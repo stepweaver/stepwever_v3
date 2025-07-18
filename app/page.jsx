@@ -1,0 +1,131 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
+export default function HomePage() {
+  const canvasRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [originalImageData, setOriginalImageData] = useState(null);
+
+  // Neon rainbow colors - starting with green
+  const neonColors = [
+    [0, 255, 0], // Neon Green (starting color)
+    [255, 255, 0], // Neon Yellow
+    [255, 165, 0], // Neon Orange
+    [255, 0, 0], // Neon Red
+    [255, 0, 255], // Neon Pink/Magenta
+    [138, 43, 226], // Neon Purple
+    [0, 191, 255], // Neon Blue
+    [0, 255, 255], // Neon Cyan
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = Math.min(scrollTop / docHeight, 1);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Load image once and store original data
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      setOriginalImageData(imageData);
+    };
+    img.src = '/images/lambda_stepweaver.png';
+  }, []);
+
+  // Update colors based on scroll
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !originalImageData) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Create a copy of the original image data
+    const imageData = new ImageData(
+      new Uint8ClampedArray(originalImageData.data),
+      originalImageData.width,
+      originalImageData.height
+    );
+    const data = imageData.data;
+
+    // Calculate which color to use based on scroll progress
+    const colorProgress = scrollProgress * (neonColors.length - 1);
+    const colorIndex = Math.floor(colorProgress);
+    const nextColorIndex = Math.min(colorIndex + 1, neonColors.length - 1);
+    const blend = colorProgress - colorIndex;
+
+    // Interpolate between current and next color for smooth transitions
+    const currentColor = neonColors[colorIndex];
+    const nextColor = neonColors[nextColorIndex];
+
+    const r = Math.round(currentColor[0] * (1 - blend) + nextColor[0] * blend);
+    const g = Math.round(currentColor[1] * (1 - blend) + nextColor[1] * blend);
+    const b = Math.round(currentColor[2] * (1 - blend) + nextColor[2] * blend);
+
+    // Apply the color to all non-transparent pixels
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] > 0) {
+        // Only change non-transparent pixels
+        data[i] = r; // Red
+        data[i + 1] = g; // Green
+        data[i + 2] = b; // Blue
+        // Keep original alpha (data[i + 3])
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+  }, [scrollProgress, originalImageData]);
+
+  return (
+    <div className='min-h-screen relative bg-terminal-dark'>
+      {/* CRT Effects */}
+      <div className='crt-background'></div>
+      <div className='crt-overlay'></div>
+      <div className='crt-vignette'></div>
+      <div className='crt-screen'></div>
+      <div className='crt-corners'></div>
+
+      {/* Fixed background canvas */}
+      <div className='fixed inset-0 z-10 flex items-center justify-start'>
+        <canvas
+          ref={canvasRef}
+          className='opacity-30'
+          style={{
+            transform: 'scale(0.8) translateX(-20%)',
+            transformOrigin: 'center',
+            filter: 'drop-shadow(0 0 20px rgba(0, 255, 65, 0.3))',
+          }}
+        />
+      </div>
+
+      {/* Minimal content to enable scrolling */}
+      <div className='relative z-20'>
+        <div className='h-screen'></div>
+        <div className='h-screen'></div>
+        <div className='h-screen'></div>
+        <div className='h-screen'></div>
+        <div className='h-screen'></div>
+      </div>
+    </div>
+  );
+}
