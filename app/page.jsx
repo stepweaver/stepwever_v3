@@ -109,9 +109,8 @@ export default function HomePage() {
       <div className='fixed inset-0 z-10 flex items-center justify-start'>
         <canvas
           ref={canvasRef}
-          className='opacity-30'
+          className='opacity-30 scale-[0.9] -translate-x-[30%] translate-y-[2%] md:scale-[1.4] md:-translate-x-[15%] md:translate-y-[5%]'
           style={{
-            transform: 'scale(0.8) translateX(-20%)',
             transformOrigin: 'center',
             filter: 'drop-shadow(0 0 20px rgba(0, 255, 65, 0.3))',
           }}
