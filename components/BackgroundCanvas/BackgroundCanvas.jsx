@@ -121,10 +121,8 @@ export default function BackgroundCanvas() {
       <div className='fixed inset-0 z-10 flex items-center justify-start'>
         <canvas
           ref={canvasRef}
-          className='opacity-30'
+          className='opacity-30 origin-center drop-shadow-[0_0_20px_rgba(0,255,65,0.3)]'
           style={{
-            transformOrigin: 'center',
-            filter: 'drop-shadow(0 0 20px rgba(0, 255, 65, 0.3))',
             transform: `scale(${
               isMobile
                 ? 0.9 - scrollProgress * 0.4 // Mobile: 0.9 to 0.5

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import buttonStyles from '../../styles/buttons.module.css';
-import animStyles from '../../styles/animations.module.css';
+import buttonStyles from './buttons.module.css';
+import animStyles from './animations.module.css';
 
 export default function GlitchButton({
   href,
@@ -59,7 +59,9 @@ export default function GlitchButton({
       )}
       {blockCursor && (
         <span
-          className={`ml-0.5 ${cursorVisible ? 'opacity-100' : 'opacity-0'} text-terminal-green`}
+          className={`ml-0.5 ${
+            cursorVisible ? 'opacity-100' : 'opacity-0'
+          } text-terminal-green`}
         >
           ▮
         </span>
@@ -102,4 +104,4 @@ export default function GlitchButton({
       {buttonContent}
     </Link>
   );
-} 
+}
