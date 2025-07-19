@@ -1,4 +1,5 @@
 import ProjectCard from './ProjectCard';
+import GlitchButton from './ui/GlitchButton';
 
 export default function Hero() {
   // Sample project data
@@ -70,19 +71,14 @@ export default function Hero() {
           surface profit opportunities in weeks—not quarters.
         </p>
 
-        <div className='flex flex-col sm:flex-row gap-6 justify-start items-start max-w-4xl ml-auto'>
-          <button
-            className='px-10 py-4 text-lg md:text-xl bg-terminal-green text-terminal-dark font-semibold rounded-lg hover:bg-terminal-cyan transition-colors duration-300 shadow-lg hover:shadow-terminal-green/25'
-            style={{ fontFamily: 'var(--font-ocr)' }}
+        {/* Discovery Call Button */}
+        <div className='mb-10 max-w-4xl ml-auto'>
+          <GlitchButton
+            href='/contact'
+            className='text-lg md:text-xl px-8 py-4'
           >
-            Get Started
-          </button>
-          <button
-            className='px-10 py-4 text-lg md:text-xl border-2 border-terminal-green text-terminal-green font-semibold rounded-lg hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300'
-            style={{ fontFamily: 'var(--font-ocr)' }}
-          >
-            Learn More
-          </button>
+            Book a Discovery Call Now
+          </GlitchButton>
         </div>
       </div>
     </section>
