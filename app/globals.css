@@ -117,3 +117,21 @@ body {
   color: var(--foreground);
   font-family: var(--font-ocr);
 }
+
+/* Global scanline effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 50%,
+    rgba(0, 255, 65, 0.02) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  animation: scanlines 20s linear infinite;
+  z-index: 5;
+}

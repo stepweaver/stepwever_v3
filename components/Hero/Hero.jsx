@@ -62,15 +62,9 @@ export default function Hero() {
           surface profit opportunities in weeks—not quarters.
         </p>
 
-        {/* Discovery Call Button */}
-        <div className='mb-10 max-w-4xl ml-auto'>
-          <GlitchButton
-            href='/contact'
-            className='text-lg md:text-xl px-8 py-4'
-          >
-            Book a Discovery Call Now
-          </GlitchButton>
-        </div>
+        <p className='text-xl md:text-2xl lg:text-3xl text-terminal-text mb-10 leading-relaxed max-w-4xl ml-auto leading-tight font-ocr'>
+          TODO:// Catchy tagline here
+        </p>
       </div>
     </section>
   );
