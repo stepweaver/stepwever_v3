@@ -6,6 +6,7 @@ export default function HomePage() {
   const canvasRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [originalImageData, setOriginalImageData] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Neon rainbow colors - starting with green
   const neonColors = [
@@ -28,8 +29,18 @@ export default function HomePage() {
       setScrollProgress(progress);
     };
 
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Set initial value
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Load image once and store original data
@@ -52,7 +63,7 @@ export default function HomePage() {
     img.src = '/images/lambda_stepweaver.png';
   }, []);
 
-  // Update colors based on scroll
+  // Update colors and scale based on scroll
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !originalImageData) return;
@@ -109,10 +120,19 @@ export default function HomePage() {
       <div className='fixed inset-0 z-10 flex items-center justify-start'>
         <canvas
           ref={canvasRef}
-          className='opacity-30 scale-[0.9] -translate-x-[30%] translate-y-[2%] md:scale-[1.4] md:-translate-x-[15%] md:translate-y-[5%]'
+          className='opacity-30'
           style={{
             transformOrigin: 'center',
             filter: 'drop-shadow(0 0 20px rgba(0, 255, 65, 0.3))',
+            transform: `scale(${
+              isMobile
+                ? 0.9 - scrollProgress * 0.4 // Mobile: 0.9 to 0.5
+                : 1.4 - scrollProgress * 0.8 // Desktop: 1.4 to 0.6
+            }) translateX(${
+              isMobile
+                ? -30 - scrollProgress * 20 // Mobile: -30% to -50%
+                : -15 - scrollProgress * 25 // Desktop: -15% to -40%
+            }%) translateY(${isMobile ? '2%' : '5%'})`,
           }}
         />
       </div>
