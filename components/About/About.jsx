@@ -3,7 +3,7 @@ export default function About() {
     <section className='relative z-30 min-h-screen py-20'>
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Two Column Layout - Bio Card and Content Side by Side */}
-        <div className='flex flex-col lg:flex-row'>
+        <div className='flex flex-col lg:flex-row gap-12 lg:gap-16'>
           {/* Bio Card - Sticky on desktop */}
           <div className='lg:w-1/3 lg:flex-shrink-0'>
             <div className='lg:sticky lg:top-8 max-w-sm mx-auto lg:mx-0'>
@@ -38,7 +38,7 @@ export default function About() {
                   <p className='text-terminal-green font-ocr text-lg mb-3 text-center'>
                     FOUNDER
                   </p>
-                  <p className='text-terminal-text font-ocr text-md leading-relaxed mb-3 text-center'>
+                  <p className='text-terminal-text font-ocr text-sm leading-relaxed mb-3 text-center'>
                     Rebel builder & data strategist
                   </p>
 
