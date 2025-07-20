@@ -49,7 +49,7 @@ export default function Experience() {
         {
           name: 'Next.js 15',
           icon: SiNextdotjs,
-          color: '#000000',
+          color: '#ffffff',
           isComponent: true,
         },
         {
@@ -63,7 +63,7 @@ export default function Experience() {
         {
           name: 'Contentlayer',
           icon: FileText,
-          color: '#000000',
+          color: '#ffffff',
           isComponent: true,
         },
         { name: 'Vite', icon: '⚡' },
@@ -82,7 +82,7 @@ export default function Experience() {
         {
           name: 'Express',
           icon: SiExpress,
-          color: '#000000',
+          color: '#ffffff',
           isComponent: true,
         },
         {
@@ -139,9 +139,9 @@ export default function Experience() {
       name: 'Automation & AI',
       technologies: [
         { name: 'OpenAI', icon: SiOpenai, color: '#412991', isComponent: true },
-        { name: 'LangChain', icon: Link, color: '#000000', isComponent: true },
+        { name: 'LangChain', icon: Link, color: '#ffffff', isComponent: true },
         { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
-        { name: 'Make', icon: Wrench, color: '#000000', isComponent: true },
+        { name: 'Make', icon: Wrench, color: '#ffffff', isComponent: true },
         {
           name: 'FireCrawl',
           icon: '🕷️',
@@ -159,7 +159,7 @@ export default function Experience() {
           color: '#FF6B35',
           isComponent: true,
         },
-        { name: 'Notion', icon: SiNotion, color: '#000000', isComponent: true },
+        { name: 'Notion', icon: SiNotion, color: '#ffffff', isComponent: true },
         { name: 'Google Sheets', icon: '📑' },
         { name: 'Slack', icon: SiSlack, color: '#4A154B', isComponent: true },
       ],
@@ -170,10 +170,10 @@ export default function Experience() {
         {
           name: 'GitHub Actions',
           icon: SiGithub,
-          color: '#181717',
+          color: '#ffffff',
           isComponent: true,
         },
-        { name: 'Vercel', icon: SiVercel, color: '#000000', isComponent: true },
+        { name: 'Vercel', icon: SiVercel, color: '#ffffff', isComponent: true },
         {
           name: 'Netlify',
           icon: SiNetlify,
@@ -221,7 +221,7 @@ export default function Experience() {
         {/* Tech Arsenal - Compact Rotating Layout */}
         <div className='ml-auto w-full max-w-6xl'>
           {/* Category Navigation */}
-          <div className='flex flex-wrap gap-3 mb-8'>
+          <div className='flex flex-wrap gap-3 mb-8 justify-center'>
             {techCategories.map((category, index) => (
               <button
                 key={category.name}
@@ -238,39 +238,43 @@ export default function Experience() {
           </div>
 
           {/* Current Category Display */}
-          <div className='mb-6'>
+          <div className='mb-6 text-center'>
             <h3 className='text-xl lg:text-2xl font-ibm text-terminal-green mb-4 font-bold'>
               {techCategories[currentCategory].name}
             </h3>
           </div>
 
           {/* Tech Icons - Compact Grid */}
-          <div className='grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-4'>
-            {techCategories[currentCategory].technologies.map((tech, index) => {
-              const IconComponent = tech.isComponent ? tech.icon : null;
-              return (
-                <div
-                  key={tech.name}
-                  className={`${styles.techItem} flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green hover:bg-opacity-5`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className='text-2xl mb-1 flex items-center justify-center'>
-                    {tech.isComponent ? (
-                      <IconComponent
-                        size={24}
-                        color={tech.color}
-                        className='transition-all duration-300 hover:scale-110'
-                      />
-                    ) : (
-                      <span>{tech.icon}</span>
-                    )}
-                  </div>
-                  <span className='font-ocr text-terminal-text text-xs text-center leading-tight'>
-                    {tech.name}
-                  </span>
-                </div>
-              );
-            })}
+          <div className='flex justify-center'>
+            <div className='flex flex-wrap justify-center gap-4 max-w-fit mx-auto'>
+              {techCategories[currentCategory].technologies.map(
+                (tech, index) => {
+                  const IconComponent = tech.isComponent ? tech.icon : null;
+                  return (
+                    <div
+                      key={tech.name}
+                      className={`${styles.techItem} flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green hover:bg-opacity-5 w-24 h-24`}
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className='mb-1 flex items-center justify-center w-12 h-12'>
+                        {tech.isComponent ? (
+                          <IconComponent
+                            size={24}
+                            color={tech.color}
+                            className='transition-all duration-300 hover:scale-110'
+                          />
+                        ) : (
+                          <span className='text-2xl'>{tech.icon}</span>
+                        )}
+                      </div>
+                      <span className='font-ocr text-terminal-text text-xs text-center leading-tight'>
+                        {tech.name}
+                      </span>
+                    </div>
+                  );
+                }
+              )}
+            </div>
           </div>
 
           {/* Category Indicators */}
