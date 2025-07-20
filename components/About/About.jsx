@@ -3,10 +3,10 @@ export default function About() {
     <section className='relative z-30 min-h-screen py-20'>
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Two Column Layout - Bio Card and Content Side by Side */}
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-start'>
-          {/* Left Column - Bio Card */}
-          <div className='lg:order-1 lg:col-span-1'>
-            <div className='sticky top-8 max-w-sm ml-auto'>
+        <div className='flex flex-col lg:flex-row'>
+          {/* Bio Card - Sticky on desktop */}
+          <div className='lg:w-1/3 lg:flex-shrink-0'>
+            <div className='lg:sticky lg:top-8 max-w-sm mx-auto lg:mx-0'>
               <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden shadow-[0_15px_30px_-5px_rgba(0,0,0,0.6),0_10px_10px_-5px_rgba(0,0,0,0.5),0_0_10px_rgba(0,255,65,0.3),0_0_1px_rgba(0,255,65,0.7),0_0_20px_rgba(0,255,65,0.3)]'>
                 {/* Terminal Header */}
                 <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
@@ -32,13 +32,13 @@ export default function About() {
                   </div>
 
                   {/* Name and Title */}
-                  <h3 className='text-terminal-text font-ibm text-lg font-bold mb-1 text-center'>
+                  <h3 className='text-terminal-text font-ibm text-xl mb-1 text-center'>
                     Stephen Weaver
                   </h3>
-                  <p className='text-terminal-green font-ocr text-xs mb-3 text-center'>
+                  <p className='text-terminal-green font-ocr text-lg mb-3 text-center'>
                     FOUNDER
                   </p>
-                  <p className='text-terminal-text font-ocr text-xs leading-relaxed mb-3 text-center'>
+                  <p className='text-terminal-text font-ocr text-md leading-relaxed mb-3 text-center'>
                     Rebel builder & data strategist
                   </p>
 
@@ -56,8 +56,8 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right Column - Main Content */}
-          <div className='lg:order-2 lg:col-span-2'>
+          {/* Main Content */}
+          <div className='lg:w-2/3'>
             {/* Section Header */}
             <div className='mb-16'>
               <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green font-bold whitespace-nowrap'>
