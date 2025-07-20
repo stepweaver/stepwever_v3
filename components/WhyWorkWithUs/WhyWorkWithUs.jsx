@@ -1,6 +1,8 @@
 'use client';
 
-const WhyWorkWithUs = () => {
+import { memo } from 'react';
+
+const WhyWorkWithUs = memo(() => {
   const reasons = [
     {
       title: 'Invest smart and strategically',
@@ -74,6 +76,6 @@ const WhyWorkWithUs = () => {
       </div>
     </section>
   );
-};
+});
 
 export default WhyWorkWithUs;

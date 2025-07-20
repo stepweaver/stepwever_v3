@@ -1,4 +1,7 @@
-export default function About() {
+import Image from 'next/image';
+import { memo } from 'react';
+
+const About = memo(function About() {
   return (
     <section className='relative z-30 min-h-screen py-20'>
       <div className='px-8 md:px-16 lg:px-24 w-full'>
@@ -24,10 +27,13 @@ export default function About() {
                 <div className='p-4 bg-terminal-dark'>
                   {/* Profile Image */}
                   <div className='mb-3 rounded overflow-hidden bg-terminal-light/10 flex items-center justify-center h-32 w-full'>
-                    <img
+                    <Image
                       src='/images/pixarMe.png'
-                      alt='Founder of λstepweaver'
+                      alt='Stephen Weaver, Founder of λstepweaver'
+                      width={128}
+                      height={128}
                       className='max-w-full max-h-full object-cover rounded'
+                      priority={true}
                     />
                   </div>
 
@@ -115,4 +121,6 @@ export default function About() {
       </div>
     </section>
   );
-}
+});
+
+export default About;

@@ -1,6 +1,8 @@
 'use client';
 
-const SuccessStories = () => {
+import { memo } from 'react';
+
+const SuccessStories = memo(() => {
   const stories = [
     {
       title: 'Notre Dame Reporting Overhaul',
@@ -122,6 +124,6 @@ const SuccessStories = () => {
       </div>
     </section>
   );
-};
+});
 
 export default SuccessStories;

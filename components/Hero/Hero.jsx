@@ -30,7 +30,7 @@ export default function Hero() {
   return (
     <section className='relative z-30 min-h-screen flex items-center justify-end'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
-        <h1 className='text-6xl md:text-8xl lg:text-9xl xl:text-[10rem] mb-10 leading-tight text-right font-ibm'>
+        <h1 className='text-4xl sm:text-6xl md:text-8xl lg:text-9xl xl:text-[10rem] mb-10 leading-tight text-right font-ibm'>
           <span className='text-terminal-green'>Automate.</span>{' '}
           <span className='text-terminal-cyan'>Optimize.</span>{' '}
           <span className='text-terminal-magenta'>Scale.</span>
@@ -38,7 +38,11 @@ export default function Hero() {
 
         {/* Project Cards */}
         <div className='mb-10 max-w-6xl ml-auto'>
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          <div
+            className='grid grid-cols-1 md:grid-cols-3 gap-6'
+            role='list'
+            aria-label='Featured projects'
+          >
             {projects.map((project, index) => (
               <ProjectCard
                 key={index}
@@ -51,7 +55,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <p className='text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-terminal-text mb-10 leading-relaxed max-w-4xl ml-auto leading-tight font-ocr'>
+        <p className='text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-terminal-text mb-10 leading-relaxed max-w-4xl ml-auto leading-tight font-ocr'>
           Growth systems for businesses that move fast and scale without
           friction.
         </p>
@@ -63,7 +67,7 @@ export default function Hero() {
         </p>
 
         <p className='text-xl md:text-2xl lg:text-3xl text-terminal-text mb-10 leading-relaxed max-w-4xl ml-auto leading-tight font-ocr'>
-          TODO:// Catchy tagline here
+          From concept to deployment in record time.
         </p>
       </div>
     </section>

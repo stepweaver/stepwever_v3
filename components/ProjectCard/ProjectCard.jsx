@@ -1,4 +1,7 @@
-export default function ProjectCard({
+import Image from 'next/image';
+import { memo } from 'react';
+
+const ProjectCard = memo(function ProjectCard({
   title,
   description,
   image,
@@ -22,10 +25,13 @@ export default function ProjectCard({
         {/* Project Image/Preview */}
         {image && (
           <div className='mb-3 rounded overflow-hidden bg-terminal-light/10 flex items-center justify-center h-32'>
-            <img
+            <Image
               src={image}
-              alt={title}
+              alt={`${title} project preview`}
+              width={400}
+              height={128}
               className='max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300'
+              priority={false}
             />
           </div>
         )}
@@ -67,4 +73,6 @@ export default function ProjectCard({
       </div>
     </div>
   );
-}
+});
+
+export default ProjectCard;

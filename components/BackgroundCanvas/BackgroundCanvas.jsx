@@ -1,7 +1,21 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import styles from './BackgroundCanvas.module.css';
+
+// Throttle function for performance
+function throttle(func, limit) {
+  let inThrottle;
+  return function () {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
 
 export default function BackgroundCanvas() {
   const canvasRef = useRef(null);
@@ -22,17 +36,17 @@ export default function BackgroundCanvas() {
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       const scrollTop = window.scrollY;
       const docHeight =
         document.documentElement.scrollHeight - window.innerHeight;
       const progress = Math.min(scrollTop / docHeight, 1);
       setScrollProgress(progress);
-    };
+    }, 16); // ~60fps
 
-    const handleResize = () => {
+    const handleResize = throttle(() => {
       setIsMobile(window.innerWidth < 768);
-    };
+    }, 100);
 
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
@@ -54,13 +68,26 @@ export default function BackgroundCanvas() {
 
     const img = new Image();
     img.crossOrigin = 'anonymous';
+
     img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      setOriginalImageData(imageData);
+      try {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        setOriginalImageData(imageData);
+      } catch (error) {
+        console.error('Error processing background image:', error);
+      }
     };
+
+    img.onerror = () => {
+      console.error(
+        'Failed to load background image: /images/lambda_stepweaver.png'
+      );
+      // Could set a fallback state here if needed
+    };
+
     img.src = '/images/lambda_stepweaver.png';
   }, []);
 
