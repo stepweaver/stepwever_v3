@@ -32,6 +32,7 @@ const ProjectCard = memo(function ProjectCard({
               height={128}
               className='max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300'
               priority={false}
+              style={{ height: 'auto' }}
             />
           </div>
         )}

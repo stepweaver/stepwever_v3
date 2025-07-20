@@ -20,6 +20,7 @@ const About = memo(function About() {
                       fill
                       className='object-cover'
                       priority={true}
+                      sizes='(max-width: 1024px) 160px, 160px'
                     />
                   </div>
                 </div>
