@@ -5,6 +5,7 @@ import Hero from '../components/Hero/Hero';
 import About from '../components/About/About';
 import WhyWorkWithUs from '../components/WhyWorkWithUs/WhyWorkWithUs';
 import SuccessStories from '../components/SuccessStories/SuccessStories';
+import WhatWeDo from '../components/WhatWeDo/WhatWeDo';
 
 export default function HomePage() {
   return (
@@ -22,6 +23,9 @@ export default function HomePage() {
 
       {/* About Section */}
       <About />
+
+      {/* What We Do Section */}
+      <WhatWeDo />
 
       {/* Additional content sections */}
       <div className='relative z-20'>
