@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 const About = memo(function About() {
   return (
-    <section className='relative z-30 min-h-screen py-20'>
+    <section className='relative z-30 py-20'>
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Two Column Layout - Bio Card and Content Side by Side */}
         <div className='flex flex-col lg:flex-row gap-12 lg:gap-16'>

@@ -2,7 +2,7 @@
 
 export default function WhatWeDo() {
   return (
-    <section className='relative z-30 min-h-screen py-20'>
+    <section className='relative z-30 py-20'>
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Section Header */}
         <div className='mb-16'>
