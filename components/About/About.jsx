@@ -10,52 +10,39 @@ const About = memo(function About() {
           {/* Bio Card - Sticky on desktop */}
           <div className='lg:w-1/3 lg:flex-shrink-0'>
             <div className='lg:sticky lg:top-8 max-w-sm mx-auto lg:mx-0'>
-              <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden shadow-[0_15px_30px_-5px_rgba(0,0,0,0.6),0_10px_10px_-5px_rgba(0,0,0,0.5),0_0_10px_rgba(0,255,65,0.3),0_0_1px_rgba(0,255,65,0.7),0_0_20px_rgba(0,255,65,0.3)]'>
-                {/* Terminal Header */}
-                <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
-                  <div className='flex items-center space-x-2'>
-                    <div className='w-3 h-3 bg-terminal-red rounded-full'></div>
-                    <div className='w-3 h-3 bg-terminal-yellow rounded-full'></div>
-                    <div className='w-3 h-3 bg-terminal-green rounded-full'></div>
-                  </div>
-                  <div className='text-terminal-dimmed text-xs font-ocr'>
-                    ~/bio
-                  </div>
-                </div>
-
-                {/* Terminal Content */}
-                <div className='p-4 bg-terminal-dark'>
-                  {/* Profile Image */}
-                  <div className='mb-3 rounded overflow-hidden bg-terminal-light/10 flex items-center justify-center h-32 w-full'>
+              <div className='bg-terminal-dark border border-terminal-border rounded-lg overflow-hidden shadow-[0_0_1px_rgba(0,255,65,0.7),0_0_20px_rgba(0,255,65,0.3)]'>
+                {/* Profile Image */}
+                <div className='relative h-48 w-full overflow-hidden bg-gradient-to-br from-terminal-light/15 to-terminal-dark/15 flex items-center justify-center p-6'>
+                  <div className='relative w-40 h-40 rounded-xl overflow-hidden border border-terminal-border/30'>
                     <Image
                       src='/images/pixarMe.png'
                       alt='Stephen Weaver, Founder of λstepweaver'
-                      width={128}
-                      height={128}
-                      className='max-w-full max-h-full object-cover rounded'
+                      fill
+                      className='object-cover'
                       priority={true}
                     />
                   </div>
+                </div>
 
-                  {/* Name and Title */}
-                  <h3 className='text-terminal-text font-ibm text-xl mb-1 text-center'>
+                {/* Profile Content */}
+                <div className='p-6 bg-terminal-dark'>
+                  <h3 className='text-terminal-text font-ibm text-2xl mb-2 text-center font-bold'>
                     Stephen Weaver
                   </h3>
-                  <p className='text-terminal-green font-ocr text-lg mb-3 text-center'>
+                  <p className='text-terminal-green font-ocr text-sm mb-3 text-center tracking-wider uppercase'>
                     FOUNDER
                   </p>
-                  <p className='text-terminal-text font-ocr text-sm leading-relaxed mb-3 text-center'>
+                  <p className='text-terminal-text font-ocr text-sm leading-relaxed mb-4 text-center'>
                     Rebel builder & data strategist
                   </p>
 
-                  {/* Terminal Prompt */}
-                  <div className='text-terminal-dimmed font-ocr text-xs text-center'>
-                    <span className='text-terminal-green'>
-                      guest@stepweaver.dev
-                    </span>
-                    <span className='text-terminal-text'> ~ </span>
-                    <span className='text-terminal-cyan'>λ</span>
-                    <span className='text-terminal-text'> whoami</span>
+                  {/* Contact Info */}
+                  <div className='text-center'>
+                    <p className='text-terminal-dimmed font-ocr text-xs'>
+                      <span className='text-terminal-green'>
+                        guest@stepweaver.dev
+                      </span>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -78,31 +65,22 @@ const About = memo(function About() {
             {/* Bio Content */}
             <div className='space-y-6 text-terminal-text font-ocr text-lg md:text-xl leading-relaxed'>
               <p>
-                I'm the founder of λstepweaver, a one-man skunkworks where code,
-                data, and story collide to drag "someday" ideas into
-                shipping-today reality. My career began 30,000 ft up as an
-                Airborne Cryptologic Linguist, tuning my ear for patterns most
-                people never hear. Degrees in Communication and Business
-                followed, then a decade as a business analyst wrestling chaotic
-                hospitality and university data into dashboards that cut costs
-                and clarified decisions.
+                λstepweaver is a one‑man skunkworks where code, data, and story
+                collide to drag “someday” ideas into shipping‑today reality. The
+                journey begins 30,000 ft up with an Airborne Cryptologic
+                Linguist tuned to patterns most people never hear. Degrees in
+                Communication and Business followed, then a decade as a business
+                analyst wrestling chaotic hospitality and university data into
+                dashboards that cut costs and clarified decisions.
               </p>
 
               <p>
-                Those years taught me one thing: every problem is an unfinished
-                conversation between systems—and I build the dialogue. Whether
-                I'm piping real-time numbers into margin models, spinning up a
-                Next.js site before lunch, or automating AI-driven marketing
-                videos, my north star is digital leverage: more clarity, fewer
-                keystrokes, faster wins.
-              </p>
-
-              <p>
-                I'm a builder, rebel, dad, and perpetual student. I don't drink
-                coffee, but I'll happily nerd-out about fonts, Tailwind, or why
-                your business is bleeding margin. Off the clock you'll catch me
-                sketching side projects, hacking AI tools, or chasing kids
-                around the backyard.
+                Those years forged one conviction: every problem is an
+                unfinished conversation between systems - λstepweaver builds the
+                dialogue. Whether piping real‑time numbers into margin models,
+                spinning up a new site before lunch, or automating AI‑driven
+                marketing videos, our north star remains digital leverage: more
+                clarity, fewer keystrokes, faster wins.
               </p>
             </div>
 
