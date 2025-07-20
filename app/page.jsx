@@ -2,6 +2,7 @@
 
 import BackgroundCanvas from '../components/BackgroundCanvas/BackgroundCanvas';
 import Hero from '../components/Hero/Hero';
+import About from '../components/About/About';
 import WhyWorkWithUs from '../components/WhyWorkWithUs/WhyWorkWithUs';
 import SuccessStories from '../components/SuccessStories/SuccessStories';
 
@@ -18,6 +19,9 @@ export default function HomePage() {
 
       {/* Success Stories Section */}
       <SuccessStories />
+
+      {/* About Section */}
+      <About />
 
       {/* Additional content sections */}
       <div className='relative z-20'>
