@@ -77,12 +77,27 @@ export default function ContactForm() {
   return (
     <div className='space-y-6 sm:space-y-8'>
       <div>
-        <TerminalWindow title='~/contact'>
+        <TerminalWindow
+          showStatusBar={true}
+          statusText={statusText}
+          lastUpdated={formattedDate}
+          customTitleContent={
+            <div className='text-terminal-green'>~/contact</div>
+          }
+        >
           <div className='p-4'>
             {status.error && (
               <div className='mb-4 p-2 border border-terminal-red bg-terminal-red/20'>
                 <p className='text-terminal-red text-sm'>
                   [ERROR] {status.error}
+                </p>
+              </div>
+            )}
+
+            {status.success && (
+              <div className='mb-4 p-2 border border-terminal-green bg-terminal-green/20'>
+                <p className='text-terminal-green text-sm'>
+                  [SUCCESS] {status.success}
                 </p>
               </div>
             )}

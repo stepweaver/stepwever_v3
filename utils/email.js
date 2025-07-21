@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 // Create transporter instance
 let transporter = null;
 
-export const getTransporter = () => {
+const getTransporter = () => {
   if (!transporter) {
     transporter = nodemailer.createTransport({
       service: process.env.EMAIL_SERVICE || 'gmail',
@@ -85,7 +85,7 @@ export const sendConfirmationEmail = async (formData) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: 'Thank you for contacting us',
+    subject: 'Thank you for contacting λstepweaver',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #333;">Thank you for reaching out!</h2>
@@ -109,14 +109,3 @@ export const isEmailConfigured = () => {
   return !!(process.env.EMAIL_USER && process.env.EMAIL_PASS);
 };
 
-// Test email configuration
-export const testEmailConfig = async () => {
-  try {
-    const transport = getTransporter();
-    await transport.verify();
-    return { success: true, message: 'Email configuration is valid' };
-  } catch (error) {
-    console.error('Email configuration test failed:', error);
-    return { success: false, message: error.message };
-  }
-}; 
