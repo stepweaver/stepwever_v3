@@ -38,7 +38,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Section - Social Links and Legal */}
-      <div className='border-t border-terminal-border mt-auto'>
+      <div className='mt-auto'>
         <div className='max-w-7xl mx-auto px-6 py-8'>
           <div className='flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0'>
             {/* Bottom Left - Social Links */}
@@ -47,7 +47,7 @@ export default function Footer() {
                 href='https://github.com/stepweaver'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm'
+                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-base uppercase tracking-wider'
               >
                 GitHub
               </a>
@@ -55,14 +55,14 @@ export default function Footer() {
                 href='https://bsky.app/profile/stepweaver.bsky.social'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm'
+                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-base uppercase tracking-wider'
               >
                 Bluesky
               </a>
             </div>
 
             {/* Bottom Right - Legal */}
-            <div className='text-terminal-muted font-ocr text-xs'>
+            <div className='text-terminal-muted font-ocr text-sm'>
               λstepweaver LLC · Veteran-owned · All rights reserved ·{' '}
               {currentYear}
             </div>
