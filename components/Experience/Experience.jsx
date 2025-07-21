@@ -188,17 +188,17 @@ export default function Experience() {
     <section className='relative z-30 py-20'>
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Section Header */}
-        <div className='mb-16 ml-auto w-full max-w-6xl'>
-          <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green'>
+        <div className='mb-12 md:mb-16 ml-auto w-full max-w-6xl'>
+          <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
             EXPERIENCE & TECH ARSENAL
           </h2>
 
           {/* Experience Message */}
-          <div className='mb-12'>
-            <h3 className='text-2xl md:text-3xl lg:text-4xl mb-6 leading-tight text-left font-ibm text-terminal-green'>
+          <div className='mb-8 md:mb-12'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight text-left font-ibm text-terminal-green'>
               Fueled by Obsession, Driven by Passion
             </h3>
-            <p className='text-terminal-text font-ocr text-lg leading-relaxed'>
+            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
               λstepweaver is led by a veteran, business analyst, and rebel
               developer obsessed with helping businesses scale. Every project is
               a hands-on mission to solve real problems with practical tools,
@@ -210,12 +210,12 @@ export default function Experience() {
         {/* Tech Arsenal - Compact Rotating Layout */}
         <div className='ml-auto w-full max-w-6xl'>
           {/* Category Navigation */}
-          <div className='flex flex-wrap gap-3 mb-8 justify-center'>
+          <div className='flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 justify-center'>
             {techCategories.map((category, index) => (
               <button
                 key={category.name}
                 onClick={() => setCurrentCategory(index)}
-                className={`px-3 py-1 font-ibm text-sm border transition-all duration-300 ${
+                className={`px-2 md:px-3 py-1 font-ibm text-xs md:text-sm border transition-all duration-300 ${
                   currentCategory === index
                     ? 'border-terminal-green text-terminal-green bg-terminal-dark'
                     : 'border-terminal-border text-terminal-muted hover:border-terminal-green hover:text-terminal-green'
@@ -227,8 +227,8 @@ export default function Experience() {
           </div>
 
           {/* Current Category Display */}
-          <div className='mb-6 text-center'>
-            <h3 className='text-xl lg:text-2xl font-ibm text-terminal-green mb-4'>
+          <div className='mb-4 md:mb-6 text-center'>
+            <h3 className='text-lg md:text-xl lg:text-2xl font-ibm text-terminal-green mb-3 md:mb-4'>
               {techCategories[currentCategory].name}
             </h3>
           </div>
