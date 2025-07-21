@@ -221,7 +221,7 @@ export default function Approach() {
 
             {/* Bottom Statement */}
             <div className='mt-8 pt-6'>
-              <p className='text-terminal-text font-ibm text-lg font-bold text-center'>
+              <p className='text-terminal-text font-ibm text-2xl font-bold text-center'>
                 The solo advantage: sharper, faster, more personal.
               </p>
             </div>
