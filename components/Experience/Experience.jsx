@@ -210,12 +210,18 @@ export default function Experience() {
           </h2>
           <div className='h-0.5 bg-terminal-green mb-8'></div>
 
-          {/* Description */}
-          <p className='text-terminal-text font-ocr text-lg leading-relaxed mb-12'>
-            Each tool is chosen for speed, composability, and the freedom to
-            hand clients a system they can actually run. When the stack isn't
-            enough, λstepweaver builds the missing piece.
-          </p>
+          {/* Experience Message */}
+          <div className='mb-12'>
+            <h3 className='text-2xl md:text-3xl lg:text-4xl mb-6 leading-tight text-left font-ibm text-terminal-green font-bold'>
+              Fueled by Obsession, Driven by Passion
+            </h3>
+            <p className='text-terminal-text font-ocr text-lg leading-relaxed'>
+              λstepweaver is led by a veteran, business analyst, and self-taught
+              coder obsessed with helping businesses scale. Every project is a
+              hands-on mission to solve real problems with practical tools,
+              clear strategy, and relentless curiosity—no fluff, just results.
+            </p>
+          </div>
         </div>
 
         {/* Tech Arsenal - Compact Rotating Layout */}
