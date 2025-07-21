@@ -10,6 +10,7 @@ import Experience from '../components/Experience/Experience';
 import PartnerFeedback from '../components/PartnerFeedback/PartnerFeedback';
 import Approach from '../components/Approach/Approach';
 import CTA from '../components/CTA/CTA';
+import Footer from '../components/Footer';
 
 export default function HomePage() {
   return (
@@ -43,11 +44,8 @@ export default function HomePage() {
       {/* CTA Section */}
       <CTA />
 
-      {/* Additional content sections */}
-      <div className='relative z-20'>
-        <div className='h-screen'></div>
-        <div className='h-screen'></div>
-      </div>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
