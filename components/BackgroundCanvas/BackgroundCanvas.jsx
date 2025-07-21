@@ -63,7 +63,7 @@ export default function BackgroundCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) return;
 
     const img = new Image();
@@ -96,7 +96,7 @@ export default function BackgroundCanvas() {
     const canvas = canvasRef.current;
     if (!canvas || !originalImageData) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) return;
 
     // Create a copy of the original image data
