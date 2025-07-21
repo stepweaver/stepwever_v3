@@ -1,6 +1,6 @@
 import localFont from 'next/font/local';
-import "./globals.css";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import './globals.css';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 const ocrFont = localFont({
   src: './fonts/OCRA.woff',
@@ -20,7 +20,8 @@ export const metadata = {
     template: '%s | λstepweaver',
     default: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
   },
-  description: 'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
+  description:
+    'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
   keywords: [
     'business automation',
     'data pipelines',
@@ -36,7 +37,7 @@ export const metadata = {
     'business optimization',
     'startup technology',
     'SaaS development',
-    'API integration'
+    'API integration',
   ],
   authors: [{ name: 'Stephen Weaver' }],
   creator: 'Stephen Weaver',
@@ -52,7 +53,8 @@ export const metadata = {
     url: 'https://stepweaver.dev/',
     siteName: 'λstepweaver',
     title: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
-    description: 'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
+    description:
+      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
     images: [
       {
         url: '/images/lambda_stepweaver.png',
@@ -65,7 +67,8 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
-    description: 'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
+    description:
+      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
     images: ['/images/lambda_stepweaver.png'],
     creator: '@stepweaver',
   },
@@ -88,6 +91,7 @@ export const metadata = {
   },
   icons: {
     icon: [
+      { url: '/favicon.ico' },
       { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
@@ -98,18 +102,26 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${ocrFont.variable} ${ibm3270.variable} antialiased`}>
+    <html
+      lang='en'
+      className={`${ocrFont.variable} ${ibm3270.variable} antialiased`}
+    >
       <head>
-        <meta name="theme-color" content="#0d1211" />
-        <meta name="color-scheme" content="dark" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta name='theme-color' content='#0d1211' />
+        <meta name='color-scheme' content='dark' />
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1, maximum-scale=5'
+        />
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossOrigin='anonymous'
+        />
       </head>
-      <body className="bg-terminal-dark text-terminal-text">
-        <ErrorBoundary>
-          {children}
-        </ErrorBoundary>
+      <body className='bg-terminal-dark text-terminal-text'>
+        <ErrorBoundary>{children}</ErrorBoundary>
       </body>
     </html>
   );
