@@ -6,7 +6,7 @@ export default function WhatWeDo() {
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Section Header */}
         <div className='mb-16'>
-          <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green font-bold whitespace-nowrap'>
+          <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green whitespace-nowrap'>
             WHAT WE DO
           </h2>
         </div>
@@ -15,7 +15,7 @@ export default function WhatWeDo() {
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16'>
           {/* Data */}
           <div>
-            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 font-bold'>
+            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4'>
               Data
             </h3>
             <div className='h-0.5 bg-terminal-green mb-6'></div>
@@ -52,7 +52,7 @@ export default function WhatWeDo() {
 
           {/* Design */}
           <div>
-            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 font-bold'>
+            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4'>
               Design
             </h3>
             <div className='h-0.5 bg-terminal-green mb-6'></div>
@@ -86,7 +86,7 @@ export default function WhatWeDo() {
 
           {/* Strategy */}
           <div>
-            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 font-bold'>
+            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4'>
               Strategy
             </h3>
             <div className='h-0.5 bg-terminal-green mb-6'></div>

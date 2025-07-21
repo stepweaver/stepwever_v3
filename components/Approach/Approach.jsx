@@ -43,7 +43,7 @@ export default function Approach() {
               } max-w-md mx-auto lg:mx-0 mb-6`}
             >
               <div className='bg-terminal-bg p-8'>
-                <p className='text-terminal-text font-ibm text-4xl font-bold text-left leading-tight'>
+                <p className='text-terminal-text font-ibm text-4xl text-left leading-tight'>
                   The λstepweaver advantage: sharper, faster, more personal.
                 </p>
               </div>
@@ -54,7 +54,7 @@ export default function Approach() {
           <div className='lg:w-2/3'>
             {/* Section Header */}
             <div className='mb-16'>
-              <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green font-bold whitespace-nowrap'>
+              <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green whitespace-nowrap'>
                 APPROACH
               </h2>
             </div>
@@ -78,14 +78,14 @@ export default function Approach() {
 
             {/* Our Approach Section */}
             <div className='mb-8'>
-              <h4 className='text-2xl md:text-3xl font-ibm text-terminal-cyan mb-6 font-bold'>
+              <h4 className='text-2xl md:text-3xl font-ibm text-terminal-cyan mb-6'>
                 Our approach is simple:
               </h4>
 
               {/* Approach Steps */}
               <div className='space-y-6'>
                 <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-xl font-ibm text-terminal-green font-bold mb-1'>
+                  <h5 className='text-xl font-ibm text-terminal-green mb-1'>
                     Align on the goal.
                   </h5>
                   <p className='text-terminal-text font-ocr text-base leading-relaxed'>
@@ -95,7 +95,7 @@ export default function Approach() {
                 </div>
 
                 <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-xl font-ibm text-terminal-green font-bold mb-1'>
+                  <h5 className='text-xl font-ibm text-terminal-green mb-1'>
                     Map the path.
                   </h5>
                   <p className='text-terminal-text font-ocr text-base leading-relaxed'>
@@ -105,7 +105,7 @@ export default function Approach() {
                 </div>
 
                 <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-xl font-ibm text-terminal-green font-bold mb-1'>
+                  <h5 className='text-xl font-ibm text-terminal-green mb-1'>
                     Build in the open.
                   </h5>
                   <p className='text-terminal-text font-ocr text-base leading-relaxed'>
@@ -115,7 +115,7 @@ export default function Approach() {
                 </div>
 
                 <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-xl font-ibm text-terminal-green font-bold mb-1'>
+                  <h5 className='text-xl font-ibm text-terminal-green mb-1'>
                     Iterate together.
                   </h5>
                   <p className='text-terminal-text font-ocr text-base leading-relaxed'>
@@ -125,7 +125,7 @@ export default function Approach() {
                 </div>
 
                 <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-xl font-ibm text-terminal-green font-bold mb-1'>
+                  <h5 className='text-xl font-ibm text-terminal-green mb-1'>
                     Deliver with pride.
                   </h5>
                   <p className='text-terminal-text font-ocr text-base leading-relaxed'>

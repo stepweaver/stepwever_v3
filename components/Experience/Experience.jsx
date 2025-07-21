@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from './Experience.module.css';
 import {
   SiReact,
   SiNextdotjs,
@@ -205,19 +204,19 @@ export default function Experience() {
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Section Header */}
         <div className='mb-16 ml-auto w-full max-w-6xl'>
-          <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green font-bold'>
+          <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green'>
             EXPERIENCE & TECH ARSENAL
           </h2>
 
           {/* Experience Message */}
           <div className='mb-12'>
-            <h3 className='text-2xl md:text-3xl lg:text-4xl mb-6 leading-tight text-left font-ibm text-terminal-green font-bold'>
+            <h3 className='text-2xl md:text-3xl lg:text-4xl mb-6 leading-tight text-left font-ibm text-terminal-green'>
               Fueled by Obsession, Driven by Passion
             </h3>
             <p className='text-terminal-text font-ocr text-lg leading-relaxed'>
               λstepweaver is led by a veteran, business analyst, and rebel
-              developer obsessed with helping businesses scale. Every project is a
-              hands-on mission to solve real problems with practical tools,
+              developer obsessed with helping businesses scale. Every project is
+              a hands-on mission to solve real problems with practical tools,
               clear strategy, and relentless curiosity—no fluff, just results.
             </p>
           </div>
@@ -244,7 +243,7 @@ export default function Experience() {
 
           {/* Current Category Display */}
           <div className='mb-6 text-center'>
-            <h3 className='text-xl lg:text-2xl font-ibm text-terminal-green mb-4 font-bold'>
+            <h3 className='text-xl lg:text-2xl font-ibm text-terminal-green mb-4'>
               {techCategories[currentCategory].name}
             </h3>
           </div>
@@ -258,7 +257,7 @@ export default function Experience() {
                   return (
                     <div
                       key={tech.name}
-                      className={`${styles.techItem} flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green hover:bg-opacity-5 w-24 h-24`}
+                      className='flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green hover:bg-opacity-5 w-24 h-24 animate-[fadeIn_0.6s_ease-out_both] hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(0,255,65,0.15)]'
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
                       <div className='mb-1 flex items-center justify-center w-12 h-12'>

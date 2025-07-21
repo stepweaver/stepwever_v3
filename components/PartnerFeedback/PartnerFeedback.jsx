@@ -72,7 +72,7 @@ export default function PartnerFeedback() {
     <section className='relative z-30 flex items-start pt-8'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
-        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green font-bold whitespace-nowrap'>
+        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green whitespace-nowrap'>
           PARTNER FEEDBACK
         </h2>
 
@@ -116,7 +116,7 @@ export default function PartnerFeedback() {
                     </blockquote>
 
                     <div className='border-t border-terminal-border pt-6'>
-                      <div className='text-terminal-cyan font-ibm text-xl font-bold mb-2'>
+                      <div className='text-terminal-cyan font-ibm text-xl mb-2'>
                         {testimonial.name}
                       </div>
                       <div className='text-terminal-muted font-ocr text-base uppercase tracking-wider'>

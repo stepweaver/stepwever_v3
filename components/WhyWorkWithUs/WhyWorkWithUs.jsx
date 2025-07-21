@@ -25,7 +25,7 @@ const WhyWorkWithUs = memo(() => {
     <section className='relative z-30 flex items-start pt-8'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
-        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green font-bold whitespace-nowrap'>
+        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green whitespace-nowrap'>
           WHY WORK WITH US
         </h2>
 
@@ -51,7 +51,7 @@ const WhyWorkWithUs = memo(() => {
               {/* Terminal Content */}
               <div className='p-4 bg-terminal-dark min-h-[200px] flex flex-col'>
                 {/* Reason Title */}
-                <h3 className='text-terminal-green font-ibm text-lg font-bold mb-2'>
+                <h3 className='text-terminal-green font-ibm text-lg mb-2'>
                   {reason.title}
                 </h3>
 

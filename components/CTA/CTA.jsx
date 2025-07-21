@@ -11,13 +11,13 @@ export default function CTA() {
           {/* Left Column - Main Headline */}
           <div className='lg:w-1/2'>
             <div className='space-y-0'>
-              <h3 className='text-7xl md:text-8xl lg:text-9xl font-ibm font-bold text-terminal-text leading-none'>
+              <h3 className='text-7xl md:text-8xl lg:text-9xl font-ibm text-terminal-text leading-none'>
                 READY
               </h3>
-              <h3 className='text-7xl md:text-8xl lg:text-9xl font-ibm font-bold text-terminal-text leading-none'>
+              <h3 className='text-7xl md:text-8xl lg:text-9xl font-ibm text-terminal-text leading-none'>
                 TO
               </h3>
-              <h3 className='text-7xl md:text-8xl lg:text-9xl font-ibm font-bold text-terminal-green leading-none'>
+              <h3 className='text-7xl md:text-8xl lg:text-9xl font-ibm text-terminal-green leading-none'>
                 MOVE?
               </h3>
             </div>
@@ -34,7 +34,7 @@ export default function CTA() {
             </div>
 
             <div className='mb-8'>
-              <p className='text-3xl font-ibm font-bold text-terminal-green'>
+              <p className='text-3xl font-ibm text-terminal-green'>
                 Let's ship something real.
               </p>
             </div>

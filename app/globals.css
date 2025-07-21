@@ -75,21 +75,84 @@
 }
 
 @keyframes glitch {
-  0%,
-  100% {
-    transform: translateX(0);
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  10% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(20deg);
   }
   20% {
-    transform: translateX(-2px);
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(-20deg);
+  }
+  30% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
   }
   40% {
-    transform: translateX(2px);
+    transform: translate(2px, -2px);
+    filter: hue-rotate(-30deg);
+  }
+  50% {
+    transform: translate(-1px, 1px);
+    filter: hue-rotate(10deg);
   }
   60% {
-    transform: skewX(2deg);
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  70% {
+    transform: translate(2px, 2px);
+    filter: hue-rotate(20deg);
   }
   80% {
-    transform: skewX(-2deg);
+    transform: translate(-1px, -1px);
+    filter: hue-rotate(-10deg);
+  }
+  90% {
+    transform: translate(1px, 2px);
+    filter: hue-rotate(15deg);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes textGlitch {
+  0% {
+    opacity: 1;
+    transform: translate(0);
+    clip-path: inset(0 0 0 0);
+  }
+  20% {
+    opacity: 0.9;
+    transform: translate(1px, 1px);
+    clip-path: inset(0 5% 0 0);
+    text-shadow: 2px 0 0 red, -2px 0 0 blue;
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-1px, 0);
+    clip-path: inset(0 0 5% 0);
+  }
+  60% {
+    opacity: 0.9;
+    transform: translate(1px, -1px);
+    clip-path: inset(5% 0 0 0);
+    text-shadow: -2px 0 0 red, 2px 0 0 blue;
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-1px, 1px);
+    clip-path: inset(0 0 0 5%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+    clip-path: inset(0 0 0 0);
   }
 }
 
@@ -111,11 +174,69 @@
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-ocr);
+}
+
+/* Glitch Button Styles */
+.glitch-button {
+  font-family: var(--font-ibm, monospace);
+  font-size: 0.875rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition-property: all;
+  transition-duration: 300ms;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-terminal-green);
+  background-color: var(--color-terminal-dark, #0d1117);
+  position: relative;
+  overflow: hidden;
+  color: var(--color-terminal-green);
+}
+
+.glitch-button:hover {
+  background-color: var(--color-terminal-light, #161b22);
+  border-color: var(--color-terminal-green, #00ff41);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.glitch-button:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.scale-normal {
+  transform: scale(1);
+}
+
+.scale-hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  text-shadow: var(--terminal-strong-glow);
 }
 
 /* Global scanline effect */

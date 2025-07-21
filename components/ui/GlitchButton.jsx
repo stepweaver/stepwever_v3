@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import buttonStyles from '../../styles/buttons.module.css';
-import animStyles from '../../styles/animations.module.css';
 
 export default function GlitchButton({
   href,
@@ -35,7 +33,9 @@ export default function GlitchButton({
       {brackets && (
         <span
           className={`text-terminal-green ${
-            isHovering ? animStyles.glitchEffect : ''
+            isHovering
+              ? 'animate-[glitch_0.2s_infinite] inline-block will-change-transform'
+              : ''
           }`}
         >
           [
@@ -43,7 +43,9 @@ export default function GlitchButton({
       )}
       <span
         className={`px-1 whitespace-nowrap text-terminal-text ${
-          isHovering ? animStyles.textGlitchEffect : ''
+          isHovering
+            ? 'animate-[textGlitch_0.2s_infinite] inline-block will-change-transform'
+            : ''
         }`}
       >
         {isLoading ? loadingText || 'LOADING...' : children}
@@ -51,7 +53,9 @@ export default function GlitchButton({
       {brackets && (
         <span
           className={`text-terminal-green ${
-            isHovering ? animStyles.glitchEffect : ''
+            isHovering
+              ? 'animate-[glitch_0.2s_infinite] inline-block will-change-transform'
+              : ''
           }`}
         >
           ]
@@ -72,10 +76,8 @@ export default function GlitchButton({
   const commonProps = {
     onMouseEnter: () => setIsHovering(true),
     onMouseLeave: () => setIsHovering(false),
-    className: `${
-      buttonStyles.glitchButton
-    } ${className} font-ibm flex items-center justify-center ${
-      isHovering ? buttonStyles.scaleHover : buttonStyles.scaleNormal
+    className: `glitch-button ${className} font-ibm flex items-center justify-center ${
+      isHovering ? 'scale-hover' : 'scale-normal'
     } ${disabled || isLoading ? 'opacity-70 cursor-not-allowed' : ''}`,
     disabled: disabled || isLoading,
   };

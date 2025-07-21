@@ -15,7 +15,7 @@ export default function Footer() {
       <div className='max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col justify-center'>
         {/* Logo Section - Centered */}
         <div className='mb-16 lg:mb-24'>
-          <h2 className='text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] font-bold text-terminal-green font-ibm tracking-tight leading-none'>
+          <h2 className='text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] text-terminal-green font-ibm tracking-tight leading-none'>
             λstepweaver
           </h2>
         </div>

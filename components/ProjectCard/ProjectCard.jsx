@@ -38,9 +38,7 @@ const ProjectCard = memo(function ProjectCard({
         )}
 
         {/* Project Title */}
-        <h3 className='text-terminal-green font-ibm text-lg font-bold mb-2'>
-          {title}
-        </h3>
+        <h3 className='text-terminal-green font-ibm text-lg mb-2'>{title}</h3>
 
         {/* Project Description */}
         <p className='text-terminal-text font-ocr text-sm leading-relaxed mb-3 flex-grow'>

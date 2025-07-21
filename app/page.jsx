@@ -10,7 +10,7 @@ import Experience from '../components/Experience/Experience';
 import PartnerFeedback from '../components/PartnerFeedback/PartnerFeedback';
 import Approach from '../components/Approach/Approach';
 import CTA from '../components/CTA/CTA';
-import Footer from '../components/Footer';
+import Footer from '../components/Footer/Footer';
 
 export default function HomePage() {
   return (

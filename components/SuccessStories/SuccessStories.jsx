@@ -48,7 +48,7 @@ const SuccessStories = memo(() => {
     <section className='relative z-30 flex items-start pt-8'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
-        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green font-bold whitespace-nowrap'>
+        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green whitespace-nowrap'>
           SELECTED SUCCESS STORIES
         </h2>
 
@@ -81,7 +81,7 @@ const SuccessStories = memo(() => {
                 </div>
 
                 {/* Story Title */}
-                <h3 className='text-terminal-green font-ibm text-base font-bold mb-3 leading-tight'>
+                <h3 className='text-terminal-green font-ibm text-base mb-3 leading-tight'>
                   {story.title}
                 </h3>
 
@@ -92,7 +92,7 @@ const SuccessStories = memo(() => {
 
                 {/* Metrics */}
                 <div className='mb-3'>
-                  <h4 className='text-terminal-cyan font-ibm text-xs font-bold mb-2'>
+                  <h4 className='text-terminal-cyan font-ibm text-xs mb-2'>
                     KEY METRICS:
                   </h4>
                   <ul className='space-y-1'>

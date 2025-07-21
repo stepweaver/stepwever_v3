@@ -27,7 +27,7 @@ const About = memo(function About() {
 
                 {/* Profile Content */}
                 <div>
-                  <h3 className='text-terminal-text font-ibm text-3xl mb-3 font-bold'>
+                  <h3 className='text-terminal-text font-ibm text-3xl mb-3'>
                     Stephen Weaver
                   </h3>
                   <p className='text-terminal-green font-ocr text-xl mb-4 tracking-wider uppercase'>
@@ -57,7 +57,7 @@ const About = memo(function About() {
           <div className='lg:w-2/3'>
             {/* Section Header */}
             <div className='mb-16'>
-              <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green font-bold whitespace-nowrap'>
+              <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green whitespace-nowrap'>
                 ABOUT
               </h2>
             </div>

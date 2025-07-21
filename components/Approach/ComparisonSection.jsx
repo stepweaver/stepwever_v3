@@ -11,10 +11,10 @@ const ComparisonSection = forwardRef((props, ref) => {
           <table className='w-full border-collapse'>
             <thead>
               <tr className='border-b border-terminal-border'>
-                <th className='text-center py-2 px-6 text-3xl font-ibm text-terminal-green font-bold w-1/2'>
+                <th className='text-center py-2 px-6 text-3xl font-ibm text-terminal-green w-1/2'>
                   λstepweaver
                 </th>
-                <th className='text-center py-2 px-6 text-3xl font-ibm text-terminal-text font-bold w-1/2'>
+                <th className='text-center py-2 px-6 text-3xl font-ibm text-terminal-text w-1/2'>
                   Traditional Agency
                 </th>
               </tr>
@@ -23,7 +23,7 @@ const ComparisonSection = forwardRef((props, ref) => {
               <tr className='border-b border-terminal-border'>
                 <td className='py-4 px-6 align-top text-center'>
                   <div>
-                    <h4 className='text-lg font-ibm text-terminal-green font-bold mb-2'>
+                    <h4 className='text-lg font-ibm text-terminal-green mb-2'>
                       Direct, Founder-Led Attention
                     </h4>
                     <p className='text-terminal-text font-ocr text-base leading-relaxed max-w-lg mx-auto'>
@@ -34,7 +34,7 @@ const ComparisonSection = forwardRef((props, ref) => {
                 </td>
                 <td className='py-4 px-6 align-top text-center'>
                   <div>
-                    <h4 className='text-lg font-ibm text-terminal-text font-bold mb-2'>
+                    <h4 className='text-lg font-ibm text-terminal-text mb-2'>
                       Account Managers & Handoffs
                     </h4>
                     <p className='text-terminal-text font-ocr text-base leading-relaxed max-w-lg mx-auto'>
@@ -48,7 +48,7 @@ const ComparisonSection = forwardRef((props, ref) => {
               <tr className='border-b border-terminal-border'>
                 <td className='py-4 px-6 align-top text-center'>
                   <div>
-                    <h4 className='text-lg font-ibm text-terminal-green font-bold mb-2'>
+                    <h4 className='text-lg font-ibm text-terminal-green mb-2'>
                       Agile, Rapid Iteration
                     </h4>
                     <p className='text-terminal-text font-ocr text-base leading-relaxed max-w-lg mx-auto'>
@@ -60,7 +60,7 @@ const ComparisonSection = forwardRef((props, ref) => {
                 </td>
                 <td className='py-4 px-6 align-top text-center'>
                   <div>
-                    <h4 className='text-lg font-ibm text-terminal-text font-bold mb-2'>
+                    <h4 className='text-lg font-ibm text-terminal-text mb-2'>
                       Slow, Waterfall Process
                     </h4>
                     <p className='text-terminal-text font-ocr text-base leading-relaxed max-w-lg mx-auto'>
@@ -74,7 +74,7 @@ const ComparisonSection = forwardRef((props, ref) => {
               <tr className='border-b border-terminal-border'>
                 <td className='py-4 px-6 align-top text-center'>
                   <div>
-                    <h4 className='text-lg font-ibm text-terminal-green font-bold mb-2'>
+                    <h4 className='text-lg font-ibm text-terminal-green mb-2'>
                       Transparent, Fair Pricing
                     </h4>
                     <p className='text-terminal-text font-ocr text-base leading-relaxed max-w-lg mx-auto'>
@@ -85,7 +85,7 @@ const ComparisonSection = forwardRef((props, ref) => {
                 </td>
                 <td className='py-4 px-6 align-top text-center'>
                   <div>
-                    <h4 className='text-lg font-ibm text-terminal-text font-bold mb-2'>
+                    <h4 className='text-lg font-ibm text-terminal-text mb-2'>
                       High Overhead, Inflated Costs
                     </h4>
                     <p className='text-terminal-text font-ocr text-base leading-relaxed max-w-lg mx-auto'>
@@ -99,7 +99,7 @@ const ComparisonSection = forwardRef((props, ref) => {
               <tr className='border-b border-terminal-border'>
                 <td className='pt-4 pb-2 px-6 align-top text-center'>
                   <div>
-                    <h4 className='text-lg font-ibm text-terminal-green font-bold mb-2'>
+                    <h4 className='text-lg font-ibm text-terminal-green mb-2'>
                       Hands-On Collaboration
                     </h4>
                     <p className='text-terminal-text font-ocr text-base leading-relaxed max-w-lg mx-auto'>
@@ -110,7 +110,7 @@ const ComparisonSection = forwardRef((props, ref) => {
                 </td>
                 <td className='pt-4 pb-2 px-6 align-top text-center'>
                   <div>
-                    <h4 className='text-lg font-ibm text-terminal-text font-bold mb-2'>
+                    <h4 className='text-lg font-ibm text-terminal-text mb-2'>
                       Impersonal Communication
                     </h4>
                     <p className='text-terminal-text font-ocr text-base leading-relaxed max-w-lg mx-auto'>
