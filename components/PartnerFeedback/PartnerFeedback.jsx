@@ -82,7 +82,7 @@ export default function PartnerFeedback() {
           {currentIndex > 0 && (
             <button
               onClick={prevTestimonial}
-              className='absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-12 h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer'
+              className='absolute left-2 md:left-0 top-1/2 -translate-y-1/2 md:-translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
               aria-label='Previous testimonial'
             >
               ←
@@ -92,7 +92,7 @@ export default function PartnerFeedback() {
           {currentIndex < testimonials.length - 1 && (
             <button
               onClick={nextTestimonial}
-              className='absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-12 h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer'
+              className='absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
               aria-label='Next testimonial'
             >
               →
@@ -108,18 +108,18 @@ export default function PartnerFeedback() {
               {testimonials.map((testimonial, index) => (
                 <div
                   key={testimonial.id}
-                  className='w-[90%] flex-shrink-0 pr-16'
+                  className='w-[90%] flex-shrink-0 pr-4 md:pr-16'
                 >
-                  <div className='p-8'>
-                    <blockquote className='text-terminal-text font-ocr text-xl leading-relaxed mb-8'>
+                  <div className='p-4 md:p-8'>
+                    <blockquote className='text-terminal-text font-ocr text-lg md:text-xl leading-relaxed mb-6 md:mb-8'>
                       "{testimonial.quote}"
                     </blockquote>
 
-                    <div className='border-t border-terminal-border pt-6'>
-                      <div className='text-terminal-cyan font-ibm text-xl mb-2'>
+                    <div className='border-t border-terminal-border pt-4 md:pt-6'>
+                      <div className='text-terminal-cyan font-ibm text-lg md:text-xl mb-2'>
                         {testimonial.name}
                       </div>
-                      <div className='text-terminal-muted font-ocr text-base uppercase tracking-wider'>
+                      <div className='text-terminal-muted font-ocr text-sm md:text-base uppercase tracking-wider'>
                         {testimonial.title}
                       </div>
                     </div>
