@@ -72,7 +72,7 @@ export default function PartnerFeedback() {
     <section className='relative z-30 flex items-start pt-8'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
-        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green'>
+        <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-12 md:mb-16 leading-tight text-left font-ibm text-terminal-green'>
           PARTNER FEEDBACK
         </h2>
 
@@ -111,15 +111,15 @@ export default function PartnerFeedback() {
                   className='w-[90%] flex-shrink-0 pr-4 md:pr-16'
                 >
                   <div className='p-4 md:p-8'>
-                    <blockquote className='text-terminal-text font-ocr text-lg md:text-xl leading-relaxed mb-6 md:mb-8'>
+                    <blockquote className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8'>
                       "{testimonial.quote}"
                     </blockquote>
 
-                    <div className='border-t border-terminal-border pt-4 md:pt-6'>
-                      <div className='text-terminal-cyan font-ibm text-lg md:text-xl mb-2'>
+                    <div className='border-t border-terminal-border pt-3 md:pt-4 lg:pt-6'>
+                      <div className='text-terminal-cyan font-ibm text-base md:text-lg lg:text-xl mb-1 md:mb-2'>
                         {testimonial.name}
                       </div>
-                      <div className='text-terminal-muted font-ocr text-sm md:text-base uppercase tracking-wider'>
+                      <div className='text-terminal-muted font-ocr text-xs md:text-sm lg:text-base uppercase tracking-wider'>
                         {testimonial.title}
                       </div>
                     </div>
