@@ -33,9 +33,11 @@ const About = memo(function About() {
                   <p className='text-terminal-green font-ocr text-xl mb-4 tracking-wider uppercase'>
                     FOUNDER
                   </p>
-                  <p className='text-terminal-text font-ocr text-base leading-relaxed mb-3'>
-                    Developer | Data Strategist | Veteran
-                  </p>
+                  <ul className='text-terminal-text font-ocr text-base leading-relaxed mb-3 space-y-1'>
+                    <li>Developer</li>
+                    <li>Data Strategist</li>
+                    <li>Veteran</li>
+                  </ul>
                   <p className='text-terminal-text font-ocr text-sm leading-relaxed mb-4 italic'>
                     (Rebel at heart)
                   </p>
