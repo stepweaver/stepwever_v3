@@ -58,18 +58,18 @@ const About = memo(function About() {
           {/* Main Content */}
           <div className='lg:w-2/3'>
             {/* Section Header */}
-            <div className='mb-16'>
-              <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green'>
+            <div className='mb-12 md:mb-16'>
+              <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
                 ABOUT λstepweaver
               </h2>
             </div>
             {/* Headline */}
-            <h3 className='text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-ibm text-terminal-text leading-tight mb-12'>
+            <h3 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-ibm text-terminal-text leading-tight mb-8 md:mb-12'>
               Digital leverage: more clarity, fewer keystrokes, faster wins.
             </h3>
 
             {/* Bio Content */}
-            <div className='space-y-6 text-terminal-text font-ocr text-lg md:text-xl leading-relaxed'>
+            <div className='space-y-4 md:space-y-6 text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed'>
               <p>
                 λstepweaver is a one‑man skunkworks where code, data, and story
                 collide to drag "someday" ideas into shipping‑today reality. The
@@ -91,12 +91,12 @@ const About = memo(function About() {
             </div>
 
             {/* Call to Action */}
-            <div className='mt-12'>
-              <p className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-cyan mb-6'>
+            <div className='mt-8 md:mt-12'>
+              <p className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-ibm text-terminal-cyan mb-4 md:mb-6'>
                 Need a partner who can translate vision into shipped product—and
                 isn't afraid to rip out walls to do it?
               </p>
-              <p className='text-3xl md:text-4xl lg:text-5xl font-ibm text-terminal-green'>
+              <p className='text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-ibm text-terminal-green'>
                 Let's build what's next.
               </p>
             </div>
