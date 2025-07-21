@@ -70,7 +70,7 @@ const About = memo(function About() {
             <div className='space-y-6 text-terminal-text font-ocr text-lg md:text-xl leading-relaxed'>
               <p>
                 λstepweaver is a one‑man skunkworks where code, data, and story
-                collide to drag “someday” ideas into shipping‑today reality. The
+                collide to drag "someday" ideas into shipping‑today reality. The
                 journey begins 30,000 ft up with an Airborne Cryptologic
                 Linguist tuned to patterns most people never hear. Degrees in
                 Communication and Business followed, then a decade as a business
