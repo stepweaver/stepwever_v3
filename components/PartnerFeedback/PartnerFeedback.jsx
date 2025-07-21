@@ -72,7 +72,7 @@ export default function PartnerFeedback() {
     <section className='relative z-30 flex items-start pt-8'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
-        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green whitespace-nowrap'>
+        <h2 className='text-4xl md:text-5xl lg:text-6xl mb-16 leading-tight text-left font-ibm text-terminal-green'>
           PARTNER FEEDBACK
         </h2>
 

@@ -6,7 +6,7 @@ export default function WhatWeDo() {
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Section Header */}
         <div className='mb-16'>
-          <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green whitespace-nowrap'>
+          <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green'>
             WHAT WE DO
           </h2>
         </div>
