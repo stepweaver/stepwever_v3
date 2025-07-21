@@ -5,21 +5,21 @@ export default function WhatWeDo() {
     <section className='relative z-30 py-20'>
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Section Header */}
-        <div className='mb-16'>
-          <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green'>
+        <div className='mb-12 md:mb-16'>
+          <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
             WHAT WE DO
           </h2>
         </div>
 
         {/* Services Grid - Clean columns without boxes */}
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16'>
           {/* Data */}
           <div>
-            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-3 md:mb-4'>
               Data
             </h3>
-            <div className='h-0.5 bg-terminal-green mb-6'></div>
-            <ul className='space-y-4 text-terminal-text font-ocr text-lg leading-relaxed'>
+            <div className='h-0.5 bg-terminal-green mb-4 md:mb-6'></div>
+            <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
               <li className='flex items-start'>
                 <span className='text-terminal-green font-bold mr-3 mt-1'>
                   &gt;
@@ -52,11 +52,11 @@ export default function WhatWeDo() {
 
           {/* Design */}
           <div>
-            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-3 md:mb-4'>
               Design
             </h3>
-            <div className='h-0.5 bg-terminal-green mb-6'></div>
-            <ul className='space-y-4 text-terminal-text font-ocr text-lg leading-relaxed'>
+            <div className='h-0.5 bg-terminal-green mb-4 md:mb-6'></div>
+            <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
               <li className='flex items-start'>
                 <span className='text-terminal-green font-bold mr-3 mt-1'>
                   &gt;
@@ -86,11 +86,11 @@ export default function WhatWeDo() {
 
           {/* Strategy */}
           <div>
-            <h3 className='text-2xl lg:text-3xl font-ibm text-terminal-green mb-4'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-3 md:mb-4'>
               Strategy
             </h3>
-            <div className='h-0.5 bg-terminal-green mb-6'></div>
-            <ul className='space-y-4 text-terminal-text font-ocr text-lg leading-relaxed'>
+            <div className='h-0.5 bg-terminal-green mb-4 md:mb-6'></div>
+            <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
               <li className='flex items-start'>
                 <span className='text-terminal-green font-bold mr-3 mt-1'>
                   &gt;
