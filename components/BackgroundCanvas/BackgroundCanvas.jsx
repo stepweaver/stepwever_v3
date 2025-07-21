@@ -137,13 +137,6 @@ export default function BackgroundCanvas() {
 
   return (
     <>
-      {/* CRT Effects */}
-      <div className={styles.crtBackground}></div>
-      <div className={styles.crtOverlay}></div>
-      <div className={styles.crtVignette}></div>
-      <div className={styles.crtScreen}></div>
-      <div className={styles.crtCorners}></div>
-
       {/* Fixed background canvas */}
       <div className='fixed inset-0 z-10 flex items-center justify-start'>
         <canvas
