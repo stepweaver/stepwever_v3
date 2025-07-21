@@ -1,6 +1,7 @@
 .glitchButton {
   font-family: var(--font-ibm, monospace);
   font-size: 0.875rem;
+  font-weight: bold;
   letter-spacing: 0.05em;
   cursor: pointer;
   transition-property: all;

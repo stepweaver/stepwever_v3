@@ -1,5 +1,4 @@
 import ProjectCard from '../ProjectCard/ProjectCard';
-import { GlitchButton } from '../ui';
 
 export default function Hero() {
   // Sample project data

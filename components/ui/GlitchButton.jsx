@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import buttonStyles from './buttons.module.css';
-import animStyles from './animations.module.css';
+import buttonStyles from '../../styles/buttons.module.css';
+import animStyles from '../../styles/animations.module.css';
 
 export default function GlitchButton({
   href,
@@ -72,15 +72,12 @@ export default function GlitchButton({
   const commonProps = {
     onMouseEnter: () => setIsHovering(true),
     onMouseLeave: () => setIsHovering(false),
-    onFocus: () => setIsHovering(true),
-    onBlur: () => setIsHovering(false),
     className: `${
       buttonStyles.glitchButton
     } ${className} font-ibm flex items-center justify-center ${
       isHovering ? buttonStyles.scaleHover : buttonStyles.scaleNormal
     } ${disabled || isLoading ? 'opacity-70 cursor-not-allowed' : ''}`,
     disabled: disabled || isLoading,
-    'aria-label': typeof children === 'string' ? children : undefined,
   };
 
   // Render as button if type is provided or if onClick is provided but no href

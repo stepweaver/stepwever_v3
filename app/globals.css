@@ -133,5 +133,5 @@ body::after {
   background-size: 100% 4px;
   pointer-events: none;
   animation: scanlines 20s linear infinite;
-  z-index: 5;
+  z-index: 1;
 }

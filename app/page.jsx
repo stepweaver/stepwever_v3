@@ -9,6 +9,7 @@ import WhatWeDo from '../components/WhatWeDo/WhatWeDo';
 import Experience from '../components/Experience/Experience';
 import PartnerFeedback from '../components/PartnerFeedback/PartnerFeedback';
 import Approach from '../components/Approach/Approach';
+import CTA from '../components/CTA/CTA';
 
 export default function HomePage() {
   return (
@@ -38,6 +39,9 @@ export default function HomePage() {
 
       {/* Approach Section */}
       <Approach />
+
+      {/* CTA Section */}
+      <CTA />
 
       {/* Additional content sections */}
       <div className='relative z-20'>
