@@ -62,7 +62,7 @@ export default function Approach() {
             {/* Main Headline */}
             <h3 className='text-3xl md:text-4xl lg:text-5xl font-ibm text-terminal-text leading-tight mb-8'>
               It's all about moving fast, staying clear, and building the right
-              thing—together.
+              thing-together.
             </h3>
 
             {/* Main Description */}

@@ -4,7 +4,7 @@ import GlitchButton from '@/components/ui/GlitchButton';
 
 export default function CTA() {
   return (
-    <section className='relative pt-8 pb-16 px-8 md:px-16 lg:px-24 z-10'>
+    <section className='relative pt-8 pb-16 px-8 md:px-16 lg:px-24 z-30'>
       <div className='max-w-7xl mx-auto w-full'>
         {/* Two Column Layout */}
         <div className='flex flex-col lg:flex-row gap-12 lg:gap-16 items-start'>
