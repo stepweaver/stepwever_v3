@@ -7,6 +7,7 @@ import WhyWorkWithUs from '../components/WhyWorkWithUs/WhyWorkWithUs';
 import SuccessStories from '../components/SuccessStories/SuccessStories';
 import WhatWeDo from '../components/WhatWeDo/WhatWeDo';
 import Experience from '../components/Experience/Experience';
+import PartnerFeedback from '../components/PartnerFeedback/PartnerFeedback';
 
 export default function HomePage() {
   return (
@@ -30,6 +31,9 @@ export default function HomePage() {
 
       {/* Experience & Tech Arsenal Section */}
       <Experience />
+
+      {/* Partner Feedback Section */}
+      <PartnerFeedback />
 
       {/* Additional content sections */}
       <div className='relative z-20'>

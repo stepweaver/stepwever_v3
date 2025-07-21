@@ -208,7 +208,6 @@ export default function Experience() {
           <h2 className='text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight text-left font-ibm text-terminal-green font-bold'>
             EXPERIENCE & TECH ARSENAL
           </h2>
-          <div className='h-0.5 bg-terminal-green mb-8'></div>
 
           {/* Experience Message */}
           <div className='mb-12'>
@@ -216,8 +215,8 @@ export default function Experience() {
               Fueled by Obsession, Driven by Passion
             </h3>
             <p className='text-terminal-text font-ocr text-lg leading-relaxed'>
-              λstepweaver is led by a veteran, business analyst, and self-taught
-              coder obsessed with helping businesses scale. Every project is a
+              λstepweaver is led by a veteran, business analyst, and rebel
+              developer obsessed with helping businesses scale. Every project is a
               hands-on mission to solve real problems with practical tools,
               clear strategy, and relentless curiosity—no fluff, just results.
             </p>
