@@ -1,10 +1,8 @@
-import Image from 'next/image';
 import { memo } from 'react';
 
 const ProjectCard = memo(function ProjectCard({
   title,
   description,
-  image,
   link,
   tags = [],
 }) {
@@ -21,33 +19,18 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {/* Terminal Content */}
-      <div className='p-4 bg-terminal-dark min-h-[200px] flex flex-col'>
-        {/* Project Image/Preview */}
-        {image && (
-          <div className='mb-3 rounded overflow-hidden bg-terminal-light/10 flex items-center justify-center h-32'>
-            <Image
-              src={image}
-              alt={`${title} project preview`}
-              width={400}
-              height={128}
-              className='max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300'
-              priority={false}
-              style={{ height: 'auto' }}
-            />
-          </div>
-        )}
-
+      <div className='p-4 bg-terminal-dark flex flex-col'>
         {/* Project Title */}
-        <h3 className='text-terminal-green font-ibm text-lg mb-2'>{title}</h3>
+        <h3 className='text-terminal-green font-ibm text-lg mb-3'>{title}</h3>
 
         {/* Project Description */}
-        <p className='text-terminal-text font-ocr text-sm leading-relaxed mb-3 flex-grow'>
+        <p className='text-terminal-text font-ocr text-sm leading-relaxed mb-4 flex-grow'>
           {description}
         </p>
 
         {/* Tags */}
         {tags.length > 0 && (
-          <div className='flex flex-wrap gap-1 mb-3'>
+          <div className='flex flex-wrap gap-1 mb-4'>
             {tags.map((tag, index) => (
               <span
                 key={index}

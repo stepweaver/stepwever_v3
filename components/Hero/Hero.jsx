@@ -59,7 +59,6 @@ export default function Hero() {
               key={index}
               title={project.title}
               description={project.description}
-              image={project.image}
               link={project.link}
               tags={project.tags}
             />
