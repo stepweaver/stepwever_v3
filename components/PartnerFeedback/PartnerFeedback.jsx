@@ -77,7 +77,7 @@ export default function PartnerFeedback() {
         </h2>
 
         {/* Testimonials Container */}
-        <div className='max-w-6xl relative'>
+        <div className='w-full relative'>
           {/* Navigation Arrows */}
           {currentIndex > 0 && (
             <button

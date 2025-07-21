@@ -66,7 +66,6 @@ export default function Experience() {
           isComponent: true,
         },
         { name: 'Vite', icon: '⚡' },
-        { name: 'Astro', icon: '🚀' },
       ],
     },
     {
@@ -105,12 +104,6 @@ export default function Experience() {
           isComponent: true,
         },
         { name: 'REST', icon: Globe, color: '#00FF41', isComponent: true },
-        {
-          name: 'GraphQL',
-          icon: SiGraphql,
-          color: '#E10098',
-          isComponent: true,
-        },
       ],
     },
     {
@@ -123,8 +116,6 @@ export default function Experience() {
           isComponent: true,
         },
         { name: 'MySQL', icon: SiMysql, color: '#4479A1', isComponent: true },
-        { name: 'dbt', icon: '🔄' },
-        { name: 'Airbyte', icon: '🛫' },
         { name: 'Tableau', icon: '📊' },
         {
           name: 'Power BI',
@@ -138,13 +129,9 @@ export default function Experience() {
       name: 'Automation & AI',
       technologies: [
         { name: 'OpenAI', icon: SiOpenai, color: '#412991', isComponent: true },
-        { name: 'LangChain', icon: Link, color: '#ffffff', isComponent: true },
         { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
-        { name: 'Make', icon: Wrench, color: '#ffffff', isComponent: true },
-        {
-          name: 'FireCrawl',
-          icon: '🕷️',
-        },
+        { name: 'Langflow', icon: '🔄' },
+        { name: 'MCP Servers', icon: '🔌' },
       ],
     },
     {
@@ -153,7 +140,7 @@ export default function Experience() {
         { name: 'Stripe', icon: SiStripe, color: '#008CDD', isComponent: true },
         { name: 'QuickBooks', icon: '📊' },
         {
-          name: 'Toast POS',
+          name: 'POS Systems',
           icon: Calculator,
           color: '#FF6B35',
           isComponent: true,
@@ -185,8 +172,6 @@ export default function Experience() {
           color: '#F38020',
           isComponent: true,
         },
-        { name: 'Docker', icon: SiDocker, color: '#2496ED', isComponent: true },
-        { name: 'Fly.io', icon: Plane, color: '#8B5CF6', isComponent: true },
       ],
     },
   ];

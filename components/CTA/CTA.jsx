@@ -24,9 +24,9 @@ export default function CTA() {
           </div>
 
           {/* Right Column - Body Text and Buttons */}
-          <div className='lg:w-1/2 pt-4'>
+          <div className='lg:w-1/2 pt-4 mt-4'>
             <div className='mb-12'>
-              <p className='text-xl md:text-2xl text-terminal-text leading-tight'>
+              <p className='text-xl md:text-xl text-terminal-text leading-tight'>
                 You're here because you're done waiting. λstepweaver turns
                 "someday" ideas into live solutions—fast. Reach out and see what
                 happens when obsession meets execution.
