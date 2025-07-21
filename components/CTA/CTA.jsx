@@ -1,6 +1,6 @@
 'use client';
 
-import GlitchButton from '../ui/GlitchButton';
+import GlitchButton from '@/components/ui/GlitchButton';
 
 export default function CTA() {
   return (
@@ -60,7 +60,7 @@ export default function CTA() {
               {/* Third Button */}
               <GlitchButton
                 href='/resume'
-                className='px-12 py-5 text-xl min-w-[200px]'
+                className='px-12 py-5 text-xl font-bold min-w-[200px]'
               >
                 DOWNLOAD RESUME
               </GlitchButton>

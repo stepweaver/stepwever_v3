@@ -28,7 +28,7 @@ export default function Footer() {
             </p>
 
             <a
-              href='mailto:inquries@stepweaver.dev'
+              href='mailto:inquiries@stepweaver.dev'
               className='text-xl lg:text-4xl text-terminal-green font-ibm hover:text-terminal-white transition-colors duration-200'
             >
               inquiries@stepweaver.dev
