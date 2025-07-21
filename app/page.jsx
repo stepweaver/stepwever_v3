@@ -8,6 +8,7 @@ import SuccessStories from '../components/SuccessStories/SuccessStories';
 import WhatWeDo from '../components/WhatWeDo/WhatWeDo';
 import Experience from '../components/Experience/Experience';
 import PartnerFeedback from '../components/PartnerFeedback/PartnerFeedback';
+import Approach from '../components/Approach/Approach';
 
 export default function HomePage() {
   return (
@@ -34,6 +35,9 @@ export default function HomePage() {
 
       {/* Partner Feedback Section */}
       <PartnerFeedback />
+
+      {/* Approach Section */}
+      <Approach />
 
       {/* Additional content sections */}
       <div className='relative z-20'>
