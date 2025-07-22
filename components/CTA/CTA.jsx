@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import GlitchButton from '@/components/ui/GlitchButton';
+import CalendlyModal from '@/components/ui/CalendlyModal';
 
 export default function CTA() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
   const words = [
     { text: 'AUTOMATE?', color: 'text-terminal-green' },
     { text: 'OPTIMIZE?', color: 'text-terminal-cyan' },
@@ -74,7 +76,7 @@ export default function CTA() {
             <div className='flex flex-col sm:flex-row gap-3 md:gap-4 mb-4 md:mb-6'>
               {/* Primary Button */}
               <GlitchButton
-                href='https://calendly.com/stepweaver'
+                onClick={() => setIsCalendlyOpen(true)}
                 className='px-8 md:px-12 py-4 md:py-5 text-base md:text-lg lg:text-xl font-bold min-w-[180px] md:min-w-[200px]'
               >
                 SCHEDULE A CALL
@@ -111,6 +113,12 @@ export default function CTA() {
           </div>
         </div>
       </div>
+
+      {/* Calendly Modal */}
+      <CalendlyModal
+        isOpen={isCalendlyOpen}
+        onClose={() => setIsCalendlyOpen(false)}
+      />
     </section>
   );
 }
