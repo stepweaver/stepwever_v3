@@ -7,49 +7,49 @@ const testimonials = [
     id: 1,
     quote:
       'Stephen transformed our chaotic data pipeline into a streamlined system that actually makes sense. His ability to see patterns in the noise and build solutions that scale is unmatched. We went from spending hours on manual reports to real-time dashboards that drive decisions.',
-    name: 'Marty McFly',
+    name: 'Marty McFly*',
     title: 'DIRECTOR OF OPERATIONS, HILL VALLEY TECHNOLOGIES',
   },
   {
     id: 2,
     quote:
       "When we needed to pivot our entire digital strategy in under a month, λstepweaver didn't just deliver—they exceeded every expectation. The combination of technical expertise and strategic thinking is rare. Our conversion rates jumped 400% within the first quarter.",
-    name: 'Ellen Ripley',
+    name: 'Ellen Ripley*',
     title: 'CEO, WEYLAND-YUTANI DIGITAL',
   },
   {
     id: 3,
     quote:
       "Stephen's background in cryptologic linguistics shows in how he approaches every problem. He doesn't just write code—he deciphers the underlying patterns and builds systems that speak the language of business. Our automation workflows now handle 90% of our routine tasks.",
-    name: 'Dr. Ian Malcolm',
+    name: 'Dr. Ian Malcolm*',
     title: 'CTO, INGEN SYSTEMS',
   },
   {
     id: 4,
     quote:
       "We were drowning in technical debt and outdated systems. λstepweaver didn't just fix our problems—they reimagined our entire digital infrastructure. The transformation was so dramatic that our competitors started asking who our secret weapon was. Spoiler alert: it's Stephen.",
-    name: 'Sarah Connor',
+    name: 'Sarah Connor*',
     title: 'VP OF TECHNOLOGY, SKYNET SOLUTIONS',
   },
   {
     id: 5,
     quote:
       "Stephen's iterative approach meant we could see progress every week, not just at the end. His communication is so clear that even our non-technical stakeholders understood what was happening. We've built a partnership that continues to deliver value long after the initial project.",
-    name: 'John McClane',
+    name: 'John McClane*',
     title: 'FOUNDER, NAKATOMI CONSULTING',
   },
   {
     id: 6,
     quote:
       "The combination of business analysis experience and technical skills is what sets λstepweaver apart. Stephen doesn't just build what you ask for—he builds what you actually need. Our data-driven marketing campaigns now generate 3x the ROI we had before.",
-    name: 'Clarice Starling',
+    name: 'Clarice Starling*',
     title: 'DIRECTOR OF MARKETING, BEHAVIORAL SCIENCE CORP',
   },
   {
     id: 7,
     quote:
       'Working with Stephen was like having a team of specialists in one person. His ability to translate complex technical concepts into business value is extraordinary. We went from concept to deployed product in record time, and it actually works better than we imagined.',
-    name: 'Forrest Gump',
+    name: 'Forrest Gump*',
     title: 'PRESIDENT, BUBBA GUMP TECH',
   },
 ];
@@ -103,7 +103,14 @@ export default function PartnerFeedback() {
 
                     <div className='border-t border-terminal-border pt-3 md:pt-4 lg:pt-6'>
                       <div className='text-terminal-cyan font-ibm text-base md:text-lg lg:text-xl mb-1 md:mb-2'>
-                        {testimonial.name}
+                        {testimonial.name.includes('*') ? (
+                          <>
+                            {testimonial.name.replace('*', '')}
+                            <span className='text-terminal-yellow'>*</span>
+                          </>
+                        ) : (
+                          testimonial.name
+                        )}
                       </div>
                       <div className='text-terminal-muted font-ocr text-xs md:text-sm lg:text-base uppercase tracking-wider'>
                         {testimonial.title}
@@ -115,6 +122,13 @@ export default function PartnerFeedback() {
             </div>
           </div>
         </div>
+
+        {/* Small Disclaimer */}
+        <span className='block text-terminal-yellow text-xs mt-6 text-center'>
+          * Awaiting actual partner feedback.
+          <br className='block md:hidden' />
+          <span className='text-terminal-green'>Want to be first?</span>
+        </span>
       </div>
     </section>
   );
