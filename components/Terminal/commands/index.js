@@ -254,14 +254,14 @@ export const handleCommand = async (
         `<span class="text-terminal-green">Available Commands:</span>`,
         ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
-        `<span class="text-terminal-text ml-4">cd contact</span>`,
-        `<span class="text-terminal-text ml-4">cd blog</span>`,
+        `<span class="text-terminal-text ml-4">cd contact</span> <span class="text-terminal-text">- Go to contact page</span>`,
+        `<span class="text-terminal-text ml-4">cd blog</span> <span class="text-terminal-text">- Go to blog page</span>`,
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
-        `<span class="text-terminal-text ml-4">weather [location] - e.g., weather london (or just "weather" for your location)</span>`,
-        `<span class="text-terminal-text ml-4">resume</span>`,
-        `<span class="text-terminal-text ml-4">contact</span>`,
-        `<span class="text-terminal-text ml-4">clear</span>`
+        `<span class="text-terminal-text ml-4">weather [location]</span> <span class="text-terminal-text">- Get weather info</span>`,
+        `<span class="text-terminal-text ml-4">resume</span> <span class="text-terminal-text">- View resume</span>`,
+        `<span class="text-terminal-text ml-4">contact</span> <span class="text-terminal-text">- Send message</span>`,
+        `<span class="text-terminal-text ml-4">clear</span> <span class="text-terminal-text">- Clear terminal</span>`
       ];
 
     case 'cd':
@@ -303,18 +303,7 @@ export const handleCommand = async (
       }
       return [];
 
-    case 'ls':
-      return [
-        `<span class="text-terminal-green">Available destinations:</span>`,
-        ``,
-        `<span class="text-terminal-cyan">contact</span> - Get in touch`,
-        `<span class="text-terminal-cyan">blog</span> - Read our blog (coming soon)`,
-        ``,
-        `<span class="text-terminal-green">Commands:</span>`,
-        `<span class="text-terminal-cyan">weather</span> - Get weather information`,
-        `<span class="text-terminal-cyan">resume</span> - View resume`,
-        `<span class="text-terminal-cyan">help</span> - Show all commands`
-      ];
+
 
     case '':
       return [];
