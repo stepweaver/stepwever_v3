@@ -95,6 +95,11 @@ const Terminal = forwardRef((props, ref) => {
   const [lastCommand, setLastCommand] = useState('');
   const [lastCommandTime, setLastCommandTime] = useState(0);
 
+  // Selection mode state
+  const [isInSelectionMode, setIsInSelectionMode] = useState(false);
+  const [selectionLocation, setSelectionLocation] = useState('');
+  const [selectionOptions, setSelectionOptions] = useState([]);
+
   const {
     history,
     historyIndex,
@@ -102,6 +107,8 @@ const Terminal = forwardRef((props, ref) => {
     addToHistory,
     navigateHistory,
   } = useCommandHistory();
+
+  // Selection mode helper functions
 
   // Create refs for pre elements to check overflow
   const preRefs = useRef({});
@@ -207,6 +214,73 @@ const Terminal = forwardRef((props, ref) => {
       addToHistory(command);
     }
 
+    // Handle selection mode - if we're in selection mode and user types a number
+    if (isInSelectionMode) {
+      const selectionNumber = parseInt(command.trim());
+      if (
+        !isNaN(selectionNumber) &&
+        selectionNumber >= 1 &&
+        selectionNumber <= selectionOptions.length
+      ) {
+        // User selected a valid option
+        setIsInSelectionMode(false);
+
+        // Show loading message
+        const loadingLine = `<span class="text-terminal-yellow">Fetching weather for ${
+          selectionOptions[selectionNumber - 1].display
+        }...</span>`;
+        setLines((prev) => [...prev, loadingLine]);
+
+        // Fetch weather for selected location
+        try {
+          const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+          const selectedCity = selectionOptions[selectionNumber - 1];
+          const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${selectedCity.lat}&lon=${selectedCity.lon}&units=imperial&appid=${API_KEY}`
+          );
+
+          if (!response.ok) {
+            throw new Error(`Weather service error: ${response.status}`);
+          }
+
+          const weatherData = await response.json();
+
+          // Replace loading message with weather data
+          const weatherOutput = [
+            `<span class="text-terminal-yellow">Weather for ${selectedCity.display}</span>`,
+            `<span class="text-terminal-cyan">Temperature:</span> ${Math.round(
+              weatherData.main.temp
+            )}°F (feels like ${Math.round(weatherData.main.feels_like)}°F)`,
+            `<span class="text-terminal-cyan">Conditions:</span> ${weatherData.weather[0].description}`,
+            `<span class="text-terminal-cyan">Humidity:</span> ${weatherData.main.humidity}%`,
+            `<span class="text-terminal-cyan">Wind:</span> ${Math.round(
+              weatherData.wind.speed
+            )} mph`,
+          ];
+
+          setLines((prev) => [...prev.slice(0, -1), ...weatherOutput]);
+        } catch (error) {
+          setLines((prev) => [
+            ...prev.slice(0, -1),
+            `<span class="text-terminal-red">Error fetching weather data: ${error.message}</span>`,
+          ]);
+        }
+
+        setInput('');
+        setCursorPosition(0);
+        return;
+      } else {
+        // Invalid selection
+        setLines((prev) => [
+          ...prev,
+          `<span class="text-terminal-red">Invalid selection. Please choose a number between 1 and ${selectionOptions.length}</span>`,
+        ]);
+        setInput('');
+        setCursorPosition(0);
+        return;
+      }
+    }
+
     // Special handling for clear command
     if (command.trim().toLowerCase() === 'clear') {
       handleClearCommand(welcomeMessages, setLines, setInput);
@@ -235,9 +309,51 @@ const Terminal = forwardRef((props, ref) => {
       router,
     });
 
-    // If it was a weather command, replace the loading line with the actual output
+    // Handle weather output
     if (cmd.startsWith('weather')) {
       updateWeatherOutput(output, setLines);
+
+      // Check if this is a selection list (multiple locations found)
+      if (
+        output &&
+        output.length > 0 &&
+        output.some((line) => line.includes('Type a number'))
+      ) {
+        // Extract location from the command (remove 'weather' prefix)
+        const location = command.replace(/^weather\s+/i, '').trim();
+        const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+
+        // Fetch the options again to store them for selection
+        try {
+          const geoResponse = await fetch(
+            `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${API_KEY}`
+          );
+
+          if (geoResponse.ok) {
+            const geoData = await geoResponse.json();
+            if (geoData.length > 1) {
+              setIsInSelectionMode(true);
+              setSelectionLocation(location);
+              setSelectionOptions(
+                geoData.map((city, index) => ({
+                  id: index,
+                  name: city.name,
+                  state: city.state || '',
+                  country: city.country,
+                  lat: city.lat,
+                  lon: city.lon,
+                  display: `${city.name}, ${city.state || ''} ${
+                    city.country
+                  }`.trim(),
+                }))
+              );
+            }
+          }
+        } catch (error) {
+          // If we can't fetch the options, just continue normally
+          console.error('Error setting up selection mode:', error);
+        }
+      }
     } else {
       updateRegularOutput(output, setLines);
     }
