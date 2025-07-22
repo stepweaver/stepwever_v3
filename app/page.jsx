@@ -22,6 +22,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <div className='min-h-screen relative bg-terminal-dark'>
+        test
         <BackgroundCanvas />
 
         {/* Hero Section */}
