@@ -1,6 +1,19 @@
 /* Paragraphs - basic spacing */
 .prose p {
-  margin-top: 1.5rem;
+  margin-top: 1.5rem !important;
+  line-height: 1.8 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* More specific selectors to override Tailwind prose */
+.prose.prose-invert.prose-lg p {
+  line-height: 1.8 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.prose .text-terminal-text p {
+  line-height: 1.8 !important;
+  margin-bottom: 0.5rem !important;
 }
 
 /* Headings - clear hierarchy */

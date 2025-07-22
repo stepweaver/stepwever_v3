@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
 import './globals.css';
+import '../styles/mdx.css';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';

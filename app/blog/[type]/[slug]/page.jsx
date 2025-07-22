@@ -1,7 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import matter from 'gray-matter';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import Update from '@/components/mdx/Update';
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
@@ -101,6 +103,11 @@ export default async function BlogPostPage({ params }) {
     return colors[type] || 'text-terminal-text';
   };
 
+  // MDX components with access to frontmatter
+  const mdxComponents = {
+    Update: (props) => <Update frontmatter={frontmatter} {...props} />,
+  };
+
   return (
     <div className='min-h-screen relative bg-terminal-dark'>
       <BackgroundCanvas />
@@ -154,8 +161,8 @@ export default async function BlogPostPage({ params }) {
 
             {/* Post Content */}
             <div className='prose prose-invert prose-lg max-w-none'>
-              <div className='text-terminal-text leading-relaxed whitespace-pre-wrap'>
-                {content}
+              <div className='text-terminal-text leading-relaxed'>
+                <MDXRemote source={content} components={mdxComponents} />
               </div>
             </div>
           </article>
