@@ -15,6 +15,7 @@ export default function MobileNav() {
   const navLinks = [
     { name: 'WORK', path: '/#success-stories', scroll: true },
     { name: 'ABOUT', path: '/#about', scroll: true },
+    { name: 'BLOG', path: '/blog' },
     { name: 'CONTACT', path: '/contact' },
     {
       name: 'BLUESKY',

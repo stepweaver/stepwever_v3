@@ -6,11 +6,11 @@ const SuccessStories = memo(() => {
   const stories = [
     {
       title: 'Notre Dame Reporting Overhaul',
-      description:
-        'As the data analyst, I learned SQL and built custom Tableau dashboards to replace the terrible off-the-shelf reporting software, delivering 10× faster ad-hoc reporting and achieving 100% adoption across dining operations.',
+        description:
+          'As business analyst, I learned SQL and built custom Tableau dashboards to replace the terrible off-the-shelf reporting software, delivering 10× faster ad-hoc reporting and achieving 100% adoption across campus ID operations.',
       metrics: [
         '10× faster ad-hoc reporting',
-        '100% adoption across dining ops',
+        '100% adoption across campus ID operations',
       ],
       category: 'Data & Analytics',
     },
@@ -28,8 +28,8 @@ const SuccessStories = memo(() => {
     {
       title: 'Python Desktop App (Google APIs)',
       description:
-        'Built a 0→1 tool in 4 weeks using new stacks and AI tooling to automate workflows, replacing manual daily exports with automated solutions.',
-      metrics: ['0→1 tool built in 4 weeks', 'Automated daily exports'],
+        'Built a 0→1 tool using new stacks and AI tooling to automate workflows, replacing manual daily exports with automated solutions.',
+      metrics: ['Built a 0→1 tool', 'Automated daily exports'],
       category: 'Automation & AI',
     },
     {

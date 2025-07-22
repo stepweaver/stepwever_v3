@@ -44,6 +44,12 @@ export default function Footer() {
             {/* Bottom Left - Social Links */}
             <div className='flex space-x-4 md:space-x-6'>
               <a
+                href='/terminal'
+                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm md:text-base uppercase tracking-wider'
+              >
+                <span className='text-terminal-green lowercase'>λ</span>Terminal
+              </a>
+              <a
                 href='https://github.com/stepweaver'
                 target='_blank'
                 rel='noopener noreferrer'
@@ -63,7 +69,7 @@ export default function Footer() {
 
             {/* Bottom Right - Legal */}
             <div className='text-terminal-muted font-ocr text-xs md:text-sm leading-tight'>
-              λstepweaver LLC · Veteran-owned · All rights reserved ·{' '}
+              <span className='text-terminal-green'>λ</span>stepweaver LLC · Veteran-owned · All rights reserved ·{' '}
               {currentYear}
             </div>
           </div>

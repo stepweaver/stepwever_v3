@@ -198,20 +198,32 @@ const fetchWeatherWithGeolocation = async () => {
 // Resume functionality
 const displayResume = () => {
   return [
-    `<span class="text-terminal-green">Resume - stepweaver</span>`,
-    `<span class="text-terminal-text">Full-stack developer & automation specialist</span>`,
+    `<span class="text-terminal-green">Stephen Weaver - λstepweaver</span>`,
+    `<span class="text-terminal-text">Founder & Full-Stack Developer</span>`,
+    `<span class="text-terminal-text">Veteran • Data Strategist • Rebel at heart</span>`,
     ``,
-    `<span class="text-terminal-cyan">Skills:</span>`,
-    `<span class="text-terminal-text">• Python, JavaScript, React, Next.js</span>`,
-    `<span class="text-terminal-text">• Data automation, API integration</span>`,
-    `<span class="text-terminal-text">• AWS, Docker, CI/CD</span>`,
+    `<span class="text-terminal-cyan">Background:</span>`,
+    `<span class="text-terminal-text ml-4">Airborne Cryptologic Linguist (30,000 ft up)</span>`,
+    `<span class="text-terminal-text ml-4">Degrees in Communication & Business</span>`,
+    `<span class="text-terminal-text ml-4">10+ years as business analyst</span>`,
+    `<span class="text-terminal-text ml-4">Hospitality & university data systems</span>`,
     ``,
-    `<span class="text-terminal-cyan">Experience:</span>`,
-    `<span class="text-terminal-text">• Business automation & data pipelines</span>`,
-    `<span class="text-terminal-text">• Web development & optimization</span>`,
-    `<span class="text-terminal-text">• Growth analytics & dashboards</span>`,
+    `<span class="text-terminal-cyan">Core Services:</span>`,
+    `<span class="text-terminal-text ml-4">Data pipelines & real-time dashboards</span>`,
+    `<span class="text-terminal-text ml-4">Web development (React/Next.js)</span>`,
+    `<span class="text-terminal-text ml-4">Business automation & API integration</span>`,
+    `<span class="text-terminal-text ml-4">Growth analytics & KPI systems</span>`,
     ``,
-    `<span class="text-terminal-yellow cursor-pointer" onclick="window.open('/weaver_resume.pdf', '_blank')">Click to download PDF →</span>`
+    `<span class="text-terminal-cyan">Tech Stack:</span>`,
+    `<span class="text-terminal-text ml-4">Frontend: React, Next.js 15, Tailwind CSS</span>`,
+    `<span class="text-terminal-text ml-4">Backend: Node.js, Express, Serverless</span>`,
+    `<span class="text-terminal-text ml-4">Data: PostgreSQL, Supabase, AWS</span>`,
+    `<span class="text-terminal-text ml-4">Tools: Docker, CI/CD, API integration</span>`,
+    ``,
+    `<span class="text-terminal-cyan">Philosophy:</span>`,
+    `<span class="text-terminal-text ml-4">"Digital leverage: more clarity, fewer keystrokes, faster wins"</span>`,
+    ``,
+    `<span class="text-terminal-yellow cursor-pointer" onclick="window.open('/weaver_resume.pdf', '_blank')">Download Full Resume (PDF) →</span>`
   ];
 };
 

@@ -197,11 +197,15 @@ export default function Hero() {
         <div className='max-w-4xl ml-auto mb-6 sm:mb-10'>
           <a
             href='/terminal'
-            className='inline-flex items-center gap-2 text-terminal-cyan hover:text-terminal-green transition-colors duration-300 font-ibm text-sm sm:text-base md:text-lg'
+            className='inline-flex items-center gap-3 text-terminal-cyan hover:text-terminal-green transition-all duration-300 font-ibm text-lg sm:text-xl md:text-2xl hover:scale-105'
           >
-            <span className='text-terminal-green'>λ</span>
-            <span>Try our interactive terminal</span>
-            <span className='text-terminal-green'>→</span>
+            <span className='text-terminal-green text-xl sm:text-2xl md:text-3xl'>
+              λ
+            </span>
+            <span className='font-bold'>Try our interactive terminal</span>
+            <span className='text-terminal-green text-xl sm:text-2xl md:text-3xl animate-pulse'>
+              →
+            </span>
           </a>
         </div>
 
