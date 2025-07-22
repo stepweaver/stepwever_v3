@@ -386,21 +386,11 @@ function PostItem({
   const typeColor = getTypeColor(post.type);
   const typeColorValue = getTypeColorValue(post.type);
 
-  // More subtle hover style that's still readable
-  const getSubtleHoverStyle = () => {
-    return isHovered
-      ? {
-          color: typeColorValue,
-          fontWeight: 'medium',
-        }
-      : {};
-  };
-
   return (
     <article className='group'>
       <a
         href={`/blog/${post.type}/${post.slug}`}
-        className='block py-0.5 px-2 rounded-sm'
+        className='block py-0.5 px-2 rounded-sm hover:bg-terminal-dimmed/5 transition-all duration-200'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -427,10 +417,7 @@ function PostItem({
         </div>
 
         {/* Description */}
-        <p
-          className='text-terminal-text mb-3 leading-relaxed transition-all duration-200'
-          style={getSubtleHoverStyle()}
-        >
+        <p className='text-terminal-text mb-3 leading-relaxed transition-all duration-200'>
           {post.description}
         </p>
 
@@ -442,7 +429,8 @@ function PostItem({
                 key={tag}
                 className='px-3 py-1 text-sm bg-terminal-text/10 text-white border border-terminal-text/20 rounded font-medium transition-colors duration-200 cursor-pointer hover:bg-terminal-text/20'
                 style={{
-                  color: hoveredTag === tag ? getTypeColorValue(post.type) : 'white',
+                  color:
+                    hoveredTag === tag ? getTypeColorValue(post.type) : 'white',
                 }}
                 onMouseEnter={() => setHoveredTag(tag)}
                 onMouseLeave={() => setHoveredTag(null)}
