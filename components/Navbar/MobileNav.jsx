@@ -13,15 +13,15 @@ export default function MobileNav() {
   const pathname = usePathname();
 
   const navLinks = [
-    { name: 'work', path: '/#success-stories', scroll: true },
-    { name: 'about', path: '/#about', scroll: true },
-    { name: 'contact', path: '/contact' },
+    { name: 'WORK', path: '/#success-stories', scroll: true },
+    { name: 'ABOUT', path: '/#about', scroll: true },
+    { name: 'CONTACT', path: '/contact' },
     {
-      name: 'bluesky',
+      name: 'BLUESKY',
       path: 'https://bsky.app/profile/stepweaver.dev',
       external: true,
     },
-    { name: 'github', path: 'https://github.com/stepweaver', external: true },
+    { name: 'GITHUB', path: 'https://github.com/stepweaver', external: true },
   ];
 
   // First effect just tracks open state
@@ -175,7 +175,6 @@ export default function MobileNav() {
                       rel='noopener noreferrer'
                       className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40'
                     >
-                      <span className='text-terminal-green mr-3'>λ</span>
                       <span className='truncate'>{item.name}</span>
                       <span className='ml-2 text-terminal-dimmed text-sm flex-shrink-0'>
                         [ext]
@@ -186,7 +185,6 @@ export default function MobileNav() {
                       onClick={() => handleNavClick(item)}
                       className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40 w-full text-left bg-transparent border-none'
                     >
-                      <span className='text-terminal-green mr-3'>λ</span>
                       <span className='truncate'>{item.name}</span>
                     </button>
                   ) : (
@@ -195,7 +193,6 @@ export default function MobileNav() {
                       onClick={() => setIsOpen(false)}
                       className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40'
                     >
-                      <span className='text-terminal-green mr-3'>λ</span>
                       <span className='truncate'>{item.name}</span>
                     </Link>
                   )}
@@ -214,7 +211,6 @@ export default function MobileNav() {
 
               {/* Simulated terminal input */}
               <div className='mt-3 flex items-center'>
-                <span className='text-terminal-green mr-2'>λ</span>
                 <span className='text-terminal-text'>navigate</span>
                 <span className='ml-1 h-4 w-2 bg-terminal-green animate-blink'></span>
               </div>
