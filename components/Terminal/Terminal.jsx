@@ -100,6 +100,15 @@ const Terminal = forwardRef((props, ref) => {
   const [selectionLocation, setSelectionLocation] = useState('');
   const [selectionOptions, setSelectionOptions] = useState([]);
 
+  // Contact form state
+  const [isInContactMode, setIsInContactMode] = useState(false);
+  const [contactStep, setContactStep] = useState(0);
+  const [contactData, setContactData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
   const {
     history,
     historyIndex,
@@ -212,6 +221,144 @@ const Terminal = forwardRef((props, ref) => {
       setLastCommandTime(now);
 
       addToHistory(command);
+    }
+
+    // Handle contact mode - if we're in contact form mode
+    if (isInContactMode) {
+      if (command.trim().toLowerCase() === 'cancel') {
+        // Cancel contact form
+        setIsInContactMode(false);
+        setContactStep(0);
+        setContactData({ name: '', email: '', message: '' });
+        setLines((prev) => [
+          ...prev,
+          `<span class="text-terminal-yellow">Contact form cancelled.</span>`,
+        ]);
+        setInput('');
+        setCursorPosition(0);
+        return;
+      }
+
+      // Handle contact form steps
+      if (contactStep === 0) {
+        // Name step
+        setContactData((prev) => ({ ...prev, name: command.trim() }));
+        setContactStep(1);
+        setLines((prev) => [
+          ...prev,
+          `<span class="text-terminal-text">${command.trim()}</span>`,
+          `<span class="text-terminal-cyan">What's your email address?</span>`,
+          `<span class="text-terminal-text">(Type your email and press Enter)</span>`,
+        ]);
+        setInput('');
+        setCursorPosition(0);
+        return;
+      } else if (contactStep === 1) {
+        // Email step
+        setContactData((prev) => ({ ...prev, email: command.trim() }));
+        setContactStep(2);
+        setLines((prev) => [
+          ...prev,
+          `<span class="text-terminal-text">${command.trim()}</span>`,
+          `<span class="text-terminal-cyan">Tell me about your project:</span>`,
+          `<span class="text-terminal-text">(Type your message and press Enter)</span>`,
+        ]);
+        setInput('');
+        setCursorPosition(0);
+        return;
+      } else if (contactStep === 2) {
+        // Message step
+        setContactData((prev) => ({ ...prev, message: command.trim() }));
+        setContactStep(3);
+
+        // Show summary and confirmation
+        setLines((prev) => [
+          ...prev,
+          `<span class="text-terminal-text">${command.trim()}</span>`,
+          ``,
+          `<span class="text-terminal-green">Contact Form Summary:</span>`,
+          `<span class="text-terminal-text ml-4">Name: ${contactData.name}</span>`,
+          `<span class="text-terminal-text ml-4">Email: ${contactData.email}</span>`,
+          `<span class="text-terminal-text ml-4">Message: ${command.trim()}</span>`,
+          ``,
+          `<span class="text-terminal-cyan">Type 'send' to submit or 'cancel' to abort</span>`,
+        ]);
+        setInput('');
+        setCursorPosition(0);
+        return;
+      } else if (contactStep === 3) {
+        // Confirmation step
+        if (command.trim().toLowerCase() === 'send') {
+          // Send the email
+          setLines((prev) => [
+            ...prev,
+            `<span class="text-terminal-yellow">Sending email...</span>`,
+          ]);
+
+          try {
+            const response = await fetch('/api/contact', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                name: contactData.name,
+                email: contactData.email,
+                message: contactData.message,
+              }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              setLines((prev) => [
+                ...prev.slice(0, -1), // Remove "Sending email..." message
+                `<span class="text-terminal-green">✓ Email sent successfully!</span>`,
+                `<span class="text-terminal-text">We'll get back to you soon.</span>`,
+              ]);
+            } else {
+              setLines((prev) => [
+                ...prev.slice(0, -1), // Remove "Sending email..." message
+                `<span class="text-terminal-red">✗ Error: ${result.error}</span>`,
+              ]);
+            }
+          } catch (error) {
+            setLines((prev) => [
+              ...prev.slice(0, -1), // Remove "Sending email..." message
+              `<span class="text-terminal-red">✗ Error sending email. Please try again.</span>`,
+            ]);
+          }
+
+          // Reset contact form
+          setIsInContactMode(false);
+          setContactStep(0);
+          setContactData({ name: '', email: '', message: '' });
+          setInput('');
+          setCursorPosition(0);
+          return;
+        } else if (command.trim().toLowerCase() === 'cancel') {
+          // Cancel contact form
+          setIsInContactMode(false);
+          setContactStep(0);
+          setContactData({ name: '', email: '', message: '' });
+          setLines((prev) => [
+            ...prev,
+            `<span class="text-terminal-yellow">Contact form cancelled.</span>`,
+          ]);
+          setInput('');
+          setCursorPosition(0);
+          return;
+        } else {
+          // Invalid input
+          setLines((prev) => [
+            ...prev,
+            `<span class="text-terminal-red">Please type 'send' to submit or 'cancel' to abort</span>`,
+          ]);
+          setInput('');
+          setCursorPosition(0);
+          return;
+        }
+      }
     }
 
     // Handle selection mode - if we're in selection mode and user types a number
@@ -354,6 +501,11 @@ const Terminal = forwardRef((props, ref) => {
           console.error('Error setting up selection mode:', error);
         }
       }
+    } else if (cmd === 'contact') {
+      // Handle contact command
+      updateRegularOutput(output, setLines);
+      setIsInContactMode(true);
+      setContactStep(0);
     } else {
       updateRegularOutput(output, setLines);
     }

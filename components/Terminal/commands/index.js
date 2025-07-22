@@ -227,6 +227,17 @@ const displayResume = () => {
   ];
 };
 
+// Contact form functionality
+const displayContactForm = () => {
+  return [
+    `<span class="text-terminal-green">Contact Form - λstepweaver</span>`,
+    `<span class="text-terminal-text">Let's get in touch! I'll ask you a few questions:</span>`,
+    ``,
+    `<span class="text-terminal-cyan">What's your name?</span>`,
+    `<span class="text-terminal-text">(Type your name and press Enter)</span>`
+  ];
+};
+
 // Main command handler
 export const handleCommand = async (
   command,
@@ -249,6 +260,7 @@ export const handleCommand = async (
         `<span class="text-terminal-cyan">Features:</span>`,
         `<span class="text-terminal-text ml-4">weather [location] - e.g., weather london (or just "weather" for your location)</span>`,
         `<span class="text-terminal-text ml-4">resume</span>`,
+        `<span class="text-terminal-text ml-4">contact</span>`,
         `<span class="text-terminal-text ml-4">clear</span>`
       ];
 
@@ -280,6 +292,9 @@ export const handleCommand = async (
 
     case 'resume':
       return displayResume();
+
+    case 'contact':
+      return displayContactForm();
 
     case 'clear':
       if (callback && callback.setLines && callback.setInput) {
