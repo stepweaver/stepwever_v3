@@ -498,7 +498,6 @@ const Terminal = forwardRef((props, ref) => {
           }
         } catch (error) {
           // If we can't fetch the options, just continue normally
-          console.error('Error setting up selection mode:', error);
         }
       }
     } else if (cmd === 'contact') {

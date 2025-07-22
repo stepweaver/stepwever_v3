@@ -29,7 +29,7 @@ export async function POST(request) {
 
     // Check if email configuration is set up
     if (!isEmailConfigured()) {
-      console.error('Email configuration missing. Please set EMAIL_USER and EMAIL_PASS environment variables.');
+      // Email configuration missing
       return NextResponse.json(
         { error: 'Email service not configured. Please set up your email credentials in .env.local' },
         { status: 500 }
@@ -45,7 +45,7 @@ export async function POST(request) {
         await sendConfirmationEmail(formData);
       }
     } catch (emailError) {
-      console.error('Error sending email:', emailError);
+      // Error sending email
       return NextResponse.json(
         { error: 'Failed to send email. Please check your email configuration.' },
         { status: 500 }
@@ -57,7 +57,7 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error('Error sending email:', error);
+    // Error sending email
 
     return NextResponse.json(
       { error: 'Failed to send message. Please try again later.' },

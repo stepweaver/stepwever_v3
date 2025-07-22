@@ -77,15 +77,12 @@ export default function BackgroundCanvas() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         setOriginalImageData(imageData);
       } catch (error) {
-        console.error('Error processing background image:', error);
+        // Error processing background image
       }
     };
 
     img.onerror = () => {
-      console.error(
-        'Failed to load background image: /images/lambda_stepweaver.png'
-      );
-      // Could set a fallback state here if needed
+      // Failed to load background image
     };
 
     img.src = '/images/lambda_stepweaver.png';

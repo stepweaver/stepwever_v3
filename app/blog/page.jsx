@@ -24,7 +24,6 @@ export default function BlogPage() {
         const data = await res.json();
         setPosts(data);
       } catch (error) {
-        console.error('Error fetching posts:', error);
         setPosts([]);
         setError('Failed to load content. Please try again later.');
       } finally {

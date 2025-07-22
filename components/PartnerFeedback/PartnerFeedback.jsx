@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 const testimonials = [
   {
@@ -56,6 +56,10 @@ const testimonials = [
 
 export default function PartnerFeedback() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentX, setCurrentX] = useState(0);
+  const carouselRef = useRef(null);
 
   const nextTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
@@ -66,6 +70,38 @@ export default function PartnerFeedback() {
       (prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length
     );
   };
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = useCallback((e) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX);
+    setCurrentX(e.touches[0].clientX);
+  }, []);
+
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (!isDragging) return;
+      setCurrentX(e.touches[0].clientX);
+    },
+    [isDragging]
+  );
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isDragging) return;
+
+    const diff = startX - currentX;
+    const threshold = 50;
+
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) {
+        nextTestimonial();
+      } else {
+        prevTestimonial();
+      }
+    }
+
+    setIsDragging(false);
+  }, [isDragging, startX, currentX]);
   return (
     <section className='relative z-30 flex items-start pt-8'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
@@ -76,20 +112,29 @@ export default function PartnerFeedback() {
 
         {/* Testimonials Container */}
         <div className='w-full relative'>
-          {/* Navigation Arrows */}
+          {/* Navigation Arrows - Hidden on mobile */}
           <button
             onClick={nextTestimonial}
-            className='absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
+            className='hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-12 h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-base'
             aria-label='Next testimonial'
           >
             →
           </button>
 
           {/* Carousel Container */}
-          <div className='overflow-hidden'>
+          <div 
+            ref={carouselRef}
+            className='overflow-hidden touch-pan-y'
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div
               className='flex transition-transform duration-500 ease-in-out'
-              style={{ transform: `translateX(-${currentIndex * 90}%)` }}
+              style={{ 
+                transform: `translateX(-${currentIndex * 90}%)`,
+                cursor: isDragging ? 'grabbing' : 'grab'
+              }}
             >
               {testimonials.map((testimonial, index) => (
                 <div

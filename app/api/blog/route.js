@@ -13,7 +13,7 @@ export async function GET() {
       if (!year || !month || !day) return new Date(0);
       return new Date(year, month - 1, day);
     } catch (e) {
-      console.error(`Invalid date format: ${dateStr}`);
+      // Invalid date format
       return new Date(0);
     }
   };
@@ -38,7 +38,7 @@ export async function GET() {
               hashtags: data.hashtags || [],
             });
           } catch (error) {
-            console.error(`Error processing file ${file}:`, error);
+            // Error processing file
           }
         }
       });

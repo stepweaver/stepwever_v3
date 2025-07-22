@@ -9,11 +9,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://calendly.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://calendly.com https://va.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://calendly.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https:",
-              "connect-src 'self' https://calendly.com https://api.calendly.com",
+              "connect-src 'self' https://calendly.com https://api.calendly.com https://va.vercel-scripts.com",
               "frame-src 'self' https://calendly.com",
               "object-src 'none'",
               "base-uri 'self'",

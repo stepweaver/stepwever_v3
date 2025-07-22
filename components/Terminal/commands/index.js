@@ -155,7 +155,6 @@ const fetchWeatherWithGeolocation = async () => {
               }
             } catch (error) {
               // If reverse geocoding fails, just use the weather data name
-              console.error('Reverse geocoding error:', error);
             }
 
             resolve([
@@ -171,14 +170,12 @@ const fetchWeatherWithGeolocation = async () => {
             ]);
           } catch (error) {
             // If there's an error with the API call, fall back to New York
-            console.error('Error fetching weather for user location:', error);
             const fallbackWeather = await fetchWeather('new york');
             resolve(fallbackWeather);
           }
         },
         async (error) => {
           // If geolocation fails, fall back to New York
-          console.error('Geolocation error:', error);
           const fallbackWeather = await fetchWeather('new york');
           resolve(fallbackWeather);
         },

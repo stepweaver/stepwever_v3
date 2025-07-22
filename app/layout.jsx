@@ -129,6 +129,7 @@ export default function RootLayout({ children }) {
 
         {/* Mobile-specific meta tags */}
         <meta name='format-detection' content='telephone=no' />
+        <meta name='mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta
           name='apple-mobile-web-app-status-bar-style'
@@ -156,7 +157,7 @@ export default function RootLayout({ children }) {
         <ErrorBoundary>
           <Navbar />
           {children}
-          <Analytics />
+          {process.env.NODE_ENV === 'production' && <Analytics />}
           <Footer />
         </ErrorBoundary>
       </body>
