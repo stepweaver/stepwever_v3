@@ -58,15 +58,13 @@ export default function PartnerFeedback() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextTestimonial = () => {
-    if (currentIndex < testimonials.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
   };
 
   const prevTestimonial = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length
+    );
   };
   return (
     <section className='relative z-30 flex items-start pt-8'>
@@ -79,25 +77,13 @@ export default function PartnerFeedback() {
         {/* Testimonials Container */}
         <div className='w-full relative'>
           {/* Navigation Arrows */}
-          {currentIndex > 0 && (
-            <button
-              onClick={prevTestimonial}
-              className='absolute left-2 md:left-0 top-1/2 -translate-y-1/2 md:-translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
-              aria-label='Previous testimonial'
-            >
-              ←
-            </button>
-          )}
-
-          {currentIndex < testimonials.length - 1 && (
-            <button
-              onClick={nextTestimonial}
-              className='absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
-              aria-label='Next testimonial'
-            >
-              →
-            </button>
-          )}
+          <button
+            onClick={nextTestimonial}
+            className='absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
+            aria-label='Next testimonial'
+          >
+            →
+          </button>
 
           {/* Carousel Container */}
           <div className='overflow-hidden'>

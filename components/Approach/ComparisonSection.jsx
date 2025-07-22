@@ -57,45 +57,49 @@ const ComparisonSection = forwardRef((props, ref) => {
   return (
     <div ref={ref} className='w-full max-w-none'>
       <div className='bg-terminal-bg p-4 md:p-8'>
-        {/* Mobile Layout - Stacked Cards */}
-        <div className='md:hidden space-y-6'>
+        {/* Mobile Layout - Minimal Text */}
+        <div className='md:hidden space-y-8'>
           {comparisons.map((comparison, index) => (
-            <div key={index} className='space-y-4'>
-              {/* λstepweaver Card */}
-              <div className='border border-terminal-green/30 bg-terminal-dark/50 p-4 rounded-lg'>
-                <div className='flex items-center mb-3'>
-                  <span className='text-terminal-green font-ibm text-lg mr-2'>
-                    λ
-                  </span>
-                  <h4 className='text-terminal-green font-ibm text-base'>
-                    stepweaver
-                  </h4>
+            <div key={index}>
+              <div className='space-y-4'>
+                {/* λstepweaver */}
+                <div>
+                  <div className='flex items-center mb-2'>
+                    <span className='text-terminal-green font-ibm text-lg'>
+                      λ
+                    </span>
+                    <h4 className='text-terminal-green font-ibm text-sm'>
+                      stepweaver
+                    </h4>
+                  </div>
+                  <h5 className='text-terminal-green font-ibm text-sm mb-2'>
+                    {comparison.stepweaver.title}
+                  </h5>
+                  <p className='text-terminal-text font-ocr text-xs leading-relaxed'>
+                    {comparison.stepweaver.description}
+                  </p>
                 </div>
-                <h5 className='text-terminal-green font-ibm text-sm mb-2'>
-                  {comparison.stepweaver.title}
-                </h5>
-                <p className='text-terminal-text font-ocr text-xs leading-relaxed'>
-                  {comparison.stepweaver.description}
-                </p>
+
+                {/* Traditional Agency */}
+                <div>
+                  <div className='flex items-center mb-2'>
+                    <h4 className='text-terminal-text font-ibm text-sm'>
+                      Traditional Agency
+                    </h4>
+                  </div>
+                  <h5 className='text-terminal-text font-ibm text-sm mb-2'>
+                    {comparison.traditional.title}
+                  </h5>
+                  <p className='text-terminal-text font-ocr text-xs leading-relaxed opacity-60'>
+                    {comparison.traditional.description}
+                  </p>
+                </div>
               </div>
 
-              {/* Traditional Agency Card */}
-              <div className='border border-terminal-border/30 bg-terminal-dark/50 p-4 rounded-lg'>
-                <div className='flex items-center mb-3'>
-                  <span className='text-terminal-text font-ibm text-lg mr-2'>
-                    ×
-                  </span>
-                  <h4 className='text-terminal-text font-ibm text-base'>
-                    Traditional Agency
-                  </h4>
-                </div>
-                <h5 className='text-terminal-text font-ibm text-sm mb-2'>
-                  {comparison.traditional.title}
-                </h5>
-                <p className='text-terminal-text font-ocr text-xs leading-relaxed'>
-                  {comparison.traditional.description}
-                </p>
-              </div>
+              {/* Border between comparisons */}
+              {index < comparisons.length - 1 && (
+                <div className='border-t border-terminal-border/20 mt-8 pt-8'></div>
+              )}
             </div>
           ))}
         </div>
