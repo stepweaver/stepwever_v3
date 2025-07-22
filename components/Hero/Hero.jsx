@@ -6,6 +6,7 @@ import ProjectCard from '@/components/ProjectCard/ProjectCard';
 export default function Hero() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   const words = [
     { text: 'Automate', color: 'text-terminal-green' },
@@ -30,28 +31,89 @@ export default function Hero() {
     {
       title: 'Data Pipeline Automation',
       description:
-        'Built a comprehensive data pipeline that processes 10M+ records daily, reducing manual work by 95% and providing real-time insights.',
-      image: '/images/lambda_stepweaver.png',
-      link: '/projects/data-pipeline',
+        'Effortlessly connect apps, databases, and APIs to automate reporting and analytics. Slash manual work and surface new business insights with custom, resilient data pipelines—built to handle millions of rows or just a daily spreadsheet.',
+      keywords: ['Data Automation', 'API Integration', 'Reporting'],
+      actions: [
+        'Consolidate sales and ops data in a live dashboard',
+        'Automate end-of-day exports and reconciliations',
+      ],
+      link: '/services/data-pipeline',
       tags: ['Data & Analytics', 'Automation', 'Python'],
     },
     {
-      title: 'E-commerce Optimization',
+      title: 'E-commerce & Workflow Optimization',
       description:
-        'Developed a high-performance e-commerce platform with automated inventory management and personalized recommendations.',
-      image: '/images/lambda_stepweaver.png',
-      link: '/projects/ecommerce',
+        'Build smarter shops and smoother workflows. Integrate e-commerce, automate inventory, streamline invoicing, or connect online orders with backend processes—no more spreadsheet gymnastics.',
+      keywords: ['Web Automation', 'Commerce', 'Operations'],
+      actions: [
+        'Inventory synced across sales channels',
+        'Custom automations (orders, fulfillment, reminders)',
+      ],
+      link: '/services/ecommerce',
       tags: ['Web Development', 'E-commerce', 'React'],
     },
     {
-      title: 'Growth Analytics Dashboard',
+      title: 'Growth Analytics Dashboards',
       description:
-        'Created a real-time analytics dashboard that tracks key metrics and provides actionable insights for business growth.',
-      image: '/images/lambda_stepweaver.png',
-      link: '/projects/analytics',
+        'Real-time dashboards and reporting built for speed and clarity. Plug your sources in and get up-to-the-minute KPIs, margin models, and custom alerts—without the agency bloat.',
+      keywords: ['Analytics', 'Dashboard', 'BI'],
+      actions: [
+        'Profitability snapshot at a glance',
+        'Alerting for trends, risks, and opportunities',
+      ],
+      link: '/services/analytics',
       tags: ['Analytics', 'Dashboard', 'Data Visualization'],
     },
+    {
+      title: 'Web Design',
+      description:
+        'Modern, lightning-fast websites built for growth. From single-page landers to multi-section sites, every build is custom-crafted for performance, SEO, and clear calls to action—no cookie-cutter templates.',
+      keywords: ['Web Development', 'UX/UI', 'SEO'],
+      actions: [
+        'Design & launch a high-performance marketing site',
+        'Integrate forms, analytics, and automated follow-ups',
+      ],
+      link: '/services/web-design',
+      tags: ['Web Development', 'UX/UI', 'SEO'],
+    },
+    {
+      title: 'Brand Strategy',
+      description:
+        'Clarity and edge, from your logo to your tone of voice. Develop or refresh your visual identity, messaging, and brand assets—giving your business the confidence to stand out (and scale up).',
+      keywords: ['Brand Identity', 'Design Direction', 'Messaging'],
+      actions: [
+        'Create a full logo suite and brand guide',
+        'Define tone of voice, color palette, and typography',
+      ],
+      link: '/services/brand-strategy',
+      tags: ['Brand Identity', 'Design Direction', 'Messaging'],
+    },
+    {
+      title: 'Marketing Automation',
+      description:
+        'Automate outreach, follow-ups, and list-building. Connect your email, CRM, and website so leads and updates flow hands-free—making every campaign faster and more efficient.',
+      keywords: ['Email Automation', 'CRM Integration', 'Lead Generation'],
+      actions: [
+        'Automated email sequences for new leads',
+        'Sync form submissions to CRM and mailing lists',
+      ],
+      link: '/services/marketing-automation',
+      tags: ['Email Automation', 'CRM Integration', 'Lead Generation'],
+    },
   ];
+
+  const nextCard = () => {
+    if (currentCardIndex < 1) {
+      // Only 2 pages (0 and 1)
+      setCurrentCardIndex(currentCardIndex + 1);
+    }
+  };
+
+  const prevCard = () => {
+    if (currentCardIndex > 0) {
+      setCurrentCardIndex(currentCardIndex - 1);
+    }
+  };
 
   return (
     <section className='relative z-30 min-h-screen flex items-center justify-end'>
@@ -84,17 +146,68 @@ export default function Hero() {
           From concept to deployment in record time.
         </p>
 
-        {/* Project Cards */}
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16'>
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              title={project.title}
-              description={project.description}
-              link={project.link}
-              tags={project.tags}
-            />
-          ))}
+        {/* Project Cards with Side Scrolling */}
+        <div className='w-full relative mt-16'>
+          {/* Navigation Arrows */}
+          {currentCardIndex > 0 && (
+            <button
+              onClick={prevCard}
+              className='absolute left-2 md:left-0 top-1/2 -translate-y-1/2 md:-translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
+              aria-label='Previous cards'
+            >
+              ←
+            </button>
+          )}
+
+          {currentCardIndex < 1 && (
+            <button
+              onClick={nextCard}
+              className='absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
+              aria-label='Next cards'
+            >
+              →
+            </button>
+          )}
+
+          {/* Carousel Container */}
+          <div className='overflow-hidden'>
+            <div
+              className='flex transition-transform duration-500 ease-in-out'
+              style={{ transform: `translateX(-${currentCardIndex * 100}%)` }}
+            >
+              {/* Page 1: First 3 cards */}
+              <div className='w-full flex-shrink-0 flex gap-6'>
+                {projects.slice(0, 3).map((project, index) => (
+                  <div key={index} className='w-1/3'>
+                    <ProjectCard
+                      title={project.title}
+                      description={project.description}
+                      link={project.link}
+                      tags={project.tags}
+                      keywords={project.keywords}
+                      actions={project.actions}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Page 2: Last 3 cards */}
+              <div className='w-full flex-shrink-0 flex gap-6'>
+                {projects.slice(3, 6).map((project, index) => (
+                  <div key={index + 3} className='w-1/3'>
+                    <ProjectCard
+                      title={project.title}
+                      description={project.description}
+                      link={project.link}
+                      tags={project.tags}
+                      keywords={project.keywords}
+                      actions={project.actions}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

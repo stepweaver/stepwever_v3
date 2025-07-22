@@ -5,9 +5,11 @@ const ProjectCard = memo(function ProjectCard({
   description,
   link,
   tags = [],
+  keywords = [],
+  actions = [],
 }) {
   return (
-    <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden shadow-[0_15px_30px_-5px_rgba(0,0,0,0.6),0_10px_10px_-5px_rgba(0,0,0,0.5),0_0_10px_rgba(0,255,65,0.3),0_0_1px_rgba(0,255,65,0.7),0_0_20px_rgba(0,255,65,0.3)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.7),0_15px_15px_-5px_rgba(0,0,0,0.6),0_0_15px_rgba(0,255,65,0.4),0_0_2px_rgba(0,255,65,0.8),0_0_25px_rgba(0,255,65,0.4)] transition-all duration-300 group'>
+    <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group'>
       {/* Terminal Header */}
       <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
         <div className='flex items-center space-x-2'>
@@ -19,7 +21,7 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {/* Terminal Content */}
-      <div className='p-4 bg-terminal-dark flex flex-col'>
+      <div className='p-4 bg-terminal-dark flex flex-col h-full'>
         {/* Project Title */}
         <h3 className='text-terminal-green font-ibm text-lg mb-3'>{title}</h3>
 
@@ -28,22 +30,47 @@ const ProjectCard = memo(function ProjectCard({
           {description}
         </p>
 
-        {/* Tags */}
-        {tags.length > 0 && (
-          <div className='flex flex-wrap gap-1 mb-4'>
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className='px-2 py-1 bg-terminal-light/20 text-terminal-cyan font-ocr text-xs rounded border border-terminal-border'
-              >
-                {tag}
-              </span>
-            ))}
+        {/* Keywords */}
+        {keywords.length > 0 && (
+          <div className='mb-4'>
+            <div className='text-terminal-cyan font-ocr text-xs mb-2'>
+              Keywords:
+            </div>
+            <div className='flex flex-wrap gap-1'>
+              {keywords.map((keyword, index) => (
+                <span
+                  key={index}
+                  className='px-2 py-1 bg-terminal-light/20 text-terminal-cyan font-ocr text-xs rounded border border-terminal-border'
+                >
+                  {keyword}
+                </span>
+              ))}
+            </div>
           </div>
         )}
 
-        {/* Terminal Prompt */}
-        <div className='text-terminal-dimmed font-ocr text-xs'>
+        {/* Sample Actions */}
+        {actions.length > 0 && (
+          <div className='mb-4'>
+            <div className='text-terminal-yellow font-ocr text-xs mb-2'>
+              Sample Actions:
+            </div>
+            <ul className='space-y-1'>
+              {actions.map((action, index) => (
+                <li
+                  key={index}
+                  className='text-terminal-text font-ocr text-xs leading-relaxed flex items-start'
+                >
+                  <span className='text-terminal-green mr-2'>•</span>
+                  {action}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Terminal Prompt - Always at bottom */}
+        <div className='text-terminal-dimmed font-ocr text-xs mt-auto'>
           <span className='text-terminal-green'>guest@stepweaver.dev</span>
           <span className='text-terminal-text'> ~ </span>
           <span className='text-terminal-cyan'>λ</span>
