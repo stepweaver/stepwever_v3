@@ -4,6 +4,7 @@ import '../styles/mdx.css';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
+import { Analytics } from '@vercel/analytics/next';
 
 const ocrFont = localFont({
   src: './fonts/OCRA.woff',
@@ -60,10 +61,11 @@ export const metadata = {
       'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
     images: [
       {
-        url: '/images/lambda_stepweaver.png',
+        url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
         alt: 'λstepweaver - Terminal-inspired business growth systems',
+        type: 'image/png',
       },
     ],
   },
@@ -72,8 +74,16 @@ export const metadata = {
     title: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
     description:
       'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
-    images: ['/images/lambda_stepweaver.png'],
+    images: [
+      {
+        url: '/images/lambda_preview.png',
+        width: 1200,
+        height: 630,
+        alt: 'λstepweaver - Terminal-inspired business growth systems',
+      },
+    ],
     creator: '@stepweaver',
+    site: '@stepweaver',
   },
   robots: {
     index: true,
@@ -116,6 +126,25 @@ export default function RootLayout({ children }) {
           name='viewport'
           content='width=device-width, initial-scale=1, maximum-scale=5'
         />
+
+        {/* Mobile-specific meta tags */}
+        <meta name='format-detection' content='telephone=no' />
+        <meta name='apple-mobile-web-app-capable' content='yes' />
+        <meta
+          name='apple-mobile-web-app-status-bar-style'
+          content='black-translucent'
+        />
+        <meta name='apple-mobile-web-app-title' content='λstepweaver' />
+
+        {/* Additional Open Graph tags for better mobile support */}
+        <meta property='og:image:width' content='1200' />
+        <meta property='og:image:height' content='630' />
+        <meta property='og:image:type' content='image/png' />
+        <meta
+          property='og:image:secure_url'
+          content='https://stepweaver.dev/images/lambda_preview.png'
+        />
+
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
           rel='preconnect'
@@ -127,6 +156,7 @@ export default function RootLayout({ children }) {
         <ErrorBoundary>
           <Navbar />
           {children}
+          <Analytics />
           <Footer />
         </ErrorBoundary>
       </body>
