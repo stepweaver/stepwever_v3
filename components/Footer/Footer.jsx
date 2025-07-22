@@ -58,7 +58,7 @@ export default function Footer() {
                 GitHub
               </a>
               <a
-                href='https://bsky.app/profile/stepweaver.bsky.social'
+                href='https://bsky.app/profile/stepweaver.dev'
                 target='_blank'
                 rel='noopener noreferrer'
                 className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm md:text-base uppercase tracking-wider'
@@ -69,8 +69,8 @@ export default function Footer() {
 
             {/* Bottom Right - Legal */}
             <div className='text-terminal-muted font-ocr text-xs md:text-sm leading-tight'>
-              <span className='text-terminal-green'>λ</span>stepweaver LLC · Veteran-owned · All rights reserved ·{' '}
-              {currentYear}
+              <span className='text-terminal-green'>λ</span>stepweaver LLC ·
+              Veteran-owned · All rights reserved · {currentYear}
             </div>
           </div>
         </div>
