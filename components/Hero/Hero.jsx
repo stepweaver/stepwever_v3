@@ -193,6 +193,18 @@ export default function Hero() {
           From concept to deployment in record time.
         </p>
 
+        {/* Terminal Link */}
+        <div className='max-w-4xl ml-auto mb-6 sm:mb-10'>
+          <a
+            href='/terminal'
+            className='inline-flex items-center gap-2 text-terminal-cyan hover:text-terminal-green transition-colors duration-300 font-ibm text-sm sm:text-base md:text-lg'
+          >
+            <span className='text-terminal-green'>λ</span>
+            <span>Try our interactive terminal</span>
+            <span className='text-terminal-green'>→</span>
+          </a>
+        </div>
+
         {/* Project Cards with Side Scrolling */}
         <div className='w-full relative mt-8 sm:mt-16'>
           {/* Navigation Arrows */}
