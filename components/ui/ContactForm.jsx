@@ -161,7 +161,7 @@ export default function ContactForm() {
                   SUBMIT
                 </GlitchButton>
 
-                <GlitchButton href='/weaver_resume.pdf' download={true}>
+                <GlitchButton href='/Stephen-Weaver-Resume-stepweaver.pdf' download={true}>
                   GET RESUME
                 </GlitchButton>
               </div>
