@@ -5,6 +5,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { Analytics } from '@vercel/analytics/next';
+import '@/utils/errorMonitor'; // Initialize error monitoring
 
 const ocrFont = localFont({
   src: './fonts/OCRA.woff',

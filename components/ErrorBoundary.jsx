@@ -5,7 +5,7 @@ import { Component } from 'react';
 class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: null, errorInfo: null };
   }
 
   static getDerivedStateFromError(error) {
@@ -14,6 +14,24 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('Error caught by boundary:', error, errorInfo);
+    this.setState({ errorInfo });
+
+    // Log additional context for scroll-related errors
+    if (error.message && error.message.includes('scroll')) {
+      console.error('Scroll-related error detected. Context:', {
+        userAgent:
+          typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
+        windowSize:
+          typeof window !== 'undefined'
+            ? `${window.innerWidth}x${window.innerHeight}`
+            : 'unknown',
+        scrollY: typeof window !== 'undefined' ? window.scrollY : 'unknown',
+        documentHeight:
+          typeof document !== 'undefined'
+            ? document.documentElement.scrollHeight
+            : 'unknown',
+      });
+    }
   }
 
   render() {
@@ -29,6 +47,16 @@ class ErrorBoundary extends Component {
               We encountered an unexpected error. Please refresh the page or try
               again later.
             </p>
+            {process.env.NODE_ENV === 'development' && this.state.error && (
+              <details className='text-left mb-4 p-2 bg-terminal-dark rounded text-xs'>
+                <summary className='cursor-pointer text-terminal-red mb-2'>
+                  Error Details (Dev)
+                </summary>
+                <pre className='text-terminal-text overflow-auto'>
+                  {this.state.error.toString()}
+                </pre>
+              </details>
+            )}
             <button
               onClick={() => window.location.reload()}
               className='bg-terminal-red text-terminal-dark font-ibm px-4 py-2 rounded border border-terminal-red hover:bg-terminal-red/80 transition-colors'

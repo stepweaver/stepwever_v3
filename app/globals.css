@@ -186,10 +186,40 @@
 }
 
 /* Base styles */
+html {
+  /* Improve mobile scrolling performance */
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-ocr);
+  /* Improve mobile scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+  /* Ensure proper height calculation */
+  min-height: 100vh;
+  /* Prevent iOS Safari zoom on input focus */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  html, body {
+    /* Prevent momentum scrolling issues on iOS */
+    -webkit-overflow-scrolling: auto;
+  }
+  
+  /* Ensure proper viewport handling */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 /* Glitch Button Styles */

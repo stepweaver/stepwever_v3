@@ -10,23 +10,42 @@ export default function Approach() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!stickyRef.current || !comparisonRef.current) return;
+      try {
+        // Check if window is available (SSR safety)
+        if (typeof window === 'undefined') return;
 
-      const stickyRect = stickyRef.current.getBoundingClientRect();
-      const comparisonRect = comparisonRef.current.getBoundingClientRect();
+        if (!stickyRef.current || !comparisonRef.current) return;
 
-      // If the sticky element would overlap with the comparison section, stop being sticky
-      if (stickyRect.bottom >= comparisonRect.top) {
+        const stickyRect = stickyRef.current.getBoundingClientRect();
+        const comparisonRect = comparisonRef.current.getBoundingClientRect();
+
+        // Validate that we got valid rects
+        if (!stickyRect || !comparisonRect) return;
+
+        // If the sticky element would overlap with the comparison section, stop being sticky
+        if (stickyRect.bottom >= comparisonRect.top) {
+          setIsSticky(false);
+        } else {
+          setIsSticky(true);
+        }
+      } catch (error) {
+        console.error('Error in scroll handler:', error);
+        // Don't crash the component, just set a safe default
         setIsSticky(false);
-      } else {
-        setIsSticky(true);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial state
+    // Only add event listener if window is available
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll(); // Check initial state
+    }
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
   }, []);
 
   return (

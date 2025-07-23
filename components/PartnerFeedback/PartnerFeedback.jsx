@@ -110,9 +110,56 @@ export default function PartnerFeedback() {
             </p>
           </div>
 
+          {/* Desktop Navigation Arrows */}
+          <div className='hidden md:block'>
+            {/* Previous Arrow */}
+            <button
+              onClick={prevTestimonial}
+              className='absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
+              aria-label='Previous testimonial'
+            >
+              <svg
+                className='w-6 h-6'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M15 19l-7-7 7-7'
+                />
+              </svg>
+            </button>
+
+            {/* Next Arrow */}
+            <button
+              onClick={nextTestimonial}
+              className='absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
+              aria-label='Next testimonial'
+            >
+              <svg
+                className='w-6 h-6'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M9 5l7 7-7 7'
+                />
+              </svg>
+            </button>
+          </div>
+
           {/* Carousel Container */}
           <div
-            className='overflow-hidden'
+            className='overflow-hidden md:mx-16'
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
@@ -149,6 +196,22 @@ export default function PartnerFeedback() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Page Indicators */}
+          <div className='flex justify-center mt-6 space-x-2'>
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? 'bg-terminal-green'
+                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+                }`}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
 
