@@ -23,6 +23,9 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  // Use custom image from frontmatter or fallback to default
+  const previewImage = frontmatter.image || '/images/lambda-preview.png';
+
   return {
     title: frontmatter.title,
     description:
@@ -34,7 +37,22 @@ export async function generateMetadata({ params }) {
         `${frontmatter.title} - Stephen Weaver's Blog`,
       type: 'article',
       url: `https://stepweaver.dev/blog/${type}/${slug}`,
-      images: ['/images/lambda-preview.png'],
+      images: [
+        {
+          url: previewImage,
+          width: 1200,
+          height: 630,
+          alt: frontmatter.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: frontmatter.title,
+      description:
+        frontmatter.description ||
+        `${frontmatter.title} - Stephen Weaver's Blog`,
+      images: [previewImage],
     },
   };
 }
