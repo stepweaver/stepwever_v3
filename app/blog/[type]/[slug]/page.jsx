@@ -25,6 +25,9 @@ export async function generateMetadata({ params }) {
 
   // Use custom image from frontmatter or fallback to default
   const previewImage = frontmatter.image || '/images/lambda-preview.png';
+  const absoluteImageUrl = previewImage.startsWith('http')
+    ? previewImage
+    : `https://stepweaver.dev${previewImage}`;
 
   return {
     title: frontmatter.title,
@@ -39,7 +42,7 @@ export async function generateMetadata({ params }) {
       url: `https://stepweaver.dev/blog/${type}/${slug}`,
       images: [
         {
-          url: previewImage,
+          url: absoluteImageUrl,
           width: 1200,
           height: 630,
           alt: frontmatter.title,
@@ -52,7 +55,7 @@ export async function generateMetadata({ params }) {
       description:
         frontmatter.description ||
         `${frontmatter.title} - Stephen Weaver's Blog`,
-      images: [previewImage],
+      images: [absoluteImageUrl],
     },
   };
 }
