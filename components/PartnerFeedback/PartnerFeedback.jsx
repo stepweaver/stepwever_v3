@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const testimonials = [
   {
@@ -56,6 +56,8 @@ const testimonials = [
 
 export default function PartnerFeedback() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
 
   const nextTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
@@ -66,6 +68,32 @@ export default function PartnerFeedback() {
       (prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length
     );
   };
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.changedTouches[0].screenX);
+  };
+
+  const handleTouchEnd = (e) => {
+    setTouchEndX(e.changedTouches[0].screenX);
+    handleSwipe();
+  };
+
+  const handleSwipe = () => {
+    if (touchStartX === null || touchEndX === null) return;
+
+    const swipeThreshold = 50; // Minimum distance for a swipe
+    const distance = touchStartX - touchEndX;
+
+    if (distance > swipeThreshold) {
+      nextTestimonial();
+    } else if (distance < -swipeThreshold) {
+      prevTestimonial();
+    }
+
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
+
   return (
     <section className='relative z-30 flex items-start pt-8'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
@@ -76,17 +104,18 @@ export default function PartnerFeedback() {
 
         {/* Testimonials Container */}
         <div className='w-full relative'>
-          {/* Navigation Arrows */}
-          <button
-            onClick={nextTestimonial}
-            className='absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
-            aria-label='Next testimonial'
-          >
-            →
-          </button>
+          <div className='text-center mb-4'>
+            <p className='text-terminal-dimmed text-sm font-ocr'>
+              Swipe to navigate
+            </p>
+          </div>
 
           {/* Carousel Container */}
-          <div className='overflow-hidden'>
+          <div
+            className='overflow-hidden'
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div
               className='flex transition-transform duration-500 ease-in-out'
               style={{ transform: `translateX(-${currentIndex * 90}%)` }}

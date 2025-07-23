@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
 
 export default function Hero() {
@@ -9,6 +9,14 @@ export default function Hero() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(2); // Default for SSR
   const [isClient, setIsClient] = useState(false);
+
+  // Touch/swipe state
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const carouselRef = useRef(null);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
 
   const words = [
     { text: 'Automate', color: 'text-terminal-green' },
@@ -32,6 +40,59 @@ export default function Hero() {
 
     return () => clearInterval(interval);
   }, [words.length]);
+
+  // Touch event handlers for swipe functionality
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextCard();
+    } else if (isRightSwipe) {
+      prevCard();
+    }
+  };
+
+  // Swipe handlers for mouse drag
+  const onMouseDown = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.clientX);
+  };
+
+  const onMouseMove = (e) => {
+    if (touchStart !== null) {
+      setTouchEnd(e.clientX);
+    }
+  };
+
+  const onMouseUp = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextCard();
+    } else if (isRightSwipe) {
+      prevCard();
+    }
+
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
 
   const projects = [
     {
@@ -141,6 +202,12 @@ export default function Hero() {
     setCurrentCardIndex((prevIndex) => (prevIndex + 1) % totalPages);
   };
 
+  const prevCard = () => {
+    setCurrentCardIndex(
+      (prevIndex) => (prevIndex - 1 + totalPages) % totalPages
+    );
+  };
+
   const getCardsForPage = (pageIndex) => {
     if (!isClient) {
       // Default for SSR: 3 cards per page
@@ -211,20 +278,26 @@ export default function Hero() {
 
         {/* Project Cards with Side Scrolling */}
         <div className='w-full relative mt-8 sm:mt-16'>
-          {/* Navigation Arrows */}
-          <button
-            onClick={nextCard}
-            className='absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-12 z-10 bg-terminal-dark border border-terminal-green/30 text-terminal-green w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 font-ibm flex items-center justify-center shadow-[0_0_10px_rgba(0,255,65,0.3)] cursor-pointer text-sm md:text-base'
-            aria-label='Next cards'
-          >
-            →
-          </button>
+          <div className='text-center mb-4'>
+            <p className='text-terminal-dimmed text-sm font-ocr'>
+              Swipe to navigate
+            </p>
+          </div>
 
           {/* Carousel Container */}
-          <div className='overflow-hidden'>
+          <div
+            className='overflow-hidden cursor-grab active:cursor-grabbing'
+            ref={carouselRef}
+          >
             <div
               className='flex transition-transform duration-500 ease-in-out'
               style={{ transform: `translateX(-${currentCardIndex * 100}%)` }}
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
             >
               {/* Generate pages dynamically based on screen size */}
               {Array.from({ length: totalPages }, (_, pageIndex) => (
