@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 const testimonials = [
   {
@@ -58,6 +58,17 @@ export default function PartnerFeedback() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const nextTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
@@ -165,12 +176,16 @@ export default function PartnerFeedback() {
           >
             <div
               className='flex transition-transform duration-500 ease-in-out'
-              style={{ transform: `translateX(-${currentIndex * 90}%)` }}
+              style={{
+                transform: `translateX(-${
+                  currentIndex * (isMobile ? 100 : 90)
+                }%)`,
+              }}
             >
               {testimonials.map((testimonial, index) => (
                 <div
                   key={testimonial.id}
-                  className='w-[90%] flex-shrink-0 pr-4 md:pr-16'
+                  className='w-full md:w-[90%] flex-shrink-0 md:pr-16'
                 >
                   <div className='p-4 md:p-8'>
                     <blockquote className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8'>

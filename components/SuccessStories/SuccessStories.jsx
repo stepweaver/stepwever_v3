@@ -1,13 +1,63 @@
 'use client';
 
-import { memo } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 
 const SuccessStories = memo(() => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const nextStory = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);
+  };
+
+  const prevStory = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + stories.length) % stories.length
+    );
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.changedTouches[0].screenX);
+  };
+
+  const handleTouchEnd = (e) => {
+    setTouchEndX(e.changedTouches[0].screenX);
+    handleSwipe();
+  };
+
+  const handleSwipe = () => {
+    if (touchStartX === null || touchEndX === null) return;
+
+    const swipeThreshold = 50; // Minimum distance for a swipe
+    const distance = touchStartX - touchEndX;
+
+    if (distance > swipeThreshold) {
+      nextStory();
+    } else if (distance < -swipeThreshold) {
+      prevStory();
+    }
+
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
+
   const stories = [
     {
       title: 'Notre Dame Reporting Overhaul',
-        description:
-          'As business analyst, I learned SQL and built custom Tableau dashboards to replace the terrible off-the-shelf reporting software, delivering 10× faster ad-hoc reporting and achieving 100% adoption across campus ID operations.',
+      description:
+        'As business analyst, I learned SQL and built custom Tableau dashboards to replace the terrible off-the-shelf reporting software, delivering 10× faster ad-hoc reporting and achieving 100% adoption across campus ID operations.',
       metrics: [
         '10× faster ad-hoc reporting',
         '100% adoption across campus ID operations',
@@ -55,74 +105,230 @@ const SuccessStories = memo(() => {
           SELECTED SUCCESS STORIES
         </h2>
 
-        {/* Four columns grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20 max-w-full'>
-          {stories.map((story, index) => (
-            <div
-              key={index}
-              className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden shadow-[0_15px_30px_-5px_rgba(0,0,0,0.6),0_10px_10px_-5px_rgba(0,0,0,0.5),0_0_10px_rgba(0,255,65,0.3),0_0_1px_rgba(0,255,65,0.7),0_0_20px_rgba(0,255,65,0.3)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.7),0_15px_15px_-5px_rgba(0,0,0,0.6),0_0_15px_rgba(0,255,65,0.4),0_0_2px_rgba(0,255,65,0.8),0_0_25px_rgba(0,255,65,0.4)] transition-all duration-300 group cursor-pointer'
+        {/* Mobile Carousel / Desktop Grid */}
+        <div className='w-full relative'>
+          {/* Mobile Swipe Instructions */}
+          <div className='text-center mb-4 md:hidden'>
+            <p className='text-terminal-dimmed text-sm font-ocr'>
+              Swipe to navigate
+            </p>
+          </div>
+
+          {/* Desktop Navigation Arrows */}
+          <div className='hidden md:block'>
+            {/* Previous Arrow */}
+            <button
+              onClick={prevStory}
+              className='absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
+              aria-label='Previous story'
             >
-              {/* Terminal Header */}
-              <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
-                <div className='flex items-center space-x-2'>
-                  <div className='w-3 h-3 bg-terminal-red rounded-full'></div>
-                  <div className='w-3 h-3 bg-terminal-yellow rounded-full'></div>
-                  <div className='w-3 h-3 bg-terminal-green rounded-full'></div>
-                </div>
-                <div className='text-terminal-dimmed text-xs font-ocr'>
-                  ~/story-{index + 1}
-                </div>
-              </div>
+              <svg
+                className='w-6 h-6'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M15 19l-7-7 7-7'
+                />
+              </svg>
+            </button>
 
-              {/* Terminal Content */}
-              <div className='p-4 bg-terminal-dark min-h-[280px] flex flex-col'>
-                {/* Category Tag */}
-                <div className='mb-2'>
-                  <span className='inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 rounded border border-terminal-green/30'>
-                    {story.category}
-                  </span>
+            {/* Next Arrow */}
+            <button
+              onClick={nextStory}
+              className='absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
+              aria-label='Next story'
+            >
+              <svg
+                className='w-6 h-6'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M9 5l7 7-7 7'
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile Carousel Container */}
+          <div
+            className='md:hidden overflow-hidden'
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className='flex transition-transform duration-500 ease-in-out'
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {stories.map((story, index) => (
+                <div key={index} className='w-full flex-shrink-0'>
+                  <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group'>
+                    {/* Terminal Header */}
+                    <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
+                      <div className='flex items-center space-x-2'>
+                        <div className='w-3 h-3 bg-terminal-red rounded-full'></div>
+                        <div className='w-3 h-3 bg-terminal-yellow rounded-full'></div>
+                        <div className='w-3 h-3 bg-terminal-green rounded-full'></div>
+                      </div>
+                      <div className='text-terminal-dimmed text-xs font-ocr'>
+                        ~/story-{index + 1}
+                      </div>
+                    </div>
+
+                    {/* Terminal Content */}
+                    <div className='p-4 bg-terminal-dark min-h-[280px] flex flex-col'>
+                      {/* Category Tag */}
+                      <div className='mb-2'>
+                        <span className='inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 rounded border border-terminal-green/30'>
+                          {story.category}
+                        </span>
+                      </div>
+
+                      {/* Story Title */}
+                      <h3 className='text-terminal-green font-ibm text-base mb-3 leading-tight'>
+                        {story.title}
+                      </h3>
+
+                      {/* Story Description */}
+                      <p className='text-terminal-text font-ocr text-xs leading-relaxed mb-4 flex-grow'>
+                        {story.description}
+                      </p>
+
+                      {/* Metrics */}
+                      <div className='mb-3'>
+                        <h4 className='text-terminal-cyan font-ibm text-xs mb-2'>
+                          KEY METRICS:
+                        </h4>
+                        <ul className='space-y-1'>
+                          {story.metrics.map((metric, metricIndex) => (
+                            <li
+                              key={metricIndex}
+                              className='text-terminal-yellow font-ocr text-xs flex items-start'
+                            >
+                              <span className='text-terminal-green mr-2'>
+                                ▶
+                              </span>
+                              {metric}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Terminal Prompt */}
+                      <div className='text-terminal-dimmed font-ocr text-xs mt-auto'>
+                        <span className='text-terminal-green'>
+                          guest@stepweaver.dev
+                        </span>
+                        <span className='text-terminal-text'> ~ </span>
+                        <span className='text-terminal-cyan'>λ</span>
+                        <span className='text-terminal-text'>
+                          {' '}
+                          success-stories
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Story Title */}
-                <h3 className='text-terminal-green font-ibm text-base mb-3 leading-tight'>
-                  {story.title}
-                </h3>
-
-                {/* Story Description */}
-                <p className='text-terminal-text font-ocr text-xs leading-relaxed mb-4 flex-grow'>
-                  {story.description}
-                </p>
-
-                {/* Metrics */}
-                <div className='mb-3'>
-                  <h4 className='text-terminal-cyan font-ibm text-xs mb-2'>
-                    KEY METRICS:
-                  </h4>
-                  <ul className='space-y-1'>
-                    {story.metrics.map((metric, metricIndex) => (
-                      <li
-                        key={metricIndex}
-                        className='text-terminal-yellow font-ocr text-xs flex items-start'
-                      >
-                        <span className='text-terminal-green mr-2'>▶</span>
-                        {metric}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Terminal Prompt */}
-                <div className='text-terminal-dimmed font-ocr text-xs mt-auto'>
-                  <span className='text-terminal-green'>
-                    guest@stepweaver.dev
-                  </span>
-                  <span className='text-terminal-text'> ~ </span>
-                  <span className='text-terminal-cyan'>λ</span>
-                  <span className='text-terminal-text'> success-stories</span>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Desktop Grid */}
+          <div className='hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20 max-w-full'>
+            {stories.map((story, index) => (
+              <div
+                key={index}
+                className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group'
+              >
+                {/* Terminal Header */}
+                <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
+                  <div className='flex items-center space-x-2'>
+                    <div className='w-3 h-3 bg-terminal-red rounded-full'></div>
+                    <div className='w-3 h-3 bg-terminal-yellow rounded-full'></div>
+                    <div className='w-3 h-3 bg-terminal-green rounded-full'></div>
+                  </div>
+                  <div className='text-terminal-dimmed text-xs font-ocr'>
+                    ~/story-{index + 1}
+                  </div>
+                </div>
+
+                {/* Terminal Content */}
+                <div className='p-4 bg-terminal-dark min-h-[280px] flex flex-col'>
+                  {/* Category Tag */}
+                  <div className='mb-2'>
+                    <span className='inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 rounded border border-terminal-green/30'>
+                      {story.category}
+                    </span>
+                  </div>
+
+                  {/* Story Title */}
+                  <h3 className='text-terminal-green font-ibm text-base mb-3 leading-tight'>
+                    {story.title}
+                  </h3>
+
+                  {/* Story Description */}
+                  <p className='text-terminal-text font-ocr text-xs leading-relaxed mb-4 flex-grow'>
+                    {story.description}
+                  </p>
+
+                  {/* Metrics */}
+                  <div className='mb-3'>
+                    <h4 className='text-terminal-cyan font-ibm text-xs mb-2'>
+                      KEY METRICS:
+                    </h4>
+                    <ul className='space-y-1'>
+                      {story.metrics.map((metric, metricIndex) => (
+                        <li
+                          key={metricIndex}
+                          className='text-terminal-yellow font-ocr text-xs flex items-start'
+                        >
+                          <span className='text-terminal-green mr-2'>▶</span>
+                          {metric}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Terminal Prompt */}
+                  <div className='text-terminal-dimmed font-ocr text-xs mt-auto'>
+                    <span className='text-terminal-green'>
+                      guest@stepweaver.dev
+                    </span>
+                    <span className='text-terminal-text'> ~ </span>
+                    <span className='text-terminal-cyan'>λ</span>
+                    <span className='text-terminal-text'> success-stories</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Page Indicators for Mobile */}
+          <div className='flex justify-center mt-6 space-x-2 md:hidden'>
+            {stories.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? 'bg-terminal-green'
+                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+                }`}
+                aria-label={`Go to story ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
