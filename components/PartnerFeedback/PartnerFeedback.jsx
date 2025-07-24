@@ -6,9 +6,9 @@ const testimonials = [
   {
     id: 1,
     quote:
-      'Stephen transformed our chaotic data pipeline into a streamlined system that actually makes sense. His ability to see patterns in the noise and build solutions that scale is unmatched. We went from spending hours on manual reports to real-time dashboards that drive decisions.',
-    name: 'Marty McFly*',
-    title: 'DIRECTOR OF OPERATIONS, HILL VALLEY TECHNOLOGIES',
+      "Stephen has a great tenacity to solve problems in the world of technical development and engineering. We were fortunate enough to work alongside him multiple times, in which he delivered the dependable digital foundations for our Clients. With each project, his work significantly improved and become more operational. For those needing a digital facelift — it's not your job to understand how it's done. Instead, focus on finding someone you trust to help craft your vision inside your digital landscape. Stephen is one of those someones. God Bless.",
+    name: 'Griffin H.',
+    title: 'HERO POINT CONSULTING',
   },
   {
     id: 2,
@@ -232,9 +232,9 @@ export default function PartnerFeedback() {
 
         {/* Small Disclaimer */}
         <span className='block text-terminal-yellow text-xs mt-6 text-center'>
-          * Awaiting actual partner feedback.
+          * Placeholder testimonials for demonstration.
           <br className='block md:hidden' />
-          <span className='text-terminal-green'>Want to be first?</span>
+          <span className='text-terminal-green'> Want to be featured?</span>
         </span>
       </div>
     </section>
