@@ -43,14 +43,23 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {/* Terminal Content */}
-      <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col md:h-full'>
+      <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col md:h-full min-h-[280px]'>
         {/* Project Image */}
         {imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-48'>
+          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48'>
             <img
               src={imageUrl}
               alt={title}
-              className='w-full h-full object-cover object-top'
+              className='w-full h-full object-cover object-center'
+            />
+          </div>
+        )}
+        {!imageUrl && (
+          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48'>
+            <img
+              src='/images/lambda_preview.png'
+              alt='Project preview'
+              className='w-full h-full object-cover object-center'
             />
           </div>
         )}
