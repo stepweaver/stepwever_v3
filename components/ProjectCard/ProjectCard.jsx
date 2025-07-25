@@ -50,7 +50,7 @@ const ProjectCard = memo(function ProjectCard({
             <img
               src={imageUrl}
               alt={title}
-              className='w-full h-full object-cover object-center'
+              className='w-full h-full object-cover object-top'
             />
           </div>
         )}
