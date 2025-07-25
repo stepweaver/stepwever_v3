@@ -105,7 +105,7 @@ export default function Hero() {
         'Browse orthodontic treatment options and services',
         'View patient testimonials and team information',
       ],
-      link: 'https://lambda-orthodontics.vercel.app',
+      link: 'https://spark-ortho.up.railway.app/',
       tags: ['Web Development', 'Healthcare', 'React'],
     },
     {
@@ -120,7 +120,7 @@ export default function Hero() {
         'Clean, brand-focused design',
         'Mobile-responsive layout',
       ],
-      link: '/projects/soap-stache',
+      link: 'https://app-soap-stache.vercel.app/',
       tags: ['E-commerce', 'Web Development', 'React'],
     },
     {

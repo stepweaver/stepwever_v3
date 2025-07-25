@@ -9,8 +9,27 @@ const ProjectCard = memo(function ProjectCard({
   keywords = [],
   actions = [],
 }) {
+  const handleClick = () => {
+    if (link) {
+      if (link.startsWith('http')) {
+        // External link - open in new window
+        window.open(link, '_blank', 'noopener,noreferrer');
+      } else {
+        // Internal link - navigate
+        window.location.href = link;
+      }
+    }
+  };
+
   return (
-    <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group md:h-full'>
+    <div
+      className={`bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group md:h-full ${
+        link
+          ? 'cursor-pointer hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20'
+          : ''
+      }`}
+      onClick={link ? handleClick : undefined}
+    >
       {/* Terminal Header */}
       <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
         <div className='flex items-center space-x-2'>
@@ -109,7 +128,12 @@ const ProjectCard = memo(function ProjectCard({
           <span className='text-terminal-cyan'>λ</span>
           <span className='text-terminal-text'>
             {' '}
-            open {title.toLowerCase().replace(/\s+/g, '-')}
+            {link
+              ? link.startsWith('http')
+                ? 'open-external'
+                : 'open'
+              : 'view'}{' '}
+            {title.toLowerCase().replace(/\s+/g, '-')}
           </span>
         </div>
       </div>
