@@ -11,18 +11,11 @@ export default function Approach() {
   useEffect(() => {
     const handleScroll = () => {
       try {
-        // Check if window is available (SSR safety)
         if (typeof window === 'undefined') return;
-
         if (!stickyRef.current || !comparisonRef.current) return;
-
         const stickyRect = stickyRef.current.getBoundingClientRect();
         const comparisonRect = comparisonRef.current.getBoundingClientRect();
-
-        // Validate that we got valid rects
         if (!stickyRect || !comparisonRect) return;
-
-        // If the sticky element would overlap with the comparison section, stop being sticky
         if (stickyRect.bottom >= comparisonRect.top) {
           setIsSticky(false);
         } else {
@@ -30,15 +23,13 @@ export default function Approach() {
         }
       } catch (error) {
         console.error('Error in scroll handler:', error);
-        // Don't crash the component, just set a safe default
         setIsSticky(false);
       }
     };
 
-    // Only add event listener if window is available
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll(); // Check initial state
+      handleScroll();
     }
 
     return () => {
@@ -49,127 +40,106 @@ export default function Approach() {
   }, []);
 
   return (
-    <section className='relative z-30 pt-20 pb-4'>
+    <section className='relative z-30 pt-16 pb-16 bg-terminal-bg text-terminal-text min-h-screen w-full'>
       <div className='px-8 md:px-16 lg:px-24 w-full'>
-        {/* Two Column Layout - Advantage Statement and Content Side by Side */}
-        <div className='flex flex-col lg:flex-row gap-12 lg:gap-16'>
-          {/* Advantage Statement - Sticky on desktop */}
-          <div className='lg:w-1/3 lg:flex-shrink-0'>
+        {/* Section Header */}
+        <div className='mb-12'>
+          <h2 className='text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight font-ibm text-terminal-green'>
+            APPROACH
+          </h2>
+        </div>
+
+        {/* Two Column Layout */}
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16'>
+          {/* Approach Steps - Sticky on desktop */}
+          <div>
             <div
               ref={stickyRef}
-              className={`${
-                isSticky ? 'lg:sticky lg:top-8' : ''
-              } max-w-md mx-auto lg:mx-0 mb-6 hidden md:block`}
+              className={`${isSticky ? 'lg:sticky lg:top-8' : ''} max-w-none`}
             >
-              <div className='bg-terminal-bg p-8'>
-                <p className='text-terminal-text font-ibm text-4xl text-left leading-tight'>
-                  The λstepweaver advantage: sharper, faster, more personal.
+              {/* Main Headline */}
+              <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-text leading-tight mb-6'>
+                It's all about moving fast, staying clear, and building the
+                right thing-together.
+              </h3>
+
+              {/* Main Description */}
+              <div className='mb-8'>
+                <p className='text-terminal-text font-ocr text-base leading-relaxed'>
+                  At λstepweaver, every project is a collaboration-rooted in
+                  rapid prototyping, honest feedback, and the discipline of
+                  follow-through. Instead of endless meetings and vague
+                  milestones, we break complex challenges into focused sprints,
+                  each with concrete deliverables and a built-in feedback loop.
+                </p>
+              </div>
+
+              {/* Our Approach Section */}
+              <div className='mb-8'>
+                <h4 className='text-lg md:text-xl font-ibm text-terminal-cyan mb-4'>
+                  Our approach is simple:
+                </h4>
+
+                {/* Approach Steps */}
+                <div className='space-y-4'>
+                  {[
+                    {
+                      title: 'Align on the goal.',
+                      description:
+                        'Every project starts with a shared vision and a clear definition of success.',
+                    },
+                    {
+                      title: 'Map the path.',
+                      description:
+                        "We outline stages, set priorities, and schedule regular check-ins so you always know what's next.",
+                    },
+                    {
+                      title: 'Build in the open.',
+                      description:
+                        'You see progress early and often-not just at the finish line.',
+                    },
+                    {
+                      title: 'Iterate together.',
+                      description:
+                        "Client feedback isn't an afterthought; it's woven into every stage, ensuring your input steers the outcome.",
+                    },
+                    {
+                      title: 'Deliver with pride.',
+                      description:
+                        'Every deliverable ships with clarity, polish, and a support window to make sure everything lands right.',
+                    },
+                  ].map((step, index) => (
+                    <div
+                      key={index}
+                      className='border-l-4 border-terminal-green pl-4 transition-all hover:pl-6 hover:border-opacity-100 border-opacity-80'
+                    >
+                      <h5 className='text-lg font-ibm text-terminal-green mb-1'>
+                        {step.title}
+                      </h5>
+                      <p className='text-terminal-text font-ocr text-sm leading-relaxed'>
+                        {step.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Closing Statement */}
+              <div className='border-t border-terminal-border pt-4 mb-6'>
+                <p className='text-terminal-text font-ocr text-base leading-relaxed'>
+                  No black boxes. No disappearing acts. Just a transparent
+                  process and responsive communication-from kickoff to launch
+                  (and beyond). That's how λstepweaver turns "someday" projects
+                  into shipping realities.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Main Content */}
-          <div className='lg:w-2/3'>
-            {/* Section Header */}
-            <div className='mb-12 md:mb-16'>
-              <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
-                APPROACH
-              </h2>
-            </div>
-
-            {/* Main Headline */}
-            <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-ibm text-terminal-text leading-tight mb-6 md:mb-8'>
-              It's all about moving fast, staying clear, and building the right
-              thing-together.
-            </h3>
-
-            {/* Main Description */}
-            <div className='mb-6 md:mb-8'>
-              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
-                At λstepweaver, every project is a collaboration—rooted in rapid
-                prototyping, honest feedback, and the discipline of
-                follow-through. Instead of endless meetings and vague
-                milestones, we break complex challenges into focused sprints,
-                each with concrete deliverables and a built-in feedback loop.
-              </p>
-            </div>
-
-            {/* Our Approach Section */}
-            <div className='mb-6 md:mb-8'>
-              <h4 className='text-lg md:text-xl lg:text-2xl xl:text-3xl font-ibm text-terminal-cyan mb-4 md:mb-6'>
-                Our approach is simple:
-              </h4>
-
-              {/* Approach Steps */}
-              <div className='space-y-4 md:space-y-6'>
-                <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-lg md:text-xl font-ibm text-terminal-green mb-1'>
-                    Align on the goal.
-                  </h5>
-                  <p className='text-terminal-text font-ocr text-sm md:text-base leading-relaxed'>
-                    Every project starts with a shared vision and a clear
-                    definition of success.
-                  </p>
-                </div>
-
-                <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-lg md:text-xl font-ibm text-terminal-green mb-1'>
-                    Map the path.
-                  </h5>
-                  <p className='text-terminal-text font-ocr text-sm md:text-base leading-relaxed'>
-                    We outline stages, set priorities, and schedule regular
-                    check-ins so you always know what's next.
-                  </p>
-                </div>
-
-                <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-lg md:text-xl font-ibm text-terminal-green mb-1'>
-                    Build in the open.
-                  </h5>
-                  <p className='text-terminal-text font-ocr text-sm md:text-base leading-relaxed'>
-                    You see progress early and often—not just at the finish
-                    line.
-                  </p>
-                </div>
-
-                <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-lg md:text-xl font-ibm text-terminal-green mb-1'>
-                    Iterate together.
-                  </h5>
-                  <p className='text-terminal-text font-ocr text-sm md:text-base leading-relaxed'>
-                    Client feedback isn't an afterthought; it's woven into every
-                    stage, ensuring your input steers the outcome.
-                  </p>
-                </div>
-
-                <div className='border-l-4 border-terminal-green pl-4'>
-                  <h5 className='text-lg md:text-xl font-ibm text-terminal-green mb-1'>
-                    Deliver with pride.
-                  </h5>
-                  <p className='text-terminal-text font-ocr text-sm md:text-base leading-relaxed'>
-                    Every deliverable ships with clarity, polish, and a support
-                    window to make sure everything lands right.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Closing Statement */}
-            <div className='border-t border-terminal-border pt-4 md:pt-6 mb-6 md:mb-8'>
-              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
-                No black boxes. No disappearing acts. Just a transparent process
-                and responsive communication—from kickoff to launch (and
-                beyond). That's how λstepweaver turns "someday" projects into
-                shipping realities.
-              </p>
-            </div>
+          {/* Comparison Section */}
+          <div>
+            <ComparisonSection ref={comparisonRef} />
           </div>
-        </div>
-
-        {/* Comparison Section - Full Width (Outside two-column layout) */}
-        <div className='mt-2'>
-          <ComparisonSection ref={comparisonRef} />
         </div>
       </div>
     </section>

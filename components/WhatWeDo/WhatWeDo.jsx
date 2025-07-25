@@ -34,7 +34,7 @@ export default function WhatWeDo() {
                   &gt;
                 </span>
                 <span>
-                  Ship real-time KPI dashboards with alerting—no more
+                  Ship real-time KPI dashboards with alerting-no more
                   end-of-month surprises.
                 </span>
               </li>

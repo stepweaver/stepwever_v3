@@ -202,7 +202,7 @@ export default function Experience() {
               λstepweaver is led by a veteran, business analyst, and rebel
               developer obsessed with helping businesses scale. Every project is
               a hands-on mission to solve real problems with practical tools,
-              clear strategy, and relentless curiosity—no fluff, just results.
+              clear strategy, and relentless curiosity-no fluff, just results.
             </p>
           </div>
         </div>

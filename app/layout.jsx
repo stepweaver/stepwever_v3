@@ -26,7 +26,7 @@ export const metadata = {
     default: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
   },
   description:
-    'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
+    'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.',
   keywords: [
     'business automation',
     'data pipelines',
@@ -59,7 +59,7 @@ export const metadata = {
     siteName: 'λstepweaver',
     title: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
     description:
-      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
+      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.',
     images: [
       {
         url: '/images/lambda_preview.png',
@@ -74,7 +74,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
     description:
-      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
+      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.',
     images: [
       {
         url: '/images/lambda_preview.png',

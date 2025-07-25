@@ -93,7 +93,7 @@ const About = memo(function About() {
             {/* Call to Action */}
             <div className='mt-8 md:mt-12'>
               <p className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-ibm text-terminal-cyan mb-4 md:mb-6'>
-                Need a partner who can translate vision into shipped product—and
+                Need a partner who can translate vision into shipped product-and
                 isn't afraid to rip out walls to do it?
               </p>
               <p className='text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-ibm text-terminal-green'>

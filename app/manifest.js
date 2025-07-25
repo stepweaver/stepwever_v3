@@ -3,7 +3,7 @@ export default function manifest() {
     name: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
     short_name: 'λstepweaver',
     description:
-      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks—not quarters.',
+      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.',
     start_url: '/',
     display: 'standalone',
     background_color: '#0d1211',

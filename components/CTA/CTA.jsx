@@ -61,7 +61,7 @@ export default function CTA() {
             <div className='mb-8 md:mb-12'>
               <p className='text-base md:text-lg lg:text-xl text-terminal-text leading-tight'>
                 You're here because you're done waiting. λstepweaver turns
-                "someday" ideas into live solutions—fast. Reach out and see what
+                "someday" ideas into live solutions-fast. Reach out and see what
                 happens when obsession meets execution.
               </p>
             </div>

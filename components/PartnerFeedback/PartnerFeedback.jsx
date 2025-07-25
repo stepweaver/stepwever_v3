@@ -6,28 +6,28 @@ const testimonials = [
   {
     id: 1,
     quote:
-      "Stephen has a great tenacity to solve problems in the world of technical development and engineering. We were fortunate enough to work alongside him multiple times, in which he delivered the dependable digital foundations for our Clients. With each project, his work significantly improved and become more operational. For those needing a digital facelift — it's not your job to understand how it's done. Instead, focus on finding someone you trust to help craft your vision inside your digital landscape. Stephen is one of those someones. God Bless.",
+      "Stephen has a great tenacity to solve problems in the world of technical development and engineering. We were fortunate enough to work alongside him multiple times, in which he delivered the dependable digital foundations for our Clients. With each project, his work significantly improved and become more operational. For those needing a digital facelift - it's not your job to understand how it's done. Instead, focus on finding someone you trust to help craft your vision inside your digital landscape. Stephen is one of those someones. God Bless.",
     name: 'Griffin H.',
     title: 'HERO POINT CONSULTING',
   },
   {
     id: 2,
     quote:
-      "When we needed to pivot our entire digital strategy in under a month, λstepweaver didn't just deliver—they exceeded every expectation. The combination of technical expertise and strategic thinking is rare. Our conversion rates jumped 400% within the first quarter.",
+      "When we needed to pivot our entire digital strategy in under a month, λstepweaver didn't just deliver-they exceeded every expectation. The combination of technical expertise and strategic thinking is rare. Our conversion rates jumped 400% within the first quarter.",
     name: 'Ellen Ripley*',
     title: 'CEO, WEYLAND-YUTANI DIGITAL',
   },
   {
     id: 3,
     quote:
-      "Stephen's background in cryptologic linguistics shows in how he approaches every problem. He doesn't just write code—he deciphers the underlying patterns and builds systems that speak the language of business. Our automation workflows now handle 90% of our routine tasks.",
+      "Stephen's background in cryptologic linguistics shows in how he approaches every problem. He doesn't just write code-he deciphers the underlying patterns and builds systems that speak the language of business. Our automation workflows now handle 90% of our routine tasks.",
     name: 'Dr. Ian Malcolm*',
     title: 'CTO, INGEN SYSTEMS',
   },
   {
     id: 4,
     quote:
-      "We were drowning in technical debt and outdated systems. λstepweaver didn't just fix our problems—they reimagined our entire digital infrastructure. The transformation was so dramatic that our competitors started asking who our secret weapon was. Spoiler alert: it's Stephen.",
+      "We were drowning in technical debt and outdated systems. λstepweaver didn't just fix our problems-they reimagined our entire digital infrastructure. The transformation was so dramatic that our competitors started asking who our secret weapon was. Spoiler alert: it's Stephen.",
     name: 'Sarah Connor*',
     title: 'VP OF TECHNOLOGY, SKYNET SOLUTIONS',
   },
@@ -41,7 +41,7 @@ const testimonials = [
   {
     id: 6,
     quote:
-      "The combination of business analysis experience and technical skills is what sets λstepweaver apart. Stephen doesn't just build what you ask for—he builds what you actually need. Our data-driven marketing campaigns now generate 3x the ROI we had before.",
+      "The combination of business analysis experience and technical skills is what sets λstepweaver apart. Stephen doesn't just build what you ask for-he builds what you actually need. Our data-driven marketing campaigns now generate 3x the ROI we had before.",
     name: 'Clarice Starling*',
     title: 'DIRECTOR OF MARKETING, BEHAVIORAL SCIENCE CORP',
   },

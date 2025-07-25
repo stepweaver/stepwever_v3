@@ -7,17 +7,17 @@ const WhyWorkWithUs = memo(() => {
     {
       title: 'Cut through, not just corners',
       description:
-        'λstepweaver operates on ruthless efficiency—every sprint is focused, every automation is deliberate, and every result is measured in real impact. No fluff. No long-winded strategy decks. Just precision moves that push your business forward—fast.',
+        'λstepweaver operates on ruthless efficiency-every sprint is focused, every automation is deliberate, and every result is measured in real impact. No fluff. No long-winded strategy decks. Just precision moves that push your business forward-fast.',
     },
     {
       title: 'Ship while others are still talking',
       description:
-        'Where traditional teams are stuck in endless meetings and approvals, λstepweaver builds, tests, and ships on a feedback loop so tight you’ll be iterating before most agencies would have finished onboarding. You get results in days, not months—because moving fast is the competitive edge.',
+        'Where traditional teams are stuck in endless meetings and approvals, λstepweaver builds, tests, and ships on a feedback loop so tight you’ll be iterating before most agencies would have finished onboarding. You get results in days, not months-because moving fast is the competitive edge.',
     },
     {
       title: 'One mind, all-in',
       description:
-        'No handoffs, no bureaucracy, no finger-pointing. You work directly with the builder—one point of contact, full accountability. Decades of analysis, automation, and storytelling fused into solutions you actually use, not just admire. Your business becomes the only focus until the job is done.',
+        'No handoffs, no bureaucracy, no finger-pointing. You work directly with the builder-one point of contact, full accountability. Decades of analysis, automation, and storytelling fused into solutions you actually use, not just admire. Your business becomes the only focus until the job is done.',
     },
   ];
 
@@ -26,7 +26,7 @@ const WhyWorkWithUs = memo(() => {
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
         <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-12 md:mb-16 leading-tight text-left font-ibm text-terminal-green'>
-          WHY WORK WITH US
+          WHY WORK WITH US?
         </h2>
 
         {/* Three columns */}

@@ -98,7 +98,7 @@ export default function Hero() {
     {
       title: 'Data Pipeline Automation',
       description:
-        'Effortlessly connect apps, databases, and APIs to automate reporting and analytics. Slash manual work and surface new business insights with custom, resilient data pipelines—built to handle millions of rows or just a daily spreadsheet.',
+        'Effortlessly connect apps, databases, and APIs to automate reporting and analytics. Slash manual work and surface new business insights with custom, resilient data pipelines-built to handle millions of rows or just a daily spreadsheet.',
       keywords: ['Data Automation', 'API Integration', 'Reporting'],
       actions: [
         'Consolidate sales and ops data in a live dashboard',
@@ -110,7 +110,7 @@ export default function Hero() {
     {
       title: 'E-commerce & Workflow Optimization',
       description:
-        'Build smarter shops and smoother workflows. Integrate e-commerce, automate inventory, streamline invoicing, or connect online orders with backend processes—no more spreadsheet gymnastics.',
+        'Build smarter shops and smoother workflows. Integrate e-commerce, automate inventory, streamline invoicing, or connect online orders with backend processes-no more spreadsheet gymnastics.',
       keywords: ['Web Automation', 'Commerce', 'Operations'],
       actions: [
         'Inventory synced across sales channels',
@@ -122,7 +122,7 @@ export default function Hero() {
     {
       title: 'Growth Analytics Dashboards',
       description:
-        'Real-time dashboards and reporting built for speed and clarity. Plug your sources in and get up-to-the-minute KPIs, margin models, and custom alerts—without the agency bloat.',
+        'Real-time dashboards and reporting built for speed and clarity. Plug your sources in and get up-to-the-minute KPIs, margin models, and custom alerts-without the agency bloat.',
       keywords: ['Analytics', 'Dashboard', 'BI'],
       actions: [
         'Profitability snapshot at a glance',
@@ -134,7 +134,7 @@ export default function Hero() {
     {
       title: 'Web Design',
       description:
-        'Modern, lightning-fast websites built for growth. From single-page landers to multi-section sites, every build is custom-crafted for performance, SEO, and clear calls to action—no cookie-cutter templates.',
+        'Modern, lightning-fast websites built for growth. From single-page landers to multi-section sites, every build is custom-crafted for performance, SEO, and clear calls to action-no cookie-cutter templates.',
       keywords: ['Web Development', 'UX/UI', 'SEO'],
       actions: [
         'Design & launch a high-performance marketing site',
@@ -146,7 +146,7 @@ export default function Hero() {
     {
       title: 'Brand Strategy',
       description:
-        'Clarity and edge, from your logo to your tone of voice. Develop or refresh your visual identity, messaging, and brand assets—giving your business the confidence to stand out (and scale up).',
+        'Clarity and edge, from your logo to your tone of voice. Develop or refresh your visual identity, messaging, and brand assets-giving your business the confidence to stand out (and scale up).',
       keywords: ['Brand Identity', 'Design Direction', 'Messaging'],
       actions: [
         'Create a full logo suite and brand guide',
@@ -158,7 +158,7 @@ export default function Hero() {
     {
       title: 'Marketing Automation',
       description:
-        'Automate outreach, follow-ups, and list-building. Connect your email, CRM, and website so leads and updates flow hands-free—making every campaign faster and more efficient.',
+        'Automate outreach, follow-ups, and list-building. Connect your email, CRM, and website so leads and updates flow hands-free-making every campaign faster and more efficient.',
       keywords: ['Email Automation', 'CRM Integration', 'Lead Generation'],
       actions: [
         'Automated email sequences for new leads',
@@ -253,7 +253,7 @@ export default function Hero() {
         <p className='text-base sm:text-xl md:text-2xl lg:text-3xl text-terminal-text mb-6 sm:mb-10 max-w-4xl ml-auto leading-tight font-ocr'>
           At λstepweaver, action comes first. We build lean data pipelines,
           automations, and high-impact web experiences that slash waste and
-          surface profit opportunities in weeks—not quarters.
+          surface profit opportunities in weeks-not quarters.
         </p>
 
         <p className='text-base sm:text-xl md:text-2xl lg:text-3xl text-terminal-text mb-6 sm:mb-10 max-w-4xl ml-auto leading-tight font-ocr'>
