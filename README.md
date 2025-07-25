@@ -1,4 +1,4 @@
-# StepWeaver v3
+# stepweaver v3
 
 Growth Systems for Fast-Moving Businesses
 
