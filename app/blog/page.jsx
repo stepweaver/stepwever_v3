@@ -165,7 +165,7 @@ export default function BlogPage() {
           {/* Page Title */}
           <div className='text-center mt-16 mb-16'>
             <h1 className='text-5xl md:text-6xl font-bold text-terminal-green mb-8 md:mb-16 font-ibm'>
-              λstepweaver Blog
+              λBlog
             </h1>
             <p className='text-terminal-text text-lg md:text-3xl leading-relaxed'>
               Hey, what's up? I'm Stephen, founder of λstepweaver and creator of

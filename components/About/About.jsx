@@ -60,7 +60,7 @@ const About = memo(function About() {
             {/* Section Header */}
             <div className='mb-12 md:mb-16'>
               <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
-                ABOUT λstepweaver
+                λabout
               </h2>
             </div>
             {/* Headline */}
