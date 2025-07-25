@@ -96,6 +96,19 @@ export default function Hero() {
 
   const projects = [
     {
+      title: 'Lambda Orthodontics',
+      description:
+        'A professional healthcare website for Lambda Orthodontics, featuring patient testimonials, treatment options, and team information. Built with modern design principles and optimized for patient engagement.',
+      imageUrl: '/images/screencapture-lambda-ortho.png',
+      keywords: ['Healthcare', 'Patient Portal', 'Treatment Options'],
+      actions: [
+        'Browse orthodontic treatment options and services',
+        'View patient testimonials and team information',
+      ],
+      link: 'https://lambda-orthodontics.vercel.app',
+      tags: ['Web Development', 'Healthcare', 'React'],
+    },
+    {
       title: 'Soap Stache E-commerce Site',
       description:
         'A clean, modern e-commerce website for Soap Stache, featuring handcrafted premium soaps. The site showcases product listings, detailed descriptions, and a cohesive brand identity.',
