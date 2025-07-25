@@ -4,6 +4,7 @@ const ProjectCard = memo(function ProjectCard({
   title,
   description,
   link,
+  imageUrl,
   tags = [],
   keywords = [],
   actions = [],
@@ -24,27 +25,44 @@ const ProjectCard = memo(function ProjectCard({
 
       {/* Terminal Content */}
       <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col md:h-full'>
+        {/* Project Image */}
+        {imageUrl && (
+          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-48'>
+            <img
+              src={imageUrl}
+              alt={title}
+              className='w-full h-full object-cover object-top'
+            />
+          </div>
+        )}
         {/* Project Title */}
-        <h3 className='text-terminal-green font-ibm text-base sm:text-lg mb-2 sm:mb-3 leading-tight'>
+        <h3 className='text-terminal-green font-ibm text-sm sm:text-base mb-1 sm:mb-2 leading-tight'>
           {title}
         </h3>
 
         {/* Project Description */}
-        <p className='text-terminal-text font-ocr text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 md:flex-grow'>
+        <p
+          className='text-terminal-text font-ocr text-xs leading-relaxed mb-2 sm:mb-3 md:flex-grow overflow-hidden'
+          style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
           {description}
         </p>
 
         {/* Keywords */}
         {keywords.length > 0 && (
-          <div className='mb-3 sm:mb-4'>
-            <div className='text-terminal-cyan font-ocr text-xs mb-1 sm:mb-2'>
+          <div className='mb-2 sm:mb-3'>
+            <div className='text-terminal-cyan font-ocr text-xs mb-1'>
               Keywords:
             </div>
             <div className='flex flex-wrap gap-1'>
               {keywords.map((keyword, index) => (
                 <span
                   key={index}
-                  className='px-1.5 sm:px-2 py-0.5 sm:py-1 bg-terminal-light/20 text-terminal-cyan font-ocr text-xs rounded border border-terminal-border'
+                  className='px-1 py-0.5 bg-terminal-light/20 text-terminal-cyan font-ocr text-xs rounded border border-terminal-border'
                 >
                   {keyword}
                 </span>
@@ -55,20 +73,29 @@ const ProjectCard = memo(function ProjectCard({
 
         {/* Sample Actions */}
         {actions.length > 0 && (
-          <div className='mb-3 sm:mb-4'>
-            <div className='text-terminal-yellow font-ocr text-xs mb-1 sm:mb-2'>
+          <div className='mb-2 sm:mb-3'>
+            <div className='text-terminal-yellow font-ocr text-xs mb-1'>
               Sample Actions:
             </div>
-            <ul className='space-y-0.5 sm:space-y-1'>
-              {actions.map((action, index) => (
+            <ul className='space-y-0.5'>
+              {actions.slice(0, 2).map((action, index) => (
                 <li
                   key={index}
                   className='text-terminal-text font-ocr text-xs leading-relaxed flex items-start'
                 >
-                  <span className='text-terminal-green mr-1.5 sm:mr-2 flex-shrink-0'>
+                  <span className='text-terminal-green mr-1 flex-shrink-0'>
                     •
                   </span>
-                  <span className='text-xs'>{action}</span>
+                  <span
+                    className='text-xs overflow-hidden'
+                    style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: 'vertical',
+                    }}
+                  >
+                    {action}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -76,7 +103,7 @@ const ProjectCard = memo(function ProjectCard({
         )}
 
         {/* Terminal Prompt - Always at bottom */}
-        <div className='text-terminal-dimmed font-ocr text-xs md:mt-auto pt-2 border-t border-terminal-border/30'>
+        <div className='text-terminal-dimmed font-ocr text-xs md:mt-auto pt-1 border-t border-terminal-border/30'>
           <span className='text-terminal-green'>guest@stepweaver.dev</span>
           <span className='text-terminal-text'> ~ </span>
           <span className='text-terminal-cyan'>λ</span>

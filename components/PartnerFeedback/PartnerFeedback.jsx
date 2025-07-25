@@ -123,32 +123,10 @@ export default function PartnerFeedback() {
 
           {/* Desktop Navigation Arrows */}
           <div className='hidden md:block'>
-            {/* Previous Arrow */}
-            <button
-              onClick={prevTestimonial}
-              className='absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
-              aria-label='Previous testimonial'
-            >
-              <svg
-                className='w-6 h-6'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15 19l-7-7 7-7'
-                />
-              </svg>
-            </button>
-
             {/* Next Arrow */}
             <button
               onClick={nextTestimonial}
-              className='absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
+              className='absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
               aria-label='Next testimonial'
             >
               <svg
@@ -170,7 +148,7 @@ export default function PartnerFeedback() {
 
           {/* Carousel Container */}
           <div
-            className='overflow-hidden md:mx-16'
+            className='overflow-hidden'
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >

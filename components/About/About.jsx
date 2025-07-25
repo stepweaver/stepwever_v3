@@ -7,49 +7,40 @@ const About = memo(function About() {
       <div className='px-8 md:px-16 lg:px-24 w-full'>
         {/* Two Column Layout - Bio Card and Content Side by Side */}
         <div className='flex flex-col lg:flex-row gap-12 lg:gap-16'>
-          {/* Bio Card - Sticky on desktop */}
+          {/* Bio Card */}
           <div className='lg:w-1/3 lg:flex-shrink-0'>
-            <div className='lg:sticky lg:top-8 max-w-sm mx-auto lg:mx-0'>
-              <div className='overflow-hidden'>
+            <div className='max-w-md mx-auto lg:mx-0'>
+              <div className='p-6 lg:p-8'>
                 {/* Profile Image */}
-                <div className='mb-4'>
-                  <div className='relative w-40 h-40 rounded-xl overflow-hidden'>
+                <div className='mb-6'>
+                  <div className='relative w-48 h-48 rounded-xl overflow-hidden'>
                     <Image
                       src='/images/pixarMe.png'
                       alt='Stephen Weaver, Founder of λstepweaver'
                       fill
                       className='object-cover'
                       priority={true}
-                      sizes='(max-width: 1024px) 160px, 160px'
+                      sizes='(max-width: 1024px) 192px, 192px'
                     />
                   </div>
                 </div>
 
                 {/* Profile Content */}
                 <div>
-                  <h3 className='text-terminal-text font-ibm text-3xl mb-3'>
+                  <h3 className='text-terminal-text font-ibm text-3xl mb-4'>
                     Stephen Weaver
                   </h3>
-                  <p className='text-terminal-green font-ocr text-xl mb-4 tracking-wider uppercase'>
+                  <p className='text-terminal-green font-ocr text-xl mb-6 tracking-wider uppercase'>
                     FOUNDER
                   </p>
-                  <ul className='text-terminal-text font-ocr text-base leading-relaxed mb-3 space-y-1'>
+                  <ul className='text-terminal-text font-ocr text-lg leading-relaxed mb-4 space-y-2'>
                     <li>Developer</li>
                     <li>Data Strategist</li>
                     <li>Veteran</li>
                   </ul>
-                  <p className='text-terminal-text font-ocr text-sm leading-relaxed mb-4 italic'>
+                  <p className='text-terminal-text font-ocr text-base leading-relaxed mb-6 italic'>
                     (Rebel at heart)
                   </p>
-
-                  {/* Contact Info */}
-                  <div>
-                    <p className='text-terminal-dimmed font-ocr text-xs'>
-                      <span className='text-terminal-green'>
-                        guest@stepweaver.dev
-                      </span>
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>

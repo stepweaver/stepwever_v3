@@ -96,6 +96,21 @@ export default function Hero() {
 
   const projects = [
     {
+      title: 'Soap Stache E-commerce Site',
+      description:
+        'A clean, modern e-commerce website for Soap Stache, featuring handcrafted premium soaps. The site showcases product listings, detailed descriptions, and a cohesive brand identity.',
+      imageUrl: '/images/screencapture-soap-stache.png',
+      keywords: ['Next.js 15', 'Sanity CMS', 'Stripe', 'Tailwind CSS 4'],
+      actions: [
+        'Product catalog with detailed descriptions',
+        'Customer reviews and testimonials',
+        'Clean, brand-focused design',
+        'Mobile-responsive layout',
+      ],
+      link: '/projects/soap-stache',
+      tags: ['E-commerce', 'Web Development', 'React'],
+    },
+    {
       title: 'Data Pipeline Automation',
       description:
         'Effortlessly connect apps, databases, and APIs to automate reporting and analytics. Slash manual work and surface new business insights with custom, resilient data pipelines-built to handle millions of rows or just a daily spreadsheet.',
@@ -107,18 +122,7 @@ export default function Hero() {
       link: '/services/data-pipeline',
       tags: ['Data & Analytics', 'Automation', 'Python'],
     },
-    {
-      title: 'E-commerce & Workflow Optimization',
-      description:
-        'Build smarter shops and smoother workflows. Integrate e-commerce, automate inventory, streamline invoicing, or connect online orders with backend processes-no more spreadsheet gymnastics.',
-      keywords: ['Web Automation', 'Commerce', 'Operations'],
-      actions: [
-        'Inventory synced across sales channels',
-        'Custom automations (orders, fulfillment, reminders)',
-      ],
-      link: '/services/ecommerce',
-      tags: ['Web Development', 'E-commerce', 'React'],
-    },
+
     {
       title: 'Growth Analytics Dashboards',
       description:
@@ -174,15 +178,16 @@ export default function Hero() {
     if (!isClient) return;
 
     const getTotalPages = () => {
+      const totalProjects = projects.length;
       if (window.innerWidth < 768) {
-        // Mobile: 1 card per page, 6 pages
-        return 6;
+        // Mobile: 1 card per page
+        return totalProjects;
       } else if (window.innerWidth < 1024) {
-        // Tablet: 2 cards per page, 3 pages
-        return 3;
+        // Tablet: 2 cards per page
+        return Math.ceil(totalProjects / 2);
       } else {
-        // Desktop: 3 cards per page, 2 pages
-        return 2;
+        // Desktop: 3 cards per page
+        return Math.ceil(totalProjects / 3);
       }
     };
 
@@ -286,32 +291,10 @@ export default function Hero() {
 
           {/* Desktop Navigation Arrows */}
           <div className='hidden md:block'>
-            {/* Previous Arrow */}
-            <button
-              onClick={prevCard}
-              className='absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
-              aria-label='Previous page'
-            >
-              <svg
-                className='w-6 h-6'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15 19l-7-7 7-7'
-                />
-              </svg>
-            </button>
-
             {/* Next Arrow */}
             <button
               onClick={nextCard}
-              className='absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
+              className='absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
               aria-label='Next page'
             >
               <svg
@@ -333,7 +316,7 @@ export default function Hero() {
 
           {/* Carousel Container */}
           <div
-            className='overflow-hidden cursor-grab active:cursor-grabbing md:mx-16'
+            className='overflow-hidden cursor-grab active:cursor-grabbing'
             ref={carouselRef}
           >
             <div
@@ -358,6 +341,7 @@ export default function Hero() {
                         title={project.title}
                         description={project.description}
                         link={project.link}
+                        imageUrl={project.imageUrl}
                         tags={project.tags}
                         keywords={project.keywords}
                         actions={project.actions}
