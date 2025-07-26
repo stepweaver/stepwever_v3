@@ -26,16 +26,12 @@ export default function Footer() {
           </h2>
         </div>
 
-        {/* Tagline and Email Section - Left aligned */}
+        {/* Tagline and Email Section - Centered */}
         <div className='space-y-6 md:space-y-8 lg:space-y-12'>
-          <div className='flex flex-col lg:flex-row lg:items-center lg:gap-8 space-y-3 md:space-y-4 lg:space-y-0'>
-            <p className='text-base md:text-lg lg:text-5xl text-terminal-text font-light'>
-              Growth systems for rebels who ship.
-            </p>
-
+          <div className='flex justify-center'>
             <Link
               href='/contact'
-              className='text-lg md:text-xl lg:text-4xl text-terminal-green font-ibm hover:text-terminal-white transition-colors duration-200'
+              className='text-lg md:text-xl lg:text-4xl text-terminal-green font-ibm hover:text-terminal-white transition-colors duration-200 text-center'
             >
               inquiries@stepweaver.dev
             </Link>

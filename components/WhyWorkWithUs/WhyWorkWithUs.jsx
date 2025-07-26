@@ -1,19 +1,34 @@
 'use client';
 
 import { memo } from 'react';
-import GlitchLambda from '@components/ui/GlitchLambda';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const WhyWorkWithUs = memo(() => {
   const reasons = [
     {
       title: 'Cut through, not just corners',
-      description:
-        '<GlitchLambda className='text-terminal-text' />stepweaver operates on ruthless efficiency-every sprint is focused, every automation is deliberate, and every result is measured in real impact. No fluff. No long-winded strategy decks. Just precision moves that push your business forward-fast.',
+      description: (
+        <>
+          <GlitchLambda className='text-terminal-text' />
+          stepweaver operates on ruthless efficiency-every sprint is focused,
+          every automation is deliberate, and every result is measured in real
+          impact. No fluff. No long-winded strategy decks. Just precision moves
+          that push your business forward-fast.
+        </>
+      ),
     },
     {
       title: 'Ship while others are still talking',
-      description:
-        'Where traditional teams are stuck in endless meetings and approvals, <GlitchLambda className='text-terminal-text' />stepweaver builds, tests, and ships on a feedback loop so tight you’ll be iterating before most agencies would have finished onboarding. You get results in days, not months-because moving fast is the competitive edge.',
+      description: (
+        <>
+          Where traditional teams are stuck in endless meetings and approvals,{' '}
+          <GlitchLambda className='text-terminal-text' />
+          stepweaver builds, tests, and ships on a feedback loop so tight you'll
+          be iterating before most agencies would have finished onboarding. You
+          get results in days, not months-because moving fast is the competitive
+          edge.
+        </>
+      ),
     },
     {
       title: 'One mind, all-in',
@@ -45,9 +60,9 @@ const WhyWorkWithUs = memo(() => {
               <div className='w-full h-px bg-terminal-green/20 mb-3 md:mb-4'></div>
 
               {/* Reason Description */}
-              <p className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed'>
+              <div className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed'>
                 {reason.description}
-              </p>
+              </div>
             </div>
           ))}
         </div>
