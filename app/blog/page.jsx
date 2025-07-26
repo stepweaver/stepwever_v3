@@ -43,6 +43,7 @@ export default function CodexPage() {
       // Set default sub-tab if none is selected
       if (!activeSubTab) {
         setActiveSubTab('syntaxfm');
+        return; // Don't fetch until sub-tab is set
       }
 
       async function fetchPodcasts() {
@@ -391,37 +392,27 @@ export default function CodexPage() {
                       Categories
                     </h3>
                     <div className='flex flex-wrap gap-2'>
-                      {tabs.map((tab) => {
-                        const count =
-                          tab.id === 'podcasts'
-                            ? podcastEpisodes.length
-                            : allPosts.filter((post) => post.type === tab.id)
-                                .length;
-                        return (
-                          <button
-                            key={tab.id}
-                            onClick={() => {
-                              setActiveTab(tab.id);
-                              setActiveHashtags([]);
-                            }}
-                            className={`
-                            px-3 py-2 rounded transition-colors cursor-pointer
-                            ${
-                              activeTab === tab.id
-                                ? 'text-terminal-green bg-terminal-green/10 border border-terminal-green/20'
-                                : 'text-terminal-text hover:text-terminal-green hover:bg-terminal-dimmed/10'
-                            }
-                          `}
-                          >
-                            <span className='capitalize font-medium'>
-                              {tab.label}
-                            </span>
-                            <span className='text-sm font-bold ml-2'>
-                              {count}
-                            </span>
-                          </button>
-                        );
-                      })}
+                      {tabs.map((tab) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => {
+                            setActiveTab(tab.id);
+                            setActiveHashtags([]);
+                          }}
+                          className={`
+                           px-3 py-2 rounded transition-colors cursor-pointer
+                           ${
+                             activeTab === tab.id
+                               ? 'text-terminal-green bg-terminal-green/10 border border-terminal-green/20'
+                               : 'text-terminal-text hover:text-terminal-green hover:bg-terminal-dimmed/10'
+                           }
+                         `}
+                        >
+                          <span className='capitalize font-medium'>
+                            {tab.label}
+                          </span>
+                        </button>
+                      ))}
                     </div>
                   </div>
 
@@ -470,35 +461,27 @@ export default function CodexPage() {
                     Categories
                   </h3>
                   <div className='space-y-2'>
-                    {tabs.map((tab) => {
-                      const count =
-                        tab.id === 'podcasts'
-                          ? podcastEpisodes.length
-                          : allPosts.filter((post) => post.type === tab.id)
-                              .length;
-                      return (
-                        <button
-                          key={tab.id}
-                          onClick={() => {
-                            setActiveTab(tab.id);
-                            setActiveHashtags([]);
-                          }}
-                          className={`
-                          flex items-center justify-between w-full text-left px-3 py-2 rounded transition-colors cursor-pointer
-                          ${
-                            activeTab === tab.id
-                              ? 'text-terminal-green bg-terminal-green/10 border border-terminal-green/20'
-                              : 'text-terminal-text hover:text-terminal-green hover:bg-terminal-dimmed/10'
-                          }
-                        `}
-                        >
-                          <span className='capitalize font-medium'>
-                            {tab.label}
-                          </span>
-                          <span className='text-sm font-bold'>{count}</span>
-                        </button>
-                      );
-                    })}
+                    {tabs.map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          setActiveTab(tab.id);
+                          setActiveHashtags([]);
+                        }}
+                        className={`
+                         flex items-center justify-between w-full text-left px-3 py-2 rounded transition-colors cursor-pointer
+                         ${
+                           activeTab === tab.id
+                             ? 'text-terminal-green bg-terminal-green/10 border border-terminal-green/20'
+                             : 'text-terminal-text hover:text-terminal-green hover:bg-terminal-dimmed/10'
+                         }
+                       `}
+                      >
+                        <span className='capitalize font-medium'>
+                          {tab.label}
+                        </span>
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -639,7 +622,15 @@ function PodcastEpisodeItem({
         {/* Title */}
         <h2
           className='text-2xl font-bold mb-2 transition-all duration-200 text-terminal-cyan'
-          style={isHovered ? getGlowStyle(podcastColor) : {}}
+          style={
+            isHovered
+              ? {
+                  textShadow: `0 0 2px rgba(${podcastColor}, 0.8), 
+                          0 0 7px rgba(${podcastColor}, 0.8), 
+                          0 0 11px rgba(${podcastColor}, 0.6)`,
+                }
+              : {}
+          }
         >
           {episode.title}
         </h2>
@@ -702,7 +693,15 @@ function ArticleItem({ article, formatDate, getGlowStyle, articleColor }) {
         {/* Title */}
         <h2
           className='text-2xl font-bold mb-2 transition-all duration-200 text-terminal-magenta'
-          style={isHovered ? getGlowStyle(articleColor) : {}}
+          style={
+            isHovered
+              ? {
+                  textShadow: `0 0 2px rgba(${articleColor}, 0.8), 
+                          0 0 7px rgba(${articleColor}, 0.8), 
+                          0 0 11px rgba(${articleColor}, 0.6)`,
+                }
+              : {}
+          }
         >
           {article.title}
         </h2>
