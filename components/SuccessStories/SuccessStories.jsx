@@ -1,6 +1,7 @@
 'use client';
 
 import React, { memo, useState, useEffect, useRef } from 'react';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const SuccessStories = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -209,7 +210,7 @@ const SuccessStories = memo(() => {
                           guest@stepweaver.dev
                         </span>
                         <span className='text-terminal-text'> ~ </span>
-                        <span className='text-terminal-cyan'>λ</span>
+                        <GlitchLambda className='text-terminal-cyan' />
                         <span className='text-terminal-text'>
                           {' '}
                           success-stories
@@ -284,7 +285,7 @@ const SuccessStories = memo(() => {
                       guest@stepweaver.dev
                     </span>
                     <span className='text-terminal-text'> ~ </span>
-                    <span className='text-terminal-cyan'>λ</span>
+                    <GlitchLambda className='text-terminal-cyan' />
                     <span className='text-terminal-text'> success-stories</span>
                   </div>
                 </div>

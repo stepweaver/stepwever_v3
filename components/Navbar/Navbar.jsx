@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import MobileNav from './MobileNav';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 export default function Navbar() {
   return (
@@ -17,7 +18,11 @@ export default function Navbar() {
             }}
           >
             <span className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
-              λstepweaver
+              <GlitchLambda
+                className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'
+                size='large'
+              />
+              stepweaver
             </span>
           </button>
 

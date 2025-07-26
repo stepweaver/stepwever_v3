@@ -45,6 +45,100 @@
   }
 }
 
+@keyframes glitch-large {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  10% {
+    transform: translate(-4px, 4px);
+    filter: hue-rotate(30deg);
+  }
+  20% {
+    transform: translate(-4px, -4px);
+    filter: hue-rotate(-30deg);
+  }
+  30% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  40% {
+    transform: translate(4px, -4px);
+    filter: hue-rotate(-40deg);
+  }
+  50% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(20deg);
+  }
+  60% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  70% {
+    transform: translate(4px, 4px);
+    filter: hue-rotate(30deg);
+  }
+  80% {
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(-20deg);
+  }
+  90% {
+    transform: translate(2px, 4px);
+    filter: hue-rotate(25deg);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes glitch-xl {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  10% {
+    transform: translate(-6px, 6px);
+    filter: hue-rotate(40deg);
+  }
+  20% {
+    transform: translate(-6px, -6px);
+    filter: hue-rotate(-40deg);
+  }
+  30% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  40% {
+    transform: translate(6px, -6px);
+    filter: hue-rotate(-50deg);
+  }
+  50% {
+    transform: translate(-3px, 3px);
+    filter: hue-rotate(30deg);
+  }
+  60% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  70% {
+    transform: translate(6px, 6px);
+    filter: hue-rotate(40deg);
+  }
+  80% {
+    transform: translate(-3px, -3px);
+    filter: hue-rotate(-30deg);
+  }
+  90% {
+    transform: translate(3px, 6px);
+    filter: hue-rotate(35deg);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
 @keyframes textGlitch {
   0% {
     opacity: 1;
@@ -105,6 +199,16 @@
 .blinkEffect {
   animation: blink 1s step-end infinite;
   will-change: opacity;
+}
+
+.animate-glitch-large {
+  animation: glitch-large 0.3s ease-in-out;
+  will-change: transform, filter;
+}
+
+.animate-glitch-xl {
+  animation: glitch-xl 0.3s ease-in-out;
+  will-change: transform, filter;
 }
 
  

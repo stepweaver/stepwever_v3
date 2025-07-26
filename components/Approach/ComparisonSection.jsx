@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef } from 'react';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const ComparisonSection = forwardRef((props, ref) => {
   const comparisons = [
@@ -58,7 +59,8 @@ const ComparisonSection = forwardRef((props, ref) => {
     <div ref={ref} className='w-full'>
       <div className='mb-8'>
         <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-text leading-tight mb-4'>
-          λstepweaver vs. traditional agencies:
+          <GlitchLambda className='text-terminal-text' />
+          stepweaver vs. traditional agencies:
         </h3>
       </div>
 
@@ -69,7 +71,7 @@ const ComparisonSection = forwardRef((props, ref) => {
             {/* λstepweaver */}
             <div>
               <div className='flex items-center mb-2'>
-                <span className='text-terminal-green font-ibm text-lg'>λ</span>
+                <GlitchLambda className='text-terminal-green font-ibm text-lg' />
                 <h4 className='text-terminal-green font-ibm text-sm ml-1'>
                   stepweaver
                 </h4>
@@ -106,7 +108,7 @@ const ComparisonSection = forwardRef((props, ref) => {
           <div className='grid grid-cols-2'>
             <div className='text-center'>
               <div className='flex items-center justify-center'>
-                <span className='text-terminal-green font-ibm text-xl'>λ</span>
+                <GlitchLambda className='text-terminal-green font-ibm text-xl' />
                 <h4 className='text-terminal-green font-ibm text-lg ml-1'>
                   stepweaver
                 </h4>

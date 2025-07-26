@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const ProjectCard = memo(function ProjectCard({
   title,
@@ -134,7 +135,7 @@ const ProjectCard = memo(function ProjectCard({
         <div className='text-terminal-dimmed font-ocr text-xs md:mt-auto pt-1 border-t border-terminal-border/30'>
           <span className='text-terminal-green'>guest@stepweaver.dev</span>
           <span className='text-terminal-text'> ~ </span>
-          <span className='text-terminal-cyan'>λ</span>
+          <GlitchLambda className='text-terminal-cyan' />
           <span className='text-terminal-text'>
             {' '}
             {link

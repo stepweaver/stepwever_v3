@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 export default function Footer() {
   const [currentYear, setCurrentYear] = useState('');
@@ -16,8 +17,12 @@ export default function Footer() {
       <div className='max-w-7xl mx-auto px-4 md:px-6 w-full flex-1 flex flex-col justify-center'>
         {/* Logo Section - Centered */}
         <div className='mb-12 md:mb-16 lg:mb-24'>
-          <h2 className='text-5xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] text-terminal-green font-ibm tracking-tight leading-none'>
-            λstepweaver
+          <h2 className='text-5xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] text-terminal-green font-ibm tracking-tight leading-none flex items-center'>
+            <GlitchLambda
+              className='text-5xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] text-terminal-green font-ibm tracking-tight leading-none'
+              size='xl'
+            />
+            <span>stepweaver</span>
           </h2>
         </div>
 
@@ -46,9 +51,10 @@ export default function Footer() {
             <div className='flex space-x-4 md:space-x-6'>
               <a
                 href='/terminal'
-                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm md:text-base uppercase tracking-wider'
+                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm md:text-base uppercase tracking-wider flex items-center'
               >
-                <span className='text-terminal-green lowercase'>λ</span>Terminal
+                <GlitchLambda className='text-terminal-green lowercase' />
+                <span>Terminal</span>
               </a>
               <a
                 href='https://github.com/stepweaver'
@@ -69,9 +75,12 @@ export default function Footer() {
             </div>
 
             {/* Bottom Right - Legal */}
-            <div className='text-terminal-muted font-ocr text-xs md:text-sm leading-tight'>
-              <span className='text-terminal-green'>λ</span>stepweaver LLC · Veteran-owned · All rights reserved ·{' '}
-              {currentYear}
+            <div className='text-terminal-muted font-ocr text-xs md:text-sm leading-tight flex items-center'>
+              <GlitchLambda className='text-terminal-green' />
+              <span>
+                stepweaver LLC · Veteran-owned · All rights reserved ·{' '}
+                {currentYear}
+              </span>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { memo } from 'react';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const About = memo(function About() {
   return (
@@ -64,9 +65,10 @@ const About = memo(function About() {
             {/* Bio Content */}
             <div className='space-y-4 md:space-y-6 text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed'>
               <p>
-                λstepweaver is a one‑man skunkworks where code, data, and story
+                <GlitchLambda className='text-terminal-text' />
+                stepweaver is a one‑man skunkworks where code, data, and story
                 collide to drag "someday" ideas into shipping‑today reality. The
-                journey begins 30,000 ft up with an Airborne Cryptologic
+                journey begins 30,000 ft up with an Airborne Cryptologic
                 Linguist tuned to patterns most people never hear. Degrees in
                 Communication and Business followed, then a decade as a business
                 analyst wrestling chaotic hospitality and university data into
@@ -75,11 +77,12 @@ const About = memo(function About() {
 
               <p>
                 Those years forged one conviction: every problem is an
-                unfinished conversation between systems - λstepweaver builds the
-                dialogue. Whether piping real‑time numbers into margin models,
-                spinning up a new site before lunch, or automating AI‑driven
-                marketing videos, our north star remains digital leverage: more
-                clarity, fewer keystrokes, faster wins.
+                unfinished conversation between systems-
+                <GlitchLambda className='text-terminal-text' />
+                stepweaver builds the dialogue. Whether piping real‑time numbers
+                into margin models, spinning up a new site before lunch, or
+                automating AI‑driven marketing videos, our north star remains
+                digital leverage: more clarity, fewer keystrokes, faster wins.
               </p>
             </div>
 

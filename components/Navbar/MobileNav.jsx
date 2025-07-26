@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from '@/styles/terminal-ui.module.css';
 import terminalStyles from '@/styles/terminal.module.css';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [animatedItems, setAnimatedItems] = useState([]);
-  const [isGlitching, setIsGlitching] = useState(false);
   const pathname = usePathname();
 
   const navLinks = [
@@ -60,24 +60,6 @@ export default function MobileNav() {
     };
   }, [isOpen]);
 
-  // Glitch effect for lambda symbol
-  useEffect(() => {
-    if (isOpen) {
-      const triggerGlitch = () => {
-        setIsGlitching(true);
-        setTimeout(() => setIsGlitching(false), 300);
-      };
-
-      const initialTimeout = setTimeout(triggerGlitch, 1000);
-      const glitchInterval = setInterval(triggerGlitch, 5000);
-
-      return () => {
-        clearTimeout(initialTimeout);
-        clearInterval(glitchInterval);
-      };
-    }
-  }, [isOpen]);
-
   const handleNavClick = (link) => {
     setIsOpen(false);
 
@@ -124,15 +106,7 @@ export default function MobileNav() {
 
           <div className={styles.terminalHeader}>
             <div className='text-xl font-ibm text-terminal-green flex items-center gap-2'>
-              <span
-                className={`${styles.lambdaSymbol} ${
-                  isGlitching
-                    ? styles.lambdaGlitching + ' animate-glitch'
-                    : styles.lambdaNormal
-                }`}
-              >
-                λ
-              </span>
+              <GlitchLambda autoGlitch={isOpen} />
               ~/menu
             </div>
 

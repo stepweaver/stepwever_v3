@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 export default function Hero() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -269,7 +270,8 @@ export default function Hero() {
         </p>
 
         <p className='text-base sm:text-xl md:text-2xl lg:text-3xl text-terminal-text mb-6 sm:mb-10 max-w-4xl ml-auto leading-tight font-ocr'>
-          At λstepweaver, action comes first. We build lean data pipelines,
+          At <GlitchLambda className='text-terminal-text' />
+          stepweaver, action comes first. We build lean data pipelines,
           automations, and high-impact web experiences that slash waste and
           surface profit opportunities in weeks-not quarters.
         </p>
@@ -284,9 +286,7 @@ export default function Hero() {
             href='/terminal'
             className='inline-flex items-center gap-2 sm:gap-3 text-terminal-cyan hover:text-terminal-green transition-all duration-300 font-ibm text-base sm:text-xl md:text-2xl hover:scale-105'
           >
-            <span className='text-terminal-green text-lg sm:text-2xl md:text-3xl'>
-              λ
-            </span>
+            <GlitchLambda className='text-terminal-green text-lg sm:text-2xl md:text-3xl' />
             <span className='font-bold whitespace-nowrap'>
               Try our interactive terminal
             </span>

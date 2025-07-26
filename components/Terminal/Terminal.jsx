@@ -11,6 +11,7 @@ import { handleCommand } from './commands';
 import { useCommandHistory } from './hooks/useCommandHistory';
 import { useRouter } from 'next/navigation';
 import styles from '../../styles/terminal.module.css';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 // Utility functions for command processing
 const handleClearCommand = (welcomeMessages, setLines, setInput) => {
@@ -629,11 +630,9 @@ const Terminal = forwardRef((props, ref) => {
           <div key={i} className='mb-1'>
             {line.startsWith('λ ') ? (
               <span className='flex items-center'>
-                <span
+                <GlitchLambda
                   className={`text-terminal-green text-xs inline-block mr-1 ${styles.crtText}`}
-                >
-                  λ
-                </span>
+                />
                 <span className={`text-terminal-text ${styles.crtText}`}>
                   {line.substring(2)}
                 </span>
@@ -664,11 +663,9 @@ const Terminal = forwardRef((props, ref) => {
           user@stepweaver.dev {currentPath}
         </div>
         <div className='flex items-center'>
-          <span
+          <GlitchLambda
             className={`text-terminal-green text-xs inline-block mr-1 ${styles.crtText}`}
-          >
-            λ
-          </span>
+          />
           <div className='relative flex-grow'>
             <div className='relative'>
               {/* Simple text before cursor */}
