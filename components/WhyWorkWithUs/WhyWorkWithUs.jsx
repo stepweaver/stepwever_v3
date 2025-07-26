@@ -8,7 +8,7 @@ const WhyWorkWithUs = memo(() => {
     {
       title: 'Cut through, not just corners',
       description:
-        'λstepweaver operates on ruthless efficiency-every sprint is focused, every automation is deliberate, and every result is measured in real impact. No fluff. No long-winded strategy decks. Just precision moves that push your business forward-fast.',
+        '<GlitchLambda className='text-terminal-text' />stepweaver operates on ruthless efficiency-every sprint is focused, every automation is deliberate, and every result is measured in real impact. No fluff. No long-winded strategy decks. Just precision moves that push your business forward-fast.',
     },
     {
       title: 'Ship while others are still talking',
