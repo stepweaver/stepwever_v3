@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from '@/styles/terminal-ui.module.css';
+import animationStyles from '@/styles/animations.module.css';
 
 export default function GlitchLambda({
   className = '',
@@ -16,19 +17,50 @@ export default function GlitchLambda({
   useEffect(() => {
     if (!autoGlitch) return;
 
-    const triggerGlitch = () => {
-      setIsGlitching(true);
-      setTimeout(() => setIsGlitching(false), 300);
+    const getGlitchDuration = () => {
+      switch (size) {
+        case 'large':
+          return 400;
+        case 'xl':
+          return 500;
+        default:
+          return 300;
+      }
     };
 
-    const initialTimeout = setTimeout(triggerGlitch, initialDelay);
-    const glitchIntervalTimer = setInterval(triggerGlitch, glitchInterval);
+    // Add randomization to stagger glitches between multiple instances
+    const getRandomizedDelay = (baseDelay) => {
+      // Add ±30% randomization to the delay
+      const variation = baseDelay * 0.3;
+      return baseDelay + (Math.random() * variation * 2 - variation);
+    };
+
+    const triggerGlitch = () => {
+      setIsGlitching(true);
+      setTimeout(() => setIsGlitching(false), getGlitchDuration());
+    };
+
+    // Randomize initial delay
+    const randomizedInitialDelay = getRandomizedDelay(initialDelay);
+    const initialTimeout = setTimeout(triggerGlitch, randomizedInitialDelay);
+
+    // Set up interval with randomized timing
+    const setupNextGlitch = () => {
+      const randomizedInterval = getRandomizedDelay(glitchInterval);
+      setTimeout(() => {
+        triggerGlitch();
+        setupNextGlitch(); // Schedule the next glitch
+      }, randomizedInterval);
+    };
+
+    // Start the staggered interval after initial delay
+    const intervalTimeout = setTimeout(setupNextGlitch, randomizedInitialDelay);
 
     return () => {
       clearTimeout(initialTimeout);
-      clearInterval(glitchIntervalTimer);
+      clearTimeout(intervalTimeout);
     };
-  }, [autoGlitch, glitchInterval, initialDelay]);
+  }, [autoGlitch, glitchInterval, initialDelay, size]);
 
   // Determine glitch animation class based on size
   const getGlitchClass = () => {
@@ -36,13 +68,13 @@ export default function GlitchLambda({
 
     switch (size) {
       case 'small':
-        return 'animate-glitch';
+        return animationStyles['animate-glitch'];
       case 'large':
-        return 'animate-glitch-large';
+        return animationStyles['animate-glitch-large'];
       case 'xl':
-        return 'animate-glitch-xl';
+        return animationStyles['animate-glitch-xl'];
       default:
-        return 'animate-glitch';
+        return animationStyles['animate-glitch'];
     }
   };
 
