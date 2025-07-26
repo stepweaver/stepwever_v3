@@ -621,7 +621,7 @@ const Terminal = forwardRef((props, ref) => {
   return (
     <div
       ref={containerRef}
-      className={`h-64 sm:h-80 md:h-96 overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-xs sm:text-sm md:text-base text-terminal-text font-ibm leading-relaxed cursor-text ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
+      className={`h-96 sm:h-[32rem] md:h-[40rem] lg:h-[48rem] overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-sm sm:text-base md:text-lg text-terminal-text font-ibm leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
       onClick={focusInput}
     >
       <div className='terminal-output mb-4' onClick={handleContentClick}>

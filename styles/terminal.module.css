@@ -314,13 +314,14 @@
   }
 }
 
-/* Terminal line with no wrapping and ellipsis */
+/* Terminal line with wrapping for better readability */
 .terminalNoWrap {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   max-width: 100%;
   display: block;
+  min-width: 0;
 }
 
 /* Custom green terminal ellipsis */
@@ -337,6 +338,16 @@
   padding-left: 5px;
   background-color: var(--color-terminal-dark);
   color: var(--color-terminal-green);
+}
+
+/* Terminal line with horizontal scrolling for long lines */
+.terminalScroll {
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  display: block;
+  min-width: 0;
 }
 
 /* Setting ellipsis color using mask technique */
