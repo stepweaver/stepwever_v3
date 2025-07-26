@@ -105,7 +105,7 @@ export default function Hero() {
         'Browse orthodontic treatment options and services',
         'View patient testimonials and team information',
       ],
-      link: 'https://spark-ortho.up.railway.app/',
+      link: 'https://lambda-ortho.up.railway.app/',
       tags: ['Web Development', 'Healthcare', 'React'],
     },
     {
