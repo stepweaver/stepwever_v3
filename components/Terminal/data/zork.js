@@ -302,7 +302,7 @@ const handleZorkInventory = (callback) => {
   callback.setLines((prev) => [...prev, `<span class="text-terminal-cyan font-bold">You are carrying:</span>`]);
   zorkGameState.inventory.forEach((itemKey) => {
     const item = zorkGameState.gameItems[itemKey];
-    callback.setLines((prev) => [...prev, `<span class="text-terminal-text ml-4">• A ${item.name}</span>`]);
+    callback.setLines((prev) => [...prev, `<span class="text-terminal-text">• A ${item.name}</span>`]);
   });
 };
 
@@ -375,7 +375,7 @@ const handleZorkOpen = (itemName, callback) => {
     callback.setLines((prev) => [...prev, `<span class="text-terminal-cyan">Opening the ${item.name} reveals:</span>`]);
     item.contains.forEach((containedItem) => {
       const containedItemObj = zorkGameState.gameItems[containedItem];
-      callback.setLines((prev) => [...prev, `<span class="text-terminal-yellow ml-4">• A ${containedItemObj.name}</span>`]);
+      callback.setLines((prev) => [...prev, `<span class="text-terminal-yellow">• A ${containedItemObj.name}</span>`]);
     });
   }
 
@@ -483,7 +483,7 @@ const handleZorkMoveItem = (itemName, callback) => {
     callback.setLines((prev) => [...prev, `<span class="text-terminal-cyan">Moving the ${item.name} reveals:</span>`]);
     item.under.forEach((hiddenItem) => {
       const hiddenItemObj = zorkGameState.gameItems[hiddenItem];
-      callback.setLines((prev) => [...prev, `<span class="text-terminal-yellow ml-4">• A ${hiddenItemObj.name}</span>`]);
+      callback.setLines((prev) => [...prev, `<span class="text-terminal-yellow">• A ${hiddenItemObj.name}</span>`]);
     });
   } else {
     callback.setLines((prev) => [...prev, `<span class="text-terminal-text">You move the ${item.name}, but find nothing underneath.</span>`]);

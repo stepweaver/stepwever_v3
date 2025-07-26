@@ -278,9 +278,9 @@ const Terminal = forwardRef((props, ref) => {
           `<span class="text-terminal-text">${command.trim()}</span>`,
           ``,
           `<span class="text-terminal-green">Contact Form Summary:</span>`,
-          `<span class="text-terminal-text ml-4">Name: ${contactData.name}</span>`,
-          `<span class="text-terminal-text ml-4">Email: ${contactData.email}</span>`,
-          `<span class="text-terminal-text ml-4">Message: ${command.trim()}</span>`,
+          `<span class="text-terminal-text">Name: ${contactData.name}</span>`,
+          `<span class="text-terminal-text">Email: ${contactData.email}</span>`,
+          `<span class="text-terminal-text">Message: ${command.trim()}</span>`,
           ``,
           `<span class="text-terminal-cyan">Type 'send' to submit or 'cancel' to abort</span>`,
         ]);
@@ -644,13 +644,13 @@ const Terminal = forwardRef((props, ref) => {
             ) : line.startsWith('<span') || line.startsWith('<div') ? (
               <pre
                 ref={(el) => addPreRef(`html-${i}`, el)}
-                className={`${styles.terminalNoWrap} leading-tight font-ibm ${styles.crtText}`}
+                className={`${styles.terminalHtml} leading-tight font-ibm ${styles.crtText}`}
                 dangerouslySetInnerHTML={{ __html: line }}
               />
             ) : (
               <pre
                 ref={(el) => addPreRef(`text-${i}`, el)}
-                className={`${styles.terminalNoWrap} leading-tight font-ibm ${styles.crtText}`}
+                className={`${styles.terminalText} leading-tight font-ibm ${styles.crtText}`}
               >
                 {line}
               </pre>

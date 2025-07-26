@@ -33,17 +33,17 @@ export const handleCommand = async (
         `<span class="text-terminal-green">Available Commands:</span>`,
         ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
-        `<span class="text-terminal-text ml-4">cd contact</span> <span class="text-terminal-text">- Go to contact page</span>`,
-        `<span class="text-terminal-text ml-4">cd blog</span> <span class="text-terminal-text">- Go to blog page</span>`,
+        `<span class="text-terminal-text">cd contact - Go to contact page</span>`,
+        `<span class="text-terminal-text">cd blog - Go to blog page</span>`,
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
-        `<span class="text-terminal-text ml-4">weather [location]</span> <span class="text-terminal-text">- Get weather info</span>`,
-        `<span class="text-terminal-text ml-4">resume</span> <span class="text-terminal-text">- View resume</span>`,
-        `<span class="text-terminal-text ml-4">contact</span> <span class="text-terminal-text">- Send message</span>`,
-        `<span class="text-terminal-text ml-4">clear</span> <span class="text-terminal-text">- Clear terminal</span>`,
+        `<span class="text-terminal-text">weather [location] - Get weather info</span>`,
+        `<span class="text-terminal-text">resume - View resume</span>`,
+        `<span class="text-terminal-text">contact - Send message</span>`,
+        `<span class="text-terminal-text">clear - Clear terminal</span>`,
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
-        `<span class="text-terminal-text ml-4">zork</span> <span class="text-terminal-text">- Play ZORK I: The Great Underground Empire</span>`
+        `<span class="text-terminal-text">zork - Play ZORK I: The Great Underground Empire</span>`
       ];
 
     case 'cd':

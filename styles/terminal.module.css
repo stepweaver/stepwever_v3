@@ -322,6 +322,47 @@
   max-width: 100%;
   display: block;
   min-width: 0;
+  text-indent: 0;
+  padding-left: 0;
+  margin-left: 0;
+  /* Ensure wrapped lines start from the left margin like a real terminal */
+  text-align: left;
+}
+
+/* Alternative terminal text style that behaves more like a real terminal */
+.terminalText {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  display: block;
+  min-width: 0;
+  text-indent: 0;
+  padding-left: 0;
+  margin-left: 0;
+  text-align: left;
+  /* Remove any automatic indentation */
+  text-indent: 0;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Terminal HTML content that wraps like a real terminal */
+.terminalHtml {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  display: block;
+  min-width: 0;
+  text-indent: 0;
+  padding-left: 0;
+  margin-left: 0;
+  text-align: left;
+  /* Ensure wrapped lines start from the left margin */
+  text-indent: 0;
+  padding-left: 0;
+  margin-left: 0;
 }
 
 /* Custom green terminal ellipsis */
