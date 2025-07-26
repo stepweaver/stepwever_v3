@@ -105,4 +105,6 @@
 .blinkEffect {
   animation: blink 1s step-end infinite;
   will-change: opacity;
-} 
+}
+
+ 

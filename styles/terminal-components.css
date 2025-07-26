@@ -68,3 +68,26 @@
   animation: cursor-blink 1.2s infinite;
   vertical-align: middle;
 }
+
+/* Smooth Carousel Animations */
+.smooth-carousel {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.smooth-carousel-dragging {
+  transition: none;
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.carousel-item {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}

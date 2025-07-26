@@ -58,7 +58,10 @@ export default function PartnerFeedback() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const carouselRef = useRef(null);
 
   // Check if mobile on mount
   React.useEffect(() => {
@@ -81,11 +84,35 @@ export default function PartnerFeedback() {
   };
 
   const handleTouchStart = (e) => {
+    e.preventDefault();
     setTouchStartX(e.changedTouches[0].screenX);
+    setIsDragging(true);
+    setDragOffset(0);
+    setTouchEndX(null); // Reset touch end to prevent double-swipe
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+
+    e.preventDefault();
+    const currentX = e.changedTouches[0].screenX;
+    const startX = touchStartX;
+    const offset = currentX - startX;
+
+    // Limit the drag offset to prevent over-scrolling
+    const maxOffset = window.innerWidth * 0.3;
+    setDragOffset(Math.max(-maxOffset, Math.min(maxOffset, offset)));
   };
 
   const handleTouchEnd = (e) => {
-    setTouchEndX(e.changedTouches[0].screenX);
+    if (!isDragging) return;
+
+    const endX = e.changedTouches[0].screenX;
+    setTouchEndX(endX);
+    setIsDragging(false);
+    setDragOffset(0);
+
+    // Process swipe immediately
     handleSwipe();
   };
 
@@ -101,8 +128,11 @@ export default function PartnerFeedback() {
       prevTestimonial();
     }
 
+    // Reset all touch states
     setTouchStartX(null);
     setTouchEndX(null);
+    setIsDragging(false);
+    setDragOffset(0);
   };
 
   return (
@@ -148,22 +178,26 @@ export default function PartnerFeedback() {
 
           {/* Carousel Container */}
           <div
+            ref={carouselRef}
             className='overflow-hidden'
             onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
             <div
-              className='flex transition-transform duration-500 ease-in-out'
+              className={`flex ${
+                isDragging ? 'smooth-carousel-dragging' : 'smooth-carousel'
+              }`}
               style={{
-                transform: `translateX(-${
+                transform: `translateX(calc(-${
                   currentIndex * (isMobile ? 100 : 90)
-                }%)`,
+                }% + ${dragOffset}px))`,
               }}
             >
               {testimonials.map((testimonial, index) => (
                 <div
                   key={testimonial.id}
-                  className='w-full md:w-[90%] flex-shrink-0 md:pr-16'
+                  className={`w-full md:w-[90%] flex-shrink-0 md:pr-16 carousel-item`}
                 >
                   <div className='p-4 md:p-8'>
                     <blockquote className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8'>

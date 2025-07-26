@@ -1,12 +1,15 @@
 'use client';
 
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useRef } from 'react';
 
 const SuccessStories = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const carouselRef = useRef(null);
 
   // Check if mobile on mount
   useEffect(() => {
@@ -29,11 +32,35 @@ const SuccessStories = memo(() => {
   };
 
   const handleTouchStart = (e) => {
+    e.preventDefault();
     setTouchStartX(e.changedTouches[0].screenX);
+    setIsDragging(true);
+    setDragOffset(0);
+    setTouchEndX(null); // Reset touch end to prevent double-swipe
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+
+    e.preventDefault();
+    const currentX = e.changedTouches[0].screenX;
+    const startX = touchStartX;
+    const offset = currentX - startX;
+
+    // Limit the drag offset to prevent over-scrolling
+    const maxOffset = window.innerWidth * 0.3;
+    setDragOffset(Math.max(-maxOffset, Math.min(maxOffset, offset)));
   };
 
   const handleTouchEnd = (e) => {
-    setTouchEndX(e.changedTouches[0].screenX);
+    if (!isDragging) return;
+
+    const endX = e.changedTouches[0].screenX;
+    setTouchEndX(endX);
+    setIsDragging(false);
+    setDragOffset(0);
+
+    // Process swipe immediately
     handleSwipe();
   };
 
@@ -49,8 +76,11 @@ const SuccessStories = memo(() => {
       prevStory();
     }
 
+    // Reset all touch states
     setTouchStartX(null);
     setTouchEndX(null);
+    setIsDragging(false);
+    setDragOffset(0);
   };
 
   const stories = [
@@ -116,16 +146,27 @@ const SuccessStories = memo(() => {
 
           {/* Mobile Carousel Container */}
           <div
+            ref={carouselRef}
             className='md:hidden overflow-hidden'
             onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
             <div
-              className='flex transition-transform duration-500 ease-in-out'
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              className={`flex ${
+                isDragging ? 'smooth-carousel-dragging' : 'smooth-carousel'
+              }`}
+              style={{
+                transform: `translateX(calc(-${
+                  currentIndex * 100
+                }% + ${dragOffset}px))`,
+              }}
             >
               {stories.map((story, index) => (
-                <div key={index} className='w-full flex-shrink-0'>
+                <div
+                  key={index}
+                  className={`w-full flex-shrink-0 carousel-item`}
+                >
                   <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group'>
                     {/* Terminal Header */}
                     <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
