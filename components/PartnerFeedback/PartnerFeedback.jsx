@@ -173,7 +173,7 @@ export default function PartnerFeedback() {
           >
             <div
               className={`flex ${
-                isDragging ? 'smooth-carousel-dragging' : 'smooth-carousel'
+                isDragging ? '' : 'transition-transform duration-300 ease-out'
               }`}
               style={{
                 transform: `translateX(calc(-${
@@ -184,7 +184,7 @@ export default function PartnerFeedback() {
               {testimonials.map((testimonial, index) => (
                 <div
                   key={testimonial.id}
-                  className={`w-full md:w-[90%] flex-shrink-0 md:pr-16 carousel-item`}
+                  className={`w-full md:w-[90%] flex-shrink-0 md:pr-16`}
                 >
                   <div className='p-4 md:p-8'>
                     <blockquote className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8'>

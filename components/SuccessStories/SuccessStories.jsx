@@ -141,7 +141,7 @@ const SuccessStories = memo(() => {
           >
             <div
               className={`flex ${
-                isDragging ? 'smooth-carousel-dragging' : 'smooth-carousel'
+                isDragging ? '' : 'transition-transform duration-300 ease-out'
               }`}
               style={{
                 transform: `translateX(calc(-${
@@ -150,10 +150,7 @@ const SuccessStories = memo(() => {
               }}
             >
               {stories.map((story, index) => (
-                <div
-                  key={index}
-                  className={`w-full flex-shrink-0 carousel-item`}
-                >
+                <div key={index} className={`w-full flex-shrink-0`}>
                   <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group'>
                     {/* Terminal Header */}
                     <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
