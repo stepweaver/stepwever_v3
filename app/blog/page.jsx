@@ -47,7 +47,7 @@ export default function CodexPage() {
 
       async function fetchPodcasts() {
         try {
-          const res = await fetch('/api/rss?source=syntaxfm');
+          const res = await fetch(`/api/rss?source=${activeSubTab}`);
           if (!res.ok) {
             throw new Error('Failed to fetch podcast episodes');
           }
@@ -184,6 +184,18 @@ export default function CodexPage() {
       color: 'text-terminal-cyan',
       glowColor: '0, 255, 255',
     },
+    {
+      id: 'itjungle',
+      label: 'IT Jungle',
+      color: 'text-terminal-magenta',
+      glowColor: '255, 85, 255',
+    },
+    {
+      id: 'coming-soon',
+      label: 'Coming Soon',
+      color: 'text-terminal-yellow',
+      glowColor: '255, 255, 0',
+    },
   ];
 
   return (
@@ -276,23 +288,69 @@ export default function CodexPage() {
 
                     {/* Podcast Episodes */}
                     <div className='space-y-12'>
-                      {podcastEpisodes.slice(0, 10).map((episode, index) => (
-                        <PodcastEpisodeItem
-                          key={`${episode.guid || index}`}
-                          episode={episode}
-                          formatDate={formatDate}
-                          getGlowStyle={getGlowStyle}
-                          podcastColor={
-                            podcastSubTabs.find((p) => p.id === activeSubTab)
-                              ?.glowColor || '0, 255, 255'
-                          }
-                        />
-                      ))}
-
-                      {podcastEpisodes.length === 0 && (
-                        <div className='text-center py-12 text-terminal-dimmed'>
-                          <p>No episodes available at the moment.</p>
+                      {activeSubTab === 'coming-soon' ? (
+                        <div className='text-center py-12'>
+                          <div className='text-terminal-yellow text-2xl font-bold mb-4'>
+                            🎧 More Podcasts Coming Soon!
+                          </div>
+                          <p className='text-terminal-text text-lg mb-6'>
+                            I'm curating more amazing podcasts to share with
+                            you.
+                          </p>
+                          <div className='bg-terminal-yellow/10 border border-terminal-yellow/20 rounded-lg p-6 max-w-2xl mx-auto'>
+                            <p className='text-terminal-text'>
+                              Stay tuned for more developer podcasts, tech
+                              discussions, and industry insights. Each podcast
+                              will be carefully selected to provide value and
+                              keep you up-to-date with the latest in web
+                              development and technology.
+                            </p>
+                          </div>
                         </div>
+                      ) : (
+                        <>
+                          {podcastEpisodes
+                            .slice(0, 10)
+                            .map((episode, index) =>
+                              activeSubTab === 'itjungle' ? (
+                                <ArticleItem
+                                  key={`${episode.guid || index}`}
+                                  article={episode}
+                                  formatDate={formatDate}
+                                  getGlowStyle={getGlowStyle}
+                                  articleColor={
+                                    podcastSubTabs.find(
+                                      (p) => p.id === activeSubTab
+                                    )?.glowColor || '255, 85, 255'
+                                  }
+                                />
+                              ) : (
+                                <PodcastEpisodeItem
+                                  key={`${episode.guid || index}`}
+                                  episode={episode}
+                                  formatDate={formatDate}
+                                  getGlowStyle={getGlowStyle}
+                                  podcastColor={
+                                    podcastSubTabs.find(
+                                      (p) => p.id === activeSubTab
+                                    )?.glowColor || '0, 255, 255'
+                                  }
+                                />
+                              )
+                            )}
+
+                          {podcastEpisodes.length === 0 && (
+                            <div className='text-center py-12 text-terminal-dimmed'>
+                              <p>
+                                No{' '}
+                                {activeSubTab === 'itjungle'
+                                  ? 'articles'
+                                  : 'episodes'}{' '}
+                                available at the moment.
+                              </p>
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
@@ -621,6 +679,62 @@ function PodcastEpisodeItem({
         {/* External link indicator */}
         <div className='mt-3 text-terminal-cyan text-sm font-medium'>
           Listen on Syntax.fm →
+        </div>
+      </a>
+    </article>
+  );
+}
+
+// ArticleItem component for IT Jungle articles
+function ArticleItem({ article, formatDate, getGlowStyle, articleColor }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <article className='group'>
+      <a
+        href={article.link}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='block py-0.5 px-2 rounded-sm hover:bg-terminal-dimmed/5 transition-all duration-200'
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Title */}
+        <h2
+          className='text-2xl font-bold mb-2 transition-all duration-200 text-terminal-magenta'
+          style={isHovered ? getGlowStyle(articleColor) : {}}
+        >
+          {article.title}
+        </h2>
+
+        {/* Date */}
+        <div
+          className='text-terminal-text text-sm mb-3 font-medium transition-all duration-200'
+          style={
+            isHovered
+              ? { color: `rgb(${articleColor})`, fontSize: '16px' }
+              : { fontSize: '16px' }
+          }
+        >
+          {formatDate(article.pubDate)}
+        </div>
+
+        {/* Description */}
+        {article.description && (
+          <div
+            className='text-terminal-text mb-3 leading-relaxed transition-all duration-200'
+            dangerouslySetInnerHTML={{
+              __html:
+                article.description.length > 300
+                  ? article.description.substring(0, 300) + '...'
+                  : article.description,
+            }}
+          />
+        )}
+
+        {/* External link indicator */}
+        <div className='mt-3 text-terminal-magenta text-sm font-medium'>
+          Read on IT Jungle →
         </div>
       </a>
     </article>

@@ -19,6 +19,9 @@ export async function GET(request) {
       case 'syntaxfm':
         feedUrl = 'https://feeds.simplecast.com/54nAGcIl';
         break;
+      case 'itjungle':
+        feedUrl = 'https://www.itjungle.com/feed/';
+        break;
       default:
         return NextResponse.json(
           { error: 'Unknown source' },
