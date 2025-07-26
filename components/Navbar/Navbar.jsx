@@ -68,7 +68,7 @@ export default function Navbar() {
               href='/blog'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
             >
-              Blog
+              Codex
             </Link>
             <Link
               href='/contact'

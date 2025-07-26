@@ -2,12 +2,15 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
-export default function BlogPage() {
+export default function CodexPage() {
   const [posts, setPosts] = useState([]);
+  const [podcastEpisodes, setPodcastEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState('blog');
+  const [activeSubTab, setActiveSubTab] = useState(null);
   const [activeHashtags, setActiveHashtags] = useState([]);
 
   // Fetch all posts from API
@@ -34,6 +37,31 @@ export default function BlogPage() {
     fetchPosts();
   }, []);
 
+  // Fetch podcast episodes when podcasts tab is active
+  useEffect(() => {
+    if (activeTab === 'podcasts') {
+      // Set default sub-tab if none is selected
+      if (!activeSubTab) {
+        setActiveSubTab('syntaxfm');
+      }
+
+      async function fetchPodcasts() {
+        try {
+          const res = await fetch('/api/rss?source=syntaxfm');
+          if (!res.ok) {
+            throw new Error('Failed to fetch podcast episodes');
+          }
+          const data = await res.json();
+          setPodcastEpisodes(data.items || []);
+        } catch (error) {
+          console.error('Error fetching podcast episodes:', error);
+          setPodcastEpisodes([]);
+        }
+      }
+      fetchPodcasts();
+    }
+  }, [activeTab, activeSubTab]);
+
   // Sort all posts by date descending
   const allPosts = useMemo(() => {
     return [...posts].sort((a, b) => {
@@ -46,10 +74,7 @@ export default function BlogPage() {
   // Get all unique hashtags for filter buttons
   const filteredHashtags = useMemo(() => {
     const tags = new Set();
-    const relevantPosts =
-      activeTab === 'all'
-        ? allPosts
-        : allPosts.filter((post) => post.type === activeTab);
+    const relevantPosts = allPosts.filter((post) => post.type === activeTab);
 
     relevantPosts.forEach((post) => {
       if (post.hashtags) {
@@ -61,12 +86,7 @@ export default function BlogPage() {
 
   // Filter content based on selected filters
   const filteredPosts = useMemo(() => {
-    let result = allPosts;
-
-    // First filter by type if not 'all'
-    if (activeTab !== 'all') {
-      result = result.filter((post) => post.type === activeTab);
-    }
+    let result = allPosts.filter((post) => post.type === activeTab);
 
     // Then filter by hashtags if any are selected
     if (activeHashtags.length > 0) {
@@ -149,12 +169,21 @@ export default function BlogPage() {
   };
 
   const tabs = [
-    { id: 'all', label: 'All' },
     { id: 'blog', label: 'Blog' },
     { id: 'project', label: 'Projects' },
     { id: 'article', label: 'Articles' },
     { id: 'tool', label: 'Tools' },
     { id: 'community', label: 'Community' },
+    { id: 'podcasts', label: 'Podcasts' },
+  ];
+
+  const podcastSubTabs = [
+    {
+      id: 'syntaxfm',
+      label: 'Syntax.fm',
+      color: 'text-terminal-cyan',
+      glowColor: '0, 255, 255',
+    },
   ];
 
   return (
@@ -167,10 +196,43 @@ export default function BlogPage() {
             <h1 className='text-5xl md:text-6xl font-bold text-terminal-green mb-8 md:mb-20 font-ibm'>
               Stephen Weaver
             </h1>
-            <p className='text-terminal-text text-lg md:text-3xl leading-relaxed'>
-              Hey, what's up? I'm Stephen, founder of λstepweaver and creator of
-              growth systems for rebels who ship.
+            <p className='max-w-5xl mx-auto text-terminal-text text-lg md:text-4xl leading-relaxed'>
+              I'm Stephen, founder of{' '}
+              <GlitchLambda className='text-terminal-text' />
+              stepweaver. I don't follow the script-I build my own and help
+              others do the same.
             </p>
+          </div>
+
+          {/* Breadcrumbs */}
+          <div className='mb-8 text-2xl'>
+            <nav className='flex items-center font-ibm text-terminal-green'>
+              <span className='text-terminal-green'>user@stepweaver:~$</span>
+              <span className='text-terminal-text ml-2'>cd</span>
+              <button
+                onClick={() => {
+                  setActiveTab('blog');
+                  setActiveSubTab(null);
+                  setActiveHashtags([]);
+                }}
+                className='text-terminal-text hover:text-terminal-green transition-colors cursor-pointer ml-1'
+              >
+                /codex
+              </button>
+              <span className='text-terminal-dimmed'>/</span>
+              <span className='text-terminal-text capitalize'>{activeTab}</span>
+              {activeTab === 'podcasts' && activeSubTab && (
+                <>
+                  <span className='text-terminal-dimmed'>/</span>
+                  <span className='text-terminal-text'>
+                    {podcastSubTabs
+                      .find((tab) => tab.id === activeSubTab)
+                      ?.label.toLowerCase()}
+                  </span>
+                </>
+              )}
+              <span className='text-terminal-green ml-2 animate-blink'>_</span>
+            </nav>
           </div>
 
           {/* Display loading or error state */}
@@ -188,33 +250,80 @@ export default function BlogPage() {
             <div className='flex flex-col lg:flex-row gap-8'>
               {/* Main Content */}
               <div className='flex-1 max-w-4xl'>
-                <div className='space-y-20'>
-                  {filteredPosts.map((post, index) => (
-                    <PostItem
-                      key={`${post.slug}-${index}`}
-                      post={post}
-                      formatDate={formatDate}
-                      getTypeColor={getTypeColor}
-                      getGlowStyle={getGlowStyle}
-                      getTypeColorValue={getTypeColorValue}
-                    />
-                  ))}
-
-                  {filteredPosts.length === 0 && (
-                    <div className='text-center py-12 text-terminal-dimmed'>
-                      <p>No posts found with the current filters.</p>
-                      <button
-                        onClick={() => {
-                          setActiveTab('all');
-                          setActiveHashtags([]);
-                        }}
-                        className='text-terminal-green hover:text-terminal-white transition-colors mt-2 cursor-pointer'
-                      >
-                        Clear filters
-                      </button>
+                {activeTab === 'podcasts' ? (
+                  <div className='space-y-8'>
+                    {/* Podcast Sub-tabs */}
+                    <div className='mb-8'>
+                      <div className='flex flex-wrap gap-2'>
+                        {podcastSubTabs.map((subTab) => (
+                          <button
+                            key={subTab.id}
+                            onClick={() => setActiveSubTab(subTab.id)}
+                            className={`
+                              px-4 py-2 rounded transition-all duration-200 cursor-pointer font-ibm
+                              ${
+                                activeSubTab === subTab.id
+                                  ? `${subTab.color} bg-terminal-cyan/10 border border-terminal-cyan/20 shadow-lg shadow-terminal-cyan/20`
+                                  : 'text-terminal-text hover:text-terminal-cyan hover:bg-terminal-dimmed/10 border border-transparent'
+                              }
+                            `}
+                          >
+                            <span className='font-medium'>{subTab.label}</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  )}
-                </div>
+
+                    {/* Podcast Episodes */}
+                    <div className='space-y-12'>
+                      {podcastEpisodes.slice(0, 10).map((episode, index) => (
+                        <PodcastEpisodeItem
+                          key={`${episode.guid || index}`}
+                          episode={episode}
+                          formatDate={formatDate}
+                          getGlowStyle={getGlowStyle}
+                          podcastColor={
+                            podcastSubTabs.find((p) => p.id === activeSubTab)
+                              ?.glowColor || '0, 255, 255'
+                          }
+                        />
+                      ))}
+
+                      {podcastEpisodes.length === 0 && (
+                        <div className='text-center py-12 text-terminal-dimmed'>
+                          <p>No episodes available at the moment.</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className='space-y-20'>
+                    {filteredPosts.map((post, index) => (
+                      <PostItem
+                        key={`${post.slug}-${index}`}
+                        post={post}
+                        formatDate={formatDate}
+                        getTypeColor={getTypeColor}
+                        getGlowStyle={getGlowStyle}
+                        getTypeColorValue={getTypeColorValue}
+                      />
+                    ))}
+
+                    {filteredPosts.length === 0 && (
+                      <div className='text-center py-12 text-terminal-dimmed'>
+                        <p>No posts found with the current filters.</p>
+                        <button
+                          onClick={() => {
+                            setActiveHashtags([]);
+                          }}
+                          className='text-terminal-green hover:text-terminal-white transition-colors mt-2 cursor-pointer'
+                        >
+                          Clear filters
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Categories and Tags moved to bottom on mobile only */}
                 <div className='mt-16 pt-8 border-t border-terminal-dimmed/20 lg:hidden'>
@@ -226,8 +335,8 @@ export default function BlogPage() {
                     <div className='flex flex-wrap gap-2'>
                       {tabs.map((tab) => {
                         const count =
-                          tab.id === 'all'
-                            ? allPosts.length
+                          tab.id === 'podcasts'
+                            ? podcastEpisodes.length
                             : allPosts.filter((post) => post.type === tab.id)
                                 .length;
                         return (
@@ -268,7 +377,9 @@ export default function BlogPage() {
                         {filteredHashtags.map((tag) => {
                           const count = allPosts.filter(
                             (post) =>
-                              post.hashtags && post.hashtags.includes(tag)
+                              post.type === activeTab &&
+                              post.hashtags &&
+                              post.hashtags.includes(tag)
                           ).length;
                           return (
                             <button
@@ -303,8 +414,8 @@ export default function BlogPage() {
                   <div className='space-y-2'>
                     {tabs.map((tab) => {
                       const count =
-                        tab.id === 'all'
-                          ? allPosts.length
+                        tab.id === 'podcasts'
+                          ? podcastEpisodes.length
                           : allPosts.filter((post) => post.type === tab.id)
                               .length;
                       return (
@@ -342,7 +453,10 @@ export default function BlogPage() {
                     <div className='flex flex-wrap gap-2'>
                       {filteredHashtags.map((tag) => {
                         const count = allPosts.filter(
-                          (post) => post.hashtags && post.hashtags.includes(tag)
+                          (post) =>
+                            post.type === activeTab &&
+                            post.hashtags &&
+                            post.hashtags.includes(tag)
                         ).length;
                         return (
                           <button
@@ -440,6 +554,74 @@ function PostItem({
             ))}
           </div>
         )}
+      </a>
+    </article>
+  );
+}
+
+// PodcastEpisodeItem component
+function PodcastEpisodeItem({
+  episode,
+  formatDate,
+  getGlowStyle,
+  podcastColor,
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <article className='group'>
+      <a
+        href={episode.link}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='block py-0.5 px-2 rounded-sm hover:bg-terminal-dimmed/5 transition-all duration-200'
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Title */}
+        <h2
+          className='text-2xl font-bold mb-2 transition-all duration-200 text-terminal-cyan'
+          style={isHovered ? getGlowStyle(podcastColor) : {}}
+        >
+          {episode.title}
+        </h2>
+
+        {/* Date */}
+        <div
+          className='text-terminal-text text-sm mb-3 font-medium transition-all duration-200'
+          style={
+            isHovered
+              ? { color: `rgb(${podcastColor})`, fontSize: '16px' }
+              : { fontSize: '16px' }
+          }
+        >
+          {formatDate(episode.pubDate)}
+        </div>
+
+        {/* Description */}
+        {episode.description && (
+          <div
+            className='text-terminal-text mb-3 leading-relaxed transition-all duration-200'
+            dangerouslySetInnerHTML={{
+              __html:
+                episode.description.length > 300
+                  ? episode.description.substring(0, 300) + '...'
+                  : episode.description,
+            }}
+          />
+        )}
+
+        {/* Duration */}
+        {episode.duration && (
+          <div className='text-terminal-dimmed text-sm font-medium'>
+            Duration: {episode.duration}
+          </div>
+        )}
+
+        {/* External link indicator */}
+        <div className='mt-3 text-terminal-cyan text-sm font-medium'>
+          Listen on Syntax.fm →
+        </div>
       </a>
     </article>
   );
