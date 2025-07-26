@@ -35,7 +35,6 @@
 /* Lambda Symbol Styles */
 .lambdaSymbol {
   display: inline-block;
-  margin-right: 0.25rem;
   font-weight: bold;
   transition: color 0.1s ease;
 }

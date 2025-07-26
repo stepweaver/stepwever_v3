@@ -72,7 +72,7 @@ const ComparisonSection = forwardRef((props, ref) => {
             <div>
               <div className='flex items-center mb-2'>
                 <GlitchLambda className='text-terminal-green font-ibm text-lg' />
-                <h4 className='text-terminal-green font-ibm text-sm ml-1'>
+                <h4 className='text-terminal-green font-ibm text-sm'>
                   stepweaver
                 </h4>
               </div>
