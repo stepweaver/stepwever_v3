@@ -35,7 +35,6 @@ const SuccessStories = memo(() => {
     setTouchStartX(e.changedTouches[0].screenX);
     setIsDragging(true);
     setDragOffset(0);
-    setTouchEndX(null); // Reset touch end to prevent double-swipe
   };
 
   const handleTouchMove = (e) => {
@@ -54,19 +53,9 @@ const SuccessStories = memo(() => {
     if (!isDragging) return;
 
     const endX = e.changedTouches[0].screenX;
-    setTouchEndX(endX);
-    setIsDragging(false);
-    setDragOffset(0);
-
-    // Process swipe immediately
-    handleSwipe();
-  };
-
-  const handleSwipe = () => {
-    if (touchStartX === null || touchEndX === null) return;
-
-    const swipeThreshold = 50; // Minimum distance for a swipe
-    const distance = touchStartX - touchEndX;
+    const startX = touchStartX;
+    const distance = startX - endX;
+    const swipeThreshold = 50;
 
     if (distance > swipeThreshold) {
       nextStory();
