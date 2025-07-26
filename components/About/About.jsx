@@ -8,11 +8,11 @@ const About = memo(function About() {
         {/* Two Column Layout - Bio Card and Content Side by Side */}
         <div className='flex flex-col lg:flex-row gap-12 lg:gap-16'>
           {/* Bio Card */}
-          <div className='lg:w-1/3 lg:flex-shrink-0'>
-            <div className='max-w-md mx-auto lg:mx-0'>
-              <div className='p-6 lg:p-8'>
+          <div className='lg:w-1/3 lg:flex-shrink-0 flex justify-center lg:justify-start'>
+            <div className='max-w-md w-full'>
+              <div className='p-6 lg:p-8 text-center'>
                 {/* Profile Image */}
-                <div className='mb-6'>
+                <div className='mb-6 flex justify-center'>
                   <div className='relative w-48 h-48 rounded-xl overflow-hidden'>
                     <Image
                       src='/images/pixarMe.png'
@@ -37,10 +37,8 @@ const About = memo(function About() {
                     <li>Developer</li>
                     <li>Data Strategist</li>
                     <li>Veteran</li>
+                    <li><span className='text-terminal-text font-ocr text-base leading-relaxed mb-6 italic'>Rebel</span></li>
                   </ul>
-                  <p className='text-terminal-text font-ocr text-base leading-relaxed mb-6 italic'>
-                    (Rebel at heart)
-                  </p>
                 </div>
               </div>
             </div>
@@ -51,7 +49,7 @@ const About = memo(function About() {
             {/* Section Header */}
             <div className='mb-12 md:mb-16'>
               <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
-                λabout
+                ABOUT US
               </h2>
             </div>
             {/* Headline */}

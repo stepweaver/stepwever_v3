@@ -3,7 +3,7 @@ const displayResume = () => {
   return [
     `<span class="text-terminal-green">Stephen Weaver - λstepweaver</span>`,
     `<span class="text-terminal-text">Founder & Principal Consultant</span>`,
-    `<span class="text-terminal-text">Veteran • Data Strategist • Rebel at heart</span>`,
+    `<span class="text-terminal-text">Veteran • Data Strategist • Rebel</span>`,
     ``,
     `<span class="text-terminal-cyan">Experience:</span>`,
     ``,
