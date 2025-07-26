@@ -84,7 +84,6 @@ export default function PartnerFeedback() {
   };
 
   const handleTouchStart = (e) => {
-    e.preventDefault();
     setTouchStartX(e.changedTouches[0].screenX);
     setIsDragging(true);
     setDragOffset(0);
@@ -94,7 +93,6 @@ export default function PartnerFeedback() {
   const handleTouchMove = (e) => {
     if (!isDragging) return;
 
-    e.preventDefault();
     const currentX = e.changedTouches[0].screenX;
     const startX = touchStartX;
     const offset = currentX - startX;
