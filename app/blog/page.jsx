@@ -163,9 +163,9 @@ export default function BlogPage() {
       <div className='relative z-10 p-4'>
         <div className='max-w-7xl mx-auto'>
           {/* Page Title */}
-          <div className='text-center mt-16 mb-16'>
-            <h1 className='text-5xl md:text-6xl font-bold text-terminal-green mb-8 md:mb-16 font-ibm'>
-              λBlog
+          <div className='text-center mt-20 mb-36'>
+            <h1 className='text-5xl md:text-6xl font-bold text-terminal-green mb-8 md:mb-20 font-ibm'>
+              Stephen Weaver
             </h1>
             <p className='text-terminal-text text-lg md:text-3xl leading-relaxed'>
               Hey, what's up? I'm Stephen, founder of λstepweaver and creator of
@@ -187,8 +187,8 @@ export default function BlogPage() {
           ) : (
             <div className='flex flex-col lg:flex-row gap-8'>
               {/* Main Content */}
-              <div className='flex-1 max-w-3xl'>
-                <div className='space-y-8'>
+              <div className='flex-1 max-w-4xl'>
+                <div className='space-y-20'>
                   {filteredPosts.map((post, index) => (
                     <PostItem
                       key={`${post.slug}-${index}`}
@@ -294,7 +294,7 @@ export default function BlogPage() {
               </div>
 
               {/* Sidebar - Categories and Tags on desktop only */}
-              <div className='w-64 flex-shrink-0 hidden lg:block'>
+              <div className='w-72 flex-shrink-0 hidden lg:block'>
                 {/* Categories */}
                 <div className='mb-8'>
                   <h3 className='text-terminal-text font-bold uppercase text-sm mb-4'>
