@@ -12,7 +12,7 @@ const WhyWorkWithUs = memo(() => {
     {
       title: 'Ship while others are still talking',
       description:
-        'Where traditional teams are stuck in endless meetings and approvals, λstepweaver builds, tests, and ships on a feedback loop so tight you’ll be iterating before most agencies would have finished onboarding. You get results in days, not months-because moving fast is the competitive edge.',
+        'Where traditional teams are stuck in endless meetings and approvals, <GlitchLambda className='text-terminal-text' />stepweaver builds, tests, and ships on a feedback loop so tight you’ll be iterating before most agencies would have finished onboarding. You get results in days, not months-because moving fast is the competitive edge.',
     },
     {
       title: 'One mind, all-in',
