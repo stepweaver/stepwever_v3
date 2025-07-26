@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Footer() {
   const [currentYear, setCurrentYear] = useState('');
@@ -27,12 +28,12 @@ export default function Footer() {
               Growth systems for rebels who ship.
             </p>
 
-            <a
-              href='mailto:inquiries@stepweaver.dev'
+            <Link
+              href='/contact'
               className='text-lg md:text-xl lg:text-4xl text-terminal-green font-ibm hover:text-terminal-white transition-colors duration-200'
             >
               inquiries@stepweaver.dev
-            </a>
+            </Link>
           </div>
         </div>
       </div>
