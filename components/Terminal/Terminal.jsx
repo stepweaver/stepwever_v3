@@ -101,6 +101,10 @@ const Terminal = forwardRef((props, ref) => {
   const [selectionLocation, setSelectionLocation] = useState('');
   const [selectionOptions, setSelectionOptions] = useState([]);
 
+  // Blog selection mode state
+  const [isBlogSelectionMode, setIsBlogSelectionMode] = useState(false);
+  const [blogSelectionPosts, setBlogSelectionPosts] = useState([]);
+
   // Contact form state
   const [isInContactMode, setIsInContactMode] = useState(false);
   const [contactStep, setContactStep] = useState(0);
@@ -429,6 +433,46 @@ const Terminal = forwardRef((props, ref) => {
       }
     }
 
+    // Blog selection mode: if user enters a number, open that blog post
+    if (isBlogSelectionMode) {
+      const selectionNumber = parseInt(command.trim());
+      if (
+        !isNaN(selectionNumber) &&
+        selectionNumber >= 1 &&
+        selectionNumber <= blogSelectionPosts.length
+      ) {
+        const selectedPost = blogSelectionPosts[selectionNumber - 1];
+        setIsBlogSelectionMode(false);
+        setBlogSelectionPosts([]);
+        // Show loading and then fetch the post
+        setLines((prev) => [
+          ...prev,
+          `<span class="text-terminal-yellow">Opening post: ${selectedPost.title}...</span>`,
+        ]);
+        setInput('');
+        setCursorPosition(0);
+        // Run the blog [slug] command
+        const output = await handleCommand(
+          `blog ${selectedPost.slug}`,
+          currentPath,
+          setCurrentPath,
+          {
+            setLines,
+            setInput,
+            router,
+          }
+        );
+        updateRegularOutput(output, setLines);
+        setInput('');
+        setCursorPosition(0);
+        return;
+      } else {
+        setIsBlogSelectionMode(false);
+        setBlogSelectionPosts([]);
+        // If not a valid number, treat as normal command
+      }
+    }
+
     // Special handling for clear command
     if (command.trim().toLowerCase() === 'clear') {
       handleClearCommand(welcomeMessages, setLines, setInput);
@@ -508,6 +552,39 @@ const Terminal = forwardRef((props, ref) => {
       setIsInContactMode(true);
       setContactStep(0);
     } else {
+      // Detect if this was a blog list command and enable blog selection mode
+      if (cmd === 'blog list' && Array.isArray(output)) {
+        // Parse the output to extract post slugs and titles
+        // We'll rely on the fact that the output is generated in blog.js
+        // Find all lines with: <span class="text-terminal-cyan">N.</span> <span class="text-terminal-text">Title</span>
+        const posts = [];
+        let lastTitle = '';
+        let lastSlug = '';
+        for (let i = 0; i < output.length; i++) {
+          const line = output[i];
+          const match = line.match(
+            /<span style="color: var\(--color-terminal-cyan\)">(\d+)\.<\/span> <span style="color: var\(--color-terminal-text\)">(.+?)<\/span>/
+          );
+          if (match) {
+            lastTitle = match[2];
+          }
+          const slugLine = output[i + 2];
+          if (slugLine && slugLine.includes('Slug:')) {
+            const slugMatch = slugLine.match(/Slug: ([^<]+)/);
+            if (slugMatch) {
+              lastSlug = slugMatch[1].trim();
+              posts.push({ title: lastTitle, slug: lastSlug });
+            }
+          }
+        }
+        if (posts.length > 0) {
+          setIsBlogSelectionMode(true);
+          setBlogSelectionPosts(posts);
+        }
+      } else {
+        setIsBlogSelectionMode(false);
+        setBlogSelectionPosts([]);
+      }
       updateRegularOutput(output, setLines);
     }
 
@@ -641,7 +718,7 @@ const Terminal = forwardRef((props, ref) => {
               <span className={`text-terminal-green ${styles.crtText}`}>
                 {line}
               </span>
-            ) : line.startsWith('<span') || line.startsWith('<div') ? (
+            ) : line.includes('<span') || line.includes('<div') ? (
               <pre
                 ref={(el) => addPreRef(`html-${i}`, el)}
                 className={`${styles.terminalHtml} leading-tight font-ibm ${styles.crtText}`}

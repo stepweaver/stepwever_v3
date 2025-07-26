@@ -5,6 +5,7 @@ import { handleNavigationCommand } from '../data/navigation.js';
 import { fetchWeather, fetchWeatherWithGeolocation } from '../data/weather.js';
 import { displayResume, displayContactForm } from '../data/content.js';
 import { handleZorkCommand, startZorkGame, getZorkGameState } from '../data/zork.js';
+import { handleBlogList, handleBlogPost } from '../data/blog.js';
 
 
 
@@ -40,6 +41,8 @@ export const handleCommand = async (
         `<span class="text-terminal-text">weather [location] - Get weather info</span>`,
         `<span class="text-terminal-text">resume - View resume</span>`,
         `<span class="text-terminal-text">contact - Send message</span>`,
+        `<span class="text-terminal-text">blog list - List recent blog posts</span>`,
+        `<span class="text-terminal-text">blog [slug] - Open a post directly in the terminal</span>`,
         `<span class="text-terminal-text">clear - Clear terminal</span>`,
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
@@ -84,6 +87,13 @@ export const handleCommand = async (
         callback.setInput('');
       }
       return [];
+
+    case 'blog':
+      const blogArg = args[0];
+      if (!blogArg || blogArg === 'list') {
+        return await handleBlogList();
+      }
+      return await handleBlogPost(blogArg);
 
     case 'zork':
       startZorkGame(callback);
