@@ -1,6 +1,7 @@
 'use client';
 
 import { memo } from 'react';
+import GlitchLambda from '@components/ui/GlitchLambda';
 
 const WhyWorkWithUs = memo(() => {
   const reasons = [
