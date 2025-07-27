@@ -5,7 +5,6 @@ import { handleNavigationCommand } from '../data/navigation.js';
 import { fetchWeather, fetchWeatherWithGeolocation } from '../data/weather.js';
 import { displayResume, displayContactForm } from '../data/content.js';
 import { handleZorkCommand, startZorkGame, getZorkGameState } from '../data/zork.js';
-import { handleBlogList, handleBlogPost } from '../data/blog.js';
 
 
 
@@ -33,17 +32,18 @@ export const handleCommand = async (
       return [
         `<span class="text-terminal-green">Available Commands:</span>`,
         ``,
+        `<span class="text-terminal-cyan">System:</span>`,
+        `<span class="text-terminal-text">clear - Clear terminal screen</span>`,
+        `<span class="text-terminal-text">cancel - Exit current form or selection</span>`,
+        ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
         `<span class="text-terminal-text">cd contact - Go to contact page</span>`,
-        `<span class="text-terminal-text">cd blog - Go to blog page</span>`,
+        `<span class="text-terminal-text">cd codex - Go to blog page</span>`,
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
         `<span class="text-terminal-text">weather [location] - Get weather info</span>`,
         `<span class="text-terminal-text">resume - View resume</span>`,
         `<span class="text-terminal-text">contact - Send message</span>`,
-        `<span class="text-terminal-text">blog list - List recent blog posts</span>`,
-        `<span class="text-terminal-text">blog [slug] - Open a post directly in the terminal</span>`,
-        `<span class="text-terminal-text">clear - Clear terminal</span>`,
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
         `<span class="text-terminal-text">zork - Play ZORK I: The Great Underground Empire</span>`
@@ -55,10 +55,12 @@ export const handleCommand = async (
         return [`<span class="text-terminal-red">Usage: cd [destination]</span>`];
       }
 
-      const validDestinations = ['contact', 'blog', 'github'];
+      const validDestinations = ['contact', 'codex', 'github'];
       if (validDestinations.includes(destination)) {
         if (callback && callback.setLines && callback.setInput && callback.router) {
-          handleNavigationCommand(destination, currentPath, callback);
+          // Map 'codex' to 'blog' for navigation
+          const navDestination = destination === 'codex' ? 'blog' : destination;
+          handleNavigationCommand(navDestination, currentPath, callback);
         } else {
           return [`<span class="text-terminal-red">Navigation not available</span>`];
         }
@@ -73,27 +75,42 @@ export const handleCommand = async (
         // No location provided, try to get user's location
         return await fetchWeatherWithGeolocation();
       }
-      return await fetchWeather(weatherArgs);
+
+      const weatherOutput = await fetchWeather(weatherArgs);
+
+      // Check if this is a selection list (multiple locations found)
+      if (
+        weatherOutput &&
+        weatherOutput.length > 0 &&
+        weatherOutput.some((line) => line.includes('Type a number'))
+      ) {
+        // Extract location from the command (remove 'weather' prefix)
+        const location = command.replace(/^weather\s+/i, '').trim();
+
+        // Set up selection mode if callback has the setupSelectionMode function
+        if (callback && callback.setupSelectionMode) {
+          callback.setupSelectionMode(location);
+        }
+      }
+
+      return weatherOutput;
 
     case 'resume':
       return displayResume();
 
     case 'contact':
-      return displayContactForm();
+      const contactOutput = displayContactForm();
+
+      // Activate contact mode if callback has the activateContactMode function
+      if (callback && callback.activateContactMode) {
+        callback.activateContactMode();
+      }
+
+      return contactOutput;
 
     case 'clear':
-      if (callback && callback.setLines && callback.setInput) {
-        callback.setLines(['<span class="text-terminal-green">Terminal cleared</span>']);
-        callback.setInput('');
-      }
+      // System clear command - handled directly in Terminal component
       return [];
-
-    case 'blog':
-      const blogArg = args[0];
-      if (!blogArg || blogArg === 'list') {
-        return await handleBlogList();
-      }
-      return await handleBlogPost(blogArg);
 
     case 'zork':
       startZorkGame(callback);
