@@ -13,6 +13,7 @@ import { handleCommand } from './commands';
 import { useCommandHistory } from './hooks/useCommandHistory';
 import { useContactForm } from './hooks/useContactForm';
 import { useWeatherSelection } from './hooks/useWeatherSelection';
+import { getCurrentPath, isCodexModeActive } from './data/codex.js';
 import { useRouter } from 'next/navigation';
 import styles from '../../styles/terminal.module.css';
 import GlitchLambda from '@/components/ui/GlitchLambda';
@@ -78,6 +79,14 @@ const Terminal = forwardRef((props, ref) => {
   // Memoized values
   const memoizedLines = useMemo(() => lines, [lines]);
 
+  // Get current path for prompt
+  const getPromptPath = useCallback(() => {
+    if (isCodexModeActive()) {
+      return getCurrentPath();
+    }
+    return currentPath;
+  }, [currentPath]);
+
   // Command processing
   const processCommand = useCallback(
     async (command) => {
@@ -119,7 +128,7 @@ const Terminal = forwardRef((props, ref) => {
       }
 
       // Display command prompt
-      const newPromptLine = `user@stepweaver.dev ${currentPath}`;
+      const newPromptLine = `user@stepweaver.dev ${getPromptPath()}`;
       const newCommandLine = `λ ${trimmedCommand}`;
       setLines((prev) => [...prev, newPromptLine, newCommandLine]);
 
@@ -406,7 +415,7 @@ const Terminal = forwardRef((props, ref) => {
 
       <div className='terminal-prompt'>
         <div className={`text-terminal-green mb-1 ${styles.crtText}`}>
-          user@stepweaver.dev {currentPath}
+          user@stepweaver.dev {getPromptPath()}
         </div>
         <div className='flex items-center'>
           <GlitchLambda

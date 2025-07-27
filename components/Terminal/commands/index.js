@@ -5,6 +5,7 @@ import { handleNavigationCommand } from '../data/navigation.js';
 import { fetchWeather, fetchWeatherWithGeolocation } from '../data/weather.js';
 import { displayResume, displayContactForm } from '../data/content.js';
 import { handleZorkCommand, startZorkGame, getZorkGameState } from '../data/zork.js';
+import { handleCodexCommand, startCodexMode, isCodexModeActive } from '../data/codex.js';
 
 
 
@@ -26,7 +27,13 @@ export const handleCommand = async (
     return [];
   }
 
-  // Regular terminal commands (only when not in Zork mode)
+  // Check if we're in Codex mode
+  if (isCodexModeActive()) {
+    // Handle Codex commands
+    return await handleCodexCommand(trimmedCommand, callback);
+  }
+
+  // Regular terminal commands (only when not in Zork or Codex mode)
   switch (cmd) {
     case 'help':
       return [
@@ -39,6 +46,7 @@ export const handleCommand = async (
         `<span class="text-terminal-cyan">Navigation:</span>`,
         `<span class="text-terminal-text">cd contact - Go to contact page</span>`,
         `<span class="text-terminal-text">cd codex - Go to blog page</span>`,
+        `<span class="text-terminal-text">codex - Enter codex mode to browse posts</span>`,
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
         `<span class="text-terminal-text">weather [location] - Get weather info + --forecast for 5-day forecast</span>`,
@@ -119,6 +127,10 @@ export const handleCommand = async (
     case 'zork':
       startZorkGame(callback);
       return [];
+
+    case 'codex':
+      const codexOutput = startCodexMode(callback);
+      return codexOutput;
 
     case '':
       return [];
