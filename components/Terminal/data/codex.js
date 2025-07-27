@@ -271,7 +271,7 @@ export const viewPostInCurrentDirectory = async (number) => {
       `<span class="text-terminal-text">${post.description}</span>`,
       hashtags ? `<span class="text-terminal-cyan">Tags: ${hashtags}</span>` : '',
       ``,
-      `<span class="text-terminal-yellow">To read the full post, visit: /blog/${post.type}/${post.slug}</span>`,
+      `<span class="text-terminal-yellow">To read the full post, visit: <a href="/blog/${post.type}/${post.slug}" target="_blank" rel="noopener noreferrer" class="text-terminal-cyan hover:text-terminal-white underline">/blog/${post.type}/${post.slug}</a></span>`,
       `<span class="text-terminal-text">Use 'ls' to see more posts or 'exit' to return to terminal</span>`
     ];
   } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'podcasts') {
@@ -293,7 +293,7 @@ export const viewPostInCurrentDirectory = async (number) => {
       `<span class="text-terminal-text">${episode.description || 'No description available'}</span>`,
       episode.duration ? `<span class="text-terminal-dimmed">Duration: ${episode.duration}</span>` : '',
       ``,
-      `<span class="text-terminal-yellow">Listen/Read at: ${episode.link}</span>`,
+      `<span class="text-terminal-yellow">Listen/Read at: <a href="${episode.link}" target="_blank" rel="noopener noreferrer" class="text-terminal-cyan hover:text-terminal-white underline">${episode.link}</a></span>`,
       `<span class="text-terminal-text">Use 'ls' to see more episodes or 'exit' to return to terminal</span>`
     ];
   }
