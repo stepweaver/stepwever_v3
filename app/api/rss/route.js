@@ -17,7 +17,7 @@ export async function GET(request) {
     // Define RSS feed URLs
     switch (source) {
       case 'syntaxfm':
-        feedUrl = 'https://feeds.simplecast.com/54nAGcIl';
+        feedUrl = 'https://feed.syntax.fm/rss';
         break;
       case 'itjungle':
         feedUrl = 'https://www.itjungle.com/feed/';
