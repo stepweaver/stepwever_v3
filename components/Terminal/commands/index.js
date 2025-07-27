@@ -41,7 +41,7 @@ export const handleCommand = async (
         `<span class="text-terminal-text">cd codex - Go to blog page</span>`,
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
-        `<span class="text-terminal-text">weather [location] - Get weather info</span>`,
+        `<span class="text-terminal-text">weather [location] - Get weather info + --forecast for 5-day forecast</span>`,
         `<span class="text-terminal-text">resume - View resume</span>`,
         `<span class="text-terminal-text">contact - Send message</span>`,
         ``,
@@ -71,12 +71,16 @@ export const handleCommand = async (
 
     case 'weather':
       const weatherArgs = args.join(' ');
-      if (!weatherArgs) {
+      const includeForecast = args.includes('--forecast') || args.includes('-f');
+      const cleanArgs = args.filter(arg => !arg.startsWith('--') && !arg.startsWith('-'));
+      const location = cleanArgs.join(' ');
+
+      if (!location) {
         // No location provided, try to get user's location
-        return await fetchWeatherWithGeolocation();
+        return await fetchWeatherWithGeolocation(includeForecast);
       }
 
-      const weatherOutput = await fetchWeather(weatherArgs);
+      const weatherOutput = await fetchWeather(location, includeForecast);
 
       // Check if this is a selection list (multiple locations found)
       if (
@@ -84,12 +88,12 @@ export const handleCommand = async (
         weatherOutput.length > 0 &&
         weatherOutput.some((line) => line.includes('Type a number'))
       ) {
-        // Extract location from the command (remove 'weather' prefix)
-        const location = command.replace(/^weather\s+/i, '').trim();
+        // Extract location from the command (remove 'weather' prefix and flags)
+        const cleanLocation = command.replace(/^weather\s+/i, '').replace(/\s*--forecast\s*/gi, '').replace(/\s*-f\s*/gi, '').trim();
 
         // Set up selection mode if callback has the setupSelectionMode function
         if (callback && callback.setupSelectionMode) {
-          callback.setupSelectionMode(location);
+          callback.setupSelectionMode(cleanLocation, includeForecast);
         }
       }
 

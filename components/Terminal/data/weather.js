@@ -1,5 +1,5 @@
 // Weather functionality
-const fetchWeather = async (location = 'new york') => {
+const fetchWeather = async (location = 'new york', includeForecast = false) => {
   try {
     // Using OpenWeatherMap API with environment variable
     const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
@@ -56,8 +56,8 @@ const fetchWeather = async (location = 'new york') => {
 
     const weatherData = await weatherResponse.json();
 
-    // Format the weather data in a terminal-friendly way
-    return [
+    // Format the current weather data
+    const currentWeather = [
       `<span class="text-terminal-yellow">Weather for ${weatherData.name}, ${weatherData.sys.country}</span>`,
       `<span class="text-terminal-cyan">Temperature:</span> ${Math.round(
         weatherData.main.temp
@@ -68,6 +68,26 @@ const fetchWeather = async (location = 'new york') => {
         weatherData.wind.speed
       )} mph`,
     ];
+
+    // If forecast is requested, fetch and add it
+    if (includeForecast) {
+      try {
+        const forecastResponse = await fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=imperial&appid=${API_KEY}`
+        );
+
+        if (forecastResponse.ok) {
+          const forecastData = await forecastResponse.json();
+          const dailyForecast = formatDailyForecast(forecastData);
+          return [...currentWeather, ``, ...dailyForecast];
+        }
+      } catch (forecastError) {
+        console.error('Forecast fetch error:', forecastError);
+        // Continue without forecast if it fails
+      }
+    }
+
+    return currentWeather;
   } catch (error) {
     return [
       `<span class="text-terminal-red">Error fetching weather data: ${error.message}</span>`,
@@ -76,8 +96,68 @@ const fetchWeather = async (location = 'new york') => {
   }
 };
 
+// Function to format daily forecast data
+const formatDailyForecast = (forecastData) => {
+  const dailyData = {};
+
+  // Group forecast data by day
+  forecastData.list.forEach(item => {
+    const date = new Date(item.dt * 1000);
+    const dayKey = date.toDateString();
+
+    if (!dailyData[dayKey]) {
+      dailyData[dayKey] = {
+        date: date,
+        temps: [],
+        conditions: [],
+        humidity: [],
+        wind: []
+      };
+    }
+
+    dailyData[dayKey].temps.push(item.main.temp);
+    dailyData[dayKey].conditions.push(item.weather[0].description);
+    dailyData[dayKey].humidity.push(item.main.humidity);
+    dailyData[dayKey].wind.push(item.wind.speed);
+  });
+
+  // Format the forecast output
+  const forecastOutput = [
+    `<span class="text-terminal-green">5-Day Forecast:</span>`,
+  ];
+
+  // Get next 5 days (skip today)
+  const sortedDays = Object.keys(dailyData).sort();
+  const next5Days = sortedDays.slice(1, 6);
+
+  next5Days.forEach(dayKey => {
+    const dayData = dailyData[dayKey];
+    const date = dayData.date;
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+    const monthDay = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+    const minTemp = Math.round(Math.min(...dayData.temps));
+    const maxTemp = Math.round(Math.max(...dayData.temps));
+
+    // Get most common condition for the day
+    const conditionCounts = {};
+    dayData.conditions.forEach(condition => {
+      conditionCounts[condition] = (conditionCounts[condition] || 0) + 1;
+    });
+    const mostCommonCondition = Object.keys(conditionCounts).reduce((a, b) =>
+      conditionCounts[a] > conditionCounts[b] ? a : b
+    );
+
+    forecastOutput.push(
+      `<span class="text-terminal-cyan">${dayName} ${monthDay}:</span> ${minTemp}°F - ${maxTemp}°F, ${mostCommonCondition}`
+    );
+  });
+
+  return forecastOutput;
+};
+
 // Function to fetch weather using geolocation or default to New York
-const fetchWeatherWithGeolocation = async () => {
+const fetchWeatherWithGeolocation = async (includeForecast = false) => {
   try {
     const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
@@ -90,7 +170,7 @@ const fetchWeatherWithGeolocation = async () => {
 
     // Check if geolocation is available
     if (!navigator.geolocation) {
-      return await fetchWeather('new york');
+      return await fetchWeather('new york', includeForecast);
     }
 
     // Try to get user's location
@@ -100,7 +180,7 @@ const fetchWeatherWithGeolocation = async () => {
           try {
             const { latitude, longitude } = position.coords;
 
-            // Fetch weather directly using coordinates
+            // Fetch current weather directly using coordinates
             const weatherResponse = await fetch(
               `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${API_KEY}`
             );
@@ -133,7 +213,7 @@ const fetchWeatherWithGeolocation = async () => {
               console.error('Reverse geocoding error:', error);
             }
 
-            resolve([
+            const currentWeather = [
               `<span class="text-terminal-yellow">Weather for ${locationDisplay} (Your Location)</span>`,
               `<span class="text-terminal-cyan">Temperature:</span> ${Math.round(
                 weatherData.main.temp
@@ -143,18 +223,39 @@ const fetchWeatherWithGeolocation = async () => {
               `<span class="text-terminal-cyan">Wind:</span> ${Math.round(
                 weatherData.wind.speed
               )} mph`,
-            ]);
+            ];
+
+            // If forecast is requested, fetch and add it
+            if (includeForecast) {
+              try {
+                const forecastResponse = await fetch(
+                  `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${API_KEY}`
+                );
+
+                if (forecastResponse.ok) {
+                  const forecastData = await forecastResponse.json();
+                  const dailyForecast = formatDailyForecast(forecastData);
+                  resolve([...currentWeather, ``, ...dailyForecast]);
+                  return;
+                }
+              } catch (forecastError) {
+                console.error('Forecast fetch error:', forecastError);
+                // Continue without forecast if it fails
+              }
+            }
+
+            resolve(currentWeather);
           } catch (error) {
             // If there's an error with the API call, fall back to New York
             console.error('Error fetching weather for user location:', error);
-            const fallbackWeather = await fetchWeather('new york');
+            const fallbackWeather = await fetchWeather('new york', includeForecast);
             resolve(fallbackWeather);
           }
         },
         async (error) => {
           // If geolocation fails, fall back to New York
           console.error('Geolocation error:', error);
-          const fallbackWeather = await fetchWeather('new york');
+          const fallbackWeather = await fetchWeather('new york', includeForecast);
           resolve(fallbackWeather);
         },
         {
@@ -166,7 +267,7 @@ const fetchWeatherWithGeolocation = async () => {
     });
   } catch (error) {
     // If anything goes wrong, fall back to New York
-    return await fetchWeather('new york');
+    return await fetchWeather('new york', includeForecast);
   }
 };
 
