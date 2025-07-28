@@ -45,7 +45,7 @@ export const handleCommand = async (
         ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
         `<span class="text-terminal-text">cd contact - Go to contact page</span>`,
-        `<span class="text-terminal-text">cd codex - Go to blog page</span>`,
+        `<span class="text-terminal-text">cd codex - Go to blog page (alias)</span>`,
         `<span class="text-terminal-text">codex - Enter codex mode to browse posts</span>`,
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
@@ -68,7 +68,7 @@ export const handleCommand = async (
         if (callback && callback.setLines && callback.setInput && callback.router) {
           // Map 'codex' to 'blog' for navigation
           const navDestination = destination === 'codex' ? 'blog' : destination;
-          handleNavigationCommand(navDestination, currentPath, callback);
+          handleNavigationCommand(navDestination, currentPath, callback, destination);
         } else {
           return [`<span class="text-terminal-red">Navigation not available</span>`];
         }

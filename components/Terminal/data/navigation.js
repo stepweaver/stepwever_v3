@@ -1,7 +1,7 @@
 // Simple navigation commands for the current site structure
-const handleNavigationCommand = (destination, currentPath, callback) => {
+const handleNavigationCommand = (destination, currentPath, callback, originalCommand) => {
   const newPromptLine = `user@stepweaver.dev ${currentPath}`;
-  const newCommandLine = `λ cd ${destination}`;
+  const newCommandLine = `λ cd ${originalCommand || destination}`;
 
   callback.setLines((prev) => [
     ...prev,
