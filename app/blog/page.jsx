@@ -9,7 +9,7 @@ export default function CodexPage() {
   const [podcastEpisodes, setPodcastEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('blog');
+  const [activeTab, setActiveTab] = useState('all');
   const [activeSubTab, setActiveSubTab] = useState(null);
   const [activeHashtags, setActiveHashtags] = useState([]);
 
@@ -98,29 +98,35 @@ export default function CodexPage() {
     });
   }, [posts]);
 
-  // Get all unique hashtags for filter buttons
+  // Get all unique hashtags for filter buttons - always show ALL hashtags from ALL posts
   const filteredHashtags = useMemo(() => {
     const tags = new Set();
-    const relevantPosts = allPosts.filter((post) => post.type === activeTab);
 
-    relevantPosts.forEach((post) => {
+    // Always use allPosts to get ALL hashtags from ALL posts
+    allPosts.forEach((post) => {
       if (post.hashtags) {
         post.hashtags.forEach((tag) => tags.add(tag));
       }
     });
     return Array.from(tags).sort();
-  }, [allPosts, activeTab]);
+  }, [allPosts]);
 
   // Filter content based on selected filters
   const filteredPosts = useMemo(() => {
-    let result = allPosts.filter((post) => post.type === activeTab);
+    let result = allPosts;
 
-    // Then filter by hashtags if any are selected
+    // If hashtags are selected, show ALL posts with those hashtags across ALL categories
     if (activeHashtags.length > 0) {
       result = result.filter((post) => {
         const postTags = post.hashtags || [];
         return activeHashtags.some((tag) => postTags.includes(tag));
       });
+    } else {
+      // If no hashtags selected, filter by active tab (except 'all' which shows everything)
+      if (activeTab !== 'all') {
+        result = result.filter((post) => post.type === activeTab);
+      }
+      // If activeTab is 'all', don't filter by type - show all posts
     }
 
     return result;
@@ -128,6 +134,11 @@ export default function CodexPage() {
 
   // Handle hashtag click
   const handleHashtagClick = (tag) => {
+    // Clear active tab when hashtags are selected to show all posts
+    if (activeTab !== 'all') {
+      setActiveTab('all');
+    }
+
     setActiveHashtags((prev) => {
       if (prev.includes(tag)) {
         return prev.filter((t) => t !== tag);
@@ -196,6 +207,7 @@ export default function CodexPage() {
   };
 
   const tabs = [
+    { id: 'all', label: 'All' },
     { id: 'blog', label: 'Blog' },
     { id: 'project', label: 'Projects' },
     { id: 'article', label: 'Articles' },
@@ -255,20 +267,25 @@ export default function CodexPage() {
           {/* Breadcrumbs */}
           <div className='mb-8 text-2xl'>
             <nav className='flex items-center font-ibm text-terminal-green'>
-              <span className='text-terminal-green'>user@stepweaver:~$</span>
-              <span className='text-terminal-text ml-2'>cd</span>
+              <span className='text-terminal-green'>user@stepweaver</span>
+              <span className='text-terminal-text ml-2'>~</span>
+              <span className='text-terminal-dimmed'>/</span>
               <button
                 onClick={() => {
-                  setActiveTab('blog');
+                  setActiveTab('all');
                   setActiveSubTab(null);
                   setActiveHashtags([]);
                 }}
-                className='text-terminal-text hover:text-terminal-green transition-colors cursor-pointer ml-1'
+                className='text-terminal-text hover:text-terminal-green transition-colors cursor-pointer'
               >
-                /codex
+                codex
               </button>
-              <span className='text-terminal-dimmed'>/</span>
-              <span className='text-terminal-text capitalize'>{activeTab}</span>
+              {activeTab !== 'all' && (
+                <>
+                  <span className='text-terminal-dimmed'>/</span>
+                  <span className='text-terminal-text'>{activeTab}</span>
+                </>
+              )}
               {activeTab === 'podcasts' && activeSubTab && (
                 <>
                   <span className='text-terminal-dimmed'>/</span>
@@ -462,6 +479,7 @@ export default function CodexPage() {
                         getTypeColor={getTypeColor}
                         getGlowStyle={getGlowStyle}
                         getTypeColorValue={getTypeColorValue}
+                        onHashtagClick={handleHashtagClick}
                       />
                     ))}
 
@@ -523,9 +541,7 @@ export default function CodexPage() {
                         {filteredHashtags.map((tag) => {
                           const count = allPosts.filter(
                             (post) =>
-                              post.type === activeTab &&
-                              post.hashtags &&
-                              post.hashtags.includes(tag)
+                              post.hashtags && post.hashtags.includes(tag)
                           ).length;
                           return (
                             <button
@@ -591,10 +607,7 @@ export default function CodexPage() {
                     <div className='flex flex-wrap gap-2'>
                       {filteredHashtags.map((tag) => {
                         const count = allPosts.filter(
-                          (post) =>
-                            post.type === activeTab &&
-                            post.hashtags &&
-                            post.hashtags.includes(tag)
+                          (post) => post.hashtags && post.hashtags.includes(tag)
                         ).length;
                         return (
                           <button
@@ -632,11 +645,21 @@ function PostItem({
   getTypeColor,
   getGlowStyle,
   getTypeColorValue,
+  onHashtagClick,
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredTag, setHoveredTag] = useState(null);
   const typeColor = getTypeColor(post.type);
   const typeColorValue = getTypeColorValue(post.type);
+
+  // Handle hashtag click to prevent post navigation
+  const handleHashtagClick = (e, tag) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onHashtagClick) {
+      onHashtagClick(tag);
+    }
+  };
 
   return (
     <article className='group'>
@@ -686,6 +709,7 @@ function PostItem({
                 }}
                 onMouseEnter={() => setHoveredTag(tag)}
                 onMouseLeave={() => setHoveredTag(null)}
+                onClick={(e) => handleHashtagClick(e, tag)}
               >
                 #{tag}
               </span>

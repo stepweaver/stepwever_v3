@@ -49,11 +49,10 @@ const formatDate = (dateStr) => {
   if (!dateStr) return '';
   try {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `[${year}-${month}-${day}]`;
   } catch (e) {
     return dateStr;
   }
@@ -278,7 +277,7 @@ export const viewPostInCurrentDirectory = async (number) => {
       `<span class="text-terminal-yellow">To read the full post, visit: <a href="/blog/${post.type}/${post.slug}" target="_blank" rel="noopener noreferrer" class="text-terminal-cyan hover:text-terminal-white underline">/blog/${post.type}/${post.slug}</a></span>`,
       `<span class="text-terminal-text">Use 'ls' to see more posts or 'exit' to return to terminal</span>`
     ];
-  } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && (pathParts[2] === 'podcasts' || pathParts[2] === 'article')) {
+  } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && (pathParts[2] === 'podcast' || pathParts[2] === 'article')) {
     const source = pathParts[3];
     const episodes = await fetchPodcastEpisodes(source);
     const index = parseInt(number) - 1;
@@ -324,21 +323,28 @@ export const searchPostsByTagInCurrentDirectory = async (tag) => {
       return [`<span class="text-terminal-red">Search not available for podcasts</span>`];
     }
 
-    const posts = cachedPosts.filter(post => post.type === category);
-    const filteredPosts = posts.filter(post =>
-      post.hashtags && post.hashtags.some(t => t.toLowerCase().includes(tag.toLowerCase()))
+    // Search across all posts in the parent /codex directory, not just current category
+    const allCodexPosts = cachedPosts.filter(post =>
+      ['blog', 'project', 'article', 'tool', 'community'].includes(post.type)
     );
 
-    if (filteredPosts.length === 0) {
-      return [`<span class="text-terminal-yellow">No posts found with tag: ${tag}</span>`];
+    const matchingPosts = allCodexPosts.filter(post => {
+      if (!post.hashtags) return false;
+      return post.hashtags.some(hashtag =>
+        hashtag.toLowerCase() === tag.toLowerCase()
+      );
+    });
+
+    if (matchingPosts.length === 0) {
+      return [`<span class="text-terminal-red">No posts found with hashtag #${tag}</span>`];
     }
 
     const output = [
-      `<span class="text-terminal-green">Posts with tag "${tag}" in ${category}:</span>`,
+      `<span class="text-terminal-green">Posts with hashtag #${tag}:</span>`,
       ``
     ];
 
-    filteredPosts.forEach((post, index) => {
+    matchingPosts.forEach((post, index) => {
       const typeColor = getTypeColor(post.type);
       const date = post.updated ? formatDate(post.updated) : formatDate(post.date);
 
@@ -346,6 +352,7 @@ export const searchPostsByTagInCurrentDirectory = async (tag) => {
         `<span class="text-terminal-cyan">${index + 1}.</span> <span class="${typeColor}">${post.title}</span>`,
         `<span class="text-terminal-dimmed">   Date: ${date}</span>`,
         `<span class="text-terminal-text">   ${post.description}</span>`,
+        `<span class="text-terminal-blue">   [${post.type}]</span>`,
         ``
       );
     });
