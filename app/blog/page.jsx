@@ -140,11 +140,13 @@ export default function CodexPage() {
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     try {
-      const date = new Date(dateStr);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `[${year}-${month}-${day}]`;
+      // Parse the date string manually to avoid timezone issues
+      const [year, month, day] = dateStr.split('-').map(Number);
+      if (!year || !month || !day) return dateStr;
+      return `[${year}-${String(month).padStart(2, '0')}-${String(day).padStart(
+        2,
+        '0'
+      )}]`;
     } catch (e) {
       return dateStr;
     }
