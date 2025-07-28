@@ -89,15 +89,6 @@ export default function CTA() {
               >
                 CONTACT
               </GlitchButton>
-
-              {/* Third Button */}
-              <GlitchButton
-                href='/Stephen-Weaver-Resume-stepweaver.pdf'
-                download='/Stephen-Weaver-Resume-stepweaver.pdf'
-                className='px-8 md:px-12 py-4 md:py-5 text-base md:text-lg lg:text-xl font-bold min-w-[180px] md:min-w-[200px]'
-              >
-                DOWNLOAD RESUME
-              </GlitchButton>
             </div>
 
             {/* Optional tiny text */}

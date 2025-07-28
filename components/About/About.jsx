@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { memo } from 'react';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import GlitchButton from '@/components/ui/GlitchButton';
 
 const About = memo(function About() {
   return (
@@ -44,6 +45,17 @@ const About = memo(function About() {
                       </span>
                     </li>
                   </ul>
+
+                  {/* Resume Link */}
+                  <div className='mt-6'>
+                    <GlitchButton
+                      href='/Stephen-Weaver-Resume-stepweaver.pdf'
+                      download='/Stephen-Weaver-Resume-stepweaver.pdf'
+                      className='px-4 py-2 text-sm font-bold'
+                    >
+                      DOWNLOAD RESUME
+                    </GlitchButton>
+                  </div>
                 </div>
               </div>
             </div>
