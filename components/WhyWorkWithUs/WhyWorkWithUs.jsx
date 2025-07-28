@@ -9,11 +9,14 @@ const WhyWorkWithUs = memo(() => {
       title: 'Cut through, not just corners',
       description: (
         <>
-          <GlitchLambda className='text-terminal-text' />
-          stepweaver operates on ruthless efficiency-every sprint is focused,
-          every automation is deliberate, and every result is measured in real
-          impact. No fluff. No long-winded strategy decks. Just precision moves
-          that push your business forward-fast.
+          <span className='whitespace-nowrap'>
+            <GlitchLambda className='text-terminal-text' />
+            stepweaver
+          </span>{' '}
+          operates on ruthless efficiency-every sprint is focused, every
+          automation is deliberate, and every result is measured in real impact.
+          No fluff. No long-winded strategy decks. Just precision moves that
+          push your business forward-fast.
         </>
       ),
     },
@@ -22,10 +25,13 @@ const WhyWorkWithUs = memo(() => {
       description: (
         <>
           Where traditional teams are stuck in endless meetings and approvals,{' '}
-          <GlitchLambda className='text-terminal-text' />
-          stepweaver builds, tests, and ships on a feedback loop so tight you'll
-          be iterating before most agencies would have finished onboarding. You
-          get results in days, not months-because moving fast is the competitive
+          <span className='whitespace-nowrap'>
+            <GlitchLambda className='text-terminal-text' />
+            stepweaver
+          </span>{' '}
+          builds, tests, and ships on a feedback loop so tight you'll be
+          iterating before most agencies would have finished onboarding. You get
+          results in days, not months-because moving fast is the competitive
           edge.
         </>
       ),
