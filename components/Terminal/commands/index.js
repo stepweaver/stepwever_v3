@@ -3,7 +3,7 @@
 // Import modular functions
 import { handleNavigationCommand } from '../data/navigation.js';
 import { fetchWeather, fetchWeatherWithGeolocation } from '../data/weather.js';
-import { displayResume, displayContactForm } from '../data/content.js';
+import { displayContactForm } from '../data/content.js';
 import { handleZorkCommand, startZorkGame, getZorkGameState } from '../data/zork.js';
 import { handleCodexCommand, startCodexMode, isCodexModeActive } from '../data/codex.js';
 
@@ -50,7 +50,7 @@ export const handleCommand = async (
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
         `<span class="text-terminal-text">weather [location] - Get weather info + --forecast for 5-day forecast</span>`,
-        `<span class="text-terminal-text">resume - View resume</span>`,
+
         `<span class="text-terminal-text">contact - Send message</span>`,
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
@@ -107,8 +107,7 @@ export const handleCommand = async (
 
       return weatherOutput;
 
-    case 'resume':
-      return displayResume();
+
 
     case 'contact':
       const contactOutput = displayContactForm();

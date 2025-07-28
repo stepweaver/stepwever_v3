@@ -18,15 +18,7 @@ export default function ContactPage() {
                 Let's Build!
               </h1>
               <p className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-text/90 max-w-4xl mx-auto leading-relaxed'>
-                I'm not here to play at this. I'm here to build.
-              </p>
-            </div>
-
-            {/* Subtitle */}
-            <div className='max-w-2xl mx-auto'>
-              <p className='text-terminal-text/70 font-ocr text-lg leading-relaxed'>
-                Ready to ship something real? Tell me about your project and
-                let's make it happen.
+                I'm not here to play at this. I'm here to build. Let's ship something real.
               </p>
             </div>
           </div>

@@ -132,26 +132,6 @@ const Terminal = forwardRef((props, ref) => {
       const newCommandLine = `λ ${trimmedCommand}`;
       setLines((prev) => [...prev, newPromptLine, newCommandLine]);
 
-      // Handle special cd resume case
-      if (trimmedCommand.toLowerCase() === 'cd resume') {
-        const output = await handleCommand(
-          'resume',
-          currentPath,
-          setCurrentPath,
-          {
-            setLines,
-            setInput,
-            router,
-            activateContactMode,
-            setupSelectionMode,
-          }
-        );
-        setLines((prev) => [...prev, ...output]);
-        setInput('');
-        setCursorPosition(0);
-        return;
-      }
-
       // Execute regular command
       try {
         const output = await handleCommand(

@@ -160,10 +160,6 @@ export default function ContactForm() {
                 >
                   SUBMIT
                 </GlitchButton>
-
-                <GlitchButton href='/Stephen-Weaver-Resume-stepweaver.pdf' download={true}>
-                  GET RESUME
-                </GlitchButton>
               </div>
             </form>
           </div>
