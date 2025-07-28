@@ -40,7 +40,7 @@ const fetchWeather = async (location = 'new york', includeForecast = false) => {
         `<span class="text-terminal-yellow">Multiple locations found for "${location}":</span>`,
         ...optionsList.map(option => `<span class="text-terminal-text">${option}</span>`),
         ``,
-        `<span class="text-terminal-cyan">Type a number (1-${geoData.length}) to select:</span>`
+        `<span class="text-terminal-cyan">Type a number (1-${geoData.length}) to select, or 'cancel' to exit:</span>`
       ];
     }
 

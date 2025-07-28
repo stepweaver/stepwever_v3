@@ -14,7 +14,21 @@ export const useWeatherSelection = (setLines, setInput, setCursorPosition) => {
   }, []);
 
   const handleSelectionInput = useCallback(async (command) => {
-    const selectionNumber = parseInt(command.trim());
+    const trimmedCommand = command.trim().toLowerCase();
+
+    // Check for cancel command first
+    if (trimmedCommand === 'cancel') {
+      setLines(prev => [
+        ...prev,
+        `<span class="text-terminal-yellow">Selection cancelled.</span>`,
+      ]);
+      resetSelection();
+      setInput('');
+      setCursorPosition(0);
+      return;
+    }
+
+    const selectionNumber = parseInt(trimmedCommand);
 
     if (isNaN(selectionNumber) || selectionNumber < 1 || selectionNumber > selectionOptions.length) {
       setLines(prev => [
