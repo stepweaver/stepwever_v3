@@ -34,24 +34,6 @@ export default function Navbar() {
               onClick={() => {
                 // If we're on the home page, scroll to section
                 if (window.location.pathname === '/') {
-                  const element = document.getElementById('success-stories');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
-                } else {
-                  // If we're on another page, navigate to home and scroll
-                  window.location.href = '/#success-stories';
-                }
-              }}
-            >
-              Work
-            </button>
-            <button
-              type='button'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
-              onClick={() => {
-                // If we're on the home page, scroll to section
-                if (window.location.pathname === '/') {
                   const element = document.getElementById('about');
                   if (element) {
                     element.scrollIntoView({ behavior: 'smooth' });
@@ -69,6 +51,12 @@ export default function Navbar() {
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
             >
               Codex
+            </Link>
+            <Link
+              href='/terminal'
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+            >
+              Terminal
             </Link>
             <Link
               href='/contact'
