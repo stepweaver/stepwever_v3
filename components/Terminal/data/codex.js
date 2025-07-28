@@ -388,11 +388,10 @@ export const handleCodexCommand = async (command, callback) => {
         return [`<span class="text-terminal-red">Usage: cd [directory] or cd ..</span>`];
       }
       const success = navigateToDirectory(args[0]);
-      if (success) {
-        return [`<span class="text-terminal-green">Changed directory to: ${currentPath}</span>`];
-      } else {
+      if (!success) {
         return [`<span class="text-terminal-red">Invalid directory: ${args[0]}</span>`];
       }
+      return [];
 
     case 'blog':
     case 'project':
@@ -404,11 +403,10 @@ export const handleCodexCommand = async (command, callback) => {
     case 'itjungle':
     case 'coming-soon':
       const success2 = navigateToDirectory(cmd);
-      if (success2) {
-        return [`<span class="text-terminal-green">Changed directory to: ${currentPath}</span>`];
-      } else {
+      if (!success2) {
         return [`<span class="text-terminal-red">Cannot navigate to: ${cmd}</span>`];
       }
+      return [];
 
     case 'exit':
       isInCodexMode = false;
