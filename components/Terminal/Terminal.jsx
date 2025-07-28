@@ -382,18 +382,23 @@ const Terminal = forwardRef((props, ref) => {
   return (
     <div
       ref={containerRef}
-      className={`h-96 sm:h-[32rem] md:h-[40rem] lg:h-[48rem] overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
+      className={`h-full md:h-96 md:sm:h-[32rem] md:md:h-[40rem] md:lg:h-[48rem] flex flex-col md:overflow-y-auto md:overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
       onClick={focusInput}
     >
-      <div className='terminal-output mb-4' onClick={handleContentClick}>
-        {memoizedLines.map((line, i) => (
-          <div key={i} className='mb-1'>
-            {renderLine(line, i)}
-          </div>
-        ))}
+      <div
+        className='flex-1 overflow-y-auto overflow-x-auto md:flex-none md:overflow-visible'
+        onClick={handleContentClick}
+      >
+        <div className='terminal-output mb-4 md:mb-4'>
+          {memoizedLines.map((line, i) => (
+            <div key={i} className='mb-1'>
+              {renderLine(line, i)}
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className='terminal-prompt'>
+      <div className='terminal-prompt flex-shrink-0 md:flex-none'>
         <div className={`text-terminal-green mb-1 ${styles.crtText}`}>
           user@stepweaver.dev {getPromptPath()}
         </div>

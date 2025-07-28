@@ -21,10 +21,11 @@ export default function TerminalPage() {
   }, []);
 
   return (
-    <div className='min-h-screen relative bg-terminal-dark'>
+    <div className='min-h-screen md:min-h-screen relative bg-terminal-dark'>
       <BackgroundCanvas />
-      <div className='relative z-10 p-4 sm:p-6 md:p-8 w-full max-w-none flex flex-col items-center justify-center min-h-screen'>
-        <div className='w-full max-w-6xl'>
+      {/* Mobile: Full screen with prompt at bottom */}
+      <div className='relative z-10 h-screen md:h-auto p-0 md:p-4 md:sm:p-6 md:md:p-8 w-full flex flex-col md:items-center md:justify-center md:min-h-screen'>
+        <div className='w-full h-full md:h-auto md:max-w-6xl'>
           <Terminal />
         </div>
       </div>
