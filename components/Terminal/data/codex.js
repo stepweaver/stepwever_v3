@@ -411,7 +411,10 @@ export const handleCodexCommand = async (command, callback) => {
       isInCodexMode = false;
       currentPath = '~/codex'; // Reset path
       if (callback && callback.setLines) {
-        callback.setLines(['<span class="text-terminal-green">Exited codex mode. Type "help" for available commands.</span>']);
+        callback.setLines([
+          '<span class="text-terminal-green">Welcome to λstepweaver terminal v3.0.0</span>',
+          '<span>Type <span class="text-terminal-cyan">"help"</span> to see available commands.</span>'
+        ]);
       }
       return [];
 

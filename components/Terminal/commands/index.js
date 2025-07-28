@@ -37,25 +37,25 @@ export const handleCommand = async (
   switch (cmd) {
     case 'help':
       return [
-        `<span class="text-terminal-green">Available Commands:</span>`,
+        `<span class="text-terminal-green">λstepweaver Terminal Commands</span>`,
         ``,
         `<span class="text-terminal-cyan">System:</span>`,
-        `<span class="text-terminal-text">clear - Clear terminal screen</span>`,
-        `<span class="text-terminal-text">cancel - Exit current form or selection</span>`,
+        `<span class="text-terminal-text">clear - Wipe the slate clean</span>`,
+        `<span class="text-terminal-text">cancel - Abort current action</span>`,
         ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
-        `<span class="text-terminal-text">cd contact - Go to contact page</span>`,
-        `<span class="text-terminal-text">cd codex - Go to blog page</span>`,
-        `<span class="text-terminal-text">codex - Enter codex mode to browse posts</span>`,
+        `<span class="text-terminal-text">cd blog - Browse writing, dev logs, notes, and more</span>`,
+        `<span class="text-terminal-text">cd contact - Jump to contact page</span>`,
         ``,
-        `<span class="text-terminal-cyan">Features:</span>`,
-        `<span class="text-terminal-text">weather [location] - Get weather info + --forecast for 5-day forecast</span>`,
-        `<span class="text-terminal-text">resume - View resume</span>`,
-        `<span class="text-terminal-text">contact - Send message</span>`,
+        `<span class="text-terminal-cyan">Tools & Features:</span>`,
+        `<span class="text-terminal-text">resume - View my resume</span>`,
+        `<span class="text-terminal-text">contact - Send a message via terminal</span>`,
+        `<span class="text-terminal-text">weather [city] - Check current weather or + --forecast for 5-day forecast</span>`,
         ``,
-        `<span class="text-terminal-cyan">Games:</span>`,
-        `<span class="text-terminal-text">zork - Play ZORK I: The Great Underground Empire</span>`
+        `<span class="text-terminal-cyan">Fun & Experiments:</span>`,
+        `<span class="text-terminal-text">zork - Enter the Great Underground Empire</span>`,
       ];
+
 
     case 'cd':
       const destination = args[0];
