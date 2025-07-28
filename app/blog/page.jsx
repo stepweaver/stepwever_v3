@@ -63,6 +63,32 @@ export default function CodexPage() {
     }
   }, [activeTab, activeSubTab]);
 
+  // Fetch articles when article tab is active
+  useEffect(() => {
+    if (activeTab === 'article') {
+      // Set default sub-tab if none is selected
+      if (!activeSubTab) {
+        setActiveSubTab('itjungle');
+        return; // Don't fetch until sub-tab is set
+      }
+
+      async function fetchArticles() {
+        try {
+          const res = await fetch(`/api/rss?source=${activeSubTab}`);
+          if (!res.ok) {
+            throw new Error('Failed to fetch articles');
+          }
+          const data = await res.json();
+          setPodcastEpisodes(data.items || []); // Reuse the same state
+        } catch (error) {
+          console.error('Error fetching articles:', error);
+          setPodcastEpisodes([]);
+        }
+      }
+      fetchArticles();
+    }
+  }, [activeTab, activeSubTab]);
+
   // Sort all posts by date descending
   const allPosts = useMemo(() => {
     return [...posts].sort((a, b) => {
@@ -186,6 +212,15 @@ export default function CodexPage() {
       glowColor: '0, 255, 255',
     },
     {
+      id: 'coming-soon',
+      label: 'Coming Soon',
+      color: 'text-terminal-yellow',
+      glowColor: '255, 255, 0',
+    },
+  ];
+
+  const articleSubTabs = [
+    {
       id: 'itjungle',
       label: 'IT Jungle',
       color: 'text-terminal-magenta',
@@ -239,6 +274,16 @@ export default function CodexPage() {
                   <span className='text-terminal-dimmed'>/</span>
                   <span className='text-terminal-text'>
                     {podcastSubTabs
+                      .find((tab) => tab.id === activeSubTab)
+                      ?.label.toLowerCase()}
+                  </span>
+                </>
+              )}
+              {activeTab === 'article' && activeSubTab && (
+                <>
+                  <span className='text-terminal-dimmed'>/</span>
+                  <span className='text-terminal-text'>
+                    {articleSubTabs
                       .find((tab) => tab.id === activeSubTab)
                       ?.label.toLowerCase()}
                   </span>
@@ -312,43 +357,95 @@ export default function CodexPage() {
                         <>
                           {podcastEpisodes
                             .slice(0, 10)
-                            .map((episode, index) =>
-                              activeSubTab === 'itjungle' ? (
-                                <ArticleItem
-                                  key={`${episode.guid || index}`}
-                                  article={episode}
-                                  formatDate={formatDate}
-                                  getGlowStyle={getGlowStyle}
-                                  articleColor={
-                                    podcastSubTabs.find(
-                                      (p) => p.id === activeSubTab
-                                    )?.glowColor || '255, 85, 255'
-                                  }
-                                />
-                              ) : (
-                                <PodcastEpisodeItem
-                                  key={`${episode.guid || index}`}
-                                  episode={episode}
-                                  formatDate={formatDate}
-                                  getGlowStyle={getGlowStyle}
-                                  podcastColor={
-                                    podcastSubTabs.find(
-                                      (p) => p.id === activeSubTab
-                                    )?.glowColor || '0, 255, 255'
-                                  }
-                                />
-                              )
-                            )}
+                            .map((episode, index) => (
+                              <PodcastEpisodeItem
+                                key={`${episode.guid || index}`}
+                                episode={episode}
+                                formatDate={formatDate}
+                                getGlowStyle={getGlowStyle}
+                                podcastColor={
+                                  podcastSubTabs.find(
+                                    (p) => p.id === activeSubTab
+                                  )?.glowColor || '0, 255, 255'
+                                }
+                              />
+                            ))}
 
                           {podcastEpisodes.length === 0 && (
                             <div className='text-center py-12 text-terminal-dimmed'>
-                              <p>
-                                No{' '}
-                                {activeSubTab === 'itjungle'
-                                  ? 'articles'
-                                  : 'episodes'}{' '}
-                                available at the moment.
-                              </p>
+                              <p>No episodes available at the moment.</p>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                ) : activeTab === 'article' ? (
+                  <div className='space-y-8'>
+                    {/* Article Sub-tabs */}
+                    <div className='mb-8'>
+                      <div className='flex flex-wrap gap-2'>
+                        {articleSubTabs.map((subTab) => (
+                          <button
+                            key={subTab.id}
+                            onClick={() => setActiveSubTab(subTab.id)}
+                            className={`
+                              px-4 py-2 rounded transition-all duration-200 cursor-pointer font-ibm
+                              ${
+                                activeSubTab === subTab.id
+                                  ? `${subTab.color} bg-terminal-magenta/10 border border-terminal-magenta/20 shadow-lg shadow-terminal-magenta/20`
+                                  : 'text-terminal-text hover:text-terminal-magenta hover:bg-terminal-dimmed/10 border border-transparent'
+                              }
+                            `}
+                          >
+                            <span className='font-medium'>{subTab.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Articles */}
+                    <div className='space-y-12'>
+                      {activeSubTab === 'coming-soon' ? (
+                        <div className='text-center py-12'>
+                          <div className='text-terminal-yellow text-2xl font-bold mb-4'>
+                            📰 More Articles Coming Soon!
+                          </div>
+                          <p className='text-terminal-text text-lg mb-6'>
+                            I'm curating more amazing articles to share with
+                            you.
+                          </p>
+                          <div className='bg-terminal-yellow/10 border border-terminal-yellow/20 rounded-lg p-6 max-w-2xl mx-auto'>
+                            <p className='text-terminal-text'>
+                              Stay tuned for more developer articles, tech
+                              discussions, and industry insights. Each article
+                              will be carefully selected to provide value and
+                              keep you up-to-date with the latest in web
+                              development and technology.
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          {podcastEpisodes
+                            .slice(0, 10)
+                            .map((article, index) => (
+                              <ArticleItem
+                                key={`${article.guid || index}`}
+                                article={article}
+                                formatDate={formatDate}
+                                getGlowStyle={getGlowStyle}
+                                articleColor={
+                                  articleSubTabs.find(
+                                    (a) => a.id === activeSubTab
+                                  )?.glowColor || '255, 85, 255'
+                                }
+                              />
+                            ))}
+
+                          {podcastEpisodes.length === 0 && (
+                            <div className='text-center py-12 text-terminal-dimmed'>
+                              <p>No articles available at the moment.</p>
                             </div>
                           )}
                         </>
