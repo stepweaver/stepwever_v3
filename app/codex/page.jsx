@@ -65,7 +65,7 @@ export default function CodexPage() {
 
   // Fetch articles when article tab is active
   useEffect(() => {
-    if (activeTab === 'article') {
+    if (activeTab === 'articles') {
       // Set default sub-tab if none is selected
       if (!activeSubTab) {
         setActiveSubTab('itjungle');
@@ -166,9 +166,9 @@ export default function CodexPage() {
   const getTypeColor = (type) => {
     const colors = {
       blog: 'text-terminal-green',
-      project: 'text-terminal-magenta',
-      article: 'text-terminal-yellow',
-      tool: 'text-terminal-cyan',
+      projects: 'text-terminal-magenta',
+      articles: 'text-terminal-yellow',
+      tools: 'text-terminal-cyan',
       community: 'text-terminal-blue',
     };
     return colors[type] || 'text-terminal-text';
@@ -178,9 +178,9 @@ export default function CodexPage() {
   const getGlowStyle = (type) => {
     const glowColors = {
       blog: '0, 255, 65', // terminal-green
-      project: '255, 85, 255', // terminal-magenta
-      article: '255, 255, 0', // terminal-yellow
-      tool: '0, 255, 255', // terminal-cyan
+      projects: '255, 85, 255', // terminal-magenta
+      articles: '255, 255, 0', // terminal-yellow
+      tools: '0, 255, 255', // terminal-cyan
       community: '0, 150, 255', // terminal-blue
     };
 
@@ -196,9 +196,9 @@ export default function CodexPage() {
   const getTypeColorValue = (type) => {
     const colorMap = {
       blog: 'rgb(0, 255, 65)', // terminal-green
-      project: 'rgb(255, 85, 255)', // terminal-magenta
-      article: 'rgb(255, 255, 0)', // terminal-yellow
-      tool: 'rgb(0, 255, 255)', // terminal-cyan
+      projects: 'rgb(255, 85, 255)', // terminal-magenta
+      articles: 'rgb(255, 255, 0)', // terminal-yellow
+      tools: 'rgb(0, 255, 255)', // terminal-cyan
       community: 'rgb(0, 150, 255)', // terminal-blue
       all: 'rgb(0, 255, 65)', // Default to green
     };
@@ -209,9 +209,9 @@ export default function CodexPage() {
   const tabs = [
     { id: 'all', label: 'All' },
     { id: 'blog', label: 'Blog' },
-    { id: 'project', label: 'Projects' },
-    { id: 'article', label: 'Articles' },
-    { id: 'tool', label: 'Tools' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'articles', label: 'Articles' },
+    { id: 'tools', label: 'Tools' },
     { id: 'community', label: 'Community' },
     { id: 'podcasts', label: 'Podcasts' },
   ];
@@ -296,7 +296,7 @@ export default function CodexPage() {
                   </span>
                 </>
               )}
-              {activeTab === 'article' && activeSubTab && (
+              {activeTab === 'articles' && activeSubTab && (
                 <>
                   <span className='text-terminal-dimmed'>/</span>
                   <span className='text-terminal-text'>
@@ -397,7 +397,7 @@ export default function CodexPage() {
                       )}
                     </div>
                   </div>
-                ) : activeTab === 'article' ? (
+                ) : activeTab === 'articles' ? (
                   <div className='space-y-8'>
                     {/* Article Sub-tabs */}
                     <div className='mb-8'>

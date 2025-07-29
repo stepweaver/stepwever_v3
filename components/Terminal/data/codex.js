@@ -62,9 +62,9 @@ const formatDate = (dateStr) => {
 const getTypeColor = (type) => {
   const colors = {
     blog: 'text-terminal-green',
-    project: 'text-terminal-magenta',
-    article: 'text-terminal-yellow',
-    tool: 'text-terminal-cyan',
+    projects: 'text-terminal-magenta',
+    articles: 'text-terminal-yellow',
+    tools: 'text-terminal-cyan',
     community: 'text-terminal-blue',
   };
   return colors[type] || 'text-terminal-text';
@@ -77,11 +77,11 @@ export const displayCodexHelp = () => {
     ``,
     `<span class="text-terminal-cyan">Navigation:</span>`,
     `<span class="text-terminal-text">blog - Navigate to blog posts</span>`,
-    `<span class="text-terminal-text">project - Navigate to project posts</span>`,
-    `<span class="text-terminal-text">article - Navigate to article posts</span>`,
-    `<span class="text-terminal-text">tool - Navigate to tool posts</span>`,
+    `<span class="text-terminal-text">projects - Navigate to project posts</span>`,
+    `<span class="text-terminal-text">articles - Navigate to article posts</span>`,
+    `<span class="text-terminal-text">tools - Navigate to tool posts</span>`,
     `<span class="text-terminal-text">community - Navigate to community posts</span>`,
-    `<span class="text-terminal-text">podcast - Navigate to podcasts</span>`,
+    `<span class="text-terminal-text">podcasts - Navigate to podcasts</span>`,
     `<span class="text-terminal-text">cd .. - Go back to parent directory</span>`,
     `<span class="text-terminal-text">pwd - Show current path</span>`,
     ``,
@@ -113,17 +113,17 @@ export const listCurrentDirectory = async () => {
       `<span class="text-terminal-green">Available Categories:</span>`,
       ``,
       `<span class="text-terminal-cyan">blog/</span> - Blog posts`,
-      `<span class="text-terminal-cyan">project/</span> - Project posts`,
-      `<span class="text-terminal-cyan">article/</span> - Curated list of favorite articles`,
-      `<span class="text-terminal-cyan">tool/</span> - Tool posts`,
+      `<span class="text-terminal-cyan">projects/</span> - Project posts`,
+      `<span class="text-terminal-cyan">articles/</span> - Curated list of favorite articles`,
+      `<span class="text-terminal-cyan">tools/</span> - Tool posts`,
       `<span class="text-terminal-cyan">community/</span> - Community posts`,
-      `<span class="text-terminal-cyan">podcast/</span> - Curated list of favorite podcasts`,
+      `<span class="text-terminal-cyan">podcasts/</span> - Curated list of favorite podcasts`,
       ``
     ];
   } else if (pathParts.length === 3 && pathParts[0] === '~' && pathParts[1] === 'codex') {
     const category = pathParts[2];
 
-    if (category === 'podcast') {
+    if (category === 'podcasts') {
       // Podcast directory - show podcast sources
       return [
         `<span class="text-terminal-green">Podcast Sources:</span>`,
@@ -132,7 +132,7 @@ export const listCurrentDirectory = async () => {
         `<span class="text-terminal-cyan">coming-soon/</span> - More podcasts coming soon`,
         ``
       ];
-    } else if (category === 'article') {
+    } else if (category === 'articles') {
       // Articles directory - show article sources
       return [
         `<span class="text-terminal-green">Article Sources:</span>`,
@@ -171,11 +171,11 @@ export const listCurrentDirectory = async () => {
 
       return output;
     }
-  } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'podcast') {
+  } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'podcasts') {
     // Specific podcast source directory
     const source = pathParts[3];
     return await listPodcastEpisodes(source);
-  } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'article') {
+  } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'articles') {
     // Specific article source directory
     const source = pathParts[3];
     return await listPodcastEpisodes(source); // Reuse the same function for articles
@@ -197,7 +197,7 @@ export const listPodcastEpisodes = async (source) => {
   }
 
   if (source === 'coming-soon') {
-    const isArticle = currentPath.includes('/article/');
+    const isArticle = currentPath.includes('/articles/');
     const contentType = isArticle ? 'Articles' : 'Podcasts';
     const emoji = isArticle ? '📰' : '🎧';
 
@@ -212,12 +212,12 @@ export const listPodcastEpisodes = async (source) => {
   const episodes = await fetchPodcastEpisodes(source);
 
   if (episodes.length === 0) {
-    const isArticle = currentPath.includes('/article/');
+    const isArticle = currentPath.includes('/articles/');
     const contentType = isArticle ? 'articles' : 'episodes';
     return [`<span class="text-terminal-yellow">No ${contentType} available for ${source}</span>`];
   }
 
-  const isArticle = currentPath.includes('/article/');
+  const isArticle = currentPath.includes('/articles/');
   const contentType = isArticle ? 'Articles' : 'Episodes';
   const output = [
     `<span class="text-terminal-green">${contentType} from ${source}:</span>`,
@@ -250,7 +250,7 @@ export const viewPostInCurrentDirectory = async (number) => {
   if (pathParts.length === 3 && pathParts[0] === '~' && pathParts[1] === 'codex') {
     const category = pathParts[2];
 
-    if (category === 'podcast') {
+    if (category === 'podcasts') {
       return [`<span class="text-terminal-red">Use 'ls' to see podcast sources first</span>`];
     }
 
@@ -277,20 +277,20 @@ export const viewPostInCurrentDirectory = async (number) => {
       `<span class="text-terminal-yellow">To read the full post, visit: <a href="/codex/${post.type}/${post.slug}" target="_blank" rel="noopener noreferrer" class="text-terminal-cyan hover:text-terminal-white underline">/codex/${post.type}/${post.slug}</a></span>`,
       `<span class="text-terminal-text">Use 'ls' to see more posts or 'exit' to return to terminal</span>`
     ];
-  } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && (pathParts[2] === 'podcast' || pathParts[2] === 'article')) {
+  } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && (pathParts[2] === 'podcasts' || pathParts[2] === 'articles')) {
     const source = pathParts[3];
     const episodes = await fetchPodcastEpisodes(source);
     const index = parseInt(number) - 1;
 
     if (index < 0 || index >= episodes.length) {
-      const contentType = pathParts[2] === 'article' ? 'article' : 'episode';
+      const contentType = pathParts[2] === 'articles' ? 'article' : 'episode';
       return [`<span class="text-terminal-red">Invalid ${contentType} number: ${number}</span>`];
     }
 
     const episode = episodes[index];
     const date = formatDate(episode.pubDate);
     const color = source === 'itjungle' ? 'text-terminal-magenta' : 'text-terminal-cyan';
-    const contentType = pathParts[2] === 'article' ? 'Article' : 'Episode';
+    const contentType = pathParts[2] === 'articles' ? 'Article' : 'Episode';
 
     return [
       `<span class="text-terminal-green">=== ${episode.title} ===</span>`,
@@ -319,13 +319,13 @@ export const searchPostsByTagInCurrentDirectory = async (tag) => {
   if (pathParts.length === 3 && pathParts[0] === '~' && pathParts[1] === 'codex') {
     const category = pathParts[2];
 
-    if (category === 'podcast') {
+    if (category === 'podcasts') {
       return [`<span class="text-terminal-red">Search not available for podcasts</span>`];
     }
 
     // Search across all posts in the parent /codex directory, not just current category
     const allCodexPosts = cachedPosts.filter(post =>
-      ['blog', 'project', 'article', 'tool', 'community'].includes(post.type)
+      ['blog', 'projects', 'articles', 'tools', 'community'].includes(post.type)
     );
 
     const matchingPosts = allCodexPosts.filter(post => {
@@ -401,11 +401,11 @@ export const handleCodexCommand = async (command, callback) => {
       return [];
 
     case 'blog':
-    case 'project':
-    case 'article':
-    case 'tool':
+    case 'projects':
+    case 'articles':
+    case 'tools':
     case 'community':
-    case 'podcast':
+    case 'podcasts':
     case 'syntaxfm':
     case 'itjungle':
     case 'coming-soon':
@@ -462,23 +462,23 @@ export const navigateToDirectory = (directory) => {
   // Navigate to specific directory
   if (pathParts.length === 2 && pathParts[0] === '~' && pathParts[1] === 'codex') {
     // From root codex directory
-    const validCategories = ['blog', 'project', 'article', 'tool', 'community', 'podcast'];
+    const validCategories = ['blog', 'projects', 'articles', 'tools', 'community', 'podcasts'];
     if (validCategories.includes(directory)) {
       currentPath = `~/codex/${directory}`;
       return true;
     }
-  } else if (pathParts.length === 3 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'podcast') {
+  } else if (pathParts.length === 3 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'podcasts') {
     // From podcast directory
     const validSources = ['syntaxfm', 'coming-soon'];
     if (validSources.includes(directory)) {
-      currentPath = `~/codex/podcast/${directory}`;
+      currentPath = `~/codex/podcasts/${directory}`;
       return true;
     }
-  } else if (pathParts.length === 3 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'article') {
+  } else if (pathParts.length === 3 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'articles') {
     // From articles directory
     const validSources = ['itjungle', 'coming-soon'];
     if (validSources.includes(directory)) {
-      currentPath = `~/codex/article/${directory}`;
+      currentPath = `~/codex/articles/${directory}`;
       return true;
     }
   }

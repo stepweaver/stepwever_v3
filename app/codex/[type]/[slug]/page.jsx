@@ -116,9 +116,9 @@ export default async function BlogPostPage({ params }) {
   const getTypeColor = (type) => {
     const colors = {
       blog: 'text-terminal-green',
-      project: 'text-terminal-magenta',
-      article: 'text-terminal-yellow',
-      tool: 'text-terminal-cyan',
+      projects: 'text-terminal-magenta',
+      articles: 'text-terminal-yellow',
+      tools: 'text-terminal-cyan',
       community: 'text-terminal-blue',
     };
     return colors[type] || 'text-terminal-text';
