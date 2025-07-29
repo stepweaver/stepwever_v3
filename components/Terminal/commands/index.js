@@ -51,7 +51,7 @@ export const handleCommand = async (
         `<span class="text-terminal-cyan">Features:</span>`,
         `<span class="text-terminal-text">weather [location] - Get weather info + --forecast for 5-day forecast</span>`,
 
-        `<span class="text-terminal-text">contact - Send message</span>`,
+        `<span class="text-terminal-text">contact - Send a message to λstepweaver</span>`,
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
         `<span class="text-terminal-text">zork - Play ZORK I: The Great Underground Empire</span>`

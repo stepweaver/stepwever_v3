@@ -70,7 +70,7 @@ export const useContactForm = (setLines, setInput, setCursorPosition) => {
       setContactData(prev => ({ ...prev, message: command.trim() }));
       setContactStep(3);
 
-      // Show summary and confirmation
+      // Show summary and confirmation with enhanced warning
       setLines(prev => [
         ...prev,
         `<span class="text-terminal-text">${command.trim()}</span>`,
@@ -80,6 +80,7 @@ export const useContactForm = (setLines, setInput, setCursorPosition) => {
         `<span class="text-terminal-text">Email: ${contactData.email}</span>`,
         `<span class="text-terminal-text">Message: ${command.trim()}</span>`,
         ``,
+        `<span class="text-terminal-yellow">⚠️  WARNING: You are about to send this message to λstepweaver</span>`,
         `<span class="text-terminal-cyan">Type 'send' to submit, 'cancel' to abort, or 'edit' to go back</span>`,
       ]);
       setInput('');
@@ -158,7 +159,7 @@ export const useContactForm = (setLines, setInput, setCursorPosition) => {
       // Invalid input
       setLines(prev => [
         ...prev,
-        `<span class="text-terminal-red">Please type 'send' to submit, 'cancel' to abort, or 'edit' to go back</span>`,
+        `<span class="text-terminal-red">Please type 'send' to submit your message, 'cancel' to abort, or 'edit' to go back</span>`,
       ]);
       setInput('');
       setCursorPosition(0);
