@@ -12,7 +12,7 @@ const fetchPosts = async () => {
     const port = window.location.port;
     const baseUrl = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
 
-    const response = await fetch(`${baseUrl}/api/blog`);
+    const response = await fetch(`${baseUrl}/api/codex`);
     if (!response.ok) {
       throw new Error(`Failed to fetch posts: ${response.status}`);
     }
@@ -274,7 +274,7 @@ export const viewPostInCurrentDirectory = async (number) => {
       `<span class="text-terminal-text">${post.description}</span>`,
       hashtags ? `<span class="text-terminal-cyan">Tags: ${hashtags}</span>` : '',
       ``,
-      `<span class="text-terminal-yellow">To read the full post, visit: <a href="/blog/${post.type}/${post.slug}" target="_blank" rel="noopener noreferrer" class="text-terminal-cyan hover:text-terminal-white underline">/blog/${post.type}/${post.slug}</a></span>`,
+      `<span class="text-terminal-yellow">To read the full post, visit: <a href="/codex/${post.type}/${post.slug}" target="_blank" rel="noopener noreferrer" class="text-terminal-cyan hover:text-terminal-white underline">/codex/${post.type}/${post.slug}</a></span>`,
       `<span class="text-terminal-text">Use 'ls' to see more posts or 'exit' to return to terminal</span>`
     ];
   } else if (pathParts.length === 4 && pathParts[0] === '~' && pathParts[1] === 'codex' && (pathParts[2] === 'podcast' || pathParts[2] === 'article')) {

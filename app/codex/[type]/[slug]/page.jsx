@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
         frontmatter.description ||
         `${frontmatter.title} - Stephen Weaver's Blog`,
       type: 'article',
-      url: `https://stepweaver.dev/blog/${type}/${slug}`,
+      url: `https://stepweaver.dev/codex/${type}/${slug}`,
       images: [
         {
           url: absoluteImageUrl,
@@ -83,10 +83,10 @@ export default async function BlogPostPage({ params }) {
                 The blog post you're looking for doesn't exist.
               </p>
               <a
-                href='/blog'
+                href='/codex'
                 className='inline-block mt-4 text-terminal-green hover:text-terminal-white transition-colors'
               >
-                ← Back to Blog
+                ← Back to Codex
               </a>
             </div>
           </div>
@@ -136,10 +136,10 @@ export default async function BlogPostPage({ params }) {
         <div className='max-w-4xl mx-auto mt-16'>
           {/* Back to Blog */}
           <a
-            href='/blog'
+            href='/codex'
             className='inline-block mb-8 text-terminal-green hover:text-terminal-white transition-colors'
           >
-            ← Back to Blog
+            ← Back to Codex
           </a>
 
           {/* Post Header */}

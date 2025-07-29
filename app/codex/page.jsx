@@ -20,7 +20,7 @@ export default function CodexPage() {
       setError(null);
 
       try {
-        const res = await fetch('/api/blog');
+        const res = await fetch('/api/codex');
         if (!res.ok) {
           throw new Error('Failed to fetch content');
         }
@@ -664,7 +664,7 @@ function PostItem({
   return (
     <article className='group'>
       <a
-        href={`/blog/${post.type}/${post.slug}`}
+        href={`/codex/${post.type}/${post.slug}`}
         className='block py-0.5 px-2 rounded-sm hover:bg-terminal-dimmed/5 transition-all duration-200'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

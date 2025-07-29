@@ -14,7 +14,7 @@ export default function MobileNav() {
 
   const navLinks = [
     { name: 'ABOUT', path: '/#about', scroll: true },
-    { name: 'CODEX', path: '/blog' },
+    { name: 'CODEX', path: '/codex' },
     { name: 'TERMINAL', path: '/terminal' },
     { name: 'CONTACT', path: '/contact' },
     {
