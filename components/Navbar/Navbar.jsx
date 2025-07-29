@@ -65,13 +65,13 @@ export default function Navbar() {
             >
               Contact
             </Link>
-
-            {/* Theme Toggle */}
-            <div className='ml-4'>
-              <ThemeToggle />
-            </div>
           </div>
         </div>
+      </div>
+
+      {/* Theme Toggle - Corner Position */}
+      <div className='absolute top-4 right-4 z-50'>
+        <ThemeToggle />
       </div>
 
       {/* Mobile Navigation */}

@@ -44,6 +44,11 @@ module.exports = {
         slideIn: 'slideIn 0.3s ease-out',
         typewriter: 'typewriter 2s steps(40, end)',
       },
+      animationDelay: {
+        '300': '300ms',
+        '600': '600ms',
+        '900': '900ms',
+      },
       keyframes: {
         blink: {
           '0%, 100%': { opacity: '1' },
