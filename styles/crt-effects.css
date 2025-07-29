@@ -35,7 +35,7 @@
   bottom: 0;
   background: linear-gradient(
     rgba(0, 0, 0, 0),
-    rgba(0, 255, 65, 0.1) 50%,
+    rgba(0, 255, 65, 0.03) 50%,
     rgba(0, 0, 0, 0)
   );
   background-size: 100% 8px;
@@ -54,7 +54,7 @@
   z-index: 2;
   background: repeating-linear-gradient(
     transparent 0px,
-    rgba(0, 255, 65, 0.08) 1px,
+    rgba(0, 255, 65, 0.03) 1px,
     transparent 2px
   );
   mix-blend-mode: overlay;

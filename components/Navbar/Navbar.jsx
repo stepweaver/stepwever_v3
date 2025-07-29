@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import MobileNav from './MobileNav';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 export default function Navbar() {
   return (
-    <nav className='py-8 relative z-50'>
+    <nav className='py-8 relative z-50 bg-transparent'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative'>
         <div className='flex justify-between items-center'>
           {/* Logo */}
@@ -27,7 +28,7 @@ export default function Navbar() {
           </button>
 
           {/* Desktop Navigation */}
-          <div className='hidden md:flex items-center space-x-12 relative z-50'>
+          <div className='hidden md:flex items-center space-x-8 relative z-50'>
             <button
               type='button'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
@@ -64,6 +65,11 @@ export default function Navbar() {
             >
               Contact
             </Link>
+
+            {/* Theme Toggle */}
+            <div className='ml-4'>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </div>

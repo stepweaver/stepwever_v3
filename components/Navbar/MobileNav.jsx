@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import styles from '@/styles/terminal-ui.module.css';
 import terminalStyles from '@/styles/terminal.module.css';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +97,7 @@ export default function MobileNav() {
 
       {isOpen && (
         <div
-          className={`fixed inset-0 ${styles.terminalDark} animate-fadeIn overflow-hidden ${terminalStyles.crtEffect} z-[9999]`}
+          className={`fixed inset-0 animate-fadeIn overflow-hidden ${terminalStyles.crtEffect} z-[9999]`}
           style={{
             boxShadow: 'inset 0 0 60px rgba(0, 255, 65, 0.15)',
           }}
@@ -110,7 +111,12 @@ export default function MobileNav() {
               ~/menu
             </div>
 
-            <div className='flex gap-2'>
+            <div className='flex gap-2 items-center'>
+              {/* Theme Toggle */}
+              <div className='mr-2'>
+                <ThemeToggle />
+              </div>
+
               <div
                 className={`${styles.terminalButton} bg-terminal-yellow cursor-pointer`}
                 onClick={() => setIsOpen(false)}
@@ -175,7 +181,7 @@ export default function MobileNav() {
               ))}
             </ul>
 
-            <div className='absolute bottom-0 left-0 right-0 border-t border-terminal-dimmed/30 py-4 px-4 md:px-6 text-terminal-dimmed text-sm bg-terminal-dark/80 backdrop-blur-sm'>
+            <div className='absolute bottom-0 left-0 right-0 border-t border-terminal-dimmed/30 py-4 px-4 md:px-6 text-terminal-dimmed text-sm backdrop-blur-sm'>
               <div className='flex justify-between items-center'>
                 <div className='truncate'>stepweaver@v3.0</div>
                 <div className='flex items-center flex-shrink-0'>

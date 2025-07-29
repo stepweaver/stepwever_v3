@@ -247,7 +247,7 @@ export default function CodexPage() {
   ];
 
   return (
-    <div className='min-h-screen relative bg-terminal-dark'>
+    <div className='min-h-screen relative'>
       <BackgroundCanvas />
       <div className='relative z-10 p-4'>
         <div className='max-w-7xl mx-auto'>

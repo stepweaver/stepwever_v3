@@ -12,7 +12,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className='relative z-30 min-h-screen flex flex-col justify-end'>
+    <footer className='relative z-30 min-h-screen flex flex-col justify-end bg-transparent'>
       {/* Main Footer Content */}
       <div className='max-w-7xl mx-auto px-4 md:px-6 w-full flex-1 flex flex-col justify-center'>
         {/* Logo Section - Centered */}

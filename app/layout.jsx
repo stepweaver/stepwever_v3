@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { Analytics } from '@vercel/analytics/next';
 import '@/utils/errorMonitor'; // Initialize error monitoring
+import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
 
 const ocrFont = localFont({
   src: './fonts/OCRA.woff',
@@ -154,12 +155,14 @@ export default function RootLayout({ children }) {
           crossOrigin='anonymous'
         />
       </head>
-      <body className='bg-terminal-dark text-terminal-text'>
+      <body className='text-terminal-text'>
         <ErrorBoundary>
-          <Navbar />
-          {children}
-          <Analytics />
-          <Footer />
+          <ThemeProvider>
+            <Navbar />
+            {children}
+            <Analytics />
+            <Footer />
+          </ThemeProvider>
         </ErrorBoundary>
       </body>
     </html>

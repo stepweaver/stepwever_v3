@@ -20,7 +20,7 @@
 
 /* CSS Variables for theming */
 @theme {
-  /* Colors */
+  /* Dark Theme Colors */
   --color-terminal-dark: #0d1211;
   --color-terminal-light: #131918;
   --color-terminal-border: #2a302d;
@@ -62,6 +62,85 @@
   --theme-glitch-color: #ff00ff;
   --theme-glitch-shadow: 0 0 5px rgba(255, 0, 255, 0.8),
     0 0 10px rgba(255, 0, 255, 0.4);
+}
+
+/* Theme-specific styles */
+[data-theme="dark"] {
+  --color-terminal-dark: #0d1211;
+  --color-terminal-light: #131918;
+  --color-terminal-border: #2a302d;
+  --color-terminal-green: #00ff41;
+  --color-terminal-text: #e2e2e2;
+  --color-terminal-muted: #8b949e;
+  --color-terminal-yellow: #ffff00;
+  --color-terminal-red: #ff3e3e;
+  --color-terminal-blue: #38beff;
+  --color-terminal-cyan: #56b6c2;
+  --color-terminal-dimmed: #6a737d;
+  --color-terminal-magenta: #ff55ff;
+  --color-terminal-pink: #ff55ff;
+  --color-terminal-purple: #a855f7;
+  --color-terminal-orange: #ffa500;
+  --color-terminal-white: #ffffff;
+  --background: transparent;
+  --foreground: #00ff00;
+  --terminal-title-glow: 0 0 3px rgba(0, 255, 65, 0.7);
+  --terminal-text-glow: 0 0 2px rgba(0, 255, 65, 0.5);
+  --terminal-shadow: 0 0 1px rgba(0, 255, 65, 0.7),
+    0 0 20px rgba(0, 255, 65, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(0, 255, 65, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(0, 255, 65, 0.8),
+    0 0 10px rgba(0, 255, 65, 0.4);
+  --crt-glow: 0 0 30px rgba(0, 255, 65, 0.15);
+  --theme-glitch-color: #ff00ff;
+  --theme-glitch-shadow: 0 0 5px rgba(255, 0, 255, 0.8),
+    0 0 10px rgba(255, 0, 255, 0.4);
+}
+
+[data-theme="light"] {
+  /* Light Mode Colors - CRT Style */
+  --color-terminal-dark: #e5e7eb;
+  --color-terminal-light: #f3f4f6;
+  --color-terminal-border: #d1d5db;
+  --color-terminal-green: #009e3f;
+  --color-terminal-text: #1f2937;
+  --color-terminal-muted: #6b7280;
+  --color-terminal-yellow: #d97706;
+  --color-terminal-red: #dc2626;
+  --color-terminal-blue: #2563eb;
+  --color-terminal-cyan: #0891b2;
+  --color-terminal-dimmed: #9ca3af;
+  --color-terminal-magenta: #c026d3;
+  --color-terminal-pink: #db2777;
+  --color-terminal-purple: #7c3aed;
+  --color-terminal-orange: #ea580c;
+  --color-terminal-white: #000000;
+
+  /* Background and Foreground - CRT Green Tint */
+  --background: #e8f0e8;
+  --foreground: #1f2937;
+
+  /* Glows / Effects — softened or reduced */
+  --terminal-title-glow: none;
+  --terminal-text-glow: none;
+  --terminal-shadow: none;
+  --terminal-inner-glow: none;
+  --terminal-strong-glow: none;
+  --crt-glow: none;
+
+  /* Glitch Effect Colors — still visible but less eye-searing */
+  --theme-glitch-color: #7c3aed;
+  --theme-glitch-shadow: 0 0 3px rgba(124, 58, 237, 0.6),
+                         0 0 6px rgba(124, 58, 237, 0.3);
+}
+
+/* Light theme font weight improvements */
+[data-theme="light"] .font-ocr {
+  font-weight: 600;
+}
+
+[data-theme="light"] .font-ibm {
+  font-weight: 600;
 }
 
 /* Keyframes */
@@ -193,6 +272,8 @@ html {
   scroll-behavior: smooth;
   /* Prevent horizontal scroll on mobile */
   overflow-x: hidden;
+  /* Smooth theme transitions */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -208,6 +289,18 @@ body {
   /* Prevent iOS Safari zoom on input focus */
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+  /* Smooth theme transitions */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure body background is applied */
+html, body {
+  background-color: var(--background);
+}
+
+/* Theme transition styles */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Mobile-specific improvements */
@@ -280,10 +373,48 @@ body::after {
   bottom: 0;
   background: linear-gradient(
     transparent 50%,
-    rgba(0, 255, 65, 0.02) 50%
+    rgba(0, 255, 65, 0.03) 50%
   );
   background-size: 100% 4px;
   pointer-events: none;
   animation: scanlines 20s linear infinite;
   z-index: 1;
+}
+
+/* Light theme scanline effect */
+[data-theme="light"] body::after {
+  background: 
+    /* Vignette effect */
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.15) 100%),
+    /* Scanlines */
+    linear-gradient(
+      transparent 0%,
+      transparent 45%,
+      rgba(0, 158, 63, 0.08) 45%,
+      rgba(0, 158, 63, 0.08) 55%,
+      transparent 55%,
+      transparent 100%
+    );
+  background-size: 100% 100%, 100% 6px;
+  animation: scanlines 15s linear infinite;
+}
+
+/* Theme toggle specific styles */
+.theme-toggle {
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+  box-shadow: 0 0 15px rgba(0, 158, 63, 0.4);
+}
+
+/* Theme toggle skeleton for hydration */
+.theme-toggle-skeleton {
+  background: var(--color-terminal-border);
+  border: 1px solid var(--color-terminal-border);
 }

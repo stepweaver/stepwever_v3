@@ -60,77 +60,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function BlogPostPage({ params }) {
-  const resolvedParams = await params;
-  const { type, slug } = resolvedParams;
-
-  const filePath = path.join(process.cwd(), 'content', type, `${slug}.mdx`);
-
-  let mdxSource;
-  try {
-    mdxSource = await fs.readFile(filePath, 'utf8');
-  } catch (err) {
-    return (
-      <div className='min-h-screen relative bg-terminal-dark'>
-        <BackgroundCanvas />
-        <div className='relative z-10 p-4'>
-          <div className='max-w-4xl mx-auto mt-16'>
-            <div className='text-center'>
-              <h1 className='text-4xl font-bold text-terminal-red mb-4'>
-                Post Not Found
-              </h1>
-              <p className='text-terminal-text'>
-                The blog post you're looking for doesn't exist.
-              </p>
-              <a
-                href='/codex'
-                className='inline-block mt-4 text-terminal-green hover:text-terminal-white transition-colors'
-              >
-                ← Back to Codex
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const { content, data: frontmatter } = matter(mdxSource);
-
-  // Format date
-  const formatDate = (dateStr) => {
-    if (!dateStr) return '';
-    try {
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-    } catch (e) {
-      return dateStr;
-    }
-  };
-
-  // Get type color
-  const getTypeColor = (type) => {
-    const colors = {
-      blog: 'text-terminal-green',
-      projects: 'text-terminal-magenta',
-      articles: 'text-terminal-yellow',
-      tools: 'text-terminal-cyan',
-      community: 'text-terminal-blue',
-    };
-    return colors[type] || 'text-terminal-text';
-  };
-
-  // MDX components with access to frontmatter
-  const mdxComponents = {
-    Update: (props) => <Update frontmatter={frontmatter} {...props} />,
-  };
-
+export default function CodexDetailPage({ params }) {
   return (
-    <div className='min-h-screen relative bg-terminal-dark'>
+    <div className='min-h-screen relative'>
       <BackgroundCanvas />
       <div className='relative z-10 p-4'>
         <div className='max-w-4xl mx-auto mt-16'>

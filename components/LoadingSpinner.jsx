@@ -1,6 +1,6 @@
-export default function LoadingSpinner({ message = 'LOADING...' }) {
+export default function LoadingSpinner() {
   return (
-    <div className='min-h-screen bg-terminal-dark flex items-center justify-center'>
+    <div className='min-h-screen flex items-center justify-center'>
       <div className='text-center'>
         <div className='text-terminal-green font-ibm text-2xl mb-4 animate-pulse'>
           {message}
