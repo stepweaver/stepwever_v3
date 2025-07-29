@@ -203,19 +203,6 @@ const SuccessStories = memo(() => {
                           ))}
                         </ul>
                       </div>
-
-                      {/* Terminal Prompt */}
-                      <div className='text-terminal-dimmed font-ocr text-xs mt-auto'>
-                        <span className='text-terminal-green'>
-                          guest@stepweaver.dev
-                        </span>
-                        <span className='text-terminal-text'> ~ </span>
-                        <GlitchLambda className='text-terminal-cyan' />
-                        <span className='text-terminal-text'>
-                          {' '}
-                          success-stories
-                        </span>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -277,16 +264,6 @@ const SuccessStories = memo(() => {
                         </li>
                       ))}
                     </ul>
-                  </div>
-
-                  {/* Terminal Prompt */}
-                  <div className='text-terminal-dimmed font-ocr text-xs mt-auto'>
-                    <span className='text-terminal-green'>
-                      guest@stepweaver.dev
-                    </span>
-                    <span className='text-terminal-text'> ~ </span>
-                    <GlitchLambda className='text-terminal-cyan' />
-                    <span className='text-terminal-text'> success-stories</span>
                   </div>
                 </div>
               </div>
