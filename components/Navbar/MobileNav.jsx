@@ -97,7 +97,7 @@ export default function MobileNav() {
 
       {isOpen && (
         <div
-          className={`fixed inset-0 animate-fadeIn overflow-hidden ${terminalStyles.crtEffect} z-[9999]`}
+          className={`fixed inset-0 animate-fadeIn overflow-hidden ${terminalStyles.crtEffect} z-[9999] bg-terminal-dark`}
           style={{
             boxShadow: 'inset 0 0 60px rgba(0, 255, 65, 0.15)',
           }}

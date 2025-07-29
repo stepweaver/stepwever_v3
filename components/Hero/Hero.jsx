@@ -246,11 +246,11 @@ export default function Hero() {
   return (
     <section className='relative z-30 py-8 sm:py-16 md:py-24'>
       <div className='text-left px-4 sm:px-8 md:px-16 lg:px-24 w-full'>
-        <h1 className='text-6xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] mb-6 sm:mb-10 leading-tight text-right font-ibm w-full h-[7rem] sm:h-[8rem] md:h-[10rem] lg:h-[12rem] xl:h-[14rem] 2xl:h-[16rem] flex flex-col sm:flex-row items-end justify-end relative overflow-hidden'>
+        <h1 className='text-6xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl mb-6 sm:mb-10 leading-tight text-left sm:text-right font-ibm w-full min-h-[8rem] sm:h-[7rem] md:h-[8rem] lg:h-[10rem] xl:h-[12rem] 2xl:h-[14rem] flex flex-col sm:flex-row items-start sm:items-end justify-start sm:justify-end relative overflow-hidden'>
           <AnimatePresence mode='wait'>
             <motion.span
               key={words[currentWordIndex].text}
-              className={`absolute right-0 ${words[currentWordIndex].color}`}
+              className={`relative sm:absolute sm:right-0 max-w-full ${words[currentWordIndex].color} break-words`}
               initial={{ opacity: 0, x: 32 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -32 }}
