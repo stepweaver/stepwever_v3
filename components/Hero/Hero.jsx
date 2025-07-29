@@ -3,10 +3,10 @@
 import { useState, useEffect, useRef } from 'react';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Hero() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(2); // Default for SSR
   const [isClient, setIsClient] = useState(false);
@@ -20,9 +20,9 @@ export default function Hero() {
   const minSwipeDistance = 50;
 
   const words = [
-    { text: 'Automate', color: 'text-terminal-green' },
-    { text: 'Optimize', color: 'text-terminal-cyan' },
-    { text: 'Scale', color: 'text-terminal-magenta' },
+    { text: 'Real systems.', color: 'text-terminal-green' },
+    { text: 'Real impact.', color: 'text-terminal-cyan' },
+    { text: 'No nonsense.', color: 'text-terminal-magenta' },
   ];
 
   useEffect(() => {
@@ -31,13 +31,8 @@ export default function Hero() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsVisible(false);
-
-      setTimeout(() => {
-        setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
-        setIsVisible(true);
-      }, 150); // Half of the fade transition time
-    }, 2750); // 2.75 seconds per word
+      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [words.length]);
@@ -251,33 +246,27 @@ export default function Hero() {
   return (
     <section className='relative z-30 py-8 sm:py-16 md:py-24'>
       <div className='text-left px-4 sm:px-8 md:px-16 lg:px-24 w-full'>
-        <h1 className='text-6xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] mb-6 sm:mb-10 leading-tight text-right font-ibm w-full h-[7rem] sm:h-[8rem] md:h-[10rem] lg:h-[12rem] xl:h-[14rem] 2xl:h-[16rem] flex flex-col sm:flex-row items-end justify-end'>
-          <span
-            className={`${
-              words[currentWordIndex].color
-            } transition-opacity duration-300 ${
-              isVisible ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {words[currentWordIndex].text}
-          </span>
-          <span className='text-terminal-text italic sm:ml-2'>fast.</span>
+        <h1 className='text-6xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] mb-6 sm:mb-10 leading-tight text-right font-ibm w-full h-[7rem] sm:h-[8rem] md:h-[10rem] lg:h-[12rem] xl:h-[14rem] 2xl:h-[16rem] flex flex-col sm:flex-row items-end justify-end relative overflow-hidden'>
+          <AnimatePresence mode='wait'>
+            <motion.span
+              key={words[currentWordIndex].text}
+              className={`absolute right-0 ${words[currentWordIndex].color}`}
+              initial={{ opacity: 0, x: 32 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -32 }}
+              transition={{ duration: 1 }}
+            >
+              {words[currentWordIndex].text}
+            </motion.span>
+          </AnimatePresence>
         </h1>
 
-        <p className='text-lg sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-terminal-text mb-6 sm:mb-10 max-w-4xl ml-auto leading-tight font-ocr'>
-          Growth systems for businesses that move fast and scale without
-          friction.
-        </p>
-
         <p className='text-base sm:text-xl md:text-2xl lg:text-3xl text-terminal-text mb-6 sm:mb-10 max-w-4xl ml-auto leading-tight font-ocr'>
-          At <GlitchLambda className='text-terminal-text' />
-          stepweaver, action comes first. We build lean data pipelines,
-          automations, and high-impact web experiences that slash waste and
-          surface profit opportunities in weeks-not quarters.
-        </p>
-
-        <p className='text-base sm:text-xl md:text-2xl lg:text-3xl text-terminal-text mb-6 sm:mb-10 max-w-4xl ml-auto leading-tight font-ocr'>
-          From concept to deployment in record time.
+          <GlitchLambda className='text-terminal-text' />
+          stepweaver is about action-not decks and buzzwords. I wire up
+          automations, dashboards, and clean sites that let you see your numbers
+          and act fast. No fluff, no endless projects. From concept to
+          deployment in record time.
         </p>
 
         {/* Terminal Link */}
