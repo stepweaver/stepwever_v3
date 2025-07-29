@@ -8,11 +8,38 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('dark');
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage on mount
+  // Get system theme preference
+  const getSystemTheme = () => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-color-scheme: light)').matches
+        ? 'light'
+        : 'dark';
+    }
+    return 'dark'; // Default fallback
+  };
+
+  // Initialize theme from localStorage or system preference on mount
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
+    const savedTheme = localStorage.getItem('theme');
+    const systemTheme = getSystemTheme();
+    const initialTheme = savedTheme || systemTheme;
+    setTheme(initialTheme);
     setMounted(true);
+
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const handleSystemThemeChange = (e) => {
+      // Only update if user hasn't manually set a preference
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'light' : 'dark');
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange);
+    };
   }, []);
 
   // Update document class and localStorage when theme changes

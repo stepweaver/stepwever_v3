@@ -15,7 +15,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className='theme-toggle relative w-10 h-10 rounded-lg border border-terminal-green bg-terminal-dark hover:bg-terminal-light transition-all duration-300 group overflow-hidden'
+      className='theme-toggle relative w-10 h-10 rounded-lg border border-terminal-green bg-terminal-dark hover:bg-terminal-light transition-all duration-300 group overflow-hidden cursor-pointer'
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
     >
       {/* Background glow effect */}
