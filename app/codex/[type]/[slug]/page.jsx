@@ -2,8 +2,40 @@ import fs from 'fs/promises';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import matter from 'gray-matter';
+import { notFound } from 'next/navigation';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
-import Update from '@/components/mdx/Update';
+import { mdxComponents } from '@/components/mdx/Update';
+
+// Helper function to get type color
+const getTypeColor = (type) => {
+  switch (type) {
+    case 'blog':
+      return 'text-terminal-green';
+    case 'projects':
+      return 'text-terminal-cyan';
+    case 'articles':
+      return 'text-terminal-magenta';
+    case 'tools':
+      return 'text-terminal-yellow';
+    case 'community':
+      return 'text-terminal-purple';
+    case 'podcasts':
+      return 'text-terminal-blue';
+    default:
+      return 'text-terminal-text';
+  }
+};
+
+// Helper function to format date
+const formatDate = (dateStr) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
@@ -60,7 +92,25 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function CodexDetailPage({ params }) {
+export default async function CodexDetailPage({ params }) {
+  const resolvedParams = await params;
+  const { type, slug } = resolvedParams;
+
+  // Read the file
+  const filePath = path.join(process.cwd(), 'content', type, `${slug}.mdx`);
+
+  let frontmatter = {};
+  let content = '';
+
+  try {
+    const source = await fs.readFile(filePath, 'utf8');
+    const { data, content: fileContent } = matter(source);
+    frontmatter = data;
+    content = fileContent;
+  } catch (err) {
+    notFound();
+  }
+
   return (
     <div className='min-h-screen relative'>
       <BackgroundCanvas />
