@@ -3,10 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
 import GlitchLambda from '@/components/ui/GlitchLambda';
-import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Hero() {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(2); // Default for SSR
   const [isClient, setIsClient] = useState(false);
@@ -19,23 +17,9 @@ export default function Hero() {
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
 
-  const words = [
-    { text: 'Real systems.', color: 'text-terminal-green' },
-    { text: 'Real impact.', color: 'text-terminal-cyan' },
-    { text: 'No nonsense.', color: 'text-terminal-magenta' },
-  ];
-
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [words.length]);
 
   // Touch event handlers for swipe functionality
   const onTouchStart = (e) => {
@@ -244,21 +228,18 @@ export default function Hero() {
   };
 
   return (
-    <section className='relative z-30 py-8 sm:py-16 md:py-24'>
+    <section className='relative z-30 pt-0 pb-4 sm:pb-8 md:pb-12'>
       <div className='text-left px-4 sm:px-8 md:px-16 lg:px-24 w-full'>
-        <h1 className='text-6xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl mb-6 sm:mb-10 leading-tight text-left sm:text-right font-ibm w-full min-h-[8rem] sm:h-[7rem] md:h-[8rem] lg:h-[10rem] xl:h-[12rem] 2xl:h-[14rem] flex flex-col sm:flex-row items-start sm:items-end justify-start sm:justify-end relative overflow-hidden'>
-          <AnimatePresence mode='wait'>
-            <motion.span
-              key={words[currentWordIndex].text}
-              className={`relative sm:absolute sm:right-0 max-w-full ${words[currentWordIndex].color} break-words`}
-              initial={{ opacity: 0, x: 32 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -32 }}
-              transition={{ duration: 1 }}
-            >
-              {words[currentWordIndex].text}
-            </motion.span>
-          </AnimatePresence>
+        <h1 className='text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] mb-6 sm:mb-10 leading-tight text-left sm:text-right font-ibm w-full min-h-[14rem] sm:min-h-[16rem] md:min-h-[18rem] lg:min-h-[20rem] xl:min-h-[22rem] 2xl:min-h-[24rem] flex flex-col sm:flex-row items-start sm:items-end justify-start sm:justify-end relative overflow-hidden'>
+          <div className='relative max-w-[99vw] sm:max-w-[98vw] md:max-w-[95vw] lg:max-w-[90vw] xl:max-w-[85vw] 2xl:max-w-[80vw] break-words'>
+            <div className='text-terminal-green font-bold mb-1 sm:mb-2 md:mb-3'>
+              Real systems.
+            </div>
+            <div className='text-terminal-cyan font-bold mb-1 sm:mb-2 md:mb-3'>
+              Real impact.
+            </div>
+            <div className='text-terminal-magenta font-bold'>No nonsense.</div>
+          </div>
         </h1>
 
         <p className='text-base sm:text-xl md:text-2xl lg:text-3xl text-terminal-text mb-6 sm:mb-10 max-w-4xl ml-auto leading-tight font-ocr'>
