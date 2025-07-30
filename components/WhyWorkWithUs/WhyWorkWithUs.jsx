@@ -1,7 +1,6 @@
 'use client';
 
 import { memo } from 'react';
-import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const WhyWorkWithUs = memo(() => {
   const reasons = [
@@ -31,26 +30,26 @@ const WhyWorkWithUs = memo(() => {
   ];
 
   return (
-    <section className='relative z-30 py-20'>
-      <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
+    <section className='relative z-30 py-12 md:py-20'>
+      <div className='text-left px-6 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
-        <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-12 md:mb-16 leading-tight text-left font-ibm text-terminal-green'>
+        <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-8 md:mb-16 leading-tight text-left font-ibm text-terminal-green'>
           WHY WORK WITH ME?
         </h2>
 
         {/* Three columns */}
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16 md:mb-20 max-w-full'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8 mb-12 md:mb-20 max-w-full'>
           {reasons.map((reason, index) => (
-            <div key={index} className='flex flex-col items-start p-4 md:p-6'>
+            <div key={index} className='flex flex-col items-start p-3 md:p-6'>
               {/* Reason Title */}
-              <div className='h-16 md:h-20 flex items-start mb-3'>
+              <div className='h-12 md:h-20 flex items-start mb-2 md:mb-3'>
                 <h3 className='text-terminal-green font-ibm text-xl md:text-2xl lg:text-3xl font-bold'>
                   {reason.title}
                 </h3>
               </div>
 
               {/* Border separator */}
-              <div className='w-full h-px bg-terminal-green/20 mb-3 md:mb-4'></div>
+              <div className='w-full h-px bg-terminal-green/20 mb-2 md:mb-4'></div>
 
               {/* Reason Description */}
               <div className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed'>
