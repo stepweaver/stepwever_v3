@@ -230,19 +230,21 @@ export default function Hero() {
   return (
     <section className='relative z-30 pt-0 pb-4 sm:pb-8 md:pb-12'>
       <div className='text-left px-4 sm:px-8 md:px-16 lg:px-24 w-full'>
-        <h1 className='text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] mb-6 sm:mb-10 leading-tight text-left sm:text-right font-ibm w-full min-h-[14rem] sm:min-h-[16rem] md:min-h-[18rem] lg:min-h-[20rem] xl:min-h-[22rem] 2xl:min-h-[24rem] flex flex-col sm:flex-row items-start sm:items-end justify-start sm:justify-end relative overflow-hidden'>
+        <h1 className='text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] mb-4 sm:mb-6 leading-tight text-right font-ibm w-full min-h-[8rem] sm:min-h-[12rem] md:min-h-[14rem] lg:min-h-[16rem] xl:min-h-[18rem] 2xl:min-h-[20rem] flex flex-col sm:flex-row items-end justify-end relative overflow-hidden'>
           <div className='relative max-w-[99vw] sm:max-w-[98vw] md:max-w-[95vw] lg:max-w-[90vw] xl:max-w-[85vw] 2xl:max-w-[80vw] break-words'>
-            <div className='text-terminal-green font-bold mb-1 sm:mb-2 md:mb-3'>
+            <div className='text-terminal-green font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
               Real systems.
             </div>
-            <div className='text-terminal-cyan font-bold mb-1 sm:mb-2 md:mb-3'>
+            <div className='text-terminal-cyan font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
               Real impact.
             </div>
-            <div className='text-terminal-magenta font-bold'>No nonsense.</div>
+            <div className='text-terminal-magenta font-bold whitespace-nowrap'>
+              No nonsense.
+            </div>
           </div>
         </h1>
 
-        <p className='text-base sm:text-xl md:text-2xl lg:text-3xl text-terminal-text mb-6 sm:mb-10 max-w-4xl ml-auto leading-tight font-ocr'>
+        <p className='text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-terminal-text mb-6 sm:mb-10 max-w-6xl ml-auto leading-tight font-ocr'>
           <GlitchLambda className='text-terminal-text' />
           stepweaver is about action-not decks and buzzwords. I wire up
           automations, dashboards, and clean sites that let you see your numbers
@@ -251,7 +253,7 @@ export default function Hero() {
         </p>
 
         {/* Terminal Link */}
-        <div className='max-w-4xl ml-auto mb-6 sm:mb-10'>
+        <div className='max-w-6xl ml-auto mb-6 sm:mb-10'>
           <a
             href='/terminal'
             className='inline-flex items-center gap-2 sm:gap-3 text-terminal-cyan hover:text-terminal-green transition-all duration-300 font-ibm text-base sm:text-xl md:text-2xl hover:scale-105'
