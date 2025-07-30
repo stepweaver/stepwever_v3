@@ -211,10 +211,22 @@ export default function Experience() {
             </h3>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
               <GlitchLambda className='text-terminal-text' />
-              stepweaver is led by a veteran, business analyst, and rebel
-              developer obsessed with helping businesses scale. Every project is
-              a hands-on mission to solve real problems with practical tools,
-              clear strategy, and relentless curiosity-no fluff, just results.
+              stepweaver is veteran-owned and run by someone who thrives on hard
+              problems.
+            </p>
+            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-4'>
+              8 years as a business analyst.
+            </p>
+            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
+              I solve business problems with code, hard work, and genuine
+              curiosity.
+            </p>
+            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
+              Building is a puzzle I never get tired of-figuring it out and
+              making it work is what I do best.
+            </p>
+            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
+              It's my brand of grit.
             </p>
           </div>
         </div>
