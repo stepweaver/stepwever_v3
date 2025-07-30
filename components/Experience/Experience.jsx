@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import {
   SiReact,
   SiNextdotjs,
@@ -38,145 +38,146 @@ import {
 } from 'lucide-react';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
-export default function Experience() {
+// 1) Data lives outside the component
+const TECH_CATEGORIES = [
+  {
+    name: 'Front-End',
+    technologies: [
+      { name: 'React', icon: SiReact, color: '#61DAFB', isComponent: true },
+      {
+        name: 'Next.js 15',
+        icon: SiNextdotjs,
+        color: '#ffffff',
+        isComponent: true,
+      },
+      {
+        name: 'Tailwind CSS v4',
+        icon: SiTailwindcss,
+        color: '#06B6D4',
+        isComponent: true,
+      },
+      { name: 'shadcn/ui', icon: '🧩' },
+      { name: 'MDX', icon: '📝' },
+      {
+        name: 'Contentlayer',
+        icon: FileText,
+        color: '#ffffff',
+        isComponent: true,
+      },
+      { name: 'Vite', icon: '⚡' },
+    ],
+  },
+  {
+    name: 'Back-End / APIs',
+    technologies: [
+      {
+        name: 'Node.js',
+        icon: SiNodedotjs,
+        color: '#339933',
+        isComponent: true,
+      },
+      {
+        name: 'Express',
+        icon: SiExpress,
+        color: '#ffffff',
+        isComponent: true,
+      },
+      {
+        name: 'Serverless',
+        icon: Cloud,
+        color: '#FD5750',
+        isComponent: true,
+      },
+      { name: 'AWS Amplify', icon: '⚡' },
+      { name: 'Cognito', icon: Shield, color: '#FF9900', isComponent: true },
+      {
+        name: 'Supabase',
+        icon: SiSupabase,
+        color: '#3ECF8E',
+        isComponent: true,
+      },
+      {
+        name: 'Firebase',
+        icon: SiFirebase,
+        color: '#FFCA28',
+        isComponent: true,
+      },
+      { name: 'REST', icon: Globe, color: '#00FF41', isComponent: true },
+    ],
+  },
+  {
+    name: 'Data & Analytics',
+    technologies: [
+      {
+        name: 'PostgreSQL',
+        icon: SiPostgresql,
+        color: '#336791',
+        isComponent: true,
+      },
+      { name: 'MySQL', icon: SiMysql, color: '#4479A1', isComponent: true },
+      { name: 'Tableau', icon: '📊' },
+      {
+        name: 'Power BI',
+        icon: BarChart3,
+        color: '#F2C811',
+        isComponent: true,
+      },
+    ],
+  },
+  {
+    name: 'Automation & AI',
+    technologies: [
+      { name: 'OpenAI', icon: SiOpenai, color: '#412991', isComponent: true },
+      { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
+      { name: 'Langflow', icon: '🔄' },
+      { name: 'MCP Servers', icon: '🔌' },
+    ],
+  },
+  {
+    name: 'Commerce & Integrations',
+    technologies: [
+      { name: 'Stripe', icon: SiStripe, color: '#008CDD', isComponent: true },
+      { name: 'QuickBooks', icon: '📊' },
+      {
+        name: 'POS Systems',
+        icon: Calculator,
+        color: '#FF6B35',
+        isComponent: true,
+      },
+      { name: 'Notion', icon: SiNotion, color: '#ffffff', isComponent: true },
+      { name: 'Google Sheets', icon: '📑' },
+      { name: 'Slack', icon: SiSlack, color: '#4A154B', isComponent: true },
+    ],
+  },
+  {
+    name: 'DevOps & Delivery',
+    technologies: [
+      {
+        name: 'GitHub Actions',
+        icon: SiGithub,
+        color: '#ffffff',
+        isComponent: true,
+      },
+      { name: 'Vercel', icon: SiVercel, color: '#ffffff', isComponent: true },
+      {
+        name: 'Netlify',
+        icon: SiNetlify,
+        color: '#00C7B7',
+        isComponent: true,
+      },
+      {
+        name: 'Cloudflare',
+        icon: SiCloudflare,
+        color: '#F38020',
+        isComponent: true,
+      },
+    ],
+  },
+];
+
+function Experience() {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
-
-  const techCategories = [
-    {
-      name: 'Front-End',
-      technologies: [
-        { name: 'React', icon: SiReact, color: '#61DAFB', isComponent: true },
-        {
-          name: 'Next.js 15',
-          icon: SiNextdotjs,
-          color: '#ffffff',
-          isComponent: true,
-        },
-        {
-          name: 'Tailwind CSS v4',
-          icon: SiTailwindcss,
-          color: '#06B6D4',
-          isComponent: true,
-        },
-        { name: 'shadcn/ui', icon: '🧩' },
-        { name: 'MDX', icon: '📝' },
-        {
-          name: 'Contentlayer',
-          icon: FileText,
-          color: '#ffffff',
-          isComponent: true,
-        },
-        { name: 'Vite', icon: '⚡' },
-      ],
-    },
-    {
-      name: 'Back-End / APIs',
-      technologies: [
-        {
-          name: 'Node.js',
-          icon: SiNodedotjs,
-          color: '#339933',
-          isComponent: true,
-        },
-        {
-          name: 'Express',
-          icon: SiExpress,
-          color: '#ffffff',
-          isComponent: true,
-        },
-        {
-          name: 'Serverless',
-          icon: Cloud,
-          color: '#FD5750',
-          isComponent: true,
-        },
-        { name: 'AWS Amplify', icon: '⚡' },
-        { name: 'Cognito', icon: Shield, color: '#FF9900', isComponent: true },
-        {
-          name: 'Supabase',
-          icon: SiSupabase,
-          color: '#3ECF8E',
-          isComponent: true,
-        },
-        {
-          name: 'Firebase',
-          icon: SiFirebase,
-          color: '#FFCA28',
-          isComponent: true,
-        },
-        { name: 'REST', icon: Globe, color: '#00FF41', isComponent: true },
-      ],
-    },
-    {
-      name: 'Data & Analytics',
-      technologies: [
-        {
-          name: 'PostgreSQL',
-          icon: SiPostgresql,
-          color: '#336791',
-          isComponent: true,
-        },
-        { name: 'MySQL', icon: SiMysql, color: '#4479A1', isComponent: true },
-        { name: 'Tableau', icon: '📊' },
-        {
-          name: 'Power BI',
-          icon: BarChart3,
-          color: '#F2C811',
-          isComponent: true,
-        },
-      ],
-    },
-    {
-      name: 'Automation & AI',
-      technologies: [
-        { name: 'OpenAI', icon: SiOpenai, color: '#412991', isComponent: true },
-        { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
-        { name: 'Langflow', icon: '🔄' },
-        { name: 'MCP Servers', icon: '🔌' },
-      ],
-    },
-    {
-      name: 'Commerce & Integrations',
-      technologies: [
-        { name: 'Stripe', icon: SiStripe, color: '#008CDD', isComponent: true },
-        { name: 'QuickBooks', icon: '📊' },
-        {
-          name: 'POS Systems',
-          icon: Calculator,
-          color: '#FF6B35',
-          isComponent: true,
-        },
-        { name: 'Notion', icon: SiNotion, color: '#ffffff', isComponent: true },
-        { name: 'Google Sheets', icon: '📑' },
-        { name: 'Slack', icon: SiSlack, color: '#4A154B', isComponent: true },
-      ],
-    },
-    {
-      name: 'DevOps & Delivery',
-      technologies: [
-        {
-          name: 'GitHub Actions',
-          icon: SiGithub,
-          color: '#ffffff',
-          isComponent: true,
-        },
-        { name: 'Vercel', icon: SiVercel, color: '#ffffff', isComponent: true },
-        {
-          name: 'Netlify',
-          icon: SiNetlify,
-          color: '#00C7B7',
-          isComponent: true,
-        },
-        {
-          name: 'Cloudflare',
-          icon: SiCloudflare,
-          color: '#F38020',
-          isComponent: true,
-        },
-      ],
-    },
-  ];
 
   // Handle tab click - disable auto-rotation when user interacts
   const handleTabClick = (index) => {
@@ -188,18 +189,18 @@ export default function Experience() {
     // Only auto-rotate if user hasn't interacted
     if (!userInteracted) {
       const interval = setInterval(() => {
-        setCurrentCategory((prev) => (prev + 1) % techCategories.length);
+        setCurrentCategory((prev) => (prev + 1) % TECH_CATEGORIES.length);
       }, 3000);
 
       return () => clearInterval(interval);
     }
-  }, [techCategories.length, userInteracted]);
+  }, [TECH_CATEGORIES.length, userInteracted]);
 
   return (
     <section className='relative z-30 py-20'>
-      <div className='px-8 md:px-16 lg:px-24 w-full'>
+      <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
         {/* Section Header */}
-        <div className='mb-12 md:mb-16 ml-auto w-full max-w-6xl'>
+        <header className='mb-12 md:mb-16 ml-auto w-full max-w-6xl'>
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
             EXPERIENCE & TECH ARSENAL
           </h2>
@@ -229,13 +230,13 @@ export default function Experience() {
               It's my brand of grit.
             </p>
           </div>
-        </div>
+        </header>
 
         {/* Tech Arsenal - Compact Rotating Layout */}
         <div className='ml-auto w-full max-w-6xl'>
           {/* Category Navigation - Improved Tab Design */}
-          <div className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center'>
-            {techCategories.map((category, index) => (
+          <nav className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center'>
+            {TECH_CATEGORIES.map((category, index) => (
               <button
                 key={category.name}
                 onClick={() => handleTabClick(index)}
@@ -254,19 +255,19 @@ export default function Experience() {
                 {category.name}
               </button>
             ))}
-          </div>
+          </nav>
 
           {/* Current Category Display */}
           <div className='mb-6 md:mb-8 text-center'>
             <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 md:mb-5 font-bold uppercase tracking-wider'>
-              {techCategories[currentCategory].name}
+              {TECH_CATEGORIES[currentCategory].name}
             </h3>
           </div>
 
           {/* Tech Icons - Compact Grid */}
           <div className='flex justify-center'>
             <div className='flex flex-wrap justify-center gap-4 max-w-fit mx-auto'>
-              {techCategories[currentCategory].technologies.map(
+              {TECH_CATEGORIES[currentCategory].technologies.map(
                 (tech, index) => {
                   const IconComponent = tech.isComponent ? tech.icon : null;
                   return (
@@ -298,7 +299,7 @@ export default function Experience() {
 
           {/* Category Indicators - Improved Design */}
           <div className='flex justify-center mt-8 gap-3'>
-            {techCategories.map((_, index) => (
+            {TECH_CATEGORIES.map((_, index) => (
               <button
                 key={index}
                 onClick={() => handleTabClick(index)}
@@ -315,3 +316,6 @@ export default function Experience() {
     </section>
   );
 }
+
+// memo is optional but inexpensive
+export default memo(Experience);

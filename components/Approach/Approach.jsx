@@ -18,8 +18,8 @@ function Approach() {
       id='approach'
       className='relative z-30 min-h-screen bg-terminal-bg text-terminal-text py-20'
     >
-      {/* Container keeps horizontal padding consistent site‑wide */}
-      <div className='container mx-auto'>
+      {/* Explicit padding for mobile, minimal for desktop */}
+      <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
         {/* Header */}
         <header className='mb-12'>
           <h2 className='font-ibm text-terminal-green text-4xl md:text-5xl leading-tight'>
@@ -61,7 +61,7 @@ function Approach() {
 
             <p className='border-t border-terminal-border pt-6 font-ocr text-base leading-relaxed mt-8'>
               No black boxes, no hand‑offs, no missed emails. Just direct work,
-              fast feedback, and honest communication—from kickoff to launch.
+              fast feedback, and honest communication-from kickoff to launch.
             </p>
           </div>
 

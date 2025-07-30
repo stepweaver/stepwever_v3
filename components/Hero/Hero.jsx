@@ -1,10 +1,102 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
-export default function Hero() {
+// 1) Data lives outside the component
+const PROJECTS = [
+  {
+    title: 'Lambda Orthodontics',
+    description:
+      'A professional healthcare website for Lambda Orthodontics, featuring patient testimonials, treatment options, and team information. Built with modern design principles and optimized for patient engagement.',
+    imageUrl: '/images/screencapture-lambda-ortho.png',
+    keywords: ['Healthcare', 'Patient Portal', 'Treatment Options'],
+    actions: [
+      'Browse orthodontic treatment options and services',
+      'View patient testimonials and team information',
+    ],
+    link: 'https://lambda-ortho.up.railway.app/',
+    tags: ['Web Development', 'Healthcare', 'React'],
+  },
+  {
+    title: 'Soap Stache E-commerce Site',
+    description:
+      'A clean, modern e-commerce website for Soap Stache, featuring handcrafted premium soaps. The site showcases product listings, detailed descriptions, and a cohesive brand identity.',
+    imageUrl: '/images/screencapture-soap-stache.png',
+    keywords: ['Next.js 15', 'Sanity CMS', 'Stripe', 'Tailwind CSS 4'],
+    actions: [
+      'Product catalog with detailed descriptions',
+      'Customer reviews and testimonials',
+      'Clean, brand-focused design',
+      'Mobile-responsive layout',
+    ],
+    link: 'https://app-soap-stache.vercel.app/',
+    tags: ['E-commerce', 'Web Development', 'React'],
+  },
+  {
+    title: 'Data Pipeline Automation',
+    description:
+      'Effortlessly connect apps, databases, and APIs to automate reporting and analytics. Slash manual work and surface new business insights with custom, resilient data pipelines-built to handle millions of rows or just a daily spreadsheet.',
+    keywords: ['Data Automation', 'API Integration', 'Reporting'],
+    actions: [
+      'Consolidate sales and ops data in a live dashboard',
+      'Automate end-of-day exports and reconciliations',
+    ],
+    link: '/services/data-pipeline',
+    tags: ['Data & Analytics', 'Automation', 'Python'],
+  },
+  {
+    title: 'Growth Analytics Dashboards',
+    description:
+      'Real-time dashboards and reporting built for speed and clarity. Plug your sources in and get up-to-the-minute KPIs, margin models, and custom alerts-without the agency bloat.',
+    keywords: ['Analytics', 'Dashboard', 'BI'],
+    actions: [
+      'Profitability snapshot at a glance',
+      'Alerting for trends, risks, and opportunities',
+    ],
+    link: '/services/analytics',
+    tags: ['Analytics', 'Dashboard', 'Data Visualization'],
+  },
+  {
+    title: 'Web Design',
+    description:
+      'Modern, lightning-fast websites built for growth. From single-page landers to multi-section sites, every build is custom-crafted for performance, SEO, and clear calls to action-no cookie-cutter templates.',
+    keywords: ['Web Development', 'UX/UI', 'SEO'],
+    actions: [
+      'Design & launch a high-performance marketing site',
+      'Integrate forms, analytics, and automated follow-ups',
+    ],
+    link: '/services/web-design',
+    tags: ['Web Development', 'UX/UI', 'SEO'],
+  },
+  {
+    title: 'Brand Strategy',
+    description:
+      'Clarity and edge, from your logo to your tone of voice. Develop or refresh your visual identity, messaging, and brand assets-giving your business the confidence to stand out (and scale up).',
+    keywords: ['Brand Identity', 'Design Direction', 'Messaging'],
+    actions: [
+      'Create a full logo suite and brand guide',
+      'Define tone of voice, color palette, and typography',
+    ],
+    link: '/services/brand-strategy',
+    tags: ['Brand Identity', 'Design Direction', 'Messaging'],
+  },
+  {
+    title: 'Marketing Automation',
+    description:
+      'Automate outreach, follow-ups, and list-building. Connect your email, CRM, and website so leads and updates flow hands-free-making every campaign faster and more efficient.',
+    keywords: ['Email Automation', 'CRM Integration', 'Lead Generation'],
+    actions: [
+      'Automated email sequences for new leads',
+      'Sync form submissions to CRM and mailing lists',
+    ],
+    link: '/services/marketing-automation',
+    tags: ['Email Automation', 'CRM Integration', 'Lead Generation'],
+  },
+];
+
+function Hero() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(2); // Default for SSR
   const [isClient, setIsClient] = useState(false);
@@ -74,104 +166,12 @@ export default function Hero() {
     setTouchEnd(null);
   };
 
-  const projects = [
-    {
-      title: 'Lambda Orthodontics',
-      description:
-        'A professional healthcare website for Lambda Orthodontics, featuring patient testimonials, treatment options, and team information. Built with modern design principles and optimized for patient engagement.',
-      imageUrl: '/images/screencapture-lambda-ortho.png',
-      keywords: ['Healthcare', 'Patient Portal', 'Treatment Options'],
-      actions: [
-        'Browse orthodontic treatment options and services',
-        'View patient testimonials and team information',
-      ],
-      link: 'https://lambda-ortho.up.railway.app/',
-      tags: ['Web Development', 'Healthcare', 'React'],
-    },
-    {
-      title: 'Soap Stache E-commerce Site',
-      description:
-        'A clean, modern e-commerce website for Soap Stache, featuring handcrafted premium soaps. The site showcases product listings, detailed descriptions, and a cohesive brand identity.',
-      imageUrl: '/images/screencapture-soap-stache.png',
-      keywords: ['Next.js 15', 'Sanity CMS', 'Stripe', 'Tailwind CSS 4'],
-      actions: [
-        'Product catalog with detailed descriptions',
-        'Customer reviews and testimonials',
-        'Clean, brand-focused design',
-        'Mobile-responsive layout',
-      ],
-      link: 'https://app-soap-stache.vercel.app/',
-      tags: ['E-commerce', 'Web Development', 'React'],
-    },
-    {
-      title: 'Data Pipeline Automation',
-      description:
-        'Effortlessly connect apps, databases, and APIs to automate reporting and analytics. Slash manual work and surface new business insights with custom, resilient data pipelines-built to handle millions of rows or just a daily spreadsheet.',
-      keywords: ['Data Automation', 'API Integration', 'Reporting'],
-      actions: [
-        'Consolidate sales and ops data in a live dashboard',
-        'Automate end-of-day exports and reconciliations',
-      ],
-      link: '/services/data-pipeline',
-      tags: ['Data & Analytics', 'Automation', 'Python'],
-    },
-
-    {
-      title: 'Growth Analytics Dashboards',
-      description:
-        'Real-time dashboards and reporting built for speed and clarity. Plug your sources in and get up-to-the-minute KPIs, margin models, and custom alerts-without the agency bloat.',
-      keywords: ['Analytics', 'Dashboard', 'BI'],
-      actions: [
-        'Profitability snapshot at a glance',
-        'Alerting for trends, risks, and opportunities',
-      ],
-      link: '/services/analytics',
-      tags: ['Analytics', 'Dashboard', 'Data Visualization'],
-    },
-    {
-      title: 'Web Design',
-      description:
-        'Modern, lightning-fast websites built for growth. From single-page landers to multi-section sites, every build is custom-crafted for performance, SEO, and clear calls to action-no cookie-cutter templates.',
-      keywords: ['Web Development', 'UX/UI', 'SEO'],
-      actions: [
-        'Design & launch a high-performance marketing site',
-        'Integrate forms, analytics, and automated follow-ups',
-      ],
-      link: '/services/web-design',
-      tags: ['Web Development', 'UX/UI', 'SEO'],
-    },
-    {
-      title: 'Brand Strategy',
-      description:
-        'Clarity and edge, from your logo to your tone of voice. Develop or refresh your visual identity, messaging, and brand assets-giving your business the confidence to stand out (and scale up).',
-      keywords: ['Brand Identity', 'Design Direction', 'Messaging'],
-      actions: [
-        'Create a full logo suite and brand guide',
-        'Define tone of voice, color palette, and typography',
-      ],
-      link: '/services/brand-strategy',
-      tags: ['Brand Identity', 'Design Direction', 'Messaging'],
-    },
-    {
-      title: 'Marketing Automation',
-      description:
-        'Automate outreach, follow-ups, and list-building. Connect your email, CRM, and website so leads and updates flow hands-free-making every campaign faster and more efficient.',
-      keywords: ['Email Automation', 'CRM Integration', 'Lead Generation'],
-      actions: [
-        'Automated email sequences for new leads',
-        'Sync form submissions to CRM and mailing lists',
-      ],
-      link: '/services/marketing-automation',
-      tags: ['Email Automation', 'CRM Integration', 'Lead Generation'],
-    },
-  ];
-
   // Calculate total pages based on screen size - only after client mounts
   useEffect(() => {
     if (!isClient) return;
 
     const getTotalPages = () => {
-      const totalProjects = projects.length;
+      const totalProjects = PROJECTS.length;
       if (window.innerWidth < 768) {
         // Mobile: 1 card per page
         return totalProjects;
@@ -210,47 +210,53 @@ export default function Hero() {
     if (!isClient) {
       // Default for SSR: 3 cards per page
       const startIndex = pageIndex * 3;
-      return projects.slice(startIndex, startIndex + 3);
+      return PROJECTS.slice(startIndex, startIndex + 3);
     }
 
     if (window.innerWidth < 768) {
       // Mobile: 1 card per page
-      return [projects[pageIndex]];
+      return [PROJECTS[pageIndex]];
     } else if (window.innerWidth < 1024) {
       // Tablet: 2 cards per page
       const startIndex = pageIndex * 2;
-      return projects.slice(startIndex, startIndex + 2);
+      return PROJECTS.slice(startIndex, startIndex + 2);
     } else {
       // Desktop: 3 cards per page
       const startIndex = pageIndex * 3;
-      return projects.slice(startIndex, startIndex + 3);
+      return PROJECTS.slice(startIndex, startIndex + 3);
     }
   };
 
   return (
     <section className='relative z-30 pt-0 pb-4 sm:pb-8 md:pb-12'>
-      <div className='text-left px-4 sm:px-8 md:px-16 lg:px-24 w-full'>
-        <h1 className='text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] mb-4 sm:mb-6 leading-tight text-right font-ibm w-full min-h-[8rem] sm:min-h-[12rem] md:min-h-[14rem] lg:min-h-[16rem] xl:min-h-[18rem] 2xl:min-h-[20rem] flex flex-col sm:flex-row items-end justify-end relative overflow-hidden'>
-          <div className='relative max-w-[99vw] sm:max-w-[98vw] md:max-w-[95vw] lg:max-w-[90vw] xl:max-w-[85vw] 2xl:max-w-[80vw] break-words'>
-            <div className='text-terminal-green font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
-              Real systems.
+      <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
+        {/* Hero Headline */}
+        <header className='mb-6 sm:mb-10'>
+          <h1 className='text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] mb-4 sm:mb-6 leading-tight text-right font-ibm w-full min-h-[8rem] sm:min-h-[12rem] md:min-h-[14rem] lg:min-h-[16rem] xl:min-h-[18rem] 2xl:min-h-[20rem] flex flex-col sm:flex-row items-end justify-end relative overflow-hidden'>
+            <div className='relative max-w-[99vw] sm:max-w-[98vw] md:max-w-[95vw] lg:max-w-[90vw] xl:max-w-[85vw] 2xl:max-w-[80vw] break-words'>
+              <div className='text-terminal-green font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
+                Real systems.
+              </div>
+              <div className='text-terminal-cyan font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
+                Real impact.
+              </div>
+              <div className='text-terminal-magenta font-bold whitespace-nowrap'>
+                No nonsense.
+              </div>
             </div>
-            <div className='text-terminal-cyan font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
-              Real impact.
-            </div>
-            <div className='text-terminal-magenta font-bold whitespace-nowrap'>
-              No nonsense.
-            </div>
-          </div>
-        </h1>
+          </h1>
+        </header>
 
-        <p className='text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-terminal-text mb-6 sm:mb-10 max-w-6xl ml-auto leading-tight font-ocr'>
-          <GlitchLambda className='text-terminal-text' />
-          stepweaver is about action-not decks and buzzwords. I wire up
-          automations, dashboards, and clean sites that let you see your numbers
-          and act fast. No fluff, no endless projects. From concept to
-          deployment in record time.
-        </p>
+        {/* Hero Description */}
+        <div className='mb-6 sm:mb-10 max-w-6xl ml-auto'>
+          <p className='text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-terminal-text leading-tight font-ocr'>
+            <GlitchLambda className='text-terminal-text' />
+            stepweaver is about action-not decks and buzzwords. I wire up
+            automations, dashboards, and clean sites that let you see your
+            numbers and act fast. No fluff, no endless projects. From concept to
+            deployment in record time.
+          </p>
+        </div>
 
         {/* Terminal Link */}
         <div className='max-w-6xl ml-auto mb-6 sm:mb-10'>
@@ -360,3 +366,6 @@ export default function Hero() {
     </section>
   );
 }
+
+// memo is optional but inexpensive
+export default memo(Hero);

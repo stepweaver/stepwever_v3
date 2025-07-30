@@ -4,7 +4,7 @@ import React, { memo, useState } from 'react';
 
 /* ---------- 1. data ---------- */
 
-const stories = [
+const STORIES = [
   {
     title: 'Notre Dame Reporting Overhaul',
     description:
@@ -98,17 +98,17 @@ const StoryCard = ({ story }) => (
 
 /* ---------- 3. carousel + grid ---------- */
 
-const SuccessStories = memo(() => {
+function SuccessStories() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
 
   const nextStory = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % STORIES.length);
   };
 
   const prevStory = () => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + stories.length) % stories.length
+      (prevIndex) => (prevIndex - 1 + STORIES.length) % STORIES.length
     );
   };
 
@@ -137,11 +137,13 @@ const SuccessStories = memo(() => {
       id='success-stories'
       className='relative z-30 pt-10 pb-24 md:pt-16'
     >
-      <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
+      <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
         {/* heading */}
-        <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-12 md:mb-16 leading-tight text-left font-ibm text-terminal-green'>
-          SELECTED SUCCESS STORIES
-        </h2>
+        <header className='mb-12 md:mb-16'>
+          <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight text-left font-ibm text-terminal-green'>
+            SELECTED SUCCESS STORIES
+          </h2>
+        </header>
 
         {/* mobile carousel */}
         <div className='md:hidden'>
@@ -154,7 +156,7 @@ const SuccessStories = memo(() => {
               className='flex transition-transform duration-300 ease-out'
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {stories.map((s) => (
+              {STORIES.map((s) => (
                 <div key={s.title} className='w-full flex-shrink-0'>
                   <StoryCard story={s} />
                 </div>
@@ -164,7 +166,7 @@ const SuccessStories = memo(() => {
 
           {/* pagination indicators */}
           <div className='flex justify-center mt-6 space-x-2'>
-            {stories.map((_, index) => (
+            {STORIES.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
@@ -186,13 +188,14 @@ const SuccessStories = memo(() => {
             gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr))',
           }}
         >
-          {stories.map((s) => (
+          {STORIES.map((s) => (
             <StoryCard key={s.title} story={s} />
           ))}
         </div>
       </div>
     </section>
   );
-});
+}
 
-export default SuccessStories;
+// memo is optional but inexpensive
+export default memo(SuccessStories);
