@@ -82,8 +82,7 @@ function About() {
             {/* CTA */}
             <footer className='space-y-4'>
               <p className='font-ibm text-terminal-cyan text-2xl lg:text-3xl'>
-                If you want to ship real solutions instead of talking about
-                them, let's build.
+                Ready to turn ideas into working systems? Let's work together.
               </p>
             </footer>
           </article>

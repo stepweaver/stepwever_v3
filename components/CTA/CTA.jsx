@@ -84,12 +84,13 @@ export default function CTA() {
         {/* ---- Copy & actions column ---------------------------------------- */}
         <div className='space-y-10 pt-2 md:pt-4'>
           <p className='font-ocr text-base md:text-lg lg:text-xl leading-tight'>
-            You're here because you want action, not talk. <GlitchLambda className='text-terminal-text' />stepweaver turns
-            ideas into working systems—fast.
+            You're here because you want action, not talk.{' '}
+            <GlitchLambda className='text-terminal-text' />
+            stepweaver turns ideas into working systems—fast.
           </p>
 
           <p className='font-ibm text-terminal-green text-xl md:text-2xl lg:text-3xl'>
-            Let&apos;s ship something real.
+            Let&apos;s create something amazing.
           </p>
 
           {/* Buttons */}

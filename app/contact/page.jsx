@@ -1,28 +1,39 @@
 'use client';
 
+import { memo } from 'react';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
 import ContactForm from '@/components/ui/ContactForm';
 
-export default function ContactPage() {
+// 1) Data lives outside the component
+const CONTACT_DATA = {
+  hero: {
+    title: 'Ready to get started?',
+    subtitle: "Reach out. Let's ship it.",
+  },
+  footer: {
+    responseTime: 'Response time: Usually within 24 hours',
+  },
+};
+
+function ContactPage() {
   return (
     <div className='min-h-screen relative'>
       <BackgroundCanvas />
 
       {/* Main Content */}
       <div className='relative z-10 min-h-screen flex flex-col justify-center'>
-        <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
           {/* Hero Section */}
-          <div className='text-center mb-16'>
-            <div className='mb-8'>
-              <h1 className='text-5xl md:text-6xl lg:text-7xl font-ibm font-bold text-terminal-green mb-6 leading-tight'>
-                Let's Build!
+          <header className='mb-8 sm:mb-12 md:mb-16'>
+            <div className='text-center'>
+              <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-ibm font-bold text-terminal-green mb-4 sm:mb-6 leading-tight'>
+                {CONTACT_DATA.hero.title}
               </h1>
-              <p className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-text/90 max-w-4xl mx-auto leading-relaxed'>
-                I'm not here to play at this. I'm here to build. Let's ship
-                something real.
+              <p className='text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-ibm text-terminal-text/90 max-w-4xl mx-auto leading-relaxed'>
+                {CONTACT_DATA.hero.subtitle}
               </p>
             </div>
-          </div>
+          </header>
 
           {/* Form Section */}
           <div className='max-w-4xl mx-auto'>
@@ -30,13 +41,16 @@ export default function ContactPage() {
           </div>
 
           {/* Bottom CTA */}
-          <div className='text-center mt-16 pt-8 border-t border-terminal-border/30'>
+          <footer className='text-center mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-terminal-border/30'>
             <p className='text-terminal-text/60 font-ocr text-sm'>
-              Response time: Usually within 24 hours
+              {CONTACT_DATA.footer.responseTime}
             </p>
-          </div>
+          </footer>
         </div>
       </div>
     </div>
   );
 }
+
+// memo is optional but inexpensive
+export default memo(ContactPage);
