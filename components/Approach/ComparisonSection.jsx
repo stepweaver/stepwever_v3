@@ -57,25 +57,34 @@ const ComparisonSection = forwardRef((props, ref) => {
 
   return (
     <div ref={ref} className='w-full'>
-      <div className='mb-8'>
-        <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-text leading-tight mb-4'>
-          <GlitchLambda className='text-terminal-text' />
-          stepweaver vs. traditional agencies:
-        </h3>
-      </div>
-
       {/* Mobile Layout - Stacked Cards */}
       <div className='md:hidden space-y-6'>
+        {/* ——— MOBILE header (≤ 767 px) ——— */}
+        <div className='md:hidden flex items-center justify-center gap-3 mb-8'>
+          <div className='flex items-center gap-1'>
+            <GlitchLambda className='text-terminal-green text-lg' />
+            <span className='font-ibm text-terminal-green text-base'>
+              stepweaver
+            </span>
+          </div>
+
+          {/* tiny divider */}
+          <span className='font-ibm text-terminal-cyan/60 text-sm tracking-wider'>
+            VS
+          </span>
+
+          <span className='font-ibm text-terminal-text text-base'>
+            Traditional Agency
+          </span>
+        </div>
+
         {comparisons.map((comparison, index) => (
-          <div key={index} className='space-y-4'>
+          <div
+            key={index}
+            className='space-y-4 rounded-lg border border-terminal-border/40 p-4'
+          >
             {/* λstepweaver */}
-            <div>
-              <div className='flex items-center mb-2'>
-                <GlitchLambda className='text-terminal-green font-ibm text-lg' />
-                <h4 className='text-terminal-green font-ibm text-sm'>
-                  stepweaver
-                </h4>
-              </div>
+            <div className='max-w-sm'>
               <h5 className='text-terminal-green font-ibm text-sm mb-2'>
                 {comparison.stepweaver.title}
               </h5>
@@ -86,11 +95,6 @@ const ComparisonSection = forwardRef((props, ref) => {
 
             {/* Traditional Agency */}
             <div>
-              <div className='flex items-center mb-2'>
-                <h4 className='text-terminal-text font-ibm text-sm'>
-                  Traditional Agency
-                </h4>
-              </div>
               <h5 className='text-terminal-text font-ibm text-sm mb-2'>
                 {comparison.traditional.title}
               </h5>
@@ -105,25 +109,30 @@ const ComparisonSection = forwardRef((props, ref) => {
       {/* Desktop Layout - Clean Table */}
       <div className='hidden md:block'>
         <div className='space-y-6'>
-          <div className='grid grid-cols-2'>
-            <div className='text-center'>
-              <div className='flex items-center justify-center'>
-                <GlitchLambda className='text-terminal-green font-ibm text-xl' />
-                <h4 className='text-terminal-green font-ibm text-lg ml-1'>
-                  stepweaver
-                </h4>
-              </div>
+          {/* Desktop header row
+               — clearer hierarchy
+               — color-coded underline so the eye locks on each column
+               — keeps the λ mark tight to the brand name without pushing the grid */}
+          <div className='hidden md:grid grid-cols-2 gap-8 mb-10'>
+            {/* λstepweaver column label */}
+            <div className='flex items-center justify-center gap-2 border-b-2 border-terminal-green/70 pb-2'>
+              <GlitchLambda className='text-terminal-green text-2xl' />
+              <h4 className='font-ibm text-terminal-green text-xl uppercase tracking-wide'>
+                stepweaver
+              </h4>
             </div>
-            <div className='text-center'>
-              <h4 className='text-terminal-text font-ibm text-lg'>
-                Traditional Agency
+
+            {/* Traditional Agency column label */}
+            <div className='flex items-center justify-center border-b border-terminal-border/70 pb-2'>
+              <h4 className='font-ibm text-terminal-text text-xl uppercase tracking-wide'>
+                Traditional&nbsp;Agency
               </h4>
             </div>
           </div>
 
           {comparisons.map((comparison, index) => (
             <div key={index} className='grid grid-cols-2 gap-8'>
-              <div>
+              <div className='max-w-lg'>
                 <h5 className='text-terminal-green font-ibm text-base mb-2'>
                   {comparison.stepweaver.title}
                 </h5>
@@ -131,7 +140,7 @@ const ComparisonSection = forwardRef((props, ref) => {
                   {comparison.stepweaver.description}
                 </p>
               </div>
-              <div>
+              <div className='max-w-lg'>
                 <h5 className='text-terminal-text font-ibm text-base mb-2'>
                   {comparison.traditional.title}
                 </h5>
