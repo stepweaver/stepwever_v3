@@ -30,7 +30,7 @@ const WhyWorkWithUs = memo(() => {
   ];
 
   return (
-    <section className='relative z-30 py-12 md:py-20'>
+    <section className='relative z-30 pt-12 pb-6 md:pt-20 md:pb-8'>
       <div className='text-left px-6 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
         <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-8 md:mb-16 leading-tight text-left font-ibm text-terminal-green'>
