@@ -1,147 +1,81 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { memo } from 'react';
 import ComparisonSection from './ComparisonSection';
 
-export default function Approach() {
-  const [isSticky, setIsSticky] = useState(true);
-  const stickyRef = useRef(null);
-  const comparisonRef = useRef(null);
+// 1) Data lives outside the component
+const STEPS = [
+  { title: 'We set the goal.', desc: 'Clear outcome, no guessing.' },
+  { title: 'We map the plan.', desc: 'Simple steps and check‑ins.' },
+  { title: 'We build and show progress.', desc: 'See the work every step.' },
+  { title: 'We adjust together.', desc: 'Your feedback steers the ship.' },
+  { title: 'We ship, support, wrap up.', desc: 'Working results, guaranteed.' },
+];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      try {
-        if (typeof window === 'undefined') return;
-        if (!stickyRef.current || !comparisonRef.current) return;
-        const stickyRect = stickyRef.current.getBoundingClientRect();
-        const comparisonRect = comparisonRef.current.getBoundingClientRect();
-        if (!stickyRect || !comparisonRect) return;
-        if (stickyRect.bottom >= comparisonRect.top) {
-          setIsSticky(false);
-        } else {
-          setIsSticky(true);
-        }
-      } catch (error) {
-        console.error('Error in scroll handler:', error);
-        setIsSticky(false);
-      }
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
-    }
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
+function Approach() {
   return (
-    <section className='relative z-30 pt-16 pb-16 bg-terminal-bg text-terminal-text min-h-screen w-full'>
-      <div className='px-8 md:px-16 lg:px-24 w-full'>
-        {/* Section Header */}
-        <div className='mb-12'>
-          <h2 className='text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight font-ibm text-terminal-green'>
+    <section
+      id='approach'
+      className='relative z-30 min-h-screen bg-terminal-bg text-terminal-text py-20'
+    >
+      {/* Container keeps horizontal padding consistent site‑wide */}
+      <div className='container mx-auto'>
+        {/* Header */}
+        <header className='mb-12'>
+          <h2 className='font-ibm text-terminal-green text-4xl md:text-5xl leading-tight'>
             APPROACH
           </h2>
-        </div>
+        </header>
 
-        {/* Two Column Layout */}
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16'>
-          {/* Approach Steps - Sticky on desktop */}
-          <div>
-            <div
-              ref={stickyRef}
-              className={`${isSticky ? 'lg:sticky lg:top-8' : ''} max-w-none`}
-            >
-              {/* Main Headline */}
-              <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-text leading-tight mb-6'>
-                It's all about moving fast, staying clear, and building the
-                right thing-together.
-              </h3>
+        {/* Two‑column grid */}
+        <div className='grid gap-y-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-20'>
+          {/* Sticky left column */}
+          <div className='lg:sticky lg:top-8 self-start'>
+            <h3 className='font-ibm text-xl md:text-2xl lg:text-3xl mb-6'>
+              I move fast, build openly, and keep you in the loop.
+            </h3>
 
-              {/* Main Description */}
-              <div className='mb-8'>
-                <p className='text-terminal-text font-ocr text-base leading-relaxed'>
-                  At λstepweaver, every project is a collaboration-rooted in
-                  rapid prototyping, honest feedback, and the discipline of
-                  follow-through. Instead of endless meetings and vague
-                  milestones, we break complex challenges into focused sprints,
-                  each with concrete deliverables and a built-in feedback loop.
-                </p>
-              </div>
+            <p className='font-ocr text-base leading-relaxed mb-8'>
+              Every project is hands‑on: you talk to me, see the work as it
+              happens, and help shape the result.
+            </p>
 
-              {/* Our Approach Section */}
-              <div className='mb-8'>
-                <h4 className='text-lg md:text-xl font-ibm text-terminal-cyan mb-4'>
-                  Our approach is simple:
-                </h4>
+            <h4 className='font-ibm text-terminal-cyan text-lg md:text-xl mb-4'>
+              How it works:
+            </h4>
 
-                {/* Approach Steps */}
-                <div className='space-y-4'>
-                  {[
-                    {
-                      title: 'Align on the goal.',
-                      description:
-                        'Every project starts with a shared vision and a clear definition of success.',
-                    },
-                    {
-                      title: 'Map the path.',
-                      description:
-                        "We outline stages, set priorities, and schedule regular check-ins so you always know what's next.",
-                    },
-                    {
-                      title: 'Build in the open.',
-                      description:
-                        'You see progress early and often-not just at the finish line.',
-                    },
-                    {
-                      title: 'Iterate together.',
-                      description:
-                        "Client feedback isn't an afterthought; it's woven into every stage, ensuring your input steers the outcome.",
-                    },
-                    {
-                      title: 'Deliver with pride.',
-                      description:
-                        'Every deliverable ships with clarity, polish, and a support window to make sure everything lands right.',
-                    },
-                  ].map((step, index) => (
-                    <div
-                      key={index}
-                      className='border-l-4 border-terminal-green pl-4 transition-all hover:pl-6 hover:border-opacity-100 border-opacity-80'
-                    >
-                      <h5 className='text-lg font-ibm text-terminal-green mb-1'>
-                        {step.title}
-                      </h5>
-                      <p className='text-terminal-text font-ocr text-sm leading-relaxed'>
-                        {step.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {/* Ordered list for accessibility */}
+            <ol className='space-y-4'>
+              {STEPS.map(({ title, desc }, i) => (
+                <li
+                  key={i}
+                  className='group border-l-4 border-terminal-green/80 pl-4 transition-all hover:pl-6 hover:border-terminal-green/100'
+                >
+                  <h5 className='font-ibm text-terminal-green text-lg mb-1'>
+                    {title}
+                  </h5>
+                  <p className='font-ocr text-sm leading-relaxed'>{desc}</p>
+                </li>
+              ))}
+            </ol>
 
-              {/* Closing Statement */}
-              <div className='border-t border-terminal-border pt-4 mb-6'>
-                <p className='text-terminal-text font-ocr text-base leading-relaxed'>
-                  No black boxes. No disappearing acts. Just a transparent
-                  process and responsive communication-from kickoff to launch
-                  (and beyond). That's how λstepweaver turns "someday" projects
-                  into shipping realities.
-                </p>
-              </div>
-            </div>
+            <p className='border-t border-terminal-border pt-6 font-ocr text-base leading-relaxed mt-8'>
+              No black boxes, no hand‑offs, no missed emails. Just direct work,
+              fast feedback, and honest communication—from kickoff to launch.
+            </p>
           </div>
 
-          {/* Comparison Section */}
-          <div>
-            <ComparisonSection ref={comparisonRef} />
+          {/* Right column scrolls independently on desktop so sticky left never collides */}
+          <div
+            className='lg:max-h-[calc(100vh-4rem)] lg:overflow-auto' /* 4 rem = top+bottom section padding */
+          >
+            <ComparisonSection />
           </div>
         </div>
       </div>
     </section>
   );
 }
+
+// memo is optional but inexpensive
+export default memo(Approach);
