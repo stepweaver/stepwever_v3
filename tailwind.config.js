@@ -28,6 +28,9 @@ module.exports = {
           white: 'var(--color-terminal-white)',
         },
       },
+      boxShadow: {
+        'terminal-green': '0 0 6px 0 rgba(0, 255, 65, 0.5)',
+      },
       backdropBlur: {
         xs: '2px',
       },
