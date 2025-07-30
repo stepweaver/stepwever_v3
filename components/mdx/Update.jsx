@@ -8,9 +8,9 @@ export default function Update({ date, frontmatter }) {
   const formattedDate = formatUpdateDate(dateToUse);
 
   return (
-    <div className='my-8 flex justify-end'>
-      <span className='text-terminal-green text-sm font-mono bg-terminal-dark px-3 py-2 rounded border border-terminal-green/50 shadow-md'>
-        UPDATE: [{formattedDate}]
+    <div className='my-6 flex justify-start'>
+      <span className='text-terminal-green text-sm font-mono bg-terminal-dark/50 px-3 py-1 rounded border border-terminal-green/30'>
+        Updated: {formattedDate}
       </span>
     </div>
   );
@@ -31,22 +31,18 @@ function formatUpdateDate(date) {
     Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day))
   );
 
-  // Format for display
+  // Format for display using [YYYY-MM-DD] format
   const formattedYear = dateObj.getUTCFullYear();
-  const formattedMonth = dateObj
-    .toLocaleString('en-US', { month: 'short', timeZone: 'UTC' })
-    .toUpperCase();
+  const formattedMonth = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
   const formattedDay = String(dateObj.getUTCDate()).padStart(2, '0');
 
-  return `${formattedYear}-${formattedMonth}-${formattedDay}`;
+  return `[${formattedYear}-${formattedMonth}-${formattedDay}]`;
 }
 
 function formatCurrentDate() {
   const now = new Date();
   const year = now.getUTCFullYear();
-  const month = now
-    .toLocaleString('en-US', { month: 'short', timeZone: 'UTC' })
-    .toUpperCase();
+  const month = String(now.getUTCMonth() + 1).padStart(2, '0');
   const day = String(now.getUTCDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  return `[${year}-${month}-${day}]`;
 }

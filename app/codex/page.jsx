@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
-export default function CodexPage() {
+function CodexContent() {
+  const searchParams = useSearchParams();
   const [posts, setPosts] = useState([]);
   const [podcastEpisodes, setPodcastEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,6 +14,15 @@ export default function CodexPage() {
   const [activeTab, setActiveTab] = useState('all');
   const [activeSubTab, setActiveSubTab] = useState(null);
   const [activeHashtags, setActiveHashtags] = useState([]);
+
+  // Handle URL hashtag parameter
+  useEffect(() => {
+    const hashtagParam = searchParams.get('hashtag');
+    if (hashtagParam) {
+      setActiveHashtags([hashtagParam]);
+      setActiveTab('all'); // Ensure we're on the 'all' tab to see all posts
+    }
+  }, [searchParams]);
 
   // Fetch all posts from API
   useEffect(() => {
@@ -152,11 +163,10 @@ export default function CodexPage() {
     if (!dateStr) return '';
     try {
       const date = new Date(dateStr);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      });
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `[${year}-${month}-${day}]`;
     } catch (e) {
       return dateStr;
     }
@@ -858,5 +868,27 @@ function ArticleItem({ article, formatDate, getGlowStyle, articleColor }) {
         </div>
       </a>
     </article>
+  );
+}
+
+// Main component with Suspense wrapper
+export default function CodexPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className='min-h-screen relative'>
+          <BackgroundCanvas />
+          <div className='relative z-10 p-4'>
+            <div className='max-w-4xl mx-auto mt-16'>
+              <div className='text-terminal-green text-xl font-mono'>
+                Loading...
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <CodexContent />
+    </Suspense>
   );
 }

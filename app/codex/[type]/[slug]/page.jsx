@@ -4,6 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import Update from '@/components/mdx/Update';
 
 // Helper function to get type color
 const getTypeColor = (type) => {
@@ -28,12 +29,15 @@ const getTypeColor = (type) => {
 // Helper function to format date
 const formatDate = (dateStr) => {
   if (!dateStr) return '';
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  try {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `[${year}-${month}-${day}]`;
+  } catch (e) {
+    return dateStr;
+  }
 };
 
 export async function generateMetadata({ params }) {
@@ -150,12 +154,13 @@ export default async function CodexDetailPage({ params }) {
               {frontmatter.hashtags && frontmatter.hashtags.length > 0 && (
                 <div className='flex flex-wrap gap-2'>
                   {frontmatter.hashtags.map((tag) => (
-                    <span
+                    <a
                       key={tag}
-                      className='px-3 py-1 text-sm bg-terminal-text/10 text-white border border-terminal-text/20 rounded font-medium'
+                      href={`/codex?hashtag=${encodeURIComponent(tag)}`}
+                      className='px-3 py-1 text-sm bg-terminal-text/10 text-white border border-terminal-text/20 rounded font-medium hover:bg-terminal-text/20 transition-colors duration-200 cursor-pointer'
                     >
                       #{tag}
-                    </span>
+                    </a>
                   ))}
                 </div>
               )}
@@ -164,7 +169,14 @@ export default async function CodexDetailPage({ params }) {
             {/* Post Content */}
             <div className='prose prose-invert prose-lg max-w-none'>
               <div className='text-terminal-text leading-relaxed'>
-                <MDXRemote source={content} />
+                <MDXRemote
+                  source={content}
+                  components={{
+                    Update: (props) => (
+                      <Update {...props} frontmatter={frontmatter} />
+                    ),
+                  }}
+                />
               </div>
             </div>
           </article>
