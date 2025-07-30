@@ -5,27 +5,32 @@ import { memo } from 'react';
 // 1) Data lives outside the component
 const SERVICES = [
   {
-    title: 'Data',
+    title: 'Data Integrations',
+    description:
+      'Connect all your business systems—POS, accounting, and SaaS—into one real-time dashboard.',
     items: [
-      'Plug your POS, accounting, and SaaS APIs into one live source of truth.',
-      'Ship real-time KPI dashboards with alerting-no more end-of-month surprises.',
-      'Automate exports, reconciliations, and reports so you can focus on what you do best.',
+      'One source of truth for all your numbers',
+      'Automated exports and reports',
+      'Alerts for what matters',
     ],
   },
   {
-    title: 'Design',
+    title: 'Web Design',
+    description:
+      'Build fast, modern websites and digital tools that work from day one.',
     items: [
-      'Craft lightning-fast marketing sites in React/Next.',
-      'Refresh logos, color palettes, and typography to match your positioning.',
-      'Bake in SEO, analytics, and interactive components from day one.',
+      'React/Next sites that load fast',
+      'Brand refresh: logo, colors, fonts',
+      'SEO, analytics, and built-in interactivity',
     ],
   },
   {
-    title: 'Strategy',
+    title: 'Strategy & Automation',
+    description: 'Get practical systems, not PowerPoints.',
     items: [
-      'Define the metric, build the system, hand it over.',
-      'AI-powered process automations that free up whole roles, not just tasks',
-      'Roadmaps, SOPs, and retainer options to keep momentum compounding.',
+      'Define the right metrics, build the tools, hand them over',
+      'Automations that handle real work, not just busywork',
+      'Ongoing support and roadmaps to keep things moving',
     ],
   },
 ];
@@ -49,6 +54,9 @@ function WhatWeDo() {
                 {service.title}
               </h3>
               <div className='h-0.5 bg-terminal-green mb-4 md:mb-6'></div>
+              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mb-4 md:mb-6'>
+                {service.description}
+              </p>
               <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
                 {service.items.map((item, itemIndex) => (
                   <li key={itemIndex} className='flex items-start'>
