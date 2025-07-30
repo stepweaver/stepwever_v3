@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from '@/styles/terminal-ui.module.css';
 import animationStyles from '@/styles/animations.module.css';
 
@@ -13,9 +13,23 @@ export default function GlitchLambda({
   size = 'normal', // 'small', 'normal', 'large', 'xl'
 }) {
   const [isGlitching, setIsGlitching] = useState(false);
+  const randomizedValues = useRef(null);
 
   useEffect(() => {
     if (!autoGlitch) return;
+
+    // Initialize randomized values only on client
+    if (!randomizedValues.current) {
+      const getRandomizedDelay = (baseDelay) => {
+        const variation = baseDelay * 0.3;
+        return baseDelay + (Math.random() * variation * 2 - variation);
+      };
+
+      randomizedValues.current = {
+        initialDelay: getRandomizedDelay(initialDelay),
+        getNextInterval: () => getRandomizedDelay(glitchInterval),
+      };
+    }
 
     const getGlitchDuration = () => {
       switch (size) {
@@ -28,25 +42,20 @@ export default function GlitchLambda({
       }
     };
 
-    // Add randomization to stagger glitches between multiple instances
-    const getRandomizedDelay = (baseDelay) => {
-      // Add ±30% randomization to the delay
-      const variation = baseDelay * 0.3;
-      return baseDelay + (Math.random() * variation * 2 - variation);
-    };
-
     const triggerGlitch = () => {
       setIsGlitching(true);
       setTimeout(() => setIsGlitching(false), getGlitchDuration());
     };
 
-    // Randomize initial delay
-    const randomizedInitialDelay = getRandomizedDelay(initialDelay);
-    const initialTimeout = setTimeout(triggerGlitch, randomizedInitialDelay);
+    // Use pre-calculated randomized initial delay
+    const initialTimeout = setTimeout(
+      triggerGlitch,
+      randomizedValues.current.initialDelay
+    );
 
     // Set up interval with randomized timing
     const setupNextGlitch = () => {
-      const randomizedInterval = getRandomizedDelay(glitchInterval);
+      const randomizedInterval = randomizedValues.current.getNextInterval();
       setTimeout(() => {
         triggerGlitch();
         setupNextGlitch(); // Schedule the next glitch
@@ -54,7 +63,10 @@ export default function GlitchLambda({
     };
 
     // Start the staggered interval after initial delay
-    const intervalTimeout = setTimeout(setupNextGlitch, randomizedInitialDelay);
+    const intervalTimeout = setTimeout(
+      setupNextGlitch,
+      randomizedValues.current.initialDelay
+    );
 
     return () => {
       clearTimeout(initialTimeout);

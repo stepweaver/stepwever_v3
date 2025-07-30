@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import errorMonitor from './errorMonitor';
 
-// Throttle function for performance
+// Simple throttle function
 function throttle(func, limit) {
   let inThrottle;
   return function (...args) {
@@ -15,20 +15,9 @@ function throttle(func, limit) {
   };
 }
 
-// Debounce function for performance
-function debounce(func, wait) {
-  let timeout;
-  return function (...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-}
-
 export function useSafeScroll(options = {}) {
   const {
     throttleMs = 16, // ~60fps
-    debounceMs = 100,
-    passive = true,
     onScroll,
     onScrollStart,
     onScrollEnd
@@ -37,9 +26,8 @@ export function useSafeScroll(options = {}) {
   const scrollTimeoutRef = useRef(null);
   const isScrollingRef = useRef(false);
 
-  const safeScrollHandler = useCallback((event) => {
+  const handleScroll = useCallback((event) => {
     try {
-      // Check if window is available (SSR safety)
       if (typeof window === 'undefined') return;
 
       const scrollTop = window.scrollY || 0;
@@ -86,27 +74,25 @@ export function useSafeScroll(options = {}) {
           isScrollingRef.current = false;
           onScrollEnd(scrollData);
         }
-      }, debounceMs);
+      }, 100);
 
     } catch (error) {
       errorMonitor.logScrollError(error, {
-        component: 'useSafeScroll',
-        options
+        component: 'useSafeScroll'
       });
     }
-  }, [onScroll, onScrollStart, onScrollEnd, debounceMs]);
+  }, [onScroll, onScrollStart, onScrollEnd]);
 
   const throttledScrollHandler = useCallback(
-    throttle(safeScrollHandler, throttleMs),
-    [safeScrollHandler, throttleMs]
+    throttle(handleScroll, throttleMs),
+    [handleScroll, throttleMs]
   );
 
   useEffect(() => {
-    // Only add event listener if window is available
     if (typeof window === 'undefined') return;
 
     try {
-      window.addEventListener('scroll', throttledScrollHandler, { passive });
+      window.addEventListener('scroll', throttledScrollHandler, { passive: true });
     } catch (error) {
       errorMonitor.logScrollError(error, {
         component: 'useSafeScroll',
@@ -129,7 +115,7 @@ export function useSafeScroll(options = {}) {
         });
       }
     };
-  }, [throttledScrollHandler, passive]);
+  }, [throttledScrollHandler]);
 
   // Return scroll utilities
   const getScrollPosition = useCallback(() => {

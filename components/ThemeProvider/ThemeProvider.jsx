@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('dark'); // Always start with dark to match server
+  const [theme, setTheme] = useState('dark'); // Default fallback
   const [mounted, setMounted] = useState(false);
 
   // Get system theme preference

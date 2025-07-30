@@ -9,7 +9,6 @@ import {
   SiExpress,
   SiSupabase,
   SiFirebase,
-  SiGraphql,
   SiPostgresql,
   SiMysql,
   SiOpenai,
@@ -21,20 +20,19 @@ import {
   SiVercel,
   SiNetlify,
   SiCloudflare,
-  SiDocker,
 } from 'react-icons/si';
 import {
   Cloud,
   Shield,
   Globe,
   BarChart3,
-  Link,
-  Wrench,
   Calculator,
-  Plane,
   FileText,
   Zap,
-  Rocket,
+  Brain,
+  ShoppingCart,
+  Palette,
+  Server,
 } from 'lucide-react';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
@@ -56,15 +54,15 @@ const TECH_CATEGORIES = [
         color: '#06B6D4',
         isComponent: true,
       },
-      { name: 'shadcn/ui', icon: '🧩' },
-      { name: 'MDX', icon: '📝' },
+      { name: 'shadcn/ui', icon: Palette, color: '#ffffff', isComponent: true },
+      { name: 'MDX', icon: FileText, color: '#ffffff', isComponent: true },
       {
         name: 'Contentlayer',
         icon: FileText,
         color: '#ffffff',
         isComponent: true,
       },
-      { name: 'Vite', icon: '⚡' },
+      { name: 'Vite', icon: Zap, color: '#646CFF', isComponent: true },
     ],
   },
   {
@@ -88,7 +86,7 @@ const TECH_CATEGORIES = [
         color: '#FD5750',
         isComponent: true,
       },
-      { name: 'AWS Amplify', icon: '⚡' },
+      { name: 'AWS Amplify', icon: Zap, color: '#FF9900', isComponent: true },
       { name: 'Cognito', icon: Shield, color: '#FF9900', isComponent: true },
       {
         name: 'Supabase',
@@ -115,7 +113,7 @@ const TECH_CATEGORIES = [
         isComponent: true,
       },
       { name: 'MySQL', icon: SiMysql, color: '#4479A1', isComponent: true },
-      { name: 'Tableau', icon: '📊' },
+      { name: 'Tableau', icon: BarChart3, color: '#E97627', isComponent: true },
       {
         name: 'Power BI',
         icon: BarChart3,
@@ -129,23 +127,38 @@ const TECH_CATEGORIES = [
     technologies: [
       { name: 'OpenAI', icon: SiOpenai, color: '#412991', isComponent: true },
       { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
-      { name: 'Langflow', icon: '🔄' },
-      { name: 'MCP Servers', icon: '🔌' },
+      { name: 'Langflow', icon: Brain, color: '#00D4AA', isComponent: true },
+      {
+        name: 'MCP Servers',
+        icon: Server,
+        color: '#00FF41',
+        isComponent: true,
+      },
     ],
   },
   {
     name: 'Commerce & Integrations',
     technologies: [
       { name: 'Stripe', icon: SiStripe, color: '#008CDD', isComponent: true },
-      { name: 'QuickBooks', icon: '📊' },
+      {
+        name: 'QuickBooks',
+        icon: Calculator,
+        color: '#2CA01C',
+        isComponent: true,
+      },
       {
         name: 'POS Systems',
-        icon: Calculator,
+        icon: ShoppingCart,
         color: '#FF6B35',
         isComponent: true,
       },
       { name: 'Notion', icon: SiNotion, color: '#ffffff', isComponent: true },
-      { name: 'Google Sheets', icon: '📑' },
+      {
+        name: 'Google Sheets',
+        icon: FileText,
+        color: '#34A853',
+        isComponent: true,
+      },
       { name: 'Slack', icon: SiSlack, color: '#4A154B', isComponent: true },
     ],
   },

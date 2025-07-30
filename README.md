@@ -1,6 +1,6 @@
 # stepweaver v3
 
-Growth Systems for Fast-Moving Businesses
+Practical transformation, powered by code.
 
 ## Features
 

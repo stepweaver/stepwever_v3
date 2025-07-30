@@ -24,10 +24,10 @@ export const metadata = {
   metadataBase: new URL('https://stepweaver.dev'),
   title: {
     template: '%s | λstepweaver',
-    default: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
+    default: 'λstepweaver - Practical transformation, powered by code.',
   },
   description:
-    'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.',
+    'Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
   keywords: [
     'business automation',
     'data pipelines',
@@ -58,30 +58,30 @@ export const metadata = {
     locale: 'en_US',
     url: 'https://stepweaver.dev/',
     siteName: 'λstepweaver',
-    title: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
+    title: 'λstepweaver - Practical transformation, powered by code.',
     description:
-      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.',
+      'Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
     images: [
       {
         url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
-        alt: 'λstepweaver - Terminal-inspired business growth systems',
+        alt: 'λstepweaver - Practical transformation, powered by code.',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
+    title: 'λstepweaver - Practical transformation, powered by code.',
     description:
-      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.',
+      'Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
     images: [
       {
         url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
-        alt: 'λstepweaver - Terminal-inspired business growth systems',
+        alt: 'λstepweaver - Practical transformation, powered by code.',
       },
     ],
     creator: '@stepweaver',
@@ -128,6 +128,30 @@ export default function RootLayout({ children }) {
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1, maximum-scale=5'
+        />
+
+        {/* Theme script to prevent flashing - runs before React hydration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  // Only set theme if not already set by server
+                  if (!document.documentElement.getAttribute('data-theme')) {
+                    const savedTheme = localStorage.getItem('theme');
+                    const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                    const theme = savedTheme || systemTheme;
+                    document.documentElement.setAttribute('data-theme', theme);
+                  }
+                } catch (e) {
+                  // Fallback to dark theme if there's an error
+                  if (!document.documentElement.getAttribute('data-theme')) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  }
+                }
+              })();
+            `,
+          }}
         />
 
         {/* Mobile-specific meta tags */}

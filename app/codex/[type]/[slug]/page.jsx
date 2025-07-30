@@ -4,7 +4,6 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
-import { mdxComponents } from '@/components/mdx/Update';
 
 // Helper function to get type color
 const getTypeColor = (type) => {
@@ -165,7 +164,7 @@ export default async function CodexDetailPage({ params }) {
             {/* Post Content */}
             <div className='prose prose-invert prose-lg max-w-none'>
               <div className='text-terminal-text leading-relaxed'>
-                <MDXRemote source={content} components={mdxComponents} />
+                <MDXRemote source={content} />
               </div>
             </div>
           </article>

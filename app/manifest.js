@@ -1,9 +1,9 @@
 export default function manifest() {
   return {
-    name: 'λstepweaver - Growth Systems for Fast-Moving Businesses',
+    name: 'λstepweaver - Practical transformation, powered by code.',
     short_name: 'λstepweaver',
     description:
-      'We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.',
+      'Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
     start_url: '/',
     display: 'standalone',
     background_color: '#0d1211',

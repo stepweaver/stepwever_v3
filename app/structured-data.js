@@ -5,7 +5,7 @@ export default function generateStructuredData() {
     "name": "λstepweaver",
     "url": "https://stepweaver.dev",
     "logo": "https://stepweaver.dev/images/lambda_stepweaver.png",
-    "description": "We build lean data pipelines, automations, and high-impact web experiences that slash waste and surface profit opportunities in weeks-not quarters.",
+    "description": "Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.",
     "foundingDate": "2023",
     "address": {
       "@type": "PostalAddress",
