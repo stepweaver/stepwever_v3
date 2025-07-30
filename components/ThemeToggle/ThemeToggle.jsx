@@ -6,10 +6,13 @@ import Image from 'next/image';
 export default function ThemeToggle() {
   const { theme, toggleTheme, mounted } = useTheme();
 
-  // Prevent hydration mismatch
+  // Prevent hydration mismatch with a theme-aware skeleton
   if (!mounted) {
     return (
-      <div className='w-8 h-8 animate-pulse bg-terminal-border rounded-full' />
+      <div className='flex items-center space-x-2'>
+        <div className='w-8 h-8 animate-pulse bg-terminal-border rounded-full' />
+        <div className='w-8 h-4 animate-pulse bg-terminal-border rounded' />
+      </div>
     );
   }
 

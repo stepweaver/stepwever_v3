@@ -289,6 +289,11 @@ html {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Prevent flash during initial load */
+html[data-theme] {
+  background-color: var(--background);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

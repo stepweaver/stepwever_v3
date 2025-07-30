@@ -18,11 +18,29 @@ export function ThemeProvider({ children }) {
     return 'dark'; // Default fallback
   };
 
-  // Initialize theme from localStorage or system preference on mount
+  // Get initial theme from HTML attribute (set by script) or localStorage
+  const getInitialTheme = () => {
+    if (typeof window !== 'undefined') {
+      // First check if the script already set the theme
+      const htmlTheme = document.documentElement.getAttribute('data-theme');
+      if (htmlTheme === 'light' || htmlTheme === 'dark') {
+        return htmlTheme;
+      }
+
+      // Fallback to localStorage or system preference
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        return savedTheme;
+      }
+
+      return getSystemTheme();
+    }
+    return 'dark'; // SSR fallback
+  };
+
+  // Initialize theme from HTML attribute, localStorage, or system preference on mount
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const systemTheme = getSystemTheme();
-    const initialTheme = savedTheme || systemTheme;
+    const initialTheme = getInitialTheme();
     setTheme(initialTheme);
     setMounted(true);
 
