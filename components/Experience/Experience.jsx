@@ -36,9 +36,11 @@ import {
   Zap,
   Rocket,
 } from 'lucide-react';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 export default function Experience() {
   const [currentCategory, setCurrentCategory] = useState(0);
+  const [userInteracted, setUserInteracted] = useState(false);
 
   const techCategories = [
     {
@@ -176,13 +178,22 @@ export default function Experience() {
     },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentCategory((prev) => (prev + 1) % techCategories.length);
-    }, 3000);
+  // Handle tab click - disable auto-rotation when user interacts
+  const handleTabClick = (index) => {
+    setCurrentCategory(index);
+    setUserInteracted(true);
+  };
 
-    return () => clearInterval(interval);
-  }, [techCategories.length]);
+  useEffect(() => {
+    // Only auto-rotate if user hasn't interacted
+    if (!userInteracted) {
+      const interval = setInterval(() => {
+        setCurrentCategory((prev) => (prev + 1) % techCategories.length);
+      }, 3000);
+
+      return () => clearInterval(interval);
+    }
+  }, [techCategories.length, userInteracted]);
 
   return (
     <section className='relative z-30 py-20'>
@@ -199,27 +210,34 @@ export default function Experience() {
               Fueled by Obsession, Driven by Passion
             </h3>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
-              λstepweaver is led by a veteran, business analyst, and rebel
-              developer obsessed with helping businesses scale. Every project is
-              a hands-on mission to solve real problems with practical tools,
-              clear strategy, and relentless curiosity-no fluff, just results.
+              <GlitchLambda className='text-terminal-text' />stepweaver is led
+              by a veteran, business analyst, and rebel developer obsessed with
+              helping businesses scale. Every project is a hands-on mission to
+              solve real problems with practical tools, clear strategy, and
+              relentless curiosity-no fluff, just results.
             </p>
           </div>
         </div>
 
         {/* Tech Arsenal - Compact Rotating Layout */}
         <div className='ml-auto w-full max-w-6xl'>
-          {/* Category Navigation */}
-          <div className='flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 justify-center'>
+          {/* Category Navigation - Improved Tab Design */}
+          <div className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center'>
             {techCategories.map((category, index) => (
               <button
                 key={category.name}
-                onClick={() => setCurrentCategory(index)}
-                className={`px-2 md:px-3 py-1 font-ibm text-xs md:text-sm border transition-all duration-300 ${
+                onClick={() => handleTabClick(index)}
+                className={`px-2 md:px-3 py-1 md:py-2 font-ibm text-xs font-bold uppercase tracking-wider border-2 transition-all duration-300 cursor-pointer rounded-lg shadow-lg hover:shadow-xl ${
                   currentCategory === index
-                    ? 'border-terminal-green text-terminal-green bg-terminal-dark'
-                    : 'border-terminal-border text-terminal-muted hover:border-terminal-green hover:text-terminal-green'
+                    ? 'border-terminal-green text-terminal-green bg-terminal-green/10 shadow-terminal-green/20 hover:shadow-terminal-green/30 transform scale-105'
+                    : 'border-terminal-border text-terminal-muted hover:border-terminal-green hover:text-terminal-green hover:bg-terminal-green/5'
                 }`}
+                style={{
+                  textShadow:
+                    currentCategory === index
+                      ? '0 0 8px rgba(0, 255, 65, 0.8), 0 0 16px rgba(0, 255, 65, 0.4)'
+                      : 'none',
+                }}
               >
                 {category.name}
               </button>
@@ -227,8 +245,8 @@ export default function Experience() {
           </div>
 
           {/* Current Category Display */}
-          <div className='mb-4 md:mb-6 text-center'>
-            <h3 className='text-lg md:text-xl lg:text-2xl font-ibm text-terminal-green mb-3 md:mb-4'>
+          <div className='mb-6 md:mb-8 text-center'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 md:mb-5 font-bold uppercase tracking-wider'>
               {techCategories[currentCategory].name}
             </h3>
           </div>
@@ -266,16 +284,16 @@ export default function Experience() {
             </div>
           </div>
 
-          {/* Category Indicators */}
-          <div className='flex justify-center mt-6 gap-2'>
+          {/* Category Indicators - Improved Design */}
+          <div className='flex justify-center mt-8 gap-3'>
             {techCategories.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentCategory(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                onClick={() => handleTabClick(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
                   currentCategory === index
-                    ? 'bg-terminal-green'
-                    : 'bg-terminal-border hover:bg-terminal-muted'
+                    ? 'bg-terminal-green shadow-lg shadow-terminal-green/50 scale-125'
+                    : 'bg-terminal-border hover:bg-terminal-muted hover:scale-110'
                 }`}
               />
             ))}
