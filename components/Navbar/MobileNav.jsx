@@ -81,7 +81,7 @@ export default function MobileNav() {
   return (
     <div
       className={`md:hidden absolute z-50 ${
-        isOpen ? 'right-0 top-0' : 'right-4 top-6'
+        isOpen ? 'right-0 top-0' : 'right-4 top-3'
       }`}
     >
       {!isOpen && (
