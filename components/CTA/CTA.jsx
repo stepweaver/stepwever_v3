@@ -61,7 +61,7 @@ export default function CTA() {
       ref={sectionRef}
       className='relative z-30 py-16 md:py-24 bg-terminal-bg text-terminal-text'
     >
-      <div className='container mx-auto grid gap-y-12 lg:grid-cols-2 lg:gap-x-24 items-start'>
+      <div className='px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 grid gap-y-12 lg:grid-cols-2 lg:gap-x-24 items-start'>
         {/* ---- Headline column ------------------------------------------------ */}
         <header className='space-y-0 leading-none'>
           <h2 className='sr-only'>Ready to automate, optimize, or scale?</h2>
