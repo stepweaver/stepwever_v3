@@ -294,6 +294,14 @@ html[data-theme] {
   background-color: var(--background);
 }
 
+/* CSS-only theme detection to prevent flash */
+@media (prefers-color-scheme: light) {
+  html[data-theme="dark"] {
+    /* If user prefers light but we're showing dark, 
+       this will be overridden by JS after hydration */
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

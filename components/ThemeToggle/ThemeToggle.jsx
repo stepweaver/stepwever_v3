@@ -6,50 +6,56 @@ import Image from 'next/image';
 export default function ThemeToggle() {
   const { theme, toggleTheme, mounted } = useTheme();
 
-  // Prevent hydration mismatch with a theme-aware skeleton
-  if (!mounted) {
-    return (
-      <div className='flex items-center space-x-2'>
-        <div className='w-8 h-8 animate-pulse bg-terminal-border rounded-full' />
-        <div className='w-8 h-4 animate-pulse bg-terminal-border rounded' />
-      </div>
-    );
-  }
-
+  // Always render the same structure to prevent hydration mismatch
   return (
-    <div
-      onClick={toggleTheme}
-      className='flex items-center space-x-2 cursor-pointer select-none'
-      role='button'
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleTheme();
-        }
-      }}
-      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-    >
-      <Image
-        src='/images/lambda_stepweaver.png'
-        alt='Lambda symbol'
-        width={32}
-        height={32}
-        className={`w-8 h-8 object-contain transition-all duration-300 ${
-          theme === 'dark'
-            ? 'filter brightness-100 drop-shadow-[0_0_4px_rgba(0,255,0,0.4)]'
-            : 'filter brightness-75 drop-shadow-[0_0_4px_rgba(255,0,255,0.4)]'
-        } hover:scale-110`}
-      />
+    <div className='flex items-center space-x-2'>
+      {!mounted ? (
+        // Skeleton state - matches the structure of the actual component
+        <>
+          <div className='w-8 h-8 animate-pulse bg-terminal-border rounded-full' />
+          <div className='w-8 h-4 animate-pulse bg-terminal-border rounded' />
+        </>
+      ) : (
+        // Actual component
+        <>
+          <div
+            onClick={toggleTheme}
+            className='cursor-pointer select-none'
+            role='button'
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleTheme();
+              }
+            }}
+            aria-label={`Switch to ${
+              theme === 'dark' ? 'light' : 'dark'
+            } theme`}
+          >
+            <Image
+              src='/images/lambda_stepweaver.png'
+              alt='Lambda symbol'
+              width={32}
+              height={32}
+              className={`w-8 h-8 object-contain transition-all duration-300 ${
+                theme === 'dark'
+                  ? 'filter brightness-100 drop-shadow-[0_0_4px_rgba(0,255,0,0.4)]'
+                  : 'filter brightness-75 drop-shadow-[0_0_4px_rgba(255,0,255,0.4)]'
+              } hover:scale-110`}
+            />
+          </div>
 
-      {/* Theme indicator text */}
-      <div
-        className={`text-xs font-ocr font-bold transition-all duration-300 ${
-          theme === 'dark' ? 'text-terminal-green' : 'text-terminal-magenta'
-        }`}
-      >
-        {theme === 'dark' ? 'DARK' : 'LIGHT'}
-      </div>
+          {/* Theme indicator text */}
+          <div
+            className={`text-xs font-ocr font-bold transition-all duration-300 ${
+              theme === 'dark' ? 'text-terminal-green' : 'text-terminal-magenta'
+            }`}
+          >
+            {theme === 'dark' ? 'DARK' : 'LIGHT'}
+          </div>
+        </>
+      )}
     </div>
   );
 }

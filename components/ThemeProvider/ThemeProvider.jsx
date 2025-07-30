@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('dark'); // Always start with dark to match server
   const [mounted, setMounted] = useState(false);
 
   // Get system theme preference
@@ -18,30 +18,27 @@ export function ThemeProvider({ children }) {
     return 'dark'; // Default fallback
   };
 
-  // Get initial theme from HTML attribute (set by script) or localStorage
-  const getInitialTheme = () => {
+  // Get user's preferred theme from localStorage or system preference
+  const getUserPreferredTheme = () => {
     if (typeof window !== 'undefined') {
-      // First check if the script already set the theme
-      const htmlTheme = document.documentElement.getAttribute('data-theme');
-      if (htmlTheme === 'light' || htmlTheme === 'dark') {
-        return htmlTheme;
-      }
-
-      // Fallback to localStorage or system preference
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light' || savedTheme === 'dark') {
         return savedTheme;
       }
-
       return getSystemTheme();
     }
     return 'dark'; // SSR fallback
   };
 
-  // Initialize theme from HTML attribute, localStorage, or system preference on mount
+  // Initialize theme after component mounts to avoid hydration mismatch
   useEffect(() => {
-    const initialTheme = getInitialTheme();
-    setTheme(initialTheme);
+    const userPreferredTheme = getUserPreferredTheme();
+
+    // Only update if the theme is different to prevent unnecessary re-renders
+    if (userPreferredTheme !== theme) {
+      setTheme(userPreferredTheme);
+    }
+
     setMounted(true);
 
     // Listen for system theme changes
@@ -58,7 +55,7 @@ export function ThemeProvider({ children }) {
     return () => {
       mediaQuery.removeEventListener('change', handleSystemThemeChange);
     };
-  }, []);
+  }, []); // Empty dependency array to run only once on mount
 
   // Update document class and localStorage when theme changes
   useEffect(() => {

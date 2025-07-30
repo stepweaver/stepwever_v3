@@ -120,6 +120,7 @@ export default function RootLayout({ children }) {
     <html
       lang='en'
       className={`${ocrFont.variable} ${ibm3270.variable} antialiased`}
+      data-theme='dark'
     >
       <head>
         <meta name='theme-color' content='#0d1211' />
@@ -127,25 +128,6 @@ export default function RootLayout({ children }) {
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1, maximum-scale=5'
-        />
-
-        {/* Prevent theme flash - set initial theme before React hydrates */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem('theme');
-                  if (!theme) {
-                    theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-                  }
-                  document.documentElement.setAttribute('data-theme', theme);
-                } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                }
-              })();
-            `,
-          }}
         />
 
         {/* Mobile-specific meta tags */}
