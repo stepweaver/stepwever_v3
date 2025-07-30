@@ -112,7 +112,7 @@ export default function ContactForm() {
                   name='name'
                   value={formData.name}
                   onChange={handleChange}
-                  className='w-full bg-black border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='Your name'
                   required
                 />
@@ -127,7 +127,7 @@ export default function ContactForm() {
                   name='email'
                   value={formData.email}
                   onChange={handleChange}
-                  className='w-full bg-black border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='your.email@company.com'
                   required
                 />
@@ -141,7 +141,7 @@ export default function ContactForm() {
                   name='message'
                   value={formData.message}
                   onChange={handleChange}
-                  className='w-full bg-black border border-terminal-border text-terminal-text p-1.5 text-sm h-48 focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm h-48 focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='Tell us about your project, timeline, and goals...'
                   required
                 ></textarea>
