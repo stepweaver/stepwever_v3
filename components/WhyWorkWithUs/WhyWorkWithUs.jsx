@@ -6,40 +6,27 @@ import GlitchLambda from '@/components/ui/GlitchLambda';
 const WhyWorkWithUs = memo(() => {
   const reasons = [
     {
-      title: 'Cut through, not just corners',
+      title: 'Direct, fast, focused.',
       description: (
         <>
-          <span className='whitespace-nowrap'>
-            <GlitchLambda className='text-terminal-text' />
-            stepweaver
-          </span>{' '}
-          operates on ruthless efficiency-every sprint is focused, every
-          automation is deliberate, and every result is measured in real impact.
-          No fluff. No long-winded strategy decks. Just precision moves that
-          push your business forward-fast.
+          I don't waste time or pile on meetings. I get to work, build what you
+          need, and show you results—quickly.
         </>
       ),
     },
     {
-      title: 'Ship while others are still talking',
+      title: 'No layers, no middlemen.',
       description: (
         <>
-          Where traditional teams are stuck in endless meetings and approvals,{' '}
-          <span className='whitespace-nowrap'>
-            <GlitchLambda className='text-terminal-text' />
-            stepweaver
-          </span>{' '}
-          builds, tests, and ships on a feedback loop so tight you'll be
-          iterating before most agencies would have finished onboarding. You get
-          results in days, not months-because moving fast is the competitive
-          edge.
+          You work with me, start to finish. If there's a problem, I fix it. If
+          you need something, you ask me.
         </>
       ),
     },
     {
-      title: 'One mind, all-in',
+      title: 'Proven systems, not theory.',
       description:
-        'No handoffs, no bureaucracy, no finger-pointing. You work directly with the builder-one point of contact, full accountability. Decades of analysis, automation, and storytelling fused into solutions you actually use, not just admire. Your business becomes the only focus until the job is done.',
+        'You get real automations, dashboards, and web tools that solve your actual problems. No distractions, no endless planning, no bloat.',
     },
   ];
 
@@ -48,7 +35,7 @@ const WhyWorkWithUs = memo(() => {
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
         {/* Main heading */}
         <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-12 md:mb-16 leading-tight text-left font-ibm text-terminal-green'>
-          WHY WORK WITH US?
+          WHY WORK WITH ME?
         </h2>
 
         {/* Three columns */}
