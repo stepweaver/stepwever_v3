@@ -1,111 +1,127 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import GlitchButton from '@/components/ui/GlitchButton';
 import CalendlyModal from '@/components/ui/CalendlyModal';
+import GlitchLambda from '@/components/ui/GlitchLambda';
+
+const WORDS = [
+  { text: 'AUTOMATE?', color: 'text-terminal-green' },
+  { text: 'OPTIMIZE?', color: 'text-terminal-cyan' },
+  { text: 'SCALE?', color: 'text-terminal-magenta' },
+];
 
 export default function CTA() {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
-  const words = [
-    { text: 'AUTOMATE?', color: 'text-terminal-green' },
-    { text: 'OPTIMIZE?', color: 'text-terminal-cyan' },
-    { text: 'SCALE?', color: 'text-terminal-magenta' },
-  ];
+  const sectionRef = useRef(null);
 
+  /** Only tick the headline animation while the CTA is in view */
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
-        setIsVisible(true);
-      }, 150); // Half of the fade transition time
-    }, 2750); // 2.75 seconds per word
-    return () => clearInterval(interval);
-  }, [words.length]);
+    const node = sectionRef.current;
+    if (!node) return;
+
+    let loop = null;
+
+    const startLoop = () => {
+      if (loop) return;
+      loop = setInterval(() => {
+        setVisible(false);
+        setTimeout(() => {
+          setIndex((i) => (i + 1) % WORDS.length);
+          setVisible(true);
+        }, 150);
+      }, 2750);
+    };
+
+    const stopLoop = () => {
+      if (loop) clearInterval(loop);
+      loop = null;
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) startLoop();
+        else stopLoop();
+      },
+      { threshold: 0.2 }
+    );
+
+    io.observe(node);
+    return () => {
+      io.disconnect();
+      stopLoop();
+    };
+  }, []);
 
   return (
     <section
       id='contact'
-      className='relative pt-6 md:pt-8 pb-12 md:pb-16 px-4 md:px-8 lg:px-16 xl:px-24 z-30'
+      ref={sectionRef}
+      className='relative z-30 py-16 md:py-24 bg-terminal-bg text-terminal-text'
     >
-      <div className='max-w-7xl mx-auto w-full'>
-        {/* Two Column Layout */}
-        <div className='flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-16 items-start'>
-          {/* Left Column - Main Headline */}
-          <div className='lg:w-1/2'>
-            <div className='space-y-0'>
-              <h3 className='text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[12rem] font-ibm text-terminal-text leading-none'>
-                READY
-              </h3>
-              <h3 className='text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[12rem] font-ibm text-terminal-text leading-none'>
-                TO
-              </h3>
-              <div className='text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[12rem] font-ibm leading-none'>
-                <span
-                  className={`${
-                    words[currentWordIndex].color
-                  } transition-opacity duration-300 ${
-                    isVisible ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-                  {words[currentWordIndex].text}
-                </span>
-              </div>
-            </div>
+      <div className='container mx-auto grid gap-y-12 lg:grid-cols-2 lg:gap-x-24 items-start'>
+        {/* ---- Headline column ------------------------------------------------ */}
+        <header className='space-y-0 leading-none'>
+          <h2 className='sr-only'>Ready to automate, optimize, or scale?</h2>
+          {/* We visually split the headline for style, but keep semantics sane */}
+          <p className='font-ibm text-[clamp(3rem,10vw,10rem)]'>READY</p>
+          <p className='font-ibm text-[clamp(3rem,10vw,10rem)]'>TO</p>
+          <p className='font-ibm text-[clamp(3rem,10vw,10rem)]'>
+            <span
+              className={`${
+                WORDS[index].color
+              } transition-opacity duration-300 ${
+                visible ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {WORDS[index].text}
+            </span>
+          </p>
+        </header>
+
+        {/* ---- Copy & actions column ---------------------------------------- */}
+        <div className='space-y-10 pt-2 md:pt-4'>
+          <p className='font-ocr text-base md:text-lg lg:text-xl leading-tight'>
+            You're here because you want action, not talk. <GlitchLambda className='text-terminal-text' />stepweaver turns
+            ideas into working systems—fast.
+          </p>
+
+          <p className='font-ibm text-terminal-green text-xl md:text-2xl lg:text-3xl'>
+            Let&apos;s ship something real.
+          </p>
+
+          {/* Buttons */}
+          <div className='flex flex-col sm:flex-row flex-wrap gap-4'>
+            <GlitchButton
+              onClick={() => setIsCalendlyOpen(true)}
+              className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
+            >
+              SCHEDULE A CALL
+            </GlitchButton>
+
+            <GlitchButton
+              href='/contact'
+              className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
+            >
+              CONTACT
+            </GlitchButton>
           </div>
 
-          {/* Right Column - Body Text and Buttons */}
-          <div className='lg:w-1/2 pt-2 md:pt-4 mt-2 md:mt-4'>
-            <div className='mb-8 md:mb-12'>
-              <p className='text-base md:text-lg lg:text-xl text-terminal-text leading-tight'>
-                You're here because you're done waiting. λstepweaver turns
-                "someday" ideas into live solutions-fast. Reach out and see what
-                happens when obsession meets execution.
-              </p>
-            </div>
-
-            <div className='mb-6 md:mb-8'>
-              <p className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green'>
-                Let's ship something real.
-              </p>
-            </div>
-
-            {/* Buttons */}
-            <div className='flex flex-col sm:flex-row gap-3 md:gap-4 mb-4 md:mb-6'>
-              {/* Primary Button */}
-              <GlitchButton
-                onClick={() => setIsCalendlyOpen(true)}
-                className='px-8 md:px-12 py-4 md:py-5 text-base md:text-lg lg:text-xl font-bold min-w-[180px] md:min-w-[200px]'
-              >
-                SCHEDULE A CALL
-              </GlitchButton>
-
-              {/* Secondary Button */}
-              <GlitchButton
-                href='/contact'
-                className='px-8 md:px-12 py-4 md:py-5 text-base md:text-lg lg:text-xl font-bold min-w-[180px] md:min-w-[200px]'
-              >
-                CONTACT
-              </GlitchButton>
-            </div>
-
-            {/* Optional tiny text */}
-            <p className='text-xs md:text-sm text-terminal-dimmed leading-tight'>
-              Prefer a real conversation? Email directly at{' '}
-              <a
-                href='mailto:inquiries@stepweaver.dev'
-                className='text-terminal-green hover:text-terminal-green/80 underline'
-              >
-                inquiries@stepweaver.dev
-              </a>
-            </p>
-          </div>
+          {/* Tiny text */}
+          <p className='text-xs md:text-sm text-terminal-dimmed'>
+            Prefer a real conversation? Email&nbsp;
+            <a
+              href='mailto:inquiries@stepweaver.dev'
+              className='text-terminal-green underline hover:text-terminal-green/80'
+            >
+              inquiries@stepweaver.dev
+            </a>
+          </p>
         </div>
       </div>
 
-      {/* Calendly Modal */}
       <CalendlyModal
         isOpen={isCalendlyOpen}
         onClose={() => setIsCalendlyOpen(false)}
