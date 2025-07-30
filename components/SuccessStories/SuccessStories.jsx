@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 
 /* ---------- 1. data ---------- */
 
@@ -99,6 +99,39 @@ const StoryCard = ({ story }) => (
 /* ---------- 3. carousel + grid ---------- */
 
 const SuccessStories = memo(() => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
+
+  const nextStory = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);
+  };
+
+  const prevStory = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + stories.length) % stories.length
+    );
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.changedTouches[0].screenX);
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!touchStartX) return;
+
+    const endX = e.changedTouches[0].screenX;
+    const distance = touchStartX - endX;
+    const swipeThreshold = 50;
+
+    if (distance > swipeThreshold) {
+      nextStory();
+    } else if (distance < -swipeThreshold) {
+      prevStory();
+    }
+
+    setTouchStartX(null);
+  };
+
   return (
     <section id='success-stories' className='relative z-30 pt-12 pb-24'>
       <div className='text-left px-8 md:px-16 lg:px-24 w-full'>
@@ -107,17 +140,40 @@ const SuccessStories = memo(() => {
           SELECTED SUCCESS STORIES
         </h2>
 
-        {/* mobile rail */}
-        <div
-          className='md:hidden overflow-x-auto flex -mx-4 px-4 space-x-6 snap-x snap-mandatory'
-          role='tablist'
-          aria-label='Success stories'
-        >
-          {stories.map((s) => (
-            <div key={s.title} className='snap-start shrink-0 w-80'>
-              <StoryCard story={s} />
+        {/* mobile carousel */}
+        <div className='md:hidden'>
+          <div
+            className='overflow-hidden'
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className='flex transition-transform duration-300 ease-out'
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {stories.map((s) => (
+                <div key={s.title} className='w-full flex-shrink-0'>
+                  <StoryCard story={s} />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* pagination indicators */}
+          <div className='flex justify-center mt-6 space-x-2'>
+            {stories.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? 'bg-terminal-green'
+                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+                }`}
+                aria-label={`Go to story ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* desktop auto-fit grid */}
