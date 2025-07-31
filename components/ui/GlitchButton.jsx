@@ -18,9 +18,6 @@ export default function GlitchButton({
   loadingText,
   disabled = false,
   download = false,
-  'aria-label': ariaLabel,
-  'aria-describedby': ariaDescribedby,
-  ...props
 }) {
   const [cursorVisible, setCursorVisible] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
@@ -82,23 +79,12 @@ export default function GlitchButton({
       isHovering ? buttonStyles.scaleHover : buttonStyles.scaleNormal
     } ${disabled || isLoading ? 'opacity-70 cursor-not-allowed' : ''}`,
     disabled: disabled || isLoading,
-    'aria-label':
-      ariaLabel || (typeof children === 'string' ? children : undefined),
-    'aria-describedby': ariaDescribedby,
-    'aria-disabled': disabled || isLoading,
-    ...props,
   };
 
   // Render as button if type is provided or if onClick is provided but no href
   if (type || (onClick && !href)) {
     return (
-      <button
-        type={type || 'button'}
-        onClick={onClick}
-        {...commonProps}
-        // Ensure minimum touch target size
-        style={{ minHeight: '44px', minWidth: '44px' }}
-      >
+      <button type={type || 'button'} onClick={onClick} {...commonProps}>
         {buttonContent}
       </button>
     );
@@ -107,13 +93,7 @@ export default function GlitchButton({
   // If we have a download attribute, use a regular anchor tag instead of Next.js Link
   if (href && download) {
     return (
-      <a
-        href={href}
-        download
-        {...commonProps}
-        // Ensure minimum touch target size
-        style={{ minHeight: '44px', minWidth: '44px' }}
-      >
+      <a href={href} download {...commonProps}>
         {buttonContent}
       </a>
     );
@@ -121,12 +101,7 @@ export default function GlitchButton({
 
   // Otherwise render as Link
   return (
-    <Link
-      href={href || '#'}
-      {...commonProps}
-      // Ensure minimum touch target size
-      style={{ minHeight: '44px', minWidth: '44px' }}
-    >
+    <Link href={href || '#'} {...commonProps}>
       {buttonContent}
     </Link>
   );

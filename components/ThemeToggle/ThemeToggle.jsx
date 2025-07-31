@@ -17,9 +17,9 @@ export default function ThemeToggle() {
         </>
       ) : (
         // Actual component
-        <button
+        <div
           onClick={toggleTheme}
-          className='flex items-center space-x-2 cursor-pointer select-none p-2 rounded-lg transition-all duration-200 hover:scale-105'
+          className='flex items-center space-x-2 cursor-pointer select-none'
           role='button'
           tabIndex={0}
           onKeyDown={(e) => {
@@ -29,9 +29,6 @@ export default function ThemeToggle() {
             }
           }}
           aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-          aria-pressed={theme === 'dark'}
-          // Ensure minimum touch target size
-          style={{ minHeight: '44px', minWidth: '44px' }}
         >
           <div className='relative p-2'>
             {theme === 'dark' ? (
@@ -42,7 +39,6 @@ export default function ThemeToggle() {
                     'radial-gradient(circle, rgba(0,255,0,1) 0%, rgba(0,255,0,0.6) 30%, rgba(0,255,0,0.2) 60%, transparent 100%)',
                   transform: 'translate(-2px, -2px)',
                 }}
-                aria-hidden='true'
               />
             ) : null}
             <Image
@@ -54,7 +50,7 @@ export default function ThemeToggle() {
                 theme === 'dark'
                   ? 'filter brightness-125 relative z-10'
                   : 'filter brightness-75'
-              }`}
+              } hover:scale-110`}
               style={{
                 filter:
                   theme === 'dark'
@@ -69,11 +65,10 @@ export default function ThemeToggle() {
             className={`text-xs font-ocr font-bold transition-all duration-300 ${
               theme === 'dark' ? 'text-terminal-green' : 'text-terminal-magenta'
             }`}
-            aria-hidden='true'
           >
             {theme === 'dark' ? 'DARK' : 'LIGHT'}
           </div>
-        </button>
+        </div>
       )}
     </div>
   );
