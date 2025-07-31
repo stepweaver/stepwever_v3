@@ -166,16 +166,20 @@ export default function ProjectCarousel() {
 
     const getTotalPages = () => {
       const totalProjects = PROJECTS.length;
-      if (window.innerWidth < 768) {
-        // Mobile: 1 card per page
-        return totalProjects;
-      } else if (window.innerWidth < 1024) {
-        // Tablet: 2 cards per page
-        return Math.ceil(totalProjects / 2);
-      } else {
-        // Desktop: 3 cards per page
-        return Math.ceil(totalProjects / 3);
+      if (typeof window !== 'undefined') {
+        if (window.innerWidth < 768) {
+          // Mobile: 1 card per page
+          return totalProjects;
+        } else if (window.innerWidth < 1024) {
+          // Tablet: 2 cards per page
+          return Math.ceil(totalProjects / 2);
+        } else {
+          // Desktop: 3 cards per page
+          return Math.ceil(totalProjects / 3);
+        }
       }
+      // Default for SSR
+      return Math.ceil(totalProjects / 3);
     };
 
     setTotalPages(getTotalPages());
@@ -186,8 +190,10 @@ export default function ProjectCarousel() {
       setCurrentCardIndex(0);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, [isClient]);
 
   const nextCard = () => {
@@ -202,23 +208,29 @@ export default function ProjectCarousel() {
 
   const getCardsForPage = (pageIndex) => {
     if (!isClient) {
-      // Default for SSR: 3 cards per page
+      // Default for SSR: 3 cards per page (desktop layout)
       const startIndex = pageIndex * 3;
       return PROJECTS.slice(startIndex, startIndex + 3);
     }
 
-    if (window.innerWidth < 768) {
-      // Mobile: 1 card per page
-      return [PROJECTS[pageIndex]];
-    } else if (window.innerWidth < 1024) {
-      // Tablet: 2 cards per page
-      const startIndex = pageIndex * 2;
-      return PROJECTS.slice(startIndex, startIndex + 2);
-    } else {
-      // Desktop: 3 cards per page
-      const startIndex = pageIndex * 3;
-      return PROJECTS.slice(startIndex, startIndex + 3);
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 768) {
+        // Mobile: 1 card per page
+        return [PROJECTS[pageIndex]];
+      } else if (window.innerWidth < 1024) {
+        // Tablet: 2 cards per page
+        const startIndex = pageIndex * 2;
+        return PROJECTS.slice(startIndex, startIndex + 2);
+      } else {
+        // Desktop: 3 cards per page
+        const startIndex = pageIndex * 3;
+        return PROJECTS.slice(startIndex, startIndex + 3);
+      }
     }
+
+    // Fallback for SSR
+    const startIndex = pageIndex * 3;
+    return PROJECTS.slice(startIndex, startIndex + 3);
   };
 
   return (
@@ -235,7 +247,7 @@ export default function ProjectCarousel() {
         <button
           onClick={nextCard}
           className='absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
-          aria-label='Next page'
+          aria-label='Next page of projects'
         >
           <svg
             className='w-6 h-6'
@@ -243,6 +255,7 @@ export default function ProjectCarousel() {
             stroke='currentColor'
             viewBox='0 0 24 24'
             xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'
           >
             <path
               strokeLinecap='round'
@@ -258,6 +271,8 @@ export default function ProjectCarousel() {
       <div
         className='overflow-hidden cursor-grab active:cursor-grabbing'
         ref={carouselRef}
+        role='region'
+        aria-label='Project carousel'
       >
         <div
           className='flex transition-transform duration-500 ease-in-out'
@@ -294,18 +309,33 @@ export default function ProjectCarousel() {
       </div>
 
       {/* Page Indicators */}
-      <div className='flex justify-center mt-4 space-x-2'>
+      <div
+        className='flex justify-center mt-4 space-x-2'
+        role='tablist'
+        aria-label='Project carousel navigation'
+      >
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index}
             onClick={() => setCurrentCardIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`rounded-full transition-all duration-300 relative ${
               index === currentCardIndex
                 ? 'bg-terminal-green'
                 : 'bg-terminal-dimmed hover:bg-terminal-green/50'
             }`}
-            aria-label={`Go to page ${index + 1}`}
-          />
+            aria-label={`Go to page ${index + 1} of ${totalPages}`}
+            aria-selected={index === currentCardIndex}
+            role='tab'
+          >
+            <div
+              className={`rounded-full transition-all duration-300 ${
+                index === currentCardIndex
+                  ? 'bg-terminal-green'
+                  : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+              }`}
+              style={{ width: '8px', height: '8px' }}
+            />
+          </button>
         ))}
       </div>
     </div>

@@ -89,9 +89,14 @@ export default function MobileNav() {
           onClick={() => setIsOpen(true)}
           className='cursor-pointer p-3 text-3xl text-terminal-green hover:text-terminal-yellow transition-colors duration-200'
           aria-expanded={isOpen}
-          aria-label='Toggle navigation menu'
+          aria-label='Open navigation menu'
+          aria-controls='mobile-navigation-menu'
+          // Ensure minimum touch target size
+          style={{ minHeight: '44px', minWidth: '44px' }}
         >
-          <span className='block'>≡</span>
+          <span className='block' aria-hidden='true'>
+            ≡
+          </span>
         </button>
       )}
 

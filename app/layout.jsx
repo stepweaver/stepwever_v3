@@ -5,8 +5,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { Analytics } from '@vercel/analytics/next';
-import '@/utils/errorMonitor'; // Initialize error monitoring
-import '@/utils/performanceMonitor'; // Initialize performance monitoring
+
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
 
 // Environment validation in development
@@ -145,6 +144,11 @@ export default function RootLayout({ children }) {
             __html: `
               (function() {
                 try {
+                  // Only run in browser environment
+                  if (typeof window === 'undefined' || typeof document === 'undefined') {
+                    return;
+                  }
+                  
                   // Check for saved theme preference or default to system preference
                   const savedTheme = localStorage.getItem('theme');
                   const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -163,8 +167,10 @@ export default function RootLayout({ children }) {
                   document.documentElement.classList.add('theme-loaded');
                 } catch (e) {
                   // Fallback to dark theme if there's an error
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                  document.documentElement.classList.add('theme-loaded');
+                  if (typeof document !== 'undefined') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.documentElement.classList.add('theme-loaded');
+                  }
                 }
               })();
             `,

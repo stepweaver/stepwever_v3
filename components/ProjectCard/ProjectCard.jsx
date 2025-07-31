@@ -52,6 +52,7 @@ const ProjectCard = memo(function ProjectCard({
               src={imageUrl}
               alt={title}
               className='w-full h-full object-cover object-top'
+              loading='lazy'
             />
           </div>
         )}
@@ -61,6 +62,7 @@ const ProjectCard = memo(function ProjectCard({
               src='/images/lambda_preview.png'
               alt='Project preview'
               className='w-full h-full object-cover object-center'
+              loading='lazy'
             />
           </div>
         )}
