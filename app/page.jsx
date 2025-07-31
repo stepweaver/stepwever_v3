@@ -17,10 +17,42 @@ export default function HomePage() {
 
   return (
     <>
+      {/* Enhanced structured data for SEO */}
       <script
         type='application/ld+json'
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.organization),
+        }}
       />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.website),
+        }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.breadcrumb),
+        }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.localBusiness),
+        }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.person),
+        }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.faq) }}
+      />
+
       <div className='relative'>
         <BackgroundCanvas />
 

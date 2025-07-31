@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { Analytics } from '@vercel/analytics/next';
 import '@/utils/errorMonitor'; // Initialize error monitoring
+import '@/utils/performanceMonitor'; // Initialize performance monitoring
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
 
 // Environment validation in development
@@ -201,7 +202,7 @@ export default function RootLayout({ children }) {
         {/* Skip to main content link for accessibility */}
         <a
           href='#main-content'
-          className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-terminal-green text-terminal-dark px-4 py-2 rounded z-50'
+          className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-terminal-green text-terminal-dark px-4 py-2 rounded font-ibm font-bold z-50'
         >
           Skip to main content
         </a>
@@ -209,7 +210,7 @@ export default function RootLayout({ children }) {
         <ErrorBoundary>
           <ThemeProvider>
             <Navbar />
-            <main id='main-content' tabIndex='-1'>
+            <main id='main-content' role='main'>
               {children}
             </main>
             <Analytics />

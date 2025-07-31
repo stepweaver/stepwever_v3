@@ -7,7 +7,11 @@ import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 export default function Navbar() {
   return (
-    <nav className='py-4 relative z-50 bg-transparent'>
+    <nav
+      className='py-4 relative z-50 bg-transparent'
+      role='navigation'
+      aria-label='Main navigation'
+    >
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative'>
         <div className='flex justify-between items-center'>
           {/* Logo */}
@@ -17,18 +21,28 @@ export default function Navbar() {
             onClick={() => {
               window.location.href = '/';
             }}
+            aria-label='Go to homepage'
+            aria-describedby='logo-description'
           >
             <span className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
               <GlitchLambda
                 className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'
                 size='large'
+                aria-hidden='true'
               />
               stepweaver
+            </span>
+            <span id='logo-description' className='sr-only'>
+              λstepweaver - Practical transformation, powered by code
             </span>
           </button>
 
           {/* Desktop Navigation */}
-          <div className='hidden md:flex items-center space-x-8 relative z-50'>
+          <div
+            className='hidden md:flex items-center space-x-8 relative z-50'
+            role='menubar'
+            aria-label='Main menu'
+          >
             <button
               type='button'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
@@ -44,24 +58,32 @@ export default function Navbar() {
                   window.location.href = '/#about';
                 }
               }}
+              role='menuitem'
+              aria-label='About section'
             >
               About
             </button>
             <Link
               href='/codex'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              role='menuitem'
+              aria-label='View blog posts and projects'
             >
               Codex
             </Link>
             <Link
               href='/terminal'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              role='menuitem'
+              aria-label='Interactive terminal interface'
             >
               Terminal
             </Link>
             <Link
               href='/contact'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              role='menuitem'
+              aria-label='Contact us about your project'
             >
               Contact
             </Link>

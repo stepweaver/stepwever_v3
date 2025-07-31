@@ -384,30 +384,59 @@ const Terminal = forwardRef((props, ref) => {
       ref={containerRef}
       className={`h-full md:h-96 md:sm:h-[32rem] md:md:h-[40rem] md:lg:h-[48rem] flex flex-col md:overflow-y-auto md:overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
       onClick={focusInput}
+      role='application'
+      aria-label='Terminal interface'
+      aria-describedby='terminal-help'
+      tabIndex={0}
+      onKeyDown={(e) => {
+        // Handle keyboard shortcuts for accessibility
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          focusInput();
+        }
+      }}
     >
+      {/* Screen reader help text */}
+      <div id='terminal-help' className='sr-only'>
+        Terminal interface. Use Tab to navigate, Enter to submit commands,
+        Escape to focus input, and arrow keys to navigate history.
+      </div>
+
       <div
         className='flex-1 overflow-y-auto overflow-x-auto md:flex-none md:overflow-visible'
         onClick={handleContentClick}
+        role='log'
+        aria-label='Terminal output'
+        aria-live='polite'
+        aria-atomic='false'
       >
         <div className='terminal-output mb-4 md:mb-4'>
           {memoizedLines.map((line, i) => (
-            <div key={i} className='mb-1'>
+            <div key={i} className='mb-1' role='log'>
               {renderLine(line, i)}
             </div>
           ))}
         </div>
       </div>
 
-      <div className='terminal-prompt flex-shrink-0 md:flex-none'>
-        <div className={`text-terminal-green mb-1 ${styles.crtText}`}>
+      <div
+        className='terminal-prompt flex-shrink-0 md:flex-none'
+        role='status'
+        aria-live='polite'
+      >
+        <div
+          className={`text-terminal-green mb-1 ${styles.crtText}`}
+          aria-label='Current path'
+        >
           user@stepweaver.dev {getPromptPath()}
         </div>
         <div className='flex items-center'>
           <GlitchLambda
             className={`text-terminal-green text-lg inline-block mr-1 ${styles.crtText}`}
+            aria-hidden='true'
           />
           <div className='relative flex-grow'>
-            <div className='relative'>
+            <div className='relative' aria-label='Command input'>
               <span className='text-terminal-text pr-0'>
                 {input.substring(0, cursorPosition)}
               </span>
@@ -415,6 +444,7 @@ const Terminal = forwardRef((props, ref) => {
                 className={`inline-block h-5 w-2.5 align-middle -mt-0.5 bg-terminal-green ${
                   cursorVisible ? 'opacity-100' : 'opacity-0'
                 } ${styles.cursorGlow}`}
+                aria-hidden='true'
               />
               <span className='text-terminal-text pl-0'>
                 {input.substring(cursorPosition)}
@@ -434,6 +464,12 @@ const Terminal = forwardRef((props, ref) => {
                 onClick={handleClick}
                 className='opacity-0 absolute top-0 left-0 w-full h-full cursor-text'
                 autoFocus
+                aria-label='Terminal command input'
+                aria-describedby='terminal-help'
+                placeholder='Type a command...'
+                role='textbox'
+                aria-autocomplete='list'
+                aria-expanded='false'
               />
             </form>
           </div>
