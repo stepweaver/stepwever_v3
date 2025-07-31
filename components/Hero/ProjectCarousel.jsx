@@ -288,7 +288,6 @@ export default function ProjectCarousel() {
                     tags={project.tags}
                     keywords={project.keywords}
                     actions={project.actions}
-                    priority={pageIndex === 0 && index < 2} // Priority for first 2 cards on first page
                   />
                 </div>
               ))}

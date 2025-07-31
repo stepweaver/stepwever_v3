@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import Image from 'next/image';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const ProjectCard = memo(function ProjectCard({
@@ -10,7 +9,6 @@ const ProjectCard = memo(function ProjectCard({
   tags = [],
   keywords = [],
   actions = [],
-  priority = false,
 }) {
   const handleClick = () => {
     if (link) {
@@ -49,32 +47,20 @@ const ProjectCard = memo(function ProjectCard({
       <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col h-full'>
         {/* Project Image */}
         {imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48 relative'>
-            <Image
+          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48'>
+            <img
               src={imageUrl}
               alt={title}
-              fill
-              sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
-              className='object-cover object-top'
-              priority={priority}
-              loading={priority ? 'eager' : 'lazy'}
-              placeholder='blur'
-              blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=='
+              className='w-full h-full object-cover object-top'
             />
           </div>
         )}
         {!imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48 relative'>
-            <Image
+          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48'>
+            <img
               src='/images/lambda_preview.png'
               alt='Project preview'
-              fill
-              sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
-              className='object-cover object-center'
-              priority={priority}
-              loading={priority ? 'eager' : 'lazy'}
-              placeholder='blur'
-              blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=='
+              className='w-full h-full object-cover object-center'
             />
           </div>
         )}
