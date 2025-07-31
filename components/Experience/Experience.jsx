@@ -248,7 +248,10 @@ function Experience() {
         {/* Tech Arsenal - Compact Rotating Layout */}
         <div className='ml-auto w-full max-w-6xl'>
           {/* Category Navigation - Improved Tab Design */}
-          <nav className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center'>
+          <nav
+            className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center'
+            aria-label='Technology categories'
+          >
             {TECH_CATEGORIES.map((category, index) => (
               <button
                 key={category.name}
@@ -263,7 +266,11 @@ function Experience() {
                     currentCategory === index
                       ? '0 0 8px rgba(0, 255, 65, 0.8), 0 0 16px rgba(0, 255, 65, 0.4)'
                       : 'none',
+                  minHeight: '44px', // Ensure minimum touch target size
                 }}
+                aria-label={`View ${category.name} technologies`}
+                aria-pressed={currentCategory === index}
+                role='tab'
               >
                 {category.name}
               </button>
@@ -279,7 +286,11 @@ function Experience() {
 
           {/* Tech Icons - Compact Grid */}
           <div className='flex justify-center'>
-            <div className='flex flex-wrap justify-center gap-4 max-w-fit mx-auto'>
+            <div
+              className='flex flex-wrap justify-center gap-4 max-w-fit mx-auto'
+              role='list'
+              aria-label={`${TECH_CATEGORIES[currentCategory].name} technologies`}
+            >
               {TECH_CATEGORIES[currentCategory].technologies.map(
                 (tech, index) => {
                   const IconComponent = tech.isComponent ? tech.icon : null;
@@ -288,6 +299,7 @@ function Experience() {
                       key={tech.name}
                       className='group flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green hover:bg-opacity-5 w-24 h-24 animate-[fadeIn_0.6s_ease-out_both] hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(0,255,65,0.15)]'
                       style={{ animationDelay: `${index * 100}ms` }}
+                      role='listitem'
                     >
                       <div className='mb-1 flex items-center justify-center w-12 h-12'>
                         {tech.isComponent ? (
@@ -295,9 +307,12 @@ function Experience() {
                             size={24}
                             color={tech.color}
                             className='transition-all duration-300 hover:scale-110'
+                            aria-hidden='true'
                           />
                         ) : (
-                          <span className='text-2xl'>{tech.icon}</span>
+                          <span className='text-2xl' aria-hidden='true'>
+                            {tech.icon}
+                          </span>
                         )}
                       </div>
                       <span className='font-ocr text-terminal-text group-hover:text-black text-xs text-center leading-tight transition-colors duration-300'>
@@ -311,16 +326,23 @@ function Experience() {
           </div>
 
           {/* Category Indicators - Improved Design */}
-          <div className='flex justify-center mt-8 gap-3'>
-            {TECH_CATEGORIES.map((_, index) => (
+          <div
+            className='flex justify-center mt-8 gap-3'
+            role='tablist'
+            aria-label='Technology category navigation'
+          >
+            {TECH_CATEGORIES.map((category, index) => (
               <button
                 key={index}
                 onClick={() => handleTabClick(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                className={`rounded-full transition-all duration-300 cursor-pointer ${
                   currentCategory === index
                     ? 'bg-terminal-green shadow-lg shadow-terminal-green/50 scale-125'
                     : 'bg-terminal-border hover:bg-terminal-muted hover:scale-110'
                 }`}
+                aria-label={`Switch to ${category.name} category`}
+                aria-selected={currentCategory === index}
+                role='tab'
               />
             ))}
           </div>

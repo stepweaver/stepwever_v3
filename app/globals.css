@@ -20,25 +20,25 @@
 
 /* CSS Variables for theming - Tailwind CSS v4 @theme block */
 @theme {
-  /* Dark Theme Colors (default) */
+  /* Dark Theme Colors (default) - Improved contrast ratios */
   --color-terminal-dark: #0d1211;
   --color-terminal-light: #131918;
   --color-terminal-border: #2a302d;
   --color-terminal-green: #00ff41;
-  --color-terminal-text: #e2e2e2;
-  --color-terminal-muted: #8b949e;
-  --color-terminal-yellow: #ffff00;
-  --color-terminal-red: #ff3e3e;
-  --color-terminal-blue: #38beff;
-  --color-terminal-cyan: #56b6c2;
-  --color-terminal-dimmed: #6a737d;
-  --color-terminal-magenta: #ff55ff;
-  --color-terminal-pink: #ff55ff;
-  --color-terminal-purple: #a855f7;
-  --color-terminal-orange: #ffa500;
+  --color-terminal-text: #f8f9fa; /* Improved contrast from #e2e2e2 */
+  --color-terminal-muted: #adb5bd; /* Improved contrast from #8b949e */
+  --color-terminal-yellow: #ffd43b; /* Improved contrast from #ffff00 */
+  --color-terminal-red: #ff6b6b; /* Improved contrast from #ff3e3e */
+  --color-terminal-blue: #4dabf7; /* Improved contrast from #38beff */
+  --color-terminal-cyan: #66d9e8; /* Improved contrast from #56b6c2 */
+  --color-terminal-dimmed: #868e96; /* Improved contrast from #6a737d */
+  --color-terminal-magenta: #e64980; /* Improved contrast from #ff55ff */
+  --color-terminal-pink: #e64980; /* Improved contrast from #ff55ff */
+  --color-terminal-purple: #ae8cff; /* Improved contrast from #a855f7 */
+  --color-terminal-orange: #ffa94d; /* Improved contrast from #ffa500 */
   --color-terminal-white: #ffffff;
   --background: #0d1211;
-  --foreground: #00ff00;
+  --foreground: #f8f9fa; /* Improved contrast */
 
   /* Terminal Effects */
   --terminal-title-glow: 0 0 3px rgba(0, 255, 65, 0.7);
@@ -59,9 +59,9 @@
   --animate-glitch: glitch 0.3s linear infinite;
 
   /* Glitch Effect Colors */
-  --theme-glitch-color: #ff00ff;
-  --theme-glitch-shadow: 0 0 5px rgba(255, 0, 255, 0.8),
-    0 0 10px rgba(255, 0, 255, 0.4);
+  --theme-glitch-color: #e64980; /* Improved contrast */
+  --theme-glitch-shadow: 0 0 5px rgba(230, 73, 128, 0.8),
+    0 0 10px rgba(230, 73, 128, 0.4);
 }
 
 /* Animation delay utilities */
@@ -83,20 +83,20 @@
   --color-terminal-light: #131918;
   --color-terminal-border: #2a302d;
   --color-terminal-green: #00ff41;
-  --color-terminal-text: #e2e2e2;
-  --color-terminal-muted: #8b949e;
-  --color-terminal-yellow: #ffff00;
-  --color-terminal-red: #ff3e3e;
-  --color-terminal-blue: #38beff;
-  --color-terminal-cyan: #56b6c2;
-  --color-terminal-dimmed: #6a737d;
-  --color-terminal-magenta: #ff55ff;
-  --color-terminal-pink: #ff55ff;
-  --color-terminal-purple: #a855f7;
-  --color-terminal-orange: #ffa500;
+  --color-terminal-text: #f8f9fa; /* Improved contrast */
+  --color-terminal-muted: #adb5bd; /* Improved contrast */
+  --color-terminal-yellow: #ffd43b; /* Improved contrast */
+  --color-terminal-red: #ff6b6b; /* Improved contrast */
+  --color-terminal-blue: #4dabf7; /* Improved contrast */
+  --color-terminal-cyan: #66d9e8; /* Improved contrast */
+  --color-terminal-dimmed: #868e96; /* Improved contrast */
+  --color-terminal-magenta: #e64980; /* Improved contrast */
+  --color-terminal-pink: #e64980; /* Improved contrast */
+  --color-terminal-purple: #ae8cff; /* Improved contrast */
+  --color-terminal-orange: #ffa94d; /* Improved contrast */
   --color-terminal-white: #ffffff;
   --background: transparent;
-  --foreground: #00ff00;
+  --foreground: #f8f9fa; /* Improved contrast */
   --terminal-title-glow: 0 0 3px rgba(0, 255, 65, 0.7);
   --terminal-text-glow: 0 0 2px rgba(0, 255, 65, 0.5);
   --terminal-shadow: 0 0 1px rgba(0, 255, 65, 0.7),
@@ -105,33 +105,33 @@
   --terminal-strong-glow: 0 0 5px rgba(0, 255, 65, 0.8),
     0 0 10px rgba(0, 255, 65, 0.4);
   --crt-glow: 0 0 30px rgba(0, 255, 65, 0.15);
-  --theme-glitch-color: #ff00ff;
-  --theme-glitch-shadow: 0 0 5px rgba(255, 0, 255, 0.8),
-    0 0 10px rgba(255, 0, 255, 0.4);
+  --theme-glitch-color: #e64980; /* Improved contrast */
+  --theme-glitch-shadow: 0 0 5px rgba(230, 73, 128, 0.8),
+    0 0 10px rgba(230, 73, 128, 0.4);
 }
 
 [data-theme="light"] {
-  /* Light Mode Colors - CRT Style */
+  /* Light Mode Colors - CRT Style with improved contrast */
   --color-terminal-dark: #e5e7eb;
   --color-terminal-light: #f3f4f6;
   --color-terminal-border: #d1d5db;
-  --color-terminal-green: #009e3f;
-  --color-terminal-text: #1f2937;
-  --color-terminal-muted: #6b7280;
-  --color-terminal-yellow: #d97706;
-  --color-terminal-red: #dc2626;
-  --color-terminal-blue: #2563eb;
-  --color-terminal-cyan: #0891b2;
-  --color-terminal-dimmed: #9ca3af;
-  --color-terminal-magenta: #c026d3;
-  --color-terminal-pink: #db2777;
-  --color-terminal-purple: #7c3aed;
-  --color-terminal-orange: #ea580c;
+  --color-terminal-green: #006400; /* Improved contrast from #009e3f */
+  --color-terminal-text: #1a1a1a; /* Improved contrast from #1f2937 */
+  --color-terminal-muted: #4a5568; /* Improved contrast from #6b7280 */
+  --color-terminal-yellow: #b45309; /* Improved contrast from #d97706 */
+  --color-terminal-red: #b91c1c; /* Improved contrast from #dc2626 */
+  --color-terminal-blue: #1d4ed8; /* Improved contrast from #2563eb */
+  --color-terminal-cyan: #0e7490; /* Improved contrast from #0891b2 */
+  --color-terminal-dimmed: #4b5563; /* Improved contrast from #9ca3af */
+  --color-terminal-magenta: #a21caf; /* Improved contrast from #c026d3 */
+  --color-terminal-pink: #be185d; /* Improved contrast from #db2777 */
+  --color-terminal-purple: #6b21a8; /* Improved contrast from #7c3aed */
+  --color-terminal-orange: #c2410c; /* Improved contrast from #ea580c */
   --color-terminal-white: #000000;
 
   /* Background and Foreground - CRT Green Tint */
   --background: #e8f0e8;
-  --foreground: #1f2937;
+  --foreground: #1a1a1a; /* Improved contrast */
 
   /* Glows / Effects — softened or reduced */
   --terminal-title-glow: none;
@@ -142,9 +142,9 @@
   --crt-glow: none;
 
   /* Glitch Effect Colors — still visible but less eye-searing */
-  --theme-glitch-color: #7c3aed;
-  --theme-glitch-shadow: 0 0 3px rgba(124, 58, 237, 0.6),
-                         0 0 6px rgba(124, 58, 237, 0.3);
+  --theme-glitch-color: #6b21a8; /* Improved contrast */
+  --theme-glitch-shadow: 0 0 3px rgba(107, 33, 168, 0.6),
+                         0 0 6px rgba(107, 33, 168, 0.3);
 }
 
 /* Font weight improvements for better readability */

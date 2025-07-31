@@ -89,26 +89,38 @@ export default function MobileNav() {
           onClick={() => setIsOpen(true)}
           className='cursor-pointer p-3 text-3xl text-terminal-green hover:text-terminal-yellow transition-colors duration-200'
           aria-expanded={isOpen}
-          aria-label='Toggle navigation menu'
+          aria-label='Open navigation menu'
+          aria-controls='mobile-navigation-menu'
+          // Ensure minimum touch target size
+          style={{ minHeight: '44px', minWidth: '44px' }}
         >
-          <span className='block'>≡</span>
+          <span className='block' aria-hidden='true'>
+            ≡
+          </span>
         </button>
       )}
 
       {isOpen && (
         <div
+          id='mobile-navigation-menu'
           className={`fixed inset-0 animate-fadeIn overflow-hidden ${terminalStyles.crtEffect} z-[9999] bg-terminal-dark`}
           style={{
             boxShadow: 'inset 0 0 60px rgba(0, 255, 65, 0.15)',
           }}
+          role='dialog'
+          aria-modal='true'
+          aria-label='Navigation menu'
         >
           {/* Scanline effect */}
-          <div className={terminalStyles.scanlinePattern}></div>
+          <div
+            className={terminalStyles.scanlinePattern}
+            aria-hidden='true'
+          ></div>
 
           <div className={styles.terminalHeader}>
             <div className='text-xl font-ibm text-terminal-green flex items-center gap-2'>
               <GlitchLambda autoGlitch={isOpen} />
-              ~/menu
+              <span>~/menu</span>
             </div>
 
             <div className='flex gap-2 items-center'>
@@ -117,18 +129,27 @@ export default function MobileNav() {
                 <ThemeToggle />
               </div>
 
-              <div
+              <button
                 className={`${styles.terminalButton} bg-terminal-yellow cursor-pointer`}
                 onClick={() => setIsOpen(false)}
-              ></div>
-              <div
+                aria-label='Close navigation menu'
+                // Ensure minimum touch target size
+                style={{ minHeight: '44px', minWidth: '44px' }}
+              ></button>
+              <button
                 className={`${styles.terminalButton} bg-terminal-green cursor-pointer`}
                 onClick={() => setIsOpen(false)}
-              ></div>
-              <div
+                aria-label='Close navigation menu'
+                // Ensure minimum touch target size
+                style={{ minHeight: '44px', minWidth: '44px' }}
+              ></button>
+              <button
                 className={`${styles.terminalButton} bg-terminal-red cursor-pointer`}
                 onClick={() => setIsOpen(false)}
-              ></div>
+                aria-label='Close navigation menu'
+                // Ensure minimum touch target size
+                style={{ minHeight: '44px', minWidth: '44px' }}
+              ></button>
             </div>
           </div>
 
@@ -138,54 +159,68 @@ export default function MobileNav() {
               <span className='text-terminal-green'>user@stepweaver.dev</span>
             </div>
 
-            <ul className='py-3 font-ibm space-y-4 md:space-y-6'>
-              {navLinks.map((item, index) => (
-                <li
-                  key={item.path}
-                  className={`transition-all duration-300 ${
-                    animatedItems.includes(index)
-                      ? 'opacity-100 translate-x-0'
-                      : 'opacity-0 translate-x-4'
-                  }`}
-                >
-                  {item.external ? (
-                    <Link
-                      href={item.path}
-                      onClick={() => setIsOpen(false)}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40'
-                    >
-                      <span className='truncate'>{item.name}</span>
-                      <span className='ml-2 text-terminal-dimmed text-sm flex-shrink-0'>
-                        [ext]
-                      </span>
-                    </Link>
-                  ) : item.scroll ? (
-                    <button
-                      onClick={() => handleNavClick(item)}
-                      className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40 w-full text-left bg-transparent border-none'
-                    >
-                      <span className='truncate'>{item.name}</span>
-                    </button>
-                  ) : (
-                    <Link
-                      href={item.path}
-                      onClick={() => setIsOpen(false)}
-                      className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40'
-                    >
-                      <span className='truncate'>{item.name}</span>
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <nav aria-label='Main navigation'>
+              <ul className='py-3 font-ibm space-y-4 md:space-y-6'>
+                {navLinks.map((item, index) => (
+                  <li
+                    key={item.path}
+                    className={`transition-all duration-300 ${
+                      animatedItems.includes(index)
+                        ? 'opacity-100 translate-x-0'
+                        : 'opacity-0 translate-x-4'
+                    }`}
+                  >
+                    {item.external ? (
+                      <Link
+                        href={item.path}
+                        onClick={() => setIsOpen(false)}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40'
+                        aria-label={`${item.name} (opens in new tab)`}
+                        // Ensure minimum touch target size
+                        style={{ minHeight: '44px' }}
+                      >
+                        <span className='truncate'>{item.name}</span>
+                        <span className='ml-2 text-terminal-dimmed text-sm flex-shrink-0'>
+                          [ext]
+                        </span>
+                      </Link>
+                    ) : item.scroll ? (
+                      <button
+                        onClick={() => handleNavClick(item)}
+                        className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40 w-full text-left bg-transparent border-none'
+                        aria-label={`Navigate to ${item.name} section`}
+                        // Ensure minimum touch target size
+                        style={{ minHeight: '44px' }}
+                      >
+                        <span className='truncate'>{item.name}</span>
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.path}
+                        onClick={() => setIsOpen(false)}
+                        className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40'
+                        aria-label={`Navigate to ${item.name} page`}
+                        // Ensure minimum touch target size
+                        style={{ minHeight: '44px' }}
+                      >
+                        <span className='truncate'>{item.name}</span>
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
             <div className='absolute bottom-0 left-0 right-0 border-t border-terminal-dimmed/30 py-4 px-4 md:px-6 text-terminal-dimmed text-sm backdrop-blur-sm'>
               <div className='flex justify-between items-center'>
                 <div className='truncate'>stepweaver@v3.0</div>
                 <div className='flex items-center flex-shrink-0'>
-                  <span className='h-2 w-2 rounded-full bg-terminal-green mr-2 animate-pulse'></span>
+                  <span
+                    className='h-2 w-2 rounded-full bg-terminal-green mr-2 animate-pulse'
+                    aria-hidden='true'
+                  ></span>
                   <span>connected</span>
                 </div>
               </div>
@@ -193,7 +228,10 @@ export default function MobileNav() {
               {/* Simulated terminal input */}
               <div className='mt-3 flex items-center'>
                 <span className='text-terminal-text'>navigate</span>
-                <span className='ml-1 h-4 w-2 bg-terminal-green animate-blink'></span>
+                <span
+                  className='ml-1 h-4 w-2 bg-terminal-green animate-blink'
+                  aria-hidden='true'
+                ></span>
               </div>
             </div>
           </div>

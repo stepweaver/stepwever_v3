@@ -235,7 +235,7 @@ export default function ProjectCarousel() {
         <button
           onClick={nextCard}
           className='absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
-          aria-label='Next page'
+          aria-label='Next page of projects'
         >
           <svg
             className='w-6 h-6'
@@ -243,6 +243,7 @@ export default function ProjectCarousel() {
             stroke='currentColor'
             viewBox='0 0 24 24'
             xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'
           >
             <path
               strokeLinecap='round'
@@ -258,6 +259,8 @@ export default function ProjectCarousel() {
       <div
         className='overflow-hidden cursor-grab active:cursor-grabbing'
         ref={carouselRef}
+        role='region'
+        aria-label='Project carousel'
       >
         <div
           className='flex transition-transform duration-500 ease-in-out'
@@ -294,18 +297,36 @@ export default function ProjectCarousel() {
       </div>
 
       {/* Page Indicators */}
-      <div className='flex justify-center mt-4 space-x-2'>
+      <div
+        className='flex justify-center mt-4 space-x-2'
+        role='tablist'
+        aria-label='Project carousel navigation'
+      >
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index}
             onClick={() => setCurrentCardIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`rounded-full transition-all duration-300 relative ${
               index === currentCardIndex
                 ? 'bg-terminal-green'
                 : 'bg-terminal-dimmed hover:bg-terminal-green/50'
             }`}
-            aria-label={`Go to page ${index + 1}`}
-          />
+            aria-label={`Go to page ${index + 1} of ${totalPages}`}
+            aria-selected={index === currentCardIndex}
+            role='tab'
+          >
+            <div
+              className={`rounded-full transition-all duration-300 ${
+                index === currentCardIndex
+                  ? 'bg-terminal-green'
+                  : 'bg-terminal-dimmed'
+              }`}
+              style={{
+                width: '8px',
+                height: '8px',
+              }}
+            />
+          </button>
         ))}
       </div>
     </div>

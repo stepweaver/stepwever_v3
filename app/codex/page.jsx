@@ -279,7 +279,10 @@ function CodexContent() {
 
           {/* Breadcrumbs */}
           <div className='mb-8 text-2xl'>
-            <nav className='flex items-center font-ibm text-terminal-green'>
+            <nav
+              className='flex items-center font-ibm text-terminal-green'
+              aria-label='Breadcrumb navigation'
+            >
               <span className='text-terminal-green'>user@stepweaver</span>
               <span className='text-terminal-text ml-2'>~</span>
               <span className='text-terminal-dimmed'>/</span>
@@ -290,6 +293,9 @@ function CodexContent() {
                   setActiveHashtags([]);
                 }}
                 className='text-terminal-text hover:text-terminal-green transition-colors cursor-pointer'
+                aria-label='Navigate to all content'
+                // Ensure minimum touch target size
+                style={{ minHeight: '44px', minWidth: '44px' }}
               >
                 codex
               </button>
@@ -319,7 +325,12 @@ function CodexContent() {
                   </span>
                 </>
               )}
-              <span className='text-terminal-green ml-2 animate-blink'>_</span>
+              <span
+                className='text-terminal-green ml-2 animate-blink'
+                aria-hidden='true'
+              >
+                _
+              </span>
             </nav>
           </div>
 
@@ -342,7 +353,11 @@ function CodexContent() {
                   <div className='space-y-8'>
                     {/* Podcast Sub-tabs */}
                     <div className='mb-8'>
-                      <div className='flex flex-wrap gap-2'>
+                      <div
+                        className='flex flex-wrap gap-2'
+                        role='tablist'
+                        aria-label='Podcast categories'
+                      >
                         {podcastSubTabs.map((subTab) => (
                           <button
                             key={subTab.id}
@@ -355,6 +370,11 @@ function CodexContent() {
                                   : 'text-terminal-text hover:text-terminal-cyan hover:bg-terminal-dimmed/10 border border-transparent'
                               }
                             `}
+                            aria-label={`View ${subTab.label} podcasts`}
+                            aria-selected={activeSubTab === subTab.id}
+                            role='tab'
+                            // Ensure minimum touch target size
+                            style={{ minHeight: '44px' }}
                           >
                             <span className='font-medium'>{subTab.label}</span>
                           </button>
@@ -519,7 +539,11 @@ function CodexContent() {
                     <h3 className='text-terminal-text font-bold uppercase text-sm mb-4'>
                       Categories
                     </h3>
-                    <div className='flex flex-wrap gap-2'>
+                    <div
+                      className='flex flex-wrap gap-2'
+                      role='tablist'
+                      aria-label='Content categories'
+                    >
                       {tabs.map((tab) => (
                         <button
                           key={tab.id}
@@ -535,6 +559,11 @@ function CodexContent() {
                                : 'text-terminal-text hover:text-terminal-green hover:bg-terminal-dimmed/10'
                            }
                          `}
+                          aria-label={`View ${tab.label} content`}
+                          aria-selected={activeTab === tab.id}
+                          role='tab'
+                          // Ensure minimum touch target size
+                          style={{ minHeight: '44px' }}
                         >
                           <span className='capitalize font-medium'>
                             {tab.label}
@@ -550,7 +579,11 @@ function CodexContent() {
                       <h3 className='text-terminal-text font-bold uppercase text-sm mb-4'>
                         Tags
                       </h3>
-                      <div className='flex flex-wrap gap-2'>
+                      <div
+                        className='flex flex-wrap gap-2'
+                        role='group'
+                        aria-label='Content tags'
+                      >
                         {filteredHashtags.map((tag) => {
                           const count = allPosts.filter(
                             (post) =>
@@ -568,6 +601,10 @@ function CodexContent() {
                                     : 'bg-terminal-text/10 text-terminal-text hover:text-terminal-green hover:bg-terminal-green/10'
                                 }
                               `}
+                              aria-label={`Filter by tag ${tag} (${count} posts)`}
+                              aria-pressed={activeHashtags.includes(tag)}
+                              // Ensure minimum touch target size
+                              style={{ minHeight: '44px' }}
                             >
                               #{tag} {count}
                             </button>
@@ -586,7 +623,11 @@ function CodexContent() {
                   <h3 className='text-terminal-text font-bold uppercase text-sm mb-4'>
                     Categories
                   </h3>
-                  <div className='space-y-2'>
+                  <div
+                    className='space-y-2'
+                    role='tablist'
+                    aria-label='Content categories'
+                  >
                     {tabs.map((tab) => (
                       <button
                         key={tab.id}
@@ -602,6 +643,11 @@ function CodexContent() {
                              : 'text-terminal-text hover:text-terminal-green hover:bg-terminal-dimmed/10'
                          }
                        `}
+                        aria-label={`View ${tab.label} content`}
+                        aria-selected={activeTab === tab.id}
+                        role='tab'
+                        // Ensure minimum touch target size
+                        style={{ minHeight: '44px' }}
                       >
                         <span className='capitalize font-medium'>
                           {tab.label}

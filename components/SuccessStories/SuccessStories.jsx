@@ -151,6 +151,8 @@ function SuccessStories() {
             className='overflow-hidden'
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
+            role='region'
+            aria-label='Success stories carousel'
           >
             <div
               className='flex transition-transform duration-300 ease-out'
@@ -165,18 +167,46 @@ function SuccessStories() {
           </div>
 
           {/* pagination indicators */}
-          <div className='flex justify-center mt-6 space-x-2'>
-            {STORIES.map((_, index) => (
+          <div
+            className='flex justify-center mt-6 space-x-2'
+            role='tablist'
+            aria-label='Success stories navigation'
+          >
+            {STORIES.map((story, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`rounded-full transition-all duration-300 relative ${
                   index === currentIndex
                     ? 'bg-terminal-green'
                     : 'bg-terminal-dimmed hover:bg-terminal-green/50'
                 }`}
-                aria-label={`Go to story ${index + 1}`}
-              />
+                aria-label={`Go to story ${index + 1} of ${STORIES.length}: ${
+                  story.title
+                }`}
+                aria-selected={index === currentIndex}
+                role='tab'
+                // Ensure minimum touch target size while keeping visual size small
+                style={{
+                  width: '44px',
+                  height: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <div
+                  className={`rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? 'bg-terminal-green'
+                      : 'bg-terminal-dimmed'
+                  }`}
+                  style={{
+                    width: '8px',
+                    height: '8px',
+                  }}
+                />
+              </button>
             ))}
           </div>
         </div>
