@@ -19,16 +19,18 @@ const ocrFont = localFont({
   src: './fonts/OCRA.woff',
   variable: '--font-ocr',
   display: 'swap',
+  preload: true,
 });
 
 const ibm3270 = localFont({
   src: './fonts/IBM_3270.woff',
   variable: '--font-ibm',
   display: 'swap',
+  preload: true,
 });
 
 export const metadata = {
-  metadataBase: new URL('https://stepweaver.dev'),
+  metadataBase: new URL('https://www.stepweaver.dev'), // Fixed to use www subdomain
   title: {
     template: '%s | λstepweaver',
     default: 'λstepweaver - Practical transformation, powered by code.',
@@ -63,7 +65,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://stepweaver.dev/',
+    url: 'https://www.stepweaver.dev/',
     siteName: 'λstepweaver',
     title: 'λstepweaver - Practical transformation, powered by code.',
     description:
@@ -109,7 +111,7 @@ export const metadata = {
     google: 'your-google-verification-code', // Add your Google Search Console verification code
   },
   alternates: {
-    canonical: 'https://stepweaver.dev/',
+    canonical: 'https://www.stepweaver.dev/',
   },
   icons: {
     icon: [
@@ -188,34 +190,49 @@ export default function RootLayout({ children }) {
         <meta property='og:image:type' content='image/png' />
         <meta
           property='og:image:secure_url'
-          content='https://stepweaver.dev/images/lambda_preview.png'
+          content='https://www.stepweaver.dev/images/lambda_preview.png'
         />
 
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin='anonymous'
-        />
-
-        {/* Resource hints for performance */}
+        {/* DNS Prefetching for external resources */}
         <link rel='dns-prefetch' href='https://va.vercel-scripts.com' />
         <link rel='dns-prefetch' href='https://assets.calendly.com' />
         <link rel='dns-prefetch' href='https://calendly.com' />
         <link rel='dns-prefetch' href='https://api.openweathermap.org' />
 
-        {/* Preload critical images */}
+        {/* Preconnect to external domains */}
+        <link rel='preconnect' href='https://va.vercel-scripts.com' />
+        <link rel='preconnect' href='https://assets.calendly.com' />
+        <link rel='preconnect' href='https://calendly.com' />
+        <link rel='preconnect' href='https://api.openweathermap.org' />
+
+        {/* Preload critical images for LCP optimization */}
+        <link
+          rel='preload'
+          href='/images/screencapture-lambda-ortho.png'
+          as='image'
+          type='image/png'
+          fetchPriority='high'
+        />
+        <link
+          rel='preload'
+          href='/images/screencapture-soap-stache.png'
+          as='image'
+          type='image/png'
+          fetchPriority='high'
+        />
         <link
           rel='preload'
           href='/images/lambda_preview.png'
           as='image'
           type='image/png'
+          fetchPriority='high'
         />
         <link
           rel='preload'
           href='/images/lambda_stepweaver.png'
           as='image'
           type='image/png'
+          fetchPriority='high'
         />
 
         {/* Preload critical fonts */}
@@ -233,6 +250,9 @@ export default function RootLayout({ children }) {
           type='font/woff'
           crossOrigin='anonymous'
         />
+
+        {/* Preload critical CSS */}
+        <link rel='preload' href='/globals.css' as='style' />
       </head>
       <body className='text-terminal-text'>
         {/* Skip to main content link for accessibility */}

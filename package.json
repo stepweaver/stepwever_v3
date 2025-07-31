@@ -44,6 +44,7 @@
     "@types/react": "19.1.8",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
+    "image-webpack-loader": "^8.1.0",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "tailwindcss": "^4",

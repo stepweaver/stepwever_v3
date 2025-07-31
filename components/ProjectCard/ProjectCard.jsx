@@ -47,7 +47,7 @@ const ProjectCard = memo(function ProjectCard({
 
       {/* Terminal Content */}
       <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col h-full'>
-        {/* Project Image */}
+        {/* Project Image - Optimized for LCP */}
         {imageUrl && (
           <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48 relative'>
             <Image
@@ -60,6 +60,8 @@ const ProjectCard = memo(function ProjectCard({
               loading={priority ? 'eager' : 'lazy'}
               placeholder='blur'
               blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=='
+              quality={priority ? 85 : 75}
+              fetchPriority={priority ? 'high' : 'auto'}
             />
           </div>
         )}
@@ -75,6 +77,8 @@ const ProjectCard = memo(function ProjectCard({
               loading={priority ? 'eager' : 'lazy'}
               placeholder='blur'
               blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=='
+              quality={priority ? 85 : 75}
+              fetchPriority={priority ? 'high' : 'auto'}
             />
           </div>
         )}

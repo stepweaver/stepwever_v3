@@ -17,7 +17,7 @@ const nextConfig = {
     },
   }),
 
-  // Image optimization
+  // Image optimization with enhanced settings
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -25,6 +25,9 @@ const nextConfig = {
     minimumCacheTTL: 31536000, // 1 year cache for images
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Enhanced image optimization for LCP
+    loader: 'default',
+    unoptimized: false,
   },
 
   // Performance optimizations
@@ -38,6 +41,9 @@ const nextConfig = {
         },
       },
     },
+    // Enable modern optimizations
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react', 'react-icons'],
   },
 
   // Compression and optimization
@@ -57,11 +63,68 @@ const nextConfig = {
             name: 'vendors',
             chunks: 'all',
           },
+          // Separate critical CSS
+          critical: {
+            test: /critical\.css$/,
+            name: 'critical',
+            chunks: 'all',
+            enforce: true,
+          },
         },
       };
+
+      // Enable tree shaking
+      config.optimization.usedExports = true;
+      config.optimization.sideEffects = false;
     }
 
+    // Optimize images
+    config.module.rules.push({
+      test: /\.(png|jpe?g|gif|svg)$/i,
+      use: [
+        {
+          loader: 'image-webpack-loader',
+          options: {
+            mozjpeg: {
+              progressive: true,
+              quality: 65,
+            },
+            optipng: {
+              enabled: false,
+            },
+            pngquant: {
+              quality: [0.65, 0.90],
+              speed: 4,
+            },
+            gifsicle: {
+              interlaced: false,
+            },
+            webp: {
+              quality: 75,
+            },
+          },
+        },
+      ],
+    });
+
     return config;
+  },
+
+  // Redirect optimization - handle www redirect properly
+  async redirects() {
+    return [
+      {
+        source: '/',
+        has: [
+          {
+            type: 'host',
+            value: 'stepweaver.dev',
+          },
+        ],
+        destination: 'https://www.stepweaver.dev/',
+        permanent: true,
+      },
+    ];
   },
 
   async headers() {
@@ -103,6 +166,11 @@ const nextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()'
+          },
+          // Performance headers
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
           }
         ]
       },
@@ -117,6 +185,16 @@ const nextConfig = {
       },
       {
         source: '/fonts/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ]
+      },
+      // Critical CSS caching
+      {
+        source: '/globals.css',
         headers: [
           {
             key: 'Cache-Control',
