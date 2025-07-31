@@ -219,29 +219,31 @@ function Experience() {
           </h2>
 
           {/* Experience Message */}
-          <div className='mb-8 md:mb-12'>
+          <div className='mb-8 md:mb-12 max-w-4xl'>
             <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight text-left font-ibm text-terminal-green'>
               Fueled by Obsession, Driven by Passion
             </h3>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
-              <GlitchLambda className='text-terminal-text' />
-              stepweaver is veteran-owned and run by someone who thrives on hard
-              problems.
-            </p>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-4'>
-              8 years as a business analyst.
-            </p>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
-              I solve business problems with code, hard work, and genuine
-              curiosity.
-            </p>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
-              Building is a puzzle I never get tired of-figuring it out and
-              making it work is what I do best.
-            </p>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
-              It's my brand of grit.
-            </p>
+            <div className='space-y-3'>
+              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                <GlitchLambda className='text-terminal-text' />
+                stepweaver is veteran-owned and run by someone who thrives on
+                hard problems.
+              </p>
+              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                8 years as a business analyst.
+              </p>
+              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                I solve business problems with code, hard work, and genuine
+                curiosity.
+              </p>
+              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                Building is a puzzle I never get tired of-figuring it out and
+                making it work is what I do best.
+              </p>
+              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                It's my brand of grit.
+              </p>
+            </div>
           </div>
         </header>
 
@@ -249,7 +251,7 @@ function Experience() {
         <div className='ml-auto w-full max-w-6xl'>
           {/* Category Navigation - Improved Tab Design */}
           <nav
-            className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center'
+            className='flex flex-wrap gap-2 md:gap-3 mb-8 md:mb-10 justify-center'
             aria-label='Technology categories'
           >
             {TECH_CATEGORIES.map((category, index) => (
@@ -327,7 +329,7 @@ function Experience() {
 
           {/* Category Indicators - Improved Design */}
           <div
-            className='flex justify-center mt-8 gap-3'
+            className='flex justify-start mt-8 gap-3'
             role='tablist'
             aria-label='Technology category navigation'
           >

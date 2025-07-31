@@ -50,6 +50,7 @@ export default function ThemeToggle() {
               alt='Lambda symbol'
               width={32}
               height={32}
+              priority
               className={`w-8 h-8 object-contain transition-all duration-300 ${
                 theme === 'dark'
                   ? 'filter brightness-125 relative z-10'

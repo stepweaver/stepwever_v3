@@ -197,6 +197,42 @@ export default function RootLayout({ children }) {
           href='https://fonts.gstatic.com'
           crossOrigin='anonymous'
         />
+
+        {/* Resource hints for performance */}
+        <link rel='dns-prefetch' href='https://va.vercel-scripts.com' />
+        <link rel='dns-prefetch' href='https://assets.calendly.com' />
+        <link rel='dns-prefetch' href='https://calendly.com' />
+        <link rel='dns-prefetch' href='https://api.openweathermap.org' />
+
+        {/* Preload critical images */}
+        <link
+          rel='preload'
+          href='/images/lambda_preview.png'
+          as='image'
+          type='image/png'
+        />
+        <link
+          rel='preload'
+          href='/images/lambda_stepweaver.png'
+          as='image'
+          type='image/png'
+        />
+
+        {/* Preload critical fonts */}
+        <link
+          rel='preload'
+          href='/fonts/OCRA.woff'
+          as='font'
+          type='font/woff'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preload'
+          href='/fonts/IBM_3270.woff'
+          as='font'
+          type='font/woff'
+          crossOrigin='anonymous'
+        />
       </head>
       <body className='text-terminal-text'>
         {/* Skip to main content link for accessibility */}
