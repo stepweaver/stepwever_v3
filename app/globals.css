@@ -512,3 +512,34 @@ body::after {
   background-color: color-mix(in srgb, var(--color-terminal-purple) 20%, transparent) !important;
   color: var(--color-terminal-purple) !important;
 }
+
+/* Fade in animation for NotFound page */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out both;
+}
+
+/* CRT-style glitch for the 404 */
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  animation: glitch 2.5s infinite;
+}
+.glitch::before {
+  clip-path: inset(0 0 60% 0);
+  left: 2px;
+  text-shadow: -2px 0 var(--color-terminal-green);
+}
+.glitch::after {
+  clip-path: inset(40% 0 0 0);
+  left: -2px;
+  text-shadow: -2px 0 var(--color-terminal-red);
+}

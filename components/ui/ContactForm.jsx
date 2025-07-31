@@ -87,7 +87,11 @@ export default function ContactForm() {
         >
           <div className='p-4'>
             {status.error && (
-              <div className='mb-4 p-2 border border-terminal-red bg-terminal-red/20'>
+              <div
+                className='mb-4 p-2 border border-terminal-red bg-terminal-red/20'
+                role='alert'
+                aria-live='polite'
+              >
                 <p className='text-terminal-red text-sm'>
                   [ERROR] {status.error}
                 </p>
@@ -95,19 +99,31 @@ export default function ContactForm() {
             )}
 
             {status.success && (
-              <div className='mb-4 p-2 border border-terminal-green bg-terminal-green/20'>
+              <div
+                className='mb-4 p-2 border border-terminal-green bg-terminal-green/20'
+                role='status'
+                aria-live='polite'
+              >
                 <p className='text-terminal-green text-sm'>
                   [SUCCESS] {status.success}
                 </p>
               </div>
             )}
 
-            <form className='space-y-3' onSubmit={handleSubmit}>
+            <form
+              className='space-y-3'
+              onSubmit={handleSubmit}
+              aria-label='Contact form'
+            >
               <div>
-                <label className='text-terminal-green text-sm block mb-1'>
+                <label
+                  htmlFor='name'
+                  className='text-terminal-green text-sm block mb-1'
+                >
                   NAME:
                 </label>
                 <input
+                  id='name'
                   type='text'
                   name='name'
                   value={formData.name}
@@ -115,14 +131,21 @@ export default function ContactForm() {
                   className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='Your name'
                   required
+                  aria-required='true'
+                  aria-describedby='name-error'
                 />
+                <div id='name-error' className='sr-only' role='alert'></div>
               </div>
 
               <div>
-                <label className='text-terminal-green text-sm block mb-1'>
+                <label
+                  htmlFor='email'
+                  className='text-terminal-green text-sm block mb-1'
+                >
                   EMAIL:
                 </label>
                 <input
+                  id='email'
                   type='email'
                   name='email'
                   value={formData.email}
@@ -130,25 +153,38 @@ export default function ContactForm() {
                   className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='your.email@company.com'
                   required
+                  aria-required='true'
+                  aria-describedby='email-error'
                 />
+                <div id='email-error' className='sr-only' role='alert'></div>
               </div>
 
               <div>
-                <label className='text-terminal-green text-sm block mb-1'>
+                <label
+                  htmlFor='message'
+                  className='text-terminal-green text-sm block mb-1'
+                >
                   PROJECT SUMMARY:
                 </label>
                 <textarea
+                  id='message'
                   name='message'
                   value={formData.message}
                   onChange={handleChange}
                   className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm h-48 focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='Tell us about your project, timeline, and goals...'
                   required
+                  aria-required='true'
+                  aria-describedby='message-help message-error'
                 ></textarea>
-                <p className='text-terminal-muted text-xs mt-1'>
+                <p
+                  id='message-help'
+                  className='text-terminal-muted text-xs mt-1'
+                >
                   Include details like deadlines, budget, and any existing work
                   or preparation.
                 </p>
+                <div id='message-error' className='sr-only' role='alert'></div>
               </div>
 
               <div className='pt-2 flex space-x-3'>

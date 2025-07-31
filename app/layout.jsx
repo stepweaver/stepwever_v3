@@ -8,6 +8,12 @@ import { Analytics } from '@vercel/analytics/next';
 import '@/utils/errorMonitor'; // Initialize error monitoring
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
 
+// Environment validation in development
+if (process.env.NODE_ENV === 'development') {
+  const { logEnvironmentStatus } = await import('@/utils/envValidation');
+  logEnvironmentStatus(true);
+}
+
 const ocrFont = localFont({
   src: './fonts/OCRA.woff',
   variable: '--font-ocr',
@@ -192,10 +198,20 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className='text-terminal-text'>
+        {/* Skip to main content link for accessibility */}
+        <a
+          href='#main-content'
+          className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-terminal-green text-terminal-dark px-4 py-2 rounded z-50'
+        >
+          Skip to main content
+        </a>
+
         <ErrorBoundary>
           <ThemeProvider>
             <Navbar />
-            {children}
+            <main id='main-content' tabIndex='-1'>
+              {children}
+            </main>
             <Analytics />
             <Footer />
           </ThemeProvider>

@@ -5,11 +5,28 @@ import {
   sendConfirmationEmail,
   isEmailConfigured
 } from '@/utils/email';
+import { sanitizeFormData } from '@/utils/sanitize';
+import { createRateLimit } from '@/utils/rateLimit';
 
 export async function POST(request) {
   try {
+    // Apply rate limiting
+    const rateLimit = createRateLimit({
+      maxRequests: 3, // Allow 3 requests per 15 minutes
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      message: 'Too many contact form submissions. Please try again later.'
+    });
+
+    const rateLimitResult = await rateLimit(request);
+    if (rateLimitResult) {
+      return rateLimitResult;
+    }
+
     const formData = await request.json();
-    const { name, email, message } = formData;
+
+    // Sanitize all form data
+    const sanitizedData = sanitizeFormData(formData);
+    const { name, email, message } = sanitizedData;
 
     // Validate required fields
     if (!name || !email || !message) {
@@ -38,11 +55,11 @@ export async function POST(request) {
 
     try {
       // Send contact email
-      await sendContactEmail(formData);
+      await sendContactEmail(sanitizedData);
 
       // Send confirmation email to the user (optional)
       if (process.env.SEND_CONFIRMATION_EMAIL === 'true') {
-        await sendConfirmationEmail(formData);
+        await sendConfirmationEmail(sanitizedData);
       }
     } catch (emailError) {
       console.error('Error sending email:', emailError);
