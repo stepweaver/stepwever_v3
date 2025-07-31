@@ -180,6 +180,7 @@ function CodexContent() {
       articles: 'text-terminal-yellow',
       tools: 'text-terminal-cyan',
       community: 'text-terminal-blue',
+      podcasts: 'text-terminal-purple',
     };
     return colors[type] || 'text-terminal-text';
   };
@@ -190,8 +191,9 @@ function CodexContent() {
       blog: '0, 255, 65', // terminal-green
       projects: '255, 85, 255', // terminal-magenta
       articles: '255, 255, 0', // terminal-yellow
-      tools: '0, 255, 255', // terminal-cyan
-      community: '0, 150, 255', // terminal-blue
+      tools: '86, 182, 194', // terminal-cyan
+      community: '56, 190, 255', // terminal-blue
+      podcasts: '168, 85, 247', // terminal-purple
     };
 
     const color = glowColors[type] || '0, 255, 65';
@@ -205,12 +207,13 @@ function CodexContent() {
   // Get type color value helper (from stepweaver)
   const getTypeColorValue = (type) => {
     const colorMap = {
-      blog: 'rgb(0, 255, 65)', // terminal-green
-      projects: 'rgb(255, 85, 255)', // terminal-magenta
-      articles: 'rgb(255, 255, 0)', // terminal-yellow
-      tools: 'rgb(0, 255, 255)', // terminal-cyan
-      community: 'rgb(0, 150, 255)', // terminal-blue
-      all: 'rgb(0, 255, 65)', // Default to green
+      blog: 'var(--color-terminal-green)', // terminal-green
+      projects: 'var(--color-terminal-magenta)', // terminal-magenta
+      articles: 'var(--color-terminal-yellow)', // terminal-yellow
+      tools: 'var(--color-terminal-cyan)', // terminal-cyan
+      community: 'var(--color-terminal-blue)', // terminal-blue
+      podcasts: 'var(--color-terminal-purple)', // terminal-purple
+      all: 'var(--color-terminal-green)', // Default to green
     };
 
     return colorMap[type] || colorMap.all;
@@ -230,14 +233,14 @@ function CodexContent() {
     {
       id: 'syntaxfm',
       label: 'Syntax.fm',
-      color: 'text-terminal-cyan',
-      glowColor: '0, 255, 255',
+      color: 'text-terminal-purple',
+      glowColor: '168, 85, 247',
     },
     {
       id: 'coming-soon',
       label: 'Coming Soon',
-      color: 'text-terminal-yellow',
-      glowColor: '255, 255, 0',
+      color: 'text-terminal-purple',
+      glowColor: '168, 85, 247',
     },
   ];
 
@@ -245,8 +248,8 @@ function CodexContent() {
     {
       id: 'itjungle',
       label: 'IT Jungle',
-      color: 'text-terminal-magenta',
-      glowColor: '255, 85, 255',
+      color: 'text-terminal-yellow',
+      glowColor: '255, 255, 0',
     },
     {
       id: 'coming-soon',
@@ -709,21 +712,31 @@ function PostItem({
         {/* Hashtags */}
         {post.hashtags && post.hashtags.length > 0 && (
           <div className='flex flex-wrap gap-2 mt-3'>
-            {post.hashtags.map((tag, i) => (
-              <span
-                key={tag}
-                className='px-3 py-1 text-sm bg-terminal-text/10 text-white border border-terminal-text/20 rounded font-medium transition-colors duration-200 cursor-pointer hover:bg-terminal-text/20'
-                style={{
-                  color:
-                    hoveredTag === tag ? getTypeColorValue(post.type) : 'white',
-                }}
-                onMouseEnter={() => setHoveredTag(tag)}
-                onMouseLeave={() => setHoveredTag(null)}
-                onClick={(e) => handleHashtagClick(e, tag)}
-              >
-                #{tag}
-              </span>
-            ))}
+            {post.hashtags.map((tag, i) => {
+              const typeColor = getTypeColorValue(post.type);
+              return (
+                <span
+                  key={tag}
+                  className='px-3 py-1 text-sm rounded font-medium transition-colors duration-200 cursor-pointer'
+                  style={{
+                    backgroundColor:
+                      hoveredTag === tag
+                        ? `color-mix(in srgb, ${typeColor} 20%, transparent)`
+                        : `color-mix(in srgb, ${typeColor} 10%, transparent)`,
+                    color:
+                      hoveredTag === tag
+                        ? typeColor
+                        : 'var(--color-terminal-text)', // Use CSS variable for theme adaptation
+                    border: `1px solid color-mix(in srgb, ${typeColor} 30%, transparent)`,
+                  }}
+                  onMouseEnter={() => setHoveredTag(tag)}
+                  onMouseLeave={() => setHoveredTag(null)}
+                  onClick={(e) => handleHashtagClick(e, tag)}
+                >
+                  #{tag}
+                </span>
+              );
+            })}
           </div>
         )}
       </a>
@@ -752,7 +765,7 @@ function PodcastEpisodeItem({
       >
         {/* Title */}
         <h2
-          className='text-2xl font-bold mb-2 transition-all duration-200 text-terminal-cyan'
+          className='text-2xl font-bold mb-2 transition-all duration-200 text-terminal-purple'
           style={
             isHovered
               ? {
@@ -799,7 +812,7 @@ function PodcastEpisodeItem({
         )}
 
         {/* External link indicator */}
-        <div className='mt-3 text-terminal-cyan text-sm font-medium'>
+        <div className='mt-3 text-terminal-purple text-sm font-medium'>
           Listen on Syntax.fm →
         </div>
       </a>
@@ -823,7 +836,7 @@ function ArticleItem({ article, formatDate, getGlowStyle, articleColor }) {
       >
         {/* Title */}
         <h2
-          className='text-2xl font-bold mb-2 transition-all duration-200 text-terminal-magenta'
+          className='text-2xl font-bold mb-2 transition-all duration-200 text-terminal-yellow'
           style={
             isHovered
               ? {
@@ -863,7 +876,7 @@ function ArticleItem({ article, formatDate, getGlowStyle, articleColor }) {
         )}
 
         {/* External link indicator */}
-        <div className='mt-3 text-terminal-magenta text-sm font-medium'>
+        <div className='mt-3 text-terminal-yellow text-sm font-medium'>
           Read on IT Jungle →
         </div>
       </a>

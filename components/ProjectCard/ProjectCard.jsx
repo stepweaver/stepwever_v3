@@ -24,7 +24,7 @@ const ProjectCard = memo(function ProjectCard({
 
   return (
     <div
-      className={`bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group md:h-full ${
+      className={`bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group h-full ${
         link
           ? 'cursor-pointer hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20'
           : ''
@@ -44,7 +44,7 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {/* Terminal Content */}
-      <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col md:h-full min-h-[280px]'>
+      <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col h-full'>
         {/* Project Image */}
         {imageUrl && (
           <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48'>
@@ -71,10 +71,10 @@ const ProjectCard = memo(function ProjectCard({
 
         {/* Project Description */}
         <p
-          className='text-terminal-text font-ocr text-xs leading-relaxed mb-2 sm:mb-3 md:flex-grow overflow-hidden'
+          className='text-terminal-text font-ocr text-xs leading-relaxed mb-2 sm:mb-3 flex-grow overflow-hidden'
           style={{
             display: '-webkit-box',
-            WebkitLineClamp: 2,
+            WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical',
           }}
         >
@@ -131,21 +131,8 @@ const ProjectCard = memo(function ProjectCard({
           </div>
         )}
 
-        {/* Terminal Prompt - Always at bottom */}
-        <div className='text-terminal-dimmed font-ocr text-xs md:mt-auto pt-1 border-t border-terminal-border/30'>
-          <span className='text-terminal-green'>guest@stepweaver.dev</span>
-          <span className='text-terminal-text'> ~ </span>
-          <GlitchLambda className='text-terminal-cyan' />
-          <span className='text-terminal-text'>
-            {' '}
-            {link
-              ? link.startsWith('http')
-                ? 'open-external'
-                : 'open'
-              : 'view'}{' '}
-            {title.toLowerCase().replace(/\s+/g, '-')}
-          </span>
-        </div>
+        {/* Bottom spacing to prevent cutoff */}
+        <div className='mt-auto pt-2'></div>
       </div>
     </div>
   );

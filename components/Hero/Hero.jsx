@@ -250,7 +250,6 @@ function Hero() {
         {/* Hero Description */}
         <div className='mb-6 sm:mb-10 max-w-6xl ml-auto'>
           <p className='text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-terminal-text leading-tight font-ocr'>
-            <GlitchLambda className='text-terminal-text' />
             Practical transformation, powered by code. I wire up automations,
             dashboards, and clean sites that transform your business through
             efficient, scalable solutions. From concept to deployment in record

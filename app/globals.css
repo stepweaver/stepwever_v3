@@ -147,13 +147,31 @@
                          0 0 6px rgba(124, 58, 237, 0.3);
 }
 
+/* Font weight improvements for better readability */
+.font-ocr {
+  font-weight: 700;
+}
+
+.font-ibm {
+  font-weight: 700;
+}
+
+/* Additional weight for small OCR text for better readability */
+.font-ocr.text-xs {
+  font-weight: 800;
+}
+
+.font-ocr.text-sm {
+  font-weight: 750;
+}
+
 /* Light theme font weight improvements */
 [data-theme="light"] .font-ocr {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 [data-theme="light"] .font-ibm {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* Keyframes */
@@ -452,4 +470,45 @@ body::after {
 .theme-toggle-skeleton {
   background: var(--color-terminal-border);
   border: 1px solid var(--color-terminal-border);
+}
+
+/* Hashtag hover effects */
+.hashtag-hover {
+  transition: all 0.2s ease;
+}
+
+.hashtag-hover:hover {
+  background-color: color-mix(in srgb, var(--color-terminal-green) 20%, transparent) !important;
+  color: var(--color-terminal-green) !important;
+}
+
+/* Type-specific hashtag hover effects */
+.hashtag-hover[data-type="blog"]:hover {
+  background-color: color-mix(in srgb, var(--color-terminal-green) 20%, transparent) !important;
+  color: var(--color-terminal-green) !important;
+}
+
+.hashtag-hover[data-type="projects"]:hover {
+  background-color: color-mix(in srgb, var(--color-terminal-magenta) 20%, transparent) !important;
+  color: var(--color-terminal-magenta) !important;
+}
+
+.hashtag-hover[data-type="articles"]:hover {
+  background-color: color-mix(in srgb, var(--color-terminal-yellow) 20%, transparent) !important;
+  color: var(--color-terminal-yellow) !important;
+}
+
+.hashtag-hover[data-type="tools"]:hover {
+  background-color: color-mix(in srgb, var(--color-terminal-cyan) 20%, transparent) !important;
+  color: var(--color-terminal-cyan) !important;
+}
+
+.hashtag-hover[data-type="community"]:hover {
+  background-color: color-mix(in srgb, var(--color-terminal-blue) 20%, transparent) !important;
+  color: var(--color-terminal-blue) !important;
+}
+
+.hashtag-hover[data-type="podcasts"]:hover {
+  background-color: color-mix(in srgb, var(--color-terminal-purple) 20%, transparent) !important;
+  color: var(--color-terminal-purple) !important;
 }

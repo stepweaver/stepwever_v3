@@ -66,6 +66,7 @@ const getTypeColor = (type) => {
     articles: 'text-terminal-yellow',
     tools: 'text-terminal-cyan',
     community: 'text-terminal-blue',
+    podcasts: 'text-terminal-purple',
   };
   return colors[type] || 'text-terminal-text';
 };

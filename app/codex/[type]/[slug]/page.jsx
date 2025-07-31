@@ -12,18 +12,31 @@ const getTypeColor = (type) => {
     case 'blog':
       return 'text-terminal-green';
     case 'projects':
-      return 'text-terminal-cyan';
-    case 'articles':
       return 'text-terminal-magenta';
-    case 'tools':
+    case 'articles':
       return 'text-terminal-yellow';
+    case 'tools':
+      return 'text-terminal-cyan';
     case 'community':
-      return 'text-terminal-purple';
-    case 'podcasts':
       return 'text-terminal-blue';
+    case 'podcasts':
+      return 'text-terminal-purple';
     default:
       return 'text-terminal-text';
   }
+};
+
+// Helper function to get type color value for styling
+const getTypeColorValue = (type) => {
+  const colorMap = {
+    blog: 'var(--color-terminal-green)', // terminal-green
+    projects: 'var(--color-terminal-magenta)', // terminal-magenta
+    articles: 'var(--color-terminal-yellow)', // terminal-yellow
+    tools: 'var(--color-terminal-cyan)', // terminal-cyan
+    community: 'var(--color-terminal-blue)', // terminal-blue
+    podcasts: 'var(--color-terminal-purple)', // terminal-purple
+  };
+  return colorMap[type] || 'var(--color-terminal-text)'; // default to terminal-text
 };
 
 // Helper function to format date
@@ -119,10 +132,12 @@ export default async function CodexDetailPage({ params }) {
       <BackgroundCanvas />
       <div className='relative z-10 p-4'>
         <div className='max-w-4xl mx-auto mt-16'>
-          {/* Back to Blog */}
+          {/* Back to Codex */}
           <a
             href='/codex'
-            className='inline-block mb-8 text-terminal-green hover:text-terminal-white transition-colors'
+            className={`inline-block mb-8 transition-colors ${getTypeColor(
+              type
+            )} hover:text-terminal-white`}
           >
             ← Back to Codex
           </a>
@@ -153,15 +168,24 @@ export default async function CodexDetailPage({ params }) {
               {/* Hashtags */}
               {frontmatter.hashtags && frontmatter.hashtags.length > 0 && (
                 <div className='flex flex-wrap gap-2'>
-                  {frontmatter.hashtags.map((tag) => (
-                    <a
-                      key={tag}
-                      href={`/codex?hashtag=${encodeURIComponent(tag)}`}
-                      className='px-3 py-1 text-sm bg-terminal-text/10 text-white border border-terminal-text/20 rounded font-medium hover:bg-terminal-text/20 transition-colors duration-200 cursor-pointer'
-                    >
-                      #{tag}
-                    </a>
-                  ))}
+                  {frontmatter.hashtags.map((tag) => {
+                    const typeColor = getTypeColorValue(type);
+                    return (
+                      <a
+                        key={tag}
+                        href={`/codex?hashtag=${encodeURIComponent(tag)}`}
+                        className='px-3 py-1 text-sm rounded font-medium transition-colors duration-200 cursor-pointer hashtag-hover'
+                        data-type={type}
+                        style={{
+                          backgroundColor: `color-mix(in srgb, ${typeColor} 10%, transparent)`,
+                          color: 'var(--color-terminal-text)', // Use CSS variable for theme adaptation
+                          border: `1px solid color-mix(in srgb, ${typeColor} 30%, transparent)`,
+                        }}
+                      >
+                        #{tag}
+                      </a>
+                    );
+                  })}
                 </div>
               )}
             </header>

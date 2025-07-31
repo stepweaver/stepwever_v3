@@ -61,7 +61,7 @@ function About() {
             <div className='prose prose-invert font-ocr max-w-none space-y-4 text-terminal-text'>
               <p className='text-lg'>
                 I'm Stephen, founder of{' '}
-                <GlitchLambda className='text-terminal-text' />
+                <span className='text-terminal-green font-bold'>λ</span>
                 stepweaver-a one-man shop for businesses that need things built,
                 automated, or fixed fast.
               </p>
