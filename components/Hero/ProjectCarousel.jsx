@@ -42,7 +42,6 @@ const PROJECTS = [
       'Consolidate sales and ops data in a live dashboard',
       'Automate end-of-day exports and reconciliations',
     ],
-    link: '/services/data-pipeline',
     tags: ['Data & Analytics', 'Automation', 'Python'],
   },
   {
@@ -54,7 +53,6 @@ const PROJECTS = [
       'Profitability snapshot at a glance',
       'Alerting for trends, risks, and opportunities',
     ],
-    link: '/services/analytics',
     tags: ['Analytics', 'Dashboard', 'Data Visualization'],
   },
   {
@@ -66,7 +64,6 @@ const PROJECTS = [
       'Design & launch a high-performance marketing site',
       'Integrate forms, analytics, and automated follow-ups',
     ],
-    link: '/services/web-design',
     tags: ['Web Development', 'UX/UI', 'SEO'],
   },
   {
@@ -78,7 +75,6 @@ const PROJECTS = [
       'Create a full logo suite and brand guide',
       'Define tone of voice, color palette, and typography',
     ],
-    link: '/services/brand-strategy',
     tags: ['Brand Identity', 'Design Direction', 'Messaging'],
   },
   {
@@ -90,7 +86,6 @@ const PROJECTS = [
       'Automated email sequences for new leads',
       'Sync form submissions to CRM and mailing lists',
     ],
-    link: '/services/marketing-automation',
     tags: ['Email Automation', 'CRM Integration', 'Lead Generation'],
   },
 ];
