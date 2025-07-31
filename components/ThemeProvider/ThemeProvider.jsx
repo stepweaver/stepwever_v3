@@ -18,9 +18,16 @@ export function ThemeProvider({ children }) {
     return 'dark'; // Default fallback
   };
 
-  // Get user's preferred theme from localStorage or system preference
+  // Get user's preferred theme from DOM (set by script), localStorage, or system preference
   const getUserPreferredTheme = () => {
     if (typeof window !== 'undefined') {
+      // First check if theme is already set on the document element (by our script)
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'light' || currentTheme === 'dark') {
+        return currentTheme;
+      }
+
+      // Fallback to localStorage or system preference
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light' || savedTheme === 'dark') {
         return savedTheme;
@@ -50,17 +57,33 @@ export function ThemeProvider({ children }) {
       }
     };
 
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
+    // Use modern event listener API for better performance
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleSystemThemeChange);
+    } else {
+      // Fallback for older browsers
+      mediaQuery.addListener(handleSystemThemeChange);
+    }
 
     return () => {
-      mediaQuery.removeEventListener('change', handleSystemThemeChange);
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleSystemThemeChange);
+      } else {
+        // Fallback for older browsers
+        mediaQuery.removeListener(handleSystemThemeChange);
+      }
     };
   }, []); // Empty dependency array to run only once on mount
 
   // Update document class and localStorage when theme changes
   useEffect(() => {
     if (mounted) {
-      document.documentElement.setAttribute('data-theme', theme);
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      // Only update if the theme is different to prevent unnecessary DOM updates
+      if (currentTheme !== theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+      // Always update localStorage to persist the preference
       localStorage.setItem('theme', theme);
     }
   }, [theme, mounted]);

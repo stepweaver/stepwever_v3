@@ -121,10 +121,12 @@ export default function RootLayout({ children }) {
       lang='en'
       className={`${ocrFont.variable} ${ibm3270.variable} antialiased`}
       data-theme='dark'
+      suppressHydrationWarning // Suppress hydration warning for data-theme attribute which is set by client script
     >
       <head>
         <meta name='theme-color' content='#0d1211' />
-        <meta name='color-scheme' content='dark' />
+        <meta name='color-scheme' content='dark light' />
+        <meta name='supported-color-schemes' content='dark light' />
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1, maximum-scale=5'
@@ -136,22 +138,31 @@ export default function RootLayout({ children }) {
             __html: `
               (function() {
                 try {
-                  // Only set theme if not already set by server
-                  if (!document.documentElement.getAttribute('data-theme')) {
-                    const savedTheme = localStorage.getItem('theme');
-                    const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-                    const theme = savedTheme || systemTheme;
-                    document.documentElement.setAttribute('data-theme', theme);
+                  // Check for saved theme preference or default to system preference
+                  const savedTheme = localStorage.getItem('theme');
+                  const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                  const theme = savedTheme || systemTheme;
+                  
+                  // Set the theme immediately to prevent flashing
+                  document.documentElement.setAttribute('data-theme', theme);
+                  
+                  // Update meta tags for better mobile experience
+                  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+                  if (metaThemeColor) {
+                    metaThemeColor.setAttribute('content', theme === 'light' ? '#e8f0e8' : '#0d1211');
                   }
+                  
+                  // Add a class to prevent layout shift during theme transition
+                  document.documentElement.classList.add('theme-loaded');
                 } catch (e) {
                   // Fallback to dark theme if there's an error
-                  if (!document.documentElement.getAttribute('data-theme')) {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                  }
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  document.documentElement.classList.add('theme-loaded');
                 }
               })();
             `,
           }}
+          strategy='beforeInteractive'
         />
 
         {/* Mobile-specific meta tags */}
