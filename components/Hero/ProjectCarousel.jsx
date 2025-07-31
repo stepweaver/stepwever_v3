@@ -221,12 +221,6 @@ export default function ProjectCarousel() {
     }
   };
 
-  // Determine priority loading for LCP optimization
-  const shouldPrioritize = (pageIndex, cardIndex) => {
-    // Prioritize first 3 cards on first page for LCP
-    return pageIndex === 0 && cardIndex < 3;
-  };
-
   return (
     <div className='w-full relative mt-8 sm:mt-16'>
       <div className='text-center mb-4'>
@@ -294,7 +288,7 @@ export default function ProjectCarousel() {
                     tags={project.tags}
                     keywords={project.keywords}
                     actions={project.actions}
-                    priority={shouldPrioritize(pageIndex, index)} // Optimized priority for LCP
+                    priority={pageIndex === 0 && index < 2} // Priority for first 2 cards on first page
                   />
                 </div>
               ))}
