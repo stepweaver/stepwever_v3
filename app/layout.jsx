@@ -16,14 +16,14 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const ocrFont = localFont({
-  src: './fonts/OCRA.woff',
+  src: '../public/fonts/OCRA.woff',
   variable: '--font-ocr',
   display: 'swap',
   preload: true,
 });
 
 const ibm3270 = localFont({
-  src: './fonts/IBM_3270.woff',
+  src: '../public/fonts/IBM_3270.woff',
   variable: '--font-ibm',
   display: 'swap',
   preload: true,
@@ -212,6 +212,7 @@ export default function RootLayout({ children }) {
           as='image'
           type='image/png'
           fetchPriority='high'
+          crossOrigin='anonymous'
         />
         <link
           rel='preload'
@@ -219,6 +220,7 @@ export default function RootLayout({ children }) {
           as='image'
           type='image/png'
           fetchPriority='high'
+          crossOrigin='anonymous'
         />
         <link
           rel='preload'
@@ -226,6 +228,7 @@ export default function RootLayout({ children }) {
           as='image'
           type='image/png'
           fetchPriority='high'
+          crossOrigin='anonymous'
         />
         <link
           rel='preload'
@@ -233,6 +236,7 @@ export default function RootLayout({ children }) {
           as='image'
           type='image/png'
           fetchPriority='high'
+          crossOrigin='anonymous'
         />
 
         {/* Preload critical fonts */}
@@ -250,9 +254,6 @@ export default function RootLayout({ children }) {
           type='font/woff'
           crossOrigin='anonymous'
         />
-
-        {/* Preload critical CSS */}
-        <link rel='preload' href='/globals.css' as='style' />
       </head>
       <body className='text-terminal-text'>
         {/* Skip to main content link for accessibility */}
