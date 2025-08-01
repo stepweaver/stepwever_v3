@@ -268,6 +268,46 @@ export default function ProjectCarousel() {
     };
   }, [nextCard, prevCard]);
 
+  // Add event listeners with non-passive options
+  useEffect(() => {
+    const carouselElement = carouselRef.current;
+    if (!carouselElement) return;
+
+    // Touch event listeners with non-passive options
+    carouselElement.addEventListener('touchstart', onTouchStart, {
+      passive: true,
+    });
+    carouselElement.addEventListener('touchmove', onTouchMove, {
+      passive: false,
+    });
+    carouselElement.addEventListener('touchend', onTouchEnd, { passive: true });
+
+    // Mouse event listeners
+    carouselElement.addEventListener('mousedown', onMouseDown, {
+      passive: true,
+    });
+    carouselElement.addEventListener('mousemove', onMouseMove, {
+      passive: true,
+    });
+    carouselElement.addEventListener('mouseup', onMouseUp, { passive: true });
+
+    return () => {
+      carouselElement.removeEventListener('touchstart', onTouchStart);
+      carouselElement.removeEventListener('touchmove', onTouchMove);
+      carouselElement.removeEventListener('touchend', onTouchEnd);
+      carouselElement.removeEventListener('mousedown', onMouseDown);
+      carouselElement.removeEventListener('mousemove', onMouseMove);
+      carouselElement.removeEventListener('mouseup', onMouseUp);
+    };
+  }, [
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
+  ]);
+
   // Memoized card rendering function
   const getCardsForPage = useCallback(
     (pageIndex) => {
@@ -351,12 +391,6 @@ export default function ProjectCarousel() {
         <div
           className='flex [transition:transform_300ms_cubic-bezier(0.25,0.46,0.45,0.94)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
           style={transformStyle}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
         >
           {/* Generate pages dynamically based on screen size */}
           {Array.from({ length: totalPages }, (_, pageIndex) => (

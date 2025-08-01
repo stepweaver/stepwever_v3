@@ -1,6 +1,13 @@
 'use client';
 
-import React, { memo, useState, useRef, useCallback, useMemo } from 'react';
+import React, {
+  memo,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useEffect,
+} from 'react';
 
 /* ---------- 1. data ---------- */
 
@@ -111,6 +118,7 @@ function SuccessStories() {
     isDragging: false,
   });
 
+  const carouselRef = useRef(null);
   const minSwipeDistance = 50;
 
   const nextStory = useCallback(() => {
@@ -229,6 +237,50 @@ function SuccessStories() {
     };
   }, [nextStory, prevStory]);
 
+  // Add event listeners with non-passive options
+  useEffect(() => {
+    const carouselElement = carouselRef.current;
+    if (!carouselElement) return;
+
+    // Touch event listeners with non-passive options
+    carouselElement.addEventListener('touchstart', handleTouchStart, {
+      passive: true,
+    });
+    carouselElement.addEventListener('touchmove', handleTouchMove, {
+      passive: false,
+    });
+    carouselElement.addEventListener('touchend', handleTouchEnd, {
+      passive: true,
+    });
+
+    // Mouse event listeners
+    carouselElement.addEventListener('mousedown', handleMouseDown, {
+      passive: true,
+    });
+    carouselElement.addEventListener('mousemove', handleMouseMove, {
+      passive: true,
+    });
+    carouselElement.addEventListener('mouseup', handleMouseUp, {
+      passive: true,
+    });
+
+    return () => {
+      carouselElement.removeEventListener('touchstart', handleTouchStart);
+      carouselElement.removeEventListener('touchmove', handleTouchMove);
+      carouselElement.removeEventListener('touchend', handleTouchEnd);
+      carouselElement.removeEventListener('mousedown', handleMouseDown);
+      carouselElement.removeEventListener('mousemove', handleMouseMove);
+      carouselElement.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+  ]);
+
   // Memoized transform style with hardware acceleration
   const transformStyle = useMemo(
     () => ({
@@ -258,13 +310,8 @@ function SuccessStories() {
             </p>
           </div>
           <div
+            ref={carouselRef}
             className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch]'
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
             role='region'
             aria-label='Success stories carousel'
           >
