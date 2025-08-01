@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useRef, useCallback, useMemo } from 'react';
 
 /* ---------- 1. data ---------- */
 
@@ -8,10 +8,10 @@ const STORIES = [
   {
     title: 'Notre Dame Reporting Overhaul',
     description:
-      'As business analyst, I learned SQL and built custom Tableau dashboards to replace the terrible off‑the‑shelf reporting software, delivering 10× faster ad‑hoc reporting and achieving 100 % adoption across campus ID operations.',
+      'As business analyst, I learned SQL and built custom Tableau dashboards to replace the terrible off‑the‑shelf reporting software, delivering 10× faster ad‑hoc reporting and achieving 100 % adoption across campus ID operations.',
     metrics: [
       '10× faster ad‑hoc reporting',
-      '100 % adoption across campus ID operations',
+      '100 % adoption across campus ID operations',
     ],
     category: 'Data & Analytics',
   },
@@ -100,71 +100,142 @@ const StoryCard = ({ story }) => (
 
 function SuccessStories() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const nextStory = () => {
+  // Touch/swipe state with better performance
+  const touchState = useRef({
+    startX: null,
+    startY: null,
+    currentX: null,
+    currentY: null,
+    isDragging: false,
+  });
+
+  const minSwipeDistance = 50;
+
+  const nextStory = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % STORIES.length);
-  };
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [isTransitioning]);
 
-  const prevStory = () => {
+  const prevStory = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentIndex(
       (prevIndex) => (prevIndex - 1 + STORIES.length) % STORIES.length
     );
-  };
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [isTransitioning]);
 
-  const handleTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
+  // Optimized touch event handlers
+  const handleTouchStart = useCallback((e) => {
+    const touch = e.targetTouches[0];
+    touchState.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      currentX: touch.clientX,
+      currentY: touch.clientY,
+      isDragging: false,
+    };
+  }, []);
 
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
+  const handleTouchMove = useCallback((e) => {
+    if (!touchState.current.startX) return;
 
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    const touch = e.targetTouches[0];
+    touchState.current.currentX = touch.clientX;
+    touchState.current.currentY = touch.clientY;
 
-    const distance = touchStart - touchEnd;
-    const minSwipeDistance = 50;
+    // Prevent default only if we're actually dragging
+    const deltaX = Math.abs(touch.clientX - touchState.current.startX);
+    const deltaY = Math.abs(touch.clientY - touchState.current.startY);
 
-    if (distance > minSwipeDistance) {
+    if (deltaX > 10 && deltaX > deltaY) {
+      touchState.current.isDragging = true;
+      e.preventDefault();
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchState.current.startX || !touchState.current.currentX) return;
+
+    const distance = touchState.current.startX - touchState.current.currentX;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
       nextStory();
-    } else if (distance < -minSwipeDistance) {
+    } else if (isRightSwipe) {
       prevStory();
     }
 
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
+    // Reset touch state
+    touchState.current = {
+      startX: null,
+      startY: null,
+      currentX: null,
+      currentY: null,
+      isDragging: false,
+    };
+  }, [nextStory, prevStory]);
 
-  // Mouse drag handlers for desktop
-  const handleMouseDown = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.clientX);
-  };
+  // Optimized mouse drag handlers for desktop
+  const handleMouseDown = useCallback((e) => {
+    touchState.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      currentX: e.clientX,
+      currentY: e.clientY,
+      isDragging: false,
+    };
+  }, []);
 
-  const handleMouseMove = (e) => {
-    if (touchStart !== null) {
-      setTouchEnd(e.clientX);
+  const handleMouseMove = useCallback((e) => {
+    if (touchState.current.startX === null) return;
+
+    touchState.current.currentX = e.clientX;
+    touchState.current.currentY = e.clientY;
+
+    const deltaX = Math.abs(e.clientX - touchState.current.startX);
+    const deltaY = Math.abs(e.clientY - touchState.current.startY);
+
+    if (deltaX > 10 && deltaX > deltaY) {
+      touchState.current.isDragging = true;
     }
-  };
+  }, []);
 
-  const handleMouseUp = () => {
-    if (!touchStart || !touchEnd) return;
+  const handleMouseUp = useCallback(() => {
+    if (!touchState.current.startX || !touchState.current.currentX) return;
 
-    const distance = touchStart - touchEnd;
-    const minSwipeDistance = 50;
+    const distance = touchState.current.startX - touchState.current.currentX;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
 
-    if (distance > minSwipeDistance) {
+    if (isLeftSwipe) {
       nextStory();
-    } else if (distance < -minSwipeDistance) {
+    } else if (isRightSwipe) {
       prevStory();
     }
 
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
+    // Reset touch state
+    touchState.current = {
+      startX: null,
+      startY: null,
+      currentX: null,
+      currentY: null,
+      isDragging: false,
+    };
+  }, [nextStory, prevStory]);
+
+  // Memoized transform style with hardware acceleration
+  const transformStyle = useMemo(
+    () => ({
+      transform: `translateX(-${currentIndex * 100}%)`,
+    }),
+    [currentIndex]
+  );
 
   return (
     <section
@@ -187,7 +258,7 @@ function SuccessStories() {
             </p>
           </div>
           <div
-            className='overflow-hidden cursor-grab active:cursor-grabbing'
+            className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch]'
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -198,11 +269,14 @@ function SuccessStories() {
             aria-label='Success stories carousel'
           >
             <div
-              className='flex transition-transform duration-500 ease-in-out'
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              className='flex [transition:transform_300ms_cubic-bezier(0.25,0.46,0.45,0.94)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+              style={transformStyle}
             >
               {STORIES.map((s) => (
-                <div key={s.title} className='w-full flex-shrink-0'>
+                <div
+                  key={s.title}
+                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden]'
+                >
                   <StoryCard story={s} />
                 </div>
               ))}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
 
 // Project data moved to a separate file
@@ -94,11 +94,19 @@ export default function ProjectCarousel() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(2);
   const [isClient, setIsClient] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Touch/swipe state
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
+  // Touch/swipe state with better performance
+  const touchState = useRef({
+    startX: null,
+    startY: null,
+    currentX: null,
+    currentY: null,
+    isDragging: false,
+  });
+
   const carouselRef = useRef(null);
+  const animationFrameRef = useRef(null);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
@@ -107,80 +115,28 @@ export default function ProjectCarousel() {
     setIsClient(true);
   }, []);
 
-  // Touch event handlers for swipe functionality
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      nextCard();
-    } else if (isRightSwipe) {
-      prevCard();
+  // Memoized functions to prevent unnecessary re-renders
+  const getTotalPages = useCallback(() => {
+    const totalProjects = PROJECTS.length;
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 768) {
+        // Mobile: 1 card per page
+        return totalProjects;
+      } else if (window.innerWidth < 1024) {
+        // Tablet: 2 cards per page
+        return Math.ceil(totalProjects / 2);
+      } else {
+        // Desktop: 3 cards per page
+        return Math.ceil(totalProjects / 3);
+      }
     }
-  };
-
-  // Swipe handlers for mouse drag
-  const onMouseDown = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.clientX);
-  };
-
-  const onMouseMove = (e) => {
-    if (touchStart !== null) {
-      setTouchEnd(e.clientX);
-    }
-  };
-
-  const onMouseUp = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      nextCard();
-    } else if (isRightSwipe) {
-      prevCard();
-    }
-
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
+    // Default for SSR
+    return Math.ceil(totalProjects / 3);
+  }, []);
 
   // Calculate total pages based on screen size - only after client mounts
   useEffect(() => {
     if (!isClient) return;
-
-    const getTotalPages = () => {
-      const totalProjects = PROJECTS.length;
-      if (typeof window !== 'undefined') {
-        if (window.innerWidth < 768) {
-          // Mobile: 1 card per page
-          return totalProjects;
-        } else if (window.innerWidth < 1024) {
-          // Tablet: 2 cards per page
-          return Math.ceil(totalProjects / 2);
-        } else {
-          // Desktop: 3 cards per page
-          return Math.ceil(totalProjects / 3);
-        }
-      }
-      // Default for SSR
-      return Math.ceil(totalProjects / 3);
-    };
 
     setTotalPages(getTotalPages());
 
@@ -194,44 +150,162 @@ export default function ProjectCarousel() {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }
-  }, [isClient]);
+  }, [isClient, getTotalPages]);
 
-  const nextCard = () => {
+  const nextCard = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentCardIndex((prevIndex) => (prevIndex + 1) % totalPages);
-  };
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [totalPages, isTransitioning]);
 
-  const prevCard = () => {
+  const prevCard = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentCardIndex(
       (prevIndex) => (prevIndex - 1 + totalPages) % totalPages
     );
-  };
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [totalPages, isTransitioning]);
 
-  const getCardsForPage = (pageIndex) => {
-    if (!isClient) {
-      // Default for SSR: 3 cards per page (desktop layout)
-      const startIndex = pageIndex * 3;
-      return PROJECTS.slice(startIndex, startIndex + 3);
+  // Optimized touch event handlers
+  const onTouchStart = useCallback((e) => {
+    const touch = e.targetTouches[0];
+    touchState.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      currentX: touch.clientX,
+      currentY: touch.clientY,
+      isDragging: false,
+    };
+  }, []);
+
+  const onTouchMove = useCallback((e) => {
+    if (!touchState.current.startX) return;
+
+    const touch = e.targetTouches[0];
+    touchState.current.currentX = touch.clientX;
+    touchState.current.currentY = touch.clientY;
+
+    // Prevent default only if we're actually dragging
+    const deltaX = Math.abs(touch.clientX - touchState.current.startX);
+    const deltaY = Math.abs(touch.clientY - touchState.current.startY);
+
+    if (deltaX > 10 && deltaX > deltaY) {
+      touchState.current.isDragging = true;
+      e.preventDefault();
+    }
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    if (!touchState.current.startX || !touchState.current.currentX) return;
+
+    const distance = touchState.current.startX - touchState.current.currentX;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextCard();
+    } else if (isRightSwipe) {
+      prevCard();
     }
 
-    if (typeof window !== 'undefined') {
-      if (window.innerWidth < 768) {
-        // Mobile: 1 card per page
-        return [PROJECTS[pageIndex]];
-      } else if (window.innerWidth < 1024) {
-        // Tablet: 2 cards per page
-        const startIndex = pageIndex * 2;
-        return PROJECTS.slice(startIndex, startIndex + 2);
-      } else {
-        // Desktop: 3 cards per page
+    // Reset touch state
+    touchState.current = {
+      startX: null,
+      startY: null,
+      currentX: null,
+      currentY: null,
+      isDragging: false,
+    };
+  }, [nextCard, prevCard]);
+
+  // Optimized mouse drag handlers
+  const onMouseDown = useCallback((e) => {
+    touchState.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      currentX: e.clientX,
+      currentY: e.clientY,
+      isDragging: false,
+    };
+  }, []);
+
+  const onMouseMove = useCallback((e) => {
+    if (touchState.current.startX === null) return;
+
+    touchState.current.currentX = e.clientX;
+    touchState.current.currentY = e.clientY;
+
+    const deltaX = Math.abs(e.clientX - touchState.current.startX);
+    const deltaY = Math.abs(e.clientY - touchState.current.startY);
+
+    if (deltaX > 10 && deltaX > deltaY) {
+      touchState.current.isDragging = true;
+    }
+  }, []);
+
+  const onMouseUp = useCallback(() => {
+    if (!touchState.current.startX || !touchState.current.currentX) return;
+
+    const distance = touchState.current.startX - touchState.current.currentX;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextCard();
+    } else if (isRightSwipe) {
+      prevCard();
+    }
+
+    // Reset touch state
+    touchState.current = {
+      startX: null,
+      startY: null,
+      currentX: null,
+      currentY: null,
+      isDragging: false,
+    };
+  }, [nextCard, prevCard]);
+
+  // Memoized card rendering function
+  const getCardsForPage = useCallback(
+    (pageIndex) => {
+      if (!isClient) {
+        // Default for SSR: 3 cards per page (desktop layout)
         const startIndex = pageIndex * 3;
         return PROJECTS.slice(startIndex, startIndex + 3);
       }
-    }
 
-    // Fallback for SSR
-    const startIndex = pageIndex * 3;
-    return PROJECTS.slice(startIndex, startIndex + 3);
-  };
+      if (typeof window !== 'undefined') {
+        if (window.innerWidth < 768) {
+          // Mobile: 1 card per page
+          return [PROJECTS[pageIndex]];
+        } else if (window.innerWidth < 1024) {
+          // Tablet: 2 cards per page
+          const startIndex = pageIndex * 2;
+          return PROJECTS.slice(startIndex, startIndex + 2);
+        } else {
+          // Desktop: 3 cards per page
+          const startIndex = pageIndex * 3;
+          return PROJECTS.slice(startIndex, startIndex + 3);
+        }
+      }
+
+      // Fallback for SSR
+      const startIndex = pageIndex * 3;
+      return PROJECTS.slice(startIndex, startIndex + 3);
+    },
+    [isClient]
+  );
+
+  // Memoized transform style with hardware acceleration
+  const transformStyle = useMemo(
+    () => ({
+      transform: `translateX(-${currentCardIndex * 100}%)`,
+    }),
+    [currentCardIndex]
+  );
 
   return (
     <div className='w-full relative mt-8 sm:mt-16'>
@@ -269,14 +343,14 @@ export default function ProjectCarousel() {
 
       {/* Carousel Container */}
       <div
-        className='overflow-hidden cursor-grab active:cursor-grabbing'
+        className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch]'
         ref={carouselRef}
         role='region'
         aria-label='Project carousel'
       >
         <div
-          className='flex transition-transform duration-500 ease-in-out'
-          style={{ transform: `translateX(-${currentCardIndex * 100}%)` }}
+          className='flex [transition:transform_300ms_cubic-bezier(0.25,0.46,0.45,0.94)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+          style={transformStyle}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
@@ -288,7 +362,7 @@ export default function ProjectCarousel() {
           {Array.from({ length: totalPages }, (_, pageIndex) => (
             <div
               key={pageIndex}
-              className='w-full flex-shrink-0 flex flex-col md:flex-row gap-4 md:gap-6'
+              className='w-full flex-shrink-0 flex flex-col md:flex-row gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden]'
             >
               {getCardsForPage(pageIndex).map((project, index) => (
                 <div key={index} className='w-full md:w-1/2 lg:w-1/3'>
