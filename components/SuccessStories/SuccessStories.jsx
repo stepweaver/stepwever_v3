@@ -100,7 +100,8 @@ const StoryCard = ({ story }) => (
 
 function SuccessStories() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   const nextStory = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % STORIES.length);
@@ -113,23 +114,56 @@ function SuccessStories() {
   };
 
   const handleTouchStart = (e) => {
-    setTouchStartX(e.changedTouches[0].screenX);
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const handleTouchEnd = (e) => {
-    if (!touchStartX) return;
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
 
-    const endX = e.changedTouches[0].screenX;
-    const distance = touchStartX - endX;
-    const swipeThreshold = 50;
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
 
-    if (distance > swipeThreshold) {
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+
+    if (distance > minSwipeDistance) {
       nextStory();
-    } else if (distance < -swipeThreshold) {
+    } else if (distance < -minSwipeDistance) {
       prevStory();
     }
 
-    setTouchStartX(null);
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.clientX);
+  };
+
+  const handleMouseMove = (e) => {
+    if (touchStart !== null) {
+      setTouchEnd(e.clientX);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+
+    if (distance > minSwipeDistance) {
+      nextStory();
+    } else if (distance < -minSwipeDistance) {
+      prevStory();
+    }
+
+    setTouchStart(null);
+    setTouchEnd(null);
   };
 
   return (
@@ -147,15 +181,24 @@ function SuccessStories() {
 
         {/* mobile carousel */}
         <div className='md:hidden'>
+          <div className='text-center mb-4'>
+            <p className='text-terminal-dimmed text-sm font-ocr'>
+              Swipe to navigate
+            </p>
+          </div>
           <div
-            className='overflow-hidden'
+            className='overflow-hidden cursor-grab active:cursor-grabbing'
             onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
             role='region'
             aria-label='Success stories carousel'
           >
             <div
-              className='flex transition-transform duration-300 ease-out'
+              className='flex transition-transform duration-500 ease-in-out'
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {STORIES.map((s) => (
@@ -176,7 +219,7 @@ function SuccessStories() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`rounded-full transition-all duration-300 relative ${
+                className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
                   index === currentIndex
                     ? 'bg-terminal-green'
                     : 'bg-terminal-dimmed hover:bg-terminal-green/50'
@@ -186,13 +229,6 @@ function SuccessStories() {
                 }`}
                 aria-selected={index === currentIndex}
                 role='tab'
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
               >
                 <div
                   className={`rounded-full transition-all duration-300 ${
