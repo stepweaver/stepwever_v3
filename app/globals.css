@@ -149,7 +149,7 @@
 
 /* Font weight improvements for better readability */
 .font-ocr {
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .font-ibm {
@@ -158,20 +158,56 @@
 
 /* Additional weight for small OCR text for better readability */
 .font-ocr.text-xs {
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .font-ocr.text-sm {
-  font-weight: 750;
+  font-weight: 850;
 }
 
-/* Light theme font weight improvements */
+/* Light theme font weight improvements - increased for better visibility */
 [data-theme="light"] .font-ocr {
-  font-weight: 700;
+  font-weight: 900;
 }
 
 [data-theme="light"] .font-ibm {
   font-weight: 700;
+}
+
+/* Additional weight classes for extra prominent OCR text */
+.font-ocr.font-black {
+  font-weight: 900;
+}
+
+.font-ocr.font-extrabold {
+  font-weight: 800;
+}
+
+/* Light mode specific extra weight for better contrast */
+[data-theme="light"] .font-ocr.font-black {
+  font-weight: 900;
+}
+
+[data-theme="light"] .font-ocr.font-extrabold {
+  font-weight: 900;
+}
+
+/* Ensure maximum weight when font-ocr and font-bold are combined */
+.font-ocr.font-bold {
+  font-weight: 900;
+}
+
+[data-theme="light"] .font-ocr.font-bold {
+  font-weight: 900;
+}
+
+/* Ensure MDX content with OCR font has good weight */
+.prose code {
+  font-weight: 800;
+}
+
+[data-theme="light"] .prose code {
+  font-weight: 900;
 }
 
 /* Keyframes */
