@@ -125,7 +125,7 @@ function SuccessStories() {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % STORIES.length);
-    setTimeout(() => setIsTransitioning(false), 300);
+    setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning]);
 
   const prevStory = useCallback(() => {
@@ -134,7 +134,7 @@ function SuccessStories() {
     setCurrentIndex(
       (prevIndex) => (prevIndex - 1 + STORIES.length) % STORIES.length
     );
-    setTimeout(() => setIsTransitioning(false), 300);
+    setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning]);
 
   // Optimized touch event handlers
@@ -316,7 +316,7 @@ function SuccessStories() {
             aria-label='Success stories carousel'
           >
             <div
-              className='flex [transition:transform_300ms_cubic-bezier(0.25,0.46,0.45,0.94)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+              className='flex [transition:transform_600ms_cubic-bezier(0.4,0.0,0.2,1)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
               style={transformStyle}
             >
               {STORIES.map((s) => (

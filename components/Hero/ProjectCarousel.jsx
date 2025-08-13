@@ -156,7 +156,7 @@ export default function ProjectCarousel() {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentCardIndex((prevIndex) => (prevIndex + 1) % totalPages);
-    setTimeout(() => setIsTransitioning(false), 300);
+    setTimeout(() => setIsTransitioning(false), 600);
   }, [totalPages, isTransitioning]);
 
   const prevCard = useCallback(() => {
@@ -165,7 +165,7 @@ export default function ProjectCarousel() {
     setCurrentCardIndex(
       (prevIndex) => (prevIndex - 1 + totalPages) % totalPages
     );
-    setTimeout(() => setIsTransitioning(false), 300);
+    setTimeout(() => setIsTransitioning(false), 600);
   }, [totalPages, isTransitioning]);
 
   // Optimized touch event handlers
@@ -389,7 +389,7 @@ export default function ProjectCarousel() {
         aria-label='Project carousel'
       >
         <div
-          className='flex [transition:transform_300ms_cubic-bezier(0.25,0.46,0.45,0.94)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+          className='flex [transition:transform_600ms_cubic-bezier(0.4,0.0,0.2,1)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
           style={transformStyle}
         >
           {/* Generate pages dynamically based on screen size */}
