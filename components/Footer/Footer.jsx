@@ -16,7 +16,7 @@ export default function Footer() {
       {/* Main Footer Content */}
       <div className='max-w-7xl mx-auto px-4 md:px-6 w-full flex-1 flex flex-col justify-center'>
         {/* Logo Section - Centered */}
-        <div className='mb-12 md:mb-16 lg:mb-24'>
+        <div className='mb-12 md:mb-16 lg:mb-24 flex justify-center'>
           <h2 className='text-5xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] text-terminal-green font-ibm tracking-tight leading-none flex items-center'>
             <GlitchLambda
               className='text-5xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] text-terminal-green font-ibm tracking-tight leading-none'

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import {
   ArrowRight,
   CheckCircle,
@@ -17,9 +17,12 @@ import {
   DollarSign,
 } from 'lucide-react';
 import GlitchButton from '@/components/ui/GlitchButton';
+import CalendlyModal from '@/components/ui/CalendlyModal';
 import SERVICES_DATA from '@/lib/servicesData';
 
 function ServicesPage() {
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -355,33 +358,38 @@ function ServicesPage() {
               </h2>
             </div>
 
-            <div className='flex flex-col sm:flex-row gap-4 justify-center items-center mb-12'>
+            <div className='flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-12'>
               <GlitchButton
-                onClick={() =>
-                  window.open(
-                    SERVICES_DATA.contact.calendlyUrl,
-                    '_blank',
-                    'noopener,noreferrer'
-                  )
-                }
-                className='w-full sm:w-auto px-8 py-3 text-lg'
+                onClick={() => setIsCalendlyOpen(true)}
+                className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
               >
-                {SERVICES_DATA.cta.ctaText}
+                SCHEDULE A CALL
               </GlitchButton>
-              <a
-                href={`mailto:${SERVICES_DATA.contact.email}?subject=Project%20Inquiry`}
-                className='inline-flex items-center gap-2 text-terminal-yellow hover:text-terminal-green transition-colors font-ocr text-lg'
-              ></a>
-            </div>
 
-            <div className='p-6 rounded-2xl bg-terminal-light/30 border border-terminal-border'>
-              <p className='font-ibm text-terminal-cyan text-xl lg:text-2xl'>
-                {SERVICES_DATA.cta.description}
-              </p>
+              <GlitchButton
+                href='/'
+                className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
+              >
+                BACK TO HOME
+              </GlitchButton>
+
+              <GlitchButton
+                href='/contact'
+                className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
+              >
+                CONTACT
+              </GlitchButton>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Calendly Modal */}
+      <CalendlyModal
+        isOpen={isCalendlyOpen}
+        onClose={() => setIsCalendlyOpen(false)}
+        calendlyUrl={SERVICES_DATA.contact.calendlyUrl}
+      />
     </>
   );
 }

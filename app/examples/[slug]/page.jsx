@@ -172,7 +172,7 @@ export default function ExamplePage({ params }) {
                   Schedule a Call
                 </GlitchButton>
 
-                <Link href='/services#contact'>
+                <Link href='/contact'>
                   <button className='text-terminal-cyan font-ocr hover:text-terminal-green transition-colors duration-200 underline hover:no-underline'>
                     Or send a message →
                   </button>

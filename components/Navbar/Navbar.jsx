@@ -8,7 +8,7 @@ import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 export default function Navbar() {
   return (
     <nav
-      className='py-4 relative z-50 bg-transparent'
+      className='pt-6 pb-4 relative z-50 bg-transparent'
       role='navigation'
       aria-label='Main navigation'
     >
