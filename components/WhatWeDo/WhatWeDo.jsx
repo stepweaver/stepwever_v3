@@ -44,6 +44,16 @@ function WhatWeDo() {
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
             WHAT WE DO
           </h2>
+          <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl leading-relaxed mb-6'>
+            Need specific pricing and delivery timelines?{' '}
+            <a
+              href='/services'
+              className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
+            >
+              Check out our services page
+            </a>{' '}
+            for fixed-price solutions and custom work options.
+          </p>
         </header>
 
         {/* Services Grid - Clean columns without boxes */}

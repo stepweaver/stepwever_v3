@@ -17,6 +17,7 @@ export default function MobileNav() {
     { name: 'ABOUT', path: '/#about', scroll: true },
     { name: 'CODEX', path: '/codex' },
     { name: 'TERMINAL', path: '/terminal' },
+    { name: 'SERVICES', path: '/services' },
     { name: 'CONTACT', path: '/contact' },
     {
       name: 'BLUESKY',

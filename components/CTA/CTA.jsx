@@ -103,6 +103,13 @@ export default function CTA() {
             </GlitchButton>
 
             <GlitchButton
+              href='/services'
+              className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
+            >
+              VIEW SERVICES
+            </GlitchButton>
+
+            <GlitchButton
               href='/contact'
               className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
             >

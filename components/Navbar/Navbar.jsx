@@ -80,6 +80,14 @@ export default function Navbar() {
               Terminal
             </Link>
             <Link
+              href='/services'
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              role='menuitem'
+              aria-label='View our services and pricing'
+            >
+              Services
+            </Link>
+            <Link
               href='/contact'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
               role='menuitem'

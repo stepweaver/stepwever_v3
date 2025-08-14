@@ -126,15 +126,15 @@ function ServicesPage() {
                     {item.benefit}
                   </p>
 
-                  {/* CTA Button */}
-                  <GlitchButton
-                    onClick={() => scrollToSection('contact')}
-                    variant='outline'
-                    size='sm'
-                    className='w-full'
+                  {/* Learn More Link */}
+                  <button
+                    onClick={() => {
+                      window.location.href = `/examples/${item.id}`;
+                    }}
+                    className='w-full text-left text-terminal-cyan font-ocr text-sm hover:text-terminal-green transition-colors duration-200 underline hover:no-underline cursor-pointer'
                   >
-                    Add to Project
-                  </GlitchButton>
+                    Learn more & see examples →
+                  </button>
                 </div>
               </article>
             ))}

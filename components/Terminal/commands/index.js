@@ -45,6 +45,7 @@ export const handleCommand = async (
         ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
         `<span class="text-terminal-text">cd contact - Go to contact page</span>`,
+        `<span class="text-terminal-text">cd services - Go to services page</span>`,
         `<span class="text-terminal-text">cd codex - Go to blog page (alias)</span>`,
         `<span class="text-terminal-text">codex - Enter codex mode to browse posts</span>`,
         ``,
@@ -63,7 +64,7 @@ export const handleCommand = async (
         return [`<span class="text-terminal-red">Usage: cd [destination]</span>`];
       }
 
-      const validDestinations = ['contact', 'codex', 'github'];
+      const validDestinations = ['contact', 'services', 'codex', 'github'];
       if (validDestinations.includes(destination)) {
         if (callback && callback.setLines && callback.setInput && callback.router) {
           // Map 'codex' to 'blog' for navigation

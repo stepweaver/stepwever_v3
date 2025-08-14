@@ -84,6 +84,22 @@ function About() {
               <p className='font-ibm text-terminal-cyan text-2xl lg:text-3xl'>
                 Ready to turn ideas into working systems? Let's work together.
               </p>
+              <p className='text-lg font-ocr text-terminal-text'>
+                <a
+                  href='/services'
+                  className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
+                >
+                  Browse our services and pricing
+                </a>{' '}
+                or{' '}
+                <a
+                  href='/contact'
+                  className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
+                >
+                  get in touch
+                </a>{' '}
+                to discuss your project.
+              </p>
             </footer>
           </article>
         </div>
