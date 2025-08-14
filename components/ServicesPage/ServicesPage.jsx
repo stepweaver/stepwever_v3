@@ -51,25 +51,103 @@ function ServicesPage() {
       {/* Hero Section */}
       <section className='relative z-30 pt-0 pb-4 sm:pb-8 md:pb-12'>
         <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
-          <div className='min-h-screen flex items-center justify-center'>
-            <div className='max-w-5xl mx-auto text-center space-y-8'>
-              <div>
-                <h1 className='text-4xl md:text-7xl font-ibm font-bold text-terminal-green mb-6 leading-tight'>
-                  {SERVICES_DATA.hero.headline}
-                </h1>
+          {/* Hero Headline - Similar to main hero */}
+          <header className='mb-6 sm:mb-10'>
+            <h1 className='text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl mb-4 sm:mb-6 leading-tight text-right font-ibm w-full min-h-[6rem] sm:min-h-[10rem] md:min-h-[12rem] lg:min-h-[14rem] xl:min-h-[16rem] 2xl:min-h-[18rem] flex flex-col sm:flex-row items-end justify-end relative overflow-hidden'>
+              <div className='relative max-w-[99vw] sm:max-w-[98vw] md:max-w-[95vw] lg:max-w-[90vw] xl:max-w-[85vw] 2xl:max-w-[80vw] break-words'>
+                <div className='text-terminal-green font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
+                  {SERVICES_DATA.hero.headline.split(' ')[0]}{' '}
+                  {SERVICES_DATA.hero.headline.split(' ')[1]}.
+                </div>
+                <div className='text-terminal-cyan font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
+                  Fast delivery.
+                </div>
+                <div className='text-terminal-magenta font-bold whitespace-nowrap'>
+                  Fair pricing.
+                </div>
+              </div>
+            </h1>
+          </header>
 
-                <p className='text-lg md:text-xl font-ocr text-terminal-text mb-8 max-w-3xl mx-auto'>
-                  {SERVICES_DATA.hero.subheadline}
+          {/* Hero Description - Similar to main hero */}
+          <div className='mb-6 sm:mb-10 max-w-6xl ml-auto'>
+            <p className='text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-terminal-text leading-tight font-ocr mb-6'>
+              {SERVICES_DATA.hero.subheadline}
+            </p>
+          </div>
+
+          {/* CTAs - Similar to main hero but with services buttons */}
+          <div className='mb-6 sm:mb-10 max-w-6xl ml-auto'>
+            <div className='flex flex-col sm:flex-row gap-4'>
+              <GlitchButton
+                onClick={() => scrollToSection('solutions')}
+                className='w-full sm:w-auto px-8 py-4 text-lg lg:text-xl'
+              >
+                {SERVICES_DATA.hero.ctaPrimary}
+              </GlitchButton>
+
+              <button
+                onClick={() => scrollToSection('contact')}
+                className='w-full sm:w-auto px-8 py-4 text-lg lg:text-xl font-ocr text-terminal-cyan border border-terminal-cyan/50 hover:bg-terminal-cyan/10 hover:border-terminal-cyan transition-all duration-200'
+              >
+                GET QUOTE
+              </button>
+            </div>
+          </div>
+
+          {/* Service Overview Cards - Right aligned like main hero */}
+          <div className='max-w-6xl ml-auto'>
+            <h2 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-yellow font-bold mb-6'>
+              WHAT I OFFER
+            </h2>
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6'>
+              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-green/30 hover:border-terminal-green/50 transition-colors duration-200'>
+                <div className='flex items-center gap-3 mb-3'>
+                  <Zap className='w-6 h-6 text-terminal-green' />
+                  <h3 className='font-ibm font-bold text-terminal-green text-sm'>
+                    QUICK SOLUTIONS
+                  </h3>
+                </div>
+                <p className='font-ocr text-terminal-text text-xs'>
+                  Fixed-price packages from $500
                 </p>
               </div>
 
-              <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-                <GlitchButton
-                  onClick={() => scrollToSection('solutions')}
-                  className='w-full sm:w-auto px-8 py-3 text-lg'
-                >
-                  {SERVICES_DATA.hero.ctaPrimary}
-                </GlitchButton>
+              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-yellow/30 hover:border-terminal-yellow/50 transition-colors duration-200'>
+                <div className='flex items-center gap-3 mb-3'>
+                  <Code className='w-6 h-6 text-terminal-yellow' />
+                  <h3 className='font-ibm font-bold text-terminal-yellow text-sm'>
+                    CUSTOM DEV
+                  </h3>
+                </div>
+                <p className='font-ocr text-terminal-text text-xs'>
+                  Tailored solutions & retainers
+                </p>
+              </div>
+
+              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-magenta/30 hover:border-terminal-magenta/50 transition-colors duration-200'>
+                <div className='flex items-center gap-3 mb-3'>
+                  <BarChart3 className='w-6 h-6 text-terminal-magenta' />
+                  <h3 className='font-ibm font-bold text-terminal-magenta text-sm'>
+                    ANALYTICS
+                  </h3>
+                </div>
+                <p className='font-ocr text-terminal-text text-xs'>
+                  Data insights & automation
+                </p>
+              </div>
+
+              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-cyan/30 hover:border-terminal-cyan/50 transition-colors duration-200'>
+                <div className='flex items-center gap-3 mb-3'>
+                  <Target className='w-6 h-6 text-terminal-cyan' />
+                  <h3 className='font-ibm font-bold text-terminal-cyan text-sm'>
+                    CONSULTING
+                  </h3>
+                </div>
+                <p className='font-ocr text-terminal-text text-xs'>
+                  Strategy & technical guidance
+                </p>
               </div>
             </div>
           </div>
