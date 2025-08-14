@@ -143,96 +143,86 @@ function ServicesPage() {
       </section>
 
       {/* Custom & Retainer Work */}
-      <section
-        id='custom-work'
-        className='relative z-30 py-20 bg-terminal-light/10'
-      >
+      <section id='custom-work' className='relative z-30 py-20'>
         <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
-          <header className='mb-12 md:mb-16 text-center'>
+          {/* Section Header */}
+          <header className='mb-12 md:mb-16'>
             <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
               {SERVICES_DATA.customWork.title}
             </h2>
-            <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl mx-auto mb-8'>
+            <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl leading-relaxed'>
               {SERVICES_DATA.customWork.description}
             </p>
           </header>
 
-          <div className='max-w-6xl mx-auto'>
-            {/* Benefits Section - Full Width */}
-            <div className='mb-16'>
-              <h3 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-6 text-center'>
-                Why go custom:
-              </h3>
-              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
-                {SERVICES_DATA.customWork.benefits.map((benefit, index) => (
-                  <div
-                    key={`benefit-${index}`}
-                    className='p-6 rounded-xl bg-terminal-light/20 border border-terminal-border hover:bg-terminal-light/30 transition-all duration-200 text-center'
-                  >
-                    <div className='w-12 h-12 rounded-full bg-terminal-green/20 border-2 border-terminal-green flex items-center justify-center mx-auto mb-4'>
-                      <span className='font-ibm font-bold text-terminal-green text-lg'>
-                        {index + 1}
-                      </span>
-                    </div>
-                    <p className='font-ocr text-terminal-text text-sm leading-relaxed'>
-                      {benefit}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <div className='mt-8 text-center'>
-                <p className='text-terminal-yellow font-ocr text-sm bg-terminal-light/20 px-4 py-2 rounded-lg inline-block'>
-                  * Custom solutions and retainer pricing are tailored to your specific needs and scope
-                </p>
-              </div>
+          {/* Benefits Section */}
+          <div className='mb-16 md:mb-20'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 md:mb-6'>
+              Why go custom?
+            </h3>
+            <div className='h-0.5 bg-terminal-green mb-6 md:mb-8'></div>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8'>
+              {SERVICES_DATA.customWork.benefits.map((benefit, index) => (
+                <div key={`benefit-${index}`} className='flex items-start'>
+                  <span className='text-terminal-green font-bold mr-3 mt-1 font-ocr'>
+                    &gt;
+                  </span>
+                  <p className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                    {benefit}
+                  </p>
+                </div>
+              ))}
             </div>
+          </div>
 
-            {/* Retainer Tiers - Enhanced Layout */}
-            <div>
-              <h3 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-8 text-center'>
-                Monthly retainer tiers:
-              </h3>
-              <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-                {SERVICES_DATA.retainers.map((retainer, index) => (
-                  <div
-                    key={`retainer-${index}`}
-                    className='p-6 rounded-xl bg-terminal-light/20 border border-terminal-border hover:bg-terminal-light/30 transition-all duration-200 hover:border-terminal-green/50 group'
-                  >
-                    <div className='text-center mb-6'>
-                      <div className='w-16 h-16 rounded-full bg-terminal-green/20 border-2 border-terminal-green flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-200'>
-                        <span className='font-ibm font-bold text-terminal-green text-2xl'>
-                          {index === 0 ? 'S' : index === 1 ? 'G' : 'O'}
+          {/* Retainer Tiers */}
+          <div className='mb-12'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 md:mb-6'>
+              Monthly retainer tiers
+            </h3>
+            <div className='h-0.5 bg-terminal-green mb-6 md:mb-8'></div>
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16'>
+              {SERVICES_DATA.retainers.map((retainer, index) => (
+                <article key={`retainer-${index}`}>
+                  <h4 className='text-lg md:text-xl lg:text-2xl font-ibm text-terminal-green mb-3 md:mb-4'>
+                    {retainer.title}
+                  </h4>
+                  <div className='h-0.5 bg-terminal-green/50 mb-4 md:mb-6'></div>
+                  <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mb-4 md:mb-6'>
+                    {retainer.description}
+                  </p>
+                  <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                    {retainer.features.map((feature, featureIndex) => (
+                      <li
+                        key={`retainer-${index}-feature-${featureIndex}`}
+                        className='flex items-start'
+                      >
+                        <span className='text-terminal-green font-bold mr-3 mt-1'>
+                          &gt;
                         </span>
-                      </div>
-                      <h4 className='font-ibm font-bold text-terminal-green text-xl mb-2'>
-                        {retainer.title}
-                      </h4>
-                      <p className='font-ocr text-terminal-muted text-sm leading-relaxed'>
-                        {retainer.description}
-                      </p>
-                    </div>
-                    
-                    <ul className='space-y-3'>
-                      {retainer.features.map((feature, featureIndex) => (
-                        <li
-                          key={`retainer-${index}-feature-${featureIndex}`}
-                          className='flex items-start text-terminal-text font-ocr text-sm'
-                        >
-                          <CheckCircle className='w-4 h-4 text-terminal-green shrink-0 mt-1 mr-3' />
-                          <span className='leading-relaxed'>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <div className='mt-6 pt-4 border-t border-terminal-border/30'>
-                      <p className='text-terminal-yellow font-ocr text-xs text-center'>
-                        Contact for custom pricing
-                      </p>
-                    </div>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className='mt-6 pt-4 border-t border-terminal-border/30'>
+                    <button
+                      onClick={() => scrollToSection('contact')}
+                      className='text-terminal-yellow font-ocr text-sm hover:text-terminal-green transition-colors duration-200 cursor-pointer underline hover:no-underline'
+                    >
+                      Contact for custom pricing
+                    </button>
                   </div>
-                ))}
-              </div>
+                </article>
+              ))}
             </div>
+          </div>
+
+          {/* Footer note */}
+          <div className='pt-8 border-t border-terminal-border/20'>
+            <p className='text-terminal-yellow font-ocr text-sm'>
+              * Custom solutions and retainer pricing are tailored to your
+              specific needs and scope
+            </p>
           </div>
         </div>
       </section>
