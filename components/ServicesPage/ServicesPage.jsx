@@ -49,9 +49,9 @@ function ServicesPage() {
       <section className='relative z-30 pt-0 pb-4 sm:pb-8 md:pb-12'>
         <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
           <div className='min-h-screen flex items-center justify-center'>
-            <div className='max-w-4xl mx-auto text-center space-y-8'>
+            <div className='max-w-5xl mx-auto text-center space-y-8'>
               <div>
-                <h1 className='text-4xl md:text-6xl font-ibm font-bold text-terminal-green mb-6 leading-tight'>
+                <h1 className='text-4xl md:text-7xl font-ibm font-bold text-terminal-green mb-6 leading-tight'>
                   {SERVICES_DATA.hero.headline}
                 </h1>
 
@@ -81,9 +81,9 @@ function ServicesPage() {
               QUICK-PICK SOLUTIONS
             </h2>
             <p className='text-lg md:text-xl font-ocr text-terminal-yellow max-w-3xl mx-auto mb-4'>
-              Build your stack — start small, add as you grow
+              Build your stack - start small, add as you grow
             </p>
-            <p className='text-base md:text-lg font-ocr text-terminal-text max-w-3xl mx-auto'>
+            <p className='text-base md:text-lg font-ocr text-terminal-text max-w-xl mx-auto'>
               Fixed prices and fast delivery. Choose what you need, when you
               need it.
             </p>
@@ -157,55 +157,82 @@ function ServicesPage() {
             </p>
           </header>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-16'>
-            {/* Benefits */}
-            <article>
-              <h3 className='text-xl md:text-2xl font-ibm text-terminal-green mb-4 md:mb-6'>
+          <div className='max-w-6xl mx-auto'>
+            {/* Benefits Section - Full Width */}
+            <div className='mb-16'>
+              <h3 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-6 text-center'>
                 Why go custom:
               </h3>
-              <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
                 {SERVICES_DATA.customWork.benefits.map((benefit, index) => (
-                  <li key={`benefit-${index}`} className='flex items-start'>
-                    <span className='text-terminal-green font-bold mr-3 mt-1'>
-                      &gt;
-                    </span>
-                    <span>{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-
-            {/* Retainer Tiers */}
-            <article>
-              <h3 className='text-xl md:text-2xl font-ibm text-terminal-green mb-4 md:mb-6'>
-                Monthly retainer tiers:
-              </h3>
-              <div className='space-y-4'>
-                {SERVICES_DATA.retainers.map((retainer, index) => (
                   <div
-                    key={`retainer-${index}`}
-                    className='p-4 rounded-xl bg-terminal-light/20 border border-terminal-border'
+                    key={`benefit-${index}`}
+                    className='p-6 rounded-xl bg-terminal-light/20 border border-terminal-border hover:bg-terminal-light/30 transition-all duration-200 text-center'
                   >
-                    <div className='flex items-center justify-between mb-2'>
-                      <h4 className='font-ibm font-bold text-terminal-green'>
-                        {retainer.title}
-                      </h4>
-                      <div className='text-right'>
-                        <span className='text-lg font-ibm font-bold text-terminal-yellow'>
-                          ${retainer.price}
-                        </span>
-                        <span className='text-terminal-muted font-ocr text-sm'>
-                          /{retainer.period}
-                        </span>
-                      </div>
+                    <div className='w-12 h-12 rounded-full bg-terminal-green/20 border-2 border-terminal-green flex items-center justify-center mx-auto mb-4'>
+                      <span className='font-ibm font-bold text-terminal-green text-lg'>
+                        {index + 1}
+                      </span>
                     </div>
-                    <p className='font-ocr text-terminal-muted text-sm mb-2'>
-                      {retainer.hours} • {retainer.description}
+                    <p className='font-ocr text-terminal-text text-sm leading-relaxed'>
+                      {benefit}
                     </p>
                   </div>
                 ))}
               </div>
-            </article>
+              <div className='mt-8 text-center'>
+                <p className='text-terminal-yellow font-ocr text-sm bg-terminal-light/20 px-4 py-2 rounded-lg inline-block'>
+                  * Custom solutions and retainer pricing are tailored to your specific needs and scope
+                </p>
+              </div>
+            </div>
+
+            {/* Retainer Tiers - Enhanced Layout */}
+            <div>
+              <h3 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-8 text-center'>
+                Monthly retainer tiers:
+              </h3>
+              <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                {SERVICES_DATA.retainers.map((retainer, index) => (
+                  <div
+                    key={`retainer-${index}`}
+                    className='p-6 rounded-xl bg-terminal-light/20 border border-terminal-border hover:bg-terminal-light/30 transition-all duration-200 hover:border-terminal-green/50 group'
+                  >
+                    <div className='text-center mb-6'>
+                      <div className='w-16 h-16 rounded-full bg-terminal-green/20 border-2 border-terminal-green flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-200'>
+                        <span className='font-ibm font-bold text-terminal-green text-2xl'>
+                          {index === 0 ? 'S' : index === 1 ? 'G' : 'O'}
+                        </span>
+                      </div>
+                      <h4 className='font-ibm font-bold text-terminal-green text-xl mb-2'>
+                        {retainer.title}
+                      </h4>
+                      <p className='font-ocr text-terminal-muted text-sm leading-relaxed'>
+                        {retainer.description}
+                      </p>
+                    </div>
+                    
+                    <ul className='space-y-3'>
+                      {retainer.features.map((feature, featureIndex) => (
+                        <li
+                          key={`retainer-${index}-feature-${featureIndex}`}
+                          className='flex items-start text-terminal-text font-ocr text-sm'
+                        >
+                          <CheckCircle className='w-4 h-4 text-terminal-green shrink-0 mt-1 mr-3' />
+                          <span className='leading-relaxed'>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <div className='mt-6 pt-4 border-t border-terminal-border/30'>
+                      <p className='text-terminal-yellow font-ocr text-xs text-center'>
+                        Contact for custom pricing
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -349,16 +376,12 @@ function ServicesPage() {
                 }
                 className='w-full sm:w-auto px-8 py-3 text-lg'
               >
-                <Calendar className='w-4 h-4 mr-2' />
                 {SERVICES_DATA.cta.ctaText}
               </GlitchButton>
               <a
                 href={`mailto:${SERVICES_DATA.contact.email}?subject=Project%20Inquiry`}
                 className='inline-flex items-center gap-2 text-terminal-yellow hover:text-terminal-green transition-colors font-ocr text-lg'
-              >
-                <Mail className='w-4 h-4' />
-                {SERVICES_DATA.contact.email}
-              </a>
+              ></a>
             </div>
 
             <div className='p-6 rounded-2xl bg-terminal-light/30 border border-terminal-border'>
