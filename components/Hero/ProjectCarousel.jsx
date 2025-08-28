@@ -15,7 +15,7 @@ const PROJECTS = [
       'Browse orthodontic treatment options and services',
       'View patient testimonials and team information',
     ],
-    link: 'https://lambda-ortho.up.railway.app/',
+    link: 'https://lambdaortho.vercel.app/',
     tags: ['Web Development', 'Healthcare', 'React'],
   },
   {
