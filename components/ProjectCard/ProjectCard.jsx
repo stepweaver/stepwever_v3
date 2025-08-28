@@ -134,7 +134,7 @@ const ProjectCard = memo(function ProjectCard({
         )}
 
         {/* Bottom spacing to prevent cutoff */}
-        <div className='mt-auto pt-2'></div>
+        <div className='mt-auto pt-4 sm:pt-6'></div>
       </div>
     </div>
   );

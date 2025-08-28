@@ -109,16 +109,20 @@ function SuccessStories() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Touch/swipe state with better performance
+  // Enhanced touch/swipe state for smooth animations
   const touchState = useRef({
     startX: null,
     startY: null,
     currentX: null,
     currentY: null,
     isDragging: false,
+    startTime: null,
+    velocity: 0,
+    offsetX: 0,
   });
 
   const carouselRef = useRef(null);
+  const containerRef = useRef(null);
   const minSwipeDistance = 50;
 
   const nextStory = useCallback(() => {
@@ -137,7 +141,7 @@ function SuccessStories() {
     setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning]);
 
-  // Optimized touch event handlers
+  // Enhanced touch event handlers with real-time feedback
   const handleTouchStart = useCallback((e) => {
     const touch = e.targetTouches[0];
     touchState.current = {
@@ -146,37 +150,90 @@ function SuccessStories() {
       currentX: touch.clientX,
       currentY: touch.clientY,
       isDragging: false,
+      startTime: Date.now(),
+      velocity: 0,
+      offsetX: 0,
     };
   }, []);
 
-  const handleTouchMove = useCallback((e) => {
-    if (!touchState.current.startX) return;
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (!touchState.current.startX) return;
 
-    const touch = e.targetTouches[0];
-    touchState.current.currentX = touch.clientX;
-    touchState.current.currentY = touch.clientY;
+      const touch = e.targetTouches[0];
+      const currentX = touch.clientX;
+      const currentY = touch.clientY;
 
-    // Prevent default only if we're actually dragging
-    const deltaX = Math.abs(touch.clientX - touchState.current.startX);
-    const deltaY = Math.abs(touch.clientY - touchState.current.startY);
+      touchState.current.currentX = currentX;
+      touchState.current.currentY = currentY;
 
-    if (deltaX > 10 && deltaX > deltaY) {
-      touchState.current.isDragging = true;
-      e.preventDefault();
-    }
-  }, []);
+      // Calculate drag offset
+      const deltaX = currentX - touchState.current.startX;
+      const deltaY = Math.abs(currentY - touchState.current.startY);
+
+      // Only handle horizontal swipes
+      if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > deltaY) {
+        touchState.current.isDragging = true;
+        touchState.current.offsetX = deltaX;
+
+        // Calculate velocity
+        const elapsed = Date.now() - touchState.current.startTime;
+        touchState.current.velocity = deltaX / elapsed;
+
+        // Apply real-time visual feedback
+        if (containerRef.current) {
+          const container = containerRef.current;
+          const baseTransform = -currentIndex * 100;
+          const dragOffset = (deltaX / window.innerWidth) * 100;
+          const transform = baseTransform + dragOffset;
+
+          container.style.transform = `translateX(${transform}%)`;
+          container.style.transition = 'none';
+        }
+
+        e.preventDefault();
+      }
+    },
+    [currentIndex]
+  );
 
   const handleTouchEnd = useCallback(() => {
     if (!touchState.current.startX || !touchState.current.currentX) return;
 
     const distance = touchState.current.startX - touchState.current.currentX;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
+    const velocity = touchState.current.velocity;
+    const isLeftSwipe =
+      distance > minSwipeDistance ||
+      (Math.abs(velocity) > 0.5 && distance > 20);
+    const isRightSwipe =
+      distance < -minSwipeDistance ||
+      (Math.abs(velocity) > 0.5 && distance < -20);
 
-    if (isLeftSwipe) {
-      nextStory();
-    } else if (isRightSwipe) {
-      prevStory();
+    // Animate to final position
+    if (containerRef.current) {
+      const container = containerRef.current;
+      container.style.transition =
+        'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+      if (isLeftSwipe) {
+        nextStory();
+        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+      } else if (isRightSwipe) {
+        prevStory();
+        container.style.transform = `translateX(-${
+          ((currentIndex - 1 + STORIES.length) % STORIES.length) * 100
+        }%)`;
+      } else {
+        // Snap back to current position
+        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+
+      // Reset transition after animation
+      setTimeout(() => {
+        if (container) {
+          container.style.transition = '';
+        }
+      }, 300);
     }
 
     // Reset touch state
@@ -186,10 +243,13 @@ function SuccessStories() {
       currentX: null,
       currentY: null,
       isDragging: false,
+      startTime: null,
+      velocity: 0,
+      offsetX: 0,
     };
-  }, [nextStory, prevStory]);
+  }, [nextStory, prevStory, currentIndex]);
 
-  // Optimized mouse drag handlers for desktop
+  // Enhanced mouse drag handlers for desktop
   const handleMouseDown = useCallback((e) => {
     touchState.current = {
       startX: e.clientX,
@@ -197,34 +257,85 @@ function SuccessStories() {
       currentX: e.clientX,
       currentY: e.clientY,
       isDragging: false,
+      startTime: Date.now(),
+      velocity: 0,
+      offsetX: 0,
     };
   }, []);
 
-  const handleMouseMove = useCallback((e) => {
-    if (touchState.current.startX === null) return;
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (touchState.current.startX === null) return;
 
-    touchState.current.currentX = e.clientX;
-    touchState.current.currentY = e.clientY;
+      const currentX = e.clientX;
+      const currentY = e.clientY;
 
-    const deltaX = Math.abs(e.clientX - touchState.current.startX);
-    const deltaY = Math.abs(e.clientY - touchState.current.startY);
+      touchState.current.currentX = currentX;
+      touchState.current.currentY = currentY;
 
-    if (deltaX > 10 && deltaX > deltaY) {
-      touchState.current.isDragging = true;
-    }
-  }, []);
+      const deltaX = currentX - touchState.current.startX;
+      const deltaY = Math.abs(currentY - touchState.current.startY);
+
+      if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > deltaY) {
+        touchState.current.isDragging = true;
+        touchState.current.offsetX = deltaX;
+
+        // Calculate velocity
+        const elapsed = Date.now() - touchState.current.startTime;
+        touchState.current.velocity = deltaX / elapsed;
+
+        // Apply real-time visual feedback
+        if (containerRef.current) {
+          const container = containerRef.current;
+          const baseTransform = -currentIndex * 100;
+          const dragOffset = (deltaX / window.innerWidth) * 100;
+          const transform = baseTransform + dragOffset;
+
+          container.style.transform = `translateX(${transform}%)`;
+          container.style.transition = 'none';
+        }
+      }
+    },
+    [currentIndex]
+  );
 
   const handleMouseUp = useCallback(() => {
     if (!touchState.current.startX || !touchState.current.currentX) return;
 
     const distance = touchState.current.startX - touchState.current.currentX;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
+    const velocity = touchState.current.velocity;
+    const isLeftSwipe =
+      distance > minSwipeDistance ||
+      (Math.abs(velocity) > 0.5 && distance > 20);
+    const isRightSwipe =
+      distance < -minSwipeDistance ||
+      (Math.abs(velocity) > 0.5 && distance < -20);
 
-    if (isLeftSwipe) {
-      nextStory();
-    } else if (isRightSwipe) {
-      prevStory();
+    // Animate to final position
+    if (containerRef.current) {
+      const container = containerRef.current;
+      container.style.transition =
+        'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+      if (isLeftSwipe) {
+        nextStory();
+        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+      } else if (isRightSwipe) {
+        prevStory();
+        container.style.transform = `translateX(-${
+          ((currentIndex - 1 + STORIES.length) % STORIES.length) * 100
+        }%)`;
+      } else {
+        // Snap back to current position
+        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+
+      // Reset transition after animation
+      setTimeout(() => {
+        if (container) {
+          container.style.transition = '';
+        }
+      }, 300);
     }
 
     // Reset touch state
@@ -234,8 +345,11 @@ function SuccessStories() {
       currentX: null,
       currentY: null,
       isDragging: false,
+      startTime: null,
+      velocity: 0,
+      offsetX: 0,
     };
-  }, [nextStory, prevStory]);
+  }, [nextStory, prevStory, currentIndex]);
 
   // Add event listeners with non-passive options
   useEffect(() => {
@@ -311,18 +425,19 @@ function SuccessStories() {
           </div>
           <div
             ref={carouselRef}
-            className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch]'
+            className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch] carousel-container'
             role='region'
             aria-label='Success stories carousel'
           >
             <div
-              className='flex [transition:transform_600ms_cubic-bezier(0.4,0.0,0.2,1)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+              ref={containerRef}
+              className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
               style={transformStyle}
             >
               {STORIES.map((s) => (
                 <div
                   key={s.title}
-                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden]'
+                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
                 >
                   <StoryCard story={s} />
                 </div>

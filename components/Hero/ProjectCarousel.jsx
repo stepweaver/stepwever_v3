@@ -96,17 +96,21 @@ export default function ProjectCarousel() {
   const [isClient, setIsClient] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Touch/swipe state with better performance
+  // Enhanced touch/swipe state for smooth animations
   const touchState = useRef({
     startX: null,
     startY: null,
     currentX: null,
     currentY: null,
     isDragging: false,
+    startTime: null,
+    velocity: 0,
+    offsetX: 0,
   });
 
   const carouselRef = useRef(null);
   const animationFrameRef = useRef(null);
+  const containerRef = useRef(null);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
@@ -168,7 +172,7 @@ export default function ProjectCarousel() {
     setTimeout(() => setIsTransitioning(false), 600);
   }, [totalPages, isTransitioning]);
 
-  // Optimized touch event handlers
+  // Enhanced touch event handlers with real-time feedback
   const onTouchStart = useCallback((e) => {
     const touch = e.targetTouches[0];
     touchState.current = {
@@ -177,37 +181,120 @@ export default function ProjectCarousel() {
       currentX: touch.clientX,
       currentY: touch.clientY,
       isDragging: false,
+      startTime: Date.now(),
+      velocity: 0,
+      offsetX: 0,
     };
-  }, []);
 
-  const onTouchMove = useCallback((e) => {
-    if (!touchState.current.startX) return;
+    // Cancel any ongoing animations
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
 
-    const touch = e.targetTouches[0];
-    touchState.current.currentX = touch.clientX;
-    touchState.current.currentY = touch.clientY;
-
-    // Prevent default only if we're actually dragging
-    const deltaX = Math.abs(touch.clientX - touchState.current.startX);
-    const deltaY = Math.abs(touch.clientY - touchState.current.startY);
-
-    if (deltaX > 10 && deltaX > deltaY) {
-      touchState.current.isDragging = true;
-      e.preventDefault();
+    // Add active state for better visual feedback
+    if (carouselRef.current) {
+      carouselRef.current.classList.add('carousel-active');
     }
   }, []);
+
+  const onTouchMove = useCallback(
+    (e) => {
+      if (!touchState.current.startX) return;
+
+      const touch = e.targetTouches[0];
+      const currentX = touch.clientX;
+      const currentY = touch.clientY;
+
+      touchState.current.currentX = currentX;
+      touchState.current.currentY = currentY;
+
+      // Calculate drag offset
+      const deltaX = currentX - touchState.current.startX;
+      const deltaY = Math.abs(currentY - touchState.current.startY);
+
+      // Only handle horizontal swipes
+      if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > deltaY) {
+        touchState.current.isDragging = true;
+        touchState.current.offsetX = deltaX;
+
+        // Calculate velocity
+        const elapsed = Date.now() - touchState.current.startTime;
+        touchState.current.velocity = deltaX / elapsed;
+
+        // Apply real-time visual feedback - simplified for smoother performance
+        if (containerRef.current) {
+          const container = containerRef.current;
+          const baseTransform = -currentCardIndex * 100;
+          const dragOffset = (deltaX / window.innerWidth) * 100;
+          const transform = baseTransform + dragOffset;
+
+          // Direct transform update for smoother real-time feedback
+          container.style.transform = `translateX(${transform}%)`;
+          container.style.transition = 'none';
+        }
+
+        e.preventDefault();
+      }
+    },
+    [currentCardIndex]
+  );
 
   const onTouchEnd = useCallback(() => {
     if (!touchState.current.startX || !touchState.current.currentX) return;
 
     const distance = touchState.current.startX - touchState.current.currentX;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
+    const velocity = touchState.current.velocity;
+    const isLeftSwipe =
+      distance > minSwipeDistance ||
+      (Math.abs(velocity) > 0.5 && distance > 20);
+    const isRightSwipe =
+      distance < -minSwipeDistance ||
+      (Math.abs(velocity) > 0.5 && distance < -20);
 
-    if (isLeftSwipe) {
-      nextCard();
-    } else if (isRightSwipe) {
-      prevCard();
+    // Animate to final position with improved easing
+    if (containerRef.current) {
+      const container = containerRef.current;
+
+      if (isLeftSwipe) {
+        // Calculate the target index first
+        const targetIndex = (currentCardIndex + 1) % totalPages;
+        container.style.transition =
+          'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        container.style.transform = `translateX(-${targetIndex * 100}%)`;
+
+        // Update state after setting transform
+        setTimeout(() => {
+          nextCard();
+        }, 50);
+      } else if (isRightSwipe) {
+        // Calculate the target index first
+        const targetIndex = (currentCardIndex - 1 + totalPages) % totalPages;
+        container.style.transition =
+          'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        container.style.transform = `translateX(-${targetIndex * 100}%)`;
+
+        // Update state after setting transform
+        setTimeout(() => {
+          prevCard();
+        }, 50);
+      } else {
+        // Snap back to current position with bounce effect
+        container.style.transition =
+          'transform 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        container.style.transform = `translateX(-${currentCardIndex * 100}%)`;
+      }
+
+      // Reset transition after animation
+      setTimeout(() => {
+        if (container) {
+          container.style.transition = '';
+        }
+      }, 300);
+    }
+
+    // Remove active state
+    if (carouselRef.current) {
+      carouselRef.current.classList.remove('carousel-active');
     }
 
     // Reset touch state
@@ -217,10 +304,13 @@ export default function ProjectCarousel() {
       currentX: null,
       currentY: null,
       isDragging: false,
+      startTime: null,
+      velocity: 0,
+      offsetX: 0,
     };
-  }, [nextCard, prevCard]);
+  }, [nextCard, prevCard, currentCardIndex, totalPages]);
 
-  // Optimized mouse drag handlers
+  // Enhanced mouse drag handlers for desktop
   const onMouseDown = useCallback((e) => {
     touchState.current = {
       startX: e.clientX,
@@ -228,34 +318,105 @@ export default function ProjectCarousel() {
       currentX: e.clientX,
       currentY: e.clientY,
       isDragging: false,
+      startTime: Date.now(),
+      velocity: 0,
+      offsetX: 0,
     };
-  }, []);
 
-  const onMouseMove = useCallback((e) => {
-    if (touchState.current.startX === null) return;
-
-    touchState.current.currentX = e.clientX;
-    touchState.current.currentY = e.clientY;
-
-    const deltaX = Math.abs(e.clientX - touchState.current.startX);
-    const deltaY = Math.abs(e.clientY - touchState.current.startY);
-
-    if (deltaX > 10 && deltaX > deltaY) {
-      touchState.current.isDragging = true;
+    // Cancel any ongoing animations
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
     }
   }, []);
+
+  const onMouseMove = useCallback(
+    (e) => {
+      if (touchState.current.startX === null) return;
+
+      const currentX = e.clientX;
+      const currentY = e.clientY;
+
+      touchState.current.currentX = currentX;
+      touchState.current.currentY = currentY;
+
+      const deltaX = currentX - touchState.current.startX;
+      const deltaY = Math.abs(currentY - touchState.current.startY);
+
+      if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > deltaY) {
+        touchState.current.isDragging = true;
+        touchState.current.offsetX = deltaX;
+
+        // Calculate velocity
+        const elapsed = Date.now() - touchState.current.startTime;
+        touchState.current.velocity = deltaX / elapsed;
+
+        // Apply real-time visual feedback - simplified for smoother performance
+        if (containerRef.current) {
+          const container = containerRef.current;
+          const baseTransform = -currentCardIndex * 100;
+          const dragOffset = (deltaX / window.innerWidth) * 100;
+          const transform = baseTransform + dragOffset;
+
+          // Direct transform update for smoother real-time feedback
+          container.style.transform = `translateX(${transform}%)`;
+          container.style.transition = 'none';
+        }
+      }
+    },
+    [currentCardIndex]
+  );
 
   const onMouseUp = useCallback(() => {
     if (!touchState.current.startX || !touchState.current.currentX) return;
 
     const distance = touchState.current.startX - touchState.current.currentX;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
+    const velocity = touchState.current.velocity;
+    const isLeftSwipe =
+      distance > minSwipeDistance ||
+      (Math.abs(velocity) > 0.5 && distance > 20);
+    const isRightSwipe =
+      distance < -minSwipeDistance ||
+      (Math.abs(velocity) > 0.5 && distance < -20);
 
-    if (isLeftSwipe) {
-      nextCard();
-    } else if (isRightSwipe) {
-      prevCard();
+    // Animate to final position
+    if (containerRef.current) {
+      const container = containerRef.current;
+
+      if (isLeftSwipe) {
+        // Calculate the target index first
+        const targetIndex = (currentCardIndex + 1) % totalPages;
+        container.style.transition =
+          'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        container.style.transform = `translateX(-${targetIndex * 100}%)`;
+
+        // Update state after setting transform
+        setTimeout(() => {
+          nextCard();
+        }, 50);
+      } else if (isRightSwipe) {
+        // Calculate the target index first
+        const targetIndex = (currentCardIndex - 1 + totalPages) % totalPages;
+        container.style.transition =
+          'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        container.style.transform = `translateX(-${targetIndex * 100}%)`;
+
+        // Update state after setting transform
+        setTimeout(() => {
+          prevCard();
+        }, 50);
+      } else {
+        // Snap back to current position with bounce effect
+        container.style.transition =
+          'transform 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        container.style.transform = `translateX(-${currentCardIndex * 100}%)`;
+      }
+
+      // Reset transition after animation
+      setTimeout(() => {
+        if (container) {
+          container.style.transition = '';
+        }
+      }, 300);
     }
 
     // Reset touch state
@@ -265,8 +426,11 @@ export default function ProjectCarousel() {
       currentX: null,
       currentY: null,
       isDragging: false,
+      startTime: null,
+      velocity: 0,
+      offsetX: 0,
     };
-  }, [nextCard, prevCard]);
+  }, [nextCard, prevCard, currentCardIndex, totalPages]);
 
   // Add event listeners with non-passive options
   useEffect(() => {
@@ -383,20 +547,21 @@ export default function ProjectCarousel() {
 
       {/* Carousel Container */}
       <div
-        className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch]'
+        className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch] carousel-container'
         ref={carouselRef}
         role='region'
         aria-label='Project carousel'
       >
         <div
-          className='flex [transition:transform_600ms_cubic-bezier(0.4,0.0,0.2,1)] [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+          ref={containerRef}
+          className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
           style={transformStyle}
         >
           {/* Generate pages dynamically based on screen size */}
           {Array.from({ length: totalPages }, (_, pageIndex) => (
             <div
               key={pageIndex}
-              className='w-full flex-shrink-0 flex flex-col md:flex-row gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden]'
+              className='w-full flex-shrink-0 flex flex-col md:flex-row gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
             >
               {getCardsForPage(pageIndex).map((project, index) => (
                 <div key={index} className='w-full md:w-1/2 lg:w-1/3'>

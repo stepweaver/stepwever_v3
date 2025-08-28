@@ -403,6 +403,40 @@ html.theme-loaded {
   * {
     -webkit-tap-highlight-color: transparent;
   }
+  
+  /* Enhanced carousel touch interactions */
+  .carousel-container {
+    /* Prevent text selection during swipes */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    /* Optimize for touch */
+    touch-action: pan-y pinch-zoom;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Smooth carousel transitions */
+  .carousel-slide {
+    /* Hardware acceleration for smooth animations */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    
+    /* Optimize rendering */
+    will-change: transform;
+    -webkit-will-change: transform;
+  }
+  
+  /* Prevent momentum scrolling conflicts */
+  .carousel-container:active {
+    -webkit-overflow-scrolling: auto;
+  }
 }
 
 /* Glitch Button Styles */
