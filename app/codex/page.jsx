@@ -79,7 +79,7 @@ function CodexContent() {
     if (activeTab === 'articles') {
       // Set default sub-tab if none is selected
       if (!activeSubTab) {
-        setActiveSubTab('itjungle');
+        setActiveSubTab('coming-soon');
         return; // Don't fetch until sub-tab is set
       }
 
@@ -245,12 +245,6 @@ function CodexContent() {
   ];
 
   const articleSubTabs = [
-    {
-      id: 'itjungle',
-      label: 'IT Jungle',
-      color: 'text-terminal-yellow',
-      glowColor: '255, 255, 0',
-    },
     {
       id: 'coming-soon',
       label: 'Coming Soon',
