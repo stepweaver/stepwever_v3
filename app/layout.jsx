@@ -33,7 +33,7 @@ export const metadata = {
     default: 'λstepweaver - Practical transformations, powered by code.',
   },
   description:
-    'Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
+    'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
   keywords: [
     'business automation',
     'data pipelines',
@@ -66,7 +66,7 @@ export const metadata = {
     siteName: 'λstepweaver',
     title: 'λstepweaver - Practical transformations, powered by code.',
     description:
-      'Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
+      'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
     images: [
       {
         url: '/images/lambda_preview.png',
@@ -81,7 +81,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'λstepweaver - Practical transformations, powered by code.',
     description:
-      'Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
+      'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
     images: [
       {
         url: '/images/lambda_preview.png',

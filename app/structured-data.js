@@ -8,7 +8,7 @@ export default function generateStructuredData() {
     "name": "λstepweaver",
     "url": baseUrl,
     "logo": `${baseUrl}/images/lambda_stepweaver.png`,
-    "description": "Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.",
+    "description": "Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.",
     "foundingDate": "2023",
     "address": {
       "@type": "PostalAddress",

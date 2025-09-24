@@ -7,7 +7,7 @@ import SERVICES_DATA from '@/lib/servicesData';
 export const metadata = {
   title: 'Business Automation & Development Services',
   description:
-    'Fixed-price business automation, web development, and data solutions. From $275 single-page sites to custom systems. Fast delivery, transparent pricing.',
+    'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
   keywords: [
     'business automation services',
     'web development pricing',
@@ -28,7 +28,7 @@ export const metadata = {
   openGraph: {
     title: 'Business Automation & Development Services | Fixed Pricing',
     description:
-      'Transform your business with practical automation and development solutions. Fixed prices starting at $275. Fast delivery. No surprises.',
+      'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
     url: 'https://stepweaver.dev/services',
     type: 'website',
     images: [

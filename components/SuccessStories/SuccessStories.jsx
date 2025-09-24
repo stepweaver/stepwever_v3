@@ -15,10 +15,10 @@ const STORIES = [
   {
     title: 'Notre Dame Reporting Overhaul',
     description:
-      'As business analyst, I learned SQL and built custom Tableau dashboards to replace the terrible off‑the‑shelf reporting software, delivering 10× faster ad‑hoc reporting and achieving 100 % adoption across campus ID operations.',
+      'As business analyst, I built custom Tableau dashboards to replace terrible off‑the‑shelf reporting software, delivering 10× faster ad‑hoc reporting and achieving 100% adoption across campus ID operations.',
     metrics: [
       '10× faster ad‑hoc reporting',
-      '100 % adoption across campus ID operations',
+      '100% adoption across campus ID operations',
     ],
     category: 'Data & Analytics',
   },

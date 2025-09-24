@@ -9,7 +9,7 @@ const REASONS = [
     description: (
       <>
         I don't waste time or pile on meetings. I get to work, build what you
-        need, and show you results—quickly.
+        need, and show you results - quickly.
       </>
     ),
   },
@@ -25,7 +25,7 @@ const REASONS = [
   {
     title: 'Proven systems, not theory.',
     description:
-      'You get real automations, dashboards, and web tools that solve your actual problems. No distractions, no endless planning, no bloat.',
+      'You get what you need - real tools to solve your problems and help you grow. No distractions, no endless planning, no bloat.',
   },
 ];
 

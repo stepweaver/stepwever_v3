@@ -28,7 +28,7 @@ const TERMINAL_CONFIG = {
 
 // Welcome messages
 const WELCOME_MESSAGES = [
-  '<span class="text-terminal-green">Welcome to λstepweaver terminal v3.5.0</span>',
+  '<span class="text-terminal-green">Welcome to λstepweaver terminal v3.6.0</span>',
   '<span>Type <span class="text-terminal-cyan">"help"</span> to see available commands.</span>',
 ];
 

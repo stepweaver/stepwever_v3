@@ -3,7 +3,7 @@ export default function manifest() {
     name: 'λstepweaver - Practical transformations, powered by code.',
     short_name: 'λstepweaver',
     description:
-      'Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
+      'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
     start_url: '/',
     display: 'standalone',
     background_color: '#0d1211',
