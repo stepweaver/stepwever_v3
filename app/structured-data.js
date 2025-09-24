@@ -8,7 +8,7 @@ export default function generateStructuredData() {
     "name": "λstepweaver",
     "url": baseUrl,
     "logo": `${baseUrl}/images/lambda_stepweaver.png`,
-    "description": "Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.",
+    "description": "Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.",
     "foundingDate": "2023",
     "address": {
       "@type": "PostalAddress",
@@ -76,7 +76,7 @@ export default function generateStructuredData() {
     "@type": "WebSite",
     "name": "λstepweaver",
     "url": baseUrl,
-    "description": "Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences.",
+    "description": "Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences.",
     "publisher": {
       "@type": "Organization",
       "name": "λstepweaver",
@@ -129,7 +129,7 @@ export default function generateStructuredData() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "λstepweaver",
-    "description": "Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences.",
+    "description": "Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences.",
     "url": baseUrl,
     "telephone": "+1-555-0123", // Replace with actual phone if available
     "email": "inquiries@stepweaver.dev",

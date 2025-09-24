@@ -1,9 +1,9 @@
 export default function manifest() {
   return {
-    name: 'λstepweaver - Practical transformation, powered by code.',
+    name: 'λstepweaver - Practical transformations, powered by code.',
     short_name: 'λstepweaver',
     description:
-      'Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
+      'Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
     start_url: '/',
     display: 'standalone',
     background_color: '#0d1211',

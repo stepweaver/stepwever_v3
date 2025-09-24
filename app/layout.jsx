@@ -30,10 +30,10 @@ export const metadata = {
   metadataBase: new URL('https://stepweaver.dev'),
   title: {
     template: '%s | λstepweaver',
-    default: 'λstepweaver - Practical transformation, powered by code.',
+    default: 'λstepweaver - Practical transformations, powered by code.',
   },
   description:
-    'Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
+    'Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
   keywords: [
     'business automation',
     'data pipelines',
@@ -64,30 +64,30 @@ export const metadata = {
     locale: 'en_US',
     url: 'https://stepweaver.dev/',
     siteName: 'λstepweaver',
-    title: 'λstepweaver - Practical transformation, powered by code.',
+    title: 'λstepweaver - Practical transformations, powered by code.',
     description:
-      'Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
+      'Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
     images: [
       {
         url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
-        alt: 'λstepweaver - Practical transformation, powered by code.',
+        alt: 'λstepweaver - Practical transformations, powered by code.',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'λstepweaver - Practical transformation, powered by code.',
+    title: 'λstepweaver - Practical transformations, powered by code.',
     description:
-      'Practical transformation, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
+      'Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences that transform businesses through efficient, scalable solutions.',
     images: [
       {
         url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
-        alt: 'λstepweaver - Practical transformation, powered by code.',
+        alt: 'λstepweaver - Practical transformations, powered by code.',
       },
     ],
     creator: '@stepweaver',
@@ -103,9 +103,6 @@ export const metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification code
   },
   alternates: {
     canonical: 'https://stepweaver.dev/',

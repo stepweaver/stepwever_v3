@@ -33,7 +33,7 @@ export default function Navbar() {
               stepweaver
             </span>
             <span id='logo-description' className='sr-only'>
-              λstepweaver - Practical transformation, powered by code
+              λstepweaver - Practical transformations, powered by code
             </span>
           </button>
 

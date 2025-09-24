@@ -1,6 +1,6 @@
 # stepweaver v3
 
-Practical transformation, powered by code.
+Practical transformations, powered by code.
 
 ## Features
 
