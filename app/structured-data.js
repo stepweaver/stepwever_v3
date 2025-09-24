@@ -17,7 +17,7 @@ export default function generateStructuredData() {
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer service",
-      "email": "inquiries@stepweaver.dev"
+      "email": "info@stepweaver.dev"
     },
     "sameAs": [
       "https://github.com/stepweaver",
@@ -132,7 +132,7 @@ export default function generateStructuredData() {
     "description": "Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences.",
     "url": baseUrl,
     "telephone": "+1-555-0123", // Replace with actual phone if available
-    "email": "inquiries@stepweaver.dev",
+    "email": "info@stepweaver.dev",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "US"
@@ -194,7 +194,7 @@ export default function generateStructuredData() {
         "name": "How can I contact λstepweaver?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "You can contact us through our contact form at stepweaver.dev/contact or email us directly at inquiries@stepweaver.dev"
+          "text": "You can contact us through our contact form at stepweaver.dev/contact or email us directly at info@stepweaver.dev"
         }
       },
       {

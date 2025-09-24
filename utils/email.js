@@ -67,7 +67,7 @@ Timestamp: ${new Date().toLocaleString()}
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: process.env.EMAIL_TO || process.env.EMAIL_USER, // Send to inquiries@stepweaver.dev or fallback to sender
+    to: process.env.EMAIL_TO || process.env.EMAIL_USER, // Send to info@stepweaver.dev or fallback to sender
     replyTo: email,
     subject: emailContent.subject,
     html: emailContent.html,

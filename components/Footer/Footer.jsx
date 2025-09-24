@@ -33,7 +33,7 @@ export default function Footer() {
               href='/contact'
               className='text-lg md:text-xl lg:text-4xl text-terminal-green font-ibm hover:text-terminal-white transition-colors duration-200 text-center'
             >
-              inquiries@stepweaver.dev
+              info@stepweaver.dev
             </Link>
           </div>
         </div>

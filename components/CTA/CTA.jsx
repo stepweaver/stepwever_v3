@@ -121,10 +121,10 @@ export default function CTA() {
           <p className='text-xs md:text-sm text-terminal-dimmed'>
             Prefer a real conversation? Email&nbsp;
             <a
-              href='mailto:inquiries@stepweaver.dev'
+              href='mailto:info@stepweaver.dev'
               className='text-terminal-green underline hover:text-terminal-green/80'
             >
-              inquiries@stepweaver.dev
+              info@stepweaver.dev
             </a>
           </p>
         </div>
