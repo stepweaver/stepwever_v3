@@ -61,7 +61,7 @@ export default function Footer() {
                 GitHub
               </a>
               <a
-                href='https://bsky.app/profile/stepweaver.bsky.social'
+                href='https://bsky.app/profile/stepweaver.dev'
                 target='_blank'
                 rel='noopener noreferrer'
                 className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm md:text-base uppercase tracking-wider'

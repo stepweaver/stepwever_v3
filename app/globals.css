@@ -156,6 +156,12 @@
   font-weight: 700;
 }
 
+/* Normal weight IBM font for terminal text */
+.font-ibm-normal {
+  font-family: var(--font-ibm);
+  font-weight: normal;
+}
+
 /* Additional weight for small OCR text for better readability */
 .font-ocr.text-xs {
   font-weight: 900;
@@ -172,6 +178,11 @@
 
 [data-theme="light"] .font-ibm {
   font-weight: 700;
+}
+
+/* Light theme normal weight IBM font */
+[data-theme="light"] .font-ibm-normal {
+  font-weight: normal;
 }
 
 /* Additional weight classes for extra prominent OCR text */

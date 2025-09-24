@@ -361,7 +361,7 @@ const Terminal = forwardRef((props, ref) => {
         return (
           <pre
             ref={(el) => addPreRef(`html-${index}`, el)}
-            className={`${styles.terminalHtml} leading-tight font-ibm ${styles.crtText}`}
+            className={`${styles.terminalHtml} leading-tight font-ibm-normal ${styles.crtText}`}
             dangerouslySetInnerHTML={{ __html: sanitizeHTML(line) }}
           />
         );
@@ -370,7 +370,7 @@ const Terminal = forwardRef((props, ref) => {
       return (
         <pre
           ref={(el) => addPreRef(`text-${index}`, el)}
-          className={`${styles.terminalText} leading-tight font-ibm ${styles.crtText}`}
+          className={`${styles.terminalText} leading-tight font-ibm-normal ${styles.crtText}`}
         >
           {line}
         </pre>
@@ -382,7 +382,7 @@ const Terminal = forwardRef((props, ref) => {
   return (
     <div
       ref={containerRef}
-      className={`h-full md:h-96 md:sm:h-[32rem] md:md:h-[40rem] md:lg:h-[48rem] overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
+      className={`h-full md:h-96 md:sm:h-[32rem] md:md:h-[40rem] md:lg:h-[48rem] overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm-normal leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
       onClick={focusInput}
       role='application'
       aria-label='Terminal interface'

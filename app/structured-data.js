@@ -21,7 +21,7 @@ export default function generateStructuredData() {
     },
     "sameAs": [
       "https://github.com/stepweaver",
-      "https://bsky.app/profile/stepweaver.bsky.social"
+      "https://bsky.app/profile/stepweaver.dev"
     ],
     "founder": {
       "@type": "Person",
@@ -159,7 +159,7 @@ export default function generateStructuredData() {
     "image": `${baseUrl}/images/pixarMe.png`,
     "sameAs": [
       "https://github.com/stepweaver",
-      "https://bsky.app/profile/stepweaver.bsky.social"
+      "https://bsky.app/profile/stepweaver.dev"
     ],
     "worksFor": {
       "@type": "Organization",
