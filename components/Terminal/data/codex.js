@@ -138,7 +138,6 @@ export const listCurrentDirectory = async () => {
       return [
         `<span class="text-terminal-green">Article Sources:</span>`,
         ``,
-        `<span class="text-terminal-cyan">itjungle/</span> - Tech articles and news`,
         `<span class="text-terminal-cyan">coming-soon/</span> - More articles coming soon`,
         ``
       ];
@@ -190,7 +189,7 @@ export const listCurrentDirectory = async () => {
 // List podcast episodes and articles
 export const listPodcastEpisodes = async (source) => {
   const validPodcastSources = ['syntaxfm', 'coming-soon'];
-  const validArticleSources = ['itjungle', 'coming-soon'];
+  const validArticleSources = ['coming-soon'];
   const allValidSources = [...validPodcastSources, ...validArticleSources];
 
   if (!allValidSources.includes(source)) {
@@ -227,7 +226,7 @@ export const listPodcastEpisodes = async (source) => {
 
   episodes.slice(0, 10).forEach((episode, index) => {
     const date = formatDate(episode.pubDate);
-    const color = source === 'itjungle' ? 'text-terminal-magenta' : 'text-terminal-cyan';
+    const color = 'text-terminal-cyan';
 
     output.push(
       `<span class="text-terminal-cyan">${index + 1}.</span> <span class="${color}">${episode.title}</span>`,
@@ -290,7 +289,7 @@ export const viewPostInCurrentDirectory = async (number) => {
 
     const episode = episodes[index];
     const date = formatDate(episode.pubDate);
-    const color = source === 'itjungle' ? 'text-terminal-magenta' : 'text-terminal-cyan';
+    const color = 'text-terminal-cyan';
     const contentType = pathParts[2] === 'articles' ? 'Article' : 'Episode';
 
     return [
@@ -408,7 +407,6 @@ export const handleCodexCommand = async (command, callback) => {
     case 'community':
     case 'podcasts':
     case 'syntaxfm':
-    case 'itjungle':
     case 'coming-soon':
       const success2 = navigateToDirectory(cmd);
       if (!success2) {
@@ -477,7 +475,7 @@ export const navigateToDirectory = (directory) => {
     }
   } else if (pathParts.length === 3 && pathParts[0] === '~' && pathParts[1] === 'codex' && pathParts[2] === 'articles') {
     // From articles directory
-    const validSources = ['itjungle', 'coming-soon'];
+    const validSources = ['coming-soon'];
     if (validSources.includes(directory)) {
       currentPath = `~/codex/articles/${directory}`;
       return true;

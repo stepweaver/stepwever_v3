@@ -75,30 +75,36 @@ function CodexContent() {
   }, [activeTab, activeSubTab]);
 
   // Fetch articles when article tab is active
-  useEffect(() => {
-    if (activeTab === 'articles') {
-      // Set default sub-tab if none is selected
-      if (!activeSubTab) {
-        setActiveSubTab('coming-soon');
-        return; // Don't fetch until sub-tab is set
-      }
-
-      async function fetchArticles() {
-        try {
-          const res = await fetch(`/api/rss?source=${activeSubTab}`);
-          if (!res.ok) {
-            throw new Error('Failed to fetch articles');
-          }
-          const data = await res.json();
-          setPodcastEpisodes(data.items || []); // Reuse the same state
-        } catch (error) {
-          console.error('Error fetching articles:', error);
-          setPodcastEpisodes([]);
-        }
-      }
-      fetchArticles();
+useEffect(() => {
+  if (activeTab === 'articles') {
+    // Set default sub-tab if none is selected
+    if (!activeSubTab) {
+      setActiveSubTab('coming-soon');
+      return; // Don't fetch until sub-tab is set
     }
-  }, [activeTab, activeSubTab]);
+
+    // Add this hardening check
+    if (activeSubTab === 'coming-soon') {
+      setPodcastEpisodes([]);
+      return;
+    }
+
+    async function fetchArticles() {
+      try {
+        const res = await fetch(`/api/rss?source=${activeSubTab}`);
+        if (!res.ok) {
+          throw new Error('Failed to fetch articles');
+        }
+        const data = await res.json();
+        setPodcastEpisodes(data.items || []); // Reuse the same state
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        setPodcastEpisodes([]);
+      }
+    }
+    fetchArticles();
+  }
+}, [activeTab, activeSubTab]);
 
   // Sort all posts by date descending
   const allPosts = useMemo(() => {
@@ -871,7 +877,7 @@ function ArticleItem({ article, formatDate, getGlowStyle, articleColor }) {
 
         {/* External link indicator */}
         <div className='mt-3 text-terminal-yellow text-sm font-medium'>
-          Read on IT Jungle →
+          Read article →
         </div>
       </a>
     </article>
