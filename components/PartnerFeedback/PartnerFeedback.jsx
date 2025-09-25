@@ -76,11 +76,11 @@ function PartnerFeedback() {
         </div>
 
         {/* Call to Action */}
-        <div className='text-center'>
+        <div>
           <p className='text-terminal-text font-ocr text-sm md:text-base mb-4'>
             Let's build something!
           </p>
-          <div className='flex justify-center'>
+          <div>
             <GlitchButton
               href='/contact'
               className='inline-block max-w-xs px-6 py-3 text-sm md:text-base'

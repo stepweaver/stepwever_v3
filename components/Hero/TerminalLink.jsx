@@ -9,7 +9,7 @@ export default function TerminalLink() {
       >
         <GlitchLambda className='text-terminal-green text-lg sm:text-2xl md:text-3xl' />
         <span className='font-bold whitespace-nowrap'>
-          Try our interactive terminal
+          Try my interactive terminal!
         </span>
         <span className='text-terminal-green text-lg sm:text-2xl md:text-3xl animate-pulse'>
           →
