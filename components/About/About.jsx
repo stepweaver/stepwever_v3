@@ -61,7 +61,7 @@ function About() {
             <div className='prose prose-invert font-ocr max-w-none space-y-4 text-terminal-text'>
               <p className='text-lg'>
                 I’m Stephen Weaver, founder of{' '}
-                <span className='text-terminal-green font-bold'>λ</span>
+                <GlitchLambda className='text-terminal-text' />
                 stepweaver — a one-man skunkworks delivering fast, no-nonsense
                 solutions: websites, automations, dashboards, and marketing
                 systems that actually work.
@@ -78,7 +78,7 @@ function About() {
               </ul>
 
               <p className='text-lg'>
-                What I've learned across those paths is simple: the most fulfilling work has been building and fixing systems that actually work. That's why I launched <span className='text-terminal-green font-bold'>λ</span>stepweaver - to cut through corporate bloat and deliver high-impact solutions and the highest standards.
+                What I've learned across those paths is simple: the most fulfilling work has been building and fixing systems that actually work. That's why I launched <GlitchLambda className='text-terminal-text' />stepweaver - to cut through corporate bloat and deliver high-impact solutions and the highest standards.
               </p>
             </div>
 
