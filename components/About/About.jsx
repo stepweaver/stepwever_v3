@@ -54,42 +54,45 @@ function About() {
 
             {/* Strapline */}
             <h3 className='font-ibm text-terminal-text text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight'>
-              Digital leverage: more clarity, fewer keystrokes, faster wins.
+              Digital leverage, forged in experience.
             </h3>
 
             {/* Narrative */}
             <div className='prose prose-invert font-ocr max-w-none space-y-4 text-terminal-text'>
               <p className='text-lg'>
-                I'm Stephen, founder of{' '}
+                I’m Stephen Weaver, founder of{' '}
                 <span className='text-terminal-green font-bold'>λ</span>
-                stepweaver-a one-man shop for businesses that need things built,
-                automated, or fixed fast.
+                stepweaver — a one-man skunkworks delivering fast, no-nonsense
+                solutions: websites, automations, dashboards, and marketing
+                systems that actually work.
               </p>
 
-              <p className='text-lg'>I turn ideas into working systems:</p>
+              <p className='text-lg'>I've worn many hats:</p>
 
               <ul className='space-y-3 font-ocr text-lg'>
-                <li>Automations that cut the busywork</li>
-                <li>Dashboards that show you what matters</li>
-                <li>Sites and tools you'll actually use</li>
+                <li>Airborne Linguist (U.S. Air Force)</li>
+                <li>Business Analyst</li>
+                <li>Retail (restaurant) Manager</li>
+                <li>Developer & Builder</li>
+                <li>Founder</li>
               </ul>
 
               <p className='text-lg'>
-                You work directly with me-no layers, no long waits, no nonsense.
+                What I've learned across those paths is simple: the most fulfilling work has been building and fixing systems that actually work. That's why I launched <span className='text-terminal-green font-bold'>λ</span>stepweaver - to cut through corporate bloat and deliver high-impact solutions and the highest standards.
               </p>
             </div>
 
             {/* CTA */}
             <footer className='space-y-4'>
               <p className='font-ibm text-terminal-cyan text-2xl lg:text-3xl'>
-                Ready to turn ideas into working systems? Let's work together.
+              Every business needs a secret weapon. I just happen to be one you can hire.
               </p>
               <p className='text-lg font-ocr text-terminal-text'>
                 <a
                   href='/services'
                   className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
                 >
-                  Browse our services and pricing
+                  Browse services and pricing
                 </a>{' '}
                 or{' '}
                 <a
