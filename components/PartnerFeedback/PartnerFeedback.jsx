@@ -13,9 +13,9 @@ const TESTIMONIAL = {
 };
 
 const COMMITMENTS = [
-  "I don't promise big numbers-I promise real work.",
-  "You'll always see what I'm building, how it works, and why it matters.",
-  'You get my full focus, and honest progress updates, every step.',
+  "I don't sell hype - I deliver working systems.",
+  "You'll always see exactly what I'm building, how it works, and why it matters.",
+  'You get my full focus and straight updates, every step of the way.',
 ];
 
 function PartnerFeedback() {
@@ -54,9 +54,8 @@ function PartnerFeedback() {
               BE ONE OF MY FIRST PARTNERS
             </h3>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mb-6'>
-              I'm looking for ambitious businesses ready to move fast. If you
-              want custom systems, hands-on help, and founder-level support,
-              let's talk.
+              If you’re serious about cutting the busywork and scaling smarter,
+              I'll build the systems to get you there.
             </p>
 
             {/* Personal Guarantee */}
@@ -79,7 +78,7 @@ function PartnerFeedback() {
         {/* Call to Action */}
         <div className='text-center'>
           <p className='text-terminal-text font-ocr text-sm md:text-base mb-4'>
-            Ready to build something real together?
+            Let's build something!
           </p>
           <div className='flex justify-center'>
             <GlitchButton
