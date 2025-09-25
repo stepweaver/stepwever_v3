@@ -221,7 +221,7 @@ function Experience() {
           {/* Experience Message */}
           <div className='mb-8 md:mb-12'>
             <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight text-left font-ibm text-terminal-green'>
-              Fueled by Obsession, Driven by Passion
+              Battle-tested. Obsession-fueled. Results-driven.
             </h3>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
               <GlitchLambda className='text-terminal-text' />
@@ -236,7 +236,7 @@ function Experience() {
               curiosity.
             </p>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
-              Building is a puzzle I never get tired of-figuring it out and
+              Building is a puzzle I never get tired of - figuring it out and
               making it work is what I do best.
             </p>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
