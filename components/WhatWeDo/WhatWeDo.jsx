@@ -7,10 +7,10 @@ const SERVICES = [
   {
     title: 'Data Integrations',
     description:
-      'Connect all your business systems—POS, accounting, and SaaS—into one real-time dashboard.',
+      'Connect all your business systems - POS, accounting, and SaaS - into one real-time dashboard.',
     items: [
       'One source of truth for all your numbers',
-      'Automated exports and reports',
+      'Automated exports and notifications',
       'Alerts for what matters',
     ],
   },
@@ -21,7 +21,7 @@ const SERVICES = [
     items: [
       'React/Next sites that load fast',
       'Brand refresh: logo, colors, fonts',
-      'SEO, analytics, and built-in interactivity',
+      'Search engine optimization, analytics, and built-in interactivity',
     ],
   },
   {
@@ -42,7 +42,7 @@ function WhatWeDo() {
         {/* Section Header */}
         <header className='mb-12 md:mb-16'>
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
-            WHAT WE DO
+            WHAT I DO
           </h2>
           <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl leading-relaxed mb-6'>
             Need specific pricing and delivery timelines?{' '}
@@ -50,7 +50,7 @@ function WhatWeDo() {
               href='/services'
               className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
             >
-              Check out our services page
+              Check out my services page
             </a>{' '}
             for fixed-price solutions and custom work options.
           </p>
