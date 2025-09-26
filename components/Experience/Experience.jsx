@@ -75,19 +75,11 @@ const TECH_CATEGORIES = [
         isComponent: true,
       },
       {
-        name: 'Express',
+        name: 'Express.js',
         icon: SiExpress,
         color: '#ffffff',
         isComponent: true,
       },
-      {
-        name: 'Serverless',
-        icon: Cloud,
-        color: '#FD5750',
-        isComponent: true,
-      },
-      { name: 'AWS Amplify', icon: Zap, color: '#FF9900', isComponent: true },
-      { name: 'Cognito', icon: Shield, color: '#FF9900', isComponent: true },
       {
         name: 'Supabase',
         icon: SiSupabase,
@@ -100,12 +92,6 @@ const TECH_CATEGORIES = [
         color: '#FFCA28',
         isComponent: true,
       },
-      { name: 'REST', icon: Globe, color: '#00FF41', isComponent: true },
-    ],
-  },
-  {
-    name: 'Data & Analytics',
-    technologies: [
       {
         name: 'PostgreSQL',
         icon: SiPostgresql,
@@ -113,24 +99,36 @@ const TECH_CATEGORIES = [
         isComponent: true,
       },
       { name: 'MySQL', icon: SiMysql, color: '#4479A1', isComponent: true },
-      { name: 'Tableau', icon: BarChart3, color: '#E97627', isComponent: true },
-      {
-        name: 'Power BI',
-        icon: BarChart3,
-        color: '#F2C811',
-        isComponent: true,
-      },
+      { name: 'REST APIs', icon: Server, color: '#ffffff', isComponent: true },
+      { name: 'GraphQL', icon: Server, color: '#E10098', isComponent: true },
     ],
   },
   {
-    name: 'Automation & AI',
+    name: 'AI & Automation',
     technologies: [
-      { name: 'OpenAI', icon: SiOpenai, color: '#412991', isComponent: true },
-      { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
-      { name: 'Langflow', icon: Brain, color: '#00D4AA', isComponent: true },
       {
-        name: 'MCP Servers',
-        icon: Server,
+        name: 'OpenAI API',
+        icon: SiOpenai,
+        color: '#412991',
+        isComponent: true,
+      },
+      { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
+      { name: 'Custom Bots', icon: Brain, color: '#00FF41', isComponent: true },
+      {
+        name: 'Workflow Automation',
+        icon: Zap,
+        color: '#00FF41',
+        isComponent: true,
+      },
+      {
+        name: 'Data Processing',
+        icon: BarChart3,
+        color: '#00FF41',
+        isComponent: true,
+      },
+      {
+        name: 'Email Automation',
+        icon: FileText,
         color: '#00FF41',
         isComponent: true,
       },
@@ -215,32 +213,25 @@ function Experience() {
         {/* Section Header */}
         <header className='mb-12 md:mb-16 ml-auto w-full max-w-6xl'>
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
-            EXPERIENCE & TECH ARSENAL
+            HOW I BUILD
           </h2>
 
           {/* Experience Message */}
           <div className='mb-8 md:mb-12'>
             <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight text-left font-ibm text-terminal-green'>
-              Battle-tested. Obsession-fueled. Results-driven.
+              I use modern, secure tools to deliver reliable solutions.
             </h3>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
               <GlitchLambda className='text-terminal-text' />
-              stepweaver is veteran-owned and run by someone who thrives on hard
-              problems.
+              stepweaver is veteran-owned and built on 8 years of solving real
+              business problems.
             </p>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-4'>
-              8 years as a business analyst.
+              No outdated technology. No security risks. No cutting corners.
             </p>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
-              I solve business problems with code, hard work, and genuine
-              curiosity.
-            </p>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
-              Building is a puzzle I never get tired of - figuring it out and
-              making it work is what I do best.
-            </p>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
-              It's my brand of grit.
+              Your business deserves tools that work today and grow with you
+              tomorrow.
             </p>
           </div>
         </header>

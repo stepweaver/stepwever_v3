@@ -13,42 +13,40 @@ import React, {
 
 const STORIES = [
   {
-    title: 'Notre Dame Reporting Overhaul',
+    title: 'Cut reporting time from hours to minutes',
     description:
-      'As business analyst, I built custom Tableau dashboards to replace terrible off‑the‑shelf reporting software, delivering 10× faster ad‑hoc reporting and achieving 100% adoption across campus ID operations.',
+      'Built custom dashboards that replaced slow, confusing software. Staff went from waiting days for reports to getting answers instantly, with 100% adoption.',
     metrics: [
-      '10× faster ad‑hoc reporting',
-      '100% adoption across campus ID operations',
+      '10× faster reporting',
+      '100% staff adoption',
+      'No more waiting for reports',
     ],
     category: 'Data & Analytics',
   },
   {
-    title: 'Small‑Business Sites',
+    title: 'Built websites that actually work',
     description:
-      'Solo designer‑dev shipping modern, mobile‑first marketing sites with exceptional performance and rapid delivery times.',
+      'Created mobile-friendly sites that load fast and convert visitors into customers. Business owners can focus on their work instead of managing their website.',
     metrics: [
-      'Modern mobile‑first design',
-      'Rapid delivery',
-      'Owner satisfaction',
+      'Works on all devices',
+      'Fast loading times',
+      'Happy business owners',
     ],
     category: 'Web Development',
   },
   {
-    title: 'Python Desktop App (Google APIs)',
+    title: 'Eliminated daily busywork forever',
     description:
-      'Built a 0→1 tool using new stacks and AI tooling to automate workflows, replacing manual daily exports with automated solutions.',
-    metrics: ['Built a 0→1 tool', 'Automated daily exports'],
-    category: 'Automation & AI',
+      'Connected business apps so data flows automatically. Replaced hours of manual work with systems that handle everything behind the scenes.',
+    metrics: ['Automated daily tasks', 'Saved hours every week'],
+    category: 'Automation',
   },
   {
-    title: 'Portfolio + Job‑Hunt Sprint',
+    title: 'Proved the value of smart systems',
     description:
-      'Demonstrated AI‑assisted rapid iteration and tangible career benefits through strategic portfolio development and deployment.',
-    metrics: [
-      'Interview + offer on same day',
-      'Recent Software Engineer interview',
-    ],
-    category: 'Career Development',
+      'Demonstrated how the right digital tools can transform a business, leading to immediate opportunities and growth.',
+    metrics: ['Immediate business impact', 'Clear return on investment'],
+    category: 'Business Growth',
   },
 ];
 

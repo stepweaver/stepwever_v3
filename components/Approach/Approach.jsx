@@ -3,14 +3,23 @@
 import { memo } from 'react';
 
 const STEPS = [
-  { title: 'We set the goal.', desc: 'Clear outcomes, no guesswork.' },
-  { title: 'We map the plan.', desc: 'Simple steps & check‑ins.' },
+  { title: 'We figure out what you need.', desc: 'Clear goals, no confusion.' },
   {
-    title: 'We build and show progress.',
-    desc: 'You see the work every step.',
+    title: 'We make a simple plan.',
+    desc: 'Easy steps with regular check-ins.',
   },
-  { title: 'We adjust together.', desc: 'Your feedback steers the ship.' },
-  { title: 'We ship, support, wrap up.', desc: 'Working results, guaranteed.' },
+  {
+    title: 'We build and show you progress.',
+    desc: "You see exactly what I'm working on.",
+  },
+  {
+    title: 'We adjust based on your feedback.',
+    desc: 'Your input shapes the final result.',
+  },
+  {
+    title: 'We finish and make sure it works.',
+    desc: 'Working solution, guaranteed.',
+  },
 ];
 
 function Approach() {
@@ -32,12 +41,12 @@ function Approach() {
           {/* Intro section */}
           <div>
             <h3 className='font-ibm text-xl lg:text-2xl mb-6 leading-relaxed'>
-              Every project is hands-on: you talk to me, see progress as it
-              happens, and help steer the result - from kickoff to launch.
+              You work directly with me. You see progress as it happens, and you
+              help guide the project from start to finish.
             </h3>
             <p className='font-ocr text-base lg:text-lg leading-relaxed text-terminal-text/90'>
-              No black boxes. No endless back-and-forth. Just direct work, fast
-              feedback, and honest communication.
+              No middlemen. No surprises. Just clear communication and working
+              solutions.
             </p>
           </div>
 

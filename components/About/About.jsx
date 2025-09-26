@@ -54,38 +54,41 @@ function About() {
 
             {/* Strapline */}
             <h3 className='font-ibm text-terminal-text text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight'>
-              Digital leverage, forged in experience.
+              I speak both business and tech.
             </h3>
 
             {/* Narrative */}
             <div className='prose prose-invert font-ocr max-w-none space-y-4 text-terminal-text'>
               <p className='text-lg'>
-                I’m Stephen Weaver, founder of{' '}
+                I'm Stephen Weaver, founder of{' '}
                 <GlitchLambda className='text-terminal-text' />
-                stepweaver — a one-man skunkworks delivering fast, no-nonsense
+                stepweaver - a one-man skunkworks delivering fast, no-nonsense
                 solutions: websites, automations, dashboards, and marketing
                 systems that actually work.
               </p>
 
-              <p className='text-lg'>I've worn many hats:</p>
+              <p className='text-lg'>My background spans both worlds:</p>
 
               <ul className='space-y-3 font-ocr text-lg'>
-                <li>Airborne Linguist (U.S. Air Force)</li>
-                <li>Business Analyst</li>
-                <li>Retail (restaurant) Manager</li>
-                <li>Developer & Builder</li>
-                <li>Founder</li>
+                <li>U.S. Air Force veteran (Airborne Linguist)</li>
+                <li>Business analyst who built reporting systems</li>
+                <li>Restaurant manager who learned operations</li>
+                <li>Developer who builds what businesses actually need</li>
               </ul>
 
               <p className='text-lg'>
-                What I've learned across those paths is simple: the most fulfilling work has been building and fixing systems that actually work. That's why I launched <GlitchLambda className='text-terminal-text' />stepweaver - to cut through corporate bloat and deliver high-impact solutions and the highest standards.
+                This unique combination means I don't just build websites and
+                apps - I understand your business challenges and create
+                solutions that actually solve them. No tech jargon, no corporate
+                bloat. Just working systems that help you grow.
               </p>
             </div>
 
             {/* CTA */}
             <footer className='space-y-4'>
               <p className='font-ibm text-terminal-cyan text-2xl lg:text-3xl'>
-              Every business needs a secret weapon. I just happen to be one you can hire.
+                Every business needs a secret weapon. I just happen to be one
+                you can hire.
               </p>
               <p className='text-lg font-ocr text-terminal-text'>
                 <a

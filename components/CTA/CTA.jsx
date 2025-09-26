@@ -6,9 +6,9 @@ import CalendlyModal from '@/components/ui/CalendlyModal';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const WORDS = [
-  { text: 'AUTOMATE?', color: 'text-terminal-green' },
-  { text: 'OPTIMIZE?', color: 'text-terminal-cyan' },
-  { text: 'SCALE?', color: 'text-terminal-magenta' },
+  { text: 'SAVE TIME?', color: 'text-terminal-green' },
+  { text: 'GROW SMARTER?', color: 'text-terminal-cyan' },
+  { text: 'GET RESULTS?', color: 'text-terminal-magenta' },
 ];
 
 export default function CTA() {
@@ -85,11 +85,12 @@ export default function CTA() {
         <div className='space-y-10 pt-2 md:pt-4'>
           <p className='font-ocr text-base md:text-lg lg:text-xl leading-tight'>
             <GlitchLambda className='text-terminal-green' />
-            stepweaver is your partner in building practical digital tools.
+            stepweaver builds websites and automations that actually work for
+            your business.
           </p>
 
           <p className='font-ibm text-terminal-green text-xl md:text-2xl lg:text-3xl'>
-            I win when you win.
+            Ready to save time and grow smarter?
           </p>
 
           {/* Buttons */}

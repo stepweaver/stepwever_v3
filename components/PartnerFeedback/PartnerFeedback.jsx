@@ -13,9 +13,9 @@ const TESTIMONIAL = {
 };
 
 const COMMITMENTS = [
-  "I don't sell hype - I deliver working systems.",
-  "You'll always see exactly what I'm building, how it works, and why it matters.",
-  'You get my full focus and straight updates, every step of the way.',
+  'No hype - just working solutions that solve real problems.',
+  "You'll see exactly what I'm building and why it matters to your business.",
+  'Clear updates and honest communication throughout the project.',
 ];
 
 function PartnerFeedback() {
@@ -51,11 +51,11 @@ function PartnerFeedback() {
         <div className='mb-8'>
           <article className='p-6 md:p-8 border border-terminal-green/30 bg-terminal-dark/10 rounded-lg'>
             <h3 className='text-xl md:text-2xl lg:text-3xl mb-4 font-ibm text-terminal-green'>
-              BE ONE OF MY FIRST PARTNERS
+              READY TO WORK TOGETHER?
             </h3>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mb-6'>
-              If you’re serious about cutting the busywork and scaling smarter,
-              I'll build the systems to get you there.
+              If you're ready to stop doing busywork and start growing smarter,
+              let's build the systems that will get you there.
             </p>
 
             {/* Personal Guarantee */}

@@ -5,32 +5,32 @@ import { memo } from 'react';
 // 1) Data lives outside the component
 const SERVICES = [
   {
-    title: 'Data Integrations',
+    title: 'Websites',
     description:
-      'Connect all your business systems - POS, accounting, and SaaS - into one real-time dashboard.',
+      'Professional websites that bring in more customers and work on every device.',
     items: [
-      'One source of truth for all your numbers',
-      'Automated exports and notifications',
-      'Alerts for what matters',
+      'Mobile-friendly sites that load fast',
+      'Contact forms that actually work',
+      'Easy to update and manage yourself',
     ],
   },
   {
-    title: 'Web Design',
+    title: 'Automations',
     description:
-      'Build fast, modern websites and digital tools that work from day one.',
+      'Stop doing repetitive tasks. Let me build systems that handle the busywork for you.',
     items: [
-      'React/Next sites that load fast',
-      'Brand refresh: logo, colors, fonts',
-      'Search engine optimization, analytics, and built-in interactivity',
+      'Connect your apps so data flows automatically',
+      'Email campaigns that run themselves',
+      'Reports that update without you lifting a finger',
     ],
   },
   {
-    title: 'Strategy & Automation',
-    description: 'Get practical systems, not PowerPoints.',
+    title: 'Digital Strategy',
+    description: 'Get a clear plan for growing your business online.',
     items: [
-      'Define the right metrics, build the tools, hand them over',
-      'Automations that handle real work, not just busywork',
-      'Ongoing support and roadmaps to keep things moving',
+      'Figure out what metrics actually matter to your business',
+      'Build the right tools to track your progress',
+      'Ongoing support to keep everything running smoothly',
     ],
   },
 ];
@@ -44,8 +44,8 @@ function WhatWeDo() {
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
             WHAT I DO
           </h2>
-          <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl leading-relaxed mb-6'>
-            Need specific pricing and delivery timelines?{' '}
+          <p className='text-lg md:text-xl font-ocr text-terminal-text leading-relaxed mb-6'>
+            Need specific pricing and delivery timelines?<br />
             <a
               href='/services'
               className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
