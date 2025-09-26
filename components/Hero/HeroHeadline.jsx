@@ -10,7 +10,7 @@ export default function HeroHeadline() {
             Automations.
           </div>
           <div className='text-terminal-magenta font-bold whitespace-nowrap'>
-            Digital Marketing.
+            Digital Tools.
           </div>
         </div>
       </h1>

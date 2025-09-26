@@ -62,7 +62,7 @@ function ServicesPage() {
                   Automations.
                 </div>
                 <div className='text-terminal-magenta font-bold mb-1 sm:mb-2 md:mb-3 whitespace-nowrap'>
-                  Digital Marketing.
+                  Digital Tools.
                 </div>
               </div>
             </h1>
