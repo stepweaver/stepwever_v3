@@ -33,7 +33,7 @@ export default function RollHistory({
   if (!history || history.length === 0) {
     return (
       <div>
-        <div className='text-sm font-bold text-terminal-green uppercase tracking-wide'>
+        <div className='text-xl font-bold text-terminal-green tracking-wide'>
           Roll History
         </div>
         <div className='text-terminal-muted italic text-center py-8'>
@@ -60,7 +60,7 @@ export default function RollHistory({
     <div>
       <div className='flex justify-between items-center mb-4 pb-2 border-b-2 border-terminal-border'>
         <div
-          className='mb-0 flex items-center gap-2 text-sm font-bold text-terminal-green uppercase tracking-wide'
+          className='mb-0 flex items-center gap-2 text-xl font-bold text-terminal-green tracking-wide'
           style={{
             cursor: hasMore ? 'pointer' : 'default',
           }}
@@ -68,7 +68,7 @@ export default function RollHistory({
         >
           {hasMore && (
             <span
-              className='text-terminal-green text-sm transition-transform duration-200 inline-block'
+              className='text-terminal-green text-xl transition-transform duration-200 inline-block'
               style={{
                 transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
               }}
