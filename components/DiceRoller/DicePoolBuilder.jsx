@@ -108,7 +108,7 @@ export default function DicePoolBuilder({
       <div>
         <h3 className='text-terminal-green mb-3 text-xl'>Add Dice</h3>
         {/* Hexagonal grid - d20 in center */}
-        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[260px] max-lg:h-[220px]'>
+        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[90vw] max-lg:max-w-[360px] max-lg:h-[300px]'>
           {DICE_TYPES.map((dice, index) => {
             const IconComponent = DiceIcons[dice.sides];
 

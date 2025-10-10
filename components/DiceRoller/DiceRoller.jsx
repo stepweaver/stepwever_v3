@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { roll, buildNotation, validateDicePool } from '@/lib/roller';
 import DicePoolBuilder from './DicePoolBuilder';
 import DiceResult from './DiceResult';
@@ -31,6 +31,7 @@ export default function DiceRoller() {
   const [isRolling, setIsRolling] = useState(false);
   const [copyStatus, setCopyStatus] = useState(false);
   const [historyExpanded, setHistoryExpanded] = useState(false);
+  const currentPoolRef = useRef(null);
 
   // Load history from localStorage on mount
   useEffect(() => {
@@ -52,6 +53,22 @@ export default function DiceRoller() {
       console.error('Failed to save history:', error);
     }
   }, [history]);
+
+  // Scroll to Current Pool on mobile when dice are added
+  useEffect(() => {
+    if (
+      dicePool.length > 0 &&
+      currentPoolRef.current &&
+      window.innerWidth < 1024
+    ) {
+      setTimeout(() => {
+        currentPoolRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }, 100);
+    }
+  }, [dicePool.length]);
 
   // Handle roll
   const handleRoll = useCallback(() => {
@@ -301,7 +318,7 @@ export default function DiceRoller() {
           {/* Right Column - Current Pool & Result */}
           <div className='flex flex-col gap-4'>
             {/* Current Pool Display */}
-            <div>
+            <div ref={currentPoolRef}>
               <h3 className='text-terminal-green mb-3 text-xl'>Current Pool</h3>
               <div className='flex flex-col gap-1 min-h-[30px] max-h-[200px] overflow-y-auto max-lg:max-h-[150px] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-terminal-dark [&::-webkit-scrollbar-track]:rounded [&::-webkit-scrollbar-thumb]:bg-terminal-border [&::-webkit-scrollbar-thumb]:rounded hover:[&::-webkit-scrollbar-thumb]:bg-terminal-green'>
                 {dicePool.length === 0 ? (
