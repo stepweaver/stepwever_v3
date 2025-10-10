@@ -6,7 +6,15 @@ import DicePoolBuilder from './DicePoolBuilder';
 import DiceResult from './DiceResult';
 import RollHistory from './RollHistory';
 import GlitchButton from '@/components/ui/GlitchButton';
-import styles from '@/styles/dice-roller.module.css';
+import {
+  GiTriangleTarget,
+  GiPerspectiveDiceSixFacesRandom,
+  GiDiceEightFacesEight,
+  GiDiceTwentyFacesTwenty,
+  GiRollingDices,
+  GiDiceTarget,
+  GiCubes,
+} from 'react-icons/gi';
 
 const MAX_HISTORY = 10;
 
@@ -182,170 +190,87 @@ export default function DiceRoller() {
   const canRoll = validateDicePool(dicePool) && !isRolling;
 
   return (
-    <div className={styles.diceRollerContainer}>
+    <div className='flex flex-col gap-2 p-2 font-ibm w-full max-w-full'>
       {/* Header Section */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '1rem',
-          paddingBottom: '0.75rem',
-          borderBottom: '1px solid var(--color-terminal-border)',
-          flexWrap: 'wrap',
-          gap: '0.75rem',
-        }}
-      >
+      <div className='flex flex-col items-center justify-center mb-4 pb-3 border-b border-terminal-border gap-3'>
         {/* Title */}
         <h1
-          style={{
-            fontSize: '1.5rem',
-            color: 'var(--color-terminal-green)',
-            margin: '0',
-            fontFamily: 'var(--font-ibm)',
-            textShadow: 'var(--terminal-title-glow)',
-            letterSpacing: '0.05em',
-          }}
+          className='text-2xl text-terminal-green m-0 font-ibm tracking-wide'
+          style={{ textShadow: 'var(--terminal-title-glow)' }}
         >
           🎲 RPG DICE ROLLER
         </h1>
 
         {/* Keyboard Shortcuts */}
-        <div className={styles.keyboardShortcuts}>
-          <div className={styles.shortcut}>
-            <span className={styles.shortcutKey}>ENTER</span>
-            <span>Roll</span>
+        <div className='flex gap-3 items-center flex-wrap justify-center max-lg:hidden'>
+          <div className='flex items-center gap-1'>
+            <span className='px-1.5 py-0.5 bg-terminal-dark border border-terminal-border rounded font-ocr text-[0.65rem] text-terminal-green'>
+              ENTER
+            </span>
+            <span className='text-sm'>Roll</span>
           </div>
-          <div className={styles.shortcut}>
-            <span className={styles.shortcutKey}>C</span>
-            <span>Copy</span>
+          <div className='flex items-center gap-1'>
+            <span className='px-1.5 py-0.5 bg-terminal-dark border border-terminal-border rounded font-ocr text-[0.65rem] text-terminal-green'>
+              C
+            </span>
+            <span className='text-sm'>Copy</span>
           </div>
-          <div className={styles.shortcut}>
-            <span className={styles.shortcutKey}>R</span>
-            <span>Reset</span>
+          <div className='flex items-center gap-1'>
+            <span className='px-1.5 py-0.5 bg-terminal-dark border border-terminal-border rounded font-ocr text-[0.65rem] text-terminal-green'>
+              R
+            </span>
+            <span className='text-sm'>Reset</span>
           </div>
-          <div className={styles.shortcut}>
-            <span className={styles.shortcutKey}>ESC</span>
-            <span>Clear</span>
+          <div className='flex items-center gap-1'>
+            <span className='px-1.5 py-0.5 bg-terminal-dark border border-terminal-border rounded font-ocr text-[0.65rem] text-terminal-green'>
+              ESC
+            </span>
+            <span className='text-sm'>Clear</span>
           </div>
         </div>
       </div>
 
-      {/* Main Content - Compact 2-Column */}
-      <div className={styles.mainGrid}>
-        {/* Left Column - Builder, Controls & Current Roll */}
-        <div
-          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
-        >
-          <DicePoolBuilder dicePool={dicePool} onUpdatePool={setDicePool} />
-
-          <div
-            style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}
-          >
-            {/* Modifier */}
-            <div
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-            >
-              <label
-                htmlFor='modifier-input'
-                style={{
-                  color: 'var(--color-terminal-green)',
-                  fontSize: '0.75rem',
-                  fontWeight: 'bold',
-                  minWidth: '50px',
-                }}
-              >
-                MOD:
-              </label>
-              <button
-                onClick={() => setModifier(modifier - 1)}
-                className={styles.quantityButton}
-                style={{
-                  padding: '0.4rem 0.6rem',
-                  fontSize: '0.85rem',
-                  minWidth: '32px',
-                }}
-                aria-label='Decrease modifier'
-              >
-                −
-              </button>
-              <input
-                id='modifier-input'
-                type='number'
-                value={modifier}
-                onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
-                className={styles.modifierInput}
-                placeholder='0'
-                aria-label='Roll modifier'
-                style={{
-                  width: '60px',
-                  padding: '0.5rem',
-                  fontSize: '0.85rem',
-                  textAlign: 'center',
-                }}
-              />
-              <button
-                onClick={() => setModifier(modifier + 1)}
-                className={styles.quantityButton}
-                style={{
-                  padding: '0.4rem 0.6rem',
-                  fontSize: '0.85rem',
-                  minWidth: '32px',
-                }}
-                aria-label='Increase modifier'
-              >
-                +
-              </button>
-            </div>
-
-            {/* Comment */}
-            <input
-              id='comment-input'
-              type='text'
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              className={styles.modifierInput}
-              placeholder='NOTE: e.g., Attack roll, initiative, saving throw...'
-              aria-label='Roll comment'
-              maxLength={150}
-              style={{
-                width: '100%',
-                maxWidth: 'none',
-                padding: '0.6rem',
-                fontSize: '0.9rem',
-                textAlign: 'left',
-              }}
+      {/* Main Content - 2-Column Grid */}
+      <div className='flex flex-col gap-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-[minmax(0,600px)_minmax(0,600px)] gap-6 lg:gap-16 items-start justify-center'>
+          {/* Left Column - Dice Selection & Controls */}
+          <div className='flex flex-col gap-2'>
+            <DicePoolBuilder
+              dicePool={dicePool}
+              onUpdatePool={setDicePool}
+              modifier={modifier}
+              setModifier={setModifier}
             />
 
-            {/* Action Buttons */}
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <GlitchButton
-                onClick={handleRoll}
-                disabled={!canRoll}
-                style={{
-                  flex: 2,
-                  padding: '0.5rem',
-                  fontSize: '0.85rem',
-                }}
-              >
-                {isRolling ? '⚡ ROLLING' : '🎲 ROLL'}
-              </GlitchButton>
+            <div className='flex flex-col gap-1.5'>
+              {/* Comment */}
+              <input
+                id='comment-input'
+                type='text'
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className='w-full p-2.5 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-left focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision]'
+                placeholder='NOTE: e.g., Attack roll, initiative, saving throw...'
+                aria-label='Roll comment'
+                maxLength={150}
+              />
 
-              <GlitchButton
-                onClick={handleReset}
-                variant='secondary'
-                style={{
-                  flex: 1,
-                  padding: '0.5rem',
-                  fontSize: '0.75rem',
-                }}
-              >
-                RESET
-              </GlitchButton>
-
-              {currentResult && (
+              {/* Action Buttons */}
+              <div className='flex gap-2'>
                 <GlitchButton
-                  onClick={handleCopy}
+                  onClick={handleRoll}
+                  disabled={!canRoll}
+                  style={{
+                    flex: 2,
+                    padding: '0.5rem',
+                    fontSize: '0.85rem',
+                  }}
+                >
+                  {isRolling ? '⚡ ROLLING' : '🎲 ROLL'}
+                </GlitchButton>
+
+                <GlitchButton
+                  onClick={handleReset}
                   variant='secondary'
                   style={{
                     flex: 1,
@@ -353,41 +278,149 @@ export default function DiceRoller() {
                     fontSize: '0.75rem',
                   }}
                 >
-                  {copyStatus ? '✓' : '📋'}
+                  RESET
                 </GlitchButton>
-              )}
+
+                {currentResult && (
+                  <GlitchButton
+                    onClick={handleCopy}
+                    variant='secondary'
+                    style={{
+                      flex: 1,
+                      padding: '0.5rem',
+                      fontSize: '0.75rem',
+                    }}
+                  >
+                    {copyStatus ? '✓' : '📋'}
+                  </GlitchButton>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Current Result */}
-          {currentResult && (
-            <div className={styles.resultsSection}>
-              <h3
-                style={{
-                  color: 'var(--color-terminal-green)',
-                  marginBottom: '0.5rem',
-                  fontSize: '0.9rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                }}
-              >
-                ▸ Current Roll
-              </h3>
-              <DiceResult result={currentResult} />
+          {/* Right Column - Current Pool & Result */}
+          <div className='flex flex-col gap-4'>
+            {/* Current Pool Display */}
+            <div>
+              <h3 className='text-terminal-green mb-3 text-xl'>Current Pool</h3>
+              <div className='flex flex-col gap-1 min-h-[30px] max-h-[200px] overflow-y-auto max-lg:max-h-[150px] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-terminal-dark [&::-webkit-scrollbar-track]:rounded [&::-webkit-scrollbar-thumb]:bg-terminal-border [&::-webkit-scrollbar-thumb]:rounded hover:[&::-webkit-scrollbar-thumb]:bg-terminal-green'>
+                {dicePool.length === 0 ? (
+                  <div className='flex items-center justify-center text-terminal-muted italic min-h-[100px]'>
+                    Click dice on the left to add them to your pool
+                  </div>
+                ) : (
+                  dicePool.map((die) => {
+                    const IconComponent = {
+                      4: GiTriangleTarget,
+                      6: GiPerspectiveDiceSixFacesRandom,
+                      8: GiDiceEightFacesEight,
+                      10: GiDiceTarget,
+                      12: GiCubes,
+                      20: GiDiceTwentyFacesTwenty,
+                      100: GiRollingDices,
+                    }[die.sides];
+
+                    return (
+                      <div
+                        key={die.sides}
+                        className='flex items-center justify-between py-1 px-1.5 bg-[rgba(13,18,17,0.4)] border rounded gap-1 text-[0.7rem] max-w-[400px] max-lg:max-w-full'
+                        style={{ borderColor: die.color }}
+                      >
+                        <div className='flex items-center gap-1.5 flex-1'>
+                          <IconComponent
+                            size={16}
+                            style={{ color: die.color }}
+                          />
+                          <span
+                            className='font-bold text-sm min-w-[50px] mr-auto'
+                            style={{ color: die.color }}
+                          >
+                            d{die.sides}
+                          </span>
+                          <div className='flex items-center gap-1.5'>
+                            <button
+                              onClick={() => {
+                                const updatedPool = dicePool
+                                  .map((d) =>
+                                    d.sides === die.sides
+                                      ? {
+                                          ...d,
+                                          count: Math.max(0, d.count - 1),
+                                        }
+                                      : d
+                                  )
+                                  .filter((d) => d.count > 0);
+                                setDicePool(updatedPool);
+                              }}
+                              className='w-[26px] h-[26px] border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] disabled:opacity-30 disabled:cursor-not-allowed'
+                              disabled={die.count <= 1}
+                              aria-label={`Decrease ${die.sides}-sided dice count`}
+                            >
+                              −
+                            </button>
+                            <span className='min-w-8 text-center text-sm font-bold'>
+                              {die.count}
+                            </span>
+                            <button
+                              onClick={() => {
+                                const updatedPool = dicePool.map((d) =>
+                                  d.sides === die.sides
+                                    ? { ...d, count: d.count + 1 }
+                                    : d
+                                );
+                                setDicePool(updatedPool);
+                              }}
+                              className='w-[26px] h-[26px] border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] disabled:opacity-30 disabled:cursor-not-allowed'
+                              disabled={die.count >= 99}
+                              aria-label={`Increase ${die.sides}-sided dice count`}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            const updatedPool = dicePool.filter(
+                              (d) => d.sides !== die.sides
+                            );
+                            setDicePool(updatedPool);
+                          }}
+                          className='p-1 bg-transparent border border-terminal-red text-terminal-red rounded cursor-pointer transition-all font-bold text-xs hover:bg-terminal-red hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-red)]'
+                          aria-label={`Remove ${die.sides}-sided dice from pool`}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
             </div>
-          )}
+
+            {/* Current Result */}
+            {currentResult && (
+              <div className='flex flex-col gap-4'>
+                <h3 className='text-terminal-green mb-2 text-sm uppercase tracking-wide'>
+                  ▸ Current Roll
+                </h3>
+                <DiceResult result={currentResult} />
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Right Column - History Only */}
-        <div>
-          <RollHistory
-            history={history}
-            onSelectRoll={handleSelectHistoryRoll}
-            onEditComment={handleEditComment}
-            onClearHistory={handleClearHistory}
-            isExpanded={historyExpanded}
-            onToggleExpanded={() => setHistoryExpanded(!historyExpanded)}
-          />
+        {/* History - Compact List Below */}
+        <div className='grid grid-cols-1 lg:grid-cols-[minmax(0,600px)_minmax(0,600px)] gap-6 lg:gap-16 justify-center'>
+          <div className='max-w-[600px] w-full'>
+            <RollHistory
+              history={history}
+              onSelectRoll={handleSelectHistoryRoll}
+              onEditComment={handleEditComment}
+              onClearHistory={handleClearHistory}
+              isExpanded={historyExpanded}
+              onToggleExpanded={() => setHistoryExpanded(!historyExpanded)}
+            />
+          </div>
         </div>
       </div>
     </div>

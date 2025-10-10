@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import styles from '@/styles/dice-roller.module.css';
 import {
   GiTriangleTarget,
   GiPerspectiveDiceSixFacesRandom,
@@ -54,7 +53,12 @@ function getRandomColor() {
 /**
  * Component for building and managing the dice pool
  */
-export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
+export default function DicePoolBuilder({
+  dicePool,
+  onUpdatePool,
+  modifier,
+  setModifier,
+}) {
   // State for button colors - initialize after mount to avoid hydration mismatch
   const [buttonColors, setButtonColors] = useState({});
 
@@ -99,34 +103,55 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
   };
 
   return (
-    <div className={styles.dicePoolBuilder}>
+    <div className='flex flex-col gap-3'>
       {/* Dice Type Selection */}
       <div>
-        <h3
-          style={{
-            color: 'var(--color-terminal-green)',
-            marginBottom: '0.75rem',
-            fontSize: '1.25rem',
-          }}
-        >
-          Add Dice
-        </h3>
-        <div className={styles.diceTypeGrid}>
-          {DICE_TYPES.map((dice) => {
+        <h3 className='text-terminal-green mb-3 text-xl'>Add Dice</h3>
+        {/* Hexagonal grid - d20 in center */}
+        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[260px] max-lg:h-[220px]'>
+          {DICE_TYPES.map((dice, index) => {
             const IconComponent = DiceIcons[dice.sides];
+
+            // Position each die in hexagonal formation
+            const positions = [
+              // d4 - top
+              { left: '50%', top: '0', transform: 'translateX(-50%)' },
+              // d6 - top right
+              { right: '10%', top: '18%', transform: '' },
+              // d8 - bottom right
+              { right: '10%', bottom: '18%', transform: '' },
+              // d10 - bottom
+              { left: '50%', bottom: '0', transform: 'translateX(-50%)' },
+              // d12 - bottom left
+              { left: '10%', bottom: '18%', transform: '' },
+              // d20 - center
+              { left: '50%', top: '50%', transform: 'translate(-50%, -50%)' },
+              // d100 - top left
+              { left: '10%', top: '18%', transform: '' },
+            ];
+
+            const pos = positions[index];
+            const positionStyles = {
+              ...(pos.left && { left: pos.left }),
+              ...(pos.right && { right: pos.right }),
+              ...(pos.top && { top: pos.top }),
+              ...(pos.bottom && { bottom: pos.bottom }),
+              ...(pos.transform && { transform: pos.transform }),
+            };
+
             return (
               <button
                 key={dice.sides}
                 onClick={() => handleAddDice(dice.sides)}
-                className={styles.diceTypeButton}
+                className='absolute p-1 bg-transparent border-none font-ibm text-[0.65rem] font-bold cursor-pointer transition-all flex flex-col items-center gap-0.5 justify-center hover:z-10 hover:drop-shadow-[0_0_10px_currentColor] hover:scale-115'
                 style={{
                   color:
                     buttonColors[dice.sides] || 'var(--color-terminal-green)',
+                  ...positionStyles,
                 }}
                 onMouseEnter={(e) => {
                   const newColor = getRandomColor();
                   e.currentTarget.style.color = newColor;
-                  // Update state so color persists after hover
                   setButtonColors((prev) => ({
                     ...prev,
                     [dice.sides]: newColor,
@@ -134,80 +159,49 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
                 }}
                 aria-label={`Add ${dice.label} to pool`}
               >
-                <IconComponent size={36} />
-                <span className={styles.diceLabel}>{dice.label}</span>
+                <IconComponent size={48} />
+                <span className='text-[0.75rem] opacity-90 font-semibold tracking-wider'>
+                  {dice.label}
+                </span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Active Dice Pool */}
+      {/* Modifier Section */}
       <div>
-        <h3
-          style={{
-            color: 'var(--color-terminal-green)',
-            marginBottom: '0.75rem',
-            fontSize: '1.25rem',
-          }}
-        >
-          Current Pool
-        </h3>
-        <div className={styles.activeDicePool}>
-          {dicePool.length === 0 ? (
-            <div className={styles.emptyPool}>
-              Click dice above to add them to your pool
-            </div>
-          ) : (
-            dicePool.map((die) => {
-              const IconComponent = DiceIcons[die.sides];
-              return (
-                <div
-                  key={die.sides}
-                  className={styles.dicePoolItem}
-                  style={{ borderColor: die.color }}
-                >
-                  <div className={styles.dicePoolInfo}>
-                    <IconComponent size={16} style={{ color: die.color }} />
-                    <span
-                      className={styles.dicePoolLabel}
-                      style={{ color: die.color }}
-                    >
-                      d{die.sides}
-                    </span>
-                    <div className={styles.dicePoolControls}>
-                      <button
-                        onClick={() => handleUpdateCount(die.sides, -1)}
-                        className={styles.quantityButton}
-                        disabled={die.count <= 1}
-                        aria-label={`Decrease ${die.sides}-sided dice count`}
-                      >
-                        −
-                      </button>
-                      <span className={styles.quantityDisplay}>
-                        {die.count}
-                      </span>
-                      <button
-                        onClick={() => handleUpdateCount(die.sides, 1)}
-                        className={styles.quantityButton}
-                        disabled={die.count >= 99}
-                        aria-label={`Increase ${die.sides}-sided dice count`}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => handleRemoveDice(die.sides)}
-                    className={styles.removeButton}
-                    aria-label={`Remove ${die.sides}-sided dice from pool`}
-                  >
-                    ✕
-                  </button>
-                </div>
-              );
-            })
-          )}
+        <h3 className='text-terminal-green mb-3 text-xl'>Modifier</h3>
+        <div className='flex items-center gap-2'>
+          <label
+            htmlFor='modifier-input'
+            className='text-terminal-green text-xs font-bold min-w-[50px]'
+          >
+            MOD:
+          </label>
+          <button
+            onClick={() => setModifier(modifier - 1)}
+            className='w-8 h-8 min-w-8 border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
+            aria-label='Decrease modifier'
+          >
+            −
+          </button>
+          <input
+            id='modifier-input'
+            type='number'
+            value={modifier}
+            onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
+            className='w-16 p-2 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-center focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision]'
+            placeholder='0'
+            aria-label='Roll modifier'
+          />
+          <button
+            onClick={() => setModifier(modifier + 1)}
+            className='w-8 h-8 min-w-8 border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
+            aria-label='Increase modifier'
+          >
+            +
+          </button>
         </div>
       </div>
     </div>

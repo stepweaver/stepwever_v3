@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styles from '@/styles/dice-roller.module.css';
 
 /**
  * Display roll history with the last N rolls
@@ -33,9 +32,11 @@ export default function RollHistory({
 
   if (!history || history.length === 0) {
     return (
-      <div className={styles.historySection}>
-        <div className={styles.historyTitle}>Roll History</div>
-        <div className={styles.historyEmpty}>
+      <div>
+        <div className='text-sm font-bold text-terminal-green uppercase tracking-wide'>
+          Roll History
+        </div>
+        <div className='text-terminal-muted italic text-center py-8'>
           No rolls yet. Start rolling some dice!
         </div>
       </div>
@@ -49,43 +50,27 @@ export default function RollHistory({
     const day = String(date.getDate()).padStart(2, '0');
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
+    return `[${year}-${month}-${day} ${hours}:${minutes}]`;
   };
 
   const displayedHistory = isExpanded ? history : history.slice(0, 3);
   const hasMore = history.length > 3;
 
   return (
-    <div className={styles.historySection}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '1rem',
-          paddingBottom: '0.5rem',
-          borderBottom: '2px solid var(--color-terminal-border)',
-        }}
-      >
+    <div>
+      <div className='flex justify-between items-center mb-4 pb-2 border-b-2 border-terminal-border'>
         <div
-          className={styles.historyTitle}
+          className='mb-0 flex items-center gap-2 text-sm font-bold text-terminal-green uppercase tracking-wide'
           style={{
-            marginBottom: 0,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
             cursor: hasMore ? 'pointer' : 'default',
           }}
           onClick={hasMore ? onToggleExpanded : undefined}
         >
           {hasMore && (
             <span
+              className='text-terminal-green text-sm transition-transform duration-200 inline-block'
               style={{
-                color: 'var(--color-terminal-green)',
-                fontSize: '0.9rem',
-                transition: 'transform 0.2s ease',
                 transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
-                display: 'inline-block',
               }}
             >
               ▸
@@ -96,13 +81,7 @@ export default function RollHistory({
         {history.length > 0 && (
           <button
             onClick={onClearHistory}
-            className={styles.copyButton}
-            style={{
-              padding: '0.25rem 0.5rem',
-              fontSize: '0.75rem',
-              borderColor: 'var(--color-terminal-red)',
-              color: 'var(--color-terminal-red)',
-            }}
+            className='py-1 px-2 bg-terminal-dark border-2 border-terminal-red rounded-md text-terminal-red font-ibm text-xs cursor-pointer transition-all hover:bg-terminal-red hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-red)]'
             aria-label='Clear history'
           >
             CLEAR
@@ -110,39 +89,32 @@ export default function RollHistory({
         )}
       </div>
       {displayedHistory.map((roll, index) => (
-        <div key={index} className={styles.historyItem}>
+        <div
+          key={index}
+          className='p-2 mb-1.5 bg-[rgba(13,18,17,0.4)] border border-terminal-border rounded cursor-pointer transition-all text-xs hover:bg-[rgba(13,18,17,0.6)] hover:border-terminal-green hover:shadow-[0_0_10px_rgba(0,255,65,0.2)]'
+        >
           <div
             onClick={() => !editingIndex && onSelectRoll && onSelectRoll(roll)}
             style={{ cursor: editingIndex === index ? 'default' : 'pointer' }}
           >
-            <div className={styles.historyItemHeader}>
-              <span className={styles.historyItemNotation}>
+            <div className='flex justify-between items-center mb-2'>
+              <span className='font-bold text-terminal-cyan'>
                 {roll.notation}
               </span>
-              <span className={styles.historyItemTotal}>= {roll.total}</span>
+              <span className='font-bold text-terminal-green'>
+                = {roll.total}
+              </span>
             </div>
 
             {editingIndex === index ? (
-              <div
-                style={{
-                  marginTop: '0.5rem',
-                  display: 'flex',
-                  gap: '0.5rem',
-                  alignItems: 'center',
-                }}
-              >
+              <div className='mt-2 flex gap-2 items-center'>
                 <input
                   type='text'
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
-                  className={styles.modifierInput}
+                  className='flex-1 p-1 px-2 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-xs focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
                   placeholder='Add comment...'
                   maxLength={100}
-                  style={{
-                    flex: 1,
-                    fontSize: '0.75rem',
-                    padding: '0.25rem 0.5rem',
-                  }}
                   autoFocus
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSaveEdit(index);
@@ -151,20 +123,13 @@ export default function RollHistory({
                 />
                 <button
                   onClick={() => handleSaveEdit(index)}
-                  className={styles.copyButton}
-                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                  className='py-1 px-2 bg-terminal-dark border-2 border-terminal-cyan rounded text-terminal-cyan font-ibm text-xs cursor-pointer transition-all hover:bg-terminal-cyan hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-cyan)]'
                 >
                   ✓
                 </button>
                 <button
                   onClick={handleCancelEdit}
-                  className={styles.copyButton}
-                  style={{
-                    padding: '0.25rem 0.5rem',
-                    fontSize: '0.75rem',
-                    borderColor: 'var(--color-terminal-red)',
-                    color: 'var(--color-terminal-red)',
-                  }}
+                  className='py-1 px-2 bg-terminal-dark border-2 border-terminal-red rounded text-terminal-red font-ibm text-xs cursor-pointer transition-all hover:bg-terminal-red hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-red)]'
                 >
                   ✕
                 </button>
@@ -172,31 +137,14 @@ export default function RollHistory({
             ) : (
               <>
                 {roll.comment ? (
-                  <div
-                    style={{
-                      marginTop: '0.25rem',
-                      fontSize: '0.75rem',
-                      color: 'var(--color-terminal-cyan)',
-                      fontStyle: 'italic',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
+                  <div className='mt-1 text-xs text-terminal-cyan italic flex justify-between items-center'>
                     <span>"{roll.comment}"</span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleStartEdit(index, roll.comment);
                       }}
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        color: 'var(--color-terminal-muted)',
-                        cursor: 'pointer',
-                        fontSize: '0.75rem',
-                        padding: '0.125rem 0.25rem',
-                      }}
+                      className='bg-transparent border-none text-terminal-muted cursor-pointer text-xs p-0.5 px-1'
                       aria-label='Edit comment'
                     >
                       ✎
@@ -208,22 +156,12 @@ export default function RollHistory({
                       e.stopPropagation();
                       handleStartEdit(index, '');
                     }}
-                    style={{
-                      marginTop: '0.25rem',
-                      background: 'none',
-                      border: 'none',
-                      color: 'var(--color-terminal-dimmed)',
-                      cursor: 'pointer',
-                      fontSize: '0.75rem',
-                      fontStyle: 'italic',
-                      padding: 0,
-                      textAlign: 'left',
-                    }}
+                    className='mt-1 bg-transparent border-none text-terminal-dimmed cursor-pointer text-xs italic p-0 text-left'
                   >
                     + add comment
                   </button>
                 )}
-                <div className={styles.historyItemTimestamp}>
+                <div className='text-[0.7rem] text-terminal-dimmed'>
                   {formatTimestamp(roll.timestamp)}
                 </div>
               </>
