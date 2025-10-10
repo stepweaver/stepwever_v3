@@ -134,7 +134,7 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
                 }}
                 aria-label={`Add ${dice.label} to pool`}
               >
-                <IconComponent size={32} />
+                <IconComponent size={36} />
                 <span className={styles.diceLabel}>{dice.label}</span>
               </button>
             );
@@ -168,7 +168,7 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
                   style={{ borderColor: die.color }}
                 >
                   <div className={styles.dicePoolInfo}>
-                    <IconComponent size={24} style={{ color: die.color }} />
+                    <IconComponent size={16} style={{ color: die.color }} />
                     <span
                       className={styles.dicePoolLabel}
                       style={{ color: die.color }}

@@ -5,6 +5,7 @@ import { roll, buildNotation, validateDicePool } from '@/lib/roller';
 import DicePoolBuilder from './DicePoolBuilder';
 import DiceResult from './DiceResult';
 import RollHistory from './RollHistory';
+import GlitchButton from '@/components/ui/GlitchButton';
 import styles from '@/styles/dice-roller.module.css';
 
 const MAX_HISTORY = 10;
@@ -16,10 +17,12 @@ const MAX_HISTORY = 10;
 export default function DiceRoller() {
   const [dicePool, setDicePool] = useState([]);
   const [modifier, setModifier] = useState(0);
+  const [comment, setComment] = useState('');
   const [currentResult, setCurrentResult] = useState(null);
   const [history, setHistory] = useState([]);
   const [isRolling, setIsRolling] = useState(false);
   const [copyStatus, setCopyStatus] = useState(false);
+  const [historyExpanded, setHistoryExpanded] = useState(false);
 
   // Load history from localStorage on mount
   useEffect(() => {
@@ -54,11 +57,15 @@ export default function DiceRoller() {
       const notation = buildNotation(dicePool, modifier);
       const result = roll(notation);
 
+      // Add comment to the result
+      result.comment = comment.trim();
+
       setCurrentResult(result);
       setHistory((prev) => [result, ...prev].slice(0, MAX_HISTORY));
       setIsRolling(false);
+      setComment(''); // Clear comment after roll
     }, 500);
-  }, [dicePool, modifier, isRolling]);
+  }, [dicePool, modifier, comment, isRolling]);
 
   // Handle copy notation
   const handleCopy = useCallback(() => {
@@ -106,8 +113,26 @@ export default function DiceRoller() {
   const handleReset = useCallback(() => {
     setDicePool([]);
     setModifier(0);
+    setComment('');
     setCurrentResult(null);
     setCopyStatus(false);
+  }, []);
+
+  // Handle clear history
+  const handleClearHistory = useCallback(() => {
+    if (window.confirm('Clear all roll history?')) {
+      setHistory([]);
+      localStorage.removeItem('diceRollerHistory');
+    }
+  }, []);
+
+  // Handle edit comment in history
+  const handleEditComment = useCallback((index, newComment) => {
+    setHistory((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], comment: newComment };
+      return updated;
+    });
   }, []);
 
   // Handle clear results
@@ -158,150 +183,210 @@ export default function DiceRoller() {
 
   return (
     <div className={styles.diceRollerContainer}>
-      {/* Title */}
-      <div style={{ textAlign: 'center' }}>
+      {/* Header Section */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '1rem',
+          paddingBottom: '0.75rem',
+          borderBottom: '1px solid var(--color-terminal-border)',
+          flexWrap: 'wrap',
+          gap: '0.75rem',
+        }}
+      >
+        {/* Title */}
         <h1
           style={{
-            fontSize: '2.5rem',
+            fontSize: '1.5rem',
             color: 'var(--color-terminal-green)',
-            marginBottom: '0.5rem',
+            margin: '0',
             fontFamily: 'var(--font-ibm)',
             textShadow: 'var(--terminal-title-glow)',
+            letterSpacing: '0.05em',
           }}
         >
           🎲 RPG DICE ROLLER
         </h1>
-        <p
-          style={{
-            color: 'var(--color-terminal-muted)',
-            fontSize: '1rem',
-          }}
+
+        {/* Keyboard Shortcuts */}
+        <div className={styles.keyboardShortcuts}>
+          <div className={styles.shortcut}>
+            <span className={styles.shortcutKey}>ENTER</span>
+            <span>Roll</span>
+          </div>
+          <div className={styles.shortcut}>
+            <span className={styles.shortcutKey}>C</span>
+            <span>Copy</span>
+          </div>
+          <div className={styles.shortcut}>
+            <span className={styles.shortcutKey}>R</span>
+            <span>Reset</span>
+          </div>
+          <div className={styles.shortcut}>
+            <span className={styles.shortcutKey}>ESC</span>
+            <span>Clear</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content - Compact 2-Column */}
+      <div className={styles.mainGrid}>
+        {/* Left Column - Builder, Controls & Current Roll */}
+        <div
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
         >
-          Roll any combination of dice for your tabletop RPG sessions
-        </p>
-      </div>
-
-      {/* Keyboard Shortcuts Info */}
-      <div className={styles.shortcutsInfo}>
-        <div className={styles.shortcut}>
-          <span className={styles.shortcutKey}>ENTER</span>
-          <span>Roll</span>
-        </div>
-        <div className={styles.shortcut}>
-          <span className={styles.shortcutKey}>C</span>
-          <span>Copy</span>
-        </div>
-        <div className={styles.shortcut}>
-          <span className={styles.shortcutKey}>R</span>
-          <span>Reset</span>
-        </div>
-        <div className={styles.shortcut}>
-          <span className={styles.shortcutKey}>ESC</span>
-          <span>Clear</span>
-        </div>
-      </div>
-
-      {/* Main Content - Two Column Layout */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '1.5rem',
-        }}
-      >
-        {/* Left Column - Dice Builder */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <DicePoolBuilder dicePool={dicePool} onUpdatePool={setDicePool} />
 
-          {/* Modifier Section */}
-          <div className={styles.modifierSection}>
-            <label
-              htmlFor='modifier-input'
-              style={{
-                color: 'var(--color-terminal-text)',
-                fontWeight: 'bold',
-              }}
-            >
-              Modifier:
-            </label>
-            <input
-              id='modifier-input'
-              type='number'
-              value={modifier}
-              onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
-              className={styles.modifierInput}
-              placeholder='0'
-              aria-label='Roll modifier'
-            />
-          </div>
-
-          {/* Roll Button */}
-          <button
-            onClick={handleRoll}
-            disabled={!canRoll}
-            className={`${styles.rollButton} ${
-              isRolling ? styles.rolling : ''
-            }`}
-            aria-label='Roll dice'
-          >
-            {isRolling ? '🎲 ROLLING...' : '🎲 ROLL DICE'}
-          </button>
-
-          {/* Action Buttons */}
           <div
-            style={{
-              display: 'flex',
-              gap: '0.75rem',
-              justifyContent: 'center',
-            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}
           >
-            <button
-              onClick={handleReset}
-              className={styles.copyButton}
-              style={{
-                borderColor: 'var(--color-terminal-orange)',
-                color: 'var(--color-terminal-orange)',
-              }}
-              aria-label='Reset dice pool'
+            {/* Modifier */}
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             >
-              RESET
-            </button>
-            {currentResult && (
-              <button
-                onClick={handleCopy}
-                className={`${styles.copyButton} ${
-                  copyStatus ? styles.copied : ''
-                }`}
-                aria-label='Copy notation to clipboard'
+              <label
+                htmlFor='modifier-input'
+                style={{
+                  color: 'var(--color-terminal-green)',
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold',
+                  minWidth: '50px',
+                }}
               >
-                {copyStatus ? '✓ COPIED!' : '📋 COPY'}
+                MOD:
+              </label>
+              <button
+                onClick={() => setModifier(modifier - 1)}
+                className={styles.quantityButton}
+                style={{
+                  padding: '0.4rem 0.6rem',
+                  fontSize: '0.85rem',
+                  minWidth: '32px',
+                }}
+                aria-label='Decrease modifier'
+              >
+                −
               </button>
-            )}
-          </div>
-        </div>
+              <input
+                id='modifier-input'
+                type='number'
+                value={modifier}
+                onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
+                className={styles.modifierInput}
+                placeholder='0'
+                aria-label='Roll modifier'
+                style={{
+                  width: '60px',
+                  padding: '0.5rem',
+                  fontSize: '0.85rem',
+                  textAlign: 'center',
+                }}
+              />
+              <button
+                onClick={() => setModifier(modifier + 1)}
+                className={styles.quantityButton}
+                style={{
+                  padding: '0.4rem 0.6rem',
+                  fontSize: '0.85rem',
+                  minWidth: '32px',
+                }}
+                aria-label='Increase modifier'
+              >
+                +
+              </button>
+            </div>
 
-        {/* Right Column - Results and History */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {/* Comment */}
+            <input
+              id='comment-input'
+              type='text'
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              className={styles.modifierInput}
+              placeholder='NOTE: e.g., Attack roll, initiative, saving throw...'
+              aria-label='Roll comment'
+              maxLength={150}
+              style={{
+                width: '100%',
+                maxWidth: 'none',
+                padding: '0.6rem',
+                fontSize: '0.9rem',
+                textAlign: 'left',
+              }}
+            />
+
+            {/* Action Buttons */}
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <GlitchButton
+                onClick={handleRoll}
+                disabled={!canRoll}
+                style={{
+                  flex: 2,
+                  padding: '0.5rem',
+                  fontSize: '0.85rem',
+                }}
+              >
+                {isRolling ? '⚡ ROLLING' : '🎲 ROLL'}
+              </GlitchButton>
+
+              <GlitchButton
+                onClick={handleReset}
+                variant='secondary'
+                style={{
+                  flex: 1,
+                  padding: '0.5rem',
+                  fontSize: '0.75rem',
+                }}
+              >
+                RESET
+              </GlitchButton>
+
+              {currentResult && (
+                <GlitchButton
+                  onClick={handleCopy}
+                  variant='secondary'
+                  style={{
+                    flex: 1,
+                    padding: '0.5rem',
+                    fontSize: '0.75rem',
+                  }}
+                >
+                  {copyStatus ? '✓' : '📋'}
+                </GlitchButton>
+              )}
+            </div>
+          </div>
+
           {/* Current Result */}
           {currentResult && (
             <div className={styles.resultsSection}>
               <h3
                 style={{
                   color: 'var(--color-terminal-green)',
-                  marginBottom: '0.75rem',
-                  fontSize: '1.25rem',
+                  marginBottom: '0.5rem',
+                  fontSize: '0.9rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
                 }}
               >
-                Current Roll
+                ▸ Current Roll
               </h3>
               <DiceResult result={currentResult} />
             </div>
           )}
+        </div>
 
-          {/* Roll History */}
+        {/* Right Column - History Only */}
+        <div>
           <RollHistory
             history={history}
             onSelectRoll={handleSelectHistoryRoll}
+            onEditComment={handleEditComment}
+            onClearHistory={handleClearHistory}
+            isExpanded={historyExpanded}
+            onToggleExpanded={() => setHistoryExpanded(!historyExpanded)}
           />
         </div>
       </div>

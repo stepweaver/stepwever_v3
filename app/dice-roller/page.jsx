@@ -21,13 +21,11 @@ export default function DiceRollerPage() {
   }, []);
 
   return (
-    <div className='min-h-screen relative'>
+    <div className='min-h-screen relative overflow-x-hidden max-w-full'>
       <BackgroundCanvas />
-      {/* Full screen centered layout */}
-      <div className='relative z-10 p-4 md:p-6 lg:p-8 w-full flex flex-col items-center justify-center min-h-screen'>
-        <div className='w-full max-w-7xl'>
-          <DiceRoller />
-        </div>
+      {/* Full width layout */}
+      <div className='relative z-10 p-2 md:p-6 lg:p-8 w-full min-h-screen overflow-x-hidden max-w-full box-border'>
+        <DiceRoller />
       </div>
     </div>
   );

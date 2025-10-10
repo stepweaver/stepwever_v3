@@ -33,51 +33,25 @@ export default function DiceResult({ result, onCopy }) {
   return (
     <div className={styles.resultCard}>
       <div className={styles.resultHeader}>
-        <span className={styles.resultNotation}>{result.notation}</span>
+        <div
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}
+        >
+          <span className={styles.resultNotation}>{result.notation}</span>
+          {result.comment && (
+            <span
+              style={{
+                fontSize: '0.875rem',
+                color: 'var(--color-terminal-cyan)',
+                fontStyle: 'italic',
+              }}
+            >
+              "{result.comment}"
+            </span>
+          )}
+        </div>
         <span className={styles.resultTimestamp}>
           {formatTimestamp(result.timestamp)}
         </span>
-      </div>
-
-      <div className={styles.resultBreakdown}>
-        {result.breakdown.map((group, index) => {
-          const color = getDiceColor(
-            group.results[0] ? parseInt(group.notation.split('d')[1]) : 6
-          );
-
-          return (
-            <div key={index} className={styles.diceGroupResult}>
-              <span className={styles.diceGroupLabel} style={{ color }}>
-                {group.notation}:
-              </span>
-              <div className={styles.diceValues}>
-                {group.results.map((value, i) => (
-                  <span
-                    key={i}
-                    className={styles.diceValue}
-                    style={{
-                      borderColor: color,
-                      color: color,
-                    }}
-                  >
-                    {value}
-                  </span>
-                ))}
-                <span className={styles.diceSubtotal}>= {group.subtotal}</span>
-              </div>
-            </div>
-          );
-        })}
-
-        {result.modifier !== 0 && (
-          <div className={styles.diceGroupResult}>
-            <span className={styles.diceGroupLabel}>Modifier:</span>
-            <span style={{ color: 'var(--color-terminal-orange)' }}>
-              {result.modifier > 0 ? '+' : ''}
-              {result.modifier}
-            </span>
-          </div>
-        )}
       </div>
 
       <div className={styles.resultTotal}>
