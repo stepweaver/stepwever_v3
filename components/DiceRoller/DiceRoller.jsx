@@ -77,7 +77,7 @@ export default function DiceRoller() {
     setIsRolling(true);
     setCopyStatus(false);
 
-    // Brief animation delay
+    // Rolling animation delay
     setTimeout(() => {
       const notation = buildNotation(dicePool, modifier);
       const result = roll(notation);
@@ -89,7 +89,7 @@ export default function DiceRoller() {
       setHistory((prev) => [result, ...prev].slice(0, MAX_HISTORY));
       setIsRolling(false);
       setComment(''); // Clear comment after roll
-    }, 500);
+    }, 1200);
   }, [dicePool, modifier, comment, isRolling]);
 
   // Handle copy notation
@@ -415,12 +415,51 @@ export default function DiceRoller() {
             </div>
 
             {/* Current Result */}
-            {currentResult && (
+            {(currentResult || isRolling) && (
               <div className='flex flex-col gap-4'>
-                <h3 className='text-terminal-green mb-2 text-sm uppercase tracking-wide'>
-                  ▸ Current Roll
+                <h3 className='text-terminal-green mb-3 text-xl'>
+                  Current Roll
                 </h3>
-                <DiceResult result={currentResult} />
+                {isRolling ? (
+                  <div className='flex flex-col items-center justify-center p-8 bg-terminal-dark border-2 border-terminal-green rounded-md animate-pulse'>
+                    <div className='flex flex-wrap gap-3 mb-4 justify-center max-w-[400px]'>
+                      {dicePool.flatMap((die, dieIndex) => {
+                        const IconComponent = {
+                          4: GiTriangleTarget,
+                          6: GiPerspectiveDiceSixFacesRandom,
+                          8: GiDiceEightFacesEight,
+                          10: GiDiceTarget,
+                          12: GiCubes,
+                          20: GiDiceTwentyFacesTwenty,
+                          100: GiRollingDices,
+                        }[die.sides];
+
+                        // Create an array for each die based on count
+                        return Array.from({
+                          length: Math.min(die.count, 8),
+                        }).map((_, countIndex) => (
+                          <div
+                            key={`${die.sides}-${dieIndex}-${countIndex}`}
+                            className='animate-[diceRoll_0.8s_ease-in-out_infinite]'
+                            style={{
+                              color: die.color,
+                              animationDelay: `${
+                                (dieIndex * die.count + countIndex) * 0.08
+                              }s`,
+                            }}
+                          >
+                            <IconComponent size={40} />
+                          </div>
+                        ));
+                      })}
+                    </div>
+                    <div className='text-terminal-green text-xl font-bold animate-[diceShake_0.5s_ease-in-out_infinite]'>
+                      🎲 ROLLING...
+                    </div>
+                  </div>
+                ) : (
+                  <DiceResult result={currentResult} />
+                )}
               </div>
             )}
           </div>
