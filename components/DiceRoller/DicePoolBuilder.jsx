@@ -1,54 +1,10 @@
 import { useState, useEffect } from 'react';
 import {
-  GiTriangleTarget,
-  GiPerspectiveDiceSixFacesRandom,
-  GiDiceEightFacesEight,
-  GiDiceTwentyFacesTwenty,
-  GiRollingDices,
-  GiDiceTarget,
-  GiCubes,
-} from 'react-icons/gi';
-
-// Dice icon components - using Game Icons collection for authentic RPG dice
-const DiceIcons = {
-  4: GiTriangleTarget, // d4 (triangle/pyramid shape)
-  6: GiPerspectiveDiceSixFacesRandom, // d6 (cube die)
-  8: GiDiceEightFacesEight, // d8 (octahedron)
-  10: GiDiceTarget, // d10 (using target/angular die)
-  12: GiCubes, // d12 (using stacked cubes icon)
-  20: GiDiceTwentyFacesTwenty, // d20 (icosahedron) - the iconic one!
-  100: GiRollingDices, // d100 (percentile dice)
-};
-
-// Available dice types
-const DICE_TYPES = [
-  { sides: 4, label: 'd4' },
-  { sides: 6, label: 'd6' },
-  { sides: 8, label: 'd8' },
-  { sides: 10, label: 'd10' },
-  { sides: 12, label: 'd12' },
-  { sides: 20, label: 'd20' },
-  { sides: 100, label: 'd100' },
-];
-
-// Available colors from the palette
-const COLORS = [
-  'var(--color-terminal-green)',
-  'var(--color-terminal-cyan)',
-  'var(--color-terminal-yellow)',
-  'var(--color-terminal-blue)',
-  'var(--color-terminal-magenta)',
-  'var(--color-terminal-pink)',
-  'var(--color-terminal-purple)',
-  'var(--color-terminal-orange)',
-];
-
-/**
- * Get a random color from the palette
- */
-function getRandomColor() {
-  return COLORS[Math.floor(Math.random() * COLORS.length)];
-}
+  DICE_ICONS,
+  DICE_TYPES,
+  UI_CONSTANTS,
+  getRandomColor,
+} from '@/lib/diceConstants';
 
 /**
  * Component for building and managing the dice pool
@@ -86,22 +42,6 @@ export default function DicePoolBuilder({
     }
   };
 
-  const handleUpdateCount = (sides, delta) => {
-    onUpdatePool(
-      dicePool
-        .map((die) =>
-          die.sides === sides
-            ? { ...die, count: Math.max(0, die.count + delta) }
-            : die
-        )
-        .filter((die) => die.count > 0)
-    );
-  };
-
-  const handleRemoveDice = (sides) => {
-    onUpdatePool(dicePool.filter((die) => die.sides !== sides));
-  };
-
   return (
     <div className='flex flex-col gap-3 max-lg:gap-1.5'>
       {/* Dice Type Selection */}
@@ -112,7 +52,7 @@ export default function DicePoolBuilder({
         {/* Hexagonal grid - d20 in center */}
         <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[90vw] max-lg:max-w-[300px] max-lg:h-[190px]'>
           {DICE_TYPES.map((dice, index) => {
-            const IconComponent = DiceIcons[dice.sides];
+            const IconComponent = DICE_ICONS[dice.sides];
 
             // Position each die in hexagonal formation
             const positions = [
@@ -196,6 +136,8 @@ export default function DicePoolBuilder({
           <input
             id='modifier-input'
             type='number'
+            min={UI_CONSTANTS.MIN_MODIFIER}
+            max={UI_CONSTANTS.MAX_MODIFIER}
             value={modifier}
             onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
             className='w-16 p-2 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-center focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision] max-lg:w-12 max-lg:p-1 max-lg:text-xs'

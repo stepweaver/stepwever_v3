@@ -36,13 +36,14 @@ components/DiceRoller/
 └── README.md               # This file
 
 lib/
-└── roller.js               # Core dice rolling engine
+├── roller.js               # Core dice rolling engine
+└── diceConstants.js        # Shared constants (icons, colors, UI values)
 
-styles/
-└── dice-roller.module.css  # Styles and animations
+utils/
+└── dateFormatter.js        # Date formatting utilities
 
 app/dice-roller/
-└── page.jsx                # Route page
+└── page.jsx                # Route page with error boundary
 ```
 
 ## Usage
@@ -67,6 +68,28 @@ The dice roller uses standard RPG dice notation:
 - `3d6` - Roll three 6-sided dice
 - `1d20+5` - Roll one 20-sided die and add 5
 - `2d8+1d6-2` - Roll two 8-sided dice, one 6-sided die, and subtract 2
+
+## Architecture & Code Quality
+
+### Centralized Constants
+
+All dice-related constants (icons, colors, UI values) are centralized in `lib/diceConstants.js` to eliminate duplication and ensure consistency across components.
+
+### Error Handling
+
+- Error boundary wraps the dice roller page
+- LocalStorage operations use proper error handling
+- All errors are logged through the error monitoring service
+
+### Performance Optimizations
+
+- `useMemo` used for computed values like `canRoll`
+- `useCallback` used for all event handlers
+- React hooks optimized to prevent unnecessary re-renders
+
+### Date Formatting
+
+Dates use the format `[YYYY-MM-DD HH:mm]` via a centralized utility in `utils/dateFormatter.js`
 
 ## API Reference
 

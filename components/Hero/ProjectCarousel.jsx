@@ -32,6 +32,19 @@ const PROJECTS = [
     tags: ['E-commerce', 'Web Development', 'Sales'],
   },
   {
+    title: 'RPG Dice Roller',
+    description:
+      'Interactive dice rolling app for tabletop RPGs with a retro terminal aesthetic. Roll any combination of dice (d4, d6, d8, d10, d12, d20, d100), add modifiers, and track your roll history. Features keyboard shortcuts, animations, and a clean interface that gamers love.',
+    imageUrl: '/images/dice-roller.png',
+    keywords: ['Gaming', 'Interactive', 'Web App'],
+    actions: [
+      'Roll any combination of RPG dice instantly',
+      'Track roll history and copy results',
+    ],
+    link: '/dice-roller',
+    tags: ['Web Development', 'Gaming', 'Interactive'],
+  },
+  {
     title: 'Eliminated daily data entry forever',
     description:
       'Connected all the business apps so data flows automatically between them. No more copying numbers from one system to another - everything updates in real-time, saving hours every week.',

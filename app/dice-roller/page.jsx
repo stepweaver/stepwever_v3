@@ -2,6 +2,7 @@
 
 import DiceRoller from '@/components/DiceRoller/DiceRoller';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import { useEffect } from 'react';
 
 export default function DiceRollerPage() {
@@ -21,12 +22,14 @@ export default function DiceRollerPage() {
   }, []);
 
   return (
-    <div className='min-h-screen relative overflow-x-hidden max-w-full'>
-      <BackgroundCanvas />
-      {/* Full width layout */}
-      <div className='relative z-10 p-1 sm:p-2 md:p-4 lg:p-8 w-full min-h-screen overflow-x-hidden max-w-full box-border'>
-        <DiceRoller />
+    <ErrorBoundary>
+      <div className='min-h-screen relative overflow-x-hidden max-w-full'>
+        <BackgroundCanvas />
+        {/* Full width layout */}
+        <div className='relative z-10 p-1 sm:p-2 md:p-4 lg:p-8 w-full min-h-screen overflow-x-hidden max-w-full box-border'>
+          <DiceRoller />
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }

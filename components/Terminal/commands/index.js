@@ -1,13 +1,10 @@
-
-
 // Import modular functions
 import { handleNavigationCommand } from '../data/navigation.js';
 import { fetchWeather, fetchWeatherWithGeolocation } from '../data/weather.js';
 import { displayContactForm } from '../data/content.js';
 import { handleZorkCommand, startZorkGame, getZorkGameState } from '../data/zork.js';
 import { handleCodexCommand, startCodexMode, isCodexModeActive } from '../data/codex.js';
-
-
+import { roll, formatRollResult, parseDiceNotation } from '@/lib/roller.js';
 
 // Main command handler
 export const handleCommand = async (
@@ -47,11 +44,12 @@ export const handleCommand = async (
         `<span class="text-terminal-text">cd contact - Go to contact page</span>`,
         `<span class="text-terminal-text">cd services - Go to services page</span>`,
         `<span class="text-terminal-text">cd codex - Go to blog page (alias)</span>`,
+        `<span class="text-terminal-text">cd dice-roller - Go to full dice roller</span>`,
         `<span class="text-terminal-text">codex - Enter codex mode to browse posts</span>`,
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
         `<span class="text-terminal-text">weather [location] - Get weather info + --forecast for 5-day forecast</span>`,
-
+        `<span class="text-terminal-text">roll [notation] - Roll dice (e.g., roll 3d6+2, roll 1d20)</span>`,
         `<span class="text-terminal-text">contact - Send a message to λstepweaver</span>`,
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
@@ -64,7 +62,7 @@ export const handleCommand = async (
         return [`<span class="text-terminal-red">Usage: cd [destination]</span>`];
       }
 
-      const validDestinations = ['contact', 'services', 'codex', 'github'];
+      const validDestinations = ['contact', 'services', 'codex', 'dice-roller', 'github'];
       if (validDestinations.includes(destination)) {
         if (callback && callback.setLines && callback.setInput && callback.router) {
           // Map 'codex' to 'blog' for navigation
@@ -131,6 +129,51 @@ export const handleCommand = async (
     case 'codex':
       const codexOutput = startCodexMode(callback);
       return codexOutput;
+
+    case 'roll':
+      const rollNotation = args.join(' ').trim();
+
+      if (!rollNotation) {
+        return [
+          `<span class="text-terminal-red">Usage: roll [notation]</span>`,
+          `<span class="text-terminal-text">Examples:</span>`,
+          `<span class="text-terminal-text">  roll 3d6+2</span>`,
+          `<span class="text-terminal-text">  roll 1d20</span>`,
+          `<span class="text-terminal-text">  roll 2d10 + 1d6 + 5</span>`,
+        ];
+      }
+
+      // Handle special shortcuts
+      let notation = rollNotation;
+      if (rollNotation.toLowerCase() === 'advantage') {
+        notation = '2d20'; // Could be enhanced to show highest
+      } else if (rollNotation.toLowerCase() === 'disadvantage') {
+        notation = '2d20'; // Could be enhanced to show lowest
+      }
+
+      // Validate notation before rolling
+      const parsed = parseDiceNotation(notation);
+      if (parsed.groups.length === 0 && parsed.modifier === 0) {
+        return [
+          `<span class="text-terminal-red">Invalid dice notation: ${rollNotation}</span>`,
+          `<span class="text-terminal-text">Examples: 3d6+2, 1d20, 2d10+1d6+5</span>`
+        ];
+      }
+
+      try {
+        const result = roll(notation);
+        const formatted = formatRollResult(result);
+
+        // Convert formatted string to HTML spans
+        return formatted.split('\n').map(line =>
+          `<span class="text-terminal-text">${line}</span>`
+        );
+      } catch (error) {
+        return [
+          `<span class="text-terminal-red">Error rolling dice: ${rollNotation}</span>`,
+          `<span class="text-terminal-text">Please check your notation and try again</span>`
+        ];
+      }
 
     case '':
       return [];

@@ -1,22 +1,13 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { roll, buildNotation, validateDicePool } from '@/lib/roller';
+import { DICE_ICONS, UI_CONSTANTS, getRandomColor } from '@/lib/diceConstants';
+import { logError } from '@/utils/errorMonitor';
 import DicePoolBuilder from './DicePoolBuilder';
 import DiceResult from './DiceResult';
 import RollHistory from './RollHistory';
 import GlitchButton from '@/components/ui/GlitchButton';
-import {
-  GiTriangleTarget,
-  GiPerspectiveDiceSixFacesRandom,
-  GiDiceEightFacesEight,
-  GiDiceTwentyFacesTwenty,
-  GiRollingDices,
-  GiDiceTarget,
-  GiCubes,
-} from 'react-icons/gi';
-
-const MAX_HISTORY = 10;
 
 /**
  * Main Dice Roller Component
@@ -41,7 +32,7 @@ export default function DiceRoller() {
         setHistory(JSON.parse(savedHistory));
       }
     } catch (error) {
-      console.error('Failed to load history:', error);
+      logError('Failed to load dice roller history', error);
     }
   }, []);
 
@@ -50,25 +41,9 @@ export default function DiceRoller() {
     try {
       localStorage.setItem('diceRollerHistory', JSON.stringify(history));
     } catch (error) {
-      console.error('Failed to save history:', error);
+      logError('Failed to save dice roller history', error);
     }
   }, [history]);
-
-  // Auto-scroll disabled - user wants no scrolling, everything should fit on screen
-  // useEffect(() => {
-  //   if (
-  //     dicePool.length > 0 &&
-  //     currentPoolRef.current &&
-  //     window.innerWidth < 1024
-  //   ) {
-  //     setTimeout(() => {
-  //       currentPoolRef.current?.scrollIntoView({
-  //         behavior: 'smooth',
-  //         block: 'nearest',
-  //       });
-  //     }, 100);
-  //   }
-  // }, [dicePool.length]);
 
   // Handle roll
   const handleRoll = useCallback(() => {
@@ -86,10 +61,12 @@ export default function DiceRoller() {
       result.comment = comment.trim();
 
       setCurrentResult(result);
-      setHistory((prev) => [result, ...prev].slice(0, MAX_HISTORY));
+      setHistory((prev) =>
+        [result, ...prev].slice(0, UI_CONSTANTS.MAX_HISTORY)
+      );
       setIsRolling(false);
       setComment(''); // Clear comment after roll
-    }, 1200);
+    }, UI_CONSTANTS.ROLL_ANIMATION_DURATION);
   }, [dicePool, modifier, comment, isRolling]);
 
   // Handle copy notation
@@ -102,10 +79,13 @@ export default function DiceRoller() {
       navigator.clipboard.writeText(notation).then(
         () => {
           setCopyStatus(true);
-          setTimeout(() => setCopyStatus(false), 2000);
+          setTimeout(
+            () => setCopyStatus(false),
+            UI_CONSTANTS.COPY_STATUS_DURATION
+          );
         },
         (err) => {
-          console.error('Failed to copy:', err);
+          logError('Failed to copy notation', err);
           // Fallback for older browsers
           fallbackCopy(notation);
         }
@@ -127,9 +107,9 @@ export default function DiceRoller() {
     try {
       document.execCommand('copy');
       setCopyStatus(true);
-      setTimeout(() => setCopyStatus(false), 2000);
+      setTimeout(() => setCopyStatus(false), UI_CONSTANTS.COPY_STATUS_DURATION);
     } catch (err) {
-      console.error('Fallback copy failed:', err);
+      logError('Fallback copy failed', err);
     }
     document.body.removeChild(textArea);
   };
@@ -204,7 +184,11 @@ export default function DiceRoller() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [handleRoll, handleCopy, handleReset, handleClearResults]);
 
-  const canRoll = validateDicePool(dicePool) && !isRolling;
+  // Memoize canRoll to avoid recalculating on every render
+  const canRoll = useMemo(
+    () => validateDicePool(dicePool) && !isRolling,
+    [dicePool, isRolling]
+  );
 
   return (
     <div className='flex flex-col gap-2 p-2 font-ibm w-full max-w-full max-lg:gap-1.5 max-lg:p-1.5'>
@@ -269,7 +253,7 @@ export default function DiceRoller() {
                 className='w-full p-2.5 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-left focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision] max-lg:p-1.5 max-lg:text-xs'
                 placeholder='NOTE: e.g., Attack roll, initiative, saving throw...'
                 aria-label='Roll comment'
-                maxLength={150}
+                maxLength={UI_CONSTANTS.MAX_COMMENT_LENGTH}
               />
 
               {/* Action Buttons */}
@@ -332,15 +316,7 @@ export default function DiceRoller() {
                   </div>
                 ) : (
                   dicePool.map((die) => {
-                    const IconComponent = {
-                      4: GiTriangleTarget,
-                      6: GiPerspectiveDiceSixFacesRandom,
-                      8: GiDiceEightFacesEight,
-                      10: GiDiceTarget,
-                      12: GiCubes,
-                      20: GiDiceTwentyFacesTwenty,
-                      100: GiRollingDices,
-                    }[die.sides];
+                    const IconComponent = DICE_ICONS[die.sides];
 
                     return (
                       <div
@@ -393,7 +369,9 @@ export default function DiceRoller() {
                                 setDicePool(updatedPool);
                               }}
                               className='w-[26px] h-[26px] border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] disabled:opacity-30 disabled:cursor-not-allowed'
-                              disabled={die.count >= 99}
+                              disabled={
+                                die.count >= UI_CONSTANTS.MAX_DICE_COUNT
+                              }
                               aria-label={`Increase ${die.sides}-sided dice count`}
                             >
                               +
@@ -429,15 +407,7 @@ export default function DiceRoller() {
                   <div className='flex flex-col items-center justify-center p-8 bg-terminal-dark border-2 border-terminal-green rounded-md animate-pulse max-lg:p-2 max-lg:border'>
                     <div className='flex flex-wrap gap-3 mb-4 justify-center max-w-[400px] max-lg:gap-1.5 max-lg:mb-1.5'>
                       {dicePool.flatMap((die, dieIndex) => {
-                        const IconComponent = {
-                          4: GiTriangleTarget,
-                          6: GiPerspectiveDiceSixFacesRandom,
-                          8: GiDiceEightFacesEight,
-                          10: GiDiceTarget,
-                          12: GiCubes,
-                          20: GiDiceTwentyFacesTwenty,
-                          100: GiRollingDices,
-                        }[die.sides];
+                        const IconComponent = DICE_ICONS[die.sides];
 
                         // Create an array for each die based on count
                         return Array.from({

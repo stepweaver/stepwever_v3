@@ -1,53 +1,11 @@
-import {
-  GiTriangleTarget,
-  GiPerspectiveDiceSixFacesRandom,
-  GiDiceEightFacesEight,
-  GiDiceTarget,
-  GiCubes,
-  GiDiceTwentyFacesTwenty,
-  GiRollingDices,
-} from 'react-icons/gi';
+import { DICE_ICONS, DICE_COLORS } from '@/lib/diceConstants';
+import { formatTimestamp } from '@/utils/dateFormatter';
 
 /**
  * Display a single dice roll result with breakdown
  */
 export default function DiceResult({ result, onCopy }) {
   if (!result) return null;
-
-  const formatTimestamp = (isoString) => {
-    const date = new Date(isoString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `[${year}-${month}-${day} ${hours}:${minutes}]`;
-  };
-
-  // Color mapping for dice types
-  const getDiceColor = (sides) => {
-    const colorMap = {
-      4: 'var(--color-terminal-cyan)',
-      6: 'var(--color-terminal-green)',
-      8: 'var(--color-terminal-yellow)',
-      10: 'var(--color-terminal-blue)',
-      12: 'var(--color-terminal-magenta)',
-      20: 'var(--color-terminal-pink)',
-      100: 'var(--color-terminal-purple)',
-    };
-    return colorMap[sides] || 'var(--color-terminal-green)';
-  };
-
-  // Icon mapping for dice types
-  const DiceIcons = {
-    4: GiTriangleTarget,
-    6: GiPerspectiveDiceSixFacesRandom,
-    8: GiDiceEightFacesEight,
-    10: GiDiceTarget,
-    12: GiCubes,
-    20: GiDiceTwentyFacesTwenty,
-    100: GiRollingDices,
-  };
 
   return (
     <div className='animate-[fadeInUp_0.3s_ease-out] text-sm max-lg:w-full max-lg:max-w-full max-lg:overflow-hidden max-lg:box-border'>
@@ -71,7 +29,8 @@ export default function DiceResult({ result, onCopy }) {
       <div className='flex flex-col gap-2 mb-3 max-lg:gap-1 max-lg:mb-2'>
         {result.breakdown.map((group, index) => {
           const sides = parseInt(group.notation.match(/\d+d(\d+)/)?.[1] || 0);
-          const IconComponent = DiceIcons[sides];
+          const IconComponent = DICE_ICONS[sides];
+          const diceColor = DICE_COLORS[sides] || 'var(--color-terminal-green)';
           return (
             <div
               key={index}
@@ -82,12 +41,12 @@ export default function DiceResult({ result, onCopy }) {
                   <IconComponent
                     size={20}
                     className='max-lg:w-4 max-lg:h-4'
-                    style={{ color: getDiceColor(sides) }}
+                    style={{ color: diceColor }}
                   />
                 )}
                 <span
                   className='font-bold text-sm max-lg:text-sm'
-                  style={{ color: getDiceColor(sides) }}
+                  style={{ color: diceColor }}
                 >
                   {group.notation}:
                 </span>
@@ -98,8 +57,8 @@ export default function DiceResult({ result, onCopy }) {
                     key={rollIndex}
                     className='px-2 py-1 border-2 rounded font-bold min-w-[36px] text-center text-sm max-lg:px-1.5 max-lg:py-0.5 max-lg:min-w-[32px] max-lg:text-sm max-lg:border'
                     style={{
-                      borderColor: getDiceColor(sides),
-                      color: getDiceColor(sides),
+                      borderColor: diceColor,
+                      color: diceColor,
                       backgroundColor:
                         roll === sides
                           ? 'rgba(0, 255, 65, 0.1)'

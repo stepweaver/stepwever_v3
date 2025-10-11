@@ -1,13 +1,6 @@
 import { useState } from 'react';
-import {
-  GiTriangleTarget,
-  GiPerspectiveDiceSixFacesRandom,
-  GiDiceEightFacesEight,
-  GiDiceTarget,
-  GiCubes,
-  GiDiceTwentyFacesTwenty,
-  GiRollingDices,
-} from 'react-icons/gi';
+import { DICE_ICONS, DICE_COLORS, UI_CONSTANTS } from '@/lib/diceConstants';
+import { formatTimestamp } from '@/utils/dateFormatter';
 
 /**
  * Display roll history with the last N rolls
@@ -39,31 +32,6 @@ export default function RollHistory({
     setEditValue('');
   };
 
-  // Color mapping for dice types
-  const getDiceColor = (sides) => {
-    const colorMap = {
-      4: 'var(--color-terminal-cyan)',
-      6: 'var(--color-terminal-green)',
-      8: 'var(--color-terminal-yellow)',
-      10: 'var(--color-terminal-blue)',
-      12: 'var(--color-terminal-magenta)',
-      20: 'var(--color-terminal-pink)',
-      100: 'var(--color-terminal-purple)',
-    };
-    return colorMap[sides] || 'var(--color-terminal-green)';
-  };
-
-  // Icon mapping for dice types
-  const DiceIcons = {
-    4: GiTriangleTarget,
-    6: GiPerspectiveDiceSixFacesRandom,
-    8: GiDiceEightFacesEight,
-    10: GiDiceTarget,
-    12: GiCubes,
-    20: GiDiceTwentyFacesTwenty,
-    100: GiRollingDices,
-  };
-
   if (!history || history.length === 0) {
     return (
       <div>
@@ -76,16 +44,6 @@ export default function RollHistory({
       </div>
     );
   }
-
-  const formatTimestamp = (isoString) => {
-    const date = new Date(isoString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `[${year}-${month}-${day} ${hours}:${minutes}]`;
-  };
 
   const displayedHistory = isExpanded ? history : history.slice(0, 3);
   const hasMore = history.length > 3;
@@ -147,7 +105,9 @@ export default function RollHistory({
                   const sides = parseInt(
                     group.notation.match(/\d+d(\d+)/)?.[1] || 0
                   );
-                  const IconComponent = DiceIcons[sides];
+                  const IconComponent = DICE_ICONS[sides];
+                  const diceColor =
+                    DICE_COLORS[sides] || 'var(--color-terminal-green)';
                   return (
                     <div
                       key={groupIndex}
@@ -157,12 +117,12 @@ export default function RollHistory({
                         {IconComponent && (
                           <IconComponent
                             size={16}
-                            style={{ color: getDiceColor(sides) }}
+                            style={{ color: diceColor }}
                           />
                         )}
                         <span
                           className='font-bold text-xs'
-                          style={{ color: getDiceColor(sides) }}
+                          style={{ color: diceColor }}
                         >
                           {group.notation}:
                         </span>
@@ -173,8 +133,8 @@ export default function RollHistory({
                             key={rollIndex}
                             className='px-1 py-0.5 border rounded font-bold min-w-[22px] text-center text-xs'
                             style={{
-                              borderColor: getDiceColor(sides),
-                              color: getDiceColor(sides),
+                              borderColor: diceColor,
+                              color: diceColor,
                             }}
                           >
                             {rollValue}
@@ -195,7 +155,7 @@ export default function RollHistory({
                   onChange={(e) => setEditValue(e.target.value)}
                   className='flex-1 p-1 px-2 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-xs focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
                   placeholder='Add comment...'
-                  maxLength={100}
+                  maxLength={UI_CONSTANTS.MAX_HISTORY_COMMENT_LENGTH}
                   autoFocus
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSaveEdit(index);
