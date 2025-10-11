@@ -50,7 +50,7 @@ export default function DicePoolBuilder({
           Add Dice
         </h3>
         {/* Hexagonal grid - d20 in center */}
-        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[90vw] max-lg:max-w-[300px] max-lg:h-[190px]'>
+        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[90vw] max-lg:max-w-[340px] max-lg:h-[280px]'>
           {DICE_TYPES.map((dice, index) => {
             const IconComponent = DICE_ICONS[dice.sides];
 
@@ -103,7 +103,7 @@ export default function DicePoolBuilder({
               >
                 <IconComponent
                   size={48}
-                  className='max-lg:w-[28px] max-lg:h-[28px]'
+                  className='max-lg:w-[44px] max-lg:h-[44px]'
                 />
                 <span className='text-base opacity-90 font-semibold tracking-wider max-lg:text-xs'>
                   {dice.label}

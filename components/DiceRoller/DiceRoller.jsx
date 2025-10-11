@@ -327,6 +327,7 @@ export default function DiceRoller() {
                         <div className='flex items-center gap-1.5 flex-1'>
                           <IconComponent
                             size={16}
+                            className='max-lg:w-[24px] max-lg:h-[24px]'
                             style={{ color: die.color }}
                           />
                           <span
@@ -425,7 +426,7 @@ export default function DiceRoller() {
                           >
                             <IconComponent
                               size={40}
-                              className='max-lg:w-[22px] max-lg:h-[22px]'
+                              className='max-lg:w-[36px] max-lg:h-[36px]'
                             />
                           </div>
                         ));
