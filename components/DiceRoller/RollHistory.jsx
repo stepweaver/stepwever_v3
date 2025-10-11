@@ -181,9 +181,6 @@ export default function RollHistory({
                             {rollValue}
                           </span>
                         ))}
-                        <span className='text-terminal-muted ml-0.5'>
-                          = {group.subtotal}
-                        </span>
                       </div>
                     </div>
                   );

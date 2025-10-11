@@ -105,9 +105,6 @@ export default function DiceResult({ result, onCopy }) {
                     {roll}
                   </span>
                 ))}
-                <span className='text-terminal-muted text-sm ml-1'>
-                  = {group.subtotal}
-                </span>
               </div>
             </div>
           );
