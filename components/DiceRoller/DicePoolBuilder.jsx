@@ -160,7 +160,7 @@ export default function DicePoolBuilder({
                 aria-label={`Add ${dice.label} to pool`}
               >
                 <IconComponent size={48} />
-                <span className='text-[0.75rem] opacity-90 font-semibold tracking-wider'>
+                <span className='text-base opacity-90 font-semibold tracking-wider'>
                   {dice.label}
                 </span>
               </button>

@@ -1,4 +1,13 @@
 import { useState } from 'react';
+import {
+  GiTriangleTarget,
+  GiPerspectiveDiceSixFacesRandom,
+  GiDiceEightFacesEight,
+  GiDiceTarget,
+  GiCubes,
+  GiDiceTwentyFacesTwenty,
+  GiRollingDices,
+} from 'react-icons/gi';
 
 /**
  * Display roll history with the last N rolls
@@ -28,6 +37,31 @@ export default function RollHistory({
   const handleCancelEdit = () => {
     setEditingIndex(null);
     setEditValue('');
+  };
+
+  // Color mapping for dice types
+  const getDiceColor = (sides) => {
+    const colorMap = {
+      4: 'var(--color-terminal-cyan)',
+      6: 'var(--color-terminal-green)',
+      8: 'var(--color-terminal-yellow)',
+      10: 'var(--color-terminal-blue)',
+      12: 'var(--color-terminal-magenta)',
+      20: 'var(--color-terminal-pink)',
+      100: 'var(--color-terminal-purple)',
+    };
+    return colorMap[sides] || 'var(--color-terminal-green)';
+  };
+
+  // Icon mapping for dice types
+  const DiceIcons = {
+    4: GiTriangleTarget,
+    6: GiPerspectiveDiceSixFacesRandom,
+    8: GiDiceEightFacesEight,
+    10: GiDiceTarget,
+    12: GiCubes,
+    20: GiDiceTwentyFacesTwenty,
+    100: GiRollingDices,
   };
 
   if (!history || history.length === 0) {
@@ -97,7 +131,7 @@ export default function RollHistory({
             onClick={() => !editingIndex && onSelectRoll && onSelectRoll(roll)}
             style={{ cursor: editingIndex === index ? 'default' : 'pointer' }}
           >
-            <div className='flex justify-between items-center mb-2'>
+            <div className='flex justify-between items-center mb-1'>
               <span className='font-bold text-terminal-cyan'>
                 {roll.notation}
               </span>
@@ -105,6 +139,57 @@ export default function RollHistory({
                 = {roll.total}
               </span>
             </div>
+
+            {/* Individual Dice Results */}
+            {roll.breakdown && roll.breakdown.length > 0 && (
+              <div className='flex flex-col gap-1 mb-2 mt-1.5'>
+                {roll.breakdown.map((group, groupIndex) => {
+                  const sides = parseInt(
+                    group.notation.match(/\d+d(\d+)/)?.[1] || 0
+                  );
+                  const IconComponent = DiceIcons[sides];
+                  return (
+                    <div
+                      key={groupIndex}
+                      className='flex flex-wrap items-center gap-1 text-[0.7rem]'
+                    >
+                      <div className='flex items-center gap-1'>
+                        {IconComponent && (
+                          <IconComponent
+                            size={12}
+                            style={{ color: getDiceColor(sides) }}
+                          />
+                        )}
+                        <span
+                          className='font-bold'
+                          style={{ color: getDiceColor(sides) }}
+                        >
+                          {group.notation}:
+                        </span>
+                      </div>
+                      <div className='flex flex-wrap gap-0.5'>
+                        {group.results.map((rollValue, rollIndex) => (
+                          <span
+                            key={rollIndex}
+                            className='px-1 py-0.5 border rounded font-bold min-w-[20px] text-center'
+                            style={{
+                              borderColor: getDiceColor(sides),
+                              color: getDiceColor(sides),
+                              fontSize: '0.65rem',
+                            }}
+                          >
+                            {rollValue}
+                          </span>
+                        ))}
+                        <span className='text-terminal-muted ml-0.5'>
+                          = {group.subtotal}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
             {editingIndex === index ? (
               <div className='mt-2 flex gap-2 items-center'>
