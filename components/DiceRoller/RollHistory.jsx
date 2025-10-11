@@ -92,9 +92,9 @@ export default function RollHistory({
 
   return (
     <div>
-      <div className='flex justify-between items-center mb-4 pb-2 border-b-2 border-terminal-border'>
+      <div className='flex justify-between items-center mb-4 pb-2 border-b-2 border-terminal-border max-lg:mb-1'>
         <div
-          className='mb-0 flex items-center gap-2 text-xl font-bold text-terminal-green tracking-wide'
+          className='mb-0 flex items-center gap-2 text-xl font-bold text-terminal-green tracking-wide max-lg:text-sm'
           style={{
             cursor: hasMore ? 'pointer' : 'default',
           }}
@@ -102,7 +102,7 @@ export default function RollHistory({
         >
           {hasMore && (
             <span
-              className='text-terminal-green text-xl transition-transform duration-200 inline-block'
+              className='text-terminal-green text-xl transition-transform duration-200 inline-block max-lg:text-sm'
               style={{
                 transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
               }}
@@ -125,24 +125,24 @@ export default function RollHistory({
       {displayedHistory.map((roll, index) => (
         <div
           key={index}
-          className='p-2 mb-1.5 bg-[rgba(13,18,17,0.4)] border border-terminal-border rounded cursor-pointer transition-all text-xs hover:bg-[rgba(13,18,17,0.6)] hover:border-terminal-green hover:shadow-[0_0_10px_rgba(0,255,65,0.2)]'
+          className='p-1.5 mb-1 bg-[rgba(13,18,17,0.4)] border border-terminal-border rounded cursor-pointer transition-all text-xs hover:bg-[rgba(13,18,17,0.6)] hover:border-terminal-green hover:shadow-[0_0_10px_rgba(0,255,65,0.2)]'
         >
           <div
             onClick={() => !editingIndex && onSelectRoll && onSelectRoll(roll)}
             style={{ cursor: editingIndex === index ? 'default' : 'pointer' }}
           >
-            <div className='flex justify-between items-center mb-1'>
-              <span className='font-bold text-terminal-cyan'>
+            <div className='flex justify-between items-center mb-0.5'>
+              <span className='font-bold text-terminal-cyan text-xs'>
                 {roll.notation}
               </span>
-              <span className='font-bold text-terminal-green'>
+              <span className='font-bold text-terminal-green text-xs'>
                 = {roll.total}
               </span>
             </div>
 
             {/* Individual Dice Results */}
             {roll.breakdown && roll.breakdown.length > 0 && (
-              <div className='flex flex-col gap-1 mb-2 mt-1.5'>
+              <div className='flex flex-col gap-0.5 mb-1 mt-0.5'>
                 {roll.breakdown.map((group, groupIndex) => {
                   const sides = parseInt(
                     group.notation.match(/\d+d(\d+)/)?.[1] || 0
@@ -151,17 +151,17 @@ export default function RollHistory({
                   return (
                     <div
                       key={groupIndex}
-                      className='flex flex-wrap items-center gap-1 text-[0.7rem]'
+                      className='flex flex-wrap items-center gap-1'
                     >
-                      <div className='flex items-center gap-1'>
+                      <div className='flex items-center gap-1 min-w-[50px]'>
                         {IconComponent && (
                           <IconComponent
-                            size={12}
+                            size={16}
                             style={{ color: getDiceColor(sides) }}
                           />
                         )}
                         <span
-                          className='font-bold'
+                          className='font-bold text-xs'
                           style={{ color: getDiceColor(sides) }}
                         >
                           {group.notation}:
@@ -171,11 +171,10 @@ export default function RollHistory({
                         {group.results.map((rollValue, rollIndex) => (
                           <span
                             key={rollIndex}
-                            className='px-1 py-0.5 border rounded font-bold min-w-[20px] text-center'
+                            className='px-1 py-0.5 border rounded font-bold min-w-[22px] text-center text-xs'
                             style={{
                               borderColor: getDiceColor(sides),
                               color: getDiceColor(sides),
-                              fontSize: '0.65rem',
                             }}
                           >
                             {rollValue}

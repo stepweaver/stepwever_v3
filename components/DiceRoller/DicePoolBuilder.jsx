@@ -103,12 +103,14 @@ export default function DicePoolBuilder({
   };
 
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-3 max-lg:gap-1.5'>
       {/* Dice Type Selection */}
       <div>
-        <h3 className='text-terminal-green mb-3 text-xl'>Add Dice</h3>
+        <h3 className='text-terminal-green mb-3 text-xl max-lg:mb-1 max-lg:text-sm'>
+          Add Dice
+        </h3>
         {/* Hexagonal grid - d20 in center */}
-        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[90vw] max-lg:max-w-[360px] max-lg:h-[300px]'>
+        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[90vw] max-lg:max-w-[300px] max-lg:h-[190px]'>
           {DICE_TYPES.map((dice, index) => {
             const IconComponent = DiceIcons[dice.sides];
 
@@ -159,8 +161,11 @@ export default function DicePoolBuilder({
                 }}
                 aria-label={`Add ${dice.label} to pool`}
               >
-                <IconComponent size={48} />
-                <span className='text-base opacity-90 font-semibold tracking-wider'>
+                <IconComponent
+                  size={48}
+                  className='max-lg:w-[28px] max-lg:h-[28px]'
+                />
+                <span className='text-base opacity-90 font-semibold tracking-wider max-lg:text-xs'>
                   {dice.label}
                 </span>
               </button>
@@ -171,17 +176,19 @@ export default function DicePoolBuilder({
 
       {/* Modifier Section */}
       <div>
-        <h3 className='text-terminal-green mb-3 text-xl'>Modifier</h3>
-        <div className='flex items-center gap-2'>
+        <h3 className='text-terminal-green mb-3 text-xl max-lg:mb-1 max-lg:text-sm'>
+          Modifier
+        </h3>
+        <div className='flex items-center gap-2 max-lg:gap-1.5'>
           <label
             htmlFor='modifier-input'
-            className='text-terminal-green text-xs font-bold min-w-[50px]'
+            className='text-terminal-green text-xs font-bold min-w-[50px] max-lg:min-w-[40px] max-lg:text-[0.65rem]'
           >
             MOD:
           </label>
           <button
             onClick={() => setModifier(modifier - 1)}
-            className='w-8 h-8 min-w-8 border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
+            className='w-8 h-8 min-w-8 border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] max-lg:w-6 max-lg:h-6 max-lg:min-w-6 max-lg:text-xs'
             aria-label='Decrease modifier'
           >
             −
@@ -191,13 +198,13 @@ export default function DicePoolBuilder({
             type='number'
             value={modifier}
             onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
-            className='w-16 p-2 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-center focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision]'
+            className='w-16 p-2 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-center focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision] max-lg:w-12 max-lg:p-1 max-lg:text-xs'
             placeholder='0'
             aria-label='Roll modifier'
           />
           <button
             onClick={() => setModifier(modifier + 1)}
-            className='w-8 h-8 min-w-8 border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
+            className='w-8 h-8 min-w-8 border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] max-lg:w-6 max-lg:h-6 max-lg:min-w-6 max-lg:text-xs'
             aria-label='Increase modifier'
           >
             +

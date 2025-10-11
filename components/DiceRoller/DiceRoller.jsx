@@ -54,21 +54,21 @@ export default function DiceRoller() {
     }
   }, [history]);
 
-  // Scroll to Current Pool on mobile when dice are added
-  useEffect(() => {
-    if (
-      dicePool.length > 0 &&
-      currentPoolRef.current &&
-      window.innerWidth < 1024
-    ) {
-      setTimeout(() => {
-        currentPoolRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-        });
-      }, 100);
-    }
-  }, [dicePool.length]);
+  // Auto-scroll disabled - user wants no scrolling, everything should fit on screen
+  // useEffect(() => {
+  //   if (
+  //     dicePool.length > 0 &&
+  //     currentPoolRef.current &&
+  //     window.innerWidth < 1024
+  //   ) {
+  //     setTimeout(() => {
+  //       currentPoolRef.current?.scrollIntoView({
+  //         behavior: 'smooth',
+  //         block: 'nearest',
+  //       });
+  //     }, 100);
+  //   }
+  // }, [dicePool.length]);
 
   // Handle roll
   const handleRoll = useCallback(() => {
@@ -207,12 +207,12 @@ export default function DiceRoller() {
   const canRoll = validateDicePool(dicePool) && !isRolling;
 
   return (
-    <div className='flex flex-col gap-2 p-2 font-ibm w-full max-w-full'>
+    <div className='flex flex-col gap-2 p-2 font-ibm w-full max-w-full max-lg:gap-1.5 max-lg:p-1.5'>
       {/* Header Section */}
-      <div className='flex flex-col items-center justify-center mb-4 pb-3 border-b border-terminal-border gap-3'>
+      <div className='flex flex-col items-center justify-center mb-4 pb-3 border-b border-terminal-border gap-3 max-lg:mb-1.5 max-lg:pb-1.5 max-lg:gap-1.5'>
         {/* Title */}
         <h1
-          className='text-2xl text-terminal-green m-0 font-ibm tracking-wide'
+          className='text-2xl text-terminal-green m-0 font-ibm tracking-wide max-lg:text-base'
           style={{ textShadow: 'var(--terminal-title-glow)' }}
         >
           🎲 RPG DICE ROLLER
@@ -248,10 +248,10 @@ export default function DiceRoller() {
       </div>
 
       {/* Main Content - 2-Column Grid */}
-      <div className='flex flex-col gap-6'>
-        <div className='grid grid-cols-1 lg:grid-cols-[minmax(0,600px)_minmax(0,600px)] gap-6 lg:gap-16 items-start justify-center'>
+      <div className='flex flex-col gap-6 max-lg:gap-1.5'>
+        <div className='grid grid-cols-1 lg:grid-cols-[minmax(0,600px)_minmax(0,600px)] gap-6 lg:gap-16 items-start justify-center max-lg:gap-1.5'>
           {/* Left Column - Dice Selection & Controls */}
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 max-lg:gap-1.5'>
             <DicePoolBuilder
               dicePool={dicePool}
               onUpdatePool={setDicePool}
@@ -259,24 +259,25 @@ export default function DiceRoller() {
               setModifier={setModifier}
             />
 
-            <div className='flex flex-col gap-1.5'>
+            <div className='flex flex-col gap-1.5 max-lg:gap-1'>
               {/* Comment */}
               <input
                 id='comment-input'
                 type='text'
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                className='w-full p-2.5 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-left focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision]'
+                className='w-full p-2.5 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-left focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision] max-lg:p-1.5 max-lg:text-xs'
                 placeholder='NOTE: e.g., Attack roll, initiative, saving throw...'
                 aria-label='Roll comment'
                 maxLength={150}
               />
 
               {/* Action Buttons */}
-              <div className='flex gap-2'>
+              <div className='flex gap-2 max-lg:gap-1.5'>
                 <GlitchButton
                   onClick={handleRoll}
                   disabled={!canRoll}
+                  className='max-lg:text-xs max-lg:py-1.5'
                   style={{
                     flex: 2,
                     padding: '0.5rem',
@@ -289,6 +290,7 @@ export default function DiceRoller() {
                 <GlitchButton
                   onClick={handleReset}
                   variant='secondary'
+                  className='max-lg:text-[0.65rem] max-lg:py-1.5'
                   style={{
                     flex: 1,
                     padding: '0.5rem',
@@ -302,6 +304,7 @@ export default function DiceRoller() {
                   <GlitchButton
                     onClick={handleCopy}
                     variant='secondary'
+                    className='max-lg:text-[0.65rem] max-lg:py-1.5'
                     style={{
                       flex: 1,
                       padding: '0.5rem',
@@ -316,14 +319,16 @@ export default function DiceRoller() {
           </div>
 
           {/* Right Column - Current Pool & Result */}
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-4 max-lg:gap-1.5'>
             {/* Current Pool Display */}
             <div ref={currentPoolRef}>
-              <h3 className='text-terminal-green mb-3 text-xl'>Current Pool</h3>
-              <div className='flex flex-col gap-1 min-h-[30px] max-h-[200px] overflow-y-auto max-lg:max-h-[150px] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-terminal-dark [&::-webkit-scrollbar-track]:rounded [&::-webkit-scrollbar-thumb]:bg-terminal-border [&::-webkit-scrollbar-thumb]:rounded hover:[&::-webkit-scrollbar-thumb]:bg-terminal-green'>
+              <h3 className='text-terminal-green mb-3 text-xl max-lg:mb-1 max-lg:text-sm'>
+                Current Pool
+              </h3>
+              <div className='flex flex-col gap-1 min-h-[30px] max-h-[200px] overflow-y-auto max-lg:max-h-[100px] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-terminal-dark [&::-webkit-scrollbar-track]:rounded [&::-webkit-scrollbar-thumb]:bg-terminal-border [&::-webkit-scrollbar-thumb]:rounded hover:[&::-webkit-scrollbar-thumb]:bg-terminal-green'>
                 {dicePool.length === 0 ? (
-                  <div className='flex items-center justify-center text-terminal-muted italic min-h-[100px]'>
-                    Click dice on the left to add them to your pool
+                  <div className='flex items-center justify-center text-terminal-muted italic min-h-[100px] max-lg:min-h-[40px] max-lg:text-[0.65rem]'>
+                    Click dice above to add to pool
                   </div>
                 ) : (
                   dicePool.map((die) => {
@@ -416,13 +421,13 @@ export default function DiceRoller() {
 
             {/* Current Result */}
             {(currentResult || isRolling) && (
-              <div className='flex flex-col gap-4'>
-                <h3 className='text-terminal-green mb-3 text-xl'>
+              <div className='flex flex-col gap-4 max-lg:gap-1.5'>
+                <h3 className='text-terminal-green mb-3 text-xl max-lg:mb-1 max-lg:text-sm'>
                   Current Roll
                 </h3>
                 {isRolling ? (
-                  <div className='flex flex-col items-center justify-center p-8 bg-terminal-dark border-2 border-terminal-green rounded-md animate-pulse'>
-                    <div className='flex flex-wrap gap-3 mb-4 justify-center max-w-[400px]'>
+                  <div className='flex flex-col items-center justify-center p-8 bg-terminal-dark border-2 border-terminal-green rounded-md animate-pulse max-lg:p-2 max-lg:border'>
+                    <div className='flex flex-wrap gap-3 mb-4 justify-center max-w-[400px] max-lg:gap-1.5 max-lg:mb-1.5'>
                       {dicePool.flatMap((die, dieIndex) => {
                         const IconComponent = {
                           4: GiTriangleTarget,
@@ -448,12 +453,15 @@ export default function DiceRoller() {
                               }s`,
                             }}
                           >
-                            <IconComponent size={40} />
+                            <IconComponent
+                              size={40}
+                              className='max-lg:w-[22px] max-lg:h-[22px]'
+                            />
                           </div>
                         ));
                       })}
                     </div>
-                    <div className='text-terminal-green text-xl font-bold animate-[diceShake_0.5s_ease-in-out_infinite]'>
+                    <div className='text-terminal-green text-xl font-bold animate-[diceShake_0.5s_ease-in-out_infinite] max-lg:text-sm'>
                       🎲 ROLLING...
                     </div>
                   </div>

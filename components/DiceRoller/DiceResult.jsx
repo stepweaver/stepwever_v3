@@ -51,48 +51,52 @@ export default function DiceResult({ result, onCopy }) {
 
   return (
     <div className='animate-[fadeInUp_0.3s_ease-out] text-sm max-lg:w-full max-lg:max-w-full max-lg:overflow-hidden max-lg:box-border'>
-      <div className='flex justify-between items-center mb-3 pb-2 border-b border-terminal-border max-lg:flex-col max-lg:items-start max-lg:gap-2'>
-        <div className='flex flex-col gap-1'>
-          <span className='text-xl font-bold text-terminal-green max-lg:text-xs max-lg:break-all max-lg:overflow-wrap-break-word max-lg:max-w-full'>
+      <div className='flex justify-between items-center mb-3 pb-2 border-b border-terminal-border max-lg:flex-col max-lg:items-start max-lg:gap-1 max-lg:mb-2 max-lg:pb-1.5'>
+        <div className='flex flex-col gap-1 max-lg:gap-0.5'>
+          <span className='text-xl font-bold text-terminal-green max-lg:text-base max-lg:break-all max-lg:overflow-wrap-break-word max-lg:max-w-full'>
             {result.notation}
           </span>
           {result.comment && (
-            <span className='text-sm text-terminal-cyan italic'>
+            <span className='text-sm text-terminal-cyan italic max-lg:text-sm'>
               "{result.comment}"
             </span>
           )}
         </div>
-        <span className='text-sm text-terminal-muted font-ocr'>
+        <span className='text-sm text-terminal-muted font-ocr max-lg:text-sm'>
           {formatTimestamp(result.timestamp)}
         </span>
       </div>
 
       {/* Individual Dice Results */}
-      <div className='flex flex-col gap-2 mb-3'>
+      <div className='flex flex-col gap-2 mb-3 max-lg:gap-1 max-lg:mb-2'>
         {result.breakdown.map((group, index) => {
           const sides = parseInt(group.notation.match(/\d+d(\d+)/)?.[1] || 0);
           const IconComponent = DiceIcons[sides];
           return (
-            <div key={index} className='flex flex-wrap items-center gap-2'>
-              <div className='flex items-center gap-1.5 min-w-[70px]'>
+            <div
+              key={index}
+              className='flex flex-wrap items-center gap-2 max-lg:gap-1.5'
+            >
+              <div className='flex items-center gap-1.5 min-w-[70px] max-lg:min-w-[60px] max-lg:gap-1'>
                 {IconComponent && (
                   <IconComponent
-                    size={18}
+                    size={20}
+                    className='max-lg:w-4 max-lg:h-4'
                     style={{ color: getDiceColor(sides) }}
                   />
                 )}
                 <span
-                  className='font-bold text-sm'
+                  className='font-bold text-sm max-lg:text-sm'
                   style={{ color: getDiceColor(sides) }}
                 >
                   {group.notation}:
                 </span>
               </div>
-              <div className='flex flex-wrap gap-1.5'>
+              <div className='flex flex-wrap gap-1.5 max-lg:gap-1'>
                 {group.results.map((roll, rollIndex) => (
                   <span
                     key={rollIndex}
-                    className='px-2 py-1 border-2 rounded font-bold min-w-[36px] text-center text-sm'
+                    className='px-2 py-1 border-2 rounded font-bold min-w-[36px] text-center text-sm max-lg:px-1.5 max-lg:py-0.5 max-lg:min-w-[32px] max-lg:text-sm max-lg:border'
                     style={{
                       borderColor: getDiceColor(sides),
                       color: getDiceColor(sides),
@@ -110,11 +114,11 @@ export default function DiceResult({ result, onCopy }) {
           );
         })}
         {result.modifier !== 0 && (
-          <div className='flex items-center gap-2'>
-            <span className='font-bold min-w-[60px] text-sm text-terminal-yellow'>
+          <div className='flex items-center gap-2 max-lg:gap-1'>
+            <span className='font-bold min-w-[60px] text-sm text-terminal-yellow max-lg:min-w-[50px] max-lg:text-sm'>
               Modifier:
             </span>
-            <span className='text-terminal-yellow font-bold'>
+            <span className='text-terminal-yellow font-bold max-lg:text-sm'>
               {result.modifier > 0 ? '+' : ''}
               {result.modifier}
             </span>
@@ -122,7 +126,7 @@ export default function DiceResult({ result, onCopy }) {
         )}
       </div>
 
-      <div className='flex justify-between items-center p-4 bg-terminal-dark border-2 border-terminal-green rounded-md text-2xl font-bold text-terminal-green shadow-[0_0_10px_rgba(0,255,65,0.2)] max-lg:text-xl'>
+      <div className='flex justify-between items-center p-4 bg-terminal-dark border-2 border-terminal-green rounded-md text-2xl font-bold text-terminal-green shadow-[0_0_10px_rgba(0,255,65,0.2)] max-lg:text-lg max-lg:p-2.5 max-lg:border'>
         <span>TOTAL:</span>
         <span>{result.total}</span>
       </div>
