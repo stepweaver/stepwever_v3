@@ -2,13 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-// Helper function to safely parse dates
+// Helper function to safely parse dates - using UTC to avoid timezone issues
 const safeParseDate = (dateStr) => {
   if (!dateStr) return new Date(0);
   try {
     const [year, month, day] = dateStr.split('-').map(Number);
     if (!year || !month || !day) return new Date(0);
-    return new Date(year, month - 1, day);
+    // Use Date.UTC to avoid timezone conversion
+    return new Date(Date.UTC(year, month - 1, day));
   } catch (e) {
     console.error(`Invalid date format: ${dateStr}`);
     return new Date(0);

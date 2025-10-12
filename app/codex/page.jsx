@@ -75,36 +75,36 @@ function CodexContent() {
   }, [activeTab, activeSubTab]);
 
   // Fetch articles when article tab is active
-useEffect(() => {
-  if (activeTab === 'articles') {
-    // Set default sub-tab if none is selected
-    if (!activeSubTab) {
-      setActiveSubTab('coming-soon');
-      return; // Don't fetch until sub-tab is set
-    }
-
-    // Add this hardening check
-    if (activeSubTab === 'coming-soon') {
-      setPodcastEpisodes([]);
-      return;
-    }
-
-    async function fetchArticles() {
-      try {
-        const res = await fetch(`/api/rss?source=${activeSubTab}`);
-        if (!res.ok) {
-          throw new Error('Failed to fetch articles');
-        }
-        const data = await res.json();
-        setPodcastEpisodes(data.items || []); // Reuse the same state
-      } catch (error) {
-        console.error('Error fetching articles:', error);
-        setPodcastEpisodes([]);
+  useEffect(() => {
+    if (activeTab === 'articles') {
+      // Set default sub-tab if none is selected
+      if (!activeSubTab) {
+        setActiveSubTab('coming-soon');
+        return; // Don't fetch until sub-tab is set
       }
+
+      // Add this hardening check
+      if (activeSubTab === 'coming-soon') {
+        setPodcastEpisodes([]);
+        return;
+      }
+
+      async function fetchArticles() {
+        try {
+          const res = await fetch(`/api/rss?source=${activeSubTab}`);
+          if (!res.ok) {
+            throw new Error('Failed to fetch articles');
+          }
+          const data = await res.json();
+          setPodcastEpisodes(data.items || []); // Reuse the same state
+        } catch (error) {
+          console.error('Error fetching articles:', error);
+          setPodcastEpisodes([]);
+        }
+      }
+      fetchArticles();
     }
-    fetchArticles();
-  }
-}, [activeTab, activeSubTab]);
+  }, [activeTab, activeSubTab]);
 
   // Sort all posts by date descending
   const allPosts = useMemo(() => {
@@ -164,15 +164,27 @@ useEffect(() => {
     });
   };
 
-  // Format date helper
+  // Format date helper - parse date string to avoid timezone issues
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     try {
-      const date = new Date(dateStr);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `[${year}-${month}-${day}]`;
+      // Parse the date parts to avoid timezone conversion
+      const [year, month, day] = dateStr.split('-').map(
+        (part) => part.replace(/[^0-9]/g, '') // Remove any non-numeric characters
+      );
+
+      if (!year || !month || !day) return dateStr;
+
+      // Build date with UTC to prevent timezone shift
+      const date = new Date(
+        Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day))
+      );
+
+      const formattedYear = date.getUTCFullYear();
+      const formattedMonth = String(date.getUTCMonth() + 1).padStart(2, '0');
+      const formattedDay = String(date.getUTCDate()).padStart(2, '0');
+
+      return `[${formattedYear}-${formattedMonth}-${formattedDay}]`;
     } catch (e) {
       return dateStr;
     }
@@ -265,15 +277,18 @@ useEffect(() => {
       <div className='relative z-10 p-4'>
         <div className='max-w-7xl mx-auto'>
           {/* Page Title */}
-          <div className='text-center mt-20 mb-36'>
-            <h1 className='text-5xl md:text-6xl font-bold text-terminal-green mb-8 md:mb-20 font-ibm'>
+          <div className='mt-20 mb-36'>
+            <h1 className='text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-terminal-green mb-8 md:mb-20 font-ibm whitespace-nowrap'>
               Stephen Weaver
             </h1>
-            <p className='max-w-5xl mx-auto text-terminal-text text-lg md:text-4xl leading-relaxed'>
+            <p className='max-w-5xl text-terminal-text text-lg md:text-4xl leading-relaxed'>
               I'm Stephen, founder of{' '}
-              <GlitchLambda className='text-terminal-text' />
-              stepweaver. I don't follow the script-I build my own and help
-              others do the same.
+              <span className='inline-block whitespace-nowrap'>
+                <GlitchLambda className='text-terminal-text' />
+                stepweaver
+              </span>
+              . I don't follow the script-I build my own and help others do the
+              same.
             </p>
           </div>
 
@@ -282,7 +297,7 @@ useEffect(() => {
             <nav className='flex items-center font-ibm text-terminal-green'>
               <span className='text-terminal-green'>user@stepweaver</span>
               <span className='text-terminal-text ml-2'>~</span>
-              <span className='text-terminal-dimmed'>/</span>
+              <span className='text-terminal-text'>/</span>
               <button
                 onClick={() => {
                   setActiveTab('all');
@@ -699,9 +714,12 @@ function PostItem({
               : { fontSize: '16px' }
           }
         >
-          {post.updated
-            ? `Updated: ${formatDate(post.updated)}`
-            : formatDate(post.date)}
+          Published: {formatDate(post.date)}
+          {post.updated && post.updated !== post.date && (
+            <span className='text-terminal-green ml-3'>
+              • Updated: {formatDate(post.updated)}
+            </span>
+          )}
         </div>
 
         {/* Description */}

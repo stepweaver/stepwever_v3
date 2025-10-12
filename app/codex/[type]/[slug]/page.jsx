@@ -39,15 +39,27 @@ const getTypeColorValue = (type) => {
   return colorMap[type] || 'var(--color-terminal-text)'; // default to terminal-text
 };
 
-// Helper function to format date
+// Helper function to format date - parse date string to avoid timezone issues
 const formatDate = (dateStr) => {
   if (!dateStr) return '';
   try {
-    const date = new Date(dateStr);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `[${year}-${month}-${day}]`;
+    // Parse the date parts to avoid timezone conversion
+    const [year, month, day] = dateStr.split('-').map(
+      (part) => part.replace(/[^0-9]/g, '') // Remove any non-numeric characters
+    );
+
+    if (!year || !month || !day) return dateStr;
+
+    // Build date with UTC to prevent timezone shift
+    const date = new Date(
+      Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day))
+    );
+
+    const formattedYear = date.getUTCFullYear();
+    const formattedMonth = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const formattedDay = String(date.getUTCDate()).padStart(2, '0');
+
+    return `[${formattedYear}-${formattedMonth}-${formattedDay}]`;
   } catch (e) {
     return dateStr;
   }
@@ -153,10 +165,14 @@ export default async function CodexDetailPage({ params }) {
                 {frontmatter.title}
               </h1>
 
-              <div className='text-terminal-text text-lg mb-4'>
-                {frontmatter.updated
-                  ? `Updated: ${formatDate(frontmatter.updated)}`
-                  : formatDate(frontmatter.date)}
+              <div className='text-terminal-text text-lg mb-4 space-y-1'>
+                <div>Published: {formatDate(frontmatter.date)}</div>
+                {frontmatter.updated &&
+                  frontmatter.updated !== frontmatter.date && (
+                    <div className='text-terminal-green'>
+                      Updated: {formatDate(frontmatter.updated)}
+                    </div>
+                  )}
               </div>
 
               {frontmatter.description && (
