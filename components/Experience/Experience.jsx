@@ -221,7 +221,7 @@ function Experience() {
             <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight text-left font-ibm text-terminal-green'>
               I use modern, secure tools to deliver reliable solutions.
             </h3>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+            <p className='text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
               <GlitchLambda className='text-terminal-text' />
               stepweaver is veteran-owned and built on 8 years of solving real
               business problems.

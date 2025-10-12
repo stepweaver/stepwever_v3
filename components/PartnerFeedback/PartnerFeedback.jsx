@@ -32,7 +32,7 @@ function PartnerFeedback() {
         {/* Real Testimonial */}
         <div className='mb-12'>
           <blockquote className='p-4 md:p-8 border border-terminal-border/30 bg-terminal-dark/20 rounded-lg'>
-            <p className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8'>
+            <p className='text-terminal-text font-ibm text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8'>
               "{TESTIMONIAL.quote}"
             </p>
 
@@ -53,7 +53,7 @@ function PartnerFeedback() {
             <h3 className='text-xl md:text-2xl lg:text-3xl mb-4 font-ibm text-terminal-green'>
               READY TO WORK TOGETHER?
             </h3>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mb-6'>
+            <p className='text-terminal-text font-ibm text-base md:text-lg leading-relaxed mb-6'>
               If you're ready to stop doing busywork and start growing smarter,
               let's build the systems that will get you there.
             </p>
@@ -63,7 +63,7 @@ function PartnerFeedback() {
               <h4 className='text-lg md:text-xl font-ibm text-terminal-cyan mb-4'>
                 MY COMMITMENT
               </h4>
-              <ul className='space-y-3 text-terminal-text font-ocr text-sm md:text-base'>
+              <ul className='space-y-3 text-terminal-text font-ibm text-sm md:text-base'>
                 {COMMITMENTS.map((commitment, index) => (
                   <li key={index} className='flex items-start'>
                     <span className='text-terminal-green mr-2'>→</span>
@@ -77,7 +77,7 @@ function PartnerFeedback() {
 
         {/* Call to Action */}
         <div>
-          <p className='text-terminal-text font-ocr text-sm md:text-base mb-4'>
+          <p className='text-terminal-text font-ibm text-sm md:text-base mb-4'>
             Let's build something!
           </p>
           <div>

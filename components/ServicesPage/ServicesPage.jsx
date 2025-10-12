@@ -70,7 +70,7 @@ function ServicesPage() {
 
           {/* Hero Description - Similar to main hero */}
           <div className='mb-6 sm:mb-10 max-w-6xl ml-auto'>
-            <p className='text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-terminal-text leading-tight font-ocr mb-6'>
+            <p className='text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-terminal-text leading-relaxed font-ibm mb-6'>
               {SERVICES_DATA.hero.subheadline}
             </p>
           </div>
@@ -197,12 +197,12 @@ function ServicesPage() {
                   </div>
 
                   {/* Description */}
-                  <p className='font-ocr text-terminal-text text-sm leading-relaxed'>
+                  <p className='font-ibm text-terminal-text text-sm leading-relaxed'>
                     {item.description}
                   </p>
 
                   {/* Benefit */}
-                  <p className='font-ocr text-terminal-green text-sm font-bold leading-relaxed'>
+                  <p className='font-ibm text-terminal-green text-sm font-bold leading-relaxed'>
                     {item.benefit}
                   </p>
 
@@ -230,7 +230,7 @@ function ServicesPage() {
             <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
               {SERVICES_DATA.customWork.title}
             </h2>
-            <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl leading-relaxed'>
+            <p className='text-lg md:text-xl font-ibm text-terminal-text max-w-4xl leading-relaxed'>
               {SERVICES_DATA.customWork.description}
             </p>
           </header>
@@ -247,7 +247,7 @@ function ServicesPage() {
                   <span className='text-terminal-green font-bold mr-3 mt-1 font-ocr'>
                     &gt;
                   </span>
-                  <p className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                  <p className='font-ibm text-terminal-text text-base md:text-lg leading-relaxed'>
                     {benefit}
                   </p>
                 </div>
@@ -268,10 +268,10 @@ function ServicesPage() {
                     {retainer.title}
                   </h4>
                   <div className='h-0.5 bg-terminal-green/50 mb-4 md:mb-6'></div>
-                  <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mb-4 md:mb-6'>
+                  <p className='text-terminal-text font-ibm text-base md:text-lg leading-relaxed mb-4 md:mb-6'>
                     {retainer.description}
                   </p>
-                  <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                  <ul className='space-y-3 md:space-y-4 text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
                     {retainer.features.map((feature, featureIndex) => (
                       <li
                         key={`retainer-${index}-feature-${featureIndex}`}
@@ -322,7 +322,7 @@ function ServicesPage() {
                 {service.title}
               </h2>
               <div className='h-0.5 bg-terminal-green mb-6 md:mb-8 max-w-24'></div>
-              <p className='text-terminal-text font-ocr text-lg md:text-xl leading-relaxed max-w-4xl'>
+              <p className='text-terminal-text font-ibm text-lg md:text-xl leading-relaxed max-w-4xl'>
                 {service.description}
               </p>
             </header>
@@ -333,7 +333,7 @@ function ServicesPage() {
                 <h3 className='text-xl md:text-2xl font-ibm text-terminal-green mb-4 md:mb-6'>
                   What's included:
                 </h3>
-                <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                <ul className='space-y-3 md:space-y-4 text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
                   {service.included.map((item, itemIndex) => (
                     <li
                       key={`${key}-included-${itemIndex}`}
@@ -353,7 +353,7 @@ function ServicesPage() {
                 <h3 className='text-xl md:text-2xl font-ibm text-terminal-green mb-4 md:mb-6'>
                   Example outcomes:
                 </h3>
-                <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                <ul className='space-y-3 md:space-y-4 text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
                   {service.outcomes.map((outcome, outcomeIndex) => (
                     <li
                       key={`${key}-outcome-${outcomeIndex}`}
@@ -401,7 +401,7 @@ function ServicesPage() {
                 </div>
 
                 <div className='ml-18 pl-6'>
-                  <ul className='space-y-3 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+                  <ul className='space-y-3 text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
                     {step.details.map((detail, detailIndex) => (
                       <li
                         key={`process-${step.step}-detail-${detailIndex}`}

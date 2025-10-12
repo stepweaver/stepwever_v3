@@ -80,7 +80,7 @@ const StoryCard = ({ story }) => (
         {story.title}
       </h3>
 
-      <p className='text-terminal-text font-ocr text-xs leading-relaxed mb-4 grow'>
+      <p className='text-terminal-text font-ibm text-xs leading-relaxed mb-4 grow'>
         {story.description}
       </p>
 
@@ -90,7 +90,7 @@ const StoryCard = ({ story }) => (
         </h4>
         <ul className='space-y-1'>
           {story.metrics.map((m) => (
-            <li key={m} className='text-terminal-yellow font-ocr text-xs flex'>
+            <li key={m} className='text-terminal-yellow font-ibm text-xs flex'>
               <span className='text-terminal-green mr-2'>▶</span>
               {m}
             </li>

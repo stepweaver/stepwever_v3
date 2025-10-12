@@ -34,7 +34,7 @@ function About() {
                 Founder
               </p>
 
-              <ul className='space-y-1 font-ocr text-xl text-terminal-text'>
+              <ul className='space-y-1 font-ibm text-xl text-terminal-text'>
                 <li>Developer</li>
                 <li>Data Strategist</li>
                 <li>Veteran</li>
@@ -58,7 +58,7 @@ function About() {
             </h3>
 
             {/* Narrative */}
-            <div className='prose prose-invert font-ocr max-w-none space-y-4 text-terminal-text'>
+            <div className='prose prose-invert font-ibm max-w-none space-y-4 text-terminal-text'>
               <p className='text-lg'>
                 I'm Stephen Weaver, founder of{' '}
                 <GlitchLambda className='text-terminal-text' />
@@ -69,7 +69,7 @@ function About() {
 
               <p className='text-lg'>My background spans both worlds:</p>
 
-              <ul className='space-y-3 font-ocr text-lg'>
+              <ul className='space-y-3 font- text-lg'>
                 <li>U.S. Air Force veteran (Airborne Linguist)</li>
                 <li>Business analyst who built reporting systems</li>
                 <li>Restaurant manager who learned operations</li>
@@ -90,7 +90,7 @@ function About() {
                 Every business needs a secret weapon. I just happen to be one
                 you can hire.
               </p>
-              <p className='text-lg font-ocr text-terminal-text'>
+              <p className='text-lg font-ibm text-terminal-text'>
                 <a
                   href='/services'
                   className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'

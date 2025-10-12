@@ -432,7 +432,7 @@ html[data-theme] {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-ocr);
+  font-family: var(--font-ibm);
   /* Improve mobile scrolling */
   -webkit-overflow-scrolling: touch;
   /* Prevent horizontal scroll */
@@ -449,6 +449,22 @@ body {
 /* Ensure body background is applied */
 html, body {
   background-color: var(--background);
+}
+
+/* Font Hierarchy - OCR-A for display, IBM 3270 for body */
+/* OCR-A for headings and display text for impact */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-ocr);
+}
+
+/* Ensure .font-ocr utility class still works for display purposes */
+.font-ocr {
+  font-family: var(--font-ocr);
+}
+
+/* Ensure .font-ibm utility class works for body text */
+.font-ibm {
+  font-family: var(--font-ibm);
 }
 
 /* Theme transition styles */

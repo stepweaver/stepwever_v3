@@ -44,8 +44,9 @@ function WhatWeDo() {
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
             WHAT I DO
           </h2>
-          <p className='text-lg md:text-xl font-ocr text-terminal-text leading-relaxed mb-6'>
-            Need specific pricing and delivery timelines?<br />
+          <p className='text-lg md:text-xl font-ibm text-terminal-text leading-relaxed mb-6'>
+            Need specific pricing and delivery timelines?
+            <br />
             <a
               href='/services'
               className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
@@ -64,10 +65,10 @@ function WhatWeDo() {
                 {service.title}
               </h3>
               <div className='h-0.5 bg-terminal-green mb-4 md:mb-6'></div>
-              <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mb-4 md:mb-6'>
+              <p className='text-terminal-text font-ibm text-base md:text-lg leading-relaxed mb-4 md:mb-6'>
                 {service.description}
               </p>
-              <ul className='space-y-3 md:space-y-4 text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+              <ul className='space-y-3 md:space-y-4 text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
                 {service.items.map((item, itemIndex) => (
                   <li key={itemIndex} className='flex items-start'>
                     <span className='text-terminal-green font-bold mr-3 mt-1'>

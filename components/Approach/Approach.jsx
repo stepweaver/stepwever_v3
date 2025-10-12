@@ -44,7 +44,7 @@ function Approach() {
               You work directly with me. You see progress as it happens, and you
               help guide the project from start to finish.
             </h3>
-            <p className='font-ocr text-base lg:text-lg leading-relaxed text-terminal-text/90'>
+            <p className='font-ibm text-base lg:text-lg leading-relaxed text-terminal-text/90'>
               No middlemen. No surprises. Just clear communication and working
               solutions.
             </p>
@@ -72,7 +72,7 @@ function Approach() {
                     <h5 className='font-ibm text-terminal-green text-xl mb-3 leading-tight'>
                       {title}
                     </h5>
-                    <p className='font-ocr text-base leading-relaxed text-terminal-text/90'>
+                    <p className='font-ibm text-base leading-relaxed text-terminal-text/90'>
                       {desc}
                     </p>
                   </div>
@@ -97,7 +97,7 @@ function Approach() {
                       <h5 className='font-ibm text-terminal-green text-xl lg:text-2xl mb-4 leading-tight'>
                         {title}
                       </h5>
-                      <p className='font-ocr text-lg lg:text-xl leading-relaxed text-terminal-text/90'>
+                      <p className='font-ibm text-lg lg:text-xl leading-relaxed text-terminal-text/90'>
                         {desc}
                       </p>
                     </div>

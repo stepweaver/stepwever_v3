@@ -58,7 +58,7 @@ function WhyWorkWithUs() {
               <div className='w-full h-px bg-terminal-green/20 mb-2 md:mb-4'></div>
 
               {/* Reason Description */}
-              <div className='text-terminal-text font-ocr text-base md:text-lg lg:text-xl leading-relaxed'>
+              <div className='text-terminal-text font-ibm text-base md:text-lg lg:text-xl leading-relaxed'>
                 {reason.description}
               </div>
             </article>

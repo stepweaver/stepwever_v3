@@ -83,7 +83,7 @@ export default function CTA() {
 
         {/* ---- Copy & actions column ---------------------------------------- */}
         <div className='space-y-10 pt-2 md:pt-4'>
-          <p className='font-ocr text-base md:text-lg lg:text-xl leading-tight'>
+          <p className='font-ibm text-base md:text-lg lg:text-xl leading-relaxed'>
             <GlitchLambda className='text-terminal-green' />
             stepweaver builds websites and automations that actually work for
             your business.
