@@ -60,15 +60,15 @@ const PROJECTS = [
     slug: 'it-consulting',
   },
   {
-    title: 'N8n Automations',
+    title: 'n8n Automations',
     description: 'Custom automation workflows to connect apps.',
     imageUrl: null,
-    keywords: ['Automation', 'N8n', 'Workflow Integration'],
+    keywords: ['Automation', 'n8n', 'Workflow Integration'],
     actions: [
       'Connect apps and services seamlessly',
       'Automate repetitive tasks and data transfers',
     ],
-    tags: ['Automation', 'N8n', 'Workflow Integration'],
+    tags: ['Automation', 'n8n', 'Workflow Integration'],
     slug: 'n8n-automations',
   },
   {
