@@ -98,7 +98,9 @@ const PROJECTS = [
 ];
 
 export default function ProjectCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // Separate state for mobile (card-based) and desktop (page-based)
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const [desktopPageIndex, setDesktopPageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -122,17 +124,18 @@ export default function ProjectCarousel() {
     setIsClient(true);
   }, []);
 
+  // Mobile navigation (one card at a time)
   const nextProject = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % PROJECTS.length);
+    setMobileIndex((prevIndex) => (prevIndex + 1) % PROJECTS.length);
     setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning]);
 
   const prevProject = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setCurrentIndex(
+    setMobileIndex(
       (prevIndex) => (prevIndex - 1 + PROJECTS.length) % PROJECTS.length
     );
     setTimeout(() => setIsTransitioning(false), 600);
@@ -177,10 +180,10 @@ export default function ProjectCarousel() {
         const elapsed = Date.now() - touchState.current.startTime;
         touchState.current.velocity = deltaX / elapsed;
 
-        // Apply real-time visual feedback
-        if (containerRef.current) {
+        // Apply real-time visual feedback (only on mobile)
+        if (containerRef.current && window.innerWidth < 768) {
           const container = containerRef.current;
-          const baseTransform = -currentIndex * 100;
+          const baseTransform = -mobileIndex * 100;
           const dragOffset = (deltaX / window.innerWidth) * 100;
           const transform = baseTransform + dragOffset;
 
@@ -191,7 +194,7 @@ export default function ProjectCarousel() {
         e.preventDefault();
       }
     },
-    [currentIndex]
+    [mobileIndex]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -206,23 +209,21 @@ export default function ProjectCarousel() {
       distance < -minSwipeDistance ||
       (Math.abs(velocity) > 0.5 && distance < -20);
 
-    // Animate to final position
-    if (containerRef.current) {
+    // Animate to final position (only on mobile)
+    if (containerRef.current && window.innerWidth < 768) {
       const container = containerRef.current;
       container.style.transition =
         'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
       if (isLeftSwipe) {
         nextProject();
-        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        // Will be updated by setMobileIndex in nextProject
       } else if (isRightSwipe) {
         prevProject();
-        container.style.transform = `translateX(-${
-          ((currentIndex - 1 + PROJECTS.length) % PROJECTS.length) * 100
-        }%)`;
+        // Will be updated by setMobileIndex in prevProject
       } else {
         // Snap back to current position
-        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+        container.style.transform = `translateX(-${mobileIndex * 100}%)`;
       }
 
       // Reset transition after animation
@@ -244,7 +245,7 @@ export default function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [nextProject, prevProject, currentIndex]);
+  }, [nextProject, prevProject, mobileIndex]);
 
   // Enhanced mouse drag handlers for desktop
   const handleMouseDown = useCallback((e) => {
@@ -281,10 +282,10 @@ export default function ProjectCarousel() {
         const elapsed = Date.now() - touchState.current.startTime;
         touchState.current.velocity = deltaX / elapsed;
 
-        // Apply real-time visual feedback
-        if (containerRef.current) {
+        // Apply real-time visual feedback (only on mobile)
+        if (containerRef.current && window.innerWidth < 768) {
           const container = containerRef.current;
-          const baseTransform = -currentIndex * 100;
+          const baseTransform = -mobileIndex * 100;
           const dragOffset = (deltaX / window.innerWidth) * 100;
           const transform = baseTransform + dragOffset;
 
@@ -293,7 +294,7 @@ export default function ProjectCarousel() {
         }
       }
     },
-    [currentIndex]
+    [mobileIndex]
   );
 
   const handleMouseUp = useCallback(() => {
@@ -308,23 +309,21 @@ export default function ProjectCarousel() {
       distance < -minSwipeDistance ||
       (Math.abs(velocity) > 0.5 && distance < -20);
 
-    // Animate to final position
-    if (containerRef.current) {
+    // Animate to final position (only on mobile)
+    if (containerRef.current && window.innerWidth < 768) {
       const container = containerRef.current;
       container.style.transition =
         'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
       if (isLeftSwipe) {
         nextProject();
-        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        // Will be updated by setMobileIndex in nextProject
       } else if (isRightSwipe) {
         prevProject();
-        container.style.transform = `translateX(-${
-          ((currentIndex - 1 + PROJECTS.length) % PROJECTS.length) * 100
-        }%)`;
+        // Will be updated by setMobileIndex in prevProject
       } else {
         // Snap back to current position
-        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+        container.style.transform = `translateX(-${mobileIndex * 100}%)`;
       }
 
       // Reset transition after animation
@@ -346,7 +345,7 @@ export default function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [nextProject, prevProject, currentIndex]);
+  }, [nextProject, prevProject, mobileIndex]);
 
   // Add event listeners with non-passive options
   useEffect(() => {
@@ -392,12 +391,12 @@ export default function ProjectCarousel() {
     handleMouseUp,
   ]);
 
-  // Memoized transform style with hardware acceleration
-  const transformStyle = useMemo(
+  // Memoized transform style for mobile (hardware accelerated)
+  const mobileTransformStyle = useMemo(
     () => ({
-      transform: `translateX(-${currentIndex * 100}%)`,
+      transform: `translateX(-${mobileIndex * 100}%)`,
     }),
-    [currentIndex]
+    [mobileIndex]
   );
 
   // Calculate how many cards per page based on screen size
@@ -423,9 +422,9 @@ export default function ProjectCarousel() {
     return () => window.removeEventListener('resize', handleResize);
   }, [isClient, getCardsPerPage]);
 
-  // Calculate total pages
+  // Calculate total pages for desktop
   const totalPages = Math.ceil(PROJECTS.length / cardsPerPage);
-  const currentPage = Math.floor(currentIndex / cardsPerPage);
+  const currentPage = desktopPageIndex;
 
   // Get cards for a specific page
   const getCardsForPage = useCallback(
@@ -440,17 +439,17 @@ export default function ProjectCarousel() {
     if (isTransitioning) return;
     setIsTransitioning(true);
     const nextPageIndex = (currentPage + 1) % totalPages;
-    setCurrentIndex(nextPageIndex * cardsPerPage);
+    setDesktopPageIndex(nextPageIndex);
     setTimeout(() => setIsTransitioning(false), 600);
-  }, [currentPage, totalPages, cardsPerPage, isTransitioning]);
+  }, [currentPage, totalPages, isTransitioning]);
 
   const prevPage = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     const prevPageIndex = (currentPage - 1 + totalPages) % totalPages;
-    setCurrentIndex(prevPageIndex * cardsPerPage);
+    setDesktopPageIndex(prevPageIndex);
     setTimeout(() => setIsTransitioning(false), 600);
-  }, [currentPage, totalPages, cardsPerPage, isTransitioning]);
+  }, [currentPage, totalPages, isTransitioning]);
 
   return (
     <div className='w-full relative mt-8 sm:mt-16'>
@@ -470,7 +469,7 @@ export default function ProjectCarousel() {
           <div
             ref={containerRef}
             className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
-            style={transformStyle}
+            style={mobileTransformStyle}
           >
             {PROJECTS.map((project, index) => (
               <div
@@ -501,19 +500,19 @@ export default function ProjectCarousel() {
           {PROJECTS.map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentIndex(index)}
+              onClick={() => setMobileIndex(index)}
               className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
-                index === currentIndex
+                index === mobileIndex
                   ? 'bg-terminal-green'
                   : 'bg-terminal-dimmed hover:bg-terminal-green/50'
               }`}
               aria-label={`Go to project ${index + 1} of ${PROJECTS.length}`}
-              aria-selected={index === currentIndex}
+              aria-selected={index === mobileIndex}
               role='tab'
             >
               <div
                 className={`rounded-full transition-all duration-300 ${
-                  index === currentIndex
+                  index === mobileIndex
                     ? 'bg-terminal-green'
                     : 'bg-terminal-dimmed hover:bg-terminal-green/50'
                 }`}
@@ -589,7 +588,7 @@ export default function ProjectCarousel() {
               ref={containerRef}
               className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
               style={{
-                transform: `translateX(-${currentPage * 100}%)`,
+                transform: `translateX(-${desktopPageIndex * 100}%)`,
               }}
             >
               {Array.from({ length: totalPages }, (_, pageIndex) => (
@@ -627,7 +626,7 @@ export default function ProjectCarousel() {
             <button
               key={index}
               onClick={() => {
-                setCurrentIndex(index * cardsPerPage);
+                setDesktopPageIndex(index);
               }}
               className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
                 index === currentPage
