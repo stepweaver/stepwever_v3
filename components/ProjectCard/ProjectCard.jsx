@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import Link from 'next/link';
-import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const ProjectCard = memo(function ProjectCard({
   title,
@@ -56,100 +55,55 @@ const ProjectCard = memo(function ProjectCard({
             />
           </div>
         )}
+
         {/* Project Title */}
-        <h3 className='text-terminal-green font-ibm text-sm sm:text-base mb-1 sm:mb-2 leading-tight'>
+        <h3 className='text-terminal-green font-ibm text-sm sm:text-base mb-2 sm:mb-3 leading-tight'>
           {title}
         </h3>
 
-        {/* Project Description */}
-        <p
-          className='text-terminal-text font-ocr text-sm sm:text-base leading-relaxed mb-2 sm:mb-3 flex-grow overflow-hidden'
-          style={{
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-          }}
-        >
-          {description}
-        </p>
-
-        {/* Keywords */}
+        {/* Keywords as Category */}
         {keywords.length > 0 && (
           <div className='mb-2 sm:mb-3'>
-            <div className='text-terminal-cyan font-ocr text-xs mb-1'>
-              Keywords:
-            </div>
-            <div className='flex flex-wrap gap-1'>
-              {keywords.map((keyword, index) => (
-                <span
-                  key={index}
-                  className='px-1 py-0.5 bg-terminal-light/20 text-terminal-cyan font-ocr text-xs rounded border border-terminal-border'
-                >
-                  {keyword}
-                </span>
-              ))}
-            </div>
+            <span className='inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 rounded border border-terminal-green/30'>
+              {keywords[0]}
+            </span>
           </div>
         )}
 
-        {/* Sample Actions */}
+        {/* Sample Actions - simplified */}
         {actions.length > 0 && (
           <div className='mb-2 sm:mb-3'>
-            <div className='text-terminal-yellow font-ocr text-xs mb-1'>
-              Sample Actions:
+            <div className='text-terminal-cyan font-ibm text-xs mb-1'>
+              KEY FEATURES:
             </div>
-            <ul className='space-y-0.5'>
+            <ul className='space-y-1'>
               {actions.slice(0, 2).map((action, index) => (
                 <li
                   key={index}
-                  className='text-terminal-text font-ocr text-xs leading-relaxed flex items-start'
+                  className='text-terminal-yellow font-ibm text-xs flex'
                 >
-                  <span className='text-terminal-green mr-1 flex-shrink-0'>
-                    •
-                  </span>
-                  <span
-                    className='text-xs overflow-hidden'
-                    style={{
-                      display: '-webkit-box',
-                      WebkitLineClamp: 1,
-                      WebkitBoxOrient: 'vertical',
-                    }}
-                  >
-                    {action}
-                  </span>
+                  <span className='text-terminal-green mr-2'>▶</span>
+                  {action}
                 </li>
               ))}
             </ul>
           </div>
         )}
 
-        {/* Bottom spacing to prevent cutoff */}
-        <div className='mt-auto pt-4 sm:pt-6'></div>
+        {/* Bottom spacing */}
+        <div className='mt-auto pt-2 sm:pt-4'></div>
       </div>
     </>
   );
 
-  if (slug) {
-    return (
-      <Link href={`/projects/${slug}`} className='block h-full'>
-        <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group h-full cursor-pointer hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20'>
-          {cardContent}
-        </div>
-      </Link>
-    );
-  }
-
+  // Match SuccessStories structure exactly - plain article element (no Link wrapper)
+  // Navigation handled by parent carousel
   return (
-    <div
-      className={`bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group h-full ${
-        link
-          ? 'cursor-pointer hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20'
-          : ''
-      }`}
-      onClick={link ? handleExternalClick : undefined}
+    <article
+      className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group h-full flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20'
     >
       {cardContent}
-    </div>
+    </article>
   );
 });
 
