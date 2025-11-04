@@ -539,8 +539,9 @@ export default function ProjectCarousel() {
           </p>
         </div>
 
-        {/* Desktop Navigation Arrows */}
+        {/* Desktop Carousel Container */}
         <div className='relative'>
+          {/* Desktop Navigation Arrows */}
           <button
             onClick={prevPage}
             className='absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
@@ -584,43 +585,42 @@ export default function ProjectCarousel() {
               />
             </svg>
           </button>
-        </div>
 
-        {/* Desktop Carousel Container */}
-        <div
-          ref={carouselRef}
-          className='overflow-hidden cursor-grab active:cursor-grabbing carousel-container'
-          role='region'
-          aria-label='Project carousel'
-        >
           <div
-            ref={containerRef}
-            className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
-            style={{
-              transform: `translateX(-${currentPage * 100}%)`,
-            }}
+            ref={carouselRef}
+            className='overflow-hidden cursor-grab active:cursor-grabbing carousel-container'
+            role='region'
+            aria-label='Project carousel'
           >
-            {Array.from({ length: totalPages }, (_, pageIndex) => (
-              <div
-                key={pageIndex}
-                className='w-full flex-shrink-0 flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
-              >
-                {getCardsForPage(pageIndex).map((project, index) => (
-                  <div key={index} className='w-full md:w-1/2 lg:w-1/3'>
-                    <ProjectCard
-                      title={project.title}
-                      description={project.description}
-                      link={project.link}
-                      imageUrl={project.imageUrl}
-                      tags={project.tags}
-                      keywords={project.keywords}
-                      actions={project.actions}
-                      slug={project.slug}
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
+            <div
+              ref={containerRef}
+              className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+              style={{
+                transform: `translateX(-${currentPage * 100}%)`,
+              }}
+            >
+              {Array.from({ length: totalPages }, (_, pageIndex) => (
+                <div
+                  key={pageIndex}
+                  className='w-full flex-shrink-0 flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
+                >
+                  {getCardsForPage(pageIndex).map((project, index) => (
+                    <div key={index} className='w-full md:w-1/2 lg:w-1/3'>
+                      <ProjectCard
+                        title={project.title}
+                        description={project.description}
+                        link={project.link}
+                        imageUrl={project.imageUrl}
+                        tags={project.tags}
+                        keywords={project.keywords}
+                        actions={project.actions}
+                        slug={project.slug}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

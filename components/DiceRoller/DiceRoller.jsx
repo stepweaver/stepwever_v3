@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { roll, buildNotation, validateDicePool } from '@/lib/roller';
+import { roll, buildNotation, validateDicePool, rerollWithHeldDice } from '@/lib/roller';
 import { DICE_ICONS, UI_CONSTANTS, getRandomColor } from '@/lib/diceConstants';
-import { logError } from '@/utils/errorMonitor';
+import errorMonitor from '@/utils/errorMonitor';
 import DicePoolBuilder from './DicePoolBuilder';
 import DiceResult from './DiceResult';
 import RollHistory from './RollHistory';
@@ -22,6 +22,7 @@ export default function DiceRoller() {
   const [isRolling, setIsRolling] = useState(false);
   const [copyStatus, setCopyStatus] = useState(false);
   const [historyExpanded, setHistoryExpanded] = useState(false);
+  const [heldDice, setHeldDice] = useState(new Set());
   const currentPoolRef = useRef(null);
 
   // Load history from localStorage on mount
@@ -32,7 +33,7 @@ export default function DiceRoller() {
         setHistory(JSON.parse(savedHistory));
       }
     } catch (error) {
-      logError('Failed to load dice roller history', error);
+      errorMonitor.logError(error, { context: 'Failed to load dice roller history' });
     }
   }, []);
 
@@ -41,7 +42,7 @@ export default function DiceRoller() {
     try {
       localStorage.setItem('diceRollerHistory', JSON.stringify(history));
     } catch (error) {
-      logError('Failed to save dice roller history', error);
+      errorMonitor.logError(error, { context: 'Failed to save dice roller history' });
     }
   }, [history]);
 
@@ -66,8 +67,42 @@ export default function DiceRoller() {
       );
       setIsRolling(false);
       setComment(''); // Clear comment after roll
+      setHeldDice(new Set()); // Clear held dice on new roll
     }, UI_CONSTANTS.ROLL_ANIMATION_DURATION);
   }, [dicePool, modifier, comment, isRolling]);
+
+  // Handle re-roll with held dice
+  const handleReroll = useCallback(() => {
+    if (!currentResult || isRolling) return;
+
+    setIsRolling(true);
+    setCopyStatus(false);
+
+    setTimeout(() => {
+      const newResult = rerollWithHeldDice(currentResult, heldDice);
+      newResult.comment = currentResult.comment || comment.trim();
+      
+      setCurrentResult(newResult);
+      setHistory((prev) =>
+        [newResult, ...prev].slice(0, UI_CONSTANTS.MAX_HISTORY)
+      );
+      setIsRolling(false);
+    }, UI_CONSTANTS.ROLL_ANIMATION_DURATION);
+  }, [currentResult, heldDice, isRolling, comment]);
+
+  // Handle toggle dice hold
+  const handleToggleDiceHold = useCallback((groupIndex, resultIndex) => {
+    setHeldDice((prev) => {
+      const newSet = new Set(prev);
+      const key = `${groupIndex}-${resultIndex}`;
+      if (newSet.has(key)) {
+        newSet.delete(key);
+      } else {
+        newSet.add(key);
+      }
+      return newSet;
+    });
+  }, []);
 
   // Handle copy notation
   const handleCopy = useCallback(() => {
@@ -85,7 +120,7 @@ export default function DiceRoller() {
           );
         },
         (err) => {
-          logError('Failed to copy notation', err);
+          errorMonitor.logError(err, { context: 'Failed to copy notation' });
           // Fallback for older browsers
           fallbackCopy(notation);
         }
@@ -109,7 +144,7 @@ export default function DiceRoller() {
       setCopyStatus(true);
       setTimeout(() => setCopyStatus(false), UI_CONSTANTS.COPY_STATUS_DURATION);
     } catch (err) {
-      logError('Fallback copy failed', err);
+      errorMonitor.logError(err, { context: 'Fallback copy failed' });
     }
     document.body.removeChild(textArea);
   };
@@ -121,6 +156,7 @@ export default function DiceRoller() {
     setComment('');
     setCurrentResult(null);
     setCopyStatus(false);
+    setHeldDice(new Set());
   }, []);
 
   // Handle clear history
@@ -144,6 +180,7 @@ export default function DiceRoller() {
   const handleClearResults = useCallback(() => {
     setCurrentResult(null);
     setCopyStatus(false);
+    setHeldDice(new Set());
   }, []);
 
   // Handle history item click
@@ -437,7 +474,12 @@ export default function DiceRoller() {
                     </div>
                   </div>
                 ) : (
-                  <DiceResult result={currentResult} />
+                  <DiceResult 
+                    result={currentResult} 
+                    heldDice={heldDice}
+                    onToggleDiceHold={handleToggleDiceHold}
+                    onReroll={handleReroll}
+                  />
                 )}
               </div>
             )}

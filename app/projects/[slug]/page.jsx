@@ -483,6 +483,107 @@ export default function ProjectPage({ params }) {
               </section>
             )}
 
+            {/* Terminal Integration */}
+            {project.terminalIntegration && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  💻 Terminal Integration
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
+                  {project.terminalIntegration.description}
+                </p>
+                {project.terminalIntegration.usage && (
+                  <div className='mb-6'>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Usage
+                    </h3>
+                    <ul className='space-y-2 ml-6'>
+                      {project.terminalIntegration.usage.map((usage, index) => (
+                        <li
+                          key={index}
+                          className='font-ocr text-terminal-text text-sm'
+                        >
+                          • {usage}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {project.terminalIntegration.example && (
+                  <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                    <pre className='font-mono text-terminal-green text-sm overflow-x-auto whitespace-pre-wrap'>
+                      {project.terminalIntegration.example}
+                    </pre>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Keyboard Shortcuts */}
+            {project.keyboardShortcuts &&
+              project.keyboardShortcuts.length > 0 && (
+                <section className='mb-16'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    ⌨️ Keyboard Shortcuts
+                  </h2>
+                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <ul className='space-y-3'>
+                    {project.keyboardShortcuts.map((shortcut, index) => (
+                      <li key={index} className='flex items-start'>
+                        <Code className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                          {shortcut}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+            {/* Dice Notation */}
+            {project.diceNotation && project.diceNotation.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  🎲 Dice Notation
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
+                  The dice roller uses standard RPG dice notation:
+                </p>
+                <ul className='space-y-3'>
+                  {project.diceNotation.map((notation, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Code className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                      <span className='font-mono text-terminal-text text-base leading-relaxed'>
+                        {notation}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Planned Features */}
+            {project.plannedFeatures && project.plannedFeatures.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  🚀 Planned Features
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-3'>
+                  {project.plannedFeatures.map((feature, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
             {/* Demo Forms */}
             {project.demoForms && project.demoForms.length > 0 && (
               <section className='mb-16'>
@@ -539,7 +640,7 @@ export default function ProjectPage({ params }) {
               </p>
               <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
                 <Link href='/contact'>
-                  <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 border border-terminal-green text-terminal-green font-ocr transition-colors duration-200 rounded-lg'>
+                  <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 border border-terminal-green text-terminal-green font-ocr transition-colors duration-200 rounded-lg cursor-pointer'>
                     Get in Touch
                   </button>
                 </Link>

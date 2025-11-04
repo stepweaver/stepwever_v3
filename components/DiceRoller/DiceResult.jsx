@@ -1,10 +1,11 @@
 import { DICE_ICONS, DICE_COLORS } from '@/lib/diceConstants';
 import { formatTimestamp } from '@/utils/dateFormatter';
+import { Lock } from 'lucide-react';
 
 /**
  * Display a single dice roll result with breakdown
  */
-export default function DiceResult({ result, onCopy }) {
+export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold, onReroll }) {
   if (!result) return null;
 
   return (
@@ -24,6 +25,13 @@ export default function DiceResult({ result, onCopy }) {
           {formatTimestamp(result.timestamp)}
         </span>
       </div>
+
+      {/* Instructions for Dice Tray */}
+      {onToggleDiceHold && (
+        <div className='mb-3 p-2 bg-terminal-light/10 border border-terminal-yellow/30 rounded text-xs text-terminal-yellow font-ocr max-lg:text-[0.65rem] max-lg:p-1.5'>
+          💡 <strong>Tip:</strong> Click on dice to hold them, then click "RE-ROLL UNHELD" to re-roll the rest
+        </div>
+      )}
 
       {/* Individual Dice Results */}
       <div className='flex flex-col gap-2 mb-3 max-lg:gap-1 max-lg:mb-2'>
@@ -52,22 +60,40 @@ export default function DiceResult({ result, onCopy }) {
                 </span>
               </div>
               <div className='flex flex-wrap gap-1.5 max-lg:gap-1'>
-                {group.results.map((roll, rollIndex) => (
-                  <span
-                    key={rollIndex}
-                    className='px-2 py-1 border-2 rounded font-bold min-w-[36px] text-center text-sm max-lg:px-1.5 max-lg:py-0.5 max-lg:min-w-[32px] max-lg:text-sm max-lg:border'
-                    style={{
-                      borderColor: diceColor,
-                      color: diceColor,
-                      backgroundColor:
-                        roll === sides
+                {group.results.map((roll, rollIndex) => {
+                  const diceKey = `${index}-${rollIndex}`;
+                  const isHeld = heldDice && heldDice.has(diceKey);
+                  return (
+                    <button
+                      key={rollIndex}
+                      onClick={() => onToggleDiceHold && onToggleDiceHold(index, rollIndex)}
+                      className={`px-2 py-1 border-2 rounded font-bold min-w-[36px] text-center text-sm max-lg:px-1.5 max-lg:py-0.5 max-lg:min-w-[32px] max-lg:text-sm max-lg:border transition-all relative ${
+                        onToggleDiceHold ? 'cursor-pointer hover:scale-110' : ''
+                      }`}
+                      style={{
+                        borderColor: isHeld ? 'var(--color-terminal-yellow)' : diceColor,
+                        color: isHeld ? 'var(--color-terminal-yellow)' : diceColor,
+                        backgroundColor: isHeld
+                          ? 'rgba(255, 255, 0, 0.2)'
+                          : roll === sides
                           ? 'rgba(0, 255, 65, 0.1)'
                           : 'transparent',
-                    }}
-                  >
-                    {roll}
-                  </span>
-                ))}
+                        boxShadow: isHeld ? '0 0 8px rgba(255, 255, 0, 0.5)' : 'none',
+                      }}
+                      title={isHeld ? 'Held - Click to release' : 'Click to hold'}
+                      aria-label={isHeld ? `Held die showing ${roll} - Click to release` : `Die showing ${roll} - Click to hold`}
+                    >
+                      {isHeld && (
+                        <Lock 
+                          size={12} 
+                          className='absolute -top-1 -right-1 text-terminal-yellow' 
+                          style={{ filter: 'drop-shadow(0 0 2px rgba(255, 255, 0, 0.8))' }}
+                        />
+                      )}
+                      {roll}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           );
@@ -90,8 +116,8 @@ export default function DiceResult({ result, onCopy }) {
         <span>{result.total}</span>
       </div>
 
-      {onCopy && (
-        <div className='mt-4 text-center'>
+      <div className='mt-4 flex gap-2 justify-center flex-wrap'>
+        {onCopy && (
           <button
             onClick={onCopy}
             className='py-2 px-4 bg-terminal-dark border-2 border-terminal-cyan rounded-md text-terminal-cyan font-ibm text-sm cursor-pointer transition-all hover:bg-terminal-cyan hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-cyan)]'
@@ -99,8 +125,17 @@ export default function DiceResult({ result, onCopy }) {
           >
             📋 COPY NOTATION
           </button>
-        </div>
-      )}
+        )}
+        {onReroll && heldDice && heldDice.size > 0 && (
+          <button
+            onClick={onReroll}
+            className='py-2 px-4 bg-terminal-dark border-2 border-terminal-yellow rounded-md text-terminal-yellow font-ibm text-sm cursor-pointer transition-all hover:bg-terminal-yellow hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-yellow)]'
+            aria-label='Re-roll unheld dice'
+          >
+            🔄 RE-ROLL UNHELD
+          </button>
+        )}
+      </div>
     </div>
   );
 }
