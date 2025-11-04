@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import Link from 'next/link';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const ProjectCard = memo(function ProjectCard({
@@ -9,28 +10,17 @@ const ProjectCard = memo(function ProjectCard({
   tags = [],
   keywords = [],
   actions = [],
+  slug,
 }) {
-  const handleClick = () => {
-    if (link) {
-      if (link.startsWith('http')) {
-        // External link - open in new window
-        window.open(link, '_blank', 'noopener,noreferrer');
-      } else {
-        // Internal link - navigate
-        window.location.href = link;
-      }
+  const handleExternalClick = (e) => {
+    e.preventDefault();
+    if (link && link.startsWith('http')) {
+      window.open(link, '_blank', 'noopener,noreferrer');
     }
   };
 
-  return (
-    <div
-      className={`bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group h-full ${
-        link
-          ? 'cursor-pointer hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20'
-          : ''
-      }`}
-      onClick={link ? handleClick : undefined}
-    >
+  const cardContent = (
+    <>
       {/* Terminal Header */}
       <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
         <div className='flex items-center space-x-2'>
@@ -47,21 +37,21 @@ const ProjectCard = memo(function ProjectCard({
       <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col h-full'>
         {/* Project Image */}
         {imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48'>
+          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-36 sm:h-56'>
             <img
               src={imageUrl}
               alt={title}
-              className='w-full h-full object-cover object-top'
+              className='w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105'
               loading='lazy'
             />
           </div>
         )}
         {!imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-32 sm:h-48'>
+          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-36 sm:h-56'>
             <img
               src='/images/lambda_preview.png'
               alt='Project preview'
-              className='w-full h-full object-cover object-center'
+              className='w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105'
               loading='lazy'
             />
           </div>
@@ -73,10 +63,10 @@ const ProjectCard = memo(function ProjectCard({
 
         {/* Project Description */}
         <p
-          className='text-terminal-text font-ocr text-xs leading-relaxed mb-2 sm:mb-3 flex-grow overflow-hidden'
+          className='text-terminal-text font-ocr text-sm sm:text-base leading-relaxed mb-2 sm:mb-3 flex-grow overflow-hidden'
           style={{
             display: '-webkit-box',
-            WebkitLineClamp: 3,
+            WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
           }}
         >
@@ -136,6 +126,29 @@ const ProjectCard = memo(function ProjectCard({
         {/* Bottom spacing to prevent cutoff */}
         <div className='mt-auto pt-4 sm:pt-6'></div>
       </div>
+    </>
+  );
+
+  if (slug) {
+    return (
+      <Link href={`/projects/${slug}`} className='block h-full'>
+        <div className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group h-full cursor-pointer hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20'>
+          {cardContent}
+        </div>
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className={`bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group h-full ${
+        link
+          ? 'cursor-pointer hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20'
+          : ''
+      }`}
+      onClick={link ? handleExternalClick : undefined}
+    >
+      {cardContent}
     </div>
   );
 });

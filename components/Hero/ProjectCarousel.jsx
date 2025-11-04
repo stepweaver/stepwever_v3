@@ -6,35 +6,37 @@ import ProjectCard from '@/components/ProjectCard/ProjectCard';
 // Project data moved to a separate file
 const PROJECTS = [
   {
-    title: 'Cut reporting time from hours to minutes',
+    title: 'Lambda Orthodontics Website - Demo',
     description:
-      'Built a custom dashboard for a healthcare practice that replaced slow, confusing reports with real-time data that staff actually use. Now they can see patient trends and business performance at a glance.',
+      'Modern responsive website with functional forms and clean design.',
     imageUrl: '/images/screencapture-lambda-ortho.png',
-    keywords: ['Healthcare', 'Dashboard', 'Time Savings'],
+    keywords: ['Healthcare', 'Website', 'Form Validation'],
     actions: [
-      'See patient trends and business performance instantly',
-      'No more waiting for monthly reports',
+      'Three fully functional forms with validation',
+      'Modern responsive design built with vanilla JavaScript',
     ],
     link: 'https://lambdaortho.vercel.app/',
-    tags: ['Web Development', 'Healthcare', 'Dashboard'],
+    tags: ['Web Development', 'Healthcare', 'Forms'],
+    slug: 'lambda-orthodontics',
   },
   {
-    title: 'Turned online store into a sales machine',
+    title: 'Soap Stache',
     description:
-      'Created an e-commerce site for a soap business that makes it easy for customers to find and buy products. The site handles everything from browsing to checkout, so the owner can focus on making soap instead of managing orders.',
+      'E-commerce platform with shopping cart, CMS, and Stripe payments.',
     imageUrl: '/images/screencapture-soap-stache.png',
-    keywords: ['E-commerce', 'Sales Growth', 'Easy Management'],
+    keywords: ['E-commerce', 'Next.js', 'Sanity CMS', 'Stripe'],
     actions: [
-      'Customers can easily browse and buy products',
-      'Owner spends time making soap, not managing orders',
+      'Complete shopping cart and checkout with Stripe integration',
+      'Content management through Sanity CMS',
     ],
     link: 'https://app-soap-stache.vercel.app/',
-    tags: ['E-commerce', 'Web Development', 'Sales'],
+    tags: ['E-commerce', 'Next.js', 'Sanity CMS', 'Stripe'],
+    slug: 'soap-stache',
   },
   {
     title: 'RPG Dice Roller',
     description:
-      'Interactive dice rolling app for tabletop RPGs with a retro terminal aesthetic. Roll any combination of dice (d4, d6, d8, d10, d12, d20, d100), add modifiers, and track your roll history. Features keyboard shortcuts, animations, and a clean interface that gamers love.',
+      'Interactive dice rolling app for tabletop RPGs with terminal aesthetic.',
     imageUrl: '/images/dice-roller.png',
     keywords: ['Gaming', 'Interactive', 'Web App'],
     actions: [
@@ -43,6 +45,7 @@ const PROJECTS = [
     ],
     link: '/dice-roller',
     tags: ['Web Development', 'Gaming', 'Interactive'],
+    slug: 'rpg-dice-roller',
   },
   {
     title: 'Eliminated daily data entry forever',
@@ -102,10 +105,9 @@ const PROJECTS = [
 ];
 
 export default function ProjectCarousel() {
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [totalPages, setTotalPages] = useState(2);
-  const [isClient, setIsClient] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   // Enhanced touch/swipe state for smooth animations
   const touchState = useRef({
@@ -120,71 +122,31 @@ export default function ProjectCarousel() {
   });
 
   const carouselRef = useRef(null);
-  const animationFrameRef = useRef(null);
   const containerRef = useRef(null);
-
-  // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Memoized functions to prevent unnecessary re-renders
-  const getTotalPages = useCallback(() => {
-    const totalProjects = PROJECTS.length;
-    if (typeof window !== 'undefined') {
-      if (window.innerWidth < 768) {
-        // Mobile: 1 card per page
-        return totalProjects;
-      } else if (window.innerWidth < 1024) {
-        // Tablet: 2 cards per page
-        return Math.ceil(totalProjects / 2);
-      } else {
-        // Desktop: 3 cards per page
-        return Math.ceil(totalProjects / 3);
-      }
-    }
-    // Default for SSR
-    return Math.ceil(totalProjects / 3);
-  }, []);
-
-  // Calculate total pages based on screen size - only after client mounts
-  useEffect(() => {
-    if (!isClient) return;
-
-    setTotalPages(getTotalPages());
-
-    const handleResize = () => {
-      setTotalPages(getTotalPages());
-      // Reset to first page when resizing
-      setCurrentCardIndex(0);
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, [isClient, getTotalPages]);
-
-  const nextCard = useCallback(() => {
+  const nextProject = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % totalPages);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % PROJECTS.length);
     setTimeout(() => setIsTransitioning(false), 600);
-  }, [totalPages, isTransitioning]);
+  }, [isTransitioning]);
 
-  const prevCard = useCallback(() => {
+  const prevProject = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setCurrentCardIndex(
-      (prevIndex) => (prevIndex - 1 + totalPages) % totalPages
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + PROJECTS.length) % PROJECTS.length
     );
     setTimeout(() => setIsTransitioning(false), 600);
-  }, [totalPages, isTransitioning]);
+  }, [isTransitioning]);
 
   // Enhanced touch event handlers with real-time feedback
-  const onTouchStart = useCallback((e) => {
+  const handleTouchStart = useCallback((e) => {
     const touch = e.targetTouches[0];
     touchState.current = {
       startX: touch.clientX,
@@ -196,19 +158,9 @@ export default function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-
-    // Cancel any ongoing animations
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
-
-    // Add active state for better visual feedback
-    if (carouselRef.current) {
-      carouselRef.current.classList.add('carousel-active');
-    }
   }, []);
 
-  const onTouchMove = useCallback(
+  const handleTouchMove = useCallback(
     (e) => {
       if (!touchState.current.startX) return;
 
@@ -232,14 +184,13 @@ export default function ProjectCarousel() {
         const elapsed = Date.now() - touchState.current.startTime;
         touchState.current.velocity = deltaX / elapsed;
 
-        // Apply real-time visual feedback - simplified for smoother performance
+        // Apply real-time visual feedback
         if (containerRef.current) {
           const container = containerRef.current;
-          const baseTransform = -currentCardIndex * 100;
+          const baseTransform = -currentIndex * 100;
           const dragOffset = (deltaX / window.innerWidth) * 100;
           const transform = baseTransform + dragOffset;
 
-          // Direct transform update for smoother real-time feedback
           container.style.transform = `translateX(${transform}%)`;
           container.style.transition = 'none';
         }
@@ -247,10 +198,10 @@ export default function ProjectCarousel() {
         e.preventDefault();
       }
     },
-    [currentCardIndex]
+    [currentIndex]
   );
 
-  const onTouchEnd = useCallback(() => {
+  const handleTouchEnd = useCallback(() => {
     if (!touchState.current.startX || !touchState.current.currentX) return;
 
     const distance = touchState.current.startX - touchState.current.currentX;
@@ -262,37 +213,23 @@ export default function ProjectCarousel() {
       distance < -minSwipeDistance ||
       (Math.abs(velocity) > 0.5 && distance < -20);
 
-    // Animate to final position with improved easing
+    // Animate to final position
     if (containerRef.current) {
       const container = containerRef.current;
+      container.style.transition =
+        'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
       if (isLeftSwipe) {
-        // Calculate the target index first
-        const targetIndex = (currentCardIndex + 1) % totalPages;
-        container.style.transition =
-          'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        container.style.transform = `translateX(-${targetIndex * 100}%)`;
-
-        // Update state after setting transform
-        setTimeout(() => {
-          nextCard();
-        }, 50);
+        nextProject();
+        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
       } else if (isRightSwipe) {
-        // Calculate the target index first
-        const targetIndex = (currentCardIndex - 1 + totalPages) % totalPages;
-        container.style.transition =
-          'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        container.style.transform = `translateX(-${targetIndex * 100}%)`;
-
-        // Update state after setting transform
-        setTimeout(() => {
-          prevCard();
-        }, 50);
+        prevProject();
+        container.style.transform = `translateX(-${
+          ((currentIndex - 1 + PROJECTS.length) % PROJECTS.length) * 100
+        }%)`;
       } else {
-        // Snap back to current position with bounce effect
-        container.style.transition =
-          'transform 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        container.style.transform = `translateX(-${currentCardIndex * 100}%)`;
+        // Snap back to current position
+        container.style.transform = `translateX(-${currentIndex * 100}%)`;
       }
 
       // Reset transition after animation
@@ -301,11 +238,6 @@ export default function ProjectCarousel() {
           container.style.transition = '';
         }
       }, 300);
-    }
-
-    // Remove active state
-    if (carouselRef.current) {
-      carouselRef.current.classList.remove('carousel-active');
     }
 
     // Reset touch state
@@ -319,10 +251,10 @@ export default function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [nextCard, prevCard, currentCardIndex, totalPages]);
+  }, [nextProject, prevProject, currentIndex]);
 
   // Enhanced mouse drag handlers for desktop
-  const onMouseDown = useCallback((e) => {
+  const handleMouseDown = useCallback((e) => {
     touchState.current = {
       startX: e.clientX,
       startY: e.clientY,
@@ -333,14 +265,9 @@ export default function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-
-    // Cancel any ongoing animations
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
   }, []);
 
-  const onMouseMove = useCallback(
+  const handleMouseMove = useCallback(
     (e) => {
       if (touchState.current.startX === null) return;
 
@@ -361,23 +288,22 @@ export default function ProjectCarousel() {
         const elapsed = Date.now() - touchState.current.startTime;
         touchState.current.velocity = deltaX / elapsed;
 
-        // Apply real-time visual feedback - simplified for smoother performance
+        // Apply real-time visual feedback
         if (containerRef.current) {
           const container = containerRef.current;
-          const baseTransform = -currentCardIndex * 100;
+          const baseTransform = -currentIndex * 100;
           const dragOffset = (deltaX / window.innerWidth) * 100;
           const transform = baseTransform + dragOffset;
 
-          // Direct transform update for smoother real-time feedback
           container.style.transform = `translateX(${transform}%)`;
           container.style.transition = 'none';
         }
       }
     },
-    [currentCardIndex]
+    [currentIndex]
   );
 
-  const onMouseUp = useCallback(() => {
+  const handleMouseUp = useCallback(() => {
     if (!touchState.current.startX || !touchState.current.currentX) return;
 
     const distance = touchState.current.startX - touchState.current.currentX;
@@ -392,34 +318,20 @@ export default function ProjectCarousel() {
     // Animate to final position
     if (containerRef.current) {
       const container = containerRef.current;
+      container.style.transition =
+        'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
       if (isLeftSwipe) {
-        // Calculate the target index first
-        const targetIndex = (currentCardIndex + 1) % totalPages;
-        container.style.transition =
-          'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        container.style.transform = `translateX(-${targetIndex * 100}%)`;
-
-        // Update state after setting transform
-        setTimeout(() => {
-          nextCard();
-        }, 50);
+        nextProject();
+        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
       } else if (isRightSwipe) {
-        // Calculate the target index first
-        const targetIndex = (currentCardIndex - 1 + totalPages) % totalPages;
-        container.style.transition =
-          'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        container.style.transform = `translateX(-${targetIndex * 100}%)`;
-
-        // Update state after setting transform
-        setTimeout(() => {
-          prevCard();
-        }, 50);
+        prevProject();
+        container.style.transform = `translateX(-${
+          ((currentIndex - 1 + PROJECTS.length) % PROJECTS.length) * 100
+        }%)`;
       } else {
-        // Snap back to current position with bounce effect
-        container.style.transition =
-          'transform 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        container.style.transform = `translateX(-${currentCardIndex * 100}%)`;
+        // Snap back to current position
+        container.style.transform = `translateX(-${currentIndex * 100}%)`;
       }
 
       // Reset transition after animation
@@ -441,7 +353,7 @@ export default function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [nextCard, prevCard, currentCardIndex, totalPages]);
+  }, [nextProject, prevProject, currentIndex]);
 
   // Add event listeners with non-passive options
   useEffect(() => {
@@ -449,178 +361,301 @@ export default function ProjectCarousel() {
     if (!carouselElement) return;
 
     // Touch event listeners with non-passive options
-    carouselElement.addEventListener('touchstart', onTouchStart, {
+    carouselElement.addEventListener('touchstart', handleTouchStart, {
       passive: true,
     });
-    carouselElement.addEventListener('touchmove', onTouchMove, {
+    carouselElement.addEventListener('touchmove', handleTouchMove, {
       passive: false,
     });
-    carouselElement.addEventListener('touchend', onTouchEnd, { passive: true });
+    carouselElement.addEventListener('touchend', handleTouchEnd, {
+      passive: true,
+    });
 
     // Mouse event listeners
-    carouselElement.addEventListener('mousedown', onMouseDown, {
+    carouselElement.addEventListener('mousedown', handleMouseDown, {
       passive: true,
     });
-    carouselElement.addEventListener('mousemove', onMouseMove, {
+    carouselElement.addEventListener('mousemove', handleMouseMove, {
       passive: true,
     });
-    carouselElement.addEventListener('mouseup', onMouseUp, { passive: true });
+    carouselElement.addEventListener('mouseup', handleMouseUp, {
+      passive: true,
+    });
 
     return () => {
-      carouselElement.removeEventListener('touchstart', onTouchStart);
-      carouselElement.removeEventListener('touchmove', onTouchMove);
-      carouselElement.removeEventListener('touchend', onTouchEnd);
-      carouselElement.removeEventListener('mousedown', onMouseDown);
-      carouselElement.removeEventListener('mousemove', onMouseMove);
-      carouselElement.removeEventListener('mouseup', onMouseUp);
+      carouselElement.removeEventListener('touchstart', handleTouchStart);
+      carouselElement.removeEventListener('touchmove', handleTouchMove);
+      carouselElement.removeEventListener('touchend', handleTouchEnd);
+      carouselElement.removeEventListener('mousedown', handleMouseDown);
+      carouselElement.removeEventListener('mousemove', handleMouseMove);
+      carouselElement.removeEventListener('mouseup', handleMouseUp);
     };
   }, [
-    onTouchStart,
-    onTouchMove,
-    onTouchEnd,
-    onMouseDown,
-    onMouseMove,
-    onMouseUp,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
   ]);
-
-  // Memoized card rendering function
-  const getCardsForPage = useCallback(
-    (pageIndex) => {
-      if (!isClient) {
-        // Default for SSR: 3 cards per page (desktop layout)
-        const startIndex = pageIndex * 3;
-        return PROJECTS.slice(startIndex, startIndex + 3);
-      }
-
-      if (typeof window !== 'undefined') {
-        if (window.innerWidth < 768) {
-          // Mobile: 1 card per page
-          return [PROJECTS[pageIndex]];
-        } else if (window.innerWidth < 1024) {
-          // Tablet: 2 cards per page
-          const startIndex = pageIndex * 2;
-          return PROJECTS.slice(startIndex, startIndex + 2);
-        } else {
-          // Desktop: 3 cards per page
-          const startIndex = pageIndex * 3;
-          return PROJECTS.slice(startIndex, startIndex + 3);
-        }
-      }
-
-      // Fallback for SSR
-      const startIndex = pageIndex * 3;
-      return PROJECTS.slice(startIndex, startIndex + 3);
-    },
-    [isClient]
-  );
 
   // Memoized transform style with hardware acceleration
   const transformStyle = useMemo(
     () => ({
-      transform: `translateX(-${currentCardIndex * 100}%)`,
+      transform: `translateX(-${currentIndex * 100}%)`,
     }),
-    [currentCardIndex]
+    [currentIndex]
   );
+
+  // Calculate how many cards per page based on screen size
+  const getCardsPerPage = useCallback(() => {
+    if (!isClient || typeof window === 'undefined') return 3;
+    if (window.innerWidth < 768) return 1; // Mobile: 1 card
+    if (window.innerWidth < 1024) return 2; // Tablet: 2 cards
+    return 3; // Desktop: 3 cards
+  }, [isClient]);
+
+  const [cardsPerPage, setCardsPerPage] = useState(3);
+
+  useEffect(() => {
+    if (!isClient) return;
+    setCardsPerPage(getCardsPerPage());
+
+    const handleResize = () => {
+      setCardsPerPage(getCardsPerPage());
+      setCurrentIndex(0);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isClient, getCardsPerPage]);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(PROJECTS.length / cardsPerPage);
+  const currentPage = Math.floor(currentIndex / cardsPerPage);
+
+  // Get cards for a specific page
+  const getCardsForPage = useCallback(
+    (pageIndex) => {
+      const startIndex = pageIndex * cardsPerPage;
+      return PROJECTS.slice(startIndex, startIndex + cardsPerPage);
+    },
+    [cardsPerPage]
+  );
+
+  const nextPage = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    const nextPageIndex = (currentPage + 1) % totalPages;
+    setCurrentIndex(nextPageIndex * cardsPerPage);
+    setTimeout(() => setIsTransitioning(false), 600);
+  }, [currentPage, totalPages, cardsPerPage, isTransitioning]);
+
+  const prevPage = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    const prevPageIndex = (currentPage - 1 + totalPages) % totalPages;
+    setCurrentIndex(prevPageIndex * cardsPerPage);
+    setTimeout(() => setIsTransitioning(false), 600);
+  }, [currentPage, totalPages, cardsPerPage, isTransitioning]);
 
   return (
     <div className='w-full relative mt-8 sm:mt-16'>
-      <div className='text-center mb-4'>
-        <p className='text-terminal-dimmed text-sm font-ocr'>
-          Swipe to navigate
-        </p>
-      </div>
-
-      {/* Desktop Navigation Arrows */}
-      <div className='hidden md:block'>
-        {/* Next Arrow */}
-        <button
-          onClick={nextCard}
-          className='absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
-          aria-label='Next page of projects'
-        >
-          <svg
-            className='w-6 h-6'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-            xmlns='http://www.w3.org/2000/svg'
-            aria-hidden='true'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M9 5l7 7-7 7'
-            />
-          </svg>
-        </button>
-      </div>
-
-      {/* Carousel Container */}
-      <div
-        className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch] carousel-container'
-        ref={carouselRef}
-        role='region'
-        aria-label='Project carousel'
-      >
+      {/* Mobile Carousel */}
+      <div className='md:hidden'>
+        <div className='text-center mb-4'>
+          <p className='text-terminal-dimmed text-sm font-ocr'>
+            Swipe to navigate
+          </p>
+        </div>
         <div
-          ref={containerRef}
-          className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
-          style={transformStyle}
+          ref={carouselRef}
+          className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch] carousel-container'
+          role='region'
+          aria-label='Project carousel'
         >
-          {/* Generate pages dynamically based on screen size */}
-          {Array.from({ length: totalPages }, (_, pageIndex) => (
-            <div
-              key={pageIndex}
-              className='w-full flex-shrink-0 flex flex-col md:flex-row gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
+          <div
+            ref={containerRef}
+            className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+            style={transformStyle}
+          >
+            {PROJECTS.map((project, index) => (
+              <div
+                key={index}
+                className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
+              >
+                <ProjectCard
+                  title={project.title}
+                  description={project.description}
+                  link={project.link}
+                  imageUrl={project.imageUrl}
+                  tags={project.tags}
+                  keywords={project.keywords}
+                  actions={project.actions}
+                  slug={project.slug}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile pagination indicators */}
+        <div
+          className='flex justify-center mt-6 space-x-2'
+          role='tablist'
+          aria-label='Project carousel navigation'
+        >
+          {PROJECTS.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
+                index === currentIndex
+                  ? 'bg-terminal-green'
+                  : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+              }`}
+              aria-label={`Go to project ${index + 1} of ${PROJECTS.length}`}
+              aria-selected={index === currentIndex}
+              role='tab'
             >
-              {getCardsForPage(pageIndex).map((project, index) => (
-                <div key={index} className='w-full md:w-1/2 lg:w-1/3'>
-                  <ProjectCard
-                    title={project.title}
-                    description={project.description}
-                    link={project.link}
-                    imageUrl={project.imageUrl}
-                    tags={project.tags}
-                    keywords={project.keywords}
-                    actions={project.actions}
-                  />
-                </div>
-              ))}
-            </div>
+              <div
+                className={`rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? 'bg-terminal-green'
+                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+                }`}
+                style={{ width: '8px', height: '8px' }}
+              />
+            </button>
           ))}
         </div>
       </div>
 
-      {/* Page Indicators */}
-      <div
-        className='flex justify-center mt-4 space-x-2'
-        role='tablist'
-        aria-label='Project carousel navigation'
-      >
-        {Array.from({ length: totalPages }, (_, index) => (
+      {/* Desktop Grid/Carousel */}
+      <div className='hidden md:block'>
+        <div className='text-center mb-4'>
+          <p className='text-terminal-dimmed text-sm font-ocr'>
+            Swipe to navigate
+          </p>
+        </div>
+
+        {/* Desktop Navigation Arrows */}
+        <div className='relative'>
           <button
-            key={index}
-            onClick={() => setCurrentCardIndex(index)}
-            className={`rounded-full transition-all duration-300 relative ${
-              index === currentCardIndex
-                ? 'bg-terminal-green'
-                : 'bg-terminal-dimmed hover:bg-terminal-green/50'
-            }`}
-            aria-label={`Go to page ${index + 1} of ${totalPages}`}
-            aria-selected={index === currentCardIndex}
-            role='tab'
+            onClick={prevPage}
+            className='absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
+            aria-label='Previous page of projects'
           >
-            <div
-              className={`rounded-full transition-all duration-300 ${
-                index === currentCardIndex
+            <svg
+              className='w-6 h-6'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M15 19l-7-7 7-7'
+              />
+            </svg>
+          </button>
+
+          <button
+            onClick={nextPage}
+            className='absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
+            aria-label='Next page of projects'
+          >
+            <svg
+              className='w-6 h-6'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M9 5l7 7-7 7'
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Desktop Carousel Container */}
+        <div
+          ref={carouselRef}
+          className='overflow-hidden cursor-grab active:cursor-grabbing carousel-container'
+          role='region'
+          aria-label='Project carousel'
+        >
+          <div
+            ref={containerRef}
+            className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
+            style={{
+              transform: `translateX(-${currentPage * 100}%)`,
+            }}
+          >
+            {Array.from({ length: totalPages }, (_, pageIndex) => (
+              <div
+                key={pageIndex}
+                className='w-full flex-shrink-0 flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
+              >
+                {getCardsForPage(pageIndex).map((project, index) => (
+                  <div key={index} className='w-full md:w-1/2 lg:w-1/3'>
+                    <ProjectCard
+                      title={project.title}
+                      description={project.description}
+                      link={project.link}
+                      imageUrl={project.imageUrl}
+                      tags={project.tags}
+                      keywords={project.keywords}
+                      actions={project.actions}
+                      slug={project.slug}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Page Indicators */}
+        <div
+          className='flex justify-center mt-6 space-x-2'
+          role='tablist'
+          aria-label='Project carousel navigation'
+        >
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setCurrentIndex(index * cardsPerPage);
+              }}
+              className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
+                index === currentPage
                   ? 'bg-terminal-green'
                   : 'bg-terminal-dimmed hover:bg-terminal-green/50'
               }`}
-              style={{ width: '8px', height: '8px' }}
-            />
-          </button>
-        ))}
+              aria-label={`Go to page ${index + 1} of ${totalPages}`}
+              aria-selected={index === currentPage}
+              role='tab'
+            >
+              <div
+                className={`rounded-full transition-all duration-300 ${
+                  index === currentPage
+                    ? 'bg-terminal-green'
+                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+                }`}
+                style={{ width: '8px', height: '8px' }}
+              />
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

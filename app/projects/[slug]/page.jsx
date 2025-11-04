@@ -1,0 +1,553 @@
+'use client';
+
+import { use } from 'react';
+import { notFound } from 'next/navigation';
+import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import { getProjectBySlug } from '@/lib/projectsData';
+import {
+  ArrowLeft,
+  ExternalLink,
+  CheckCircle,
+  Code,
+  Server,
+  CreditCard,
+  Palette,
+  Zap,
+  Shield,
+} from 'lucide-react';
+import Link from 'next/link';
+
+export default function ProjectPage({ params }) {
+  const { slug } = use(params);
+  const project = getProjectBySlug(slug);
+
+  if (!project) {
+    notFound();
+  }
+
+  return (
+    <>
+      <div className='relative'>
+        <BackgroundCanvas />
+
+        <main className='relative z-30 min-h-screen pt-20 pb-12'>
+          <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-6xl'>
+            {/* Back Navigation */}
+            <div className='mb-8'>
+              <Link
+                href='/'
+                className='inline-flex items-center text-terminal-cyan font-ocr text-sm hover:text-terminal-green transition-colors duration-200'
+              >
+                <ArrowLeft className='w-4 h-4 mr-2' />
+                Back to Home
+              </Link>
+            </div>
+
+            {/* Header */}
+            <header className='mb-12 md:mb-16'>
+              <div className='mb-6'>
+                <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-terminal-green'>
+                  {project.title}
+                </h1>
+              </div>
+
+              <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl leading-relaxed mb-8'>
+                {project.description}
+              </p>
+
+              {/* Project Image - 16:9 aspect ratio */}
+              {project.imageUrl && (
+                <div className='mb-8 border border-terminal-border rounded-lg overflow-hidden aspect-video'>
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className='w-full h-full object-cover object-top'
+                  />
+                </div>
+              )}
+
+              {/* External Link */}
+              {project.link && (
+                <div className='mb-8'>
+                  <a
+                    href={project.link}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='inline-flex items-center px-6 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 border border-terminal-green text-terminal-green font-ocr transition-colors duration-200 rounded-lg'
+                  >
+                    <ExternalLink className='w-5 h-5 mr-2' />
+                    View Live Project
+                  </a>
+                </div>
+              )}
+
+              {/* Tags */}
+              {project.tags && project.tags.length > 0 && (
+                <div className='flex flex-wrap gap-2 mb-8'>
+                  {project.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className='px-3 py-1 bg-terminal-light/20 text-terminal-cyan font-ocr text-sm rounded border border-terminal-border'
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </header>
+
+            {/* Features Section */}
+            {project.features && project.features.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  🚀 Features
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-4'>
+                  {project.features.map((feature, index) => (
+                    <li key={index} className='flex items-start'>
+                      <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Tech Stack Section */}
+            {project.techStack && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  🛠️ Tech Stack
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                  {project.techStack.frontend && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-center mb-4'>
+                        <Code className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Frontend
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.frontend.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.backend && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-center mb-4'>
+                        <Server className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Backend & CMS
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.backend.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.payment && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-center mb-4'>
+                        <CreditCard className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Payment & E-commerce
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.payment.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.development && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-center mb-4'>
+                        <Zap className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Development Tools
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.development.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+
+            {/* Project Structure */}
+            {project.projectStructure && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  📁 Project Structure
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                  <pre className='font-mono text-terminal-text text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap'>
+                    {project.projectStructure}
+                  </pre>
+                </div>
+              </section>
+            )}
+
+            {/* Content Management */}
+            {project.contentManagement && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  📝 Content Management with Sanity
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                {project.contentManagement.productSchema && (
+                  <div className='mb-8'>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Product Schema
+                    </h3>
+                    <p className='font-ocr text-terminal-text mb-4'>
+                      The project includes a comprehensive product schema with
+                      the following fields:
+                    </p>
+                    <ul className='space-y-2 ml-6'>
+                      {project.contentManagement.productSchema.map(
+                        (field, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {field}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
+                {project.contentManagement.contentTypes && (
+                  <div className='mb-8'>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Content Types
+                    </h3>
+                    {project.contentManagement.contentTypes.map(
+                      (type, index) => (
+                        <div
+                          key={index}
+                          className='mb-6 bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'
+                        >
+                          <h4 className='font-ibm text-terminal-green mb-3'>
+                            {type.name}
+                          </h4>
+                          <ul className='space-y-2 ml-6'>
+                            {type.features.map((feature, featIndex) => (
+                              <li
+                                key={featIndex}
+                                className='font-ocr text-terminal-text text-sm'
+                              >
+                                • {feature}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+                {project.contentManagement.studioFeatures && (
+                  <div>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Sanity Studio Features
+                    </h3>
+                    <ul className='space-y-2 ml-6'>
+                      {project.contentManagement.studioFeatures.map(
+                        (feature, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {feature}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* E-commerce Features */}
+            {project.ecommerceFeatures && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  💳 E-commerce Features
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+                  {project.ecommerceFeatures.shoppingCart && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <h3 className='text-lg font-ibm text-terminal-green mb-4'>
+                        Shopping Cart
+                      </h3>
+                      <ul className='space-y-2'>
+                        {project.ecommerceFeatures.shoppingCart.map(
+                          (feature, index) => (
+                            <li
+                              key={index}
+                              className='font-ocr text-terminal-text text-sm'
+                            >
+                              • {feature}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                  {project.ecommerceFeatures.checkout && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <h3 className='text-lg font-ibm text-terminal-green mb-4'>
+                        Checkout Process
+                      </h3>
+                      <ul className='space-y-2'>
+                        {project.ecommerceFeatures.checkout.map(
+                          (feature, index) => (
+                            <li
+                              key={index}
+                              className='font-ocr text-terminal-text text-sm'
+                            >
+                              • {feature}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                  {project.ecommerceFeatures.productManagement && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <h3 className='text-lg font-ibm text-terminal-green mb-4'>
+                        Product Management
+                      </h3>
+                      <ul className='space-y-2'>
+                        {project.ecommerceFeatures.productManagement.map(
+                          (feature, index) => (
+                            <li
+                              key={index}
+                              className='font-ocr text-terminal-text text-sm'
+                            >
+                              • {feature}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+
+            {/* Design System */}
+            {project.designSystem && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  🎨 Design System
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                  <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                    <div className='flex items-center mb-4'>
+                      <Palette className='w-6 h-6 text-terminal-green mr-3' />
+                      <h3 className='text-xl font-ibm text-terminal-green'>
+                        Components
+                      </h3>
+                    </div>
+                    <ul className='space-y-2'>
+                      {project.designSystem.components.map(
+                        (component, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {component}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                  <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                    <div className='flex items-center mb-4'>
+                      <Palette className='w-6 h-6 text-terminal-green mr-3' />
+                      <h3 className='text-xl font-ibm text-terminal-green'>
+                        Styling
+                      </h3>
+                    </div>
+                    <ul className='space-y-2'>
+                      {project.designSystem.styling.map((style, index) => (
+                        <li
+                          key={index}
+                          className='font-ocr text-terminal-text text-sm'
+                        >
+                          • {style}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* API Routes */}
+            {project.apiRoutes && project.apiRoutes.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  🔧 API Routes
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-3'>
+                  {project.apiRoutes.map((route, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Code className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {route}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Performance */}
+            {project.performance && project.performance.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  📊 Performance
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-3'>
+                  {project.performance.map((item, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Zap className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Security */}
+            {project.security && project.security.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  🔒 Security
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-3'>
+                  {project.security.map((item, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Shield className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Demo Forms */}
+            {project.demoForms && project.demoForms.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Demo Forms
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
+                  The website includes three fully functional demo forms:
+                </p>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
+                  {project.demoForms.map((form, index) => (
+                    <div
+                      key={index}
+                      className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'
+                    >
+                      <h3 className='text-lg font-ibm text-terminal-green mb-2'>
+                        {form.name}
+                      </h3>
+                      <p className='font-ocr text-terminal-text text-sm'>
+                        {form.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                {project.formFeatures && project.formFeatures.length > 0 && (
+                  <div>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Each form:
+                    </h3>
+                    <ul className='space-y-2 ml-6'>
+                      {project.formFeatures.map((feature, index) => (
+                        <li key={index} className='flex items-start'>
+                          <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                          <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* CTA Section */}
+            <section className='text-center bg-terminal-light/10 p-8 md:p-12 rounded-xl'>
+              <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
+                Interested in a similar project?
+              </h2>
+              <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
+                Let's discuss how we can build something similar for your
+                business.
+              </p>
+              <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
+                <Link href='/contact'>
+                  <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 border border-terminal-green text-terminal-green font-ocr transition-colors duration-200 rounded-lg'>
+                    Get in Touch
+                  </button>
+                </Link>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </>
+  );
+}
