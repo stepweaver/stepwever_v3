@@ -48,59 +48,52 @@ const PROJECTS = [
     slug: 'rpg-dice-roller',
   },
   {
-    title: 'Eliminated daily data entry forever',
-    description:
-      'Connected all the business apps so data flows automatically between them. No more copying numbers from one system to another - everything updates in real-time, saving hours every week.',
-    keywords: ['Automation', 'Time Savings', 'Data Flow'],
+    title: 'IT Consulting',
+    description: 'Strategic IT consulting to streamline operations.',
+    imageUrl: null,
+    keywords: ['IT Consulting', 'Strategic Planning', 'System Integration'],
     actions: [
-      'All your business data in one place automatically',
-      'No more manual data entry or duplicate work',
+      'Technology planning and implementation',
+      'System optimization and workflow improvement',
     ],
-    tags: ['Automation', 'Data Integration', 'Time Savings'],
+    tags: ['IT Consulting', 'Strategic Planning', 'System Integration'],
+    slug: 'it-consulting',
   },
   {
-    title: 'Made business numbers crystal clear',
-    description:
-      'Built dashboards that show exactly what matters to the business - profit, customer trends, and growth opportunities. No more guessing or waiting for reports that are already outdated.',
-    keywords: ['Business Intelligence', 'Clear Metrics', 'Real-time Data'],
+    title: 'N8n Automations',
+    description: 'Custom automation workflows to connect apps.',
+    imageUrl: null,
+    keywords: ['Automation', 'N8n', 'Workflow Integration'],
     actions: [
-      'See exactly how your business is performing right now',
-      'Spot trends and opportunities before your competitors',
+      'Connect apps and services seamlessly',
+      'Automate repetitive tasks and data transfers',
     ],
-    tags: ['Analytics', 'Dashboard', 'Business Intelligence'],
+    tags: ['Automation', 'N8n', 'Workflow Integration'],
+    slug: 'n8n-automations',
   },
   {
-    title: 'Built websites that bring in customers',
-    description:
-      'Created professional websites that work on every device and actually convert visitors into customers. Each site is built to grow with the business, not just look pretty.',
-    keywords: ['Customer Acquisition', 'Mobile-friendly', 'Conversion'],
+    title: 'AI Integrations',
+    description: 'AI tool integration to enhance workflows.',
+    imageUrl: null,
+    keywords: ['AI Integration', 'Machine Learning', 'Productivity'],
     actions: [
-      'Professional website that works on phones and computers',
-      'Contact forms and features that actually work',
+      'Custom AI solutions for business needs',
+      'Enhanced workflows with intelligent automation',
     ],
-    tags: ['Web Development', 'Customer Acquisition', 'Mobile'],
+    tags: ['AI Integration', 'Machine Learning', 'Productivity'],
+    slug: 'ai-integrations',
   },
   {
-    title: 'Created a clear path to growth',
-    description:
-      'Helped a business figure out exactly what to measure and how to track it. Built the tools to monitor progress and spot opportunities, so they can make decisions based on real data instead of guesswork.',
-    keywords: ['Growth Strategy', 'Clear Metrics', 'Data-driven Decisions'],
+    title: 'Google Analytics',
+    description: 'Analytics setup and optimization for tracking.',
+    imageUrl: null,
+    keywords: ['Analytics', 'Data Tracking', 'Business Intelligence'],
     actions: [
-      'Know exactly what numbers matter to your business',
-      'Track progress and spot opportunities automatically',
+      'Comprehensive tracking setup and configuration',
+      'Actionable insights from business data',
     ],
-    tags: ['Brand Identity', 'Design Direction', 'Messaging'],
-  },
-  {
-    title: 'Marketing Automation',
-    description:
-      'Automate outreach, follow-ups, and list-building. Connect your email, CRM, and website so leads and updates flow hands-free-making every campaign faster and more efficient.',
-    keywords: ['Email Automation', 'CRM Integration', 'Lead Generation'],
-    actions: [
-      'Automated email sequences for new leads',
-      'Sync form submissions to CRM and mailing lists',
-    ],
-    tags: ['Email Automation', 'CRM Integration', 'Lead Generation'],
+    tags: ['Analytics', 'Data Tracking', 'Business Intelligence'],
+    slug: 'google-analytics',
   },
 ];
 

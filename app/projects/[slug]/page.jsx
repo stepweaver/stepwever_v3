@@ -14,8 +14,11 @@ import {
   Palette,
   Zap,
   Shield,
+  Mail,
 } from 'lucide-react';
 import Link from 'next/link';
+import { SERVICES_DATA } from '@/lib/servicesData';
+import GlitchButton from '@/components/ui/GlitchButton';
 
 export default function ProjectPage({ params }) {
   const { slug } = use(params);
@@ -194,6 +197,86 @@ export default function ProjectPage({ params }) {
                       </div>
                       <ul className='space-y-2'>
                         {project.techStack.development.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.consulting && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-center mb-4'>
+                        <Server className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Consulting Services
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.consulting.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.automation && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-center mb-4'>
+                        <Zap className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Automation Tools
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.automation.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.ai && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-center mb-4'>
+                        <Code className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          AI & Machine Learning
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.ai.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.analytics && (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-center mb-4'>
+                        <Code className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Analytics Tools
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.analytics.map((tech, index) => (
                           <li
                             key={index}
                             className='font-ocr text-terminal-text text-sm'
@@ -629,23 +712,182 @@ export default function ProjectPage({ params }) {
               </section>
             )}
 
-            {/* CTA Section */}
-            <section className='text-center bg-terminal-light/10 p-8 md:p-12 rounded-xl'>
-              <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
-                Interested in a similar project?
-              </h2>
-              <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
-                Let's discuss how we can build something similar for your
-                business.
-              </p>
-              <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-                <Link href='/contact'>
-                  <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 border border-terminal-green text-terminal-green font-ocr transition-colors duration-200 rounded-lg cursor-pointer'>
-                    Get in Touch
-                  </button>
-                </Link>
-              </div>
-            </section>
+            {/* Benefits Section - Services Only */}
+            {project.isService && project.benefits && project.benefits.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  ✨ Benefits
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-3'>
+                  {project.benefits.map((benefit, index) => (
+                    <li key={index} className='flex items-start'>
+                      <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {benefit}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Process Section - Services Only */}
+            {project.isService && project.process && project.process.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  🔄 Process
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='space-y-4'>
+                  {project.process.map((step, index) => (
+                    <div key={index} className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
+                      <div className='flex items-start gap-4'>
+                        <div className='flex-shrink-0 w-8 h-8 bg-terminal-green text-terminal-dark font-ibm font-bold rounded-full flex items-center justify-center'>
+                          {index + 1}
+                        </div>
+                        <div className='flex-1'>
+                          <p className='font-ocr text-terminal-text text-base leading-relaxed'>
+                            {step}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Common Use Cases - Services Only */}
+            {project.isService && project.commonUseCases && project.commonUseCases.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  💼 Common Use Cases
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-3'>
+                  {project.commonUseCases.map((useCase, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {useCase}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Use Cases - Services Only */}
+            {project.isService && project.useCases && project.useCases.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  💼 Use Cases
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-3'>
+                  {project.useCases.map((useCase, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {useCase}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Services List - Services Only */}
+            {project.isService && project.services && project.services.length > 0 && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  📋 Services Included
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <ul className='space-y-3'>
+                  {project.services.map((service, index) => (
+                    <li key={index} className='flex items-start'>
+                      <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {service}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* CTA Section - Different for Services vs Projects */}
+            {project.isService ? (
+              <section className='text-center bg-terminal-light/10 p-8 md:p-12 rounded-xl border border-terminal-green/30'>
+                <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
+                  Ready to Get Started?
+                </h2>
+                <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
+                  Let's discuss how I can help with {project.title.toLowerCase()}. I'll work with you to understand your needs and create a solution that fits your business.
+                </p>
+                <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
+                  <GlitchButton
+                    onClick={() => {
+                      window.open(
+                        SERVICES_DATA.contact.calendlyUrl,
+                        '_blank',
+                        'noopener,noreferrer'
+                      );
+                    }}
+                    className='px-8 py-3 text-lg'
+                  >
+                    Schedule a Call
+                  </GlitchButton>
+                  <Link href='/contact'>
+                    <button className='px-8 py-3 bg-terminal-cyan/20 hover:bg-terminal-cyan/30 border border-terminal-cyan text-terminal-cyan font-ocr transition-colors duration-200 rounded-lg flex items-center gap-2'>
+                      <Mail className='w-5 h-5' />
+                      Send a Message
+                    </button>
+                  </Link>
+                </div>
+                <div className='mt-6 text-sm font-ocr text-terminal-dimmed'>
+                  <p>Or reach out directly:</p>
+                  <a
+                    href={`mailto:${SERVICES_DATA.contact.email}`}
+                    className='text-terminal-cyan hover:text-terminal-green transition-colors'
+                  >
+                    {SERVICES_DATA.contact.email}
+                  </a>
+                </div>
+              </section>
+            ) : (
+              <section className='text-center bg-terminal-light/10 p-8 md:p-12 rounded-xl'>
+                {project.link ? (
+                  <>
+                    <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
+                      Interested in a similar project?
+                    </h2>
+                    <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
+                      Let's discuss how we can build something similar for your
+                      business.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
+                      Ready to get started?
+                    </h2>
+                    <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
+                      Let's discuss how I can help with your project.
+                    </p>
+                  </>
+                )}
+                <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
+                  <Link href='/contact'>
+                    <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 border border-terminal-green text-terminal-green font-ocr transition-colors duration-200 rounded-lg cursor-pointer'>
+                      Get in Touch
+                    </button>
+                  </Link>
+                </div>
+              </section>
+            )}
           </div>
         </main>
       </div>
