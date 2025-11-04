@@ -5,6 +5,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { Analytics } from '@vercel/analytics/next';
+import MatrixRain from '@/components/transition/MatrixRain';
 
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
 
@@ -212,12 +213,14 @@ export default function RootLayout({ children }) {
 
         <ErrorBoundary>
           <ThemeProvider>
-            <Navbar />
-            <main id='main-content' role='main'>
-              {children}
-            </main>
-            <Analytics />
-            <Footer />
+            <MatrixRain>
+              <Navbar />
+              <main id='main-content' role='main'>
+                {children}
+              </main>
+              <Analytics />
+              <Footer />
+            </MatrixRain>
           </ThemeProvider>
         </ErrorBoundary>
       </body>
