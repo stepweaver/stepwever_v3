@@ -137,7 +137,7 @@ export const generateEnvInstructions = () => {
 
   for (const [key, config] of Object.entries(REQUIRED_ENV_VARS)) {
     const isMissing = validation.missing.some(m => m.key === key);
-    const status = isMissing ? '❌ **REQUIRED**' : '✅ Present';
+    const status = isMissing ? '**REQUIRED**' : 'Present';
 
     instructions += `### ${key}\n`;
     instructions += `- **Status**: ${status}\n`;
@@ -162,28 +162,28 @@ export const generateEnvInstructions = () => {
 export const logEnvironmentStatus = (verbose = false) => {
   const validation = validateEnvironment();
 
-  console.log('\n🔍 Environment Validation Results:');
-  console.log(`📊 Summary: ${validation.summary.present}/${validation.summary.total} variables set`);
+  console.log('\nEnvironment Validation Results:');
+  console.log(`Summary: ${validation.summary.present}/${validation.summary.total} variables set`);
 
   if (validation.errors.length > 0) {
-    console.log('\n❌ Errors:');
+    console.log('\nErrors:');
     validation.errors.forEach(error => console.log(`  - ${error}`));
   }
 
   if (validation.warnings.length > 0 && verbose) {
-    console.log('\n⚠️  Warnings:');
+    console.log('\nWarnings:');
     validation.warnings.forEach(warning => console.log(`  - ${warning}`));
   }
 
   if (verbose && validation.present.length > 0) {
-    console.log('\n✅ Present variables:');
+    console.log('\nPresent variables:');
     validation.present.forEach(key => console.log(`  - ${key}`));
   }
 
   if (validation.isValid) {
-    console.log('\n✅ Environment validation passed!');
+    console.log('\nEnvironment validation passed!');
   } else {
-    console.log('\n❌ Environment validation failed. Please check the errors above.');
+    console.log('\nEnvironment validation failed. Please check the errors above.');
   }
 
   console.log('');

@@ -236,7 +236,7 @@ export default function DiceRoller() {
           className='text-2xl text-terminal-green m-0 font-ibm tracking-wide max-lg:text-base'
           style={{ textShadow: 'var(--terminal-title-glow)' }}
         >
-          🎲 RPG DICE ROLLER
+          RPG DICE ROLLER
         </h1>
 
         {/* Keyboard Shortcuts */}
@@ -305,7 +305,7 @@ export default function DiceRoller() {
                     fontSize: '0.85rem',
                   }}
                 >
-                  {isRolling ? '⚡ ROLLING' : '🎲 ROLL'}
+                  {isRolling ? 'ROLLING' : 'ROLL'}
                 </GlitchButton>
 
                 <GlitchButton
@@ -332,7 +332,7 @@ export default function DiceRoller() {
                       fontSize: '0.75rem',
                     }}
                   >
-                    {copyStatus ? '✓' : '📋'}
+                    {copyStatus ? '✓' : 'COPY'}
                   </GlitchButton>
                 )}
               </div>
@@ -470,7 +470,7 @@ export default function DiceRoller() {
                       })}
                     </div>
                     <div className='text-terminal-green text-xl font-bold animate-[diceShake_0.5s_ease-in-out_infinite] max-lg:text-sm'>
-                      🎲 ROLLING...
+                      ROLLING...
                     </div>
                   </div>
                 ) : (

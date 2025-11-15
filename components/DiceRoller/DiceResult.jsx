@@ -29,7 +29,7 @@ export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold,
       {/* Instructions for Dice Tray */}
       {onToggleDiceHold && (
         <div className='mb-3 p-2 bg-terminal-light/10 border border-terminal-yellow/30 rounded text-xs text-terminal-yellow font-ocr max-lg:text-[0.65rem] max-lg:p-1.5'>
-          💡 <strong>Tip:</strong> Click on dice to hold them, then click "RE-ROLL UNHELD" to re-roll the rest
+          <strong>Tip:</strong> Click on dice to hold them, then click "RE-ROLL UNHELD" to re-roll the rest
         </div>
       )}
 
@@ -123,7 +123,7 @@ export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold,
             className='py-2 px-4 bg-terminal-dark border-2 border-terminal-cyan rounded-md text-terminal-cyan font-ibm text-sm cursor-pointer transition-all hover:bg-terminal-cyan hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-cyan)]'
             aria-label='Copy roll notation'
           >
-            📋 COPY NOTATION
+            COPY NOTATION
           </button>
         )}
         {onReroll && heldDice && heldDice.size > 0 && (
@@ -132,7 +132,7 @@ export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold,
             className='py-2 px-4 bg-terminal-dark border-2 border-terminal-yellow rounded-md text-terminal-yellow font-ibm text-sm cursor-pointer transition-all hover:bg-terminal-yellow hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-yellow)]'
             aria-label='Re-roll unheld dice'
           >
-            🔄 RE-ROLL UNHELD
+            RE-ROLL UNHELD
           </button>
         )}
       </div>

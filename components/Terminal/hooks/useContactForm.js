@@ -80,7 +80,7 @@ export const useContactForm = (setLines, setInput, setCursorPosition) => {
         `<span class="text-terminal-text">Email: ${contactData.email}</span>`,
         `<span class="text-terminal-text">Message: ${command.trim()}</span>`,
         ``,
-        `<span class="text-terminal-yellow">⚠️  WARNING: You are about to send this message to λstepweaver</span>`,
+        `<span class="text-terminal-yellow">WARNING: You are about to send this message to λstepweaver</span>`,
         `<span class="text-terminal-cyan">Type 'send' to submit, 'cancel' to abort, or 'edit' to go back</span>`,
       ]);
       setInput('');

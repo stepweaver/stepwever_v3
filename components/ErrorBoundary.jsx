@@ -39,7 +39,7 @@ class ErrorBoundary extends Component {
       return (
         <div className='min-h-screen flex items-center justify-center p-8'>
           <div className='bg-terminal-light border border-terminal-red/30 rounded-lg p-8 max-w-md text-center'>
-            <div className='text-terminal-red text-4xl mb-4'>⚠️</div>
+          <div className='text-terminal-red text-4xl mb-4'>!</div>
             <h2 className='text-terminal-red font-ibm text-xl mb-4'>
               Something went wrong
             </h2>

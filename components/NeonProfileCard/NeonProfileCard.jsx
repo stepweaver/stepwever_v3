@@ -12,7 +12,7 @@ const defaultProfile = {
   tagline: 'Lambda Systems · R&D',
   status: 'ACTIVE',
   avatar:
-    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=220&h=220&auto=format&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=240&q=80',
   badges: ['Security Engineer', 'XR Specialist', 'Quantum Ops'],
 };
 

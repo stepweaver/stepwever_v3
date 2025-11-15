@@ -382,7 +382,7 @@ function CodexContent() {
                       {activeSubTab === 'coming-soon' ? (
                         <div className='text-center py-12'>
                           <div className='text-terminal-yellow text-2xl font-bold mb-4'>
-                            🎧 More Podcasts Coming Soon!
+                            More Podcasts Coming Soon!
                           </div>
                           <p className='text-terminal-text text-lg mb-6'>
                             I'm curating more amazing podcasts to share with

@@ -199,10 +199,9 @@ export const listPodcastEpisodes = async (source) => {
   if (source === 'coming-soon') {
     const isArticle = currentPath.includes('/articles/');
     const contentType = isArticle ? 'Articles' : 'Podcasts';
-    const emoji = isArticle ? '📰' : '🎧';
 
     return [
-      `<span class="text-terminal-yellow">${emoji} More ${contentType} Coming Soon!</span>`,
+      `<span class="text-terminal-yellow">More ${contentType} Coming Soon!</span>`,
       ``,
       `<span class="text-terminal-text">I'm curating more amazing ${contentType.toLowerCase()} to share with you.</span>`,
       `<span class="text-terminal-text">Stay tuned for more developer ${contentType.toLowerCase()}, tech discussions, and industry insights.</span>`

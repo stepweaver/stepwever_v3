@@ -2,7 +2,36 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { SiBluesky, SiGithub } from 'react-icons/si';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+
+const FOOTER_LINKS = [
+  {
+    label: 'terminal',
+    href: '/terminal',
+    icon: GlitchLambda,
+    external: false,
+    iconProps: {
+      className: 'text-terminal-green text-lg',
+      size: 'small',
+      'aria-hidden': true,
+    },
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/stepweaver',
+    icon: SiGithub,
+    external: true,
+    iconProps: { className: 'w-4 h-4', 'aria-hidden': true },
+  },
+  {
+    label: 'Bluesky',
+    href: 'https://bsky.app/profile/stepweaver.dev',
+    icon: SiBluesky,
+    external: true,
+    iconProps: { className: 'w-4 h-4', 'aria-hidden': true },
+  },
+];
 
 export default function Footer() {
   const [currentYear, setCurrentYear] = useState('');
@@ -44,30 +73,42 @@ export default function Footer() {
         <div className='max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8'>
           <div className='flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-3 md:space-y-4 lg:space-y-0'>
             {/* Bottom Left - Social Links */}
-            <div className='flex space-x-4 md:space-x-6'>
-              <a
-                href='/terminal'
-                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm md:text-base uppercase tracking-wider flex items-center'
-              >
-                <GlitchLambda className='text-terminal-green lowercase' />
-                <span>Terminal</span>
-              </a>
-              <a
-                href='https://github.com/stepweaver'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm md:text-base uppercase tracking-wider'
-              >
-                GitHub
-              </a>
-              <a
-                href='https://bsky.app/profile/stepweaver.dev'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='text-terminal-muted hover:text-terminal-green transition-colors duration-200 font-ocr text-sm md:text-base uppercase tracking-wider'
-              >
-                Bluesky
-              </a>
+            <div className='flex flex-wrap gap-4'>
+              {FOOTER_LINKS.map((link) => {
+                const Icon = link.icon;
+                const sharedProps = link.external
+                  ? { target: '_blank', rel: 'noreferrer' }
+                  : {};
+                const isTerminalLink = link.href === '/terminal';
+
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className={`inline-flex items-center font-ocr text-sm text-terminal-green hover:text-terminal-white transition-colors ${
+                      isTerminalLink ? 'gap-0' : 'gap-2'
+                    }`}
+                    {...sharedProps}
+                    aria-label={isTerminalLink ? 'terminal' : undefined}
+                  >
+                    {isTerminalLink ? (
+                      <span className='inline-flex items-center leading-none'>
+                        <Icon
+                          {...(link.iconProps ?? { className: 'w-4 h-4' })}
+                        />
+                        <span className='tracking-tight'>{link.label}</span>
+                      </span>
+                    ) : (
+                      <>
+                        <Icon
+                          {...(link.iconProps ?? { className: 'w-4 h-4' })}
+                        />
+                        {link.label}
+                      </>
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Bottom Right - Legal */}

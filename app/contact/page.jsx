@@ -6,6 +6,7 @@ import { ArrowUpRight, Mail, MessageSquare, Sparkles } from 'lucide-react';
 import { SiBluesky, SiGithub } from 'react-icons/si';
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
 import ContactForm from '@/components/ui/ContactForm';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 
 const CONTACT_COPY = {
   hero: {
@@ -56,18 +57,25 @@ const SOCIAL_LINKS = [
     href: 'https://github.com/stepweaver',
     icon: SiGithub,
     external: true,
+    iconProps: { className: 'w-4 h-4' },
   },
   {
     label: 'Bluesky',
     href: 'https://bsky.app/profile/stepweaver.dev',
     icon: SiBluesky,
     external: true,
+    iconProps: { className: 'w-4 h-4' },
   },
   {
-    label: 'Terminal',
+    label: 'terminal',
     href: '/terminal',
-    icon: Sparkles,
+    icon: GlitchLambda,
     external: false,
+    iconProps: {
+      className: 'text-terminal-green text-base',
+      size: 'small',
+      'aria-hidden': true,
+    },
   },
 ];
 
@@ -179,18 +187,36 @@ function ContactPage() {
               <div className='flex flex-wrap gap-4'>
                 {SOCIAL_LINKS.map((link) => {
                   const Icon = link.icon;
+                  const iconProps = link.iconProps ?? {
+                    className: 'w-4 h-4',
+                    'aria-hidden': true,
+                  };
                   const sharedProps = link.external
                     ? { target: '_blank', rel: 'noreferrer' }
                     : {};
+                  const isTerminalLink = link.href === '/terminal';
+
                   return (
                     <Link
                       key={link.label}
                       href={link.href}
-                      className='inline-flex items-center gap-2 font-ocr text-sm text-terminal-green hover:text-terminal-white transition-colors'
+                      className={`inline-flex items-center font-ocr text-sm text-terminal-green hover:text-terminal-white transition-colors ${
+                        isTerminalLink ? 'gap-0' : 'gap-2'
+                      }`}
                       {...sharedProps}
+                      aria-label={isTerminalLink ? 'terminal' : undefined}
                     >
-                      <Icon className='w-4 h-4' />
-                      {link.label}
+                      {isTerminalLink ? (
+                        <span className='inline-flex items-center leading-none'>
+                          <Icon {...iconProps} />
+                          <span className='tracking-tight'>{link.label}</span>
+                        </span>
+                      ) : (
+                        <>
+                          <Icon {...iconProps} />
+                          {link.label}
+                        </>
+                      )}
                     </Link>
                   );
                 })}

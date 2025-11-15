@@ -147,7 +147,7 @@ export default function ProjectPage({ params }) {
             {project.features && project.features.length > 0 && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  🚀 Features
+                  Features
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <ul className='space-y-4'>
@@ -167,7 +167,7 @@ export default function ProjectPage({ params }) {
             {project.techStack && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  🛠️ Tech Stack
+                  Tech Stack
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
@@ -339,7 +339,7 @@ export default function ProjectPage({ params }) {
             {project.projectStructure && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  📁 Project Structure
+                  Project Structure
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
@@ -354,7 +354,7 @@ export default function ProjectPage({ params }) {
             {project.contentManagement && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  📝 Content Management with Sanity
+                  Content Management with Sanity
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 {project.contentManagement.productSchema && (
@@ -435,7 +435,7 @@ export default function ProjectPage({ params }) {
             {project.ecommerceFeatures && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  💳 E-commerce Features
+                  E-commerce Features
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
@@ -504,7 +504,7 @@ export default function ProjectPage({ params }) {
             {project.designSystem && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  🎨 Design System
+                  Design System
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
@@ -554,7 +554,7 @@ export default function ProjectPage({ params }) {
             {project.apiRoutes && project.apiRoutes.length > 0 && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  🔧 API Routes
+                  API Routes
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <ul className='space-y-3'>
@@ -574,7 +574,7 @@ export default function ProjectPage({ params }) {
             {project.performance && project.performance.length > 0 && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  📊 Performance
+                  Performance
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <ul className='space-y-3'>
@@ -594,7 +594,7 @@ export default function ProjectPage({ params }) {
             {project.security && project.security.length > 0 && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  🔒 Security
+                  Security
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <ul className='space-y-3'>
@@ -614,7 +614,7 @@ export default function ProjectPage({ params }) {
             {project.terminalIntegration && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  💻 Terminal Integration
+                  Terminal Integration
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
@@ -651,8 +651,8 @@ export default function ProjectPage({ params }) {
             {project.keyboardShortcuts &&
               project.keyboardShortcuts.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                    ⌨️ Keyboard Shortcuts
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Keyboard Shortcuts
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
@@ -672,7 +672,7 @@ export default function ProjectPage({ params }) {
             {project.diceNotation && project.diceNotation.length > 0 && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  🎲 Dice Notation
+                  Dice Notation
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
@@ -695,7 +695,7 @@ export default function ProjectPage({ params }) {
             {project.plannedFeatures && project.plannedFeatures.length > 0 && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  🚀 Planned Features
+                  Planned Features
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <ul className='space-y-3'>
@@ -761,8 +761,8 @@ export default function ProjectPage({ params }) {
               project.benefits &&
               project.benefits.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                    ✨ Benefits
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Benefits
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
@@ -783,8 +783,8 @@ export default function ProjectPage({ params }) {
               project.process &&
               project.process.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                    🔄 Process
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Process
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <div className='space-y-4'>
@@ -814,8 +814,8 @@ export default function ProjectPage({ params }) {
               project.commonUseCases &&
               project.commonUseCases.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                    💼 Common Use Cases
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Common Use Cases
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
@@ -836,8 +836,8 @@ export default function ProjectPage({ params }) {
               project.useCases &&
               project.useCases.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                    💼 Use Cases
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Use Cases
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
@@ -858,8 +858,8 @@ export default function ProjectPage({ params }) {
               project.services &&
               project.services.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                    📋 Services Included
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Services Included
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
