@@ -18,11 +18,16 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { SERVICES_DATA } from '@/lib/servicesData';
+import NeonProfileCard from '@/components/NeonProfileCard/NeonProfileCard';
 import GlitchButton from '@/components/ui/GlitchButton';
 
 export default function ProjectPage({ params }) {
   const { slug } = use(params);
   const project = getProjectBySlug(slug);
+  const demoComponents = {
+    'neon-profile-card': NeonProfileCard,
+  };
+  const DemoComponent = demoComponents[slug] || null;
 
   if (!project) {
     notFound();
@@ -98,6 +103,45 @@ export default function ProjectPage({ params }) {
                 </div>
               )}
             </header>
+
+            {DemoComponent && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Live Neon Profile Card Demo
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
+                  <div className='flex justify-center'>
+                    <DemoComponent />
+                  </div>
+                  <div className='space-y-6 rounded-2xl border border-terminal-border bg-terminal-light/20 p-6'>
+                    <p className='font-ocr text-terminal-text text-base leading-relaxed'>
+                      This component brings the NETRUNNER challenge card into
+                      our CRT palette. Everything is handled with Tailwind
+                      utilities, so the glow, glass, and responsive stacking
+                      work without bespoke CSS.
+                    </p>
+                    {project.demoHighlights && (
+                      <ul className='space-y-3'>
+                        {project.demoHighlights.map((highlight, index) => (
+                          <li key={index} className='flex items-start'>
+                            <CheckCircle className='mr-3 mt-0.5 h-5 w-5 text-terminal-green' />
+                            <span className='font-ocr text-terminal-text text-sm leading-relaxed'>
+                              {highlight}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <p className='text-sm font-ocr text-terminal-muted'>
+                      Inspired by the Neon Profile Card brief from Codenhack,
+                      adapted to reuse our IBM headers, OCR body copy, and
+                      BackgroundCanvas lighting.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )}
 
             {/* Features Section */}
             {project.features && project.features.length > 0 && (
@@ -713,110 +757,123 @@ export default function ProjectPage({ params }) {
             )}
 
             {/* Benefits Section - Services Only */}
-            {project.isService && project.benefits && project.benefits.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  ✨ Benefits
-                </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.benefits.map((benefit, index) => (
-                    <li key={index} className='flex items-start'>
-                      <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
-                        {benefit}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+            {project.isService &&
+              project.benefits &&
+              project.benefits.length > 0 && (
+                <section className='mb-16'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    ✨ Benefits
+                  </h2>
+                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <ul className='space-y-3'>
+                    {project.benefits.map((benefit, index) => (
+                      <li key={index} className='flex items-start'>
+                        <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                          {benefit}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
             {/* Process Section - Services Only */}
-            {project.isService && project.process && project.process.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  🔄 Process
-                </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <div className='space-y-4'>
-                  {project.process.map((step, index) => (
-                    <div key={index} className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'>
-                      <div className='flex items-start gap-4'>
-                        <div className='flex-shrink-0 w-8 h-8 bg-terminal-green text-terminal-dark font-ibm font-bold rounded-full flex items-center justify-center'>
-                          {index + 1}
-                        </div>
-                        <div className='flex-1'>
-                          <p className='font-ocr text-terminal-text text-base leading-relaxed'>
-                            {step}
-                          </p>
+            {project.isService &&
+              project.process &&
+              project.process.length > 0 && (
+                <section className='mb-16'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    🔄 Process
+                  </h2>
+                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <div className='space-y-4'>
+                    {project.process.map((step, index) => (
+                      <div
+                        key={index}
+                        className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border'
+                      >
+                        <div className='flex items-start gap-4'>
+                          <div className='flex-shrink-0 w-8 h-8 bg-terminal-green text-terminal-dark font-ibm font-bold rounded-full flex items-center justify-center'>
+                            {index + 1}
+                          </div>
+                          <div className='flex-1'>
+                            <p className='font-ocr text-terminal-text text-base leading-relaxed'>
+                              {step}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
+                    ))}
+                  </div>
+                </section>
+              )}
 
             {/* Common Use Cases - Services Only */}
-            {project.isService && project.commonUseCases && project.commonUseCases.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  💼 Common Use Cases
-                </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.commonUseCases.map((useCase, index) => (
-                    <li key={index} className='flex items-start'>
-                      <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
-                        {useCase}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+            {project.isService &&
+              project.commonUseCases &&
+              project.commonUseCases.length > 0 && (
+                <section className='mb-16'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    💼 Common Use Cases
+                  </h2>
+                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <ul className='space-y-3'>
+                    {project.commonUseCases.map((useCase, index) => (
+                      <li key={index} className='flex items-start'>
+                        <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                          {useCase}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
             {/* Use Cases - Services Only */}
-            {project.isService && project.useCases && project.useCases.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  💼 Use Cases
-                </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.useCases.map((useCase, index) => (
-                    <li key={index} className='flex items-start'>
-                      <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
-                        {useCase}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+            {project.isService &&
+              project.useCases &&
+              project.useCases.length > 0 && (
+                <section className='mb-16'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    💼 Use Cases
+                  </h2>
+                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <ul className='space-y-3'>
+                    {project.useCases.map((useCase, index) => (
+                      <li key={index} className='flex items-start'>
+                        <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                          {useCase}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
             {/* Services List - Services Only */}
-            {project.isService && project.services && project.services.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  📋 Services Included
-                </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.services.map((service, index) => (
-                    <li key={index} className='flex items-start'>
-                      <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
-                        {service}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+            {project.isService &&
+              project.services &&
+              project.services.length > 0 && (
+                <section className='mb-16'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    📋 Services Included
+                  </h2>
+                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <ul className='space-y-3'>
+                    {project.services.map((service, index) => (
+                      <li key={index} className='flex items-start'>
+                        <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                          {service}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
             {/* CTA Section - Different for Services vs Projects */}
             {project.isService ? (
@@ -825,7 +882,10 @@ export default function ProjectPage({ params }) {
                   Ready to Get Started?
                 </h2>
                 <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
-                  Let's discuss how I can help with {project.title.toLowerCase()}. I'll work with you to understand your needs and create a solution that fits your business.
+                  Let's discuss how I can help with{' '}
+                  {project.title.toLowerCase()}. I'll work with you to
+                  understand your needs and create a solution that fits your
+                  business.
                 </p>
                 <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
                   <GlitchButton

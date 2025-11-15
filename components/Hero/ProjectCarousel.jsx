@@ -54,6 +54,18 @@ const PROJECTS = [
     slug: 'rpg-dice-roller',
   },
   {
+    title: 'Neon Profile Card',
+    description: 'Glassmorphism-inspired ID card with neon CRT glow.',
+    imageUrl: null,
+    keywords: ['UI System', 'Tailwind CSS', 'Neon'],
+    actions: [
+      'Reusable profile data model with IBM/OCR typography stack',
+      'Pure CSS glow + pulse effects powered by Tailwind utilities',
+    ],
+    tags: ['UI Design', 'Tailwind CSS', 'Animation'],
+    slug: 'neon-profile-card',
+  },
+  {
     title: 'IT Consulting',
     description: 'Strategic IT consulting to streamline operations.',
     imageUrl: null,

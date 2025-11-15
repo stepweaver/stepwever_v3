@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { memo } from 'react';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import NeonProfileCard from '@/components/NeonProfileCard/NeonProfileCard';
 
 function About() {
   return (
@@ -12,35 +12,23 @@ function About() {
         {/* 2️⃣  CSS Grid → easier to manage two columns + re‑order on mobile */}
         <div className='grid gap-8 lg:gap-12 lg:grid-cols-[minmax(auto,320px)_1fr]'>
           {/* ────────────── Bio Card ────────────── */}
-          <aside className='lg:sticky lg:top-24 order-2 lg:order-1'>
-            <div className='rounded-xl bg-terminal-light/40 backdrop-blur p-8'>
-              {/* Avatar */}
-              <div className='relative lg:mx-0 mb-6 h-48 w-48 overflow-hidden rounded-xl'>
-                <Image
-                  src='/images/pixarMe.png'
-                  alt='Stephen Weaver, Founder of λstepweaver'
-                  fill
-                  className='object-cover'
-                  sizes='192px'
-                  priority
-                />
-              </div>
-
-              {/* Meta */}
-              <h3 className='font-ibm text-4xl text-terminal-text mb-2'>
-                Stephen Weaver
-              </h3>
-              <p className='font-ocr text-2xl tracking-wider uppercase text-terminal-green mb-6'>
-                Founder
-              </p>
-
-              <ul className='space-y-1 font-ibm text-xl text-terminal-text'>
-                <li>Developer</li>
-                <li>Data Strategist</li>
-                <li>Veteran</li>
-                <li className='italic text-base'>Rebel</li>
-              </ul>
-            </div>
+          <aside className='lg:sticky lg:top-24 order-2 lg:order-1 flex justify-center lg:justify-start'>
+            <NeonProfileCard
+              profile={{
+                name: 'Stephen Weaver',
+                role: 'Founder',
+                tagline: 'Principal Builder · λstepweaver',
+                status: 'ACTIVE',
+                avatar: '/images/pixarMe.png',
+                badges: [
+                  'Developer',
+                  'Data Strategist',
+                  'IT Consultant',
+                  'Veteran',
+                  { text: 'Rebel', accent: true },
+                ],
+              }}
+            />
           </aside>
 
           {/* ────────────── Main Copy ────────────── */}
