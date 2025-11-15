@@ -405,6 +405,32 @@
   }
 }
 
+.terminal-caret {
+  animation: terminalCaret 1s steps(1, end) infinite;
+}
+
+@keyframes terminalCaret {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  61%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes matrixBlink {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  30%,
+  60% {
+    opacity: 1;
+  }
+}
+
 /* Base styles */
 html {
   /* Improve mobile scrolling performance */

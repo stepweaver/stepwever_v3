@@ -1,3 +1,11 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
+const MATRIX_GLYPHS = ['λ', 'ネ', 'ホ', 'ミ', 'ツ', '0', '1'];
+const FALLBACK_TERMINAL_LINES = ['λSYNC 01 // λλ00', 'λSYNC 02 // ネホ01'];
+const FALLBACK_MATRIX_CELLS = ['λ0', 'ネ1', 'ホミ', 'ツλ', '01', '10'];
+
 const defaultProfile = {
   name: 'Nyx Solaris',
   role: 'XR Protocol Engineer',
@@ -11,6 +19,45 @@ const defaultProfile = {
 const NeonProfileCard = ({ profile }) => {
   const mergedProfile = profile ?? defaultProfile;
   const tagline = mergedProfile.tagline ?? mergedProfile.department;
+  const createTerminalLines = (startAttempt) =>
+    Array.from({ length: 2 }, (_, idx) => {
+      const code = Array.from(
+        { length: 5 },
+        () => MATRIX_GLYPHS[Math.floor(Math.random() * MATRIX_GLYPHS.length)]
+      ).join('');
+      return `λSYNC ${(startAttempt + idx)
+        .toString()
+        .padStart(2, '0')} // ${code}`;
+    });
+
+  const createMatrixCells = () =>
+    Array.from({ length: 6 }, () =>
+      [
+        MATRIX_GLYPHS[Math.floor(Math.random() * MATRIX_GLYPHS.length)],
+        MATRIX_GLYPHS[Math.floor(Math.random() * MATRIX_GLYPHS.length)],
+      ].join('')
+    );
+
+  const [attempt, setAttempt] = useState(1);
+  const [statusIndex, setStatusIndex] = useState(0);
+  const [terminalLines, setTerminalLines] = useState(FALLBACK_TERMINAL_LINES);
+  const [matrixCells, setMatrixCells] = useState(FALLBACK_MATRIX_CELLS);
+  const statusMessages = ['ROUTING', 'HANDSHAKE', 'FAILED'];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMatrixCells(createMatrixCells());
+      setAttempt((prev) => {
+        const nextAttempt = prev >= 97 ? 1 : prev + 1;
+        setTerminalLines(createTerminalLines(nextAttempt));
+        return nextAttempt;
+      });
+      setStatusIndex((prev) => (prev + 1) % statusMessages.length);
+    }, 2200);
+
+    return () => clearInterval(interval);
+  }, [statusMessages.length]);
+
   const badges = Array.isArray(mergedProfile.badges)
     ? mergedProfile.badges
     : [];
@@ -24,20 +71,19 @@ const NeonProfileCard = ({ profile }) => {
         </div>
 
         <div className='relative p-6 space-y-6'>
-          <div className='flex items-center justify-between'>
-            <p className='font-ibm text-xl text-terminal-green tracking-[0.2em]'>
-              Stepweaver
-            </p>
-            {mergedProfile.status && (
-              <div className='flex items-center gap-2 text-terminal-green uppercase text-[0.6rem] tracking-[0.4em]'>
-                <span className='relative flex h-3.5 w-3.5'>
-                  <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-50' />
-                  <span className='relative inline-flex h-3.5 w-3.5 rounded-full bg-terminal-green shadow-[0_0_10px_rgba(0,255,65,0.45)]' />
-                </span>
-                {mergedProfile.status}
-              </div>
-            )}
-          </div>
+          <p className='font-ibm text-xl text-terminal-green tracking-[0.2em]'>
+            λstepweaver
+          </p>
+
+          {mergedProfile.status && (
+            <div className='inline-flex items-center gap-2 text-terminal-green uppercase text-[0.6rem] tracking-[0.4em] bg-terminal-dark/60 px-3 py-1 rounded-full border border-terminal-green/30 shadow-[0_0_12px_rgba(0,255,65,0.25)]'>
+              <span className='relative flex h-3.5 w-3.5'>
+                <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-50' />
+                <span className='relative inline-flex h-3.5 w-3.5 rounded-full bg-terminal-green shadow-[0_0_10px_rgba(0,255,65,0.45)]' />
+              </span>
+              {mergedProfile.status}
+            </div>
+          )}
 
           <div className='flex flex-col gap-4 items-start text-left'>
             {mergedProfile.avatar && (
@@ -84,6 +130,38 @@ const NeonProfileCard = ({ profile }) => {
               })}
             </div>
           )}
+
+          <div
+            className='rounded-2xl border border-terminal-green/25 bg-terminal-dark/70 p-4 space-y-3 card-glow-tight'
+            aria-live='polite'
+          >
+            <div className='flex items-center justify-between text-[0.65rem] uppercase tracking-[0.4em] text-terminal-muted whitespace-nowrap'>
+              <span>Matrix sync</span>
+              <span className='text-terminal-green'>
+                Attempt #{attempt.toString().padStart(2, '0')}
+              </span>
+            </div>
+            <div className='space-y-1 font-mono text-terminal-green text-[0.6rem] tracking-[0.25em]'>
+              <div className='flex items-center gap-2 text-terminal-magenta tracking-[0.25em] text-[0.6rem]'>
+                λSYNC//
+                <span>{statusMessages[statusIndex]}</span>
+                <span className='terminal-caret text-terminal-green'>_</span>
+              </div>
+            </div>
+            <div className='grid grid-cols-6 gap-1'>
+              {matrixCells.map((cell, index) => (
+                <div
+                  key={`${cell}-${index}`}
+                  className='h-5 rounded bg-terminal-light/15 border border-terminal-green/20 flex items-center justify-center text-terminal-green font-mono text-[0.5rem]'
+                >
+                  {cell}
+                </div>
+              ))}
+            </div>
+            <p className='text-terminal-magenta text-[0.6rem] font-ocr tracking-[0.3em] uppercase whitespace-nowrap text-left'>
+              STATUS: USER UNPLUGGED
+            </p>
+          </div>
         </div>
       </div>
     </div>

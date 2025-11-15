@@ -25,6 +25,7 @@ function About() {
                   'Data Strategist',
                   'IT Consultant',
                   'Veteran',
+                  'Yankee Samurai',
                   { text: 'Rebel', accent: true },
                 ],
               }}
