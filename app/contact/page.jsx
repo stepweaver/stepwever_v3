@@ -9,40 +9,42 @@ import ContactForm from '@/components/ui/ContactForm';
 
 const CONTACT_COPY = {
   hero: {
-    title: 'Ready to get started?',
-    subtitle: "Reach out. Let's ship it.",
-    ribbon: "Have questions? I'm on comms and ready to assist.",
+    title: 'Initiate contact sequence.',
+    subtitle:
+      'Submit a briefing and I’ll return with diagnostics & execution options.',
+    ribbon: 'Comms online. Packet loss: 0%. Ready when you are.',
   },
   helpCta: {
-    title: 'Need fast answers?',
-    body: 'Browse the services breakdown, play with the terminal, or explore recent work while you wait on a reply.',
-    link: { href: '/services', label: 'Explore services' },
+    title: 'Want answers now?',
+    body: 'Browse services, explore recent builds, or fire up the terminal to test ideas while you wait for a reply.',
+    link: { href: '/services', label: 'View services' },
   },
 };
 
 const CONTACT_CHANNELS = [
   {
     title: 'Email the studio',
-    description: 'Best for proposals, partnership pitches, and press.',
+    description:
+      'Best for scoped projects, detailed briefs, partnership outreach, or anything requiring more than a few sentences.',
     icon: Mail,
     entries: [
       {
         label: 'info@stepweaver.dev',
         href: 'mailto:info@stepweaver.dev',
-        helper: 'Primary inbox (monitored daily).',
+        helper: 'Checked daily. Expect a thoughtful, actionable response.',
       },
     ],
   },
   {
     title: 'Project comms',
     description:
-      'Want to chat through a scope? Spin up the in-browser terminal.',
+      'Want to talk through your idea before the form? Use the interactive terminal to send a structured brief.',
     icon: MessageSquare,
     entries: [
       {
         label: 'Launch the terminal',
         href: '/terminal',
-        helper: 'Use the `contact` command to send structured briefs.',
+        helper: 'The contact command guides you step-by-step.',
       },
     ],
   },
@@ -76,13 +78,13 @@ function ContactPage() {
 
       <div className='relative z-10 w-full'>
         <section className='w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24'>
-          <div className='w-full max-w-6xl mx-auto flex flex-col gap-12'>
+          <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
             <header className='space-y-6'>
               <div className='space-y-4'>
                 <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-terminal-green leading-tight'>
                   {CONTACT_COPY.hero.title}
                 </h1>
-                <p className='font-ocr text-base sm:text-lg md:text-xl text-terminal-text/80 max-w-3xl leading-relaxed'>
+                <p className='font-ocr text-base sm:text-lg md:text-xl text-terminal-text/80 max-w-6xl leading-relaxed'>
                   {CONTACT_COPY.hero.subtitle}
                 </p>
               </div>

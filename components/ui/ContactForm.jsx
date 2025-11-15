@@ -120,7 +120,7 @@ export default function ContactForm() {
                   htmlFor='name'
                   className='text-terminal-green text-sm block mb-1'
                 >
-                  NAME:
+                  Who am I chatting with?
                 </label>
                 <input
                   id='name'
@@ -142,7 +142,7 @@ export default function ContactForm() {
                   htmlFor='email'
                   className='text-terminal-green text-sm block mb-1'
                 >
-                  EMAIL:
+                  Your best email:
                 </label>
                 <input
                   id='email'
@@ -164,7 +164,7 @@ export default function ContactForm() {
                   htmlFor='message'
                   className='text-terminal-green text-sm block mb-1'
                 >
-                  PROJECT SUMMARY:
+                  What are you building, fixing, or exploring?
                 </label>
                 <textarea
                   id='message'
@@ -172,7 +172,7 @@ export default function ContactForm() {
                   value={formData.message}
                   onChange={handleChange}
                   className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm h-48 focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
-                  placeholder='Tell us about your project, timeline, and goals...'
+                  placeholder='Include goals, timeline, budget, blockers, or any context you have handy.'
                   required
                   aria-required='true'
                   aria-describedby='message-help message-error'
@@ -181,21 +181,25 @@ export default function ContactForm() {
                   id='message-help'
                   className='text-terminal-muted text-xs mt-1'
                 >
-                  Include details like deadlines, budget, and any existing work
-                  or preparation.
+                  Feel free to include goals, timeline, budget, or anything else
+                  that helps.
                 </p>
                 <div id='message-error' className='sr-only' role='alert'></div>
               </div>
 
-              <div className='pt-2 flex space-x-3'>
+              <div className='pt-2 flex flex-col gap-3'>
                 <GlitchButton
                   type='submit'
                   disabled={status.submitting}
                   isLoading={status.submitting}
                   loadingText='SENDING...'
                 >
-                  SUBMIT
+                  [SEND TRANSMISSION]
                 </GlitchButton>
+                <p className='text-terminal-muted text-xs'>
+                  No perfect brief required. Write what you know - I’ll help
+                  clarify the rest.
+                </p>
               </div>
             </form>
           </div>
