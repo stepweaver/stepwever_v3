@@ -101,7 +101,7 @@ function ServicesPage() {
             </h2>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6'>
-              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-green/30 hover:border-terminal-green/50 transition-colors duration-200'>
+              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-green/30 hover:border-terminal-green/50 transition-colors duration-200 card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
                   <Zap className='w-6 h-6 text-terminal-green' />
                   <h3 className='font-ibm font-bold text-terminal-green text-sm'>
@@ -113,7 +113,7 @@ function ServicesPage() {
                 </p>
               </div>
 
-              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-yellow/30 hover:border-terminal-yellow/50 transition-colors duration-200'>
+              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-yellow/30 hover:border-terminal-yellow/50 transition-colors duration-200 card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
                   <Code className='w-6 h-6 text-terminal-yellow' />
                   <h3 className='font-ibm font-bold text-terminal-yellow text-sm'>
@@ -125,7 +125,7 @@ function ServicesPage() {
                 </p>
               </div>
 
-              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-magenta/30 hover:border-terminal-magenta/50 transition-colors duration-200'>
+              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-magenta/30 hover:border-terminal-magenta/50 transition-colors duration-200 card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
                   <BarChart3 className='w-6 h-6 text-terminal-magenta' />
                   <h3 className='font-ibm font-bold text-terminal-magenta text-sm'>
@@ -137,7 +137,7 @@ function ServicesPage() {
                 </p>
               </div>
 
-              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-cyan/30 hover:border-terminal-cyan/50 transition-colors duration-200'>
+              <div className='p-4 md:p-6 bg-terminal-light/10 border border-terminal-cyan/30 hover:border-terminal-cyan/50 transition-colors duration-200 card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
                   <Target className='w-6 h-6 text-terminal-cyan' />
                   <h3 className='font-ibm font-bold text-terminal-cyan text-sm'>
@@ -173,7 +173,7 @@ function ServicesPage() {
             {SERVICES_DATA.quickPickSolutions.map((item) => (
               <article
                 key={item.id}
-                className='group p-6 rounded-2xl bg-terminal-light/30 border border-terminal-border hover:bg-terminal-light/40 transition-all duration-200 hover:border-terminal-green/50'
+                className='group p-6 rounded-2xl bg-terminal-light/30 border border-terminal-border hover:bg-terminal-light/40 transition-all duration-200 hover:border-terminal-green/50 card-glow'
               >
                 <div className='space-y-4'>
                   {/* Icon & Title */}
