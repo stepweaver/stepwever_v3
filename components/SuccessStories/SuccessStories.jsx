@@ -57,7 +57,7 @@ const StoryCard = ({ story }) => (
     className={`
       bg-terminal-dark border border-terminal-green/15 rounded-lg
       shadow-lg hover:shadow-terminal-green/20 transition-shadow
-      flex flex-col h-full
+      flex flex-col h-full card-glow-tight
     `}
   >
     {/* terminal header */}
