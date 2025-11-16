@@ -8,30 +8,34 @@ import Terminal from '@/components/Terminal/Terminal';
 
 const TERMINAL_COPY = {
   hero: {
-    title: 'Codex terminal: always-on mission control.',
+    title: 'Codex terminal: hands-on mission control.',
     subtitle:
-      'An interactive CLI that mirrors the on-call consoles I use in production—except this one lets prospective partners explore projects, content, and contact workflows without leaving the neon shell.',
-    ribbon: 'Runs in-browser, powered by Next.js + streamed I/O. Zero page reloads.',
+      "This isn't a fake console overlay. It's a tiny ops-style shell wired into my site content so you can explore work, read, and reach out from the same green glow I use for real tooling.",
+    ribbon:
+      'Runs fully in your browser. No login, no install—just type `help` to start exploring.',
     meta: [
-      { label: 'Stacks mirrored', value: 'Blog • Projects • Community' },
-      { label: 'Guided ops', value: 'contact, weather, dice, utilities' },
-      { label: 'Latency budget', value: '<120ms echo target' },
+      {
+        label: 'Use it for',
+        value: 'skimming work, poking at ideas, sending briefs',
+      },
+      { label: 'Feels like', value: 'a dev console, not a landing page' },
+      { label: 'Built with', value: 'Next.js, React, custom CLI engine' },
     ],
   },
   overview: {
-    title: 'Why build a terminal for a studio site?',
+    title: 'Why a terminal instead of another scrolling page?',
     paragraphs: [
-      'Because experimentation beats marketing copy. The Codex terminal lets you poke at real data, skim curated references, and send structured briefs without waiting on static forms.',
-      'It also acts as a living spec for how I design operational tooling: opinionated, legible, and multiplayer-friendly. Every interaction is logged, commands are namespaced, and nothing is hidden behind menus.',
+      "Because I'd rather show you how I think than hide behind marketing copy. The Codex terminal behaves like a small ops console: you can list posts, open retros, and follow prompts that turn fuzzy ideas into concrete project shapes.",
+      "Under the hood, it mirrors the way I design real tools: opinionated commands, readable output, and guardrails that keep people oriented. You can't break anything here—but you will get a feel for how I build systems that stay legible even as they grow.",
     ],
   },
   usage: {
     title: 'How to drive it',
     steps: [
-      'Launch with `codex` — that command is the root directory. Everything branches from there.',
-      'Drill into `blog`, `projects`, or `community` to browse content streams. The prompt updates so you always know where you are.',
-      'Use `ls`, `cat [number]`, and `grep [tag]` for search + detail views. `pwd` mirrors your current location, `clear` resets the buffer.',
-      'Dispatch `contact` when you are ready to send a structured brief. The assistant walks you through scope, budget, and urgency.',
+      'Start with `help` to see all available commands and get oriented. From there, use `codex` to navigate site content—blog, projects, contact, and utilities.',
+      "Jump into `blog`, `projects`, or `community` and use `ls` to see what's there. The prompt path updates so you always know where you are.",
+      'Use `cat [number]` to open an item and `grep [tag]` to filter by topic. `pwd` echoes your location, `clear` wipes the scrollback.',
+      '`contact` launches a guided brief that asks about your goals, constraints, and timing—so when I reply, we\'re already past the "so what are you looking for?" stage.',
     ],
   },
 };
@@ -39,17 +43,17 @@ const TERMINAL_COPY = {
 const FEATURE_CARDS = [
   {
     title: 'Guided contact',
-    body: 'The `contact` macro walks through project scope, constraints, and next steps so I can respond with actionable diagnostics.',
+    body: 'The `contact` flow asks the right questions up front—goals, constraints, priorities—so my first reply can include options and next steps, not more forms.',
     icon: MessageSquare,
   },
   {
     title: 'Content drill-down',
-    body: 'Use `blog`, `projects`, or `community` to surface curated posts, project retros, and partner spotlights pulled straight from the Codex API.',
+    body: 'Point the shell at `blog`, `projects`, or `community` to pull up posts, retros, and spotlights. Everything stays in one viewport so you can read, copy, and move on.',
     icon: Map,
   },
   {
     title: 'Command-grade UX',
-    body: 'Autocomplete, history, weather, dice rollers, and neon CRT theming make the shell feel like real tooling—not a gimmick.',
+    body: 'History, autocomplete, dice rollers, weather, and CRT theming keep it fun—but the layout, prompts, and errors are all designed like real tooling.',
     icon: Sparkles,
   },
 ];
@@ -57,28 +61,39 @@ const FEATURE_CARDS = [
 const COMMAND_GUIDE = [
   {
     command: 'codex',
-    summary: 'Boot sequence + root directory.',
-    detail: 'Lists every available category. Think of it as `~/codex` with read-only knowledge mounted.',
+    summary: 'Navigate site content.',
+    detail:
+      'Opens the directory of site content—blog, projects, utilities, and contact. From here you can branch into specific areas to explore work and ideas.',
   },
   {
     command: 'blog | projects | community',
-    summary: 'Category deep-dives with `ls`, `cat`, and `grep` support.',
-    detail: 'Each directory mirrors the public site but stays inside the terminal so you can skim and copy without losing focus.',
+    summary: 'Browse content by area with familiar CLI verbs.',
+    detail:
+      'Each "directory" mirrors the public site but stays inside the terminal. Use `ls` to list entries, `cat [number]` to open one, and `grep` to filter by tag.',
   },
   {
     command: 'contact',
-    summary: 'Guided project brief.',
-    detail: 'Launches an interactive prompt that structures goals, constraints, and timelines into a ready-to-send message.',
+    summary: 'Guided intake for potential work.',
+    detail:
+      "Walks through what you're trying to achieve, what's in the way, and how fast you need to move. The output lands as a structured message in my inbox.",
   },
   {
     command: 'back / cd ..',
-    summary: 'Single-step escape hatch.',
-    detail: 'Returns you to the parent directory so you never get lost while exploring nested feeds.',
+    summary: 'One-step escape hatch.',
+    detail:
+      'Climb a level up the path whenever you want to zoom out of a nested folder without losing state.',
   },
   {
-    command: 'clear, help, theme',
+    command: 'help',
+    summary: 'Start here—command reference.',
+    detail:
+      'Prints all available commands and how to use them. This is your starting point to understand what the terminal can do.',
+  },
+  {
+    command: 'clear, theme',
     summary: 'Quality-of-life commands.',
-    detail: 'Reset the viewport, print available actions, or toggle neon palettes without refreshing.',
+    detail:
+      'Tidy the viewport or toggle color schemes if you prefer something softer than full neon.',
   },
 ];
 
@@ -114,7 +129,10 @@ export default function TerminalPage() {
               </div>
               <div className='relative border border-terminal-green/50 px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
                 <span>{TERMINAL_COPY.hero.ribbon}</span>
-                <span className='absolute inset-y-0 left-0 w-1 bg-terminal-green/80' aria-hidden='true'></span>
+                <span
+                  className='absolute inset-y-0 left-0 w-1 bg-terminal-green/80'
+                  aria-hidden='true'
+                ></span>
               </div>
               <div className='grid gap-4 sm:grid-cols-3'>
                 {TERMINAL_COPY.hero.meta.map((item) => (
@@ -122,8 +140,12 @@ export default function TerminalPage() {
                     key={item.label}
                     className='border border-terminal-border/60 p-4 flex flex-col gap-1 font-ocr text-sm text-terminal-text/80'
                   >
-                    <span className='text-terminal-green text-xs uppercase tracking-wide'>{item.label}</span>
-                    <span className='text-terminal-white text-base'>{item.value}</span>
+                    <span className='text-terminal-green text-xs uppercase tracking-wide'>
+                      {item.label}
+                    </span>
+                    <span className='text-terminal-white text-base'>
+                      {item.value}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -136,7 +158,10 @@ export default function TerminalPage() {
                     {TERMINAL_COPY.overview.title}
                   </h2>
                   {TERMINAL_COPY.overview.paragraphs.map((paragraph, idx) => (
-                    <p key={idx} className='font-ocr text-base text-terminal-text/85 leading-relaxed'>
+                    <p
+                      key={idx}
+                      className='font-ocr text-base text-terminal-text/85 leading-relaxed'
+                    >
                       {paragraph}
                     </p>
                   ))}
@@ -152,9 +177,13 @@ export default function TerminalPage() {
                       >
                         <div className='flex items-center gap-3'>
                           <Icon className='w-5 h-5 text-terminal-green' />
-                          <p className='font-ibm text-lg text-terminal-green'>{card.title}</p>
+                          <p className='font-ibm text-lg text-terminal-green'>
+                            {card.title}
+                          </p>
                         </div>
-                        <p className='font-ocr text-sm text-terminal-text/80 leading-relaxed'>{card.body}</p>
+                        <p className='font-ocr text-sm text-terminal-text/80 leading-relaxed'>
+                          {card.body}
+                        </p>
                       </div>
                     );
                   })}
@@ -166,7 +195,10 @@ export default function TerminalPage() {
                   </h3>
                   <ul className='space-y-3 font-ocr text-sm text-terminal-text/85'>
                     {TERMINAL_COPY.usage.steps.map((step, idx) => (
-                      <li key={idx} className='border border-terminal-border/40 p-4 leading-relaxed'>
+                      <li
+                        key={idx}
+                        className='border border-terminal-border/40 p-4 leading-relaxed'
+                      >
                         {step}
                       </li>
                     ))}
@@ -176,7 +208,9 @@ export default function TerminalPage() {
                 <article className='space-y-4'>
                   <div className='flex items-center gap-3'>
                     <Command className='w-5 h-5 text-terminal-green' />
-                    <h3 className='font-ibm text-2xl text-terminal-green'>Command map</h3>
+                    <h3 className='font-ibm text-2xl text-terminal-green'>
+                      Command map
+                    </h3>
                   </div>
                   <div className='grid gap-4'>
                     {COMMAND_GUIDE.map((item) => (
@@ -185,7 +219,10 @@ export default function TerminalPage() {
                         className='border border-terminal-border/60 rounded-lg p-4 space-y-1 font-ocr text-sm text-terminal-text/85'
                       >
                         <p className='text-terminal-green'>
-                          <span className='font-ibm text-base'>{item.command}</span> — {item.summary}
+                          <span className='font-ibm text-base'>
+                            {item.command}
+                          </span>{' '}
+                          — {item.summary}
                         </p>
                         <p className='text-terminal-text/75'>{item.detail}</p>
                       </div>
@@ -196,8 +233,10 @@ export default function TerminalPage() {
 
               <aside className='border border-terminal-border/60 rounded-xl p-4 md:p-6 shadow-[0_0_35px_rgba(255,0,255,0.12)]'>
                 <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
-                  Terminal output lives here. Type `codex` to begin, then explore with `blog`, `projects`, or `community`. Use
-                  `back` whenever you need daylight.
+                  The shell lives here. Type `help` to start and see all
+                  available commands. Use `codex` to navigate site content, then
+                  wander through `blog`, `projects`, or `community`. Use `back`
+                  to climb up a level whenever you want to come up for air.
                 </p>
                 <div className='w-full'>
                   <Terminal />
