@@ -112,40 +112,40 @@
 }
 
 [data-theme="light"] {
-  /* Light Mode Colors - CRT Style */
-  --color-terminal-dark: #e5e7eb;
-  --color-terminal-light: #f3f4f6;
-  --color-terminal-border: #d1d5db;
-  --color-terminal-green: #009e3f;
-  --color-terminal-text: #1f2937;
-  --color-terminal-muted: #6b7280;
-  --color-terminal-yellow: #d97706;
-  --color-terminal-red: #dc2626;
-  --color-terminal-blue: #2563eb;
-  --color-terminal-cyan: #0891b2;
-  --color-terminal-dimmed: #9ca3af;
-  --color-terminal-magenta: #c026d3;
-  --color-terminal-pink: #db2777;
-  --color-terminal-purple: #7c3aed;
-  --color-terminal-orange: #ea580c;
+  /* Light Mode Colors - Neon on Darker Light Background */
+  --color-terminal-dark: #dcdcdc;
+  --color-terminal-light: #e5e5e5;
+  --color-terminal-border: #c8c8c8;
+  /* Neon colors - darker, more saturated for visibility on light */
+  --color-terminal-green: #00cc33;
+  --color-terminal-text: #0d0d0d;
+  --color-terminal-muted: #555555;
+  --color-terminal-yellow: #ffaa00;
+  --color-terminal-red: #ff3333;
+  --color-terminal-blue: #0066ff;
+  --color-terminal-cyan: #00cccc;
+  --color-terminal-dimmed: #777777;
+  --color-terminal-magenta: #ff00ff;
+  --color-terminal-pink: #ff00ff;
+  --color-terminal-purple: #9900ff;
+  --color-terminal-orange: #ff6600;
   --color-terminal-white: #000000;
 
-  /* Background and Foreground - Neutral Gray */
-  --background: #e5e7eb;
-  --foreground: #1f2937;
+  /* Background and Foreground - Darker light gray */
+  --background: #e5e5e5;
+  --foreground: #0d0d0d;
 
-  /* Glows / Effects — softened or reduced */
-  --terminal-title-glow: none;
-  --terminal-text-glow: none;
-  --terminal-shadow: none;
-  --terminal-inner-glow: none;
-  --terminal-strong-glow: none;
-  --crt-glow: none;
+  /* Shadows instead of glows - black shadows for depth, adjusted for darker background */
+  --terminal-title-glow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  --terminal-text-glow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  --terminal-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  --terminal-inner-glow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  --terminal-strong-glow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
+  --crt-glow: 0 8px 16px rgba(0, 0, 0, 0.12);
 
-  /* Glitch Effect Colors — still visible but less eye-searing */
-  --theme-glitch-color: #7c3aed;
-  --theme-glitch-shadow: 0 0 3px rgba(124, 58, 237, 0.6),
-                         0 0 6px rgba(124, 58, 237, 0.3);
+  /* Glitch Effect Colors — dark shadows */
+  --theme-glitch-color: #9900ff;
+  --theme-glitch-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Font weight improvements for better readability */
@@ -592,6 +592,11 @@ html.theme-loaded {
   box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 }
 
+/* Light mode: black shadow on hover */
+[data-theme="light"] .glitch-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
 .glitch-button:hover::after {
   content: '';
   position: absolute;
@@ -617,6 +622,11 @@ html.theme-loaded {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(0, 255, 65, 0.25);
 }
 
+/* Light mode: black shadows only */
+[data-theme="light"] .card-glow {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .card-glow-tight {
   position: relative;
   isolation: isolate;
@@ -633,6 +643,17 @@ html.theme-loaded {
   opacity: 0.75;
   pointer-events: none;
   z-index: -1;
+}
+
+/* Light mode: black shadows instead of green glows */
+[data-theme="light"] .card-glow-tight {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .card-glow-tight::after {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  opacity: 1;
 }
 
 /* Global scanline effect */
@@ -653,17 +674,17 @@ body::after {
   z-index: 1;
 }
 
-/* Light theme scanline effect */
+/* Light theme scanline effect - subtle black scanlines */
 [data-theme="light"] body::after {
   background: 
     /* Vignette effect */
-    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.15) 100%),
-    /* Scanlines */
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.08) 100%),
+    /* Scanlines - subtle black */
     linear-gradient(
       transparent 0%,
       transparent 45%,
-      rgba(0, 158, 63, 0.08) 45%,
-      rgba(0, 158, 63, 0.08) 55%,
+      rgba(0, 0, 0, 0.03) 45%,
+      rgba(0, 0, 0, 0.03) 55%,
       transparent 55%,
       transparent 100%
     );
@@ -681,8 +702,9 @@ body::after {
   box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
 }
 
+/* Light mode: black shadow on theme toggle */
 [data-theme="light"] .theme-toggle:hover {
-  box-shadow: 0 0 15px rgba(0, 158, 63, 0.4);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
 /* Theme toggle skeleton for hydration */
@@ -893,10 +915,32 @@ body::after {
   filter: drop-shadow(0 0 12px rgba(255, 62, 62, 0.3));
 }
 
+/* Light mode: black shadows instead of colored glows for borders */
+[data-theme="light"] .cyber-border-green,
+[data-theme="light"] .cyber-border-magenta,
+[data-theme="light"] .cyber-border-yellow,
+[data-theme="light"] .cyber-border-cyan,
+[data-theme="light"] .cyber-border-red {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+[data-theme="light"] .cyber-border-green:hover,
+[data-theme="light"] .cyber-border-magenta:hover,
+[data-theme="light"] .cyber-border-yellow:hover,
+[data-theme="light"] .cyber-border-cyan:hover,
+[data-theme="light"] .cyber-border-red:hover {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
+}
+
 /* Subtle glowing text effect for terminal only */
 .terminal-glow {
   /* Subtle glow for all text */
   text-shadow: 0 0 2px rgba(0, 255, 0, 0.25), 0 0 4px rgba(0, 255, 0, 0.12);
+}
+
+/* Light mode: black text shadows instead of green glows */
+[data-theme="light"] .terminal-glow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 /* Terminal headings get stronger glow */
@@ -907,6 +951,16 @@ body::after {
 .terminal-glow h5,
 .terminal-glow h6 {
   text-shadow: 0 0 3px rgba(0, 255, 0, 0.35), 0 0 6px rgba(0, 255, 0, 0.18);
+}
+
+/* Light mode: black shadows for headings */
+[data-theme="light"] .terminal-glow h1,
+[data-theme="light"] .terminal-glow h2,
+[data-theme="light"] .terminal-glow h3,
+[data-theme="light"] .terminal-glow h4,
+[data-theme="light"] .terminal-glow h5,
+[data-theme="light"] .terminal-glow h6 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 /* Code and terminal elements */
@@ -924,13 +978,22 @@ body::after {
   text-shadow: 0 0 3px rgba(0, 255, 0, 0.45), 0 0 6px rgba(0, 255, 0, 0.22);
 }
 
-/* Light theme adjustments */
-[data-theme="light"] .cyber-border-green {
-  border-color: rgba(0, 158, 63, 0.5);
-  filter: drop-shadow(0 0 6px rgba(0, 158, 63, 0.2));
+/* Light mode: black shadows for colored text */
+[data-theme="light"] .terminal-glow .text-terminal-green,
+[data-theme="light"] .terminal-glow [class*="text-terminal-green"],
+[data-theme="light"] .terminal-glow .text-terminal-cyan,
+[data-theme="light"] .terminal-glow .text-terminal-magenta,
+[data-theme="light"] .terminal-glow .text-terminal-yellow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
 }
 
+/* Light theme border adjustments - using black shadows */
 [data-theme="light"] .cyber-border-border {
-  border-color: rgba(209, 213, 219, 0.7);
-  filter: drop-shadow(0 0 4px rgba(209, 213, 219, 0.3));
+  border-color: rgba(0, 0, 0, 0.18);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+[data-theme="light"] .cyber-border-border:hover {
+  border-color: rgba(0, 0, 0, 0.28);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
 }

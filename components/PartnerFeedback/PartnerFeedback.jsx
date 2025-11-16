@@ -49,7 +49,7 @@ function PartnerFeedback() {
 
         {/* Early Access Callout */}
         <div className='mb-8'>
-          <article className='p-6 md:p-8 border border-terminal-green/30 bg-terminal-dark/10 rounded-lg card-glow'>
+          <article className='p-6 md:p-8 bg-terminal-dark/10 rounded-lg card-glow'>
             <h3 className='text-xl md:text-2xl lg:text-3xl mb-4 font-ibm text-terminal-green'>
               READY TO WORK TOGETHER?
             </h3>
