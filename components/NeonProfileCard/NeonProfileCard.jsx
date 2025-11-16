@@ -64,7 +64,7 @@ const NeonProfileCard = ({ profile }) => {
 
   return (
     <div className='relative w-full max-w-[340px] text-terminal-text font-ocr'>
-      <div className='relative overflow-hidden cyber-border-lg cyber-border-green bg-terminal-dark/85 backdrop-blur-xl card-glow'>
+      <div className='relative overflow-hidden cyber-border-lg cyber-border-green bg-terminal-dark/30 backdrop-blur-xl card-glow'>
         <div className='absolute inset-0 opacity-25' aria-hidden='true'>
           <div className='absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(0,255,65,0.18),transparent_55%)]' />
           <div className='absolute inset-0 bg-[radial-gradient(circle_at_90%_0%,rgba(255,0,255,0.15),transparent_45%)]' />

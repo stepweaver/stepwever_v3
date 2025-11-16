@@ -57,27 +57,32 @@ function WhatWeDo() {
           </p>
         </header>
 
-        {/* Services Grid - Clean columns without boxes */}
+        {/* Services Grid - Cards with blurred background and glow */}
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16'>
           {SERVICES.map((service, index) => (
-            <article key={index}>
-              <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-3 md:mb-4'>
-                {service.title}
-              </h3>
-              <div className='h-0.5 bg-terminal-green mb-4 md:mb-6'></div>
-              <p className='text-terminal-text font-ibm text-base md:text-lg leading-relaxed mb-4 md:mb-6'>
-                {service.description}
-              </p>
-              <ul className='space-y-3 md:space-y-4 text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
-                {service.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className='flex items-start'>
-                    <span className='text-terminal-green font-bold mr-3 mt-1'>
-                      &gt;
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            <article
+              key={index}
+              className='bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-full flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'
+            >
+              <div className='p-4 sm:p-6 flex flex-col h-full'>
+                <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-3 md:mb-4'>
+                  {service.title}
+                </h3>
+                <div className='h-0.5 bg-terminal-green mb-4 md:mb-6'></div>
+                <p className='text-terminal-text font-ibm text-base md:text-lg leading-relaxed mb-4 md:mb-6'>
+                  {service.description}
+                </p>
+                <ul className='space-y-3 md:space-y-4 text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
+                  {service.items.map((item, itemIndex) => (
+                    <li key={itemIndex} className='flex items-start'>
+                      <span className='text-terminal-green font-bold mr-3 mt-1'>
+                        &gt;
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </article>
           ))}
         </div>

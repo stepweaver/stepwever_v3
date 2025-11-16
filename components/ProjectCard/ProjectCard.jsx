@@ -33,7 +33,7 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {/* Terminal Content */}
-      <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col h-full'>
+      <div className='p-3 sm:p-4 bg-terminal-dark/30 backdrop-blur-xl flex flex-col h-full'>
         {/* Project Image */}
         {imageUrl && (
           <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-36 sm:h-56'>
@@ -99,7 +99,7 @@ const ProjectCard = memo(function ProjectCard({
   // Match SuccessStories structure exactly - plain article element (no Link wrapper)
   // Navigation handled by parent carousel
   return (
-    <article className='bg-terminal-dark cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-full flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
+    <article className='bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-full flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
       {cardContent}
     </article>
   );

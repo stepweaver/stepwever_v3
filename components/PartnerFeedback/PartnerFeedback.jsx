@@ -31,7 +31,7 @@ function PartnerFeedback() {
 
         {/* Real Testimonial */}
         <div className='mb-12'>
-          <blockquote className='p-4 md:p-8 border border-terminal-border/30 bg-terminal-dark/20 rounded-lg card-glow'>
+          <blockquote className='p-4 md:p-8 border border-terminal-border/30 bg-terminal-dark/20 backdrop-blur-xl rounded-lg card-glow'>
             <p className='text-terminal-text font-ibm text-base md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8'>
               "{TESTIMONIAL.quote}"
             </p>
@@ -49,7 +49,7 @@ function PartnerFeedback() {
 
         {/* Early Access Callout */}
         <div className='mb-8'>
-          <article className='p-6 md:p-8 bg-terminal-dark/10 rounded-lg card-glow'>
+          <article className='p-6 md:p-8 bg-terminal-dark/10 backdrop-blur-xl rounded-lg card-glow'>
             <h3 className='text-xl md:text-2xl lg:text-3xl mb-4 font-ibm text-terminal-green'>
               READY TO WORK TOGETHER?
             </h3>

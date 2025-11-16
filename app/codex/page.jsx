@@ -346,7 +346,7 @@ function CodexContent() {
               </div>
             </div>
           ) : error ? (
-            <div className='border border-terminal-red/50 bg-terminal-red/10 text-terminal-red p-4 my-4 rounded'>
+            <div className='border border-terminal-red/50 bg-terminal-red/10 backdrop-blur-xl text-terminal-red p-4 my-4 rounded'>
               {error}
             </div>
           ) : (
@@ -388,7 +388,7 @@ function CodexContent() {
                             I'm curating more amazing podcasts to share with
                             you.
                           </p>
-                          <div className='bg-terminal-yellow/10 border border-terminal-yellow/20 rounded-lg p-6 max-w-2xl mx-auto'>
+                          <div className='bg-terminal-yellow/10 backdrop-blur-xl border border-terminal-yellow/20 rounded-lg p-6 max-w-2xl mx-auto'>
                             <p className='text-terminal-text'>
                               Stay tuned for more developer podcasts, tech
                               discussions, and industry insights. Each podcast
@@ -460,7 +460,7 @@ function CodexContent() {
                             I'm curating more amazing articles to share with
                             you.
                           </p>
-                          <div className='bg-terminal-yellow/10 border border-terminal-yellow/20 rounded-lg p-6 max-w-2xl mx-auto'>
+                          <div className='bg-terminal-yellow/10 backdrop-blur-xl border border-terminal-yellow/20 rounded-lg p-6 max-w-2xl mx-auto'>
                             <p className='text-terminal-text'>
                               Stay tuned for more developer articles, tech
                               discussions, and industry insights. Each article

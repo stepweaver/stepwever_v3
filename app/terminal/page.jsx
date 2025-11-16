@@ -127,7 +127,7 @@ const JumpToTerminalButton = () => {
   return (
     <button
       onClick={scrollToTerminal}
-      className='xl:hidden w-full mt-6 py-3 px-4 cyber-border-sm cyber-border-green bg-terminal-dark/50 hover:bg-terminal-dark/70 text-terminal-green font-ocr text-sm transition-all duration-200 hover:border-terminal-green hover:shadow-[0_0_15px_rgba(0,255,0,0.3)] flex items-center justify-center gap-2'
+      className='xl:hidden w-full mt-6 py-3 px-4 cyber-border-sm cyber-border-green bg-terminal-dark/30 backdrop-blur-xl hover:bg-terminal-dark/50 text-terminal-green font-ocr text-sm transition-all duration-200 hover:border-terminal-green hover:shadow-[0_0_15px_rgba(0,255,0,0.3)] flex items-center justify-center gap-2'
       aria-label='Jump to terminal'
     >
       <TerminalIcon className='w-4 h-4' />
@@ -166,7 +166,7 @@ export default function TerminalPage() {
                   {TERMINAL_COPY.hero.subtitle}
                 </p>
               </div>
-              <div className='relative cyber-border cyber-border-green px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
+              <div className='relative cyber-border cyber-border-green bg-terminal-dark/20 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
                 <span>{TERMINAL_COPY.hero.ribbon}</span>
                 <span
                   className='absolute inset-y-0 left-0 w-1 bg-terminal-green/80'
@@ -177,7 +177,7 @@ export default function TerminalPage() {
                 {TERMINAL_COPY.hero.meta.map((item) => (
                   <div
                     key={item.label}
-                    className='cyber-border-sm cyber-border-border p-4 flex flex-col gap-1 font-ocr text-sm text-terminal-text/80'
+                    className='cyber-border-sm cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 flex flex-col gap-1 font-ocr text-sm text-terminal-text/80'
                   >
                     <span className='text-terminal-green text-xs uppercase tracking-wide'>
                       {item.label}
@@ -213,7 +213,7 @@ export default function TerminalPage() {
                     return (
                       <div
                         key={card.title}
-                        className='cyber-border cyber-border-border p-5 space-y-3'
+                        className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-5 space-y-3'
                       >
                         <div className='flex items-center gap-3'>
                           <Icon className='w-5 h-5 text-terminal-green' />
@@ -238,7 +238,7 @@ export default function TerminalPage() {
                     {TERMINAL_COPY.usage.steps.map((step, idx) => (
                       <li
                         key={idx}
-                        className='cyber-border-sm cyber-border-border p-4 leading-relaxed'
+                        className='cyber-border-sm cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 leading-relaxed'
                       >
                         {step}
                       </li>
@@ -258,7 +258,7 @@ export default function TerminalPage() {
                     {COMMAND_GUIDE.map((item) => (
                       <div
                         key={item.command}
-                        className='cyber-border cyber-border-border p-4 space-y-1 font-ocr text-sm text-terminal-text/85'
+                        className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 space-y-1 font-ocr text-sm text-terminal-text/85'
                       >
                         <p className='text-terminal-green'>
                           <span className='font-ibm text-base'>
@@ -276,7 +276,7 @@ export default function TerminalPage() {
 
               <aside
                 id='terminal-section'
-                className='cyber-border cyber-border-green p-4 md:p-6 animate-pulse-glow'
+                className='cyber-border cyber-border-green bg-transparent p-4 md:p-6 animate-pulse-glow'
               >
                 <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
                   The shell lives here. Type `help` to start and see all

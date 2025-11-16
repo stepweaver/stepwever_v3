@@ -55,7 +55,7 @@ const STORIES = [
 const StoryCard = ({ story }) => (
   <article
     className={`
-      bg-terminal-dark cyber-border cyber-border-green
+      bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green
       shadow-lg hover:shadow-terminal-green/20 transition-shadow
       flex flex-col h-full card-glow-tight
     `}

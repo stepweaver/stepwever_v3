@@ -88,7 +88,7 @@ export default function ContactForm() {
           <div className='p-4'>
             {status.error && (
               <div
-                className='mb-4 p-2 border border-terminal-red bg-terminal-red/20'
+                className='mb-4 p-2 border border-terminal-red bg-terminal-red/20 backdrop-blur-xl'
                 role='alert'
                 aria-live='polite'
               >
@@ -100,7 +100,7 @@ export default function ContactForm() {
 
             {status.success && (
               <div
-                className='mb-4 p-2 border border-terminal-green bg-terminal-green/20'
+                className='mb-4 p-2 border border-terminal-green bg-terminal-green/20 backdrop-blur-xl'
                 role='status'
                 aria-live='polite'
               >
@@ -128,7 +128,7 @@ export default function ContactForm() {
                   name='name'
                   value={formData.name}
                   onChange={handleChange}
-                  className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='Your name'
                   required
                   aria-required='true'
@@ -150,7 +150,7 @@ export default function ContactForm() {
                   name='email'
                   value={formData.email}
                   onChange={handleChange}
-                  className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='your.email@company.com'
                   required
                   aria-required='true'
@@ -171,7 +171,7 @@ export default function ContactForm() {
                   name='message'
                   value={formData.message}
                   onChange={handleChange}
-                  className='w-full bg-terminal-dark border border-terminal-border text-terminal-text p-1.5 text-sm h-48 focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-sm h-48 focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='Include goals, timeline, budget, blockers, or any context you have handy.'
                   required
                   aria-required='true'
@@ -193,11 +193,12 @@ export default function ContactForm() {
                   disabled={status.submitting}
                   isLoading={status.submitting}
                   loadingText='SENDING...'
+                  className='w-fit max-w-[95%]'
                 >
                   [SEND TRANSMISSION]
                 </GlitchButton>
                 <p className='text-terminal-muted text-xs'>
-                  No perfect brief required. Write what you know - I’ll help
+                  No perfect brief required. Write what you know - I'll help
                   clarify the rest.
                 </p>
               </div>

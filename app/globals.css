@@ -42,7 +42,7 @@
 
   /* Terminal Effects */
   --terminal-title-glow: 0 0 3px rgba(0, 255, 0, 0.7);
-  --terminal-text-glow: 0 0 2px rgba(0, 255, 0, 0.5);
+  --terminal-text-glow: 0 0 1px rgba(0, 255, 0, 0.3);
   --terminal-shadow: 0 0 1px rgba(0, 255, 0, 0.7),
     0 0 20px rgba(0, 255, 0, 0.3);
   --terminal-inner-glow: inset 0 0 80px rgba(0, 255, 0, 0.08);
@@ -99,7 +99,7 @@
   --background: transparent;
   --foreground: #00ff00;
   --terminal-title-glow: 0 0 3px rgba(0, 255, 0, 0.7);
-  --terminal-text-glow: 0 0 2px rgba(0, 255, 0, 0.5);
+  --terminal-text-glow: 0 0 1px rgba(0, 255, 0, 0.3);
   --terminal-shadow: 0 0 1px rgba(0, 255, 0, 0.7),
     0 0 20px rgba(0, 255, 0, 0.3);
   --terminal-inner-glow: inset 0 0 80px rgba(0, 255, 0, 0.08);
@@ -568,7 +568,7 @@ html.theme-loaded {
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  border: 1px solid var(--color-terminal-green);
+  border: 1.5px solid var(--color-terminal-green);
   background-color: var(--color-terminal-dark, #0d1117);
   position: relative;
   overflow: hidden;
@@ -854,9 +854,9 @@ body::after {
   );
 }
 
-/* Border color utilities with glow */
+/* Border color utilities with glow - slightly thicker borders */
 .cyber-border-green {
-  border: 1px solid rgba(0, 255, 65, 0.4);
+  border: 1.5px solid rgba(0, 255, 65, 0.4);
   filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.2));
 }
 
@@ -866,7 +866,7 @@ body::after {
 }
 
 .cyber-border-border {
-  border: 1px solid rgba(42, 48, 45, 0.6);
+  border: 1.5px solid rgba(42, 48, 45, 0.6);
   filter: drop-shadow(0 0 6px rgba(42, 48, 45, 0.3));
 }
 
@@ -876,7 +876,7 @@ body::after {
 }
 
 .cyber-border-magenta {
-  border: 1px solid rgba(255, 85, 255, 0.4);
+  border: 1.5px solid rgba(255, 85, 255, 0.4);
   filter: drop-shadow(0 0 8px rgba(255, 85, 255, 0.2));
 }
 
@@ -886,7 +886,7 @@ body::after {
 }
 
 .cyber-border-yellow {
-  border: 1px solid rgba(255, 255, 0, 0.4);
+  border: 1.5px solid rgba(255, 255, 0, 0.4);
   filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.2));
 }
 
@@ -896,7 +896,7 @@ body::after {
 }
 
 .cyber-border-cyan {
-  border: 1px solid rgba(86, 182, 194, 0.4);
+  border: 1.5px solid rgba(86, 182, 194, 0.4);
   filter: drop-shadow(0 0 8px rgba(86, 182, 194, 0.2));
 }
 
@@ -906,7 +906,7 @@ body::after {
 }
 
 .cyber-border-red {
-  border: 1px solid rgba(255, 62, 62, 0.4);
+  border: 1.5px solid rgba(255, 62, 62, 0.4);
   filter: drop-shadow(0 0 8px rgba(255, 62, 62, 0.2));
 }
 
@@ -930,6 +930,90 @@ body::after {
 [data-theme="light"] .cyber-border-cyan:hover,
 [data-theme="light"] .cyber-border-red:hover {
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
+}
+
+/* Light mode: black borders for card components */
+[data-theme="light"] article.cyber-border-green,
+[data-theme="light"] article.cyber-border.cyber-border-green,
+[data-theme="light"] div.cyber-border-green.card-glow,
+[data-theme="light"] div.cyber-border-green.card-glow-tight,
+[data-theme="light"] div.cyber-border-lg.cyber-border-green {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] article.cyber-border-green:hover,
+[data-theme="light"] article.cyber-border.cyber-border-green:hover,
+[data-theme="light"] div.cyber-border-green.card-glow:hover,
+[data-theme="light"] div.cyber-border-green.card-glow-tight:hover,
+[data-theme="light"] div.cyber-border-lg.cyber-border-green:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode: override hover border colors for cards (handles Tailwind hover:border-terminal-green classes) */
+[data-theme="light"] article.card-glow-tight:hover,
+[data-theme="light"] article.cyber-border.cyber-border-green:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode: override hover shadow colors for cards (handles Tailwind hover:shadow-terminal-green classes) */
+[data-theme="light"] article.card-glow-tight:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] article.cyber-border.cyber-border-green:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Light mode: small badge borders (cyber-border-sm) */
+[data-theme="light"] .cyber-border-sm.cyber-border-green {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Light mode: ServicesPage cards with green borders */
+[data-theme="light"] .card-glow.cyber-border-green,
+[data-theme="light"] article.card-glow.cyber-border-green {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .card-glow.cyber-border-green:hover,
+[data-theme="light"] article.card-glow.cyber-border-green:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode: override Tailwind hover:border-terminal-green/50 for all cards */
+[data-theme="light"] article[class*="card-glow"]:hover,
+[data-theme="light"] div[class*="card-glow"]:hover,
+[data-theme="light"] article.cyber-border[class*="hover:border"]:hover,
+[data-theme="light"] div.cyber-border[class*="hover:border"]:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode: black borders for buttons */
+[data-theme="light"] button.cyber-border-green,
+[data-theme="light"] button.cyber-border-sm.cyber-border-green,
+[data-theme="light"] .glitchButton,
+[data-theme="light"] button[class*="cyber-border-green"],
+[data-theme="light"] a[class*="cyber-border-green"] {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] button.cyber-border-green:hover,
+[data-theme="light"] button.cyber-border-sm.cyber-border-green:hover,
+[data-theme="light"] .glitchButton:hover,
+[data-theme="light"] button[class*="cyber-border-green"]:hover,
+[data-theme="light"] a[class*="cyber-border-green"]:hover {
+  border-color: rgba(0, 0, 0, 0.35);
+}
+
+/* Light mode: override Tailwind border-terminal-green classes on buttons */
+[data-theme="light"] button[class*="border-terminal-green"],
+[data-theme="light"] a[class*="border-terminal-green"] {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] button[class*="border-terminal-green"]:hover,
+[data-theme="light"] a[class*="border-terminal-green"]:hover {
+  border-color: rgba(0, 0, 0, 0.35);
 }
 
 /* Subtle glowing text effect for terminal only */
@@ -969,13 +1053,13 @@ body::after {
 .terminal-glow .terminal-output,
 .terminal-glow .terminal-input,
 .terminal-glow .terminal-line {
-  text-shadow: 0 0 2px rgba(0, 255, 0, 0.3), 0 0 4px rgba(0, 255, 0, 0.15);
+  text-shadow: 0 0 1px rgba(0, 255, 0, 0.25), 0 0 2px rgba(0, 255, 0, 0.1);
 }
 
 /* Terminal green text gets enhanced glow */
 .terminal-glow .text-terminal-green,
 .terminal-glow [class*="text-terminal-green"] {
-  text-shadow: 0 0 3px rgba(0, 255, 0, 0.45), 0 0 6px rgba(0, 255, 0, 0.22);
+  text-shadow: 0 0 2px rgba(0, 255, 0, 0.35), 0 0 3px rgba(0, 255, 0, 0.15);
 }
 
 /* Light mode: black shadows for colored text */

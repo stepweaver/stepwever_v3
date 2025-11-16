@@ -45,7 +45,7 @@ export default function Navbar() {
           >
             <button
               type='button'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               onClick={() => {
                 // If we're on the home page, scroll to section
                 if (window.location.pathname === '/') {
@@ -65,7 +65,7 @@ export default function Navbar() {
             </button>
             <Link
               href='/codex'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='View blog posts and projects'
             >
@@ -73,7 +73,7 @@ export default function Navbar() {
             </Link>
             <Link
               href='/terminal'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='Interactive terminal interface'
             >
@@ -81,7 +81,7 @@ export default function Navbar() {
             </Link>
             <Link
               href='/services'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='View our services and pricing'
             >
@@ -89,7 +89,7 @@ export default function Navbar() {
             </Link>
             <Link
               href='/contact'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 border border-transparent hover:border-terminal-green bg-transparent'
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='Contact us about your project'
             >

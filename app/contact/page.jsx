@@ -96,7 +96,7 @@ function ContactPage() {
                   {CONTACT_COPY.hero.subtitle}
                 </p>
               </div>
-              <div className='relative border border-terminal-green/50 px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
+              <div className='relative border border-terminal-green/50 bg-terminal-dark/20 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
                 <span>{CONTACT_COPY.hero.ribbon}</span>
                 <span
                   className='absolute inset-y-0 left-0 w-1 bg-terminal-green/80'
@@ -114,7 +114,7 @@ function ContactPage() {
                 {CONTACT_CHANNELS.map((channel) => (
                   <div
                     key={channel.title}
-                    className='cyber-border cyber-border-border p-5 space-y-3'
+                    className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-5 space-y-3'
                   >
                     <div className='flex items-center gap-3'>
                       <channel.icon className='w-5 h-5 text-terminal-green' />
@@ -162,7 +162,7 @@ function ContactPage() {
                   </div>
                 ))}
 
-                <div className='border border-terminal-border/60 rounded-lg p-5 space-y-4'>
+                <div className='border border-terminal-border/60 bg-terminal-dark/30 backdrop-blur-xl rounded-lg p-5 space-y-4'>
                   <div className='flex items-center gap-3'>
                     <Sparkles className='w-5 h-5 text-terminal-green' />
                     <p className='font-ibm text-xl text-terminal-green'>
