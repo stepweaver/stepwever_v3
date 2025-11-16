@@ -41,14 +41,14 @@
   --foreground: #00ff00;
 
   /* Terminal Effects */
-  --terminal-title-glow: 0 0 3px rgba(0, 255, 65, 0.7);
-  --terminal-text-glow: 0 0 2px rgba(0, 255, 65, 0.5);
-  --terminal-shadow: 0 0 1px rgba(0, 255, 65, 0.7),
-    0 0 20px rgba(0, 255, 65, 0.3);
-  --terminal-inner-glow: inset 0 0 80px rgba(0, 255, 65, 0.08);
-  --terminal-strong-glow: 0 0 5px rgba(0, 255, 65, 0.8),
-    0 0 10px rgba(0, 255, 65, 0.4);
-  --crt-glow: 0 0 30px rgba(0, 255, 65, 0.15);
+  --terminal-title-glow: 0 0 3px rgba(0, 255, 0, 0.7);
+  --terminal-text-glow: 0 0 2px rgba(0, 255, 0, 0.5);
+  --terminal-shadow: 0 0 1px rgba(0, 255, 0, 0.7),
+    0 0 20px rgba(0, 255, 0, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(0, 255, 0, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(0, 255, 0, 0.8),
+    0 0 10px rgba(0, 255, 0, 0.4);
+  --crt-glow: 0 0 30px rgba(0, 255, 0, 0.15);
 
   /* Fonts */
   --font-ibm: 'IBM 3270', monospace;
@@ -57,6 +57,7 @@
   /* Animations */
   --animate-blink: blink 1s step-end infinite;
   --animate-glitch: glitch 0.3s linear infinite;
+  --animate-pulse-glow: pulseGlow 2s ease-in-out infinite;
 
   /* Glitch Effect Colors */
   --theme-glitch-color: #ff00ff;
@@ -97,14 +98,14 @@
   --color-terminal-white: #ffffff;
   --background: transparent;
   --foreground: #00ff00;
-  --terminal-title-glow: 0 0 3px rgba(0, 255, 65, 0.7);
-  --terminal-text-glow: 0 0 2px rgba(0, 255, 65, 0.5);
-  --terminal-shadow: 0 0 1px rgba(0, 255, 65, 0.7),
-    0 0 20px rgba(0, 255, 65, 0.3);
-  --terminal-inner-glow: inset 0 0 80px rgba(0, 255, 65, 0.08);
-  --terminal-strong-glow: 0 0 5px rgba(0, 255, 65, 0.8),
-    0 0 10px rgba(0, 255, 65, 0.4);
-  --crt-glow: 0 0 30px rgba(0, 255, 65, 0.15);
+  --terminal-title-glow: 0 0 3px rgba(0, 255, 0, 0.7);
+  --terminal-text-glow: 0 0 2px rgba(0, 255, 0, 0.5);
+  --terminal-shadow: 0 0 1px rgba(0, 255, 0, 0.7),
+    0 0 20px rgba(0, 255, 0, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(0, 255, 0, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(0, 255, 0, 0.8),
+    0 0 10px rgba(0, 255, 0, 0.4);
+  --crt-glow: 0 0 30px rgba(0, 255, 0, 0.15);
   --theme-glitch-color: #ff00ff;
   --theme-glitch-shadow: 0 0 5px rgba(255, 0, 255, 0.8),
     0 0 10px rgba(255, 0, 255, 0.4);
@@ -727,6 +728,26 @@ body::after {
 }
 .animate-fade-in {
   animation: fade-in 0.6s ease-out both;
+}
+
+/* Subtle pulsating green glow animation for terminal */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2),
+      0 0 20px rgba(0, 255, 0, 0.1),
+      0 0 30px rgba(0, 255, 0, 0.05);
+    border-color: rgba(0, 255, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3),
+      0 0 30px rgba(0, 255, 0, 0.15),
+      0 0 45px rgba(0, 255, 0, 0.08);
+    border-color: rgba(0, 255, 0, 0.3);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
 }
 
 /* CRT-style glitch for the 404 */

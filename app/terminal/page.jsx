@@ -1,6 +1,12 @@
 'use client';
 
-import { Command, Map, MessageSquare, Sparkles } from 'lucide-react';
+import {
+  Command,
+  Map,
+  MessageSquare,
+  Sparkles,
+  Terminal as TerminalIcon,
+} from 'lucide-react';
 import { useEffect } from 'react';
 
 import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
@@ -103,6 +109,33 @@ const COMMAND_GUIDE = [
   },
 ];
 
+const JumpToTerminalButton = () => {
+  const scrollToTerminal = () => {
+    const terminal = document.getElementById('terminal-section');
+    if (terminal) {
+      terminal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Focus the terminal input after a brief delay
+      setTimeout(() => {
+        const terminalInput = terminal.querySelector('input[type="text"]');
+        if (terminalInput) {
+          terminalInput.focus();
+        }
+      }, 500);
+    }
+  };
+
+  return (
+    <button
+      onClick={scrollToTerminal}
+      className='xl:hidden w-full mt-6 py-3 px-4 border border-terminal-green/50 rounded-lg bg-terminal-dark/50 hover:bg-terminal-dark/70 text-terminal-green font-ocr text-sm transition-all duration-200 hover:border-terminal-green hover:shadow-[0_0_15px_rgba(0,255,0,0.3)] flex items-center justify-center gap-2'
+      aria-label='Jump to terminal'
+    >
+      <TerminalIcon className='w-4 h-4' />
+      <span>Jump to terminal</span>
+    </button>
+  );
+};
+
 export default function TerminalPage() {
   useEffect(() => {
     const footer = document.querySelector('footer');
@@ -171,6 +204,7 @@ export default function TerminalPage() {
                       {paragraph}
                     </p>
                   ))}
+                  <JumpToTerminalButton />
                 </article>
 
                 <div className='grid gap-6'>
@@ -193,6 +227,7 @@ export default function TerminalPage() {
                       </div>
                     );
                   })}
+                  <JumpToTerminalButton />
                 </div>
 
                 <article className='space-y-4'>
@@ -209,6 +244,7 @@ export default function TerminalPage() {
                       </li>
                     ))}
                   </ul>
+                  <JumpToTerminalButton />
                 </article>
 
                 <article className='space-y-4'>
@@ -234,10 +270,14 @@ export default function TerminalPage() {
                       </div>
                     ))}
                   </div>
+                  <JumpToTerminalButton />
                 </article>
               </div>
 
-              <aside className='border border-terminal-border/60 rounded-xl p-4 md:p-6 shadow-[0_0_35px_rgba(255,0,255,0.12)]'>
+              <aside
+                id='terminal-section'
+                className='border border-terminal-green/30 rounded-xl p-4 md:p-6 animate-pulse-glow'
+              >
                 <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
                   The shell lives here. Type `help` to start and see all
                   available commands. Use `codex` to enter codex mode for

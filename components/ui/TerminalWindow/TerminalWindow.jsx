@@ -12,7 +12,7 @@ export default function TerminalWindow({
 }) {
   return (
     <div
-      className={`bg-terminal-dark border border-terminal-border rounded-lg shadow-[0_0_1px_rgba(0,255,65,0.7),0_0_20px_rgba(0,255,65,0.3)] overflow-hidden relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-[rgba(0,255,65,0.02)] before:to-transparent before:bg-[length:100%_4px] before:pointer-events-none before:animate-[scanlines_20s_linear_infinite] before:z-[1] ${className}`}
+      className={`bg-terminal-dark border border-terminal-green/30 rounded-lg overflow-hidden relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-[rgba(0,255,0,0.02)] before:to-transparent before:bg-[length:100%_4px] before:pointer-events-none before:animate-[scanlines_20s_linear_infinite] before:z-[1] animate-pulse-glow ${className}`}
     >
       {showHeader && (
         <div className='bg-terminal-light border-b border-terminal-border px-4 py-3 relative z-[2]'>

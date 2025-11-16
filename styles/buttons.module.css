@@ -20,7 +20,7 @@
 .glitchButton:hover {
   background-color: var(--color-terminal-light, #161b22);
   border-color: var(--color-terminal-green, #00ff41);
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .glitchButton:hover::after {

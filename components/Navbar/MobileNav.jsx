@@ -189,7 +189,7 @@ export default function MobileNav() {
 
             <div className='absolute bottom-0 left-0 right-0 border-t border-terminal-dimmed/30 py-4 px-4 md:px-6 text-terminal-dimmed text-sm backdrop-blur-sm'>
               <div className='flex justify-between items-center'>
-                <div className='truncate'>stepweaver@v3.0</div>
+                <div className='truncate'>stepweaver@v3.7</div>
                 <div className='flex items-center flex-shrink-0'>
                   <span className='h-2 w-2 rounded-full bg-terminal-green mr-2 animate-pulse'></span>
                   <span>connected</span>

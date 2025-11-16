@@ -39,7 +39,7 @@
 
 .lambda-normal {
   color: var(--color-terminal-green);
-  text-shadow: 0 0 3px rgba(0, 255, 65, 0.4);
+  text-shadow: 0 0 3px rgba(0, 255, 0, 0.4);
 }
 
 .lambda-glitching {
