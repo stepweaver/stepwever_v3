@@ -64,7 +64,7 @@ const NeonProfileCard = ({ profile }) => {
 
   return (
     <div className='relative w-full max-w-[340px] text-terminal-text font-ocr'>
-      <div className='relative overflow-hidden rounded-[24px] border border-terminal-green/30 bg-terminal-dark/85 backdrop-blur-xl card-glow'>
+      <div className='relative overflow-hidden cyber-border-lg cyber-border-green bg-terminal-dark/85 backdrop-blur-xl card-glow'>
         <div className='absolute inset-0 opacity-25' aria-hidden='true'>
           <div className='absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(0,255,65,0.18),transparent_55%)]' />
           <div className='absolute inset-0 bg-[radial-gradient(circle_at_90%_0%,rgba(255,0,255,0.15),transparent_45%)]' />
@@ -76,7 +76,7 @@ const NeonProfileCard = ({ profile }) => {
           </p>
 
           {mergedProfile.status && (
-            <div className='inline-flex items-center gap-2 text-terminal-green uppercase text-[0.6rem] tracking-[0.4em] bg-terminal-dark/60 px-3 py-1 rounded-full border border-terminal-green/30 shadow-[0_0_12px_rgba(0,255,65,0.25)]'>
+            <div className='inline-flex items-center gap-2 text-terminal-green uppercase text-[0.6rem] tracking-[0.4em] bg-terminal-dark/60 px-3 py-1 cyber-border-sm cyber-border-green shadow-[0_0_12px_rgba(0,255,65,0.25)]'>
               <span className='relative flex h-3.5 w-3.5'>
                 <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-50' />
                 <span className='relative inline-flex h-3.5 w-3.5 rounded-full bg-terminal-green shadow-[0_0_10px_rgba(0,255,65,0.45)]' />
@@ -87,7 +87,7 @@ const NeonProfileCard = ({ profile }) => {
 
           <div className='flex flex-col gap-4 items-start text-left'>
             {mergedProfile.avatar && (
-              <div className='relative h-28 w-28 overflow-hidden rounded-3xl border border-terminal-magenta/40 shadow-[0_0_18px_rgba(255,0,255,0.2)]'>
+              <div className='relative h-28 w-28 overflow-hidden cyber-border cyber-border-magenta shadow-[0_0_18px_rgba(255,0,255,0.2)]'>
                 <img
                   src={mergedProfile.avatar}
                   alt={`${mergedProfile.name} avatar`}
@@ -111,7 +111,7 @@ const NeonProfileCard = ({ profile }) => {
           </div>
 
           {badges.length > 0 && (
-            <div className='rounded-2xl border border-terminal-border/50 bg-terminal-light/12 px-4 py-4 space-y-2 text-left'>
+            <div className='cyber-border cyber-border-border bg-terminal-light/12 px-4 py-4 space-y-2 text-left'>
               {badges.map((badge, index) => {
                 const badgeContent =
                   typeof badge === 'string' ? { text: badge } : badge;
@@ -132,7 +132,7 @@ const NeonProfileCard = ({ profile }) => {
           )}
 
           <div
-            className='rounded-2xl border border-terminal-green/25 bg-terminal-dark/70 p-4 space-y-3 card-glow-tight'
+            className='cyber-border cyber-border-green bg-terminal-dark/70 p-4 space-y-3 card-glow-tight'
             aria-live='polite'
           >
             <div className='flex items-center justify-between text-[0.65rem] uppercase tracking-[0.4em] text-terminal-muted whitespace-nowrap'>
@@ -152,7 +152,7 @@ const NeonProfileCard = ({ profile }) => {
               {matrixCells.map((cell, index) => (
                 <div
                   key={`${cell}-${index}`}
-                  className='h-5 rounded bg-terminal-light/15 border border-terminal-green/20 flex items-center justify-center text-terminal-green font-mono text-[0.5rem]'
+                  className='h-6 cyber-border-sm cyber-border-green bg-terminal-light/15 flex items-center justify-center text-terminal-green font-mono text-[0.75rem]'
                 >
                   {cell}
                 </div>

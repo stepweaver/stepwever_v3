@@ -15,6 +15,17 @@
   position: relative;
   overflow: hidden;
   color: var(--color-terminal-green);
+  border-radius: 0;
+  clip-path: polygon(
+    6px 0%, 
+    calc(100% - 6px) 0%, 
+    100% 6px, 
+    100% calc(100% - 6px), 
+    calc(100% - 6px) 100%, 
+    6px 100%, 
+    0% calc(100% - 6px), 
+    0% 6px
+  );
 }
 
 .glitchButton:hover {

@@ -28,7 +28,7 @@ export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold,
 
       {/* Instructions for Dice Tray */}
       {onToggleDiceHold && (
-        <div className='mb-3 p-2 bg-terminal-light/10 border border-terminal-yellow/30 rounded text-xs text-terminal-yellow font-ocr max-lg:text-[0.65rem] max-lg:p-1.5'>
+        <div className='mb-3 p-2 bg-terminal-light/10 cyber-border-sm cyber-border-yellow text-xs text-terminal-yellow font-ocr max-lg:text-[0.65rem] max-lg:p-1.5'>
           <strong>Tip:</strong> Click on dice to hold them, then click "RE-ROLL UNHELD" to re-roll the rest
         </div>
       )}
@@ -67,7 +67,7 @@ export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold,
                     <button
                       key={rollIndex}
                       onClick={() => onToggleDiceHold && onToggleDiceHold(index, rollIndex)}
-                      className={`px-2 py-1 border-2 rounded font-bold min-w-[36px] text-center text-sm max-lg:px-1.5 max-lg:py-0.5 max-lg:min-w-[32px] max-lg:text-sm max-lg:border transition-all relative ${
+                      className={`px-2 py-1 border-2 cyber-border-sm font-bold min-w-[36px] text-center text-sm max-lg:px-1.5 max-lg:py-0.5 max-lg:min-w-[32px] max-lg:text-sm max-lg:border transition-all relative ${
                         onToggleDiceHold ? 'cursor-pointer hover:scale-110' : ''
                       }`}
                       style={{
@@ -111,7 +111,7 @@ export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold,
         )}
       </div>
 
-      <div className='flex justify-between items-center p-4 bg-terminal-dark border-2 border-terminal-green rounded-md text-2xl font-bold text-terminal-green shadow-[0_0_10px_rgba(0,255,65,0.2)] max-lg:text-lg max-lg:p-2.5 max-lg:border'>
+      <div className='flex justify-between items-center p-4 bg-terminal-dark border-2 border-terminal-green cyber-border text-2xl font-bold text-terminal-green shadow-[0_0_10px_rgba(0,255,65,0.2)] max-lg:text-lg max-lg:p-2.5 max-lg:border'>
         <span>TOTAL:</span>
         <span>{result.total}</span>
       </div>
@@ -120,7 +120,7 @@ export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold,
         {onCopy && (
           <button
             onClick={onCopy}
-            className='py-2 px-4 bg-terminal-dark border-2 border-terminal-cyan rounded-md text-terminal-cyan font-ibm text-sm cursor-pointer transition-all hover:bg-terminal-cyan hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-cyan)]'
+            className='py-2 px-4 bg-terminal-dark border-2 border-terminal-cyan cyber-border-sm text-terminal-cyan font-ibm text-sm cursor-pointer transition-all hover:bg-terminal-cyan hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-cyan)]'
             aria-label='Copy roll notation'
           >
             COPY NOTATION
@@ -129,7 +129,7 @@ export default function DiceResult({ result, onCopy, heldDice, onToggleDiceHold,
         {onReroll && heldDice && heldDice.size > 0 && (
           <button
             onClick={onReroll}
-            className='py-2 px-4 bg-terminal-dark border-2 border-terminal-yellow rounded-md text-terminal-yellow font-ibm text-sm cursor-pointer transition-all hover:bg-terminal-yellow hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-yellow)]'
+            className='py-2 px-4 bg-terminal-dark border-2 border-terminal-yellow cyber-border-sm text-terminal-yellow font-ibm text-sm cursor-pointer transition-all hover:bg-terminal-yellow hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-yellow)]'
             aria-label='Re-roll unheld dice'
           >
             RE-ROLL UNHELD

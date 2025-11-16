@@ -114,7 +114,7 @@ function ContactPage() {
                 {CONTACT_CHANNELS.map((channel) => (
                   <div
                     key={channel.title}
-                    className='border border-terminal-border/60 rounded-lg p-5 space-y-3'
+                    className='cyber-border cyber-border-border p-5 space-y-3'
                   >
                     <div className='flex items-center gap-3'>
                       <channel.icon className='w-5 h-5 text-terminal-green' />

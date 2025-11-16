@@ -55,7 +55,7 @@ const STORIES = [
 const StoryCard = ({ story }) => (
   <article
     className={`
-      bg-terminal-dark border border-terminal-green/15 rounded-lg
+      bg-terminal-dark cyber-border cyber-border-green
       shadow-lg hover:shadow-terminal-green/20 transition-shadow
       flex flex-col h-full card-glow-tight
     `}
@@ -72,7 +72,7 @@ const StoryCard = ({ story }) => (
 
     {/* body */}
     <div className='p-4 flex flex-col grow'>
-      <span className='mb-2 inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 rounded border border-terminal-green/30'>
+      <span className='mb-2 inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 cyber-border-sm cyber-border-green'>
         {story.category}
       </span>
 

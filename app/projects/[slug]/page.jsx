@@ -65,7 +65,7 @@ export default function ProjectPage({ params }) {
 
               {/* Project Image - 16:9 aspect ratio */}
               {project.imageUrl && (
-                <div className='mb-8 border border-terminal-border rounded-lg overflow-hidden aspect-video card-glow'>
+                <div className='mb-8 cyber-border-lg cyber-border-border overflow-hidden aspect-video card-glow'>
                   <img
                     src={project.imageUrl}
                     alt={project.title}
@@ -81,7 +81,7 @@ export default function ProjectPage({ params }) {
                     href={project.link}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='inline-flex items-center px-6 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 border border-terminal-green text-terminal-green font-ocr transition-colors duration-200 rounded-lg'
+                    className='inline-flex items-center px-6 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 cyber-border-sm cyber-border-green text-terminal-green font-ocr transition-colors duration-200'
                   >
                     <ExternalLink className='w-5 h-5 mr-2' />
                     View Live Project
@@ -95,7 +95,7 @@ export default function ProjectPage({ params }) {
                   {project.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className='px-3 py-1 bg-terminal-light/20 text-terminal-cyan font-ocr text-sm rounded border border-terminal-border'
+                      className='px-3 py-1 bg-terminal-light/20 text-terminal-cyan font-ocr text-sm cyber-border-sm cyber-border-border'
                     >
                       {tag}
                     </span>
@@ -114,7 +114,7 @@ export default function ProjectPage({ params }) {
                   <div className='flex justify-center'>
                     <DemoComponent />
                   </div>
-                  <div className='space-y-6 rounded-2xl border border-terminal-border bg-terminal-light/20 p-6 card-glow'>
+                  <div className='space-y-6 cyber-border-lg cyber-border-border bg-terminal-light/20 p-6 card-glow'>
                     <p className='font-ocr text-terminal-text text-base leading-relaxed'>
                       This component brings the NETRUNNER challenge card into
                       our CRT palette. Everything is handled with Tailwind
@@ -172,7 +172,7 @@ export default function ProjectPage({ params }) {
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                   {project.techStack.frontend && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <div className='flex items-center mb-4'>
                         <Code className='w-6 h-6 text-terminal-green mr-3' />
                         <h3 className='text-xl font-ibm text-terminal-green'>
@@ -192,7 +192,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.backend && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <div className='flex items-center mb-4'>
                         <Server className='w-6 h-6 text-terminal-green mr-3' />
                         <h3 className='text-xl font-ibm text-terminal-green'>
@@ -212,7 +212,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.payment && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <div className='flex items-center mb-4'>
                         <CreditCard className='w-6 h-6 text-terminal-green mr-3' />
                         <h3 className='text-xl font-ibm text-terminal-green'>
@@ -232,7 +232,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.development && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <div className='flex items-center mb-4'>
                         <Zap className='w-6 h-6 text-terminal-green mr-3' />
                         <h3 className='text-xl font-ibm text-terminal-green'>
@@ -252,7 +252,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.consulting && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <div className='flex items-center mb-4'>
                         <Server className='w-6 h-6 text-terminal-green mr-3' />
                         <h3 className='text-xl font-ibm text-terminal-green'>
@@ -272,7 +272,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.automation && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <div className='flex items-center mb-4'>
                         <Zap className='w-6 h-6 text-terminal-green mr-3' />
                         <h3 className='text-xl font-ibm text-terminal-green'>
@@ -292,7 +292,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.ai && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <div className='flex items-center mb-4'>
                         <Code className='w-6 h-6 text-terminal-green mr-3' />
                         <h3 className='text-xl font-ibm text-terminal-green'>
@@ -312,7 +312,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.analytics && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <div className='flex items-center mb-4'>
                         <Code className='w-6 h-6 text-terminal-green mr-3' />
                         <h3 className='text-xl font-ibm text-terminal-green'>
@@ -440,7 +440,7 @@ export default function ProjectPage({ params }) {
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                   {project.ecommerceFeatures.shoppingCart && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <h3 className='text-lg font-ibm text-terminal-green mb-4'>
                         Shopping Cart
                       </h3>
@@ -459,7 +459,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.ecommerceFeatures.checkout && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <h3 className='text-lg font-ibm text-terminal-green mb-4'>
                         Checkout Process
                       </h3>
@@ -478,7 +478,7 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.ecommerceFeatures.productManagement && (
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
                       <h3 className='text-lg font-ibm text-terminal-green mb-4'>
                         Product Management
                       </h3>
@@ -877,7 +877,7 @@ export default function ProjectPage({ params }) {
 
             {/* CTA Section - Different for Services vs Projects */}
             {project.isService ? (
-              <section className='text-center bg-terminal-light/10 p-8 md:p-12 rounded-xl border border-terminal-green/30 card-glow'>
+              <section className='text-center bg-terminal-light/10 p-8 md:p-12 cyber-border-lg cyber-border-green card-glow'>
                 <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
                   Ready to Get Started?
                 </h2>
@@ -901,7 +901,7 @@ export default function ProjectPage({ params }) {
                     Schedule a Call
                   </GlitchButton>
                   <Link href='/contact'>
-                    <button className='px-8 py-3 bg-terminal-cyan/20 hover:bg-terminal-cyan/30 border border-terminal-cyan text-terminal-cyan font-ocr transition-colors duration-200 rounded-lg flex items-center gap-2'>
+                    <button className='px-8 py-3 bg-terminal-cyan/20 hover:bg-terminal-cyan/30 cyber-border-sm cyber-border-cyan text-terminal-cyan font-ocr transition-colors duration-200 flex items-center gap-2'>
                       <Mail className='w-5 h-5' />
                       Send a Message
                     </button>
@@ -941,7 +941,7 @@ export default function ProjectPage({ params }) {
                 )}
                 <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
                   <Link href='/contact'>
-                    <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 border border-terminal-green text-terminal-green font-ocr transition-colors duration-200 rounded-lg cursor-pointer'>
+                    <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 cyber-border-sm cyber-border-green text-terminal-green font-ocr transition-colors duration-200 cursor-pointer'>
                       Get in Touch
                     </button>
                   </Link>

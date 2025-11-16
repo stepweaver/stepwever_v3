@@ -16,7 +16,7 @@ export default function CalendlyModal({
       />
 
       {/* Modal */}
-      <div className='relative w-full h-full md:w-11/12 md:h-5/6 lg:w-4/5 lg:h-4/5 bg-terminal-dark border border-terminal-green/20 rounded-lg overflow-hidden'>
+      <div className='relative w-full h-full md:w-11/12 md:h-5/6 lg:w-4/5 lg:h-4/5 bg-terminal-dark cyber-border cyber-border-green overflow-hidden'>
         {/* Header */}
         <div className='flex items-center justify-between p-4 border-b border-terminal-border/30'>
           <h2 className='text-terminal-green font-ibm text-lg'>

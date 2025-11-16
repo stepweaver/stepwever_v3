@@ -38,7 +38,7 @@ class ErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div className='min-h-screen flex items-center justify-center p-8'>
-          <div className='bg-terminal-light border border-terminal-red/30 rounded-lg p-8 max-w-md text-center'>
+          <div className='bg-terminal-light cyber-border cyber-border-red p-8 max-w-md text-center'>
           <div className='text-terminal-red text-4xl mb-4'>!</div>
             <h2 className='text-terminal-red font-ibm text-xl mb-4'>
               Something went wrong
@@ -48,7 +48,7 @@ class ErrorBoundary extends Component {
               again later.
             </p>
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <details className='text-left mb-4 p-2 bg-terminal-dark rounded text-xs'>
+              <details className='text-left mb-4 p-2 bg-terminal-dark cyber-border-sm cyber-border-border text-xs'>
                 <summary className='cursor-pointer text-terminal-red mb-2'>
                   Error Details (Dev)
                 </summary>
@@ -59,7 +59,7 @@ class ErrorBoundary extends Component {
             )}
             <button
               onClick={() => window.location.reload()}
-              className='bg-terminal-red text-terminal-dark font-ibm px-4 py-2 rounded border border-terminal-red hover:bg-terminal-red/80 transition-colors'
+              className='bg-terminal-red text-terminal-dark font-ibm px-4 py-2 cyber-border-sm cyber-border-red hover:bg-terminal-red/80 transition-colors'
             >
               Refresh Page
             </button>

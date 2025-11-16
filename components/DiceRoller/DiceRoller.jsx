@@ -242,25 +242,25 @@ export default function DiceRoller() {
         {/* Keyboard Shortcuts */}
         <div className='flex gap-3 items-center flex-wrap justify-center max-lg:hidden'>
           <div className='flex items-center gap-1'>
-            <span className='px-1.5 py-0.5 bg-terminal-dark border border-terminal-border rounded font-ocr text-[0.65rem] text-terminal-green'>
+            <span className='px-1.5 py-0.5 bg-terminal-dark cyber-border-sm cyber-border-border font-ocr text-[0.65rem] text-terminal-green'>
               ENTER
             </span>
             <span className='text-sm'>Roll</span>
           </div>
           <div className='flex items-center gap-1'>
-            <span className='px-1.5 py-0.5 bg-terminal-dark border border-terminal-border rounded font-ocr text-[0.65rem] text-terminal-green'>
+            <span className='px-1.5 py-0.5 bg-terminal-dark cyber-border-sm cyber-border-border font-ocr text-[0.65rem] text-terminal-green'>
               C
             </span>
             <span className='text-sm'>Copy</span>
           </div>
           <div className='flex items-center gap-1'>
-            <span className='px-1.5 py-0.5 bg-terminal-dark border border-terminal-border rounded font-ocr text-[0.65rem] text-terminal-green'>
+            <span className='px-1.5 py-0.5 bg-terminal-dark cyber-border-sm cyber-border-border font-ocr text-[0.65rem] text-terminal-green'>
               R
             </span>
             <span className='text-sm'>Reset</span>
           </div>
           <div className='flex items-center gap-1'>
-            <span className='px-1.5 py-0.5 bg-terminal-dark border border-terminal-border rounded font-ocr text-[0.65rem] text-terminal-green'>
+            <span className='px-1.5 py-0.5 bg-terminal-dark cyber-border-sm cyber-border-border font-ocr text-[0.65rem] text-terminal-green'>
               ESC
             </span>
             <span className='text-sm'>Clear</span>
@@ -287,7 +287,7 @@ export default function DiceRoller() {
                 type='text'
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                className='w-full p-2.5 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-sm text-left focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision] max-lg:p-1.5 max-lg:text-xs'
+                className='w-full p-2.5 bg-terminal-dark cyber-border-sm cyber-border-border text-terminal-text font-ibm text-sm text-left focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)] [-webkit-font-smoothing:antialiased] [text-rendering:geometricPrecision] max-lg:p-1.5 max-lg:text-xs'
                 placeholder='NOTE: e.g., Attack roll, initiative, saving throw...'
                 aria-label='Roll comment'
                 maxLength={UI_CONSTANTS.MAX_COMMENT_LENGTH}
@@ -358,7 +358,7 @@ export default function DiceRoller() {
                     return (
                       <div
                         key={die.sides}
-                        className='flex items-center justify-between py-1 px-1.5 bg-[rgba(13,18,17,0.4)] border rounded gap-1 text-[0.7rem] max-w-[400px] max-lg:max-w-full'
+                        className='flex items-center justify-between py-1 px-1.5 bg-[rgba(13,18,17,0.4)] cyber-border-sm cyber-border-border gap-1 text-[0.7rem] max-w-[400px] max-lg:max-w-full'
                         style={{ borderColor: die.color }}
                       >
                         <div className='flex items-center gap-1.5 flex-1'>
@@ -388,7 +388,7 @@ export default function DiceRoller() {
                                   .filter((d) => d.count > 0);
                                 setDicePool(updatedPool);
                               }}
-                              className='w-[26px] h-[26px] border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] disabled:opacity-30 disabled:cursor-not-allowed'
+                              className='w-[26px] h-[26px] border border-terminal-border bg-terminal-light cyber-border-sm text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] disabled:opacity-30 disabled:cursor-not-allowed'
                               disabled={die.count <= 1}
                               aria-label={`Decrease ${die.sides}-sided dice count`}
                             >
@@ -406,7 +406,7 @@ export default function DiceRoller() {
                                 );
                                 setDicePool(updatedPool);
                               }}
-                              className='w-[26px] h-[26px] border border-terminal-border bg-terminal-light rounded text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] disabled:opacity-30 disabled:cursor-not-allowed'
+                              className='w-[26px] h-[26px] border border-terminal-border bg-terminal-light cyber-border-sm text-sm font-bold cursor-pointer transition-all text-terminal-text flex items-center justify-center hover:bg-terminal-dark hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] disabled:opacity-30 disabled:cursor-not-allowed'
                               disabled={
                                 die.count >= UI_CONSTANTS.MAX_DICE_COUNT
                               }
@@ -423,7 +423,7 @@ export default function DiceRoller() {
                             );
                             setDicePool(updatedPool);
                           }}
-                          className='p-1 bg-transparent border border-terminal-red text-terminal-red rounded cursor-pointer transition-all font-bold text-xs hover:bg-terminal-red hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-red)]'
+                          className='p-1 bg-transparent border border-terminal-red text-terminal-red cyber-border-sm cursor-pointer transition-all font-bold text-xs hover:bg-terminal-red hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-red)]'
                           aria-label={`Remove ${die.sides}-sided dice from pool`}
                         >
                           ✕
@@ -442,7 +442,7 @@ export default function DiceRoller() {
                   Current Roll
                 </h3>
                 {isRolling ? (
-                  <div className='flex flex-col items-center justify-center p-8 bg-terminal-dark border-2 border-terminal-green rounded-md animate-pulse max-lg:p-2 max-lg:border'>
+                  <div className='flex flex-col items-center justify-center p-8 bg-terminal-dark border-2 border-terminal-green cyber-border animate-pulse max-lg:p-2 max-lg:border'>
                     <div className='flex flex-wrap gap-3 mb-4 justify-center max-w-[400px] max-lg:gap-1.5 max-lg:mb-1.5'>
                       {dicePool.flatMap((die, dieIndex) => {
                         const IconComponent = DICE_ICONS[die.sides];

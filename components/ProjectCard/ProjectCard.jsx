@@ -36,7 +36,7 @@ const ProjectCard = memo(function ProjectCard({
       <div className='p-3 sm:p-4 bg-terminal-dark flex flex-col h-full'>
         {/* Project Image */}
         {imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-36 sm:h-56'>
+          <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-36 sm:h-56'>
             <img
               src={imageUrl}
               alt={title}
@@ -46,7 +46,7 @@ const ProjectCard = memo(function ProjectCard({
           </div>
         )}
         {!imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border rounded overflow-hidden h-36 sm:h-56'>
+          <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-36 sm:h-56'>
             <img
               src='/images/lambda_preview.png'
               alt='Project preview'
@@ -64,7 +64,7 @@ const ProjectCard = memo(function ProjectCard({
         {/* Keywords as Category */}
         {keywords.length > 0 && (
           <div className='mb-2 sm:mb-3'>
-            <span className='inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 rounded border border-terminal-green/30'>
+            <span className='inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 cyber-border-sm cyber-border-green'>
               {keywords[0]}
             </span>
           </div>
@@ -99,7 +99,7 @@ const ProjectCard = memo(function ProjectCard({
   // Match SuccessStories structure exactly - plain article element (no Link wrapper)
   // Navigation handled by parent carousel
   return (
-    <article className='bg-terminal-dark border border-terminal-green/15 rounded-lg overflow-hidden transition-all duration-300 group h-full flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
+    <article className='bg-terminal-dark cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-full flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
       {cardContent}
     </article>
   );

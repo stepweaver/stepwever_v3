@@ -130,8 +130,8 @@
   --color-terminal-orange: #ea580c;
   --color-terminal-white: #000000;
 
-  /* Background and Foreground - CRT Green Tint */
-  --background: #e8f0e8;
+  /* Background and Foreground - Neutral Gray */
+  --background: #e5e7eb;
   --foreground: #1f2937;
 
   /* Glows / Effects — softened or reduced */
@@ -573,6 +573,17 @@ html.theme-loaded {
   position: relative;
   overflow: hidden;
   color: var(--color-terminal-green);
+  border-radius: 0;
+  clip-path: polygon(
+    6px 0%, 
+    calc(100% - 6px) 0%, 
+    100% 6px, 
+    100% calc(100% - 6px), 
+    calc(100% - 6px) 100%, 
+    6px 100%, 
+    0% calc(100% - 6px), 
+    0% 6px
+  );
 }
 
 .glitch-button:hover {
@@ -770,4 +781,156 @@ body::after {
   clip-path: inset(40% 0 0 0);
   left: -2px;
   text-shadow: -2px 0 var(--color-terminal-red);
+}
+
+/* Cyberpunk Border Styles - Chamfered corners with sharp angles */
+.cyber-border {
+  position: relative;
+  border-radius: 0;
+  /* 10px chamfer for aggressive cyberpunk look */
+  clip-path: polygon(
+    10px 0%, 
+    calc(100% - 10px) 0%, 
+    100% 10px, 
+    100% calc(100% - 10px), 
+    calc(100% - 10px) 100%, 
+    10px 100%, 
+    0% calc(100% - 10px), 
+    0% 10px
+  );
+}
+
+/* Smaller chamfer for buttons and small elements */
+.cyber-border-sm {
+  position: relative;
+  border-radius: 0;
+  clip-path: polygon(
+    6px 0%, 
+    calc(100% - 6px) 0%, 
+    100% 6px, 
+    100% calc(100% - 6px), 
+    calc(100% - 6px) 100%, 
+    6px 100%, 
+    0% calc(100% - 6px), 
+    0% 6px
+  );
+}
+
+/* Larger chamfer for prominent containers */
+.cyber-border-lg {
+  position: relative;
+  border-radius: 0;
+  clip-path: polygon(
+    14px 0%, 
+    calc(100% - 14px) 0%, 
+    100% 14px, 
+    100% calc(100% - 14px), 
+    calc(100% - 14px) 100%, 
+    14px 100%, 
+    0% calc(100% - 14px), 
+    0% 14px
+  );
+}
+
+/* Border color utilities with glow */
+.cyber-border-green {
+  border: 1px solid rgba(0, 255, 65, 0.4);
+  filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.2));
+}
+
+.cyber-border-green:hover {
+  border-color: rgba(0, 255, 65, 0.6);
+  filter: drop-shadow(0 0 12px rgba(0, 255, 65, 0.3));
+}
+
+.cyber-border-border {
+  border: 1px solid rgba(42, 48, 45, 0.6);
+  filter: drop-shadow(0 0 6px rgba(42, 48, 45, 0.3));
+}
+
+.cyber-border-border:hover {
+  border-color: rgba(42, 48, 45, 0.8);
+  filter: drop-shadow(0 0 10px rgba(42, 48, 45, 0.4));
+}
+
+.cyber-border-magenta {
+  border: 1px solid rgba(255, 85, 255, 0.4);
+  filter: drop-shadow(0 0 8px rgba(255, 85, 255, 0.2));
+}
+
+.cyber-border-magenta:hover {
+  border-color: rgba(255, 85, 255, 0.6);
+  filter: drop-shadow(0 0 12px rgba(255, 85, 255, 0.3));
+}
+
+.cyber-border-yellow {
+  border: 1px solid rgba(255, 255, 0, 0.4);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.2));
+}
+
+.cyber-border-yellow:hover {
+  border-color: rgba(255, 255, 0, 0.6);
+  filter: drop-shadow(0 0 12px rgba(255, 255, 0, 0.3));
+}
+
+.cyber-border-cyan {
+  border: 1px solid rgba(86, 182, 194, 0.4);
+  filter: drop-shadow(0 0 8px rgba(86, 182, 194, 0.2));
+}
+
+.cyber-border-cyan:hover {
+  border-color: rgba(86, 182, 194, 0.6);
+  filter: drop-shadow(0 0 12px rgba(86, 182, 194, 0.3));
+}
+
+.cyber-border-red {
+  border: 1px solid rgba(255, 62, 62, 0.4);
+  filter: drop-shadow(0 0 8px rgba(255, 62, 62, 0.2));
+}
+
+.cyber-border-red:hover {
+  border-color: rgba(255, 62, 62, 0.6);
+  filter: drop-shadow(0 0 12px rgba(255, 62, 62, 0.3));
+}
+
+/* Subtle glowing text effect for terminal only */
+.terminal-glow {
+  /* Subtle glow for all text */
+  text-shadow: 0 0 2px rgba(0, 255, 0, 0.25), 0 0 4px rgba(0, 255, 0, 0.12);
+}
+
+/* Terminal headings get stronger glow */
+.terminal-glow h1,
+.terminal-glow h2,
+.terminal-glow h3,
+.terminal-glow h4,
+.terminal-glow h5,
+.terminal-glow h6 {
+  text-shadow: 0 0 3px rgba(0, 255, 0, 0.35), 0 0 6px rgba(0, 255, 0, 0.18);
+}
+
+/* Code and terminal elements */
+.terminal-glow code,
+.terminal-glow pre,
+.terminal-glow .terminal-output,
+.terminal-glow .terminal-input,
+.terminal-glow .terminal-line {
+  text-shadow: 0 0 2px rgba(0, 255, 0, 0.3), 0 0 4px rgba(0, 255, 0, 0.15);
+}
+
+/* Terminal green text gets enhanced glow */
+.terminal-glow .text-terminal-green,
+.terminal-glow [class*="text-terminal-green"] {
+  text-shadow: 0 0 3px rgba(0, 255, 0, 0.45), 0 0 6px rgba(0, 255, 0, 0.22);
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .cyber-border-green {
+  border-color: rgba(0, 158, 63, 0.5);
+  filter: drop-shadow(0 0 6px rgba(0, 158, 63, 0.2));
+}
+
+[data-theme="light"] .cyber-border-border {
+  border-color: rgba(209, 213, 219, 0.7);
+  filter: drop-shadow(0 0 4px rgba(209, 213, 219, 0.3));
 }
