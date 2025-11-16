@@ -32,7 +32,7 @@ const TERMINAL_COPY = {
   usage: {
     title: 'How to drive it',
     steps: [
-      'Start with `help` to see all available commands and get oriented. From there, use `codex` to navigate site content—blog, projects, contact, and utilities.',
+      'Start with `help` to see all available commands and get oriented. Use `codex` to enter codex mode, where you can then navigate posted content—blog, projects, contact, and utilities.',
       "Jump into `blog`, `projects`, or `community` and use `ls` to see what's there. The prompt path updates so you always know where you are.",
       'Use `cat [number]` to open an item and `grep [tag]` to filter by topic. `pwd` echoes your location, `clear` wipes the scrollback.',
       '`contact` launches a guided brief that asks about your goals, constraints, and timing—so when I reply, we\'re already past the "so what are you looking for?" stage.',
@@ -61,9 +61,15 @@ const FEATURE_CARDS = [
 const COMMAND_GUIDE = [
   {
     command: 'codex',
-    summary: 'Navigate site content.',
+    summary: 'Enter codex mode for content navigation.',
     detail:
-      'Opens the directory of site content—blog, projects, utilities, and contact. From here you can branch into specific areas to explore work and ideas.',
+      'Puts the terminal into codex mode, enabling navigation of posted content. Once in this mode, you can explore blog, projects, utilities, and contact areas.',
+  },
+  {
+    command: 'cd codex',
+    summary: 'Navigate to the /codex page.',
+    detail:
+      'Changes directory to the /codex page. This is literal navigation, not entering codex mode.',
   },
   {
     command: 'blog | projects | community',
@@ -234,9 +240,10 @@ export default function TerminalPage() {
               <aside className='border border-terminal-border/60 rounded-xl p-4 md:p-6 shadow-[0_0_35px_rgba(255,0,255,0.12)]'>
                 <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
                   The shell lives here. Type `help` to start and see all
-                  available commands. Use `codex` to navigate site content, then
-                  wander through `blog`, `projects`, or `community`. Use `back`
-                  to climb up a level whenever you want to come up for air.
+                  available commands. Use `codex` to enter codex mode for
+                  content navigation, then wander through `blog`, `projects`, or
+                  `community`. Use `back` to climb up a level whenever you want
+                  to come up for air.
                 </p>
                 <div className='w-full'>
                   <Terminal />

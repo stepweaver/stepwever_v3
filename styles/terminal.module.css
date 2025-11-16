@@ -363,6 +363,23 @@
   text-indent: 0;
   padding-left: 0;
   margin-left: 0;
+  position: relative;
+}
+
+/* Visual indicator for wrapped lines - continuation character */
+.terminalHtml::after,
+.terminalText::after {
+  content: '';
+  display: none;
+}
+
+/* Wrapped line continuation indicator - using visual left border (best practice)
+   This adds a subtle left border to indicate that wrapped lines are continuations */
+.terminalWrapped {
+  position: relative;
+  border-left: 2px solid rgba(0, 255, 0, 0.2);
+  padding-left: 4px;
+  margin-left: 0;
 }
 
 /* Custom green terminal ellipsis */

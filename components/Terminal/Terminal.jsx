@@ -285,24 +285,52 @@ const Terminal = forwardRef((props, ref) => {
   }, [memoizedLines]);
 
   useEffect(() => {
-    // Overflow checking
+    // Overflow checking and wrapping detection
     const checkOverflow = () => {
       Object.keys(preRefs.current).forEach((key) => {
         const el = preRefs.current[key];
         if (el) {
+          // Check for horizontal overflow (ellipsis)
           if (el.offsetWidth < el.scrollWidth) {
             el.classList.add(styles.terminalEllipsis);
           } else {
             el.classList.remove(styles.terminalEllipsis);
           }
+          
+          // Check for vertical wrapping (line continuation)
+          // Compare scrollHeight to a single line height estimate
+          const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 20;
+          const hasWrapped = el.scrollHeight > lineHeight * 1.5;
+          
+          if (hasWrapped) {
+            // Check if this is output (not a prompt line)
+            const lineText = el.textContent || el.innerText || '';
+            const isPrompt = lineText.includes('user@stepweaver.dev') || 
+                           lineText.trim().startsWith('λ') ||
+                           lineText.includes('guest@');
+            
+            // Only add wrapping indicator to output lines, not prompts
+            if (!isPrompt) {
+              el.classList.add(styles.terminalWrapped);
+            } else {
+              el.classList.remove(styles.terminalWrapped);
+            }
+          } else {
+            el.classList.remove(styles.terminalWrapped);
+          }
         }
       });
     };
 
-    checkOverflow();
+    // Use setTimeout to ensure DOM is updated after render
+    const timeoutId = setTimeout(() => {
+      checkOverflow();
+    }, 100);
+
     window.addEventListener('resize', checkOverflow);
 
     return () => {
+      clearTimeout(timeoutId);
       window.removeEventListener('resize', checkOverflow);
     };
   }, [memoizedLines]);
