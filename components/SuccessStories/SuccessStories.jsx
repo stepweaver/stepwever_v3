@@ -106,6 +106,17 @@ const StoryCard = ({ story }) => (
 function SuccessStories() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const autoScrollIntervalRef = useRef(null);
+
+  // Pause auto-scroll on user interaction - defined early so it can be used in handlers
+  const handleUserInteraction = useCallback(() => {
+    setIsPaused(true);
+    // Resume after 15 seconds of no interaction
+    setTimeout(() => {
+      setIsPaused(false);
+    }, 15000);
+  }, []);
 
   // Enhanced touch/swipe state for smooth animations
   const touchState = useRef({
@@ -152,7 +163,8 @@ function SuccessStories() {
       velocity: 0,
       offsetX: 0,
     };
-  }, []);
+    handleUserInteraction();
+  }, [handleUserInteraction]);
 
   const handleTouchMove = useCallback(
     (e) => {
@@ -216,11 +228,13 @@ function SuccessStories() {
       if (isLeftSwipe) {
         nextStory();
         container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        handleUserInteraction();
       } else if (isRightSwipe) {
         prevStory();
         container.style.transform = `translateX(-${
           ((currentIndex - 1 + STORIES.length) % STORIES.length) * 100
         }%)`;
+        handleUserInteraction();
       } else {
         // Snap back to current position
         container.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -245,7 +259,7 @@ function SuccessStories() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [nextStory, prevStory, currentIndex]);
+  }, [nextStory, prevStory, currentIndex, handleUserInteraction]);
 
   // Enhanced mouse drag handlers for desktop
   const handleMouseDown = useCallback((e) => {
@@ -259,7 +273,8 @@ function SuccessStories() {
       velocity: 0,
       offsetX: 0,
     };
-  }, []);
+    handleUserInteraction();
+  }, [handleUserInteraction]);
 
   const handleMouseMove = useCallback(
     (e) => {
@@ -318,11 +333,13 @@ function SuccessStories() {
       if (isLeftSwipe) {
         nextStory();
         container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        handleUserInteraction();
       } else if (isRightSwipe) {
         prevStory();
         container.style.transform = `translateX(-${
           ((currentIndex - 1 + STORIES.length) % STORIES.length) * 100
         }%)`;
+        handleUserInteraction();
       } else {
         // Snap back to current position
         container.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -347,7 +364,7 @@ function SuccessStories() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [nextStory, prevStory, currentIndex]);
+  }, [nextStory, prevStory, currentIndex, handleUserInteraction]);
 
   // Add event listeners with non-passive options
   useEffect(() => {
@@ -393,13 +410,38 @@ function SuccessStories() {
     handleMouseUp,
   ]);
 
-  // Memoized transform style with hardware acceleration
+  // Memoized transform style with hardware acceleration and smooth transitions
   const transformStyle = useMemo(
     () => ({
       transform: `translateX(-${currentIndex * 100}%)`,
+      transition: 'transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     }),
     [currentIndex]
   );
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    // Clear any existing interval
+    if (autoScrollIntervalRef.current) {
+      clearInterval(autoScrollIntervalRef.current);
+    }
+
+    // Don't auto-scroll if paused or transitioning
+    if (isPaused || isTransitioning) return;
+
+    // Auto-scroll interval: 10 seconds (generous reading time)
+    const AUTO_SCROLL_DELAY = 10000;
+
+    autoScrollIntervalRef.current = setInterval(() => {
+      nextStory();
+    }, AUTO_SCROLL_DELAY);
+
+    return () => {
+      if (autoScrollIntervalRef.current) {
+        clearInterval(autoScrollIntervalRef.current);
+      }
+    };
+  }, [isPaused, isTransitioning, nextStory]);
 
   return (
     <section
@@ -426,6 +468,8 @@ function SuccessStories() {
             className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch] carousel-container'
             role='region'
             aria-label='Success stories carousel'
+            onMouseEnter={handleUserInteraction}
+            onTouchStart={handleUserInteraction}
           >
             <div
               ref={containerRef}
@@ -450,20 +494,23 @@ function SuccessStories() {
             aria-label='Success stories navigation'
           >
             {STORIES.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
-                  index === currentIndex
-                    ? 'bg-terminal-green'
-                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
-                }`}
-                aria-label={`Go to story ${index + 1} of ${STORIES.length}: ${
-                  STORIES[index].title
-                }`}
-                aria-selected={index === currentIndex}
-                role='tab'
-              >
+            <button
+              key={index}
+              onClick={() => {
+                setCurrentIndex(index);
+                handleUserInteraction();
+              }}
+              className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
+                index === currentIndex
+                  ? 'bg-terminal-green'
+                  : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+              }`}
+              aria-label={`Go to story ${index + 1} of ${STORIES.length}: ${
+                STORIES[index].title
+              }`}
+              aria-selected={index === currentIndex}
+              role='tab'
+            >
                 <div
                   className={`rounded-full transition-all duration-300 ${
                     index === currentIndex
