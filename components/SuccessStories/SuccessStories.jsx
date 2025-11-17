@@ -67,7 +67,9 @@ const StoryCard = ({ story }) => (
         <span className='w-3 h-3 bg-terminal-yellow rounded-full' />
         <span className='w-3 h-3 bg-terminal-green rounded-full' />
       </div>
-      <span className='text-terminal-dimmed text-sm sm:text-base font-ocr'>~/story</span>
+      <span className='text-terminal-dimmed text-sm sm:text-base font-ocr'>
+        ~/story
+      </span>
     </header>
 
     {/* body */}
@@ -90,7 +92,10 @@ const StoryCard = ({ story }) => (
         </h4>
         <ul className='space-y-1'>
           {story.metrics.map((m) => (
-            <li key={m} className='text-terminal-yellow font-ibm text-sm sm:text-base flex'>
+            <li
+              key={m}
+              className='text-terminal-yellow font-ibm text-sm sm:text-base flex'
+            >
               <span className='text-terminal-green mr-2'>▶</span>
               {m}
             </li>
@@ -151,20 +156,23 @@ function SuccessStories() {
   }, [isTransitioning]);
 
   // Enhanced touch event handlers with real-time feedback
-  const handleTouchStart = useCallback((e) => {
-    const touch = e.targetTouches[0];
-    touchState.current = {
-      startX: touch.clientX,
-      startY: touch.clientY,
-      currentX: touch.clientX,
-      currentY: touch.clientY,
-      isDragging: false,
-      startTime: Date.now(),
-      velocity: 0,
-      offsetX: 0,
-    };
-    handleUserInteraction();
-  }, [handleUserInteraction]);
+  const handleTouchStart = useCallback(
+    (e) => {
+      const touch = e.targetTouches[0];
+      touchState.current = {
+        startX: touch.clientX,
+        startY: touch.clientY,
+        currentX: touch.clientX,
+        currentY: touch.clientY,
+        isDragging: false,
+        startTime: Date.now(),
+        velocity: 0,
+        offsetX: 0,
+      };
+      handleUserInteraction();
+    },
+    [handleUserInteraction]
+  );
 
   const handleTouchMove = useCallback(
     (e) => {
@@ -262,19 +270,22 @@ function SuccessStories() {
   }, [nextStory, prevStory, currentIndex, handleUserInteraction]);
 
   // Enhanced mouse drag handlers for desktop
-  const handleMouseDown = useCallback((e) => {
-    touchState.current = {
-      startX: e.clientX,
-      startY: e.clientY,
-      currentX: e.clientX,
-      currentY: e.clientY,
-      isDragging: false,
-      startTime: Date.now(),
-      velocity: 0,
-      offsetX: 0,
-    };
-    handleUserInteraction();
-  }, [handleUserInteraction]);
+  const handleMouseDown = useCallback(
+    (e) => {
+      touchState.current = {
+        startX: e.clientX,
+        startY: e.clientY,
+        currentX: e.clientX,
+        currentY: e.clientY,
+        isDragging: false,
+        startTime: Date.now(),
+        velocity: 0,
+        offsetX: 0,
+      };
+      handleUserInteraction();
+    },
+    [handleUserInteraction]
+  );
 
   const handleMouseMove = useCallback(
     (e) => {
@@ -494,23 +505,23 @@ function SuccessStories() {
             aria-label='Success stories navigation'
           >
             {STORIES.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setCurrentIndex(index);
-                handleUserInteraction();
-              }}
-              className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
-                index === currentIndex
-                  ? 'bg-terminal-green'
-                  : 'bg-terminal-dimmed hover:bg-terminal-green/50'
-              }`}
-              aria-label={`Go to story ${index + 1} of ${STORIES.length}: ${
-                STORIES[index].title
-              }`}
-              aria-selected={index === currentIndex}
-              role='tab'
-            >
+              <button
+                key={index}
+                onClick={() => {
+                  setCurrentIndex(index);
+                  handleUserInteraction();
+                }}
+                className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
+                  index === currentIndex
+                    ? 'bg-terminal-green'
+                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
+                }`}
+                aria-label={`Go to story ${index + 1} of ${STORIES.length}: ${
+                  STORIES[index].title
+                }`}
+                aria-selected={index === currentIndex}
+                role='tab'
+              >
                 <div
                   className={`rounded-full transition-all duration-300 ${
                     index === currentIndex

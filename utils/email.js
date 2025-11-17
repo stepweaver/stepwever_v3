@@ -90,7 +90,7 @@ export const sendConfirmationEmail = async (formData) => {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #333;">Thank you for reaching out!</h2>
         <p>Hi ${name},</p>
-        <p>We've received your message and will get back to you as soon as possible.</p>
+        <p>I've received your message and will get back to you as soon as possible.</p>
         <p>Here's a copy of your message:</p>
         <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
           <p style="white-space: pre-wrap;">${message}</p>

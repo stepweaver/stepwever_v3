@@ -70,7 +70,7 @@ export async function POST(request) {
     }
 
     return NextResponse.json({
-      message: 'Message sent successfully! We\'ll get back to you soon.',
+      message: 'Message sent successfully! I\'ll get back to you soon.',
     });
 
   } catch (error) {

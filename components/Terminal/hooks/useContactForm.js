@@ -116,7 +116,7 @@ export const useContactForm = (setLines, setInput, setCursorPosition) => {
             setLines(prev => [
               ...prev.slice(0, -1), // Remove "Sending email..." message
               `<span class="text-terminal-green">✓ Email sent successfully!</span>`,
-              `<span class="text-terminal-text">We'll get back to you soon.</span>`,
+              `<span class="text-terminal-text">I'll get back to you soon.</span>`,
             ]);
           } else {
             setLines(prev => [

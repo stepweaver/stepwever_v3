@@ -55,7 +55,8 @@ const PROJECTS = [
   },
   {
     title: 'Neon Profile Card',
-    description: 'Glassmorphism-inspired ID card with neon CRT glow and animated Matrix Sync terminal sequence.',
+    description:
+      'Glassmorphism-inspired ID card with neon CRT glow and animated Matrix Sync terminal sequence.',
     imageUrl: null,
     keywords: ['UI System', 'Tailwind CSS', 'Neon', 'React'],
     actions: [

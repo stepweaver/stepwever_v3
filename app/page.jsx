@@ -68,7 +68,7 @@ export default function HomePage() {
         {/* About Section */}
         <About />
 
-        {/* What We Do Section */}
+        {/* What I Do Section */}
         <WhatWeDo />
 
         {/* Experience & Tech Arsenal Section */}

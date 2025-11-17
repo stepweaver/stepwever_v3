@@ -76,7 +76,7 @@ export default function generateStructuredData() {
     "@type": "WebSite",
     "name": "λstepweaver",
     "url": baseUrl,
-    "description": "Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences.",
+    "description": "Practical transformations, powered by code. I build lean data pipelines, automations, and high-impact web experiences.",
     "publisher": {
       "@type": "Organization",
       "name": "λstepweaver",
@@ -129,7 +129,7 @@ export default function generateStructuredData() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "λstepweaver",
-    "description": "Practical transformations, powered by code. We build lean data pipelines, automations, and high-impact web experiences.",
+    "description": "Practical transformations, powered by code. I build lean data pipelines, automations, and high-impact web experiences.",
     "url": baseUrl,
     "telephone": "+1-555-0123", // Replace with actual phone if available
     "email": "info@stepweaver.dev",
@@ -186,7 +186,7 @@ export default function generateStructuredData() {
         "name": "What services does λstepweaver offer?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We offer data pipeline development, web application development, business process automation, API integration, and business intelligence services."
+          "text": "I offer data pipeline development, web application development, business process automation, API integration, and business intelligence services."
         }
       },
       {
@@ -194,7 +194,7 @@ export default function generateStructuredData() {
         "name": "How can I contact λstepweaver?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "You can contact us through our contact form at stepweaver.dev/contact or email us directly at info@stepweaver.dev"
+          "text": "You can contact me through the contact form at stepweaver.dev/contact or email me directly at info@stepweaver.dev"
         }
       },
       {
@@ -202,7 +202,7 @@ export default function generateStructuredData() {
         "name": "What technologies does λstepweaver use?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We use modern technologies including React, Next.js, Node.js, Python, and various cloud platforms to build scalable solutions."
+          "text": "I use modern technologies including React, Next.js, Node.js, Python, and various cloud platforms to build scalable solutions."
         }
       }
     ]

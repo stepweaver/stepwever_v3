@@ -39,11 +39,11 @@ class ErrorBoundary extends Component {
       return (
         <div className='min-h-screen flex items-center justify-center p-8'>
           <div className='bg-terminal-light cyber-border cyber-border-red p-8 max-w-md text-center'>
-          <div className='text-terminal-red text-4xl mb-4'>!</div>
+            <div className='text-terminal-red text-4xl mb-4'>!</div>
             <h2 className='text-terminal-red font-ibm text-xl mb-4'>
               Something went wrong
             </h2>
-            <p className='text-terminal-text font-ocr text-base mb-6'>
+            <p className='text-terminal-text font-ocr text-sm mb-6'>
               We encountered an unexpected error. Please refresh the page or try
               again later.
             </p>

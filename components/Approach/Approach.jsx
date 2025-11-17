@@ -3,21 +3,21 @@
 import { memo } from 'react';
 
 const STEPS = [
-  { title: 'We figure out what you need.', desc: 'Clear goals, no confusion.' },
+  { title: 'I figure out what you need.', desc: 'Clear goals, no confusion.' },
   {
-    title: 'We make a simple plan.',
+    title: 'I make a simple plan.',
     desc: 'Easy steps with regular check-ins.',
   },
   {
-    title: 'We build and show you progress.',
+    title: 'I build and show you progress.',
     desc: "You see exactly what I'm working on.",
   },
   {
-    title: 'We adjust based on your feedback.',
+    title: 'I adjust based on your feedback.',
     desc: 'Your input shapes the final result.',
   },
   {
-    title: 'We finish and make sure it works.',
+    title: 'I finish and make sure it works.',
     desc: 'Working solution, guaranteed.',
   },
 ];

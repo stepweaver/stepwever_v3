@@ -117,10 +117,10 @@ export default function ProjectPage({ params }) {
                   <div className='space-y-6 cyber-border-lg cyber-border-border bg-terminal-light/20 p-6 card-glow'>
                     <p className='font-ocr text-terminal-text text-base leading-relaxed'>
                       This component brings the NETRUNNER challenge card into
-                      our CRT palette. Built as a React component with client-side
-                      state management for the automated Matrix Sync terminal sequence.
-                      Styling uses Tailwind CSS v4 utilities for glow, glass effects,
-                      and responsive stacking.
+                      our CRT palette. Built as a React component with
+                      client-side state management for the automated Matrix Sync
+                      terminal sequence. Styling uses Tailwind CSS utilities for
+                      glow, glass effects, and responsive stacking.
                     </p>
                     {project.demoHighlights && (
                       <ul className='space-y-3'>
@@ -652,8 +652,8 @@ export default function ProjectPage({ params }) {
             {project.keyboardShortcuts &&
               project.keyboardShortcuts.length > 0 && (
                 <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Keyboard Shortcuts
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    Keyboard Shortcuts
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
@@ -762,8 +762,8 @@ export default function ProjectPage({ params }) {
               project.benefits &&
               project.benefits.length > 0 && (
                 <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Benefits
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    Benefits
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
@@ -784,8 +784,8 @@ export default function ProjectPage({ params }) {
               project.process &&
               project.process.length > 0 && (
                 <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Process
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    Process
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <div className='space-y-4'>
@@ -815,8 +815,8 @@ export default function ProjectPage({ params }) {
               project.commonUseCases &&
               project.commonUseCases.length > 0 && (
                 <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Common Use Cases
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    Common Use Cases
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
@@ -837,8 +837,8 @@ export default function ProjectPage({ params }) {
               project.useCases &&
               project.useCases.length > 0 && (
                 <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Use Cases
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    Use Cases
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
@@ -859,8 +859,8 @@ export default function ProjectPage({ params }) {
               project.services &&
               project.services.length > 0 && (
                 <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Services Included
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                    Services Included
                   </h2>
                   <div className='h-0.5 bg-terminal-green mb-8'></div>
                   <ul className='space-y-3'>
