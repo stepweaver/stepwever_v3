@@ -97,6 +97,37 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // Cache static assets (JS, CSS, images, fonts) for 1 year
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Cache public assets (images, fonts, etc.) for 1 year
+        source: '/(.*\\.(?:js|css|woff|woff2|ttf|otf|eot|png|jpg|jpeg|gif|svg|ico|webp|avif|mp4|webm))',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Cache insights/script.js and similar analytics scripts for 1 year
+        source: '/insights/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // HTML pages - short cache with revalidation
         source: '/(.*)',
         headers: [
           {
@@ -113,9 +144,13 @@ const nextConfig = {
               "base-uri 'self'",
               "form-action 'self' https://calendly.com"
             ].join('; ')
-          }
-        ]
-      }
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
     ];
   }
 };
