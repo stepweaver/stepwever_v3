@@ -212,11 +212,19 @@ export default function RootLayout({ children }) {
           crossOrigin='anonymous'
         />
 
-        {/* Preload LCP image for better performance */}
+        {/* Preload LCP image for better performance - both WebP and PNG */}
+        <link
+          rel='preload'
+          href='/images/screencapture-lambda-ortho.webp'
+          as='image'
+          type='image/webp'
+          fetchPriority='high'
+        />
         <link
           rel='preload'
           href='/images/screencapture-lambda-ortho.png'
           as='image'
+          type='image/png'
           fetchPriority='high'
         />
       </head>

@@ -10,6 +10,9 @@ export default function OptimizedImage({
   fetchPriority = 'auto',
   ...props
 }) {
+  // Ensure loading attribute is explicitly set (not undefined)
+  const loadingAttr = loading || 'lazy';
+  
   // If src doesn't end with .png, assume it's already optimized or not a PNG
   if (!src || !src.endsWith('.png')) {
     return (
@@ -17,7 +20,7 @@ export default function OptimizedImage({
         src={src}
         alt={alt}
         className={className}
-        loading={loading}
+        loading={loadingAttr}
         fetchPriority={fetchPriority}
         {...props}
       />
@@ -34,7 +37,7 @@ export default function OptimizedImage({
         src={src}
         alt={alt}
         className={className}
-        loading={loading}
+        loading={loadingAttr}
         fetchPriority={fetchPriority}
         {...props}
       />
