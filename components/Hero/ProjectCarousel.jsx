@@ -78,6 +78,18 @@ const PROJECTS = [
     slug: 'it-consulting',
   },
   {
+    title: 'Google Analytics',
+    description: 'Analytics setup and optimization for tracking.',
+    imageUrl: null,
+    keywords: ['Analytics', 'Data Tracking', 'Business Intelligence'],
+    actions: [
+      'Comprehensive tracking setup and configuration',
+      'Actionable insights from business data',
+    ],
+    tags: ['Analytics', 'Data Tracking', 'Business Intelligence'],
+    slug: 'google-analytics',
+  },
+  {
     title: 'n8n Automations',
     description: 'Custom automation workflows to connect apps.',
     imageUrl: null,
@@ -100,18 +112,6 @@ const PROJECTS = [
     ],
     tags: ['AI Integration', 'Machine Learning', 'Productivity'],
     slug: 'ai-integrations',
-  },
-  {
-    title: 'Google Analytics',
-    description: 'Analytics setup and optimization for tracking.',
-    imageUrl: null,
-    keywords: ['Analytics', 'Data Tracking', 'Business Intelligence'],
-    actions: [
-      'Comprehensive tracking setup and configuration',
-      'Actionable insights from business data',
-    ],
-    tags: ['Analytics', 'Data Tracking', 'Business Intelligence'],
-    slug: 'google-analytics',
   },
 ];
 
