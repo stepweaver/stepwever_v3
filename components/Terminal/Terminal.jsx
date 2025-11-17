@@ -55,6 +55,8 @@ const Terminal = forwardRef((props, ref) => {
   const containerRef = useRef(null);
   const inputRef = useRef(null);
   const preRefs = useRef({});
+  const previousLinesLength = useRef(WELCOME_MESSAGES.length);
+  const bottomRef = useRef(null);
 
   // Hooks
   const router = useRouter();
@@ -86,6 +88,7 @@ const Terminal = forwardRef((props, ref) => {
     }
     return currentPath;
   }, [currentPath]);
+
 
   // Command processing
   const processCommand = useCallback(
@@ -124,6 +127,17 @@ const Terminal = forwardRef((props, ref) => {
         setLines([...WELCOME_MESSAGES]);
         setInput('');
         setCursorPosition(0);
+        // Scroll to top after clear
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (containerRef.current) {
+              containerRef.current.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }
+          });
+        });
         return;
       }
 
@@ -174,6 +188,7 @@ const Terminal = forwardRef((props, ref) => {
       router,
       activateContactMode,
       setupSelectionMode,
+      getPromptPath,
     ]
   );
 
@@ -276,13 +291,19 @@ const Terminal = forwardRef((props, ref) => {
     return () => clearInterval(blinkInterval);
   }, []);
 
+  // Scroll to bottom when new lines are added (after command execution)
   useEffect(() => {
-    // Auto-scroll to bottom
-    containerRef.current?.scrollTo({
-      top: containerRef.current.scrollHeight,
-      behavior: 'smooth',
-    });
-  }, [memoizedLines]);
+    // Only scroll if lines increased (new content added) - not on initial load
+    const linesIncreased = lines.length > previousLinesLength.current;
+    
+    if (linesIncreased && bottomRef.current) {
+      // Use scrollIntoView - simplest and most reliable
+      bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+    
+    // Always update the previous length
+    previousLinesLength.current = lines.length;
+  }, [lines]);
 
   useEffect(() => {
     // Overflow checking and wrapping detection
@@ -486,7 +507,6 @@ const Terminal = forwardRef((props, ref) => {
                   onKeyDown={handleKeyDown}
                   onClick={handleClick}
                   className='opacity-0 absolute top-0 left-0 w-full h-full cursor-text'
-                  autoFocus
                   aria-label='Terminal command input'
                   aria-describedby='terminal-help'
                   placeholder='Type a command...'
@@ -497,6 +517,7 @@ const Terminal = forwardRef((props, ref) => {
               </form>
             </div>
           </div>
+          <div ref={bottomRef} />
         </div>
       </div>
     </div>
