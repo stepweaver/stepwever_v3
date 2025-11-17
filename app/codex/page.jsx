@@ -717,7 +717,7 @@ function PostItem({
           Published: {formatDate(post.date)}
           {post.updated && post.updated !== post.date && (
             <span className='text-terminal-green ml-3'>
-              • Updated: {formatDate(post.updated)}
+              | Updated: {formatDate(post.updated)}
             </span>
           )}
         </div>

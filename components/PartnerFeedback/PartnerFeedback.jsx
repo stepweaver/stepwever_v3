@@ -40,7 +40,7 @@ function PartnerFeedback() {
               <div className='text-terminal-cyan font-ibm text-base md:text-lg lg:text-xl mb-1 md:mb-2'>
                 {TESTIMONIAL.name}
               </div>
-              <div className='text-terminal-muted font-ocr text-xs md:text-sm lg:text-base uppercase tracking-wider'>
+              <div className='text-terminal-muted font-ocr text-sm md:text-base lg:text-lg uppercase tracking-wider'>
                 {TESTIMONIAL.title}
               </div>
             </footer>

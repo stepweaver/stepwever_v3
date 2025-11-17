@@ -117,9 +117,10 @@ export default function ProjectPage({ params }) {
                   <div className='space-y-6 cyber-border-lg cyber-border-border bg-terminal-light/20 p-6 card-glow'>
                     <p className='font-ocr text-terminal-text text-base leading-relaxed'>
                       This component brings the NETRUNNER challenge card into
-                      our CRT palette. Everything is handled with Tailwind
-                      utilities, so the glow, glass, and responsive stacking
-                      work without bespoke CSS.
+                      our CRT palette. Built as a React component with client-side
+                      state management for the automated Matrix Sync terminal sequence.
+                      Styling uses Tailwind CSS v4 utilities for glow, glass effects,
+                      and responsive stacking.
                     </p>
                     {project.demoHighlights && (
                       <ul className='space-y-3'>

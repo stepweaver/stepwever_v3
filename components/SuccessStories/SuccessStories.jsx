@@ -67,30 +67,30 @@ const StoryCard = ({ story }) => (
         <span className='w-3 h-3 bg-terminal-yellow rounded-full' />
         <span className='w-3 h-3 bg-terminal-green rounded-full' />
       </div>
-      <span className='text-terminal-dimmed text-xs font-ocr'>~/story</span>
+      <span className='text-terminal-dimmed text-sm sm:text-base font-ocr'>~/story</span>
     </header>
 
     {/* body */}
     <div className='p-4 flex flex-col grow'>
-      <span className='mb-2 inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 cyber-border-sm cyber-border-green'>
+      <span className='mb-2 inline-block bg-terminal-green/20 text-terminal-green text-sm sm:text-base font-ocr px-2 py-1 cyber-border-sm cyber-border-green'>
         {story.category}
       </span>
 
-      <h3 className='text-terminal-green font-ibm text-base mb-3 leading-tight'>
+      <h3 className='text-terminal-green font-ibm text-base sm:text-lg mb-3 leading-tight'>
         {story.title}
       </h3>
 
-      <p className='text-terminal-text font-ibm text-xs leading-relaxed mb-4 grow'>
+      <p className='text-terminal-text font-ibm text-sm sm:text-base leading-relaxed mb-4 grow'>
         {story.description}
       </p>
 
       <div>
-        <h4 className='text-terminal-cyan font-ibm text-xs mb-2'>
+        <h4 className='text-terminal-cyan font-ibm text-sm sm:text-base mb-2'>
           KEY METRICS:
         </h4>
         <ul className='space-y-1'>
           {story.metrics.map((m) => (
-            <li key={m} className='text-terminal-yellow font-ibm text-xs flex'>
+            <li key={m} className='text-terminal-yellow font-ibm text-sm sm:text-base flex'>
               <span className='text-terminal-green mr-2'>▶</span>
               {m}
             </li>
@@ -459,7 +459,7 @@ function SuccessStories() {
         {/* mobile carousel */}
         <div className='md:hidden'>
           <div className='text-center mb-4'>
-            <p className='text-terminal-dimmed text-sm font-ocr'>
+            <p className='text-terminal-dimmed text-base sm:text-lg font-ocr'>
               Swipe to navigate
             </p>
           </div>

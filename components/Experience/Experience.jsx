@@ -49,7 +49,7 @@ const TECH_CATEGORIES = [
         isComponent: true,
       },
       {
-        name: 'Tailwind CSS v4',
+        name: 'Tailwind CSS',
         icon: SiTailwindcss,
         color: '#06B6D4',
         isComponent: true,
@@ -115,19 +115,19 @@ const TECH_CATEGORIES = [
       { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
       { name: 'Custom Bots', icon: Brain, color: '#00FF41', isComponent: true },
       {
-        name: 'Workflow Automation',
+        name: 'Workflow Auto',
         icon: Zap,
         color: '#00FF41',
         isComponent: true,
       },
       {
-        name: 'Data Processing',
+        name: 'Data Process',
         icon: BarChart3,
         color: '#00FF41',
         isComponent: true,
       },
       {
-        name: 'Email Automation',
+        name: 'Email Auto',
         icon: FileText,
         color: '#00FF41',
         isComponent: true,
@@ -152,7 +152,7 @@ const TECH_CATEGORIES = [
       },
       { name: 'Notion', icon: SiNotion, color: '#ffffff', isComponent: true },
       {
-        name: 'Google Sheets',
+        name: 'Sheets',
         icon: FileText,
         color: '#34A853',
         isComponent: true,
@@ -164,7 +164,7 @@ const TECH_CATEGORIES = [
     name: 'DevOps & Delivery',
     technologies: [
       {
-        name: 'GitHub Actions',
+        name: 'GitHub',
         icon: SiGithub,
         color: '#ffffff',
         isComponent: true,
@@ -244,7 +244,7 @@ function Experience() {
               <button
                 key={category.name}
                 onClick={() => handleTabClick(index)}
-                className={`px-2 md:px-3 py-1 md:py-2 font-ibm text-xs font-bold uppercase tracking-wider border-2 transition-all duration-300 cursor-pointer rounded-lg shadow-lg hover:shadow-xl ${
+                className={`px-2 md:px-3 py-1 md:py-2 font-ibm text-sm md:text-base font-bold uppercase tracking-wider border-2 transition-all duration-300 cursor-pointer rounded-lg shadow-lg hover:shadow-xl ${
                   currentCategory === index
                     ? 'border-terminal-green text-terminal-green bg-terminal-green/10 shadow-terminal-green/20 hover:shadow-terminal-green/30 transform scale-105'
                     : 'border-terminal-border text-terminal-muted hover:border-terminal-green hover:text-terminal-green hover:bg-terminal-green/5'
@@ -277,7 +277,7 @@ function Experience() {
                   return (
                     <div
                       key={tech.name}
-                      className='group flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg bg-terminal-dark/30 backdrop-blur-xl transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green/10 w-24 h-24 animate-[fadeIn_0.6s_ease-out_both] hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(0,255,65,0.15)]'
+                      className='group flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg bg-terminal-dark/30 backdrop-blur-xl transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green/10 min-w-24 w-auto h-auto min-h-24 animate-[fadeIn_0.6s_ease-out_both] hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(0,255,65,0.15)] card-glow-tight'
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
                       <div className='mb-1 flex items-center justify-center w-12 h-12'>
@@ -291,7 +291,7 @@ function Experience() {
                           <span className='text-2xl'>{tech.icon}</span>
                         )}
                       </div>
-                      <span className='font-ocr text-terminal-text group-hover:text-black text-xs text-center leading-tight transition-colors duration-300'>
+                      <span className='font-ocr text-terminal-text group-hover:text-terminal-green group-hover:[text-shadow:0_0_5px_rgba(0,255,65,0.8),0_0_10px_rgba(0,255,65,0.4)] text-sm sm:text-base text-center leading-tight transition-all duration-300'>
                         {tech.name}
                       </span>
                     </div>

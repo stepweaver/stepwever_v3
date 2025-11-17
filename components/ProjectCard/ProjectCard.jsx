@@ -27,7 +27,7 @@ const ProjectCard = memo(function ProjectCard({
           <div className='w-3 h-3 bg-terminal-yellow rounded-full'></div>
           <div className='w-3 h-3 bg-terminal-green rounded-full'></div>
         </div>
-        <div className='text-terminal-dimmed text-xs sm:text-sm font-ocr truncate max-w-[60%]'>
+        <div className='text-terminal-dimmed text-sm sm:text-base font-ocr truncate max-w-[60%]'>
           {title}
         </div>
       </div>
@@ -57,14 +57,14 @@ const ProjectCard = memo(function ProjectCard({
         )}
 
         {/* Project Title */}
-        <h3 className='text-terminal-green font-ibm text-sm sm:text-base mb-2 sm:mb-3 leading-tight'>
+        <h3 className='text-terminal-green font-ibm text-base sm:text-lg mb-2 sm:mb-3 leading-tight'>
           {title}
         </h3>
 
         {/* Keywords as Category */}
         {keywords.length > 0 && (
           <div className='mb-2 sm:mb-3'>
-            <span className='inline-block bg-terminal-green/20 text-terminal-green text-xs font-ocr px-2 py-1 cyber-border-sm cyber-border-green'>
+            <span className='inline-block bg-terminal-green/20 text-terminal-green text-sm sm:text-base font-ocr px-2 py-1 cyber-border-sm cyber-border-green'>
               {keywords[0]}
             </span>
           </div>
@@ -73,14 +73,14 @@ const ProjectCard = memo(function ProjectCard({
         {/* Sample Actions - simplified */}
         {actions.length > 0 && (
           <div className='mb-2 sm:mb-3'>
-            <div className='text-terminal-cyan font-ibm text-xs mb-1'>
+            <div className='text-terminal-cyan font-ibm text-sm sm:text-base mb-1'>
               KEY FEATURES:
             </div>
             <ul className='space-y-1'>
               {actions.slice(0, 2).map((action, index) => (
                 <li
                   key={index}
-                  className='text-terminal-yellow font-ibm text-xs flex'
+                  className='text-terminal-yellow font-ibm text-sm sm:text-base flex'
                 >
                   <span className='text-terminal-green mr-2'>▶</span>
                   {action}

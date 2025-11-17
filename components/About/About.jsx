@@ -10,7 +10,7 @@ function About() {
       {/* 1. Use explicit padding for mobile, minimal for desktop */}
       <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
         {/* 2. CSS Grid → easier to manage two columns + re‑order on mobile */}
-        <div className='grid gap-8 lg:gap-12 lg:grid-cols-[minmax(auto,320px)_1fr]'>
+        <div className='grid gap-8 lg:gap-12 lg:grid-cols-[minmax(auto,420px)_1fr]'>
           {/* ────────────── Bio Card ────────────── */}
           <aside className='lg:sticky lg:top-24 order-2 lg:order-1 flex justify-center lg:justify-start'>
             <NeonProfileCard

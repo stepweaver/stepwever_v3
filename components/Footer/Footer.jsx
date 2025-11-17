@@ -112,7 +112,7 @@ export default function Footer() {
             </div>
 
             {/* Bottom Right - Legal */}
-            <div className='text-terminal-muted font-ocr text-xs md:text-sm leading-tight flex items-center min-h-[3rem] md:min-h-0'>
+            <div className='text-terminal-muted font-ocr text-sm md:text-base leading-tight flex items-center min-h-[3rem] md:min-h-0'>
               <GlitchLambda className='text-terminal-green' />
               <span>
                 stepweaver LLC · Veteran-owned · All rights reserved ·{' '}

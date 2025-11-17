@@ -16,32 +16,20 @@ const TERMINAL_COPY = {
   hero: {
     title: 'Codex terminal: hands-on mission control.',
     subtitle:
-      "This isn't a fake console overlay. It's a tiny ops-style shell wired into my site content so you can explore work, read, and reach out from the same green glow I use for real tooling.",
+      "A tiny ops-style shell wired into my site content. Explore work, read, and reach out from the same green glow I use for real tooling.",
     ribbon:
-      'Runs fully in your browser. No login, no install—just type `help` to start exploring.',
-    meta: [
-      {
-        label: 'Use it for',
-        value: 'skimming work, poking at ideas, sending briefs',
-      },
-      { label: 'Feels like', value: 'a dev console, not a landing page' },
-      { label: 'Built with', value: 'Next.js, React, custom CLI engine' },
-    ],
+      'Runs fully in your browser. Type `help` to start.',
   },
   overview: {
-    title: 'Why a terminal instead of another scrolling page?',
-    paragraphs: [
-      "Because I'd rather show you how I think than hide behind marketing copy. The Codex terminal behaves like a small ops console: you can list posts, open retros, and follow prompts that turn fuzzy ideas into concrete project shapes.",
-      "Under the hood, it mirrors the way I design real tools: opinionated commands, readable output, and guardrails that keep people oriented. You can't break anything here—but you will get a feel for how I build systems that stay legible even as they grow.",
-    ],
+    title: 'Why a terminal?',
+    text: "I'd rather show you how I think than hide behind marketing copy. The terminal behaves like a small ops console: list posts, open retros, follow prompts. It mirrors how I design real tools—opinionated commands, readable output, guardrails that keep you oriented.",
   },
   usage: {
-    title: 'How to drive it',
+    title: 'Quick start',
     steps: [
-      'Start with `help` to see all available commands and get oriented. Use `codex` to enter codex mode, where you can then navigate posted content—blog, projects, contact, and utilities.',
-      "Jump into `blog`, `projects`, or `community` and use `ls` to see what's there. The prompt path updates so you always know where you are.",
-      'Use `cat [number]` to open an item and `grep [tag]` to filter by topic. `pwd` echoes your location, `clear` wipes the scrollback.',
-      '`contact` launches a guided brief that asks about your goals, constraints, and timing—so when I reply, we\'re already past the "so what are you looking for?" stage.',
+      'Type `help` to see commands. Use `codex` to enter content mode.',
+      'Navigate `blog`, `projects`, or `community`. Use `ls` to list, `cat [number]` to open.',
+      '`contact` launches a guided brief. `back` climbs up a level.',
     ],
   },
 };
@@ -49,64 +37,27 @@ const TERMINAL_COPY = {
 const FEATURE_CARDS = [
   {
     title: 'Guided contact',
-    body: 'The `contact` flow asks the right questions up front—goals, constraints, priorities—so my first reply can include options and next steps, not more forms.',
+    body: 'The `contact` flow asks goals, constraints, priorities upfront—so my first reply includes options, not more forms.',
     icon: MessageSquare,
   },
   {
     title: 'Content drill-down',
-    body: 'Point the shell at `blog`, `projects`, or `community` to pull up posts, retros, and spotlights. Everything stays in one viewport so you can read, copy, and move on.',
+    body: 'Point at `blog`, `projects`, or `community` to pull up posts and retros. Everything stays in one viewport.',
     icon: Map,
   },
   {
     title: 'Command-grade UX',
-    body: 'History, autocomplete, dice rollers, weather, and CRT theming keep it fun—but the layout, prompts, and errors are all designed like real tooling.',
+    body: 'History, autocomplete, and CRT theming keep it fun—but the layout and prompts are designed like real tooling.',
     icon: Sparkles,
   },
 ];
 
 const COMMAND_GUIDE = [
-  {
-    command: 'codex',
-    summary: 'Enter codex mode for content navigation.',
-    detail:
-      'Puts the terminal into codex mode, enabling navigation of posted content. Once in this mode, you can explore blog, projects, utilities, and contact areas.',
-  },
-  {
-    command: 'cd codex',
-    summary: 'Navigate to the /codex page.',
-    detail:
-      'Changes directory to the /codex page. This is literal navigation, not entering codex mode.',
-  },
-  {
-    command: 'blog | projects | community',
-    summary: 'Browse content by area with familiar CLI verbs.',
-    detail:
-      'Each "directory" mirrors the public site but stays inside the terminal. Use `ls` to list entries, `cat [number]` to open one, and `grep` to filter by tag.',
-  },
-  {
-    command: 'contact',
-    summary: 'Guided intake for potential work.',
-    detail:
-      "Walks through what you're trying to achieve, what's in the way, and how fast you need to move. The output lands as a structured message in my inbox.",
-  },
-  {
-    command: 'back / cd ..',
-    summary: 'One-step escape hatch.',
-    detail:
-      'Climb a level up the path whenever you want to zoom out of a nested folder without losing state.',
-  },
-  {
-    command: 'help',
-    summary: 'Start here—command reference.',
-    detail:
-      'Prints all available commands and how to use them. This is your starting point to understand what the terminal can do.',
-  },
-  {
-    command: 'clear, theme',
-    summary: 'Quality-of-life commands.',
-    detail:
-      'Tidy the viewport or toggle color schemes if you prefer something softer than full neon.',
-  },
+  { command: 'codex', summary: 'Enter codex mode for content navigation.' },
+  { command: 'blog | projects | community', summary: 'Browse content. Use `ls` to list, `cat [number]` to open.' },
+  { command: 'contact', summary: 'Guided intake for potential work.' },
+  { command: 'back / cd ..', summary: 'Climb up a level.' },
+  { command: 'help', summary: 'Command reference.' },
 ];
 
 const JumpToTerminalButton = () => {
@@ -157,7 +108,7 @@ export default function TerminalPage() {
       <div className='relative z-10 w-full'>
         <section className='w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24'>
           <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
-            <header className='space-y-8'>
+            <header className='space-y-6'>
               <div className='space-y-4'>
                 <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl text-terminal-green leading-tight'>
                   {TERMINAL_COPY.hero.title}
@@ -173,72 +124,51 @@ export default function TerminalPage() {
                   aria-hidden='true'
                 ></span>
               </div>
-              <div className='grid gap-4 sm:grid-cols-3'>
-                {TERMINAL_COPY.hero.meta.map((item) => (
-                  <div
-                    key={item.label}
-                    className='cyber-border-sm cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 flex flex-col gap-1 font-ocr text-sm text-terminal-text/80'
-                  >
-                    <span className='text-terminal-green text-xs uppercase tracking-wide'>
-                      {item.label}
-                    </span>
-                    <span className='text-terminal-white text-base'>
-                      {item.value}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </header>
 
-            <section className='grid gap-10 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1.2fr)]'>
-              <div className='space-y-10'>
-                <article className='space-y-4'>
+            <section className='grid gap-10 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1.8fr)]'>
+              <div className='space-y-8'>
+                <article className='space-y-3'>
                   <h2 className='font-ibm text-2xl sm:text-3xl text-terminal-green'>
                     {TERMINAL_COPY.overview.title}
                   </h2>
-                  {TERMINAL_COPY.overview.paragraphs.map((paragraph, idx) => (
-                    <p
-                      key={idx}
-                      className='font-ocr text-base text-terminal-text/85 leading-relaxed'
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
+                  <p className='font-ocr text-sm text-terminal-text/85 leading-relaxed'>
+                    {TERMINAL_COPY.overview.text}
+                  </p>
                   <JumpToTerminalButton />
                 </article>
 
-                <div className='grid gap-6'>
+                <div className='grid gap-4'>
                   {FEATURE_CARDS.map((card) => {
                     const Icon = card.icon;
                     return (
                       <div
                         key={card.title}
-                        className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-5 space-y-3'
+                        className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 space-y-2'
                       >
-                        <div className='flex items-center gap-3'>
-                          <Icon className='w-5 h-5 text-terminal-green' />
-                          <p className='font-ibm text-lg text-terminal-green'>
+                        <div className='flex items-center gap-2'>
+                          <Icon className='w-4 h-4 text-terminal-green' />
+                          <p className='font-ibm text-base text-terminal-green'>
                             {card.title}
                           </p>
                         </div>
-                        <p className='font-ocr text-sm text-terminal-text/80 leading-relaxed'>
+                        <p className='font-ocr text-xs text-terminal-text/80 leading-relaxed'>
                           {card.body}
                         </p>
                       </div>
                     );
                   })}
-                  <JumpToTerminalButton />
                 </div>
 
-                <article className='space-y-4'>
-                  <h3 className='font-ibm text-2xl text-terminal-green'>
+                <article className='space-y-3'>
+                  <h3 className='font-ibm text-xl text-terminal-green'>
                     {TERMINAL_COPY.usage.title}
                   </h3>
-                  <ul className='space-y-3 font-ocr text-sm text-terminal-text/85'>
+                  <ul className='space-y-2 font-ocr text-xs text-terminal-text/85'>
                     {TERMINAL_COPY.usage.steps.map((step, idx) => (
                       <li
                         key={idx}
-                        className='cyber-border-sm cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 leading-relaxed'
+                        className='cyber-border-sm cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-3 leading-relaxed'
                       >
                         {step}
                       </li>
@@ -247,26 +177,25 @@ export default function TerminalPage() {
                   <JumpToTerminalButton />
                 </article>
 
-                <article className='space-y-4'>
-                  <div className='flex items-center gap-3'>
-                    <Command className='w-5 h-5 text-terminal-green' />
-                    <h3 className='font-ibm text-2xl text-terminal-green'>
-                      Command map
+                <article className='space-y-3'>
+                  <div className='flex items-center gap-2'>
+                    <Command className='w-4 h-4 text-terminal-green' />
+                    <h3 className='font-ibm text-xl text-terminal-green'>
+                      Commands
                     </h3>
                   </div>
-                  <div className='grid gap-4'>
+                  <div className='grid gap-3'>
                     {COMMAND_GUIDE.map((item) => (
                       <div
                         key={item.command}
-                        className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 space-y-1 font-ocr text-sm text-terminal-text/85'
+                        className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-3 font-ocr text-xs text-terminal-text/85'
                       >
                         <p className='text-terminal-green'>
-                          <span className='font-ibm text-base'>
+                          <span className='font-ibm text-sm'>
                             {item.command}
                           </span>{' '}
                           — {item.summary}
                         </p>
-                        <p className='text-terminal-text/75'>{item.detail}</p>
                       </div>
                     ))}
                   </div>
@@ -279,11 +208,7 @@ export default function TerminalPage() {
                 className='cyber-border cyber-border-green bg-transparent p-4 md:p-6 animate-pulse-glow'
               >
                 <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
-                  The shell lives here. Type `help` to start and see all
-                  available commands. Use `codex` to enter codex mode for
-                  content navigation, then wander through `blog`, `projects`, or
-                  `community`. Use `back` to climb up a level whenever you want
-                  to come up for air.
+                  Type `help` to see commands. Use `codex` to navigate content.
                 </p>
                 <div className='w-full'>
                   <Terminal />

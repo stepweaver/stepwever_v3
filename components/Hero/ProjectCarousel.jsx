@@ -55,14 +55,14 @@ const PROJECTS = [
   },
   {
     title: 'Neon Profile Card',
-    description: 'Glassmorphism-inspired ID card with neon CRT glow.',
+    description: 'Glassmorphism-inspired ID card with neon CRT glow and animated Matrix Sync terminal sequence.',
     imageUrl: null,
-    keywords: ['UI System', 'Tailwind CSS', 'Neon'],
+    keywords: ['UI System', 'Tailwind CSS', 'Neon', 'React'],
     actions: [
-      'Reusable profile data model with IBM/OCR typography stack',
-      'Pure CSS glow + pulse effects powered by Tailwind utilities',
+      'Reusable React component with profile data model and IBM/OCR typography',
+      'Animated Matrix Sync terminal sequence with React state and animation hooks',
     ],
-    tags: ['UI Design', 'Tailwind CSS', 'Animation'],
+    tags: ['UI Design', 'Tailwind CSS', 'Animation', 'React'],
     slug: 'neon-profile-card',
   },
   {
@@ -549,7 +549,7 @@ function ProjectCarousel() {
       {/* Mobile Carousel */}
       <div className='md:hidden'>
         <div className='text-center mb-4'>
-          <p className='text-terminal-dimmed text-sm font-ocr'>
+          <p className='text-terminal-dimmed text-base sm:text-lg font-ocr'>
             Swipe to navigate
           </p>
         </div>
@@ -677,7 +677,7 @@ function ProjectCarousel() {
       {/* Desktop Grid/Carousel */}
       <div className='hidden md:block'>
         <div className='text-center mb-4'>
-          <p className='text-terminal-dimmed text-sm font-ocr'>
+          <p className='text-terminal-dimmed text-base sm:text-lg font-ocr'>
             Swipe to navigate
           </p>
         </div>

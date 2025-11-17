@@ -92,7 +92,7 @@ export default function ContactForm() {
                 role='alert'
                 aria-live='polite'
               >
-                <p className='text-terminal-red text-sm'>
+                <p className='text-terminal-red text-base'>
                   [ERROR] {status.error}
                 </p>
               </div>
@@ -104,7 +104,7 @@ export default function ContactForm() {
                 role='status'
                 aria-live='polite'
               >
-                <p className='text-terminal-green text-sm'>
+                <p className='text-terminal-green text-base'>
                   [SUCCESS] {status.success}
                 </p>
               </div>
@@ -118,7 +118,7 @@ export default function ContactForm() {
               <div>
                 <label
                   htmlFor='name'
-                  className='text-terminal-green text-sm block mb-1'
+                  className='text-terminal-green text-base block mb-1'
                 >
                   Who am I chatting with?
                 </label>
@@ -128,7 +128,7 @@ export default function ContactForm() {
                   name='name'
                   value={formData.name}
                   onChange={handleChange}
-                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-base focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='Your name'
                   required
                   aria-required='true'
@@ -140,7 +140,7 @@ export default function ContactForm() {
               <div>
                 <label
                   htmlFor='email'
-                  className='text-terminal-green text-sm block mb-1'
+                  className='text-terminal-green text-base block mb-1'
                 >
                   Your best email:
                 </label>
@@ -150,7 +150,7 @@ export default function ContactForm() {
                   name='email'
                   value={formData.email}
                   onChange={handleChange}
-                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-sm focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-base focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
                   placeholder='your.email@company.com'
                   required
                   aria-required='true'
@@ -162,7 +162,7 @@ export default function ContactForm() {
               <div>
                 <label
                   htmlFor='message'
-                  className='text-terminal-green text-sm block mb-1'
+                  className='text-terminal-green text-base block mb-1'
                 >
                   What are you building, fixing, or exploring?
                 </label>
@@ -179,7 +179,7 @@ export default function ContactForm() {
                 ></textarea>
                 <p
                   id='message-help'
-                  className='text-terminal-muted text-xs mt-1'
+                  className='text-terminal-muted text-sm mt-1'
                 >
                   Feel free to include goals, timeline, budget, or anything else
                   that helps.
@@ -197,7 +197,7 @@ export default function ContactForm() {
                 >
                   [SEND TRANSMISSION]
                 </GlitchButton>
-                <p className='text-terminal-muted text-xs'>
+                <p className='text-terminal-muted text-sm'>
                   No perfect brief required. Write what you know - I'll help
                   clarify the rest.
                 </p>

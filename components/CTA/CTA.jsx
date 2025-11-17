@@ -118,7 +118,7 @@ export default function CTA() {
           </div>
 
           {/* Tiny text */}
-          <p className='text-xs md:text-sm text-terminal-dimmed'>
+          <p className='text-sm md:text-base text-terminal-dimmed'>
             Prefer a real conversation? Email&nbsp;
             <a
               href='mailto:info@stepweaver.dev'

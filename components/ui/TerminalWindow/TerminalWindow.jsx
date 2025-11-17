@@ -35,7 +35,7 @@ export default function TerminalWindow({
 
       {showStatusBar && (
         <div className='bg-terminal-light border-t border-terminal-border px-4 py-2 relative z-[2]'>
-          <div className='flex items-center justify-between text-terminal-text text-xs'>
+          <div className='flex items-center justify-between text-terminal-text text-sm sm:text-base'>
             <div className='flex items-center gap-4'>
               <span className='text-terminal-green'>Status:</span>
               <span

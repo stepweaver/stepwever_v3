@@ -43,12 +43,12 @@ class ErrorBoundary extends Component {
             <h2 className='text-terminal-red font-ibm text-xl mb-4'>
               Something went wrong
             </h2>
-            <p className='text-terminal-text font-ocr text-sm mb-6'>
+            <p className='text-terminal-text font-ocr text-base mb-6'>
               We encountered an unexpected error. Please refresh the page or try
               again later.
             </p>
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <details className='text-left mb-4 p-2 bg-terminal-dark cyber-border-sm cyber-border-border text-xs'>
+              <details className='text-left mb-4 p-2 bg-terminal-dark cyber-border-sm cyber-border-border text-sm'>
                 <summary className='cursor-pointer text-terminal-red mb-2'>
                   Error Details (Dev)
                 </summary>

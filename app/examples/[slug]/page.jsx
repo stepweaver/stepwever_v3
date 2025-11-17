@@ -51,7 +51,7 @@ export default function ExamplePage({ params }) {
                     ${service.price}
                   </span>
                   <span className='font-ocr text-terminal-muted'>
-                    • {service.delivery}
+                    - {service.delivery}
                   </span>
                 </div>
               </div>
@@ -102,18 +102,36 @@ export default function ExamplePage({ params }) {
 
                 {/* Placeholder for Demo/Screenshot */}
                 <div>
-                  <div className='bg-terminal-light/20 border border-terminal-border rounded-xl p-8 h-64 md:h-80 flex items-center justify-center'>
-                    <div className='text-center'>
-                      <div className='w-16 h-16 bg-terminal-green/20 rounded-full flex items-center justify-center mx-auto mb-4'>
-                        <ExternalLink className='w-8 h-8 text-terminal-green' />
+                  {service.id === 'contact-site' ? (
+                    <Link
+                      href='/contact'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='bg-terminal-light/20 border border-terminal-border rounded-xl p-8 h-64 md:h-80 flex items-center justify-center hover:bg-terminal-light/30 hover:border-terminal-green transition-all duration-200 group'
+                    >
+                      <div className='text-center'>
+                        <div className='w-16 h-16 bg-terminal-green/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-terminal-green/30 transition-colors duration-200'>
+                          <ExternalLink className='w-8 h-8 text-terminal-green' />
+                        </div>
+                        <p className='font-ocr text-terminal-green text-sm group-hover:text-terminal-cyan transition-colors duration-200'>
+                          View Demo →
+                        </p>
                       </div>
-                      <p className='font-ocr text-terminal-muted text-sm'>
-                        {exampleProject.placeholder
-                          ? 'Demo coming soon'
-                          : 'Interactive demo'}
-                      </p>
+                    </Link>
+                  ) : (
+                    <div className='bg-terminal-light/20 border border-terminal-border rounded-xl p-8 h-64 md:h-80 flex items-center justify-center'>
+                      <div className='text-center'>
+                        <div className='w-16 h-16 bg-terminal-green/20 rounded-full flex items-center justify-center mx-auto mb-4'>
+                          <ExternalLink className='w-8 h-8 text-terminal-green' />
+                        </div>
+                        <p className='font-ocr text-terminal-muted text-sm'>
+                          {exampleProject.placeholder
+                            ? 'Demo coming soon'
+                            : 'Interactive demo'}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </section>

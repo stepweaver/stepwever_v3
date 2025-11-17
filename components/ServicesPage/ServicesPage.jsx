@@ -104,11 +104,11 @@ function ServicesPage() {
               <div className='p-4 md:p-6 bg-terminal-light/10 backdrop-blur-xl cyber-border cyber-border-green card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
                   <Zap className='w-6 h-6 text-terminal-green' />
-                  <h3 className='font-ibm font-bold text-terminal-green text-sm'>
+                  <h3 className='font-ibm font-bold text-terminal-green text-base sm:text-lg'>
                     QUICK SOLUTIONS
                   </h3>
                 </div>
-                <p className='font-ocr text-terminal-text text-xs'>
+                <p className='font-ocr text-terminal-text text-sm sm:text-base'>
                   Fixed-price packages from $500
                 </p>
               </div>
@@ -116,11 +116,11 @@ function ServicesPage() {
               <div className='p-4 md:p-6 bg-terminal-light/10 backdrop-blur-xl cyber-border cyber-border-yellow card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
                   <Code className='w-6 h-6 text-terminal-yellow' />
-                  <h3 className='font-ibm font-bold text-terminal-yellow text-sm'>
+                  <h3 className='font-ibm font-bold text-terminal-yellow text-base sm:text-lg'>
                     CUSTOM DEV
                   </h3>
                 </div>
-                <p className='font-ocr text-terminal-text text-xs'>
+                <p className='font-ocr text-terminal-text text-sm sm:text-base'>
                   Tailored solutions & retainers
                 </p>
               </div>
@@ -128,11 +128,11 @@ function ServicesPage() {
               <div className='p-4 md:p-6 bg-terminal-light/10 backdrop-blur-xl cyber-border cyber-border-magenta card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
                   <BarChart3 className='w-6 h-6 text-terminal-magenta' />
-                  <h3 className='font-ibm font-bold text-terminal-magenta text-sm'>
+                  <h3 className='font-ibm font-bold text-terminal-magenta text-base sm:text-lg'>
                     ANALYTICS
                   </h3>
                 </div>
-                <p className='font-ocr text-terminal-text text-xs'>
+                <p className='font-ocr text-terminal-text text-sm sm:text-base'>
                   Data insights & automation
                 </p>
               </div>
@@ -140,11 +140,11 @@ function ServicesPage() {
               <div className='p-4 md:p-6 bg-terminal-light/10 backdrop-blur-xl border border-terminal-cyan/30 hover:border-terminal-cyan/50 transition-colors duration-200 card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
                   <Target className='w-6 h-6 text-terminal-cyan' />
-                  <h3 className='font-ibm font-bold text-terminal-cyan text-sm'>
+                  <h3 className='font-ibm font-bold text-terminal-cyan text-base sm:text-lg'>
                     CONSULTING
                   </h3>
                 </div>
-                <p className='font-ocr text-terminal-text text-xs'>
+                <p className='font-ocr text-terminal-text text-sm sm:text-base'>
                   Strategy & technical guidance
                 </p>
               </div>
@@ -189,20 +189,20 @@ function ServicesPage() {
                         <span className='text-2xl font-ibm font-bold text-terminal-yellow'>
                           ${item.price}
                         </span>
-                        <span className='font-ocr text-terminal-muted text-sm'>
-                          • {item.delivery}
+                        <span className='font-ocr text-terminal-muted text-base'>
+                          {item.delivery}
                         </span>
                       </div>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className='font-ibm text-terminal-text text-sm leading-relaxed'>
+                  <p className='font-ibm text-terminal-text text-base leading-relaxed'>
                     {item.description}
                   </p>
 
                   {/* Benefit */}
-                  <p className='font-ibm text-terminal-green text-sm font-bold leading-relaxed'>
+                  <p className='font-ibm text-terminal-green text-base font-bold leading-relaxed'>
                     {item.benefit}
                   </p>
 
@@ -211,7 +211,7 @@ function ServicesPage() {
                     onClick={() => {
                       window.location.href = `/examples/${item.id}`;
                     }}
-                    className='w-full text-left text-terminal-cyan font-ocr text-sm hover:text-terminal-green transition-colors duration-200 underline hover:no-underline cursor-pointer'
+                    className='w-full text-left text-terminal-cyan font-ocr text-base hover:text-terminal-green transition-colors duration-200 underline hover:no-underline cursor-pointer'
                   >
                     Learn more & see examples →
                   </button>
@@ -287,7 +287,7 @@ function ServicesPage() {
                   <div className='mt-6 pt-4 border-t border-terminal-border/30'>
                     <button
                       onClick={() => scrollToSection('contact')}
-                      className='text-terminal-yellow font-ocr text-sm hover:text-terminal-green transition-colors duration-200 cursor-pointer underline hover:no-underline'
+                      className='text-terminal-yellow font-ocr text-base hover:text-terminal-green transition-colors duration-200 cursor-pointer underline hover:no-underline'
                     >
                       Contact for custom pricing
                     </button>
@@ -299,7 +299,7 @@ function ServicesPage() {
 
           {/* Footer note */}
           <div className='pt-8 border-t border-terminal-border/20'>
-            <p className='text-terminal-yellow font-ocr text-sm'>
+            <p className='text-terminal-yellow font-ocr text-base'>
               * Custom solutions and retainer pricing are tailored to your
               specific needs and scope
             </p>
