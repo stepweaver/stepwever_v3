@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { SERVICES_DATA } from '@/lib/servicesData';
+import OptimizedImage from '@/components/OptimizedImage/OptimizedImage';
 
 // Lazy load heavy components
 const BackgroundCanvas = dynamic(
@@ -74,10 +75,12 @@ export default function ProjectPage({ params }) {
               {/* Project Image - 16:9 aspect ratio */}
               {project.imageUrl && (
                 <div className='mb-8 cyber-border-lg cyber-border-border overflow-hidden aspect-video card-glow'>
-                  <img
+                  <OptimizedImage
                     src={project.imageUrl}
                     alt={project.title}
                     className='w-full h-full object-cover object-top'
+                    loading='eager'
+                    fetchPriority='high'
                   />
                 </div>
               )}

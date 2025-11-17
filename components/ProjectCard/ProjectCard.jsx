@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import Link from 'next/link';
+import OptimizedImage from '@/components/OptimizedImage/OptimizedImage';
 
 const ProjectCard = memo(function ProjectCard({
   title,
@@ -38,7 +39,7 @@ const ProjectCard = memo(function ProjectCard({
         {/* Project Image */}
         {imageUrl && (
           <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-36 sm:h-56'>
-            <img
+            <OptimizedImage
               src={imageUrl}
               alt={title}
               className='w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105'
@@ -49,7 +50,7 @@ const ProjectCard = memo(function ProjectCard({
         )}
         {!imageUrl && (
           <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-36 sm:h-56'>
-            <img
+            <OptimizedImage
               src='/images/lambda_preview.png'
               alt='Project preview'
               className='w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105'
