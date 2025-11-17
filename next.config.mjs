@@ -1,22 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable bundle analyzer in development
-  ...(process.env.ANALYZE === 'true' && {
-    webpack: (config, { isServer }) => {
-      if (!isServer) {
-        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-        config.plugins.push(
-          new BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            openAnalyzer: false,
-            reportFilename: './bundle-analysis.html',
-          })
-        );
-      }
-      return config;
-    },
-  }),
-
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
@@ -27,6 +10,74 @@ const nextConfig = {
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['lucide-react', 'react-icons'],
+  },
+
+  // Compress output
+  compress: true,
+
+  // Optimize production builds
+  swcMinify: true,
+
+  // Better code splitting
+  webpack: (config, { isServer, dev }) => {
+    // Optimize bundle splitting for production
+    if (!isServer && !dev) {
+      config.optimization = {
+        ...config.optimization,
+        moduleIds: 'deterministic',
+        runtimeChunk: 'single',
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: false,
+            vendors: false,
+            // Vendor chunk for node_modules
+            vendor: {
+              name: 'vendor',
+              chunks: 'all',
+              test: /node_modules/,
+              priority: 20,
+            },
+            // Separate chunk for large libraries
+            react: {
+              name: 'react',
+              test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+              chunks: 'all',
+              priority: 30,
+            },
+            // Icons chunk
+            icons: {
+              name: 'icons',
+              test: /[\\/]node_modules[\\/](react-icons|lucide-react)[\\/]/,
+              chunks: 'all',
+              priority: 25,
+            },
+            // Common chunk for shared code
+            common: {
+              name: 'common',
+              minChunks: 2,
+              chunks: 'all',
+              priority: 10,
+              reuseExistingChunk: true,
+            },
+          },
+        },
+      };
+    }
+
+    // Bundle analyzer in development/production when ANALYZE is set
+    if (process.env.ANALYZE === 'true' && !isServer) {
+      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+          openAnalyzer: false,
+          reportFilename: './bundle-analysis.html',
+        })
+      );
+    }
+
+    return config;
   },
 
   async headers() {

@@ -2,11 +2,17 @@
 
 import { use } from 'react';
 import { notFound } from 'next/navigation';
-import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import dynamic from 'next/dynamic';
 import { SERVICES_DATA } from '@/lib/servicesData';
-import GlitchButton from '@/components/ui/GlitchButton';
 import { ArrowLeft, CheckCircle, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+
+// Lazy load heavy components
+const BackgroundCanvas = dynamic(
+  () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
+  { ssr: false }
+);
+const GlitchButton = dynamic(() => import('@/components/ui/GlitchButton'));
 
 export default function ExamplePage({ params }) {
   const { slug } = use(params);

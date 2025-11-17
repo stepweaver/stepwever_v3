@@ -9,8 +9,20 @@ import {
 } from 'lucide-react';
 import { useEffect } from 'react';
 
-import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
-import Terminal from '@/components/Terminal/Terminal';
+import dynamic from 'next/dynamic';
+
+// Lazy load heavy components
+const BackgroundCanvas = dynamic(
+  () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
+  { ssr: false }
+);
+const Terminal = dynamic(() => import('@/components/Terminal/Terminal'), {
+  loading: () => (
+    <div className='min-h-[400px] flex items-center justify-center'>
+      <p className='text-terminal-text font-ocr'>Loading terminal...</p>
+    </div>
+  ),
+});
 
 const TERMINAL_COPY = {
   hero: {

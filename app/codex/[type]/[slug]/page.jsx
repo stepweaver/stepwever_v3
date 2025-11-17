@@ -1,10 +1,17 @@
 import fs from 'fs/promises';
 import path from 'path';
+import dynamic from 'next/dynamic';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
-import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
 import Update from '@/components/mdx/Update';
+
+// Lazy load BackgroundCanvas (client component)
+// Note: ssr: false not allowed in Server Components, but BackgroundCanvas is a client component
+// so it will only render on the client anyway
+const BackgroundCanvas = dynamic(() =>
+  import('@/components/BackgroundCanvas/BackgroundCanvas')
+);
 
 // Helper function to get type color
 const getTypeColor = (type) => {

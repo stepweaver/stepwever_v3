@@ -2,11 +2,17 @@
 
 import Link from 'next/link';
 import { memo } from 'react';
+import dynamic from 'next/dynamic';
 import { ArrowUpRight, Mail, MessageSquare, Sparkles } from 'lucide-react';
 import { SiBluesky, SiGithub } from 'react-icons/si';
-import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
-import ContactForm from '@/components/ui/ContactForm';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+
+// Lazy load heavy components
+const BackgroundCanvas = dynamic(
+  () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
+  { ssr: false }
+);
+const ContactForm = dynamic(() => import('@/components/ui/ContactForm'));
 
 const CONTACT_COPY = {
   hero: {

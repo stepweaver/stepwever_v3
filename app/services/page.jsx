@@ -1,7 +1,16 @@
-import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
-import ServicesPage from '@/components/ServicesPage/ServicesPage';
+import dynamic from 'next/dynamic';
 import generateStructuredData from '../structured-data';
 import SERVICES_DATA from '@/lib/servicesData';
+
+// Lazy load heavy components
+// Note: ssr: false not allowed in Server Components, but BackgroundCanvas is a client component
+// so it will only render on the client anyway
+const BackgroundCanvas = dynamic(() =>
+  import('@/components/BackgroundCanvas/BackgroundCanvas')
+);
+const ServicesPage = dynamic(() =>
+  import('@/components/ServicesPage/ServicesPage')
+);
 
 // Custom metadata for services page - optimized for social media lead generation
 export const metadata = {

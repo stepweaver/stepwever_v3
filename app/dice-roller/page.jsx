@@ -1,9 +1,15 @@
 'use client';
 
-import DiceRoller from '@/components/DiceRoller/DiceRoller';
-import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import dynamic from 'next/dynamic';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { useEffect } from 'react';
+
+// Lazy load heavy components
+const BackgroundCanvas = dynamic(
+  () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
+  { ssr: false }
+);
+const DiceRoller = dynamic(() => import('@/components/DiceRoller/DiceRoller'));
 
 export default function DiceRollerPage() {
   // Hide footer for dice roller page (full-screen experience)

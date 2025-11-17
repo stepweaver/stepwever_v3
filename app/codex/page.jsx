@@ -2,8 +2,14 @@
 
 import { useEffect, useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import dynamic from 'next/dynamic';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+
+// Lazy load BackgroundCanvas
+const BackgroundCanvas = dynamic(
+  () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
+  { ssr: false }
+);
 
 function CodexContent() {
   const searchParams = useSearchParams();

@@ -1,16 +1,43 @@
 'use client';
 
-import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero/Hero';
-import About from '@/components/About/About';
-import WhyWorkWithUs from '@/components/WhyWorkWithUs/WhyWorkWithUs';
-import SuccessStories from '@/components/SuccessStories/SuccessStories';
-import WhatWeDo from '@/components/WhatWeDo/WhatWeDo';
-import Experience from '@/components/Experience/Experience';
-import PartnerFeedback from '@/components/PartnerFeedback/PartnerFeedback';
-import Approach from '@/components/Approach/Approach';
-import CTA from '@/components/CTA/CTA';
 import generateStructuredData from './structured-data';
+
+// Lazy load BackgroundCanvas - heavy canvas operations
+const BackgroundCanvas = dynamic(
+  () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
+  { ssr: false }
+);
+
+// Lazy load below-the-fold components
+const About = dynamic(() => import('@/components/About/About'), {
+  loading: () => <div className='min-h-[400px]' />,
+});
+const WhyWorkWithUs = dynamic(
+  () => import('@/components/WhyWorkWithUs/WhyWorkWithUs'),
+  { loading: () => <div className='min-h-[400px]' /> }
+);
+const SuccessStories = dynamic(
+  () => import('@/components/SuccessStories/SuccessStories'),
+  { loading: () => <div className='min-h-[400px]' /> }
+);
+const WhatWeDo = dynamic(() => import('@/components/WhatWeDo/WhatWeDo'), {
+  loading: () => <div className='min-h-[400px]' />,
+});
+const Experience = dynamic(() => import('@/components/Experience/Experience'), {
+  loading: () => <div className='min-h-[400px]' />,
+});
+const PartnerFeedback = dynamic(
+  () => import('@/components/PartnerFeedback/PartnerFeedback'),
+  { loading: () => <div className='min-h-[400px]' /> }
+);
+const Approach = dynamic(() => import('@/components/Approach/Approach'), {
+  loading: () => <div className='min-h-[400px]' />,
+});
+const CTA = dynamic(() => import('@/components/CTA/CTA'), {
+  loading: () => <div className='min-h-[200px]' />,
+});
 
 export default function HomePage() {
   const structuredData = generateStructuredData();
