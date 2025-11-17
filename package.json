@@ -49,5 +49,12 @@
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "webpack-bundle-analyzer": "^4.10.2"
-  }
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead",
+    "not IE 11",
+    "not op_mini all"
+  ]
 }

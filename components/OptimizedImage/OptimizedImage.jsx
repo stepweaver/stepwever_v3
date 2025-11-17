@@ -2,6 +2,16 @@
  * OptimizedImage component that serves WebP images with PNG fallback
  * Uses the <picture> element to provide modern format support with graceful degradation
  */
+
+// List of images that have WebP versions available
+// Add images here as WebP versions are created
+const IMAGES_WITH_WEBP = [
+  '/images/dice-roller.png',
+  '/images/lambda_stepweaver.png',
+  '/images/screencapture-lambda-ortho.png',
+  '/images/screencapture-soap-stache.png',
+];
+
 export default function OptimizedImage({
   src,
   alt,
@@ -15,6 +25,23 @@ export default function OptimizedImage({
   
   // If src doesn't end with .png, assume it's already optimized or not a PNG
   if (!src || !src.endsWith('.png')) {
+    return (
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        loading={loadingAttr}
+        fetchPriority={fetchPriority}
+        {...props}
+      />
+    );
+  }
+
+  // Only use WebP if we know the WebP version exists
+  const hasWebPVersion = IMAGES_WITH_WEBP.includes(src);
+
+  // If no WebP version exists, just use the PNG directly
+  if (!hasWebPVersion) {
     return (
       <img
         src={src}

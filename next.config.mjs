@@ -11,6 +11,14 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'react-icons'],
   },
+
+  // Compiler configuration to target modern browsers and exclude unnecessary polyfills
+  compiler: {
+    // Remove console.log in production
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
   
   // Production optimizations
   productionBrowserSourceMaps: false, // Disable source maps in production to reduce bundle size
@@ -20,6 +28,23 @@ const nextConfig = {
 
   // Better code splitting and smaller chunks
   webpack: (config, { isServer, dev }) => {
+    // Exclude unnecessary polyfills for modern browsers
+    // These features are natively supported in all modern browsers
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        // Prevent polyfills from being included for Baseline features
+        // These are natively supported in all modern browsers
+        'core-js/modules/es.array.at': false,
+        'core-js/modules/es.array.flat': false,
+        'core-js/modules/es.array.flat-map': false,
+        'core-js/modules/es.object.from-entries': false,
+        'core-js/modules/es.object.has-own': false,
+        'core-js/modules/es.string.trim-end': false,
+        'core-js/modules/es.string.trim-start': false,
+      };
+    }
+
     // Optimize bundle splitting for production
     if (!isServer && !dev) {
       config.optimization = {
