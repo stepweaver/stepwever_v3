@@ -157,6 +157,8 @@ export default function BackgroundCanvas() {
       <div className='fixed inset-0 z-10 flex items-center justify-start'>
         <canvas
           ref={canvasRef}
+          width={1024}
+          height={1536}
           className='opacity-30 origin-center drop-shadow-[0_0_20px_rgba(0,255,65,0.3)]'
           style={{
             transform: `scale(${
