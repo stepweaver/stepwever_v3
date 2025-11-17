@@ -57,6 +57,7 @@ export default function BackgroundCanvas() {
   }, []);
 
   // Load image once and store original data
+  // Try WebP first for better compression, fallback to PNG
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -81,14 +82,24 @@ export default function BackgroundCanvas() {
       }
     };
 
+    // Try WebP first, fallback to PNG if WebP fails
+    let webpFailed = false;
     img.onerror = () => {
-      console.error(
-        'Failed to load background image: /images/lambda_stepweaver.png'
-      );
-      setHasError(true);
+      if (!webpFailed) {
+        // WebP failed, try PNG fallback
+        webpFailed = true;
+        img.src = '/images/lambda_stepweaver.png';
+      } else {
+        // Both formats failed
+        console.error(
+          'Failed to load background image: /images/lambda_stepweaver.webp and .png'
+        );
+        setHasError(true);
+      }
     };
 
-    img.src = '/images/lambda_stepweaver.png';
+    // Start with WebP for better compression
+    img.src = '/images/lambda_stepweaver.webp';
   }, []);
 
   // Update colors and scale based on scroll

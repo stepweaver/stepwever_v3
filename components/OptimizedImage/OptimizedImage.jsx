@@ -66,6 +66,7 @@ export default function OptimizedImage({
         className={className}
         loading={loadingAttr}
         fetchPriority={fetchPriority}
+        decoding="async"
         {...props}
       />
     </picture>
