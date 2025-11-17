@@ -30,19 +30,21 @@
 .crtBackground::after {
   content: '';
   position: absolute;
-  top: 0;
+  top: -8px;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: calc(100% + 16px);
   background: linear-gradient(
     rgba(0, 0, 0, 0),
     rgba(0, 255, 65, 0.1) 50%,
     rgba(0, 0, 0, 0)
   );
   background-size: 100% 8px;
+  background-repeat: repeat-y;
   z-index: 1;
   opacity: 0.5;
-  animation: scanline-move 10s linear infinite;
+  animation: scanline-move 0.2s linear infinite;
+  will-change: transform;
 }
 
 .crtOverlay {
@@ -175,9 +177,9 @@
 
 @keyframes scanline-move {
   0% {
-    background-position: 0 0;
+    transform: translateY(0);
   }
   100% {
-    background-position: 0 100%;
+    transform: translateY(8px);
   }
 } 

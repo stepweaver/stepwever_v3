@@ -326,10 +326,19 @@
 
 @keyframes scanlines {
   0% {
-    background-position: 0 0;
+    transform: translateY(0);
   }
   100% {
-    background-position: 0 100%;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes scanlines-light {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(6px);
   }
 }
 
@@ -650,18 +659,20 @@ html.theme-loaded {
 body::after {
   content: '';
   position: fixed;
-  top: 0;
+  top: -4px;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: calc(100% + 8px);
   background: linear-gradient(
     transparent 50%,
     rgba(0, 255, 65, 0.03) 50%
   );
   background-size: 100% 4px;
+  background-repeat: repeat-y;
   pointer-events: none;
-  animation: scanlines 20s linear infinite;
+  animation: scanlines 0.1s linear infinite;
   z-index: 1;
+  will-change: transform;
 }
 
 /* Light theme scanline effect - subtle black scanlines */
@@ -679,7 +690,10 @@ body::after {
       transparent 100%
     );
   background-size: 100% 100%, 100% 6px;
-  animation: scanlines 15s linear infinite;
+  background-repeat: no-repeat, repeat-y;
+  top: -6px;
+  height: calc(100% + 12px);
+  animation: scanlines-light 0.15s linear infinite;
 }
 
 /* Theme toggle specific styles */

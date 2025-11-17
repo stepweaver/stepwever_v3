@@ -99,6 +99,17 @@
 
 /* Scanline effect for retro terminal feel */
 .scanlinePattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanlinePattern::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 8px);
   background-image: linear-gradient(
     to bottom,
     transparent,
@@ -107,8 +118,19 @@
     rgba(0, 0, 0, 0.02)
   );
   background-size: 100% 4px;
-  animation: scanlines 1s steps(30) infinite;
-  will-change: background-position;
+  background-repeat: repeat-y;
+  animation: scanlines-transform 0.1s linear infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@keyframes scanlines-transform {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
 }
 
 /* Terminal tag styles */
@@ -172,10 +194,10 @@
 .scanlineEffect::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -4px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% + 8px);
   background: linear-gradient(
     to bottom,
     transparent 0%,
@@ -183,15 +205,17 @@
     transparent 100%
   );
   background-size: 100% 4px;
-  animation: scanline 0.15s linear infinite;
+  background-repeat: repeat-y;
+  animation: scanline 0.1s linear infinite;
+  will-change: transform;
 }
 
 @keyframes scanline {
   0% {
-    background-position: 0 -100%;
+    transform: translateY(0);
   }
   100% {
-    background-position: 0 100%;
+    transform: translateY(4px);
   }
 }
 
