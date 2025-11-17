@@ -167,17 +167,29 @@ const NeonProfileCard = ({ profile }) => {
               {badges.map((badge, index) => {
                 const badgeContent =
                   typeof badge === 'string' ? { text: badge } : badge;
+                const isAccent = badgeContent.accent;
                 return (
-                  <p
+                  <div
                     key={`${badgeContent.text}-${index}`}
-                    className={`font-ibm text-base sm:text-lg tracking-wide ${
-                      badgeContent.accent
-                        ? 'italic text-terminal-magenta'
-                        : 'text-terminal-text'
-                    }`}
+                    className='group flex items-center gap-2'
                   >
-                    {badgeContent.text}
-                  </p>
+                    <span
+                      className={`font-mono text-xs opacity-20 group-hover:opacity-40 transition-opacity ${
+                        isAccent ? 'text-terminal-magenta' : 'text-terminal-green'
+                      }`}
+                    >
+                      {'•'}
+                    </span>
+                    <p
+                      className={`font-ibm text-base sm:text-lg tracking-wide ${
+                        isAccent
+                          ? 'italic text-terminal-magenta'
+                          : 'text-terminal-text'
+                      }`}
+                    >
+                      {badgeContent.text}
+                    </p>
+                  </div>
                 );
               })}
             </div>
