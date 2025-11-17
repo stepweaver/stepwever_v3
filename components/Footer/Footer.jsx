@@ -71,7 +71,7 @@ export default function Footer() {
       {/* Bottom Section - Social Links and Legal */}
       <div className='mt-auto'>
         <div className='max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8'>
-          <div className='flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-3 md:space-y-4 lg:space-y-0'>
+          <div className='flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-3 md:space-y-4 lg:space-y-0 min-h-[4rem] lg:min-h-0'>
             {/* Bottom Left - Social Links */}
             <div className='flex flex-wrap gap-4'>
               {FOOTER_LINKS.map((link) => {
@@ -112,7 +112,7 @@ export default function Footer() {
             </div>
 
             {/* Bottom Right - Legal */}
-            <div className='text-terminal-muted font-ocr text-xs md:text-sm leading-tight flex items-center'>
+            <div className='text-terminal-muted font-ocr text-xs md:text-sm leading-tight flex items-center min-h-[3rem] md:min-h-0'>
               <GlitchLambda className='text-terminal-green' />
               <span>
                 stepweaver LLC · Veteran-owned · All rights reserved ·{' '}
