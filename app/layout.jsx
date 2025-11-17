@@ -1,13 +1,23 @@
 import localFont from 'next/font/local';
+import dynamic from 'next/dynamic';
 import './globals.css';
 import '../styles/mdx.css';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar/Navbar';
-import Footer from '@/components/Footer/Footer';
-import { Analytics } from '@vercel/analytics/next';
-import PageTransition from '@/components/transition/PageTransition';
-
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
+// Analytics is a client component that handles its own lazy loading
+import Analytics from '@/components/Analytics/Analytics';
+
+// Lazy load below-the-fold and non-critical components
+const Footer = dynamic(() => import('@/components/Footer/Footer'), {
+  ssr: true, // Keep SSR for SEO
+});
+const PageTransition = dynamic(
+  () => import('@/components/transition/PageTransition'),
+  {
+    ssr: true,
+  }
+);
 
 // Environment validation in development
 if (process.env.NODE_ENV === 'development') {
@@ -225,9 +235,10 @@ export default function RootLayout({ children }) {
             <main id='main-content' role='main'>
               <PageTransition>{children}</PageTransition>
             </main>
-            <Analytics />
             <Footer />
           </ThemeProvider>
+          {/* Load Analytics after initial render to reduce blocking */}
+          <Analytics />
         </ErrorBoundary>
       </body>
     </html>

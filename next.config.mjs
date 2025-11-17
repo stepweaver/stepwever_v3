@@ -11,14 +11,14 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'react-icons'],
   },
+  
+  // Production optimizations
+  productionBrowserSourceMaps: false, // Disable source maps in production to reduce bundle size
 
   // Compress output
   compress: true,
 
-  // Optimize production builds
-  swcMinify: true,
-
-  // Better code splitting
+  // Better code splitting and smaller chunks
   webpack: (config, { isServer, dev }) => {
     // Optimize bundle splitting for production
     if (!isServer && !dev) {
@@ -28,37 +28,51 @@ const nextConfig = {
         runtimeChunk: 'single',
         splitChunks: {
           chunks: 'all',
+          maxInitialRequests: 25,
+          minSize: 20000,
           cacheGroups: {
             default: false,
             vendors: false,
-            // Vendor chunk for node_modules
-            vendor: {
-              name: 'vendor',
-              chunks: 'all',
-              test: /node_modules/,
-              priority: 20,
-            },
-            // Separate chunk for large libraries
+            // Separate chunk for React core - highest priority
             react: {
               name: 'react',
-              test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+              test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
               chunks: 'all',
-              priority: 30,
+              priority: 40,
+              enforce: true,
             },
-            // Icons chunk
+            // Icons chunk - split to reduce main bundle
             icons: {
               name: 'icons',
               test: /[\\/]node_modules[\\/](react-icons|lucide-react)[\\/]/,
               chunks: 'all',
+              priority: 30,
+              enforce: true,
+            },
+            // MDX and content processing libraries
+            mdx: {
+              name: 'mdx',
+              test: /[\\/]node_modules[\\/](@mdx-js|next-mdx-remote|gray-matter|vfile-matter)[\\/]/,
+              chunks: 'all',
               priority: 25,
             },
-            // Common chunk for shared code
+            // Vendor chunk for other node_modules (smaller, more granular)
+            vendor: {
+              name: 'vendor',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/]/,
+              priority: 20,
+              minChunks: 1,
+              reuseExistingChunk: true,
+            },
+            // Common chunk for shared code between pages
             common: {
               name: 'common',
               minChunks: 2,
               chunks: 'all',
               priority: 10,
               reuseExistingChunk: true,
+              minSize: 0,
             },
           },
         },

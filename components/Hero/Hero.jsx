@@ -1,10 +1,21 @@
 'use client';
 
 import { memo } from 'react';
+import dynamic from 'next/dynamic';
 import HeroHeadline from './HeroHeadline';
 import HeroDescription from './HeroDescription';
 import TerminalLink from './TerminalLink';
-import ProjectCarousel from './ProjectCarousel';
+
+// Lazy load ProjectCarousel - it's a large component (798 lines) with complex logic
+// This reduces initial JS execution time significantly
+const ProjectCarousel = dynamic(() => import('./ProjectCarousel'), {
+  ssr: true, // Keep SSR for SEO and initial render
+  loading: () => (
+    <div className='min-h-[400px] flex items-center justify-center'>
+      <div className='text-terminal-muted font-ocr'>Loading projects...</div>
+    </div>
+  ),
+});
 
 function Hero() {
   return (
