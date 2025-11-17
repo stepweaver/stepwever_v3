@@ -277,7 +277,7 @@ function Experience() {
                   return (
                     <div
                       key={tech.name}
-                      className='group flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green hover:bg-opacity-5 w-24 h-24 animate-[fadeIn_0.6s_ease-out_both] hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(0,255,65,0.15)]'
+                      className='group flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg bg-terminal-dark/30 backdrop-blur-xl transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green/10 w-24 h-24 animate-[fadeIn_0.6s_ease-out_both] hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(0,255,65,0.15)]'
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
                       <div className='mb-1 flex items-center justify-center w-12 h-12'>
