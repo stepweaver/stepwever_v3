@@ -169,6 +169,36 @@ function ProjectCarousel() {
     setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning]);
 
+  // Calculate how many cards per page based on screen size
+  const getCardsPerPage = useCallback(() => {
+    if (typeof window === 'undefined') return 3;
+    if (window.innerWidth < 768) return 1; // Mobile: 1 card
+    if (window.innerWidth < 1024) return 2; // Tablet: 2 cards
+    return 3; // Desktop: 3 cards
+  }, []);
+
+  const [cardsPerPage, setCardsPerPage] = useState(3);
+  const [desktopPageIndex, setDesktopPageIndex] = useState(0);
+
+  // Desktop page navigation functions (defined early for use in handleMouseUp)
+  const nextPage = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    const total = Math.ceil(PROJECTS.length / cardsPerPage);
+    const nextPageIndex = (desktopPageIndex + 1) % total;
+    setDesktopPageIndex(nextPageIndex);
+    setTimeout(() => setIsTransitioning(false), 600);
+  }, [desktopPageIndex, cardsPerPage, isTransitioning]);
+
+  const prevPage = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    const total = Math.ceil(PROJECTS.length / cardsPerPage);
+    const prevPageIndex = (desktopPageIndex - 1 + total) % total;
+    setDesktopPageIndex(prevPageIndex);
+    setTimeout(() => setIsTransitioning(false), 600);
+  }, [desktopPageIndex, cardsPerPage, isTransitioning]);
+
   // Enhanced touch event handlers with real-time feedback
   const handleTouchStart = useCallback(
     (e) => {
@@ -213,9 +243,10 @@ function ProjectCarousel() {
         touchState.current.velocity = deltaX / elapsed;
 
         // Apply real-time visual feedback (mobile only)
+        // Base transform is -100% (current item at position 1 of 3)
         if (mobileContainerRef.current) {
           const container = mobileContainerRef.current;
-          const baseTransform = -currentIndex * 100;
+          const baseTransform = -100;
           const dragOffset = (deltaX / window.innerWidth) * 100;
           const transform = baseTransform + dragOffset;
 
@@ -252,15 +283,13 @@ function ProjectCarousel() {
 
       if (isLeftSwipe) {
         nextProject();
-        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        container.style.transform = `translateX(-100%)`;
       } else if (isRightSwipe) {
         prevProject();
-        container.style.transform = `translateX(-${
-          ((currentIndex - 1 + PROJECTS.length) % PROJECTS.length) * 100
-        }%)`;
+        container.style.transform = `translateX(-100%)`;
       } else {
         // Snap back to current position
-        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+        container.style.transform = `translateX(-100%)`;
       }
 
       // Reset transition after animation
@@ -331,17 +360,6 @@ function ProjectCarousel() {
         // Calculate velocity
         const elapsed = Date.now() - touchState.current.startTime;
         touchState.current.velocity = deltaX / elapsed;
-
-        // Apply real-time visual feedback
-        if (containerRef.current) {
-          const container = containerRef.current;
-          const baseTransform = -currentIndex * 100;
-          const dragOffset = (deltaX / window.innerWidth) * 100;
-          const transform = baseTransform + dragOffset;
-
-          container.style.transform = `translateX(${transform}%)`;
-          container.style.transition = 'none';
-        }
       }
     },
     [currentIndex]
@@ -359,25 +377,33 @@ function ProjectCarousel() {
       distance < -minSwipeDistance ||
       (Math.abs(velocity) > 0.5 && distance < -20);
 
+    // Handle desktop navigation (no transforms, just page changes)
+    if (!isMobile && (isLeftSwipe || isRightSwipe)) {
+      if (isLeftSwipe) {
+        nextPage();
+      } else if (isRightSwipe) {
+        prevPage();
+      }
+      handleUserInteraction();
+    }
+
     // Animate to final position (mobile only)
-    if (mobileContainerRef.current) {
+    if (isMobile && mobileContainerRef.current) {
       const container = mobileContainerRef.current;
       container.style.transition =
         'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
       if (isLeftSwipe) {
         nextProject();
-        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        container.style.transform = `translateX(-100%)`;
         handleUserInteraction();
       } else if (isRightSwipe) {
         prevProject();
-        container.style.transform = `translateX(-${
-          ((currentIndex - 1 + PROJECTS.length) % PROJECTS.length) * 100
-        }%)`;
+        container.style.transform = `translateX(-100%)`;
         handleUserInteraction();
       } else {
         // Snap back to current position
-        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+        container.style.transform = `translateX(-100%)`;
       }
 
       // Reset transition after animation
@@ -399,7 +425,7 @@ function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [nextProject, prevProject, currentIndex, handleUserInteraction]);
+  }, [isMobile, nextProject, prevProject, nextPage, prevPage, handleUserInteraction]);
 
   // Add event listeners with non-passive options (mobile only)
   useEffect(() => {
@@ -450,24 +476,14 @@ function ProjectCarousel() {
   ]);
 
   // Memoized transform style with hardware acceleration and smooth transitions
+  // Since we render 3 items (prev, current, next), current is always at position 1 (100%)
   const transformStyle = useMemo(
     () => ({
-      transform: `translateX(-${currentIndex * 100}%)`,
+      transform: `translateX(-100%)`,
       transition: 'transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     }),
-    [currentIndex]
+    []
   );
-
-  // Calculate how many cards per page based on screen size
-  const getCardsPerPage = useCallback(() => {
-    if (typeof window === 'undefined') return 3;
-    if (window.innerWidth < 768) return 1; // Mobile: 1 card
-    if (window.innerWidth < 1024) return 2; // Tablet: 2 cards
-    return 3; // Desktop: 3 cards
-  }, []);
-
-  const [cardsPerPage, setCardsPerPage] = useState(3);
-  const [desktopPageIndex, setDesktopPageIndex] = useState(0);
 
   useEffect(() => {
     // Set mobile state and cards per page after mount to avoid hydration mismatch
@@ -496,22 +512,6 @@ function ProjectCarousel() {
     },
     [cardsPerPage]
   );
-
-  const nextPage = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    const nextPageIndex = (currentPage + 1) % totalPages;
-    setDesktopPageIndex(nextPageIndex);
-    setTimeout(() => setIsTransitioning(false), 600);
-  }, [currentPage, totalPages, isTransitioning]);
-
-  const prevPage = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    const prevPageIndex = (currentPage - 1 + totalPages) % totalPages;
-    setDesktopPageIndex(prevPageIndex);
-    setTimeout(() => setIsTransitioning(false), 600);
-  }, [currentPage, totalPages, isTransitioning]);
 
   // Auto-scroll functionality
   useEffect(() => {
@@ -545,15 +545,33 @@ function ProjectCarousel() {
     };
   }, [isMobile, isPaused, isTransitioning, nextProject, nextPage, totalPages]);
 
+  // Calculate visible items for mobile (current, prev, next)
+  const getVisibleMobileIndices = useCallback(() => {
+    const indices = [];
+    const prev = (currentIndex - 1 + PROJECTS.length) % PROJECTS.length;
+    const next = (currentIndex + 1) % PROJECTS.length;
+    indices.push(prev, currentIndex, next);
+    return indices;
+  }, [currentIndex]);
+
+  // Calculate visible items for desktop (current page only)
+  const visibleDesktopProjects = useMemo(() => {
+    return getCardsForPage(desktopPageIndex);
+  }, [desktopPageIndex, getCardsForPage]);
+
+  const visibleMobileIndices = useMemo(() => getVisibleMobileIndices(), [getVisibleMobileIndices]);
+
   return (
     <div className='w-full relative mt-8 sm:mt-16'>
-      {/* Mobile Carousel */}
+      {/* Swipe instruction */}
+      <div className='text-center mb-4'>
+        <p className='text-terminal-dimmed text-base sm:text-lg font-ocr'>
+          Swipe to navigate
+        </p>
+      </div>
+
+      {/* Mobile Carousel - Only render visible items */}
       <div className='md:hidden'>
-        <div className='text-center mb-4'>
-          <p className='text-terminal-dimmed text-base sm:text-lg font-ocr'>
-            Swipe to navigate
-          </p>
-        </div>
         <div
           ref={mobileCarouselRef}
           className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch] carousel-container'
@@ -567,32 +585,33 @@ function ProjectCarousel() {
             className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
             style={transformStyle}
           >
-            {PROJECTS.map((project, index) => (
-              <div
-                key={index}
-                className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
-              >
-                {project.slug || project.link ? (
-                  <Link
-                    href={
-                      project.slug
-                        ? `/projects/${project.slug}`
-                        : project.link || '#'
-                    }
-                    target={
-                      project.link && project.link.startsWith('http')
-                        ? '_blank'
-                        : undefined
-                    }
-                    rel={
-                      project.link && project.link.startsWith('http')
-                        ? 'noopener noreferrer'
-                        : undefined
-                    }
-                    className='block h-full'
-                    onClick={(e) => {
-                      // On mobile, prevent navigation if this was a swipe
-                      if (isMobile) {
+            {visibleMobileIndices.map((index) => {
+              const project = PROJECTS[index];
+              const isCurrent = index === currentIndex;
+              return (
+                <div
+                  key={index}
+                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
+                >
+                  {project.slug || project.link ? (
+                    <Link
+                      href={
+                        project.slug
+                          ? `/projects/${project.slug}`
+                          : project.link || '#'
+                      }
+                      target={
+                        project.link && project.link.startsWith('http')
+                          ? '_blank'
+                          : undefined
+                      }
+                      rel={
+                        project.link && project.link.startsWith('http')
+                          ? 'noopener noreferrer'
+                          : undefined
+                      }
+                      className='block h-full'
+                      onClick={(e) => {
                         if (
                           touchState.current.wasSwipe ||
                           touchState.current.isDragging
@@ -601,15 +620,26 @@ function ProjectCarousel() {
                           e.stopPropagation();
                           return false;
                         }
-                      }
-                      // On desktop, always allow clicks
-                    }}
-                    style={{
-                      touchAction: isMobile ? 'pan-y pinch-zoom' : 'auto',
-                      pointerEvents: 'auto',
-                      WebkitTapHighlightColor: 'transparent',
-                    }}
-                  >
+                      }}
+                      style={{
+                        touchAction: 'pan-y pinch-zoom',
+                        pointerEvents: 'auto',
+                        WebkitTapHighlightColor: 'transparent',
+                      }}
+                    >
+                      <ProjectCard
+                        title={project.title}
+                        description={project.description}
+                        link={project.link}
+                        imageUrl={project.imageUrl}
+                        tags={project.tags}
+                        keywords={project.keywords}
+                        actions={project.actions}
+                        slug={project.slug}
+                        isLCP={isCurrent && index === 0}
+                      />
+                    </Link>
+                  ) : (
                     <ProjectCard
                       title={project.title}
                       description={project.description}
@@ -619,30 +649,16 @@ function ProjectCarousel() {
                       keywords={project.keywords}
                       actions={project.actions}
                       slug={project.slug}
-                      isLCP={index === 0}
+                      isLCP={isCurrent && index === 0}
                     />
-                  </Link>
-                ) : (
-                  <div className='h-full'>
-                    <ProjectCard
-                      title={project.title}
-                      description={project.description}
-                      link={project.link}
-                      imageUrl={project.imageUrl}
-                      tags={project.tags}
-                      keywords={project.keywords}
-                      actions={project.actions}
-                      slug={project.slug}
-                      isLCP={index === 0}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Mobile pagination indicators */}
+        {/* Mobile pagination indicators - simplified */}
         <div
           className='flex justify-center mt-6 space-x-2'
           role='tablist'
@@ -655,7 +671,7 @@ function ProjectCarousel() {
                 setCurrentIndex(index);
                 handleUserInteraction();
               }}
-              className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentIndex
                   ? 'bg-terminal-green'
                   : 'bg-terminal-dimmed hover:bg-terminal-green/50'
@@ -663,29 +679,13 @@ function ProjectCarousel() {
               aria-label={`Go to project ${index + 1} of ${PROJECTS.length}`}
               aria-selected={index === currentIndex}
               role='tab'
-            >
-              <div
-                className={`rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? 'bg-terminal-green'
-                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
-                }`}
-                style={{ width: '8px', height: '8px' }}
-              />
-            </button>
+            />
           ))}
         </div>
       </div>
 
-      {/* Desktop Grid/Carousel */}
+      {/* Desktop Grid/Carousel - Only render current page */}
       <div className='hidden md:block'>
-        <div className='text-center mb-4'>
-          <p className='text-terminal-dimmed text-base sm:text-lg font-ocr'>
-            Swipe to navigate
-          </p>
-        </div>
-
-        {/* Desktop Carousel Container */}
         <div className='relative'>
           {/* Desktop Navigation Arrows */}
           <button
@@ -747,75 +747,60 @@ function ProjectCarousel() {
             aria-label='Project carousel'
             onMouseEnter={handleUserInteraction}
           >
-            <div
-              ref={desktopContainerRef}
-              className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
-              style={{
-                transform: `translateX(-${desktopPageIndex * 100}%)`,
-                transition:
-                  'transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-              }}
-            >
-              {Array.from({ length: totalPages }, (_, pageIndex) => (
-                <div
-                  key={pageIndex}
-                  className='w-full flex-shrink-0 flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
-                >
-                  {getCardsForPage(pageIndex).map((project, index) => (
-                    <div key={index} className='w-full md:w-1/2 lg:w-1/3'>
-                      {project.slug || project.link ? (
-                        <Link
-                          href={
-                            project.slug
-                              ? `/projects/${project.slug}`
-                              : project.link || '#'
-                          }
-                          target={
-                            project.link && project.link.startsWith('http')
-                              ? '_blank'
-                              : undefined
-                          }
-                          rel={
-                            project.link && project.link.startsWith('http')
-                              ? 'noopener noreferrer'
-                              : undefined
-                          }
-                          className='block h-full'
-                        >
-                          <ProjectCard
-                            title={project.title}
-                            description={project.description}
-                            link={project.link}
-                            imageUrl={project.imageUrl}
-                            tags={project.tags}
-                            keywords={project.keywords}
-                            actions={project.actions}
-                            slug={project.slug}
-                            isLCP={pageIndex === 0 && index === 0}
-                          />
-                        </Link>
-                      ) : (
-                        <ProjectCard
-                          title={project.title}
-                          description={project.description}
-                          link={project.link}
-                          imageUrl={project.imageUrl}
-                          tags={project.tags}
-                          keywords={project.keywords}
-                          actions={project.actions}
-                          slug={project.slug}
-                          isLCP={pageIndex === 0 && index === 0}
-                        />
-                      )}
-                    </div>
-                  ))}
+            <div className='flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden]'>
+              {visibleDesktopProjects.map((project, index) => (
+                <div key={`${project.slug}-${index}`} className='w-full md:w-1/2 lg:w-1/3'>
+                  {project.slug || project.link ? (
+                    <Link
+                      href={
+                        project.slug
+                          ? `/projects/${project.slug}`
+                          : project.link || '#'
+                      }
+                      target={
+                        project.link && project.link.startsWith('http')
+                          ? '_blank'
+                          : undefined
+                      }
+                      rel={
+                        project.link && project.link.startsWith('http')
+                          ? 'noopener noreferrer'
+                          : undefined
+                      }
+                      className='block h-full'
+                    >
+                      <ProjectCard
+                        title={project.title}
+                        description={project.description}
+                        link={project.link}
+                        imageUrl={project.imageUrl}
+                        tags={project.tags}
+                        keywords={project.keywords}
+                        actions={project.actions}
+                        slug={project.slug}
+                        isLCP={desktopPageIndex === 0 && index === 0}
+                      />
+                    </Link>
+                  ) : (
+                    <ProjectCard
+                      title={project.title}
+                      description={project.description}
+                      link={project.link}
+                      imageUrl={project.imageUrl}
+                      tags={project.tags}
+                      keywords={project.keywords}
+                      actions={project.actions}
+                      slug={project.slug}
+                      isLCP={desktopPageIndex === 0 && index === 0}
+                    />
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Desktop Page Indicators */}
+        {/* Desktop Page Indicators - simplified */}
         <div
           className='flex justify-center mt-6 space-x-2'
           role='tablist'
@@ -828,7 +813,7 @@ function ProjectCarousel() {
                 setDesktopPageIndex(index);
                 handleUserInteraction();
               }}
-              className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentPage
                   ? 'bg-terminal-green'
                   : 'bg-terminal-dimmed hover:bg-terminal-green/50'
@@ -836,16 +821,7 @@ function ProjectCarousel() {
               aria-label={`Go to page ${index + 1} of ${totalPages}`}
               aria-selected={index === currentPage}
               role='tab'
-            >
-              <div
-                className={`rounded-full transition-all duration-300 ${
-                  index === currentPage
-                    ? 'bg-terminal-green'
-                    : 'bg-terminal-dimmed hover:bg-terminal-green/50'
-                }`}
-                style={{ width: '8px', height: '8px' }}
-              />
-            </button>
+            />
           ))}
         </div>
       </div>

@@ -199,9 +199,10 @@ function SuccessStories() {
         touchState.current.velocity = deltaX / elapsed;
 
         // Apply real-time visual feedback
+        // Base transform is -100% (current item at position 1 of 3)
         if (containerRef.current) {
           const container = containerRef.current;
-          const baseTransform = -currentIndex * 100;
+          const baseTransform = -100;
           const dragOffset = (deltaX / window.innerWidth) * 100;
           const transform = baseTransform + dragOffset;
 
@@ -235,17 +236,15 @@ function SuccessStories() {
 
       if (isLeftSwipe) {
         nextStory();
-        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        container.style.transform = `translateX(-100%)`;
         handleUserInteraction();
       } else if (isRightSwipe) {
         prevStory();
-        container.style.transform = `translateX(-${
-          ((currentIndex - 1 + STORIES.length) % STORIES.length) * 100
-        }%)`;
+        container.style.transform = `translateX(-100%)`;
         handleUserInteraction();
       } else {
         // Snap back to current position
-        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+        container.style.transform = `translateX(-100%)`;
       }
 
       // Reset transition after animation
@@ -343,17 +342,15 @@ function SuccessStories() {
 
       if (isLeftSwipe) {
         nextStory();
-        container.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        container.style.transform = `translateX(-100%)`;
         handleUserInteraction();
       } else if (isRightSwipe) {
         prevStory();
-        container.style.transform = `translateX(-${
-          ((currentIndex - 1 + STORIES.length) % STORIES.length) * 100
-        }%)`;
+        container.style.transform = `translateX(-100%)`;
         handleUserInteraction();
       } else {
         // Snap back to current position
-        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+        container.style.transform = `translateX(-100%)`;
       }
 
       // Reset transition after animation
@@ -421,13 +418,25 @@ function SuccessStories() {
     handleMouseUp,
   ]);
 
+  // Calculate visible items for mobile (current, prev, next)
+  const getVisibleMobileIndices = useCallback(() => {
+    const indices = [];
+    const prev = (currentIndex - 1 + STORIES.length) % STORIES.length;
+    const next = (currentIndex + 1) % STORIES.length;
+    indices.push(prev, currentIndex, next);
+    return indices;
+  }, [currentIndex]);
+
+  const visibleMobileIndices = useMemo(() => getVisibleMobileIndices(), [getVisibleMobileIndices]);
+
   // Memoized transform style with hardware acceleration and smooth transitions
+  // Since we render 3 items (prev, current, next), current is always at position 1 (100%)
   const transformStyle = useMemo(
     () => ({
-      transform: `translateX(-${currentIndex * 100}%)`,
+      transform: `translateX(-100%)`,
       transition: 'transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     }),
-    [currentIndex]
+    []
   );
 
   // Auto-scroll functionality
@@ -487,14 +496,17 @@ function SuccessStories() {
               className='flex [will-change:transform] [transform:translateZ(0)] [backface-visibility:hidden] [perspective:1000px]'
               style={transformStyle}
             >
-              {STORIES.map((s) => (
-                <div
-                  key={s.title}
-                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
-                >
-                  <StoryCard story={s} />
-                </div>
-              ))}
+              {visibleMobileIndices.map((index) => {
+                const story = STORIES[index];
+                return (
+                  <div
+                    key={story.title}
+                    className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
+                  >
+                    <StoryCard story={story} />
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -511,7 +523,7 @@ function SuccessStories() {
                   setCurrentIndex(index);
                   handleUserInteraction();
                 }}
-                className={`w-3 h-3 flex items-center justify-center rounded-full transition-all duration-300 relative ${
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentIndex
                     ? 'bg-terminal-green'
                     : 'bg-terminal-dimmed hover:bg-terminal-green/50'
@@ -521,16 +533,7 @@ function SuccessStories() {
                 }`}
                 aria-selected={index === currentIndex}
                 role='tab'
-              >
-                <div
-                  className={`rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? 'bg-terminal-green'
-                      : 'bg-terminal-dimmed hover:bg-terminal-green/50'
-                  }`}
-                  style={{ width: '8px', height: '8px' }}
-                />
-              </button>
+              />
             ))}
           </div>
         </div>
