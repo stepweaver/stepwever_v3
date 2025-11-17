@@ -10,6 +10,7 @@ const ProjectCard = memo(function ProjectCard({
   keywords = [],
   actions = [],
   slug,
+  isLCP = false,
 }) {
   const handleExternalClick = (e) => {
     e.preventDefault();
@@ -41,7 +42,8 @@ const ProjectCard = memo(function ProjectCard({
               src={imageUrl}
               alt={title}
               className='w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105'
-              loading='lazy'
+              loading={isLCP ? 'eager' : 'lazy'}
+              fetchPriority={isLCP ? 'high' : 'auto'}
             />
           </div>
         )}

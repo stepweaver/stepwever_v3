@@ -201,6 +201,14 @@ export default function RootLayout({ children }) {
           href='https://fonts.gstatic.com'
           crossOrigin='anonymous'
         />
+
+        {/* Preload LCP image for better performance */}
+        <link
+          rel='preload'
+          href='/images/screencapture-lambda-ortho.png'
+          as='image'
+          fetchPriority='high'
+        />
       </head>
       <body className='text-terminal-text'>
         {/* Skip to main content link for accessibility */}

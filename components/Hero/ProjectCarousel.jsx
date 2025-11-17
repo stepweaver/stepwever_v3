@@ -619,6 +619,7 @@ function ProjectCarousel() {
                       keywords={project.keywords}
                       actions={project.actions}
                       slug={project.slug}
+                      isLCP={index === 0}
                     />
                   </Link>
                 ) : (
@@ -632,6 +633,7 @@ function ProjectCarousel() {
                       keywords={project.keywords}
                       actions={project.actions}
                       slug={project.slug}
+                      isLCP={index === 0}
                     />
                   </div>
                 )}
@@ -789,6 +791,7 @@ function ProjectCarousel() {
                             keywords={project.keywords}
                             actions={project.actions}
                             slug={project.slug}
+                            isLCP={pageIndex === 0 && index === 0}
                           />
                         </Link>
                       ) : (
@@ -801,6 +804,7 @@ function ProjectCarousel() {
                           keywords={project.keywords}
                           actions={project.actions}
                           slug={project.slug}
+                          isLCP={pageIndex === 0 && index === 0}
                         />
                       )}
                     </div>
