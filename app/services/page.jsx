@@ -69,8 +69,11 @@ export const metadata = {
   },
 };
 
+// Memoize structured data at module level to avoid regenerating on every request
+const baseStructuredData = generateStructuredData();
+
 export default function Services() {
-  const structuredData = generateStructuredData();
+  const structuredData = baseStructuredData;
 
   // Enhanced service-specific structured data
   const servicesStructuredData = {

@@ -53,8 +53,9 @@ const nextConfig = {
         runtimeChunk: 'single',
         splitChunks: {
           chunks: 'all',
-          maxInitialRequests: 25,
+          maxInitialRequests: 20, // Reduced to prevent too many initial chunks
           minSize: 20000,
+          maxSize: 244000, // Limit chunk size to improve parallel loading
           cacheGroups: {
             default: false,
             vendors: false,

@@ -39,9 +39,10 @@ const CTA = dynamic(() => import('@/components/CTA/CTA'), {
   loading: () => <div className='min-h-[200px]' />,
 });
 
-export default function HomePage() {
-  const structuredData = generateStructuredData();
+// Memoize structured data to avoid regenerating on every render
+const structuredData = generateStructuredData();
 
+export default function HomePage() {
   return (
     <>
       {/* Enhanced structured data for SEO */}

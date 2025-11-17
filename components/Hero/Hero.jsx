@@ -8,8 +8,9 @@ import TerminalLink from './TerminalLink';
 
 // Lazy load ProjectCarousel - it's a large component (798 lines) with complex logic
 // This reduces initial JS execution time significantly
+// Client-only since it's below the fold and interactive
 const ProjectCarousel = dynamic(() => import('./ProjectCarousel'), {
-  ssr: true, // Keep SSR for SEO and initial render
+  ssr: false, // Client-only to reduce initial bundle and main thread work
   loading: () => (
     <div className='min-h-[400px] flex items-center justify-center'>
       <div className='text-terminal-muted font-ocr'>Loading projects...</div>
