@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
-const MATRIX_GLYPHS = ['λ', 'ネ', 'ホ', 'ミ', 'ツ', '0', '1'];
+const MATRIX_GLYPHS = ['λ', 'ネ', 'ホ', 'ミ', 'ツ'];
 
 const defaultProfile = {
   name: 'Nyx Solaris',
@@ -212,7 +212,7 @@ const NeonProfileCard = ({ profile }) => {
               {matrixCells.map((cell, index) => (
                 <div
                   key={`${cell}-${index}-${isMounted}`}
-                  className='h-8 sm:h-9 cyber-border-sm cyber-border-green bg-terminal-light/15 flex items-center justify-center text-terminal-green font-mono text-lg sm:text-xl font-bold'
+                  className='h-8 sm:h-9 matrix-border-sm cyber-border-green bg-terminal-light/15 flex items-center justify-center text-terminal-green font-mono text-lg sm:text-xl font-bold'
                 >
                   {cell}
                 </div>

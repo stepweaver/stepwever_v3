@@ -573,17 +573,7 @@ html.theme-loaded {
   position: relative;
   overflow: hidden;
   color: var(--color-terminal-green);
-  border-radius: 0;
-  clip-path: polygon(
-    6px 0%, 
-    calc(100% - 6px) 0%, 
-    100% 6px, 
-    100% calc(100% - 6px), 
-    calc(100% - 6px) 100%, 
-    6px 100%, 
-    0% calc(100% - 6px), 
-    0% 6px
-  );
+  border-radius: 4px;
 }
 
 .glitch-button:hover {
@@ -805,25 +795,26 @@ body::after {
   text-shadow: -2px 0 var(--color-terminal-red);
 }
 
-/* Cyberpunk Border Styles - Chamfered corners with sharp angles */
+/* Cyberpunk Border Styles - Rounded corners for softer cyberpunk aesthetic */
 .cyber-border {
   position: relative;
-  border-radius: 0;
-  /* 10px chamfer for aggressive cyberpunk look */
-  clip-path: polygon(
-    10px 0%, 
-    calc(100% - 10px) 0%, 
-    100% 10px, 
-    100% calc(100% - 10px), 
-    calc(100% - 10px) 100%, 
-    10px 100%, 
-    0% calc(100% - 10px), 
-    0% 10px
-  );
+  border-radius: 6px;
 }
 
-/* Smaller chamfer for buttons and small elements */
+/* Smaller border for buttons and small elements */
 .cyber-border-sm {
+  position: relative;
+  border-radius: 4px;
+}
+
+/* Larger border for prominent containers */
+.cyber-border-lg {
+  position: relative;
+  border-radius: 8px;
+}
+
+/* Matrix border - keeps clip-path for old analog output effect */
+.matrix-border-sm {
   position: relative;
   border-radius: 0;
   clip-path: polygon(
@@ -835,22 +826,6 @@ body::after {
     6px 100%, 
     0% calc(100% - 6px), 
     0% 6px
-  );
-}
-
-/* Larger chamfer for prominent containers */
-.cyber-border-lg {
-  position: relative;
-  border-radius: 0;
-  clip-path: polygon(
-    14px 0%, 
-    calc(100% - 14px) 0%, 
-    100% 14px, 
-    100% calc(100% - 14px), 
-    calc(100% - 14px) 100%, 
-    14px 100%, 
-    0% calc(100% - 14px), 
-    0% 14px
   );
 }
 
