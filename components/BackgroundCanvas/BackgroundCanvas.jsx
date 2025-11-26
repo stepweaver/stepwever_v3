@@ -50,10 +50,23 @@ export default function BackgroundCanvas() {
     [185, 185, 185], // Very Dark Gray
   ];
 
+  // Pure black/grayscale colors for monochrome inverted mode
+  const colorsMonochromeInverted = [
+    [0, 0, 0], // Pure Black (starting color)
+    [10, 10, 10], // Very Dark Gray
+    [20, 20, 20], // Dark Gray
+    [30, 30, 30], // Dark-Medium Gray
+    [40, 40, 40], // Medium Gray
+    [50, 50, 50], // Medium-Light Gray
+    [60, 60, 60], // Light Gray
+    [70, 70, 70], // Very Light Gray
+  ];
+
   // Select color palette based on theme
   const neonColors = 
     theme === 'light' ? colorsLight : 
     theme === 'monochrome' ? colorsMonochrome : 
+    theme === 'monochrome-inverted' ? colorsMonochromeInverted :
     neonColorsDark;
 
   // Use safe scroll hook
@@ -235,8 +248,9 @@ export default function BackgroundCanvas() {
             filter: 
               theme === 'light' ? 'drop-shadow(8px 8px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 60px rgba(0, 0, 0, 0.3))' :
               theme === 'monochrome' ? 'drop-shadow(0 0 8px rgba(255, 255, 255, 1)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))' :
+              theme === 'monochrome-inverted' ? 'drop-shadow(0 0 8px rgba(0, 0, 0, 1)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.4))' :
               'drop-shadow(0 0 8px rgba(0, 255, 65, 1)) drop-shadow(0 0 20px rgba(0, 255, 65, 0.4))',
-            opacity: theme === 'light' ? 0.2 : 0.3,
+            opacity: theme === 'light' || theme === 'monochrome-inverted' ? 0.2 : 0.3,
             transform: `scale(${
               isMobile
                 ? 0.9 - scrollProgress * 0.4 // Mobile: 0.9 to 0.5

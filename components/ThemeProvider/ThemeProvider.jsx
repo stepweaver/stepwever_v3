@@ -23,13 +23,13 @@ export function ThemeProvider({ children }) {
     if (typeof window !== 'undefined') {
       // First check if theme is already set on the document element (by our script)
       const currentTheme = document.documentElement.getAttribute('data-theme');
-      if (currentTheme === 'light' || currentTheme === 'dark' || currentTheme === 'monochrome') {
+      if (currentTheme === 'light' || currentTheme === 'dark' || currentTheme === 'monochrome' || currentTheme === 'monochrome-inverted') {
         return currentTheme;
       }
 
       // Fallback to localStorage or system preference
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'monochrome') {
+      if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'monochrome' || savedTheme === 'monochrome-inverted') {
         return savedTheme;
       }
       return getSystemTheme();
@@ -92,7 +92,8 @@ export function ThemeProvider({ children }) {
     setTheme((prevTheme) => {
       if (prevTheme === 'dark') return 'light';
       if (prevTheme === 'light') return 'monochrome';
-      return 'dark'; // monochrome -> dark
+      if (prevTheme === 'monochrome') return 'monochrome-inverted';
+      return 'dark'; // monochrome-inverted -> dark
     });
   };
 

@@ -188,6 +188,46 @@
     0 0 10px rgba(255, 255, 255, 0.4);
 }
 
+[data-theme="monochrome-inverted"] {
+  /* Monochrome Inverted Mode - Pure Black on Pure White */
+  --color-terminal-dark: #ffffff;
+  --color-terminal-light: #f5f5f5;
+  --color-terminal-border: #cccccc;
+  /* All colors are black or shades of gray */
+  --color-terminal-green: #000000;
+  --color-terminal-text: #000000;
+  --color-terminal-muted: #333333;
+  --color-terminal-yellow: #000000;
+  --color-terminal-red: #000000;
+  --color-terminal-blue: #000000;
+  --color-terminal-cyan: #000000;
+  --color-terminal-dimmed: #666666;
+  --color-terminal-magenta: #000000;
+  --color-terminal-pink: #000000;
+  --color-terminal-purple: #000000;
+  --color-terminal-orange: #000000;
+  --color-terminal-white: #000000;
+
+  /* Background and Foreground - Pure white and black */
+  --background: #ffffff;
+  --foreground: #000000;
+
+  /* Black shadows on white */
+  --terminal-title-glow: 0 0 3px rgba(0, 0, 0, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(0, 0, 0, 0.3);
+  --terminal-shadow: 0 0 1px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(0, 0, 0, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(0, 0, 0, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(0, 0, 0, 0.4);
+  --crt-glow: 0 0 30px rgba(0, 0, 0, 0.15);
+
+  /* Glitch Effect Colors — black */
+  --theme-glitch-color: #000000;
+  --theme-glitch-shadow: 0 0 5px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(0, 0, 0, 0.4);
+}
+
 /* Font weight improvements for better readability */
 .font-ocr {
   font-weight: 800;
@@ -636,6 +676,11 @@ html.theme-loaded {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
+/* Monochrome inverted: black shadow on hover */
+[data-theme="monochrome-inverted"] .glitch-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
 .glitch-button:hover::after {
   content: '';
   position: absolute;
@@ -666,6 +711,11 @@ html.theme-loaded {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Monochrome inverted: black shadows only */
+[data-theme="monochrome-inverted"] .card-glow {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .card-glow-tight {
   position: relative;
   isolation: isolate;
@@ -690,6 +740,17 @@ html.theme-loaded {
 }
 
 [data-theme="light"] .card-glow-tight::after {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  opacity: 1;
+}
+
+/* Monochrome inverted: black shadows instead of white glows */
+[data-theme="monochrome-inverted"] .card-glow-tight {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="monochrome-inverted"] .card-glow-tight::after {
   border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
   opacity: 1;
@@ -736,6 +797,27 @@ body::after {
   animation: scanlines-light 0.15s linear infinite;
 }
 
+/* Monochrome inverted theme scanline effect - subtle black scanlines */
+[data-theme="monochrome-inverted"] body::after {
+  background: 
+    /* Vignette effect */
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.08) 100%),
+    /* Scanlines - subtle black */
+    linear-gradient(
+      transparent 0%,
+      transparent 45%,
+      rgba(0, 0, 0, 0.03) 45%,
+      rgba(0, 0, 0, 0.03) 55%,
+      transparent 55%,
+      transparent 100%
+    );
+  background-size: 100% 100%, 100% 6px;
+  background-repeat: no-repeat, repeat-y;
+  top: -6px;
+  height: calc(100% + 12px);
+  animation: scanlines-light 0.15s linear infinite;
+}
+
 /* Theme toggle specific styles */
 .theme-toggle {
   transition: all 0.3s ease;
@@ -748,6 +830,11 @@ body::after {
 
 /* Light mode: black shadow on theme toggle */
 [data-theme="light"] .theme-toggle:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Monochrome inverted: black shadow on theme toggle */
+[data-theme="monochrome-inverted"] .theme-toggle:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
@@ -961,6 +1048,23 @@ body::after {
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
 }
 
+/* Monochrome inverted: black shadows instead of colored glows for borders */
+[data-theme="monochrome-inverted"] .cyber-border-green,
+[data-theme="monochrome-inverted"] .cyber-border-magenta,
+[data-theme="monochrome-inverted"] .cyber-border-yellow,
+[data-theme="monochrome-inverted"] .cyber-border-cyan,
+[data-theme="monochrome-inverted"] .cyber-border-red {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+[data-theme="monochrome-inverted"] .cyber-border-green:hover,
+[data-theme="monochrome-inverted"] .cyber-border-magenta:hover,
+[data-theme="monochrome-inverted"] .cyber-border-yellow:hover,
+[data-theme="monochrome-inverted"] .cyber-border-cyan:hover,
+[data-theme="monochrome-inverted"] .cyber-border-red:hover {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
+}
+
 /* Light mode: black borders for card components */
 [data-theme="light"] article.cyber-border-green,
 [data-theme="light"] article.cyber-border.cyber-border-green,
@@ -1017,6 +1121,62 @@ body::after {
   border-color: rgba(0, 0, 0, 0.3);
 }
 
+/* Monochrome inverted: black borders for card components */
+[data-theme="monochrome-inverted"] article.cyber-border-green,
+[data-theme="monochrome-inverted"] article.cyber-border.cyber-border-green,
+[data-theme="monochrome-inverted"] div.cyber-border-green.card-glow,
+[data-theme="monochrome-inverted"] div.cyber-border-green.card-glow-tight,
+[data-theme="monochrome-inverted"] div.cyber-border-lg.cyber-border-green {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="monochrome-inverted"] article.cyber-border-green:hover,
+[data-theme="monochrome-inverted"] article.cyber-border.cyber-border-green:hover,
+[data-theme="monochrome-inverted"] div.cyber-border-green.card-glow:hover,
+[data-theme="monochrome-inverted"] div.cyber-border-green.card-glow-tight:hover,
+[data-theme="monochrome-inverted"] div.cyber-border-lg.cyber-border-green:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Monochrome inverted: override hover border colors for cards */
+[data-theme="monochrome-inverted"] article.card-glow-tight:hover,
+[data-theme="monochrome-inverted"] article.cyber-border.cyber-border-green:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Monochrome inverted: override hover shadow colors for cards */
+[data-theme="monochrome-inverted"] article.card-glow-tight:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="monochrome-inverted"] article.cyber-border.cyber-border-green:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Monochrome inverted: small badge borders */
+[data-theme="monochrome-inverted"] .cyber-border-sm.cyber-border-green {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Monochrome inverted: ServicesPage cards with borders */
+[data-theme="monochrome-inverted"] .card-glow.cyber-border-green,
+[data-theme="monochrome-inverted"] article.card-glow.cyber-border-green {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="monochrome-inverted"] .card-glow.cyber-border-green:hover,
+[data-theme="monochrome-inverted"] article.card-glow.cyber-border-green:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Monochrome inverted: override Tailwind hover:border for all cards */
+[data-theme="monochrome-inverted"] article[class*="card-glow"]:hover,
+[data-theme="monochrome-inverted"] div[class*="card-glow"]:hover,
+[data-theme="monochrome-inverted"] article.cyber-border[class*="hover:border"]:hover,
+[data-theme="monochrome-inverted"] div.cyber-border[class*="hover:border"]:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
 /* Light mode: black borders for buttons */
 [data-theme="light"] button.cyber-border-green,
 [data-theme="light"] button.cyber-border-sm.cyber-border-green,
@@ -1045,6 +1205,34 @@ body::after {
   border-color: rgba(0, 0, 0, 0.35);
 }
 
+/* Monochrome inverted: black borders for buttons */
+[data-theme="monochrome-inverted"] button.cyber-border-green,
+[data-theme="monochrome-inverted"] button.cyber-border-sm.cyber-border-green,
+[data-theme="monochrome-inverted"] .glitchButton,
+[data-theme="monochrome-inverted"] button[class*="cyber-border-green"],
+[data-theme="monochrome-inverted"] a[class*="cyber-border-green"] {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="monochrome-inverted"] button.cyber-border-green:hover,
+[data-theme="monochrome-inverted"] button.cyber-border-sm.cyber-border-green:hover,
+[data-theme="monochrome-inverted"] .glitchButton:hover,
+[data-theme="monochrome-inverted"] button[class*="cyber-border-green"]:hover,
+[data-theme="monochrome-inverted"] a[class*="cyber-border-green"]:hover {
+  border-color: rgba(0, 0, 0, 0.35);
+}
+
+/* Monochrome inverted: override Tailwind border-terminal-green classes on buttons */
+[data-theme="monochrome-inverted"] button[class*="border-terminal-green"],
+[data-theme="monochrome-inverted"] a[class*="border-terminal-green"] {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="monochrome-inverted"] button[class*="border-terminal-green"]:hover,
+[data-theme="monochrome-inverted"] a[class*="border-terminal-green"]:hover {
+  border-color: rgba(0, 0, 0, 0.35);
+}
+
 /* Subtle glowing text effect for terminal only */
 .terminal-glow {
   /* Subtle glow for all text */
@@ -1054,6 +1242,49 @@ body::after {
 /* Light mode: black text shadows instead of green glows */
 [data-theme="light"] .terminal-glow {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* Monochrome inverted: black text shadows instead of white glows */
+[data-theme="monochrome-inverted"] .terminal-glow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* Monochrome inverted: override any remaining hardcoded green in terminal modules */
+[data-theme="monochrome-inverted"] .hover-glow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* ========================================
+   Monochrome Inverted: Override ALL inline Tailwind shadows with green
+   ======================================== */
+
+/* Override inline hover:shadow-[0_0_15px_rgba(0,255,0,0.3)] and similar */
+[data-theme="monochrome-inverted"] *[class*="hover:shadow-"]:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Override inline text-shadow-[...] with green */
+[data-theme="monochrome-inverted"] *[class*="text-shadow-"] {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Override TerminalWindow gradient scanlines */
+[data-theme="monochrome-inverted"] *[class*="before:via-[rgba(0,255,0"]::before,
+[data-theme="monochrome-inverted"] *[class*="before:via-[rgba(0,255"]::before {
+  --tw-gradient-to: rgba(0, 0, 0, 0.02) !important;
+  --tw-gradient-via: rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Override terminal button shadows on terminal page */
+[data-theme="monochrome-inverted"] button.cyber-border-green:hover,
+[data-theme="monochrome-inverted"] .cyber-border-green:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Override any animate-pulse-glow for cleaner look */
+[data-theme="monochrome-inverted"] .animate-pulse-glow,
+[data-theme="monochrome-inverted"] *[class*="animate-pulse-glow"] {
+  animation: none !important;
 }
 
 /* Terminal headings get stronger glow */
@@ -1076,6 +1307,16 @@ body::after {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
+/* Monochrome inverted: black shadows for headings */
+[data-theme="monochrome-inverted"] .terminal-glow h1,
+[data-theme="monochrome-inverted"] .terminal-glow h2,
+[data-theme="monochrome-inverted"] .terminal-glow h3,
+[data-theme="monochrome-inverted"] .terminal-glow h4,
+[data-theme="monochrome-inverted"] .terminal-glow h5,
+[data-theme="monochrome-inverted"] .terminal-glow h6 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
 /* Code and terminal elements */
 .terminal-glow code,
 .terminal-glow pre,
@@ -1091,6 +1332,21 @@ body::after {
   text-shadow: 0 0 2px rgba(0, 255, 0, 0.35), 0 0 3px rgba(0, 255, 0, 0.15);
 }
 
+/* Monochrome inverted: black shadows for code and terminal elements */
+[data-theme="monochrome-inverted"] .terminal-glow code,
+[data-theme="monochrome-inverted"] .terminal-glow pre,
+[data-theme="monochrome-inverted"] .terminal-glow .terminal-output,
+[data-theme="monochrome-inverted"] .terminal-glow .terminal-input,
+[data-theme="monochrome-inverted"] .terminal-glow .terminal-line {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* Monochrome inverted: black shadows for terminal green text */
+[data-theme="monochrome-inverted"] .terminal-glow .text-terminal-green,
+[data-theme="monochrome-inverted"] .terminal-glow [class*="text-terminal-green"] {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
 /* Light mode: black shadows for colored text */
 [data-theme="light"] .terminal-glow .text-terminal-green,
 [data-theme="light"] .terminal-glow [class*="text-terminal-green"],
@@ -1100,8 +1356,23 @@ body::after {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
 }
 
+/* Monochrome inverted: black shadows for colored text */
+[data-theme="monochrome-inverted"] .terminal-glow .text-terminal-cyan,
+[data-theme="monochrome-inverted"] .terminal-glow .text-terminal-magenta,
+[data-theme="monochrome-inverted"] .terminal-glow .text-terminal-yellow,
+[data-theme="monochrome-inverted"] .terminal-glow .text-terminal-blue,
+[data-theme="monochrome-inverted"] .terminal-glow .text-terminal-red {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
 /* Light theme border adjustments - using black shadows */
 [data-theme="light"] .cyber-border-border {
+  border-color: rgba(0, 0, 0, 0.18);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+/* Monochrome inverted border adjustments - using black shadows */
+[data-theme="monochrome-inverted"] .cyber-border-border {
   border-color: rgba(0, 0, 0, 0.18);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
 }

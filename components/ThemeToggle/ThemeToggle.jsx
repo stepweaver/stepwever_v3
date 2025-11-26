@@ -28,11 +28,12 @@ export default function ThemeToggle() {
           }}
           aria-label={`Switch theme (current: ${theme})`}
         >
-          {/* Toggle track - now wider for 3 states */}
+          {/* Toggle track - now wider for 4 states */}
           <div
-            className={`crt-toggle-track-three ${
+            className={`crt-toggle-track-four ${
               theme === 'dark' ? 'crt-toggle-dark' : 
-              theme === 'light' ? 'crt-toggle-light' : 'crt-toggle-monochrome'
+              theme === 'light' ? 'crt-toggle-light' : 
+              theme === 'monochrome' ? 'crt-toggle-monochrome' : 'crt-toggle-monochrome-inverted'
             }`}
           >
             {/* Scanline effect overlay */}
@@ -40,16 +41,18 @@ export default function ThemeToggle() {
 
             {/* Toggle slider with lambda */}
             <div
-              className={`crt-toggle-slider-three ${
+              className={`crt-toggle-slider-four ${
                 theme === 'dark' ? 'crt-slider-dark' : 
-                theme === 'light' ? 'crt-slider-light' : 'crt-slider-monochrome'
+                theme === 'light' ? 'crt-slider-light' : 
+                theme === 'monochrome' ? 'crt-slider-monochrome' : 'crt-slider-monochrome-inverted'
               }`}
             >
               {/* Glow effect */}
               <div
                 className={`crt-toggle-glow ${
                   theme === 'dark' ? 'crt-glow-green' : 
-                  theme === 'light' ? 'crt-glow-magenta' : 'crt-glow-white'
+                  theme === 'light' ? 'crt-glow-magenta' : 
+                  theme === 'monochrome' ? 'crt-glow-white' : 'crt-glow-black'
                 }`}
               />
 
@@ -64,7 +67,7 @@ export default function ThemeToggle() {
             </div>
 
             {/* Theme labels with lambda images */}
-            <div className='crt-toggle-labels-three'>
+            <div className='crt-toggle-labels-four'>
               <Image
                 src='/images/lambda_stepweaver.png'
                 alt='Dark theme'
@@ -90,6 +93,15 @@ export default function ThemeToggle() {
                 height={12}
                 className={`crt-lambda-label crt-lambda-white ${
                   theme === 'monochrome' ? 'crt-label-active' : 'crt-label-inactive'
+                }`}
+              />
+              <Image
+                src='/images/lambda_stepweaver.png'
+                alt='Monochrome inverted theme'
+                width={12}
+                height={12}
+                className={`crt-lambda-label crt-lambda-black ${
+                  theme === 'monochrome-inverted' ? 'crt-label-active' : 'crt-label-inactive'
                 }`}
               />
             </div>

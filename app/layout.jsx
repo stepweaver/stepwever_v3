@@ -168,7 +168,7 @@ export default function RootLayout({ children }) {
                   // Update meta tags for better mobile experience
                   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
                   if (metaThemeColor) {
-                    const themeColor = theme === 'light' ? '#e5e5e5' : theme === 'monochrome' ? '#000000' : '#0d1211';
+                    const themeColor = theme === 'light' ? '#e5e5e5' : theme === 'monochrome' ? '#000000' : theme === 'monochrome-inverted' ? '#ffffff' : '#0d1211';
                     metaThemeColor.setAttribute('content', themeColor);
                   }
                   
