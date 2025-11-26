@@ -282,22 +282,39 @@ function ProjectCarousel() {
         'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
       if (isLeftSwipe) {
-        nextProject();
-        container.style.transform = `translateX(-100%)`;
+        // Animate left (to -200%), then update state
+        container.style.transform = `translateX(-200%)`;
+        setTimeout(() => {
+          nextProject();
+          if (container) {
+            container.style.transition = 'none';
+            container.style.transform = `translateX(-100%)`;
+            setTimeout(() => {
+              if (container) {
+                container.style.transition = '';
+              }
+            }, 50);
+          }
+        }, 300);
       } else if (isRightSwipe) {
-        prevProject();
-        container.style.transform = `translateX(-100%)`;
+        // Animate right (to 0%), then update state
+        container.style.transform = `translateX(0%)`;
+        setTimeout(() => {
+          prevProject();
+          if (container) {
+            container.style.transition = 'none';
+            container.style.transform = `translateX(-100%)`;
+            setTimeout(() => {
+              if (container) {
+                container.style.transition = '';
+              }
+            }, 50);
+          }
+        }, 300);
       } else {
         // Snap back to current position
         container.style.transform = `translateX(-100%)`;
       }
-
-      // Reset transition after animation
-      setTimeout(() => {
-        if (container) {
-          container.style.transition = '';
-        }
-      }, 300);
     }
 
     // Set wasSwipe flag
@@ -394,24 +411,41 @@ function ProjectCarousel() {
         'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
       if (isLeftSwipe) {
-        nextProject();
-        container.style.transform = `translateX(-100%)`;
+        // Animate left (to -200%), then update state
+        container.style.transform = `translateX(-200%)`;
         handleUserInteraction();
+        setTimeout(() => {
+          nextProject();
+          if (container) {
+            container.style.transition = 'none';
+            container.style.transform = `translateX(-100%)`;
+            setTimeout(() => {
+              if (container) {
+                container.style.transition = '';
+              }
+            }, 50);
+          }
+        }, 300);
       } else if (isRightSwipe) {
-        prevProject();
-        container.style.transform = `translateX(-100%)`;
+        // Animate right (to 0%), then update state
+        container.style.transform = `translateX(0%)`;
         handleUserInteraction();
+        setTimeout(() => {
+          prevProject();
+          if (container) {
+            container.style.transition = 'none';
+            container.style.transform = `translateX(-100%)`;
+            setTimeout(() => {
+              if (container) {
+                container.style.transition = '';
+              }
+            }, 50);
+          }
+        }, 300);
       } else {
         // Snap back to current position
         container.style.transform = `translateX(-100%)`;
       }
-
-      // Reset transition after animation
-      setTimeout(() => {
-        if (container) {
-          container.style.transition = '';
-        }
-      }, 300);
     }
 
     // Reset touch state

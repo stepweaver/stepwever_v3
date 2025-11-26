@@ -207,7 +207,7 @@ export default function DiceRollerPage() {
 
                 <aside
                   id='dice-roller-section'
-                  className='cyber-border cyber-border-cyan bg-transparent p-4 md:p-6 animate-pulse-glow overflow-x-hidden max-w-full'
+                  className='cyber-border cyber-border-cyan bg-terminal-dark/30 backdrop-blur-xl p-4 md:p-6 animate-pulse-glow overflow-x-hidden max-w-full'
                 >
                   <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
                     Click dice to add to your pool. Use modifiers and notes as needed.
