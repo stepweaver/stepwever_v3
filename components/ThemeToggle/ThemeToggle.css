@@ -20,7 +20,7 @@
   @apply relative flex items-center;
   width: 64px;
   height: 32px;
-  border-radius: 16px;
+  border-radius: 3px;
   border: 2px solid;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
   position: relative;
@@ -59,7 +59,7 @@
   @apply absolute flex items-center justify-center;
   width: 26px;
   height: 26px;
-  border-radius: 50%;
+  border-radius: 2px;
   border: 2px solid;
   z-index: 2;
   top: 1px;
@@ -78,7 +78,7 @@
 
 .crt-slider-light {
   @apply border-terminal-magenta bg-white;
-  transform: translateX(34px);
+  transform: translateX(30px);
   box-shadow: 
     0 0 8px rgba(255, 0, 255, 0.6),
     inset 0 0 4px rgba(255, 0, 255, 0.3);
@@ -86,7 +86,8 @@
 
 /* Glow effect behind the slider */
 .crt-toggle-glow {
-  @apply absolute inset-0 rounded-full opacity-40;
+  @apply absolute inset-0 opacity-40;
+  border-radius: 2px;
   transition: opacity 0.25s ease;
   filter: blur(4px);
 }
