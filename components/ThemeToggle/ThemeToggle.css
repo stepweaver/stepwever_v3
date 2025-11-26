@@ -187,6 +187,25 @@
   z-index: 0;
 }
 
+/* Lambda image labels */
+.crt-lambda-label {
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  object-fit: contain;
+}
+
+/* Color filters for each theme */
+.crt-lambda-green {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%);
+}
+
+.crt-lambda-magenta {
+  filter: brightness(0) saturate(100%) invert(33%) sepia(97%) saturate(6729%) hue-rotate(296deg) brightness(101%) contrast(101%);
+}
+
+.crt-lambda-white {
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
 .crt-toggle-labels span {
   @apply font-bold text-base font-ocr;
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -226,6 +245,30 @@
 
 .crt-label-monochrome {
   margin-right: 2px;
+}
+
+/* Active state - lambda images */
+.crt-lambda-label.crt-label-active {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+/* Inactive state - lambda images */
+.crt-lambda-label.crt-label-inactive {
+  opacity: 0.5;
+}
+
+/* Add glow to inactive lambda images */
+.crt-toggle-dark .crt-lambda-green.crt-label-inactive {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 3px rgba(0, 255, 65, 0.6));
+}
+
+.crt-toggle-light .crt-lambda-magenta.crt-label-inactive {
+  filter: brightness(0) saturate(100%) invert(33%) sepia(97%) saturate(6729%) hue-rotate(296deg) brightness(101%) contrast(101%) drop-shadow(0 0 3px rgba(255, 0, 255, 0.6));
+}
+
+.crt-toggle-monochrome .crt-lambda-white.crt-label-inactive {
+  filter: brightness(0) saturate(100%) invert(100%) drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
 }
 
 /* Status text */

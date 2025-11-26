@@ -63,29 +63,35 @@ export default function ThemeToggle() {
               />
             </div>
 
-            {/* Theme labels */}
+            {/* Theme labels with lambda images */}
             <div className='crt-toggle-labels-three'>
-              <span
-                className={`crt-label-dark ${
+              <Image
+                src='/images/lambda_stepweaver.png'
+                alt='Dark theme'
+                width={12}
+                height={12}
+                className={`crt-lambda-label crt-lambda-green ${
                   theme === 'dark' ? 'crt-label-active' : 'crt-label-inactive'
                 }`}
-              >
-                λ
-              </span>
-              <span
-                className={`crt-label-light ${
+              />
+              <Image
+                src='/images/lambda_stepweaver.png'
+                alt='Light theme'
+                width={12}
+                height={12}
+                className={`crt-lambda-label crt-lambda-magenta ${
                   theme === 'light' ? 'crt-label-active' : 'crt-label-inactive'
                 }`}
-              >
-                λ
-              </span>
-              <span
-                className={`crt-label-monochrome ${
+              />
+              <Image
+                src='/images/lambda_stepweaver.png'
+                alt='Monochrome theme'
+                width={12}
+                height={12}
+                className={`crt-lambda-label crt-lambda-white ${
                   theme === 'monochrome' ? 'crt-label-active' : 'crt-label-inactive'
                 }`}
-              >
-                λ
-              </span>
+              />
             </div>
           </div>
         </div>
