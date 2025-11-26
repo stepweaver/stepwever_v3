@@ -1,0 +1,198 @@
+@reference "../../app/globals.css";
+
+/* CRT-Style Theme Toggle */
+
+.crt-toggle-container {
+  @apply flex items-center gap-2 cursor-pointer select-none;
+  transition: transform 0.15s ease;
+}
+
+.crt-toggle-container:hover {
+  transform: scale(1.03);
+}
+
+.crt-toggle-container:active {
+  transform: scale(0.97);
+}
+
+/* Toggle track - the main switch body */
+.crt-toggle-track {
+  @apply relative flex items-center;
+  width: 64px;
+  height: 32px;
+  border-radius: 16px;
+  border: 2px solid;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-toggle-dark {
+  @apply border-terminal-green bg-transparent;
+  box-shadow: 
+    inset 0 0 8px rgba(0, 255, 0, 0.2),
+    0 0 12px rgba(0, 255, 0, 0.3);
+}
+
+.crt-toggle-light {
+  @apply border-terminal-magenta bg-transparent;
+  box-shadow: 
+    inset 0 0 8px rgba(255, 0, 255, 0.2),
+    0 0 12px rgba(255, 0, 255, 0.3);
+}
+
+/* CRT scanline effect */
+.crt-scanlines {
+  @apply absolute inset-0 pointer-events-none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  z-index: 1;
+}
+
+/* Sliding button */
+.crt-toggle-slider {
+  @apply absolute flex items-center justify-center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid;
+  z-index: 2;
+  top: 1px;
+  left: 2px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+.crt-slider-dark {
+  @apply border-terminal-green bg-black;
+  transform: translateX(0);
+  box-shadow: 
+    0 0 8px rgba(0, 255, 0, 0.6),
+    inset 0 0 4px rgba(0, 255, 0, 0.3);
+}
+
+.crt-slider-light {
+  @apply border-terminal-magenta bg-white;
+  transform: translateX(34px);
+  box-shadow: 
+    0 0 8px rgba(255, 0, 255, 0.6),
+    inset 0 0 4px rgba(255, 0, 255, 0.3);
+}
+
+/* Glow effect behind the slider */
+.crt-toggle-glow {
+  @apply absolute inset-0 rounded-full opacity-40;
+  transition: opacity 0.25s ease;
+  filter: blur(4px);
+}
+
+.crt-glow-green {
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 0, 0.9) 0%,
+    rgba(0, 255, 0, 0.5) 50%,
+    transparent 100%
+  );
+}
+
+.crt-glow-magenta {
+  background: radial-gradient(
+    circle,
+    rgba(255, 0, 255, 0.9) 0%,
+    rgba(255, 0, 255, 0.5) 50%,
+    transparent 100%
+  );
+}
+
+/* Lambda icon inside slider */
+.crt-lambda-icon {
+  @apply relative z-10 w-5 h-5 object-contain;
+  filter: brightness(1.2) contrast(1.1);
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.crt-toggle-dark .crt-lambda-icon {
+  filter: brightness(1.5) drop-shadow(0 0 2px rgba(0, 255, 0, 0.8));
+}
+
+.crt-toggle-light .crt-lambda-icon {
+  filter: brightness(0.8) drop-shadow(0 0 2px rgba(255, 0, 255, 0.8));
+}
+
+/* Lambda labels on track */
+.crt-toggle-labels {
+  @apply absolute inset-0 flex items-center justify-between px-2 pointer-events-none;
+  z-index: 0;
+}
+
+.crt-toggle-labels span {
+  @apply font-bold text-base font-ocr;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.crt-label-dark {
+  margin-left: 2px;
+}
+
+.crt-label-light {
+  margin-right: 2px;
+}
+
+.crt-label-active {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.crt-label-inactive {
+  opacity: 0.3;
+}
+
+.crt-toggle-dark .crt-label-inactive {
+  @apply text-terminal-green;
+  text-shadow: 0 0 4px rgba(0, 255, 0, 0.4);
+}
+
+.crt-toggle-light .crt-label-inactive {
+  @apply text-terminal-magenta;
+  text-shadow: 0 0 4px rgba(255, 0, 255, 0.4);
+}
+
+/* Status text */
+.crt-status-text {
+  @apply text-xs font-ocr font-bold;
+  transition: color 0.2s ease;
+  text-shadow: 0 0 6px currentColor;
+  letter-spacing: 0.1em;
+}
+
+/* Hover effects */
+.crt-toggle-container:hover .crt-toggle-track {
+  filter: brightness(1.1);
+}
+
+.crt-toggle-container:hover .crt-lambda-icon {
+  transform: scale(1.05);
+}
+
+/* Focus state for accessibility */
+.crt-toggle-container:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 20px;
+}
+
+/* Animation for theme changes */
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.crt-toggle-container:active .crt-toggle-track {
+  animation: crt-flicker 0.15s ease-in-out;
+}
+
