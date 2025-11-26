@@ -1,14 +1,48 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import MobileNav from './MobileNav';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Determine if scrolled past threshold
+      setScrolled(currentScrollY > 20);
+
+      // Show/hide navbar based on scroll direction
+      if (currentScrollY < lastScrollY || currentScrollY < 100) {
+        // Scrolling up or near top - show navbar
+        setVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down and past threshold - hide navbar
+        setVisible(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   return (
     <nav
-      className='pt-6 pb-4 relative z-50 bg-transparent'
+      className={`pt-6 pb-4 fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        visible ? 'translate-y-0' : '-translate-y-full'
+      } ${
+        scrolled
+          ? 'bg-terminal-dark/90 backdrop-blur-md shadow-lg shadow-terminal-green/10'
+          : 'bg-transparent'
+      }`}
       role='navigation'
       aria-label='Main navigation'
     >

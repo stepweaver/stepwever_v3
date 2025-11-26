@@ -234,7 +234,7 @@ export default function RootLayout({ children }) {
         <ErrorBoundary>
           <ThemeProvider>
             <Navbar />
-            <main id='main-content' role='main'>
+            <main id='main-content' role='main' className='pt-24'>
               <PageTransition>{children}</PageTransition>
             </main>
             <Footer />
