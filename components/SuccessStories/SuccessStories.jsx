@@ -57,7 +57,7 @@ const StoryCard = ({ story }) => (
     className={`
       bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green
       shadow-lg hover:shadow-terminal-green/20 transition-shadow
-      flex flex-col h-full card-glow-tight
+      flex flex-col h-full min-h-[400px] sm:min-h-[450px] card-glow-tight
     `}
   >
     {/* terminal header */}
@@ -535,7 +535,7 @@ function SuccessStories() {
                 return (
                   <div
                     key={story.title}
-                    className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
+                    className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide min-h-[400px] sm:min-h-[450px]'
                   >
                     <StoryCard story={story} />
                   </div>

@@ -102,7 +102,7 @@ const ProjectCard = memo(function ProjectCard({
   // Match SuccessStories structure exactly - plain article element (no Link wrapper)
   // Navigation handled by parent carousel
   return (
-    <article className='bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-full flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
+    <article className='bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-full min-h-[500px] sm:min-h-[600px] flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
       {cardContent}
     </article>
   );

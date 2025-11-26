@@ -198,7 +198,7 @@
   filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%);
 }
 
-.crt-lambda-magenta {
+.crt-lambda-pink {
   filter: brightness(0) saturate(100%) invert(33%) sepia(97%) saturate(6729%) hue-rotate(296deg) brightness(101%) contrast(101%);
 }
 
@@ -263,7 +263,7 @@
   filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 3px rgba(0, 255, 65, 0.6));
 }
 
-.crt-toggle-light .crt-lambda-magenta.crt-label-inactive {
+.crt-toggle-light .crt-lambda-pink.crt-label-inactive {
   filter: brightness(0) saturate(100%) invert(33%) sepia(97%) saturate(6729%) hue-rotate(296deg) brightness(101%) contrast(101%) drop-shadow(0 0 3px rgba(255, 0, 255, 0.6));
 }
 

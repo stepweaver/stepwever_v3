@@ -79,7 +79,7 @@ export default function ThemeToggle() {
                 alt='Light theme'
                 width={12}
                 height={12}
-                className={`crt-lambda-label crt-lambda-magenta ${
+                className={`crt-lambda-label crt-lambda-pink ${
                   theme === 'light' ? 'crt-label-active' : 'crt-label-inactive'
                 }`}
               />

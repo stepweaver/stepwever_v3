@@ -625,7 +625,7 @@ function ProjectCarousel() {
               return (
                 <div
                   key={index}
-                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
+                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide min-h-[500px] sm:min-h-[600px]'
                 >
                   {project.slug || project.link ? (
                     <Link
