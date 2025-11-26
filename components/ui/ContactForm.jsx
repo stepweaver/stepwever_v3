@@ -76,7 +76,7 @@ export default function ContactForm() {
 
   return (
     <div className='space-y-6 sm:space-y-8'>
-      <div>
+      <div className='relative z-10'>
         <TerminalWindow
           showStatusBar={true}
           statusText={statusText}
@@ -85,7 +85,7 @@ export default function ContactForm() {
             <div className='text-terminal-green'>~/contact</div>
           }
         >
-          <div className='p-4'>
+          <div className='p-4 relative z-10'>
             {status.error && (
               <div
                 className='mb-4 p-2 border border-terminal-red bg-terminal-red/20 backdrop-blur-xl'

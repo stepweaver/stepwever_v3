@@ -97,55 +97,43 @@ function ServicesPage() {
           {/* Service Overview Cards - Right aligned like main hero */}
           <div className='max-w-6xl ml-auto'>
             <h2 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-yellow font-bold mb-6'>
-              WHAT I OFFER
+              WHAT I BUILD
             </h2>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'>
               <div className='p-4 md:p-6 bg-terminal-light/10 backdrop-blur-xl cyber-border cyber-border-green card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
-                  <Zap className='w-6 h-6 text-terminal-green' />
+                  <DollarSign className='w-6 h-6 text-terminal-green' />
                   <h3 className='font-ibm font-bold text-terminal-green text-base sm:text-lg'>
-                    QUICK SOLUTIONS
+                    STARTER
                   </h3>
                 </div>
                 <p className='font-ocr text-terminal-text text-sm sm:text-base'>
-                  Fixed-price packages from $500
-                </p>
-              </div>
-
-              <div className='p-4 md:p-6 bg-terminal-light/10 backdrop-blur-xl cyber-border cyber-border-yellow card-glow'>
-                <div className='flex items-center gap-3 mb-3'>
-                  <Code className='w-6 h-6 text-terminal-yellow' />
-                  <h3 className='font-ibm font-bold text-terminal-yellow text-base sm:text-lg'>
-                    CUSTOM DEV
-                  </h3>
-                </div>
-                <p className='font-ocr text-terminal-text text-sm sm:text-base'>
-                  Tailored solutions & retainers
+                  $500–$1,500
                 </p>
               </div>
 
               <div className='p-4 md:p-6 bg-terminal-light/10 backdrop-blur-xl cyber-border cyber-border-magenta card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
-                  <BarChart3 className='w-6 h-6 text-terminal-magenta' />
+                  <Zap className='w-6 h-6 text-terminal-magenta' />
                   <h3 className='font-ibm font-bold text-terminal-magenta text-base sm:text-lg'>
-                    ANALYTICS
+                    GROWTH
                   </h3>
                 </div>
                 <p className='font-ocr text-terminal-text text-sm sm:text-base'>
-                  Data insights & automation
+                  $1,500–$3,800/mo
                 </p>
               </div>
 
               <div className='p-4 md:p-6 bg-terminal-light/10 backdrop-blur-xl border border-terminal-cyan/30 hover:border-terminal-cyan/50 transition-colors duration-200 card-glow'>
                 <div className='flex items-center gap-3 mb-3'>
-                  <Target className='w-6 h-6 text-terminal-cyan' />
+                  <Clock className='w-6 h-6 text-terminal-cyan' />
                   <h3 className='font-ibm font-bold text-terminal-cyan text-base sm:text-lg'>
-                    CONSULTING
+                    ONGOING
                   </h3>
                 </div>
                 <p className='font-ocr text-terminal-text text-sm sm:text-base'>
-                  Strategy & technical guidance
+                  $300–$600/mo
                 </p>
               </div>
             </div>
@@ -153,19 +141,18 @@ function ServicesPage() {
         </div>
       </section>
 
-      {/* Quick-Pick Solutions */}
+      {/* What I Build */}
       <section id='solutions' className='relative z-30 py-20'>
         <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
           <header className='mb-12 md:mb-16 text-center'>
             <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
-              QUICK-PICK SOLUTIONS
+              WHAT I BUILD
             </h2>
             <p className='text-lg md:text-xl font-ocr text-terminal-yellow max-w-3xl mx-auto mb-4'>
-              Build your stack - start small, add as you grow
+              Websites. Dashboards. Automations. Digital tools.
             </p>
             <p className='text-base md:text-lg font-ocr text-terminal-text max-w-xl mx-auto'>
-              Fixed prices and fast delivery. Choose what you need, when you
-              need it.
+              Everything built to be simple, stable, and easy to maintain — no black boxes, no agency fluff.
             </p>
           </header>
 
@@ -222,26 +209,29 @@ function ServicesPage() {
         </div>
       </section>
 
-      {/* Custom & Retainer Work */}
+      {/* Pricing */}
       <section id='custom-work' className='relative z-30 py-20'>
         <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
           {/* Section Header */}
           <header className='mb-12 md:mb-16'>
             <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
-              {SERVICES_DATA.customWork.title}
+              PRICING
             </h2>
             <p className='text-lg md:text-xl font-ibm text-terminal-text max-w-4xl leading-relaxed'>
-              {SERVICES_DATA.customWork.description}
+              Straightforward, no gotchas. Everything is scoped in advance. No surprise fees.
             </p>
           </header>
 
-          {/* Benefits Section */}
+          {/* Who I Help Section */}
           <div className='mb-16 md:mb-20'>
             <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 md:mb-6'>
-              Why go custom?
+              {SERVICES_DATA.customWork.title}
             </h3>
             <div className='h-0.5 bg-terminal-green mb-6 md:mb-8'></div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8'>
+            <p className='text-base md:text-lg font-ibm text-terminal-text mb-6 leading-relaxed'>
+              {SERVICES_DATA.customWork.description}
+            </p>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8'>
               {SERVICES_DATA.customWork.benefits.map((benefit, index) => (
                 <div key={`benefit-${index}`} className='flex items-start'>
                   <span className='text-terminal-green font-bold mr-3 mt-1 font-ocr'>
@@ -255,10 +245,10 @@ function ServicesPage() {
             </div>
           </div>
 
-          {/* Retainer Tiers */}
+          {/* Pricing Tiers */}
           <div className='mb-12'>
             <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 md:mb-6'>
-              Monthly retainer tiers
+              How it's priced
             </h3>
             <div className='h-0.5 bg-terminal-green mb-6 md:mb-8'></div>
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16'>
@@ -297,13 +287,6 @@ function ServicesPage() {
             </div>
           </div>
 
-          {/* Footer note */}
-          <div className='pt-8 border-t border-terminal-border/20'>
-            <p className='text-terminal-yellow font-ocr text-base'>
-              * Custom solutions and retainer pricing are tailored to your
-              specific needs and scope
-            </p>
-          </div>
         </div>
       </section>
 
@@ -370,12 +353,12 @@ function ServicesPage() {
         </section>
       ))}
 
-      {/* How I Work Section */}
+      {/* How It Works Section */}
       <section id='process' className='relative z-30 py-20'>
         <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
           <header className='mb-12 md:mb-16'>
             <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
-              HOW I WORK
+              HOW IT WORKS
             </h2>
           </header>
 
@@ -433,6 +416,9 @@ function ServicesPage() {
               <h2 className='text-3xl md:text-4xl lg:text-5xl font-ibm font-bold text-terminal-green mb-6 leading-tight'>
                 {SERVICES_DATA.cta.headline}
               </h2>
+              <p className='text-lg md:text-xl font-ibm text-terminal-text leading-relaxed'>
+                {SERVICES_DATA.cta.description}
+              </p>
             </div>
 
             <div className='flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-12'>
@@ -440,21 +426,14 @@ function ServicesPage() {
                 onClick={() => setIsCalendlyOpen(true)}
                 className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
               >
-                SCHEDULE A CALL
+                {SERVICES_DATA.cta.ctaText}
               </GlitchButton>
 
               <GlitchButton
-                href='/'
-                className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
+                href={`mailto:${SERVICES_DATA.contact.email}`}
+                className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1 [&>div>span:first-child]:text-terminal-cyan [&>div>span:last-child]:text-terminal-cyan [&>div>span:nth-child(3)]:text-terminal-cyan !border-terminal-cyan hover:!border-terminal-cyan text-terminal-cyan hover:shadow-[0_0_10px_rgba(0,255,255,0.3)]'
               >
-                BACK TO HOME
-              </GlitchButton>
-
-              <GlitchButton
-                href='/contact'
-                className='px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold sm:flex-1'
-              >
-                CONTACT
+                EMAIL DIRECT
               </GlitchButton>
             </div>
           </div>

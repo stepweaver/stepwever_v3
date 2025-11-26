@@ -23,6 +23,12 @@ export default function OptimizedImage({
   // Ensure loading attribute is explicitly set (not undefined)
   const loadingAttr = loading || 'lazy';
   
+  // Prevent context menu on images (right-click)
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    return false;
+  };
+  
   // If src doesn't end with .png, assume it's already optimized or not a PNG
   if (!src || !src.endsWith('.png')) {
     return (
@@ -32,6 +38,8 @@ export default function OptimizedImage({
         className={className}
         loading={loadingAttr}
         fetchPriority={fetchPriority}
+        onContextMenu={handleContextMenu}
+        draggable={false}
         {...props}
       />
     );
@@ -49,6 +57,8 @@ export default function OptimizedImage({
         className={className}
         loading={loadingAttr}
         fetchPriority={fetchPriority}
+        onContextMenu={handleContextMenu}
+        draggable={false}
         {...props}
       />
     );
@@ -58,7 +68,7 @@ export default function OptimizedImage({
   const webpSrc = src.replace('.png', '.webp');
 
   return (
-    <picture>
+    <picture onContextMenu={handleContextMenu}>
       <source srcSet={webpSrc} type="image/webp" />
       <img
         src={src}
@@ -67,6 +77,8 @@ export default function OptimizedImage({
         loading={loadingAttr}
         fetchPriority={fetchPriority}
         decoding="async"
+        onContextMenu={handleContextMenu}
+        draggable={false}
         {...props}
       />
     </picture>

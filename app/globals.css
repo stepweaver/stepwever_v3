@@ -671,7 +671,7 @@ body::after {
   background-repeat: repeat-y;
   pointer-events: none;
   animation: scanlines 0.1s linear infinite;
-  z-index: 1;
+  z-index: 0;
   will-change: transform;
 }
 
@@ -1069,4 +1069,26 @@ body::after {
 [data-theme="light"] .cyber-border-border:hover {
   border-color: rgba(0, 0, 0, 0.28);
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
+}
+
+/* Image Protection Styles */
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: auto;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* Prevent selection on picture elements */
+picture {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }

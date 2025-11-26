@@ -12,55 +12,55 @@ const ServicesPage = dynamic(() =>
   import('@/components/ServicesPage/ServicesPage')
 );
 
-// Custom metadata for services page - optimized for social media lead generation
+// Custom metadata for services page - optimized for local business consulting
 export const metadata = {
-  title: 'Business Automation & Development Services',
+  title: 'Stepweaver Consulting - Practical Tech for Small Businesses',
   description:
-    'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
+    'Web systems, automations, and data clarity for restaurants, contractors, and local businesses. No buzzwords, just results. $500-$3800.',
   keywords: [
-    'business automation services',
-    'web development pricing',
-    'fixed price automation',
-    'small business tech solutions',
-    'workflow automation',
-    'data pipeline development',
-    'custom software development',
-    'process automation consultant',
-    'business intelligence services',
-    'startup technology solutions',
-    'n8n automation',
-    'zapier alternative',
-    'google sheets dashboard',
-    'receipt capture automation',
-    'email automation services',
+    'small business consulting',
+    'restaurant technology consultant',
+    'contractor website services',
+    'local business automation',
+    'business dashboard development',
+    'toast pos integration',
+    'quickbooks automation',
+    'small business web development',
+    'restaurant automation systems',
+    'contractor lead generation',
+    'retail business technology',
+    'practical tech solutions',
+    'affordable business automation',
+    'local business consultant',
+    'business systems optimization',
   ],
   openGraph: {
-    title: 'Business Automation & Development Services | Fixed Pricing',
+    title: 'Stepweaver Consulting | Practical Systems for Small Businesses',
     description:
-      'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
+      'Web systems + automations + data clarity. Practical tech fixes for restaurants, contractors, and local businesses. Results, not buzzwords.',
     url: 'https://stepweaver.dev/services',
     type: 'website',
     images: [
       {
-        url: '/images/lambda_preview.png', // Consider creating services-specific image
+        url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
-        alt: 'λstepweaver Services - Business Automation & Development Solutions',
+        alt: 'Stepweaver Consulting - Practical Tech Solutions for Small Businesses',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Business Automation & Development Services | Fixed Pricing',
+    title: 'Stepweaver Consulting | Practical Tech for Small Businesses',
     description:
-      'Transform your business with practical automation and development solutions. Fixed prices starting at $275. Fast delivery. No surprises.',
+      'Web systems, automations, and dashboards for restaurants, contractors, and local businesses. Practical solutions, no buzzwords. $500-$3800.',
     images: [
       {
-        url: '/images/lambda_preview.png', // Consider creating services-specific image
+        url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
-        alt: 'λstepweaver Services - Business Automation & Development Solutions',
+        alt: 'Stepweaver Consulting - Practical Tech Solutions for Small Businesses',
       },
     ],
   },
@@ -79,18 +79,18 @@ export default function Services() {
   const servicesStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: 'Business Automation & Development Services',
+    name: 'Stepweaver Consulting - Small Business Technology Solutions',
     description:
-      'Fixed-price business automation, web development, and data solutions for small to medium businesses.',
+      'Practical web systems, automations, and dashboards for restaurants, contractors, and local businesses. Fixed pricing from $500-$3800.',
     provider: {
       '@type': 'Organization',
       name: 'λstepweaver',
       url: 'https://stepweaver.dev',
     },
-    areaServed: 'Worldwide',
+    areaServed: 'United States',
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Quick-Pick Solutions',
+      name: 'Consulting Services',
       itemListElement: SERVICES_DATA.quickPickSolutions.map(
         (service, index) => ({
           '@type': 'Offer',
@@ -100,20 +100,23 @@ export default function Services() {
             name: service.title,
             description: service.description,
           },
-          price: service.price,
-          priceCurrency: 'USD',
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            price: service.price,
+            priceCurrency: 'USD',
+          },
           availability: 'https://schema.org/InStock',
           deliveryLeadTime: service.delivery,
         })
       ),
     },
     serviceType: [
+      'Restaurant Technology Consulting',
+      'Small Business Web Development',
       'Business Automation',
-      'Web Development',
-      'Data Pipeline Development',
-      'Process Optimization',
-      'Workflow Automation',
-      'Custom Software Development',
+      'Dashboard Development',
+      'POS Integration',
+      'Business Systems Consulting',
     ],
   };
 
