@@ -228,7 +228,7 @@ export default function DiceRoller() {
   );
 
   return (
-    <div className='flex flex-col gap-2 p-2 font-ibm w-full max-w-full max-lg:gap-1.5 max-lg:p-1.5'>
+    <div className='flex flex-col gap-2 p-2 font-ibm w-full max-w-full overflow-x-hidden max-lg:gap-1.5 max-lg:p-1.5'>
       {/* Header Section */}
       <div className='flex flex-col items-center justify-center mb-4 pb-3 border-b border-terminal-border gap-3 max-lg:mb-1.5 max-lg:pb-1.5 max-lg:gap-1.5'>
         {/* Title */}
@@ -268,11 +268,10 @@ export default function DiceRoller() {
         </div>
       </div>
 
-      {/* Main Content - 2-Column Grid */}
+      {/* Main Content - Single Column */}
       <div className='flex flex-col gap-6 max-lg:gap-1.5'>
-        <div className='grid grid-cols-1 lg:grid-cols-[minmax(0,600px)_minmax(0,600px)] gap-6 lg:gap-16 items-start justify-center max-lg:gap-1.5'>
-          {/* Left Column - Dice Selection & Controls */}
-          <div className='flex flex-col gap-2 max-lg:gap-1.5'>
+        {/* Dice Selection & Controls */}
+        <div className='flex flex-col gap-2 max-lg:gap-1.5'>
             <DicePoolBuilder
               dicePool={dicePool}
               onUpdatePool={setDicePool}
@@ -337,10 +336,10 @@ export default function DiceRoller() {
                 )}
               </div>
             </div>
-          </div>
+        </div>
 
-          {/* Right Column - Current Pool & Result */}
-          <div className='flex flex-col gap-4 max-lg:gap-1.5'>
+        {/* Current Pool & Result */}
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 max-lg:gap-3'>
             {/* Current Pool Display */}
             <div ref={currentPoolRef}>
               <h3 className='text-terminal-green mb-3 text-xl max-lg:mb-1 max-lg:text-sm'>
@@ -484,20 +483,17 @@ export default function DiceRoller() {
               </div>
             )}
           </div>
-        </div>
 
-        {/* History - Compact List Below */}
-        <div className='grid grid-cols-1 lg:grid-cols-[minmax(0,600px)_minmax(0,600px)] gap-6 lg:gap-16 justify-center'>
-          <div className='max-w-[600px] w-full'>
-            <RollHistory
-              history={history}
-              onSelectRoll={handleSelectHistoryRoll}
-              onEditComment={handleEditComment}
-              onClearHistory={handleClearHistory}
-              isExpanded={historyExpanded}
-              onToggleExpanded={() => setHistoryExpanded(!historyExpanded)}
-            />
-          </div>
+        {/* History - Full Width Below */}
+        <div className='w-full'>
+          <RollHistory
+            history={history}
+            onSelectRoll={handleSelectHistoryRoll}
+            onEditComment={handleEditComment}
+            onClearHistory={handleClearHistory}
+            isExpanded={historyExpanded}
+            onToggleExpanded={() => setHistoryExpanded(!historyExpanded)}
+          />
         </div>
       </div>
     </div>

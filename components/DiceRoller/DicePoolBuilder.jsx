@@ -43,14 +43,14 @@ export default function DicePoolBuilder({
   };
 
   return (
-    <div className='flex flex-col gap-3 max-lg:gap-1.5'>
+    <div className='flex flex-col gap-3 max-lg:gap-1.5 overflow-x-hidden max-w-full'>
       {/* Dice Type Selection */}
       <div>
         <h3 className='text-terminal-green mb-3 text-xl max-lg:mb-1 max-lg:text-sm'>
           Add Dice
         </h3>
         {/* Hexagonal grid - d20 in center */}
-        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[90vw] max-lg:max-w-[340px] max-lg:h-[280px]'>
+        <div className='relative w-[320px] h-[280px] mx-auto max-lg:w-[90vw] max-lg:max-w-[280px] max-lg:h-[240px]'>
           {DICE_TYPES.map((dice, index) => {
             const IconComponent = DICE_ICONS[dice.sides];
 

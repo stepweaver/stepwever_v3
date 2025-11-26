@@ -107,8 +107,8 @@ export default function DiceRollerPage() {
       <div className='min-h-screen relative overflow-x-hidden max-w-full'>
         <BackgroundCanvas />
         
-        <div className='relative z-10 w-full'>
-          <section className='w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24'>
+        <div className='relative z-10 w-full overflow-x-hidden'>
+          <section className='w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24 overflow-x-hidden'>
             <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
               <header className='space-y-6'>
                 <div className='space-y-4'>
@@ -128,7 +128,7 @@ export default function DiceRollerPage() {
                 </div>
               </header>
 
-              <section className='grid gap-10 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1.8fr)]'>
+              <section className='grid gap-10 xl:grid-cols-[minmax(0,400px)_minmax(0,1fr)]'>
                 <div className='space-y-8'>
                   <article className='space-y-3'>
                     <h2 className='font-ibm text-2xl sm:text-3xl text-terminal-cyan'>
@@ -207,12 +207,12 @@ export default function DiceRollerPage() {
 
                 <aside
                   id='dice-roller-section'
-                  className='cyber-border cyber-border-cyan bg-transparent p-4 md:p-6 animate-pulse-glow'
+                  className='cyber-border cyber-border-cyan bg-transparent p-4 md:p-6 animate-pulse-glow overflow-x-hidden max-w-full'
                 >
                   <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
                     Click dice to add to your pool. Use modifiers and notes as needed.
                   </p>
-                  <div className='w-full'>
+                  <div className='w-full overflow-x-hidden max-w-full'>
                     <DiceRoller />
                   </div>
                 </aside>
