@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useSafeScroll } from '@/utils/useSafeScroll';
+import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import styles from './BackgroundCanvas.module.css';
 
 export default function BackgroundCanvas() {
@@ -10,9 +11,11 @@ export default function BackgroundCanvas() {
   const [originalImageData, setOriginalImageData] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { theme } = useTheme();
 
-  // Neon rainbow colors - starting with green
-  const neonColors = [
+  // Neon rainbow colors for dark mode - starting with green
+  const neonColorsDark = [
     [0, 255, 0], // Neon Green (starting color)
     [255, 255, 0], // Neon Yellow
     [255, 165, 0], // Neon Orange
@@ -22,6 +25,21 @@ export default function BackgroundCanvas() {
     [0, 191, 255], // Neon Blue
     [0, 255, 255], // Neon Cyan
   ];
+
+  // Colors for light mode - starting with black, transitioning through darker tones
+  const colorsLight = [
+    [0, 0, 0], // Black (starting color for light mode)
+    [51, 51, 51], // Dark Gray
+    [102, 51, 102], // Dark Purple
+    [102, 0, 102], // Darker Magenta
+    [153, 0, 153], // Deep Magenta
+    [153, 0, 51], // Deep Red-Purple
+    [51, 51, 102], // Dark Blue-Gray
+    [0, 51, 102], // Dark Blue
+  ];
+
+  // Select color palette based on theme
+  const neonColors = theme === 'light' ? colorsLight : neonColorsDark;
 
   // Use safe scroll hook
   useSafeScroll({
@@ -76,6 +94,8 @@ export default function BackgroundCanvas() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         setOriginalImageData(imageData);
         setHasError(false);
+        // Trigger fade-in after a short delay to ensure first paint
+        setTimeout(() => setIsLoaded(true), 100);
       } catch (error) {
         console.error('Error processing background image:', error);
         setHasError(true);
@@ -103,21 +123,15 @@ export default function BackgroundCanvas() {
   }, []);
 
   // Update colors and scale based on scroll
-  // Use requestAnimationFrame and chunked processing to avoid blocking main thread
+  // Use requestAnimationFrame for smooth color transitions
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !originalImageData || hasError) return;
 
     let rafId = null;
-    let lastColor = null;
-    let isProcessing = false;
+    let lastColorKey = null;
 
     const updateCanvas = () => {
-      if (isProcessing) {
-        rafId = requestAnimationFrame(updateCanvas);
-        return;
-      }
-
       try {
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
         if (!ctx) return;
@@ -142,18 +156,14 @@ export default function BackgroundCanvas() {
           currentColor[2] * (1 - blend) + nextColor[2] * blend
         );
 
-        // Skip update if color hasn't changed significantly (reduces unnecessary processing)
+        // Skip update if color hasn't changed (reduces unnecessary processing)
         const colorKey = `${r},${g},${b}`;
-        if (lastColor === colorKey) {
-          rafId = requestAnimationFrame(updateCanvas);
+        if (lastColorKey === colorKey) {
           return;
         }
-        lastColor = colorKey;
+        lastColorKey = colorKey;
 
-        // Process pixels in chunks to avoid blocking main thread
-        // Process 10000 pixels per chunk (allows browser to handle other tasks)
-        const PIXELS_PER_CHUNK = 10000;
-        const dataLength = originalImageData.data.length;
+        // Create new image data and process all pixels at once for smooth transition
         const imageData = new ImageData(
           new Uint8ClampedArray(originalImageData.data),
           originalImageData.width,
@@ -161,71 +171,34 @@ export default function BackgroundCanvas() {
         );
         const data = imageData.data;
 
-        isProcessing = true;
-        let currentIndex = 0;
-
-        const processChunk = (deadline) => {
-          // Process one chunk per call to avoid blocking
-          if (currentIndex >= dataLength) {
-            // All pixels processed - update canvas
-            ctx.putImageData(imageData, 0, 0);
-            isProcessing = false;
-            rafId = requestAnimationFrame(updateCanvas);
-            return;
+        // Process all pixels in one frame (image is small enough to handle)
+        for (let i = 0; i < data.length; i += 4) {
+          if (data[i + 3] > 0) {
+            // Only change non-transparent pixels
+            data[i] = r; // Red
+            data[i + 1] = g; // Green
+            data[i + 2] = b; // Blue
+            // Keep original alpha (data[i + 3])
           }
-
-          const endIndex = Math.min(currentIndex + PIXELS_PER_CHUNK * 4, dataLength);
-          
-          // Process pixels in this chunk
-          for (let i = currentIndex; i < endIndex; i += 4) {
-            if (data[i + 3] > 0) {
-              // Only change non-transparent pixels
-              data[i] = r; // Red
-              data[i + 1] = g; // Green
-              data[i + 2] = b; // Blue
-              // Keep original alpha (data[i + 3])
-            }
-          }
-
-          currentIndex = endIndex;
-
-          // Continue processing - yield to browser between chunks
-          if (deadline && deadline.timeRemaining() > 0) {
-            // Still have time in this idle period, continue immediately
-            processChunk(deadline);
-          } else {
-            // Yield to browser - schedule next chunk
-            if (typeof requestIdleCallback !== 'undefined') {
-              requestIdleCallback(processChunk, { timeout: 100 });
-            } else {
-              setTimeout(() => processChunk(null), 0);
-            }
-          }
-        };
-
-        // Use requestIdleCallback if available, otherwise fallback to setTimeout
-        if (typeof requestIdleCallback !== 'undefined') {
-          requestIdleCallback(processChunk, { timeout: 100 });
-        } else {
-          setTimeout(() => processChunk(null), 0);
         }
+
+        // Update canvas with new colors
+        ctx.putImageData(imageData, 0, 0);
       } catch (error) {
         console.error('Error updating canvas colors:', error);
         setHasError(true);
-        isProcessing = false;
       }
     };
 
-    // Use requestAnimationFrame to batch updates and yield to browser
-    rafId = requestAnimationFrame(updateCanvas);
+    // Update immediately and then on any dependency change
+    updateCanvas();
 
     return () => {
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }
-      isProcessing = false;
     };
-  }, [scrollProgress, originalImageData, hasError]);
+  }, [scrollProgress, originalImageData, hasError, neonColors, theme]);
 
   // Don't render if there's an error
   if (hasError) {
@@ -240,8 +213,14 @@ export default function BackgroundCanvas() {
           ref={canvasRef}
           width={1024}
           height={1536}
-          className='opacity-30 origin-center drop-shadow-[0_0_20px_rgba(0,255,65,0.3)]'
+          className={`origin-center transition-all duration-700 ease-out ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
           style={{
+            filter: theme === 'light'
+              ? 'drop-shadow(8px 8px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 60px rgba(0, 0, 0, 0.3))'
+              : 'drop-shadow(0 0 15px rgba(0, 255, 65, 0.9)) drop-shadow(0 0 30px rgba(0, 255, 65, 0.5)) drop-shadow(0 0 50px rgba(0, 255, 65, 0.2))',
+            opacity: theme === 'light' ? 0.2 : 0.3,
             transform: `scale(${
               isMobile
                 ? 0.9 - scrollProgress * 0.4 // Mobile: 0.9 to 0.5
