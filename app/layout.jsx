@@ -168,7 +168,8 @@ export default function RootLayout({ children }) {
                   // Update meta tags for better mobile experience
                   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
                   if (metaThemeColor) {
-                    metaThemeColor.setAttribute('content', theme === 'light' ? '#e8f0e8' : '#0d1211');
+                    const themeColor = theme === 'light' ? '#e5e5e5' : theme === 'monochrome' ? '#000000' : '#0d1211';
+                    metaThemeColor.setAttribute('content', themeColor);
                   }
                   
                   // Add a class to prevent layout shift during theme transition

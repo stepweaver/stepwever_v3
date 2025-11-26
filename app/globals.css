@@ -148,6 +148,46 @@
   --theme-glitch-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+[data-theme="monochrome"] {
+  /* Monochrome Mode - Pure White on Pure Black */
+  --color-terminal-dark: #000000;
+  --color-terminal-light: #0a0a0a;
+  --color-terminal-border: #333333;
+  /* All colors are white or shades of gray */
+  --color-terminal-green: #ffffff;
+  --color-terminal-text: #ffffff;
+  --color-terminal-muted: #cccccc;
+  --color-terminal-yellow: #ffffff;
+  --color-terminal-red: #ffffff;
+  --color-terminal-blue: #ffffff;
+  --color-terminal-cyan: #ffffff;
+  --color-terminal-dimmed: #999999;
+  --color-terminal-magenta: #ffffff;
+  --color-terminal-pink: #ffffff;
+  --color-terminal-purple: #ffffff;
+  --color-terminal-orange: #ffffff;
+  --color-terminal-white: #ffffff;
+
+  /* Background and Foreground - Pure black and white */
+  --background: #000000;
+  --foreground: #ffffff;
+
+  /* White glows on black */
+  --terminal-title-glow: 0 0 3px rgba(255, 255, 255, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(255, 255, 255, 0.3);
+  --terminal-shadow: 0 0 1px rgba(255, 255, 255, 0.7),
+    0 0 20px rgba(255, 255, 255, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(255, 255, 255, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.4);
+  --crt-glow: 0 0 30px rgba(255, 255, 255, 0.15);
+
+  /* Glitch Effect Colors — white */
+  --theme-glitch-color: #ffffff;
+  --theme-glitch-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.4);
+}
+
 /* Font weight improvements for better readability */
 .font-ocr {
   font-weight: 800;

@@ -38,8 +38,23 @@ export default function BackgroundCanvas() {
     [0, 51, 102], // Dark Blue
   ];
 
+  // Pure white/grayscale colors for monochrome mode
+  const colorsMonochrome = [
+    [255, 255, 255], // Pure White (starting color)
+    [245, 245, 245], // Very Light Gray
+    [235, 235, 235], // Light Gray
+    [225, 225, 225], // Light-Medium Gray
+    [215, 215, 215], // Medium Gray
+    [205, 205, 205], // Medium-Dark Gray
+    [195, 195, 195], // Dark Gray
+    [185, 185, 185], // Very Dark Gray
+  ];
+
   // Select color palette based on theme
-  const neonColors = theme === 'light' ? colorsLight : neonColorsDark;
+  const neonColors = 
+    theme === 'light' ? colorsLight : 
+    theme === 'monochrome' ? colorsMonochrome : 
+    neonColorsDark;
 
   // Use safe scroll hook
   useSafeScroll({
@@ -217,9 +232,10 @@ export default function BackgroundCanvas() {
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
-            filter: theme === 'light'
-              ? 'drop-shadow(8px 8px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 60px rgba(0, 0, 0, 0.3))'
-              : 'drop-shadow(0 0 15px rgba(0, 255, 65, 0.9)) drop-shadow(0 0 30px rgba(0, 255, 65, 0.5)) drop-shadow(0 0 50px rgba(0, 255, 65, 0.2))',
+            filter: 
+              theme === 'light' ? 'drop-shadow(8px 8px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 60px rgba(0, 0, 0, 0.3))' :
+              theme === 'monochrome' ? 'drop-shadow(0 0 8px rgba(255, 255, 255, 1)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))' :
+              'drop-shadow(0 0 8px rgba(0, 255, 65, 1)) drop-shadow(0 0 20px rgba(0, 255, 65, 0.4))',
             opacity: theme === 'light' ? 0.2 : 0.3,
             transform: `scale(${
               isMobile

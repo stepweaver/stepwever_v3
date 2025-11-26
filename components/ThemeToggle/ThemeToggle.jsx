@@ -26,12 +26,13 @@ export default function ThemeToggle() {
               toggleTheme();
             }
           }}
-          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+          aria-label={`Switch theme (current: ${theme})`}
         >
-          {/* Toggle track */}
+          {/* Toggle track - now wider for 3 states */}
           <div
-            className={`crt-toggle-track ${
-              theme === 'dark' ? 'crt-toggle-dark' : 'crt-toggle-light'
+            className={`crt-toggle-track-three ${
+              theme === 'dark' ? 'crt-toggle-dark' : 
+              theme === 'light' ? 'crt-toggle-light' : 'crt-toggle-monochrome'
             }`}
           >
             {/* Scanline effect overlay */}
@@ -39,14 +40,16 @@ export default function ThemeToggle() {
 
             {/* Toggle slider with lambda */}
             <div
-              className={`crt-toggle-slider ${
-                theme === 'dark' ? 'crt-slider-dark' : 'crt-slider-light'
+              className={`crt-toggle-slider-three ${
+                theme === 'dark' ? 'crt-slider-dark' : 
+                theme === 'light' ? 'crt-slider-light' : 'crt-slider-monochrome'
               }`}
             >
               {/* Glow effect */}
               <div
                 className={`crt-toggle-glow ${
-                  theme === 'dark' ? 'crt-glow-green' : 'crt-glow-magenta'
+                  theme === 'dark' ? 'crt-glow-green' : 
+                  theme === 'light' ? 'crt-glow-magenta' : 'crt-glow-white'
                 }`}
               />
 
@@ -61,7 +64,7 @@ export default function ThemeToggle() {
             </div>
 
             {/* Theme labels */}
-            <div className='crt-toggle-labels'>
+            <div className='crt-toggle-labels-three'>
               <span
                 className={`crt-label-dark ${
                   theme === 'dark' ? 'crt-label-active' : 'crt-label-inactive'
@@ -72,6 +75,13 @@ export default function ThemeToggle() {
               <span
                 className={`crt-label-light ${
                   theme === 'light' ? 'crt-label-active' : 'crt-label-inactive'
+                }`}
+              >
+                λ
+              </span>
+              <span
+                className={`crt-label-monochrome ${
+                  theme === 'monochrome' ? 'crt-label-active' : 'crt-label-inactive'
                 }`}
               >
                 λ
