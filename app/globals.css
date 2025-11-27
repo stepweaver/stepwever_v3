@@ -1357,6 +1357,7 @@ body::after {
 [data-theme="light"] .cyber-border-yellow,
 [data-theme="light"] .cyber-border-cyan,
 [data-theme="light"] .cyber-border-red {
+  border-color: rgba(0, 0, 0, 0.25) !important;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
 }
 
@@ -1365,6 +1366,7 @@ body::after {
 [data-theme="light"] .cyber-border-yellow:hover,
 [data-theme="light"] .cyber-border-cyan:hover,
 [data-theme="light"] .cyber-border-red:hover {
+  border-color: rgba(0, 0, 0, 0.35) !important;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
 }
 
@@ -1374,6 +1376,7 @@ body::after {
 [data-theme="monochrome-inverted"] .cyber-border-yellow,
 [data-theme="monochrome-inverted"] .cyber-border-cyan,
 [data-theme="monochrome-inverted"] .cyber-border-red {
+  border-color: rgba(0, 0, 0, 0.25) !important;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
 }
 
@@ -1382,6 +1385,7 @@ body::after {
 [data-theme="monochrome-inverted"] .cyber-border-yellow:hover,
 [data-theme="monochrome-inverted"] .cyber-border-cyan:hover,
 [data-theme="monochrome-inverted"] .cyber-border-red:hover {
+  border-color: rgba(0, 0, 0, 0.35) !important;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
 }
 
@@ -2070,6 +2074,7 @@ body::after {
 [data-theme="vintage"] .cyber-border-yellow,
 [data-theme="vintage"] .cyber-border-cyan,
 [data-theme="vintage"] .cyber-border-red {
+  border-color: rgba(85, 255, 255, 0.4) !important;
   filter: drop-shadow(0 0 8px rgba(85, 255, 255, 0.2));
 }
 
@@ -2078,6 +2083,7 @@ body::after {
 [data-theme="vintage"] .cyber-border-yellow:hover,
 [data-theme="vintage"] .cyber-border-cyan:hover,
 [data-theme="vintage"] .cyber-border-red:hover {
+  border-color: rgba(85, 255, 255, 0.6) !important;
   filter: drop-shadow(0 0 12px rgba(85, 255, 255, 0.3));
 }
 
@@ -2210,6 +2216,11 @@ body::after {
   filter: drop-shadow(0 0 8px rgba(85, 255, 255, 0.2));
 }
 
+[data-theme="vintage"] .cyber-border-border:hover {
+  border-color: rgba(85, 255, 255, 0.5);
+  filter: drop-shadow(0 0 12px rgba(85, 255, 255, 0.3));
+}
+
 /* Vintage: hover glow effect */
 [data-theme="vintage"] .hover-glow {
   text-shadow: 0 0 5px rgba(85, 255, 255, 0.8), 0 0 10px rgba(85, 255, 255, 0.4);
@@ -2237,7 +2248,7 @@ body::after {
    ======================================== */
 
 /* Apple II: scanline effects with soft lime tones */
-[data-theme="apple2"] body::after {
+[data-theme="apple"] body::after {
   background: 
     /* Subtle vignette effect */
     radial-gradient(ellipse at center, transparent 0%, rgba(0, 17, 0, 0.3) 100%),
@@ -2258,188 +2269,195 @@ body::after {
 }
 
 /* Apple II: button hover effects */
-[data-theme="apple2"] .glitch-button:hover {
+[data-theme="apple"] .glitch-button:hover {
   box-shadow: 0 0 10px rgba(51, 255, 51, 0.3);
 }
 
 /* Apple II: card glows */
-[data-theme="apple2"] .card-glow {
+[data-theme="apple"] .card-glow {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(51, 255, 51, 0.25);
 }
 
-[data-theme="apple2"] .card-glow-tight {
+[data-theme="apple"] .card-glow-tight {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
 }
 
-[data-theme="apple2"] .card-glow-tight::after {
+[data-theme="apple"] .card-glow-tight::after {
   border: 1px solid rgba(51, 255, 51, 0.35);
   box-shadow: inset 0 0 18px rgba(51, 255, 51, 0.2);
   opacity: 0.75;
 }
 
 /* Apple II: theme toggle hover */
-[data-theme="apple2"] .theme-toggle:hover {
+[data-theme="apple"] .theme-toggle:hover {
   box-shadow: 0 0 15px rgba(51, 255, 51, 0.4);
 }
 
 /* Apple II: cyber borders with lime glow */
-[data-theme="apple2"] .cyber-border-green,
-[data-theme="apple2"] .cyber-border-magenta,
-[data-theme="apple2"] .cyber-border-yellow,
-[data-theme="apple2"] .cyber-border-cyan,
-[data-theme="apple2"] .cyber-border-red {
+[data-theme="apple"] .cyber-border-green,
+[data-theme="apple"] .cyber-border-magenta,
+[data-theme="apple"] .cyber-border-yellow,
+[data-theme="apple"] .cyber-border-cyan,
+[data-theme="apple"] .cyber-border-red {
+  border-color: rgba(51, 255, 51, 0.4) !important;
   filter: drop-shadow(0 0 8px rgba(51, 255, 51, 0.2));
 }
 
-[data-theme="apple2"] .cyber-border-green:hover,
-[data-theme="apple2"] .cyber-border-magenta:hover,
-[data-theme="apple2"] .cyber-border-yellow:hover,
-[data-theme="apple2"] .cyber-border-cyan:hover,
-[data-theme="apple2"] .cyber-border-red:hover {
+[data-theme="apple"] .cyber-border-green:hover,
+[data-theme="apple"] .cyber-border-magenta:hover,
+[data-theme="apple"] .cyber-border-yellow:hover,
+[data-theme="apple"] .cyber-border-cyan:hover,
+[data-theme="apple"] .cyber-border-red:hover {
+  border-color: rgba(51, 255, 51, 0.6) !important;
   filter: drop-shadow(0 0 12px rgba(51, 255, 51, 0.3));
 }
 
 /* Apple II: card component borders */
-[data-theme="apple2"] article.cyber-border-green,
-[data-theme="apple2"] article.cyber-border.cyber-border-green,
-[data-theme="apple2"] div.cyber-border-green.card-glow,
-[data-theme="apple2"] div.cyber-border-green.card-glow-tight,
-[data-theme="apple2"] div.cyber-border-lg.cyber-border-green {
+[data-theme="apple"] article.cyber-border-green,
+[data-theme="apple"] article.cyber-border.cyber-border-green,
+[data-theme="apple"] div.cyber-border-green.card-glow,
+[data-theme="apple"] div.cyber-border-green.card-glow-tight,
+[data-theme="apple"] div.cyber-border-lg.cyber-border-green {
   border-color: rgba(51, 255, 51, 0.4);
 }
 
-[data-theme="apple2"] article.cyber-border-green:hover,
-[data-theme="apple2"] article.cyber-border.cyber-border-green:hover,
-[data-theme="apple2"] div.cyber-border-green.card-glow:hover,
-[data-theme="apple2"] div.cyber-border-green.card-glow-tight:hover,
-[data-theme="apple2"] div.cyber-border-lg.cyber-border-green:hover {
+[data-theme="apple"] article.cyber-border-green:hover,
+[data-theme="apple"] article.cyber-border.cyber-border-green:hover,
+[data-theme="apple"] div.cyber-border-green.card-glow:hover,
+[data-theme="apple"] div.cyber-border-green.card-glow-tight:hover,
+[data-theme="apple"] div.cyber-border-lg.cyber-border-green:hover {
   border-color: rgba(51, 255, 51, 0.6);
 }
 
 /* Apple II: override hover border colors for cards */
-[data-theme="apple2"] article.card-glow-tight:hover,
-[data-theme="apple2"] article.cyber-border.cyber-border-green:hover {
+[data-theme="apple"] article.card-glow-tight:hover,
+[data-theme="apple"] article.cyber-border.cyber-border-green:hover {
   border-color: rgba(51, 255, 51, 0.6);
 }
 
 /* Apple II: override hover shadow colors for cards */
-[data-theme="apple2"] article.card-glow-tight:hover {
+[data-theme="apple"] article.card-glow-tight:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 0 15px rgba(51, 255, 51, 0.2);
 }
 
-[data-theme="apple2"] article.cyber-border.cyber-border-green:hover {
+[data-theme="apple"] article.cyber-border.cyber-border-green:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 0 15px rgba(51, 255, 51, 0.2);
 }
 
 /* Apple II: small badge borders */
-[data-theme="apple2"] .cyber-border-sm.cyber-border-green {
+[data-theme="apple"] .cyber-border-sm.cyber-border-green {
   border-color: rgba(51, 255, 51, 0.4);
 }
 
 /* Apple II: ServicesPage cards with borders */
-[data-theme="apple2"] .card-glow.cyber-border-green,
-[data-theme="apple2"] article.card-glow.cyber-border-green {
+[data-theme="apple"] .card-glow.cyber-border-green,
+[data-theme="apple"] article.card-glow.cyber-border-green {
   border-color: rgba(51, 255, 51, 0.4);
 }
 
-[data-theme="apple2"] .card-glow.cyber-border-green:hover,
-[data-theme="apple2"] article.card-glow.cyber-border-green:hover {
+[data-theme="apple"] .card-glow.cyber-border-green:hover,
+[data-theme="apple"] article.card-glow.cyber-border-green:hover {
   border-color: rgba(51, 255, 51, 0.6);
 }
 
 /* Apple II: override Tailwind hover:border for all cards */
-[data-theme="apple2"] article[class*="card-glow"]:hover,
-[data-theme="apple2"] div[class*="card-glow"]:hover,
-[data-theme="apple2"] article.cyber-border[class*="hover:border"]:hover,
-[data-theme="apple2"] div.cyber-border[class*="hover:border"]:hover {
+[data-theme="apple"] article[class*="card-glow"]:hover,
+[data-theme="apple"] div[class*="card-glow"]:hover,
+[data-theme="apple"] article.cyber-border[class*="hover:border"]:hover,
+[data-theme="apple"] div.cyber-border[class*="hover:border"]:hover {
   border-color: rgba(51, 255, 51, 0.6);
 }
 
 /* Apple II: button borders */
-[data-theme="apple2"] button.cyber-border-green,
-[data-theme="apple2"] button.cyber-border-sm.cyber-border-green,
-[data-theme="apple2"] .glitchButton,
-[data-theme="apple2"] button[class*="cyber-border-green"],
-[data-theme="apple2"] a[class*="cyber-border-green"] {
+[data-theme="apple"] button.cyber-border-green,
+[data-theme="apple"] button.cyber-border-sm.cyber-border-green,
+[data-theme="apple"] .glitchButton,
+[data-theme="apple"] button[class*="cyber-border-green"],
+[data-theme="apple"] a[class*="cyber-border-green"] {
   border-color: rgba(51, 255, 51, 0.4);
 }
 
-[data-theme="apple2"] button.cyber-border-green:hover,
-[data-theme="apple2"] button.cyber-border-sm.cyber-border-green:hover,
-[data-theme="apple2"] .glitchButton:hover,
-[data-theme="apple2"] button[class*="cyber-border-green"]:hover,
-[data-theme="apple2"] a[class*="cyber-border-green"]:hover {
+[data-theme="apple"] button.cyber-border-green:hover,
+[data-theme="apple"] button.cyber-border-sm.cyber-border-green:hover,
+[data-theme="apple"] .glitchButton:hover,
+[data-theme="apple"] button[class*="cyber-border-green"]:hover,
+[data-theme="apple"] a[class*="cyber-border-green"]:hover {
   border-color: rgba(51, 255, 51, 0.6);
 }
 
 /* Apple II: override Tailwind border-terminal-green classes on buttons */
-[data-theme="apple2"] button[class*="border-terminal-green"],
-[data-theme="apple2"] a[class*="border-terminal-green"] {
+[data-theme="apple"] button[class*="border-terminal-green"],
+[data-theme="apple"] a[class*="border-terminal-green"] {
   border-color: rgba(51, 255, 51, 0.4);
 }
 
-[data-theme="apple2"] button[class*="border-terminal-green"]:hover,
-[data-theme="apple2"] a[class*="border-terminal-green"]:hover {
+[data-theme="apple"] button[class*="border-terminal-green"]:hover,
+[data-theme="apple"] a[class*="border-terminal-green"]:hover {
   border-color: rgba(51, 255, 51, 0.6);
 }
 
 /* Apple II: terminal text glows */
-[data-theme="apple2"] .terminal-glow {
+[data-theme="apple"] .terminal-glow {
   text-shadow: 0 0 2px rgba(51, 255, 51, 0.25), 0 0 4px rgba(51, 255, 51, 0.12);
 }
 
 /* Apple II: terminal headings with stronger lime glow */
-[data-theme="apple2"] .terminal-glow h1,
-[data-theme="apple2"] .terminal-glow h2,
-[data-theme="apple2"] .terminal-glow h3,
-[data-theme="apple2"] .terminal-glow h4,
-[data-theme="apple2"] .terminal-glow h5,
-[data-theme="apple2"] .terminal-glow h6 {
+[data-theme="apple"] .terminal-glow h1,
+[data-theme="apple"] .terminal-glow h2,
+[data-theme="apple"] .terminal-glow h3,
+[data-theme="apple"] .terminal-glow h4,
+[data-theme="apple"] .terminal-glow h5,
+[data-theme="apple"] .terminal-glow h6 {
   text-shadow: 0 0 3px rgba(51, 255, 51, 0.35), 0 0 6px rgba(51, 255, 51, 0.18);
 }
 
 /* Apple II: code and terminal elements */
-[data-theme="apple2"] .terminal-glow code,
-[data-theme="apple2"] .terminal-glow pre,
-[data-theme="apple2"] .terminal-glow .terminal-output,
-[data-theme="apple2"] .terminal-glow .terminal-input,
-[data-theme="apple2"] .terminal-glow .terminal-line {
+[data-theme="apple"] .terminal-glow code,
+[data-theme="apple"] .terminal-glow pre,
+[data-theme="apple"] .terminal-glow .terminal-output,
+[data-theme="apple"] .terminal-glow .terminal-input,
+[data-theme="apple"] .terminal-glow .terminal-line {
   text-shadow: 0 0 1px rgba(51, 255, 51, 0.25), 0 0 2px rgba(51, 255, 51, 0.1);
 }
 
 /* Apple II: terminal green text (now lime) */
-[data-theme="apple2"] .terminal-glow .text-terminal-green,
-[data-theme="apple2"] .terminal-glow [class*="text-terminal-green"] {
+[data-theme="apple"] .terminal-glow .text-terminal-green,
+[data-theme="apple"] .terminal-glow [class*="text-terminal-green"] {
   text-shadow: 0 0 2px rgba(51, 255, 51, 0.35), 0 0 3px rgba(51, 255, 51, 0.15);
 }
 
 /* Apple II: colored text with lime glow */
-[data-theme="apple2"] .terminal-glow .text-terminal-cyan,
-[data-theme="apple2"] .terminal-glow .text-terminal-magenta,
-[data-theme="apple2"] .terminal-glow .text-terminal-yellow,
-[data-theme="apple2"] .terminal-glow .text-terminal-blue,
-[data-theme="apple2"] .terminal-glow .text-terminal-red {
+[data-theme="apple"] .terminal-glow .text-terminal-cyan,
+[data-theme="apple"] .terminal-glow .text-terminal-magenta,
+[data-theme="apple"] .terminal-glow .text-terminal-yellow,
+[data-theme="apple"] .terminal-glow .text-terminal-blue,
+[data-theme="apple"] .terminal-glow .text-terminal-red {
   text-shadow: 0 0 2px rgba(51, 255, 51, 0.35), 0 0 3px rgba(51, 255, 51, 0.15);
 }
 
 /* Apple II: border adjustments */
-[data-theme="apple2"] .cyber-border-border {
+[data-theme="apple"] .cyber-border-border {
   border-color: rgba(51, 255, 51, 0.3);
   filter: drop-shadow(0 0 8px rgba(51, 255, 51, 0.2));
 }
 
+[data-theme="apple"] .cyber-border-border:hover {
+  border-color: rgba(51, 255, 51, 0.5);
+  filter: drop-shadow(0 0 12px rgba(51, 255, 51, 0.3));
+}
+
 /* Apple II: hover glow effect */
-[data-theme="apple2"] .hover-glow {
+[data-theme="apple"] .hover-glow {
   text-shadow: 0 0 5px rgba(51, 255, 51, 0.8), 0 0 10px rgba(51, 255, 51, 0.4);
 }
 
 /* Apple II: override inline Tailwind shadows */
-[data-theme="apple2"] *[class*="hover:shadow-"]:hover {
+[data-theme="apple"] *[class*="hover:shadow-"]:hover {
   box-shadow: 0 0 15px rgba(51, 255, 51, 0.3) !important;
 }
 
 /* Apple II: override inline text-shadow */
-[data-theme="apple2"] *[class*="text-shadow-"] {
+[data-theme="apple"] *[class*="text-shadow-"] {
   text-shadow: 0 0 2px rgba(51, 255, 51, 0.35) !important;
 }
 
@@ -2500,6 +2518,7 @@ body::after {
 [data-theme="c64"] .cyber-border-yellow,
 [data-theme="c64"] .cyber-border-cyan,
 [data-theme="c64"] .cyber-border-red {
+  border-color: rgba(163, 230, 255, 0.4) !important;
   filter: drop-shadow(0 0 8px rgba(163, 230, 255, 0.2));
 }
 
@@ -2508,6 +2527,7 @@ body::after {
 [data-theme="c64"] .cyber-border-yellow:hover,
 [data-theme="c64"] .cyber-border-cyan:hover,
 [data-theme="c64"] .cyber-border-red:hover {
+  border-color: rgba(163, 230, 255, 0.6) !important;
   filter: drop-shadow(0 0 12px rgba(163, 230, 255, 0.3));
 }
 
@@ -2619,6 +2639,11 @@ body::after {
   filter: drop-shadow(0 0 8px rgba(163, 230, 255, 0.2));
 }
 
+[data-theme="c64"] .cyber-border-border:hover {
+  border-color: rgba(163, 230, 255, 0.5);
+  filter: drop-shadow(0 0 12px rgba(163, 230, 255, 0.3));
+}
+
 [data-theme="c64"] .hover-glow {
   text-shadow: 0 0 5px rgba(163, 230, 255, 0.8), 0 0 10px rgba(163, 230, 255, 0.4);
 }
@@ -2686,6 +2711,7 @@ body::after {
 [data-theme="amber"] .cyber-border-yellow,
 [data-theme="amber"] .cyber-border-cyan,
 [data-theme="amber"] .cyber-border-red {
+  border-color: rgba(255, 176, 0, 0.4) !important;
   filter: drop-shadow(0 0 8px rgba(255, 176, 0, 0.2));
 }
 
@@ -2694,6 +2720,7 @@ body::after {
 [data-theme="amber"] .cyber-border-yellow:hover,
 [data-theme="amber"] .cyber-border-cyan:hover,
 [data-theme="amber"] .cyber-border-red:hover {
+  border-color: rgba(255, 176, 0, 0.6) !important;
   filter: drop-shadow(0 0 12px rgba(255, 176, 0, 0.3));
 }
 
@@ -2805,6 +2832,11 @@ body::after {
   filter: drop-shadow(0 0 8px rgba(255, 176, 0, 0.2));
 }
 
+[data-theme="amber"] .cyber-border-border:hover {
+  border-color: rgba(255, 176, 0, 0.5);
+  filter: drop-shadow(0 0 12px rgba(255, 176, 0, 0.3));
+}
+
 [data-theme="amber"] .hover-glow {
   text-shadow: 0 0 5px rgba(255, 176, 0, 0.8), 0 0 10px rgba(255, 176, 0, 0.4);
 }
@@ -2872,6 +2904,7 @@ body::after {
 [data-theme="synthwave"] .cyber-border-yellow,
 [data-theme="synthwave"] .cyber-border-cyan,
 [data-theme="synthwave"] .cyber-border-red {
+  border-color: rgba(255, 20, 147, 0.4) !important;
   filter: drop-shadow(0 0 8px rgba(255, 20, 147, 0.2));
 }
 
@@ -2880,6 +2913,7 @@ body::after {
 [data-theme="synthwave"] .cyber-border-yellow:hover,
 [data-theme="synthwave"] .cyber-border-cyan:hover,
 [data-theme="synthwave"] .cyber-border-red:hover {
+  border-color: rgba(255, 20, 147, 0.6) !important;
   filter: drop-shadow(0 0 12px rgba(255, 20, 147, 0.3));
 }
 
@@ -2991,6 +3025,11 @@ body::after {
   filter: drop-shadow(0 0 8px rgba(255, 20, 147, 0.2));
 }
 
+[data-theme="synthwave"] .cyber-border-border:hover {
+  border-color: rgba(255, 20, 147, 0.5);
+  filter: drop-shadow(0 0 12px rgba(255, 20, 147, 0.3));
+}
+
 [data-theme="synthwave"] .hover-glow {
   text-shadow: 0 0 5px rgba(255, 20, 147, 0.8), 0 0 10px rgba(255, 20, 147, 0.4);
 }
@@ -3058,6 +3097,7 @@ body::after {
 [data-theme="dracula"] .cyber-border-yellow,
 [data-theme="dracula"] .cyber-border-cyan,
 [data-theme="dracula"] .cyber-border-red {
+  border-color: rgba(189, 147, 249, 0.4) !important;
   filter: drop-shadow(0 0 8px rgba(189, 147, 249, 0.2));
 }
 
@@ -3066,6 +3106,7 @@ body::after {
 [data-theme="dracula"] .cyber-border-yellow:hover,
 [data-theme="dracula"] .cyber-border-cyan:hover,
 [data-theme="dracula"] .cyber-border-red:hover {
+  border-color: rgba(189, 147, 249, 0.6) !important;
   filter: drop-shadow(0 0 12px rgba(189, 147, 249, 0.3));
 }
 
@@ -3177,6 +3218,11 @@ body::after {
   filter: drop-shadow(0 0 8px rgba(189, 147, 249, 0.2));
 }
 
+[data-theme="dracula"] .cyber-border-border:hover {
+  border-color: rgba(189, 147, 249, 0.5);
+  filter: drop-shadow(0 0 12px rgba(189, 147, 249, 0.3));
+}
+
 [data-theme="dracula"] .hover-glow {
   text-shadow: 0 0 5px rgba(189, 147, 249, 0.8), 0 0 10px rgba(189, 147, 249, 0.4);
 }
@@ -3244,6 +3290,7 @@ body::after {
 [data-theme="solarized"] .cyber-border-yellow,
 [data-theme="solarized"] .cyber-border-cyan,
 [data-theme="solarized"] .cyber-border-red {
+  border-color: rgba(42, 161, 152, 0.4) !important;
   filter: drop-shadow(0 0 8px rgba(42, 161, 152, 0.2));
 }
 
@@ -3252,6 +3299,7 @@ body::after {
 [data-theme="solarized"] .cyber-border-yellow:hover,
 [data-theme="solarized"] .cyber-border-cyan:hover,
 [data-theme="solarized"] .cyber-border-red:hover {
+  border-color: rgba(42, 161, 152, 0.6) !important;
   filter: drop-shadow(0 0 12px rgba(42, 161, 152, 0.3));
 }
 
@@ -3363,6 +3411,11 @@ body::after {
   filter: drop-shadow(0 0 8px rgba(42, 161, 152, 0.2));
 }
 
+[data-theme="solarized"] .cyber-border-border:hover {
+  border-color: rgba(42, 161, 152, 0.5);
+  filter: drop-shadow(0 0 12px rgba(42, 161, 152, 0.3));
+}
+
 [data-theme="solarized"] .hover-glow {
   text-shadow: 0 0 5px rgba(42, 161, 152, 0.8), 0 0 10px rgba(42, 161, 152, 0.4);
 }
@@ -3430,6 +3483,7 @@ body::after {
 [data-theme="nord"] .cyber-border-yellow,
 [data-theme="nord"] .cyber-border-cyan,
 [data-theme="nord"] .cyber-border-red {
+  border-color: rgba(136, 192, 208, 0.4) !important;
   filter: drop-shadow(0 0 8px rgba(136, 192, 208, 0.2));
 }
 
@@ -3438,6 +3492,7 @@ body::after {
 [data-theme="nord"] .cyber-border-yellow:hover,
 [data-theme="nord"] .cyber-border-cyan:hover,
 [data-theme="nord"] .cyber-border-red:hover {
+  border-color: rgba(136, 192, 208, 0.6) !important;
   filter: drop-shadow(0 0 12px rgba(136, 192, 208, 0.3));
 }
 
@@ -3547,6 +3602,11 @@ body::after {
 [data-theme="nord"] .cyber-border-border {
   border-color: rgba(136, 192, 208, 0.3);
   filter: drop-shadow(0 0 8px rgba(136, 192, 208, 0.2));
+}
+
+[data-theme="nord"] .cyber-border-border:hover {
+  border-color: rgba(136, 192, 208, 0.5);
+  filter: drop-shadow(0 0 12px rgba(136, 192, 208, 0.3));
 }
 
 [data-theme="nord"] .hover-glow {
