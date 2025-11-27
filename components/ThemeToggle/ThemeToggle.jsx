@@ -1,111 +1,116 @@
 'use client';
 
 import { useTheme } from '../ThemeProvider/ThemeProvider';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import './ThemeToggle.css';
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme, mounted } = useTheme();
+  const { theme, changeTheme, mounted } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const themes = [
+    { value: 'dark', label: 'DARK' },
+    { value: 'light', label: 'LIGHT' },
+    { value: 'monochrome', label: 'MONO' },
+    { value: 'monochrome-inverted', label: 'INVERT' },
+  ];
+
+  const currentTheme = themes.find(t => t.value === theme);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
+  const handleThemeSelect = (themeValue) => {
+    changeTheme(themeValue);
+    setIsOpen(false);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setIsOpen(!isOpen);
+    } else if (e.key === 'Escape') {
+      setIsOpen(false);
+    }
+  };
+
+  const handleOptionKeyDown = (e, themeValue) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleThemeSelect(themeValue);
+    }
+  };
 
   // Always render the same structure to prevent hydration mismatch
   return (
     <div className='flex items-center gap-3'>
       {!mounted ? (
         // Skeleton state - matches the structure of the actual component
-        <div className='w-20 h-10 animate-pulse bg-terminal-border rounded-lg' />
+        <div className='w-32 h-10 animate-pulse bg-terminal-border rounded' />
       ) : (
-        // CRT-style toggle switch
-        <div
-          onClick={toggleTheme}
-          className='crt-toggle-container'
-          role='button'
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              toggleTheme();
-            }
-          }}
-          aria-label={`Switch theme (current: ${theme})`}
-        >
-          {/* Toggle track - now wider for 4 states */}
-          <div
-            className={`crt-toggle-track-four ${
-              theme === 'dark' ? 'crt-toggle-dark' : 
-              theme === 'light' ? 'crt-toggle-light' : 
-              theme === 'monochrome' ? 'crt-toggle-monochrome' : 'crt-toggle-monochrome-inverted'
-            }`}
+        // CRT-style dropdown
+        <div className='theme-dropdown-container' ref={dropdownRef}>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            onKeyDown={handleKeyDown}
+            className={`theme-dropdown-trigger ${theme}`}
+            aria-label='Select theme'
+            aria-haspopup='listbox'
+            aria-expanded={isOpen}
           >
-            {/* Scanline effect overlay */}
-            <div className='crt-scanlines' />
+            <Image
+              src='/images/lambda_stepweaver.png'
+              alt='Lambda'
+              width={16}
+              height={16}
+              className={`lambda-icon ${theme}`}
+            />
+            <span className='theme-dropdown-label'>{currentTheme?.label}</span>
+            <span className={`theme-dropdown-arrow ${isOpen ? 'open' : ''}`}>▼</span>
+          </button>
 
-            {/* Toggle slider with lambda */}
-            <div
-              className={`crt-toggle-slider-four ${
-                theme === 'dark' ? 'crt-slider-dark' : 
-                theme === 'light' ? 'crt-slider-light' : 
-                theme === 'monochrome' ? 'crt-slider-monochrome' : 'crt-slider-monochrome-inverted'
-              }`}
-            >
-              {/* Glow effect */}
-              <div
-                className={`crt-toggle-glow ${
-                  theme === 'dark' ? 'crt-glow-green' : 
-                  theme === 'light' ? 'crt-glow-magenta' : 
-                  theme === 'monochrome' ? 'crt-glow-white' : 'crt-glow-black'
-                }`}
-              />
-
-              {/* Lambda symbol */}
-              <Image
-                src='/images/lambda_stepweaver.png'
-                alt='Lambda'
-                width={20}
-                height={20}
-                className='crt-lambda-icon'
-              />
+          {isOpen && (
+            <div className={`theme-dropdown-menu ${theme}`} role='listbox'>
+              {themes.map((themeOption) => (
+                <button
+                  key={themeOption.value}
+                  onClick={() => handleThemeSelect(themeOption.value)}
+                  onKeyDown={(e) => handleOptionKeyDown(e, themeOption.value)}
+                  className={`theme-dropdown-option ${themeOption.value} ${
+                    theme === themeOption.value ? 'active' : ''
+                  }`}
+                  role='option'
+                  aria-selected={theme === themeOption.value}
+                  tabIndex={0}
+                >
+                  <Image
+                    src='/images/lambda_stepweaver.png'
+                    alt='Lambda'
+                    width={12}
+                    height={12}
+                    className={`lambda-icon-small ${themeOption.value}`}
+                  />
+                  {themeOption.label}
+                </button>
+              ))}
             </div>
-
-            {/* Theme labels with lambda images */}
-            <div className='crt-toggle-labels-four'>
-              <Image
-                src='/images/lambda_stepweaver.png'
-                alt='Dark theme'
-                width={12}
-                height={12}
-                className={`crt-lambda-label crt-lambda-green ${
-                  theme === 'dark' ? 'crt-label-active' : 'crt-label-inactive'
-                }`}
-              />
-              <Image
-                src='/images/lambda_stepweaver.png'
-                alt='Light theme'
-                width={12}
-                height={12}
-                className={`crt-lambda-label crt-lambda-pink ${
-                  theme === 'light' ? 'crt-label-active' : 'crt-label-inactive'
-                }`}
-              />
-              <Image
-                src='/images/lambda_stepweaver.png'
-                alt='Monochrome theme'
-                width={12}
-                height={12}
-                className={`crt-lambda-label crt-lambda-white ${
-                  theme === 'monochrome' ? 'crt-label-active' : 'crt-label-inactive'
-                }`}
-              />
-              <Image
-                src='/images/lambda_stepweaver.png'
-                alt='Monochrome inverted theme'
-                width={12}
-                height={12}
-                className={`crt-lambda-label crt-lambda-black ${
-                  theme === 'monochrome-inverted' ? 'crt-label-active' : 'crt-label-inactive'
-                }`}
-              />
-            </div>
-          </div>
+          )}
         </div>
       )}
     </div>

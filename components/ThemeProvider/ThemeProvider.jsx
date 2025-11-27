@@ -97,9 +97,14 @@ export function ThemeProvider({ children }) {
     });
   };
 
+  const changeTheme = (newTheme) => {
+    setTheme(newTheme);
+  };
+
   const value = {
     theme,
     toggleTheme,
+    changeTheme,
     mounted,
   };
 

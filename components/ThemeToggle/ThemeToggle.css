@@ -1,376 +1,225 @@
 @reference "../../app/globals.css";
 
-/* CRT-Style Theme Toggle */
+/* CRT-Style Theme Dropdown - Sleek & Borderless */
 
-.crt-toggle-container {
-  @apply flex items-center gap-2 cursor-pointer select-none;
-  transition: transform 0.15s ease;
+.theme-dropdown-container {
+  @apply relative;
+  font-family: 'OCR-A', 'Courier New', monospace;
 }
 
-.crt-toggle-container:hover {
-  transform: scale(1.03);
-}
-
-.crt-toggle-container:active {
-  transform: scale(0.97);
-}
-
-/* Toggle track - the main switch body (2-state) */
-.crt-toggle-track {
-  @apply relative flex items-center;
-  width: 64px;
-  height: 32px;
-  border-radius: 3px;
-  border: 2px solid;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+.theme-dropdown-trigger {
+  @apply flex items-center gap-2.5 px-3 py-2 cursor-pointer select-none;
+  min-width: 150px;
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+  text-align: left;
   position: relative;
-  overflow: hidden;
 }
 
-/* Toggle track - three state version */
-.crt-toggle-track-three {
-  @apply relative flex items-center;
-  width: 96px;
-  height: 32px;
-  border-radius: 3px;
-  border: 2px solid;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+.theme-dropdown-trigger.dark {
+  @apply text-terminal-green;
+}
+
+.theme-dropdown-trigger.light {
+  @apply text-terminal-magenta;
+}
+
+.theme-dropdown-trigger.monochrome {
+  @apply text-white;
+}
+
+.theme-dropdown-trigger.monochrome-inverted {
+  @apply text-black;
+}
+
+.theme-dropdown-trigger:hover {
+  filter: brightness(1.2);
+}
+
+.theme-dropdown-trigger:hover .lambda-icon {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.theme-dropdown-label {
+  @apply font-bold text-sm tracking-wide;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.theme-dropdown-arrow {
+  @apply text-xs ml-auto;
+  transition: transform 0.2s ease;
+  text-shadow: 0 0 6px currentColor;
+}
+
+.theme-dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Lambda icon styling */
+.lambda-icon {
+  @apply object-contain;
+  transition: all 0.2s ease;
+}
+
+.lambda-icon.dark {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 4px rgba(0, 255, 0, 0.6));
+}
+
+.lambda-icon.light {
+  filter: brightness(0) saturate(100%) invert(33%) sepia(97%) saturate(6729%) hue-rotate(296deg) brightness(101%) contrast(101%) drop-shadow(0 0 4px rgba(255, 0, 255, 0.6));
+}
+
+.lambda-icon.monochrome {
+  filter: brightness(0) saturate(100%) invert(100%) drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+}
+
+.lambda-icon.monochrome-inverted {
+  filter: brightness(0) saturate(100%) invert(0%) drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
+}
+
+.theme-dropdown-menu {
+  @apply absolute top-full left-0 mt-1 w-full rounded overflow-hidden z-50;
+  background: #000000;
+  backdrop-filter: blur(12px);
+  animation: dropdown-fade-in 0.15s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.theme-dropdown-menu.dark {
+  box-shadow: 0 8px 24px rgba(0, 255, 0, 0.25);
+  border-color: rgba(0, 255, 0, 0.2);
+}
+
+.theme-dropdown-menu.light {
+  box-shadow: 0 8px 24px rgba(255, 0, 255, 0.25);
+  border-color: rgba(255, 0, 255, 0.2);
+}
+
+.theme-dropdown-menu.monochrome {
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-dropdown-menu.monochrome-inverted {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+.theme-dropdown-option {
+  @apply w-full px-3 py-2.5 text-left text-sm font-bold tracking-wide cursor-pointer flex items-center gap-2;
+  background: transparent;
+  border: none;
+  transition: all 0.15s ease;
   position: relative;
-  overflow: hidden;
 }
 
-/* Toggle track - four state version */
-.crt-toggle-track-four {
-  @apply relative flex items-center;
-  width: 128px;
-  height: 32px;
-  border-radius: 3px;
-  border: 2px solid;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-  position: relative;
-  overflow: hidden;
+.theme-dropdown-option.dark {
+  color: #00ff41;
 }
 
-.crt-toggle-dark {
-  @apply border-terminal-green bg-transparent;
-  box-shadow: 
-    inset 0 0 8px rgba(0, 255, 0, 0.2),
-    0 0 12px rgba(0, 255, 0, 0.3);
+.theme-dropdown-option.dark:hover,
+.theme-dropdown-option.dark.active {
+  background: rgba(0, 255, 0, 0.12);
+  text-shadow: 0 0 12px rgba(0, 255, 65, 0.95);
 }
 
-.crt-toggle-light {
-  @apply border-terminal-magenta bg-transparent;
-  box-shadow: 
-    inset 0 0 8px rgba(255, 0, 255, 0.2),
-    0 0 12px rgba(255, 0, 255, 0.3);
+.theme-dropdown-option.light {
+  color: #ff10f0;
 }
 
-.crt-toggle-monochrome {
-  @apply border-white bg-transparent;
-  box-shadow: 
-    inset 0 0 8px rgba(255, 255, 255, 0.2),
-    0 0 12px rgba(255, 255, 255, 0.3);
+.theme-dropdown-option.light:hover,
+.theme-dropdown-option.light.active {
+  background: rgba(255, 0, 255, 0.12);
+  text-shadow: 0 0 12px rgba(255, 16, 240, 0.95);
 }
 
-.crt-toggle-monochrome-inverted {
-  @apply border-black bg-transparent;
-  box-shadow: 
-    inset 0 0 8px rgba(0, 0, 0, 0.2),
-    0 0 12px rgba(0, 0, 0, 0.3);
+.theme-dropdown-option.monochrome {
+  @apply text-white;
 }
 
-/* CRT scanline effect */
-.crt-scanlines {
-  @apply absolute inset-0 pointer-events-none;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.15) 0px,
-    rgba(0, 0, 0, 0.15) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  z-index: 1;
+.theme-dropdown-option.monochrome:hover,
+.theme-dropdown-option.monochrome.active {
+  background: rgba(255, 255, 255, 0.12);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.95);
 }
 
-/* Sliding button (2-state) */
-.crt-toggle-slider {
-  @apply absolute flex items-center justify-center;
-  width: 26px;
-  height: 26px;
-  border-radius: 2px;
-  border: 2px solid;
-  z-index: 2;
-  top: 1px;
-  left: 2px;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  will-change: transform;
+.theme-dropdown-option.monochrome-inverted {
+  color: #888888;
 }
 
-/* Sliding button (3-state) */
-.crt-toggle-slider-three {
-  @apply absolute flex items-center justify-center;
-  width: 26px;
-  height: 26px;
-  border-radius: 2px;
-  border: 2px solid;
-  z-index: 2;
-  top: 1px;
-  left: 2px;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  will-change: transform;
+.theme-dropdown-option.monochrome-inverted:hover,
+.theme-dropdown-option.monochrome-inverted.active {
+  background: rgba(136, 136, 136, 0.15);
+  color: #aaaaaa;
+  text-shadow: 0 0 12px rgba(170, 170, 170, 0.95);
 }
 
-/* Sliding button (4-state) */
-.crt-toggle-slider-four {
-  @apply absolute flex items-center justify-center;
-  width: 26px;
-  height: 26px;
-  border-radius: 2px;
-  border: 2px solid;
-  z-index: 2;
-  top: 1px;
-  left: 2px;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  will-change: transform;
+.theme-dropdown-option.active {
+  font-weight: 900;
 }
 
-.crt-slider-dark {
-  @apply border-terminal-green bg-black;
-  transform: translateX(0);
-  box-shadow: 
-    0 0 8px rgba(0, 255, 0, 0.6),
-    inset 0 0 4px rgba(0, 255, 0, 0.3);
+/* Lambda icon in dropdown options */
+.lambda-icon-small {
+  @apply object-contain;
+  transition: all 0.15s ease;
 }
 
-.crt-slider-light {
-  @apply border-terminal-magenta bg-white;
-  transform: translateX(30px);
-  box-shadow: 
-    0 0 8px rgba(255, 0, 255, 0.6),
-    inset 0 0 4px rgba(255, 0, 255, 0.3);
-}
-
-.crt-slider-monochrome {
-  @apply border-white bg-black;
-  transform: translateX(62px);
-  box-shadow: 
-    0 0 8px rgba(255, 255, 255, 0.6),
-    inset 0 0 4px rgba(255, 255, 255, 0.3);
-}
-
-.crt-slider-monochrome-inverted {
-  @apply border-black bg-white;
-  transform: translateX(94px);
-  box-shadow: 
-    0 0 8px rgba(0, 0, 0, 0.6),
-    inset 0 0 4px rgba(0, 0, 0, 0.3);
-}
-
-/* Glow effect behind the slider */
-.crt-toggle-glow {
-  @apply absolute inset-0 opacity-40;
-  border-radius: 2px;
-  transition: opacity 0.25s ease;
-  filter: blur(4px);
-}
-
-.crt-glow-green {
-  background: radial-gradient(
-    circle,
-    rgba(0, 255, 0, 0.9) 0%,
-    rgba(0, 255, 0, 0.5) 50%,
-    transparent 100%
-  );
-}
-
-.crt-glow-magenta {
-  background: radial-gradient(
-    circle,
-    rgba(255, 0, 255, 0.9) 0%,
-    rgba(255, 0, 255, 0.5) 50%,
-    transparent 100%
-  );
-}
-
-.crt-glow-white {
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.5) 50%,
-    transparent 100%
-  );
-}
-
-.crt-glow-black {
-  background: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.5) 50%,
-    transparent 100%
-  );
-}
-
-/* Lambda icon inside slider */
-.crt-lambda-icon {
-  @apply relative z-10 object-contain;
-  filter: brightness(1.2) contrast(1.1);
-  transition: filter 0.2s ease, transform 0.2s ease;
-}
-
-.crt-toggle-dark .crt-lambda-icon {
-  filter: brightness(1.5) drop-shadow(0 0 2px rgba(0, 255, 0, 0.8));
-}
-
-.crt-toggle-light .crt-lambda-icon {
-  filter: brightness(0.8) drop-shadow(0 0 2px rgba(255, 0, 255, 0.8));
-}
-
-/* Lambda labels on track (2-state) */
-.crt-toggle-labels {
-  @apply absolute inset-0 flex items-center justify-between px-2 pointer-events-none;
-  z-index: 0;
-}
-
-/* Lambda labels on track (3-state) */
-.crt-toggle-labels-three {
-  @apply absolute inset-0 flex items-center justify-between px-2 pointer-events-none;
-  z-index: 0;
-}
-
-/* Lambda labels on track (4-state) */
-.crt-toggle-labels-four {
-  @apply absolute inset-0 flex items-center justify-between px-2 pointer-events-none;
-  z-index: 0;
-}
-
-/* Lambda image labels */
-.crt-lambda-label {
-  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
-  object-fit: contain;
-}
-
-/* Color filters for each theme */
-.crt-lambda-green {
+.lambda-icon-small.dark {
   filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%);
 }
 
-.crt-lambda-pink {
+.lambda-icon-small.light {
   filter: brightness(0) saturate(100%) invert(33%) sepia(97%) saturate(6729%) hue-rotate(296deg) brightness(101%) contrast(101%);
 }
 
-.crt-lambda-white {
+.lambda-icon-small.monochrome {
   filter: brightness(0) saturate(100%) invert(100%);
 }
 
-.crt-lambda-black {
-  filter: brightness(0) saturate(100%) invert(0%);
+.lambda-icon-small.monochrome-inverted {
+  filter: brightness(0) saturate(100%) invert(53%);
 }
 
-.crt-toggle-labels span {
-  @apply font-bold text-base font-ocr;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+.theme-dropdown-option.dark:hover .lambda-icon-small.dark,
+.theme-dropdown-option.dark.active .lambda-icon-small.dark {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 4px rgba(0, 255, 0, 0.9));
 }
 
-.crt-label-dark {
-  margin-left: 2px;
+.theme-dropdown-option.light:hover .lambda-icon-small.light,
+.theme-dropdown-option.light.active .lambda-icon-small.light {
+  filter: brightness(0) saturate(100%) invert(33%) sepia(97%) saturate(6729%) hue-rotate(296deg) brightness(101%) contrast(101%) drop-shadow(0 0 4px rgba(255, 0, 255, 0.9));
 }
 
-.crt-label-light {
-  margin-right: 2px;
+.theme-dropdown-option.monochrome:hover .lambda-icon-small.monochrome,
+.theme-dropdown-option.monochrome.active .lambda-icon-small.monochrome {
+  filter: brightness(0) saturate(100%) invert(100%) drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
 }
 
-.crt-label-active {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.crt-label-inactive {
-  opacity: 0.3;
-}
-
-.crt-toggle-dark .crt-label-inactive {
-  @apply text-terminal-green;
-  text-shadow: 0 0 4px rgba(0, 255, 0, 0.4);
-}
-
-.crt-toggle-light .crt-label-inactive {
-  @apply text-terminal-magenta;
-  text-shadow: 0 0 4px rgba(255, 0, 255, 0.4);
-}
-
-.crt-toggle-monochrome .crt-label-inactive {
-  @apply text-white;
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
-}
-
-.crt-toggle-monochrome-inverted .crt-label-inactive {
-  @apply text-black;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-}
-
-.crt-label-monochrome {
-  margin-right: 2px;
-}
-
-/* Active state - lambda images */
-.crt-lambda-label.crt-label-active {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-/* Inactive state - lambda images */
-.crt-lambda-label.crt-label-inactive {
-  opacity: 0.5;
-}
-
-/* Add glow to inactive lambda images */
-.crt-toggle-dark .crt-lambda-green.crt-label-inactive {
-  filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 3px rgba(0, 255, 65, 0.6));
-}
-
-.crt-toggle-light .crt-lambda-pink.crt-label-inactive {
-  filter: brightness(0) saturate(100%) invert(33%) sepia(97%) saturate(6729%) hue-rotate(296deg) brightness(101%) contrast(101%) drop-shadow(0 0 3px rgba(255, 0, 255, 0.6));
-}
-
-.crt-toggle-monochrome .crt-lambda-white.crt-label-inactive {
-  filter: brightness(0) saturate(100%) invert(100%) drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
-}
-
-.crt-toggle-monochrome-inverted .crt-lambda-black.crt-label-inactive {
-  filter: brightness(0) saturate(100%) invert(0%) drop-shadow(0 0 3px rgba(0, 0, 0, 0.6));
-}
-
-/* Status text */
-.crt-status-text {
-  @apply text-xs font-ocr font-bold;
-  transition: color 0.2s ease;
-  text-shadow: 0 0 6px currentColor;
-  letter-spacing: 0.1em;
-}
-
-/* Hover effects */
-.crt-toggle-container:hover .crt-toggle-track {
-  filter: brightness(1.1);
-}
-
-.crt-toggle-container:hover .crt-lambda-icon {
-  transform: scale(1.05);
+.theme-dropdown-option.monochrome-inverted:hover .lambda-icon-small.monochrome-inverted,
+.theme-dropdown-option.monochrome-inverted.active .lambda-icon-small.monochrome-inverted {
+  filter: brightness(0) saturate(100%) invert(67%) drop-shadow(0 0 4px rgba(170, 170, 170, 0.9));
 }
 
 /* Focus state for accessibility */
-.crt-toggle-container:focus-visible {
+.theme-dropdown-trigger:focus-visible {
   outline: 2px solid currentColor;
-  outline-offset: 4px;
-  border-radius: 20px;
+  outline-offset: 2px;
 }
 
-/* Animation for theme changes */
-@keyframes crt-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
-}
-
-.crt-toggle-container:active .crt-toggle-track {
-  animation: crt-flicker 0.15s ease-in-out;
+.theme-dropdown-option:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
 }
 
