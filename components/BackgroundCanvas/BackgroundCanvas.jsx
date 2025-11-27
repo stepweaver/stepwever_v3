@@ -62,11 +62,24 @@ export default function BackgroundCanvas() {
     [70, 70, 70], // Very Light Gray
   ];
 
+  // Vintage DOS/IBM PC colors for vintage mode
+  const colorsVintage = [
+    [85, 255, 255], // Bright Cyan (starting color)
+    [255, 255, 255], // White
+    [85, 85, 255], // Bright Blue
+    [255, 255, 85], // Bright Yellow
+    [85, 255, 85], // Bright Green
+    [255, 85, 255], // Bright Magenta
+    [170, 170, 170], // Light Gray
+    [85, 85, 85], // Dark Gray
+  ];
+
   // Select color palette based on theme
   const neonColors = 
     theme === 'light' ? colorsLight : 
     theme === 'monochrome' ? colorsMonochrome : 
     theme === 'monochrome-inverted' ? colorsMonochromeInverted :
+    theme === 'vintage' ? colorsVintage :
     neonColorsDark;
 
   // Use safe scroll hook
@@ -249,6 +262,7 @@ export default function BackgroundCanvas() {
               theme === 'light' ? 'drop-shadow(8px 8px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 60px rgba(0, 0, 0, 0.3))' :
               theme === 'monochrome' ? 'drop-shadow(0 0 8px rgba(255, 255, 255, 1)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))' :
               theme === 'monochrome-inverted' ? 'drop-shadow(0 0 8px rgba(0, 0, 0, 1)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.4))' :
+              theme === 'vintage' ? 'drop-shadow(0 0 8px rgba(85, 255, 255, 1)) drop-shadow(0 0 20px rgba(85, 255, 255, 0.4))' :
               'drop-shadow(0 0 8px rgba(0, 255, 65, 1)) drop-shadow(0 0 20px rgba(0, 255, 65, 0.4))',
             opacity: theme === 'light' || theme === 'monochrome-inverted' ? 0.2 : 0.3,
             transform: `scale(${

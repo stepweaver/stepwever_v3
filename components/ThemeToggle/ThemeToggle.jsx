@@ -15,6 +15,7 @@ export default function ThemeToggle() {
     { value: 'light', label: 'LIGHT' },
     { value: 'monochrome', label: 'MONO' },
     { value: 'monochrome-inverted', label: 'INVERT' },
+    { value: 'vintage', label: 'VINTAGE' },
   ];
 
   const currentTheme = themes.find(t => t.value === theme);

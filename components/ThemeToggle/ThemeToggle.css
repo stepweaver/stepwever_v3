@@ -33,6 +33,10 @@
   @apply text-black;
 }
 
+.theme-dropdown-trigger.vintage {
+  color: #55ffff;
+}
+
 .theme-dropdown-trigger:hover {
   filter: brightness(1.2);
 }
@@ -78,6 +82,10 @@
   filter: brightness(0) saturate(100%) invert(0%) drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
 }
 
+.lambda-icon.vintage {
+  filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(130deg) brightness(104%) contrast(101%) drop-shadow(0 0 4px rgba(85, 255, 255, 0.6));
+}
+
 .theme-dropdown-menu {
   @apply absolute top-full left-0 mt-1 w-full rounded overflow-hidden z-50;
   background: #000000;
@@ -110,6 +118,16 @@
 .theme-dropdown-menu.monochrome {
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
   border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-dropdown-menu.monochrome-inverted {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.theme-dropdown-menu.vintage {
+  box-shadow: 0 8px 24px rgba(85, 255, 255, 0.25);
+  border-color: rgba(85, 255, 255, 0.2);
 }
 
 .theme-dropdown-menu.monochrome-inverted {
@@ -166,6 +184,16 @@
   text-shadow: 0 0 12px rgba(170, 170, 170, 0.95);
 }
 
+.theme-dropdown-option.vintage {
+  color: #55ffff;
+}
+
+.theme-dropdown-option.vintage:hover,
+.theme-dropdown-option.vintage.active {
+  background: rgba(85, 255, 255, 0.12);
+  text-shadow: 0 0 12px rgba(85, 255, 255, 0.95);
+}
+
 .theme-dropdown-option.active {
   font-weight: 900;
 }
@@ -192,6 +220,10 @@
   filter: brightness(0) saturate(100%) invert(53%);
 }
 
+.lambda-icon-small.vintage {
+  filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(130deg) brightness(104%) contrast(101%);
+}
+
 .theme-dropdown-option.dark:hover .lambda-icon-small.dark,
 .theme-dropdown-option.dark.active .lambda-icon-small.dark {
   filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 4px rgba(0, 255, 0, 0.9));
@@ -210,6 +242,11 @@
 .theme-dropdown-option.monochrome-inverted:hover .lambda-icon-small.monochrome-inverted,
 .theme-dropdown-option.monochrome-inverted.active .lambda-icon-small.monochrome-inverted {
   filter: brightness(0) saturate(100%) invert(67%) drop-shadow(0 0 4px rgba(170, 170, 170, 0.9));
+}
+
+.theme-dropdown-option.vintage:hover .lambda-icon-small.vintage,
+.theme-dropdown-option.vintage.active .lambda-icon-small.vintage {
+  filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(130deg) brightness(104%) contrast(101%) drop-shadow(0 0 4px rgba(85, 255, 255, 0.9));
 }
 
 /* Focus state for accessibility */

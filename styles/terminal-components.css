@@ -67,6 +67,16 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Vintage: cyan glow for lambda */
+[data-theme="vintage"] .lambda-normal {
+  text-shadow: 0 0 3px rgba(85, 255, 255, 0.4);
+}
+
+/* Vintage: bright cyan glow for glitching */
+[data-theme="vintage"] .lambda-glitching {
+  text-shadow: 0 0 5px rgba(85, 255, 255, 0.8), 0 0 10px rgba(85, 255, 255, 0.4);
+}
+
 /* Animation for cursor blink */
 @keyframes cursor-blink {
   0%,
