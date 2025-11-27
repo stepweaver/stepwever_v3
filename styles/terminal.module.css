@@ -403,9 +403,14 @@
    This adds a subtle left border to indicate that wrapped lines are continuations */
 .terminalWrapped {
   position: relative;
-  border-left: 2px solid rgba(0, 255, 0, 0.2);
+  border-left: 2px solid rgba(0, 255, 0, 0.5);
   padding-left: 4px;
   margin-left: 0;
+}
+
+/* Make wrap indicators more visible in light themes */
+:global(.light) .terminalWrapped {
+  border-left-color: rgba(0, 180, 0, 0.6);
 }
 
 /* Custom green terminal ellipsis */
