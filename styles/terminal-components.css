@@ -77,6 +77,70 @@
   text-shadow: 0 0 5px rgba(85, 255, 255, 0.8), 0 0 10px rgba(85, 255, 255, 0.4);
 }
 
+/* Apple II: soft lime glow for lambda */
+[data-theme="apple"] .lambda-normal {
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.4);
+}
+
+/* Apple II: bright lime glow for glitching */
+[data-theme="apple"] .lambda-glitching {
+  text-shadow: 0 0 5px rgba(51, 255, 51, 0.8), 0 0 10px rgba(51, 255, 51, 0.4);
+}
+
+/* C64: light blue glow for lambda */
+[data-theme="c64"] .lambda-normal {
+  text-shadow: 0 0 3px rgba(163, 230, 255, 0.4);
+}
+
+[data-theme="c64"] .lambda-glitching {
+  text-shadow: 0 0 5px rgba(163, 230, 255, 0.8), 0 0 10px rgba(163, 230, 255, 0.4);
+}
+
+/* Amber: warm amber glow for lambda */
+[data-theme="amber"] .lambda-normal {
+  text-shadow: 0 0 3px rgba(255, 176, 0, 0.4);
+}
+
+[data-theme="amber"] .lambda-glitching {
+  text-shadow: 0 0 5px rgba(255, 176, 0, 0.8), 0 0 10px rgba(255, 176, 0, 0.4);
+}
+
+/* Synthwave: hot pink glow for lambda */
+[data-theme="synthwave"] .lambda-normal {
+  text-shadow: 0 0 3px rgba(255, 20, 147, 0.4);
+}
+
+[data-theme="synthwave"] .lambda-glitching {
+  text-shadow: 0 0 5px rgba(255, 20, 147, 0.8), 0 0 10px rgba(255, 20, 147, 0.4);
+}
+
+/* Dracula: purple glow for lambda */
+[data-theme="dracula"] .lambda-normal {
+  text-shadow: 0 0 3px rgba(189, 147, 249, 0.4);
+}
+
+[data-theme="dracula"] .lambda-glitching {
+  text-shadow: 0 0 5px rgba(189, 147, 249, 0.8), 0 0 10px rgba(189, 147, 249, 0.4);
+}
+
+/* Solarized: teal glow for lambda */
+[data-theme="solarized"] .lambda-normal {
+  text-shadow: 0 0 3px rgba(42, 161, 152, 0.4);
+}
+
+[data-theme="solarized"] .lambda-glitching {
+  text-shadow: 0 0 5px rgba(42, 161, 152, 0.8), 0 0 10px rgba(42, 161, 152, 0.4);
+}
+
+/* Nord: frost blue glow for lambda */
+[data-theme="nord"] .lambda-normal {
+  text-shadow: 0 0 3px rgba(136, 192, 208, 0.4);
+}
+
+[data-theme="nord"] .lambda-glitching {
+  text-shadow: 0 0 5px rgba(136, 192, 208, 0.8), 0 0 10px rgba(136, 192, 208, 0.4);
+}
+
 /* Animation for cursor blink */
 @keyframes cursor-blink {
   0%,

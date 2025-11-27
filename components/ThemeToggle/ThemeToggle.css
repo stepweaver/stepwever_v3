@@ -37,6 +37,34 @@
   color: #55ffff;
 }
 
+.theme-dropdown-trigger.apple {
+  color: #33ff33;
+}
+
+.theme-dropdown-trigger.c64 {
+  color: #a3e6ff;
+}
+
+.theme-dropdown-trigger.amber {
+  color: #ffb000;
+}
+
+.theme-dropdown-trigger.synthwave {
+  color: #ff1493;
+}
+
+.theme-dropdown-trigger.dracula {
+  color: #bd93f9;
+}
+
+.theme-dropdown-trigger.solarized {
+  color: #2aa198;
+}
+
+.theme-dropdown-trigger.nord {
+  color: #88c0d0;
+}
+
 .theme-dropdown-trigger:hover {
   filter: brightness(1.2);
 }
@@ -84,6 +112,34 @@
 
 .lambda-icon.vintage {
   filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(130deg) brightness(104%) contrast(101%) drop-shadow(0 0 4px rgba(85, 255, 255, 0.6));
+}
+
+.lambda-icon.apple {
+  filter: brightness(0) saturate(100%) invert(81%) sepia(55%) saturate(2078%) hue-rotate(66deg) brightness(103%) contrast(101%) drop-shadow(0 0 4px rgba(51, 255, 51, 0.6));
+}
+
+.lambda-icon.c64 {
+  filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(170deg) brightness(104%) contrast(101%) drop-shadow(0 0 4px rgba(163, 230, 255, 0.6));
+}
+
+.lambda-icon.amber {
+  filter: brightness(0) saturate(100%) invert(72%) sepia(78%) saturate(1000%) hue-rotate(360deg) brightness(105%) contrast(101%) drop-shadow(0 0 4px rgba(255, 176, 0, 0.6));
+}
+
+.lambda-icon.synthwave {
+  filter: brightness(0) saturate(100%) invert(25%) sepia(99%) saturate(7426%) hue-rotate(318deg) brightness(101%) contrast(101%) drop-shadow(0 0 4px rgba(255, 20, 147, 0.6));
+}
+
+.lambda-icon.dracula {
+  filter: brightness(0) saturate(100%) invert(75%) sepia(31%) saturate(1825%) hue-rotate(214deg) brightness(103%) contrast(96%) drop-shadow(0 0 4px rgba(189, 147, 249, 0.6));
+}
+
+.lambda-icon.solarized {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(30%) saturate(1142%) hue-rotate(131deg) brightness(91%) contrast(86%) drop-shadow(0 0 4px rgba(42, 161, 152, 0.6));
+}
+
+.lambda-icon.nord {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(16%) saturate(1142%) hue-rotate(153deg) brightness(95%) contrast(86%) drop-shadow(0 0 4px rgba(136, 192, 208, 0.6));
 }
 
 .theme-dropdown-menu {
@@ -194,6 +250,76 @@
   text-shadow: 0 0 12px rgba(85, 255, 255, 0.95);
 }
 
+.theme-dropdown-option.apple {
+  color: #33ff33;
+}
+
+.theme-dropdown-option.apple:hover,
+.theme-dropdown-option.apple.active {
+  background: rgba(51, 255, 51, 0.12);
+  text-shadow: 0 0 12px rgba(51, 255, 51, 0.95);
+}
+
+.theme-dropdown-option.c64 {
+  color: #a3e6ff;
+}
+
+.theme-dropdown-option.c64:hover,
+.theme-dropdown-option.c64.active {
+  background: rgba(163, 230, 255, 0.12);
+  text-shadow: 0 0 12px rgba(163, 230, 255, 0.95);
+}
+
+.theme-dropdown-option.amber {
+  color: #ffb000;
+}
+
+.theme-dropdown-option.amber:hover,
+.theme-dropdown-option.amber.active {
+  background: rgba(255, 176, 0, 0.12);
+  text-shadow: 0 0 12px rgba(255, 176, 0, 0.95);
+}
+
+.theme-dropdown-option.synthwave {
+  color: #ff1493;
+}
+
+.theme-dropdown-option.synthwave:hover,
+.theme-dropdown-option.synthwave.active {
+  background: rgba(255, 20, 147, 0.12);
+  text-shadow: 0 0 12px rgba(255, 20, 147, 0.95);
+}
+
+.theme-dropdown-option.dracula {
+  color: #bd93f9;
+}
+
+.theme-dropdown-option.dracula:hover,
+.theme-dropdown-option.dracula.active {
+  background: rgba(189, 147, 249, 0.12);
+  text-shadow: 0 0 12px rgba(189, 147, 249, 0.95);
+}
+
+.theme-dropdown-option.solarized {
+  color: #2aa198;
+}
+
+.theme-dropdown-option.solarized:hover,
+.theme-dropdown-option.solarized.active {
+  background: rgba(42, 161, 152, 0.12);
+  text-shadow: 0 0 12px rgba(42, 161, 152, 0.95);
+}
+
+.theme-dropdown-option.nord {
+  color: #88c0d0;
+}
+
+.theme-dropdown-option.nord:hover,
+.theme-dropdown-option.nord.active {
+  background: rgba(136, 192, 208, 0.12);
+  text-shadow: 0 0 12px rgba(136, 192, 208, 0.95);
+}
+
 .theme-dropdown-option.active {
   font-weight: 900;
 }
@@ -224,6 +350,34 @@
   filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(130deg) brightness(104%) contrast(101%);
 }
 
+.lambda-icon-small.apple {
+  filter: brightness(0) saturate(100%) invert(81%) sepia(55%) saturate(2078%) hue-rotate(66deg) brightness(103%) contrast(101%);
+}
+
+.lambda-icon-small.c64 {
+  filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(170deg) brightness(104%) contrast(101%);
+}
+
+.lambda-icon-small.amber {
+  filter: brightness(0) saturate(100%) invert(72%) sepia(78%) saturate(1000%) hue-rotate(360deg) brightness(105%) contrast(101%);
+}
+
+.lambda-icon-small.synthwave {
+  filter: brightness(0) saturate(100%) invert(25%) sepia(99%) saturate(7426%) hue-rotate(318deg) brightness(101%) contrast(101%);
+}
+
+.lambda-icon-small.dracula {
+  filter: brightness(0) saturate(100%) invert(75%) sepia(31%) saturate(1825%) hue-rotate(214deg) brightness(103%) contrast(96%);
+}
+
+.lambda-icon-small.solarized {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(30%) saturate(1142%) hue-rotate(131deg) brightness(91%) contrast(86%);
+}
+
+.lambda-icon-small.nord {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(16%) saturate(1142%) hue-rotate(153deg) brightness(95%) contrast(86%);
+}
+
 .theme-dropdown-option.dark:hover .lambda-icon-small.dark,
 .theme-dropdown-option.dark.active .lambda-icon-small.dark {
   filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 4px rgba(0, 255, 0, 0.9));
@@ -247,6 +401,41 @@
 .theme-dropdown-option.vintage:hover .lambda-icon-small.vintage,
 .theme-dropdown-option.vintage.active .lambda-icon-small.vintage {
   filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(130deg) brightness(104%) contrast(101%) drop-shadow(0 0 4px rgba(85, 255, 255, 0.9));
+}
+
+.theme-dropdown-option.apple:hover .lambda-icon-small.apple,
+.theme-dropdown-option.apple.active .lambda-icon-small.apple {
+  filter: brightness(0) saturate(100%) invert(81%) sepia(55%) saturate(2078%) hue-rotate(66deg) brightness(103%) contrast(101%) drop-shadow(0 0 4px rgba(51, 255, 51, 0.9));
+}
+
+.theme-dropdown-option.c64:hover .lambda-icon-small.c64,
+.theme-dropdown-option.c64.active .lambda-icon-small.c64 {
+  filter: brightness(0) saturate(100%) invert(87%) sepia(78%) saturate(2076%) hue-rotate(170deg) brightness(104%) contrast(101%) drop-shadow(0 0 4px rgba(163, 230, 255, 0.9));
+}
+
+.theme-dropdown-option.amber:hover .lambda-icon-small.amber,
+.theme-dropdown-option.amber.active .lambda-icon-small.amber {
+  filter: brightness(0) saturate(100%) invert(72%) sepia(78%) saturate(1000%) hue-rotate(360deg) brightness(105%) contrast(101%) drop-shadow(0 0 4px rgba(255, 176, 0, 0.9));
+}
+
+.theme-dropdown-option.synthwave:hover .lambda-icon-small.synthwave,
+.theme-dropdown-option.synthwave.active .lambda-icon-small.synthwave {
+  filter: brightness(0) saturate(100%) invert(25%) sepia(99%) saturate(7426%) hue-rotate(318deg) brightness(101%) contrast(101%) drop-shadow(0 0 4px rgba(255, 20, 147, 0.9));
+}
+
+.theme-dropdown-option.dracula:hover .lambda-icon-small.dracula,
+.theme-dropdown-option.dracula.active .lambda-icon-small.dracula {
+  filter: brightness(0) saturate(100%) invert(75%) sepia(31%) saturate(1825%) hue-rotate(214deg) brightness(103%) contrast(96%) drop-shadow(0 0 4px rgba(189, 147, 249, 0.9));
+}
+
+.theme-dropdown-option.solarized:hover .lambda-icon-small.solarized,
+.theme-dropdown-option.solarized.active .lambda-icon-small.solarized {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(30%) saturate(1142%) hue-rotate(131deg) brightness(91%) contrast(86%) drop-shadow(0 0 4px rgba(42, 161, 152, 0.9));
+}
+
+.theme-dropdown-option.nord:hover .lambda-icon-small.nord,
+.theme-dropdown-option.nord.active .lambda-icon-small.nord {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(16%) saturate(1142%) hue-rotate(153deg) brightness(95%) contrast(86%) drop-shadow(0 0 4px rgba(136, 192, 208, 0.9));
 }
 
 /* Focus state for accessibility */

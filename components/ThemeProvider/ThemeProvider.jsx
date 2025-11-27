@@ -23,13 +23,13 @@ export function ThemeProvider({ children }) {
     if (typeof window !== 'undefined') {
       // First check if theme is already set on the document element (by our script)
       const currentTheme = document.documentElement.getAttribute('data-theme');
-      if (currentTheme === 'light' || currentTheme === 'dark' || currentTheme === 'monochrome' || currentTheme === 'monochrome-inverted' || currentTheme === 'vintage') {
+      if (currentTheme === 'light' || currentTheme === 'dark' || currentTheme === 'monochrome' || currentTheme === 'monochrome-inverted' || currentTheme === 'vintage' || currentTheme === 'apple' || currentTheme === 'c64' || currentTheme === 'amber' || currentTheme === 'synthwave' || currentTheme === 'dracula' || currentTheme === 'solarized' || currentTheme === 'nord') {
         return currentTheme;
       }
 
       // Fallback to localStorage or system preference
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'monochrome' || savedTheme === 'monochrome-inverted' || savedTheme === 'vintage') {
+      if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'monochrome' || savedTheme === 'monochrome-inverted' || savedTheme === 'vintage' || savedTheme === 'apple' || savedTheme === 'c64' || savedTheme === 'amber' || savedTheme === 'synthwave' || savedTheme === 'dracula' || savedTheme === 'solarized' || savedTheme === 'nord') {
         return savedTheme;
       }
       return getSystemTheme();
@@ -94,7 +94,14 @@ export function ThemeProvider({ children }) {
       if (prevTheme === 'light') return 'monochrome';
       if (prevTheme === 'monochrome') return 'monochrome-inverted';
       if (prevTheme === 'monochrome-inverted') return 'vintage';
-      return 'dark'; // vintage -> dark
+      if (prevTheme === 'vintage') return 'apple';
+      if (prevTheme === 'apple') return 'c64';
+      if (prevTheme === 'c64') return 'amber';
+      if (prevTheme === 'amber') return 'synthwave';
+      if (prevTheme === 'synthwave') return 'dracula';
+      if (prevTheme === 'dracula') return 'solarized';
+      if (prevTheme === 'solarized') return 'nord';
+      return 'dark'; // nord -> dark (full circle)
     });
   };
 

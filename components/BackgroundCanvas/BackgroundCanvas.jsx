@@ -74,12 +74,103 @@ export default function BackgroundCanvas() {
     [85, 85, 85], // Dark Gray
   ];
 
+  // Apple II soft lime green colors
+  const colorsApple = [
+    [51, 255, 51], // Soft Lime (starting color)
+    [102, 255, 102], // Medium Lime
+    [68, 204, 68], // Muted Lime
+    [136, 255, 136], // Pale Lime
+    [119, 255, 119], // Light Lime
+    [85, 255, 85], // Bright Lime
+    [153, 255, 153], // Very Light Lime
+    [34, 136, 34], // Dark Lime
+  ];
+
+  // Commodore 64 blue colors
+  const colorsC64 = [
+    [163, 230, 255], // Light Blue (starting color)
+    [124, 112, 218], // Purple-Blue
+    [163, 163, 255], // Bright Blue
+    [216, 216, 255], // Very Light Blue
+    [149, 149, 221], // Medium Blue
+    [184, 184, 255], // Pale Blue
+    [200, 200, 255], // Ultra Light Blue
+    [96, 88, 184], // Dark Blue
+  ];
+
+  // Amber CRT colors
+  const colorsAmber = [
+    [255, 176, 0], // Amber (starting color)
+    [255, 187, 34], // Light Amber
+    [255, 153, 0], // Deep Amber/Orange
+    [255, 204, 102], // Pale Amber
+    [221, 136, 68], // Burnt Orange
+    [255, 170, 85], // Soft Orange
+    [255, 221, 136], // Cream Amber
+    [204, 136, 51], // Dark Amber
+  ];
+
+  // Synthwave hot pink/cyan colors
+  const colorsSynthwave = [
+    [255, 20, 147], // Hot Pink (starting color)
+    [0, 255, 255], // Cyan
+    [157, 0, 255], // Purple
+    [255, 255, 0], // Yellow
+    [255, 105, 180], // Light Pink
+    [65, 105, 225], // Royal Blue
+    [255, 0, 255], // Magenta
+    [0, 191, 255], // Deep Sky Blue
+  ];
+
+  // Dracula purple/pink colors
+  const colorsDracula = [
+    [189, 147, 249], // Purple (starting color)
+    [255, 121, 198], // Pink
+    [139, 233, 253], // Cyan
+    [80, 250, 123], // Green
+    [241, 250, 140], // Yellow
+    [255, 184, 108], // Orange
+    [255, 85, 85], // Red
+    [248, 248, 242], // White
+  ];
+
+  // Solarized teal/cyan colors
+  const colorsSolarized = [
+    [42, 161, 152], // Teal (starting color)
+    [38, 139, 210], // Blue
+    [133, 153, 0], // Green
+    [181, 137, 0], // Yellow
+    [203, 75, 22], // Orange
+    [211, 54, 130], // Magenta
+    [108, 113, 196], // Violet
+    [131, 148, 150], // Base0
+  ];
+
+  // Nord frost blue colors
+  const colorsNord = [
+    [136, 192, 208], // Frost Blue (starting color)
+    [129, 161, 193], // Frost Blue 2
+    [94, 129, 172], // Frost Blue 3
+    [163, 190, 140], // Aurora Green
+    [235, 203, 139], // Aurora Yellow
+    [208, 135, 112], // Aurora Orange
+    [191, 97, 106], // Aurora Red
+    [180, 142, 173], // Aurora Purple
+  ];
+
   // Select color palette based on theme
   const neonColors = 
     theme === 'light' ? colorsLight : 
     theme === 'monochrome' ? colorsMonochrome : 
     theme === 'monochrome-inverted' ? colorsMonochromeInverted :
     theme === 'vintage' ? colorsVintage :
+    theme === 'apple' ? colorsApple :
+    theme === 'c64' ? colorsC64 :
+    theme === 'amber' ? colorsAmber :
+    theme === 'synthwave' ? colorsSynthwave :
+    theme === 'dracula' ? colorsDracula :
+    theme === 'solarized' ? colorsSolarized :
+    theme === 'nord' ? colorsNord :
     neonColorsDark;
 
   // Use safe scroll hook
@@ -263,6 +354,13 @@ export default function BackgroundCanvas() {
               theme === 'monochrome' ? 'drop-shadow(0 0 8px rgba(255, 255, 255, 1)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))' :
               theme === 'monochrome-inverted' ? 'drop-shadow(0 0 8px rgba(0, 0, 0, 1)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.4))' :
               theme === 'vintage' ? 'drop-shadow(0 0 8px rgba(85, 255, 255, 1)) drop-shadow(0 0 20px rgba(85, 255, 255, 0.4))' :
+              theme === 'apple' ? 'drop-shadow(0 0 8px rgba(51, 255, 51, 1)) drop-shadow(0 0 20px rgba(51, 255, 51, 0.4))' :
+              theme === 'c64' ? 'drop-shadow(0 0 8px rgba(163, 230, 255, 1)) drop-shadow(0 0 20px rgba(163, 230, 255, 0.4))' :
+              theme === 'amber' ? 'drop-shadow(0 0 8px rgba(255, 176, 0, 1)) drop-shadow(0 0 20px rgba(255, 176, 0, 0.4))' :
+              theme === 'synthwave' ? 'drop-shadow(0 0 8px rgba(255, 20, 147, 1)) drop-shadow(0 0 20px rgba(255, 20, 147, 0.4))' :
+              theme === 'dracula' ? 'drop-shadow(0 0 8px rgba(189, 147, 249, 1)) drop-shadow(0 0 20px rgba(189, 147, 249, 0.4))' :
+              theme === 'solarized' ? 'drop-shadow(0 0 8px rgba(42, 161, 152, 1)) drop-shadow(0 0 20px rgba(42, 161, 152, 0.4))' :
+              theme === 'nord' ? 'drop-shadow(0 0 8px rgba(136, 192, 208, 1)) drop-shadow(0 0 20px rgba(136, 192, 208, 0.4))' :
               'drop-shadow(0 0 8px rgba(0, 255, 65, 1)) drop-shadow(0 0 20px rgba(0, 255, 65, 0.4))',
             opacity: theme === 'light' || theme === 'monochrome-inverted' ? 0.2 : 0.3,
             transform: `scale(${

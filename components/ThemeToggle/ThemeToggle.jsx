@@ -15,7 +15,14 @@ export default function ThemeToggle() {
     { value: 'light', label: 'LIGHT' },
     { value: 'monochrome', label: 'MONO' },
     { value: 'monochrome-inverted', label: 'INVERT' },
-    { value: 'vintage', label: 'VINTAGE' },
+    { value: 'vintage', label: 'DOS' },
+    { value: 'apple', label: 'APPLE' },
+    { value: 'c64', label: 'C64' },
+    { value: 'amber', label: 'AMBER' },
+    { value: 'synthwave', label: 'SYNTH' },
+    { value: 'dracula', label: 'DRACULA' },
+    { value: 'solarized', label: 'SOLAR' },
+    { value: 'nord', label: 'NORD' },
   ];
 
   const currentTheme = themes.find(t => t.value === theme);

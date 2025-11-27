@@ -168,7 +168,7 @@ export default function RootLayout({ children }) {
                   // Update meta tags for better mobile experience
                   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
                   if (metaThemeColor) {
-                    const themeColor = theme === 'light' ? '#e5e5e5' : theme === 'monochrome' ? '#000000' : theme === 'monochrome-inverted' ? '#ffffff' : theme === 'vintage' ? '#000000' : '#0d1211';
+                    const themeColor = theme === 'light' ? '#e5e5e5' : theme === 'monochrome' ? '#000000' : theme === 'monochrome-inverted' ? '#ffffff' : theme === 'vintage' ? '#000000' : theme === 'apple' ? '#000000' : theme === 'c64' ? '#40318d' : theme === 'amber' ? '#1a0f00' : theme === 'synthwave' ? '#0a0a14' : theme === 'dracula' ? '#282a36' : theme === 'solarized' ? '#002b36' : theme === 'nord' ? '#2e3440' : '#0d1211';
                     metaThemeColor.setAttribute('content', themeColor);
                   }
                   

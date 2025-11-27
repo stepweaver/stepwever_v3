@@ -268,6 +268,286 @@
     0 0 10px rgba(85, 255, 255, 0.4);
 }
 
+[data-theme="apple"] {
+  /* Apple II Theme - Soft Lime Green Aesthetic */
+  --color-terminal-dark: #000000;
+  --color-terminal-light: #001100;
+  --color-terminal-border: #113311;
+  /* Apple II soft lime green palette */
+  --color-terminal-green: #33ff33;
+  --color-terminal-text: #66ff66;
+  --color-terminal-muted: #44cc44;
+  --color-terminal-yellow: #88ff88;
+  --color-terminal-red: #44ff44;
+  --color-terminal-blue: #55ff55;
+  --color-terminal-cyan: #77ff77;
+  --color-terminal-dimmed: #228822;
+  --color-terminal-magenta: #66ff66;
+  --color-terminal-pink: #66ff66;
+  --color-terminal-purple: #55ff55;
+  --color-terminal-orange: #77ff77;
+  --color-terminal-white: #99ff99;
+
+  /* Background and Foreground - Pure black and soft lime */
+  --background: #000000;
+  --foreground: #33ff33;
+
+  /* Soft lime glows for Apple II CRT effect */
+  --terminal-title-glow: 0 0 3px rgba(51, 255, 51, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(51, 255, 51, 0.3);
+  --terminal-shadow: 0 0 1px rgba(51, 255, 51, 0.7),
+    0 0 20px rgba(51, 255, 51, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(51, 255, 51, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(51, 255, 51, 0.8),
+    0 0 10px rgba(51, 255, 51, 0.4);
+  --crt-glow: 0 0 30px rgba(51, 255, 51, 0.15);
+
+  /* Glitch Effect Colors — soft lime */
+  --theme-glitch-color: #33ff33;
+  --theme-glitch-shadow: 0 0 5px rgba(51, 255, 51, 0.8),
+    0 0 10px rgba(51, 255, 51, 0.4);
+}
+
+[data-theme="c64"] {
+  /* Commodore 64 Theme - Light Blue on Dark Blue */
+  --color-terminal-dark: #40318d;
+  --color-terminal-light: #4a3b9f;
+  --color-terminal-border: #5a4bbf;
+  /* C64 classic blue palette */
+  --color-terminal-green: #a3e6ff;
+  --color-terminal-text: #7c70da;
+  --color-terminal-muted: #6058b8;
+  --color-terminal-yellow: #d8d8ff;
+  --color-terminal-red: #9f95e6;
+  --color-terminal-blue: #a3a3ff;
+  --color-terminal-cyan: #c8c8ff;
+  --color-terminal-dimmed: #4a4099;
+  --color-terminal-magenta: #b8b8ff;
+  --color-terminal-pink: #b8b8ff;
+  --color-terminal-purple: #9595dd;
+  --color-terminal-orange: #c0b8ff;
+  --color-terminal-white: #e8e8ff;
+
+  /* Background and Foreground - Classic C64 blue */
+  --background: #40318d;
+  --foreground: #7c70da;
+
+  /* Light blue glows for C64 CRT effect */
+  --terminal-title-glow: 0 0 3px rgba(163, 230, 255, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(163, 230, 255, 0.3);
+  --terminal-shadow: 0 0 1px rgba(163, 230, 255, 0.7),
+    0 0 20px rgba(163, 230, 255, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(163, 230, 255, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(163, 230, 255, 0.8),
+    0 0 10px rgba(163, 230, 255, 0.4);
+  --crt-glow: 0 0 30px rgba(163, 230, 255, 0.15);
+
+  /* Glitch Effect Colors — light blue */
+  --theme-glitch-color: #a3e6ff;
+  --theme-glitch-shadow: 0 0 5px rgba(163, 230, 255, 0.8),
+    0 0 10px rgba(163, 230, 255, 0.4);
+}
+
+[data-theme="amber"] {
+  /* Amber CRT Theme - Warm Orange on Dark Brown */
+  --color-terminal-dark: #1a0f00;
+  --color-terminal-light: #2a1a00;
+  --color-terminal-border: #442200;
+  /* Amber/orange vintage colors */
+  --color-terminal-green: #ffb000;
+  --color-terminal-text: #ffcc66;
+  --color-terminal-muted: #cc8833;
+  --color-terminal-yellow: #ffdd88;
+  --color-terminal-red: #ff6600;
+  --color-terminal-blue: #ffaa55;
+  --color-terminal-cyan: #ffcc77;
+  --color-terminal-dimmed: #996633;
+  --color-terminal-magenta: #ff9944;
+  --color-terminal-pink: #ffaa66;
+  --color-terminal-purple: #dd8844;
+  --color-terminal-orange: #ff9900;
+  --color-terminal-white: #ffddaa;
+
+  /* Background and Foreground - Deep brown and amber */
+  --background: #1a0f00;
+  --foreground: #ffb000;
+
+  /* Amber glows for vintage CRT effect */
+  --terminal-title-glow: 0 0 3px rgba(255, 176, 0, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(255, 176, 0, 0.3);
+  --terminal-shadow: 0 0 1px rgba(255, 176, 0, 0.7),
+    0 0 20px rgba(255, 176, 0, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(255, 176, 0, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(255, 176, 0, 0.8),
+    0 0 10px rgba(255, 176, 0, 0.4);
+  --crt-glow: 0 0 30px rgba(255, 176, 0, 0.15);
+
+  /* Glitch Effect Colors — warm amber */
+  --theme-glitch-color: #ff9900;
+  --theme-glitch-shadow: 0 0 5px rgba(255, 153, 0, 0.8),
+    0 0 10px rgba(255, 153, 0, 0.4);
+}
+
+[data-theme="synthwave"] {
+  /* Synthwave Theme - Hot Pink, Cyan, Purple Neon */
+  --color-terminal-dark: #0a0a14;
+  --color-terminal-light: #14142d;
+  --color-terminal-border: #2d2d5f;
+  /* Synthwave neon colors */
+  --color-terminal-green: #00ffff;
+  --color-terminal-text: #ffffff;
+  --color-terminal-muted: #b8b8ff;
+  --color-terminal-yellow: #ffff00;
+  --color-terminal-red: #ff1493;
+  --color-terminal-blue: #4169e1;
+  --color-terminal-cyan: #00ffff;
+  --color-terminal-dimmed: #8888aa;
+  --color-terminal-magenta: #ff00ff;
+  --color-terminal-pink: #ff1493;
+  --color-terminal-purple: #9d00ff;
+  --color-terminal-orange: #ff69b4;
+  --color-terminal-white: #ffffff;
+
+  /* Background and Foreground - Dark purple and hot pink */
+  --background: #0a0a14;
+  --foreground: #ff1493;
+
+  /* Hot pink/cyan glows for synthwave effect */
+  --terminal-title-glow: 0 0 3px rgba(255, 20, 147, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(255, 20, 147, 0.3);
+  --terminal-shadow: 0 0 1px rgba(255, 20, 147, 0.7),
+    0 0 20px rgba(255, 20, 147, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(255, 20, 147, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(255, 20, 147, 0.8),
+    0 0 10px rgba(255, 20, 147, 0.4);
+  --crt-glow: 0 0 30px rgba(255, 20, 147, 0.15);
+
+  /* Glitch Effect Colors — hot pink */
+  --theme-glitch-color: #ff1493;
+  --theme-glitch-shadow: 0 0 5px rgba(255, 20, 147, 0.8),
+    0 0 10px rgba(255, 20, 147, 0.4);
+}
+
+[data-theme="dracula"] {
+  /* Dracula Theme - Purple, Pink, Cyan on Dark */
+  --color-terminal-dark: #282a36;
+  --color-terminal-light: #323443;
+  --color-terminal-border: #44475a;
+  /* Dracula colors */
+  --color-terminal-green: #50fa7b;
+  --color-terminal-text: #f8f8f2;
+  --color-terminal-muted: #6272a4;
+  --color-terminal-yellow: #f1fa8c;
+  --color-terminal-red: #ff5555;
+  --color-terminal-blue: #8be9fd;
+  --color-terminal-cyan: #8be9fd;
+  --color-terminal-dimmed: #6272a4;
+  --color-terminal-magenta: #ff79c6;
+  --color-terminal-pink: #ff79c6;
+  --color-terminal-purple: #bd93f9;
+  --color-terminal-orange: #ffb86c;
+  --color-terminal-white: #f8f8f2;
+
+  /* Background and Foreground - Dracula purple */
+  --background: #282a36;
+  --foreground: #bd93f9;
+
+  /* Purple/pink glows for Dracula effect */
+  --terminal-title-glow: 0 0 3px rgba(189, 147, 249, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(189, 147, 249, 0.3);
+  --terminal-shadow: 0 0 1px rgba(189, 147, 249, 0.7),
+    0 0 20px rgba(189, 147, 249, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(189, 147, 249, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(189, 147, 249, 0.8),
+    0 0 10px rgba(189, 147, 249, 0.4);
+  --crt-glow: 0 0 30px rgba(189, 147, 249, 0.15);
+
+  /* Glitch Effect Colors — purple */
+  --theme-glitch-color: #bd93f9;
+  --theme-glitch-shadow: 0 0 5px rgba(189, 147, 249, 0.8),
+    0 0 10px rgba(189, 147, 249, 0.4);
+}
+
+[data-theme="solarized"] {
+  /* Solarized Dark Theme - Tan on Blue-Gray */
+  --color-terminal-dark: #002b36;
+  --color-terminal-light: #073642;
+  --color-terminal-border: #0f4d5c;
+  /* Solarized colors */
+  --color-terminal-green: #859900;
+  --color-terminal-text: #839496;
+  --color-terminal-muted: #586e75;
+  --color-terminal-yellow: #b58900;
+  --color-terminal-red: #dc322f;
+  --color-terminal-blue: #268bd2;
+  --color-terminal-cyan: #2aa198;
+  --color-terminal-dimmed: #586e75;
+  --color-terminal-magenta: #d33682;
+  --color-terminal-pink: #d33682;
+  --color-terminal-purple: #6c71c4;
+  --color-terminal-orange: #cb4b16;
+  --color-terminal-white: #fdf6e3;
+
+  /* Background and Foreground - Solarized base */
+  --background: #002b36;
+  --foreground: #839496;
+
+  /* Subtle blue/teal glows for Solarized */
+  --terminal-title-glow: 0 0 3px rgba(42, 161, 152, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(42, 161, 152, 0.3);
+  --terminal-shadow: 0 0 1px rgba(42, 161, 152, 0.7),
+    0 0 20px rgba(42, 161, 152, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(42, 161, 152, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(42, 161, 152, 0.8),
+    0 0 10px rgba(42, 161, 152, 0.4);
+  --crt-glow: 0 0 30px rgba(42, 161, 152, 0.15);
+
+  /* Glitch Effect Colors — cyan/teal */
+  --theme-glitch-color: #2aa198;
+  --theme-glitch-shadow: 0 0 5px rgba(42, 161, 152, 0.8),
+    0 0 10px rgba(42, 161, 152, 0.4);
+}
+
+[data-theme="nord"] {
+  /* Nord Theme - Arctic Blue/Teal */
+  --color-terminal-dark: #2e3440;
+  --color-terminal-light: #3b4252;
+  --color-terminal-border: #434c5e;
+  /* Nord colors */
+  --color-terminal-green: #a3be8c;
+  --color-terminal-text: #d8dee9;
+  --color-terminal-muted: #81a1c1;
+  --color-terminal-yellow: #ebcb8b;
+  --color-terminal-red: #bf616a;
+  --color-terminal-blue: #81a1c1;
+  --color-terminal-cyan: #88c0d0;
+  --color-terminal-dimmed: #4c566a;
+  --color-terminal-magenta: #b48ead;
+  --color-terminal-pink: #b48ead;
+  --color-terminal-purple: #5e81ac;
+  --color-terminal-orange: #d08770;
+  --color-terminal-white: #eceff4;
+
+  /* Background and Foreground - Nord polar night and frost */
+  --background: #2e3440;
+  --foreground: #88c0d0;
+
+  /* Cool frost blue glows for Nord */
+  --terminal-title-glow: 0 0 3px rgba(136, 192, 208, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(136, 192, 208, 0.3);
+  --terminal-shadow: 0 0 1px rgba(136, 192, 208, 0.7),
+    0 0 20px rgba(136, 192, 208, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(136, 192, 208, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(136, 192, 208, 0.8),
+    0 0 10px rgba(136, 192, 208, 0.4);
+  --crt-glow: 0 0 30px rgba(136, 192, 208, 0.15);
+
+  /* Glitch Effect Colors — frost blue */
+  --theme-glitch-color: #88c0d0;
+  --theme-glitch-shadow: 0 0 5px rgba(136, 192, 208, 0.8),
+    0 0 10px rgba(136, 192, 208, 0.4);
+}
+
 /* Font weight improvements for better readability */
 .font-ocr {
   font-weight: 800;
@@ -1633,6 +1913,224 @@ body::after {
 [data-theme="vintage"] *[class*="before:via-[rgba(0,255"]::before {
   --tw-gradient-to: rgba(85, 255, 255, 0.02) !important;
   --tw-gradient-via: rgba(85, 255, 255, 0.02) !important;
+}
+
+/* ========================================
+   APPLE II THEME - Comprehensive Overrides
+   ======================================== */
+
+/* Apple II: scanline effects with soft lime tones */
+[data-theme="apple2"] body::after {
+  background: 
+    /* Subtle vignette effect */
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 17, 0, 0.3) 100%),
+    /* Scanlines - soft lime */
+    linear-gradient(
+      transparent 0%,
+      transparent 45%,
+      rgba(51, 255, 51, 0.03) 45%,
+      rgba(51, 255, 51, 0.03) 55%,
+      transparent 55%,
+      transparent 100%
+    );
+  background-size: 100% 100%, 100% 6px;
+  background-repeat: no-repeat, repeat-y;
+  top: -6px;
+  height: calc(100% + 12px);
+  animation: scanlines-light 0.15s linear infinite;
+}
+
+/* Apple II: button hover effects */
+[data-theme="apple2"] .glitch-button:hover {
+  box-shadow: 0 0 10px rgba(51, 255, 51, 0.3);
+}
+
+/* Apple II: card glows */
+[data-theme="apple2"] .card-glow {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(51, 255, 51, 0.25);
+}
+
+[data-theme="apple2"] .card-glow-tight {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="apple2"] .card-glow-tight::after {
+  border: 1px solid rgba(51, 255, 51, 0.35);
+  box-shadow: inset 0 0 18px rgba(51, 255, 51, 0.2);
+  opacity: 0.75;
+}
+
+/* Apple II: theme toggle hover */
+[data-theme="apple2"] .theme-toggle:hover {
+  box-shadow: 0 0 15px rgba(51, 255, 51, 0.4);
+}
+
+/* Apple II: cyber borders with lime glow */
+[data-theme="apple2"] .cyber-border-green,
+[data-theme="apple2"] .cyber-border-magenta,
+[data-theme="apple2"] .cyber-border-yellow,
+[data-theme="apple2"] .cyber-border-cyan,
+[data-theme="apple2"] .cyber-border-red {
+  filter: drop-shadow(0 0 8px rgba(51, 255, 51, 0.2));
+}
+
+[data-theme="apple2"] .cyber-border-green:hover,
+[data-theme="apple2"] .cyber-border-magenta:hover,
+[data-theme="apple2"] .cyber-border-yellow:hover,
+[data-theme="apple2"] .cyber-border-cyan:hover,
+[data-theme="apple2"] .cyber-border-red:hover {
+  filter: drop-shadow(0 0 12px rgba(51, 255, 51, 0.3));
+}
+
+/* Apple II: card component borders */
+[data-theme="apple2"] article.cyber-border-green,
+[data-theme="apple2"] article.cyber-border.cyber-border-green,
+[data-theme="apple2"] div.cyber-border-green.card-glow,
+[data-theme="apple2"] div.cyber-border-green.card-glow-tight,
+[data-theme="apple2"] div.cyber-border-lg.cyber-border-green {
+  border-color: rgba(51, 255, 51, 0.4);
+}
+
+[data-theme="apple2"] article.cyber-border-green:hover,
+[data-theme="apple2"] article.cyber-border.cyber-border-green:hover,
+[data-theme="apple2"] div.cyber-border-green.card-glow:hover,
+[data-theme="apple2"] div.cyber-border-green.card-glow-tight:hover,
+[data-theme="apple2"] div.cyber-border-lg.cyber-border-green:hover {
+  border-color: rgba(51, 255, 51, 0.6);
+}
+
+/* Apple II: override hover border colors for cards */
+[data-theme="apple2"] article.card-glow-tight:hover,
+[data-theme="apple2"] article.cyber-border.cyber-border-green:hover {
+  border-color: rgba(51, 255, 51, 0.6);
+}
+
+/* Apple II: override hover shadow colors for cards */
+[data-theme="apple2"] article.card-glow-tight:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 0 15px rgba(51, 255, 51, 0.2);
+}
+
+[data-theme="apple2"] article.cyber-border.cyber-border-green:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 0 15px rgba(51, 255, 51, 0.2);
+}
+
+/* Apple II: small badge borders */
+[data-theme="apple2"] .cyber-border-sm.cyber-border-green {
+  border-color: rgba(51, 255, 51, 0.4);
+}
+
+/* Apple II: ServicesPage cards with borders */
+[data-theme="apple2"] .card-glow.cyber-border-green,
+[data-theme="apple2"] article.card-glow.cyber-border-green {
+  border-color: rgba(51, 255, 51, 0.4);
+}
+
+[data-theme="apple2"] .card-glow.cyber-border-green:hover,
+[data-theme="apple2"] article.card-glow.cyber-border-green:hover {
+  border-color: rgba(51, 255, 51, 0.6);
+}
+
+/* Apple II: override Tailwind hover:border for all cards */
+[data-theme="apple2"] article[class*="card-glow"]:hover,
+[data-theme="apple2"] div[class*="card-glow"]:hover,
+[data-theme="apple2"] article.cyber-border[class*="hover:border"]:hover,
+[data-theme="apple2"] div.cyber-border[class*="hover:border"]:hover {
+  border-color: rgba(51, 255, 51, 0.6);
+}
+
+/* Apple II: button borders */
+[data-theme="apple2"] button.cyber-border-green,
+[data-theme="apple2"] button.cyber-border-sm.cyber-border-green,
+[data-theme="apple2"] .glitchButton,
+[data-theme="apple2"] button[class*="cyber-border-green"],
+[data-theme="apple2"] a[class*="cyber-border-green"] {
+  border-color: rgba(51, 255, 51, 0.4);
+}
+
+[data-theme="apple2"] button.cyber-border-green:hover,
+[data-theme="apple2"] button.cyber-border-sm.cyber-border-green:hover,
+[data-theme="apple2"] .glitchButton:hover,
+[data-theme="apple2"] button[class*="cyber-border-green"]:hover,
+[data-theme="apple2"] a[class*="cyber-border-green"]:hover {
+  border-color: rgba(51, 255, 51, 0.6);
+}
+
+/* Apple II: override Tailwind border-terminal-green classes on buttons */
+[data-theme="apple2"] button[class*="border-terminal-green"],
+[data-theme="apple2"] a[class*="border-terminal-green"] {
+  border-color: rgba(51, 255, 51, 0.4);
+}
+
+[data-theme="apple2"] button[class*="border-terminal-green"]:hover,
+[data-theme="apple2"] a[class*="border-terminal-green"]:hover {
+  border-color: rgba(51, 255, 51, 0.6);
+}
+
+/* Apple II: terminal text glows */
+[data-theme="apple2"] .terminal-glow {
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.25), 0 0 4px rgba(51, 255, 51, 0.12);
+}
+
+/* Apple II: terminal headings with stronger lime glow */
+[data-theme="apple2"] .terminal-glow h1,
+[data-theme="apple2"] .terminal-glow h2,
+[data-theme="apple2"] .terminal-glow h3,
+[data-theme="apple2"] .terminal-glow h4,
+[data-theme="apple2"] .terminal-glow h5,
+[data-theme="apple2"] .terminal-glow h6 {
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.35), 0 0 6px rgba(51, 255, 51, 0.18);
+}
+
+/* Apple II: code and terminal elements */
+[data-theme="apple2"] .terminal-glow code,
+[data-theme="apple2"] .terminal-glow pre,
+[data-theme="apple2"] .terminal-glow .terminal-output,
+[data-theme="apple2"] .terminal-glow .terminal-input,
+[data-theme="apple2"] .terminal-glow .terminal-line {
+  text-shadow: 0 0 1px rgba(51, 255, 51, 0.25), 0 0 2px rgba(51, 255, 51, 0.1);
+}
+
+/* Apple II: terminal green text (now lime) */
+[data-theme="apple2"] .terminal-glow .text-terminal-green,
+[data-theme="apple2"] .terminal-glow [class*="text-terminal-green"] {
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.35), 0 0 3px rgba(51, 255, 51, 0.15);
+}
+
+/* Apple II: colored text with lime glow */
+[data-theme="apple2"] .terminal-glow .text-terminal-cyan,
+[data-theme="apple2"] .terminal-glow .text-terminal-magenta,
+[data-theme="apple2"] .terminal-glow .text-terminal-yellow,
+[data-theme="apple2"] .terminal-glow .text-terminal-blue,
+[data-theme="apple2"] .terminal-glow .text-terminal-red {
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.35), 0 0 3px rgba(51, 255, 51, 0.15);
+}
+
+/* Apple II: border adjustments */
+[data-theme="apple2"] .cyber-border-border {
+  border-color: rgba(51, 255, 51, 0.3);
+  filter: drop-shadow(0 0 8px rgba(51, 255, 51, 0.2));
+}
+
+/* Apple II: hover glow effect */
+[data-theme="apple2"] .hover-glow {
+  text-shadow: 0 0 5px rgba(51, 255, 51, 0.8), 0 0 10px rgba(51, 255, 51, 0.4);
+}
+
+/* Apple II: override inline Tailwind shadows */
+[data-theme="apple2"] *[class*="hover:shadow-"]:hover {
+  box-shadow: 0 0 15px rgba(51, 255, 51, 0.3) !important;
+}
+
+/* Apple II: override inline text-shadow */
+[data-theme="apple2"] *[class*="text-shadow-"] {
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.35) !important;
+}
+
+/* Apple II: override TerminalWindow gradient scanlines */
+[data-theme="apple2"] *[class*="before:via-[rgba(0,255,0"]::before,
+[data-theme="apple2"] *[class*="before:via-[rgba(0,255"]::before {
+  --tw-gradient-to: rgba(51, 255, 51, 0.02) !important;
+  --tw-gradient-via: rgba(51, 255, 51, 0.02) !important;
 }
 
 [data-theme="light"] .cyber-border-border:hover {
