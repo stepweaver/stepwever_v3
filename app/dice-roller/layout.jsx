@@ -23,7 +23,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/dice-roller.png',
+        url: '/images/screely-dice.png',
         width: 1200,
         height: 630,
         alt: 'RPG Dice Roller - Terminal styled dice rolling application',
@@ -38,7 +38,7 @@ export const metadata = {
       'Roll d4, d6, d8, d10, d12, d20, d100 with modifiers and roll history. Perfect for tabletop RPG sessions.',
     images: [
       {
-        url: '/images/dice-roller.png',
+        url: '/images/screely-dice.png',
         width: 1200,
         height: 630,
         alt: 'RPG Dice Roller - Terminal styled dice rolling application',

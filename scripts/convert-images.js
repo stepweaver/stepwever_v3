@@ -3,10 +3,11 @@ const fs = require('fs');
 const path = require('path');
 
 const imagesToConvert = [
-  'screencapture-lambda-ortho.png',
-  'screencapture-soap-stache.png',
+  'screely-lambda.png',
+  'screely-stache.png',
+  'screely-dice.png',
+  'screely-profilcard.png',
   'lambda_stepweaver.png',
-  'dice-roller.png',
 ];
 
 const imagesDir = path.join(__dirname, '..', 'public', 'images');

@@ -38,18 +38,18 @@ const ProjectCard = memo(function ProjectCard({
       <div className='p-3 sm:p-4 bg-terminal-dark/30 backdrop-blur-xl flex flex-col h-full'>
         {/* Project Image */}
         {imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-36 sm:h-56'>
+          <div className={`mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-48 sm:h-72 ${slug === 'neon-profile-card' ? 'bg-terminal-dark/50' : ''}`}>
             <OptimizedImage
               src={imageUrl}
               alt={title}
-              className='w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105'
+              className={`w-full h-full transition-transform duration-300 hover:scale-105 ${slug === 'neon-profile-card' ? 'object-contain' : 'object-cover object-top'}`}
               loading={isLCP ? 'eager' : 'lazy'}
               fetchPriority={isLCP ? 'high' : 'auto'}
             />
           </div>
         )}
         {!imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-36 sm:h-56'>
+          <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-48 sm:h-72'>
             <OptimizedImage
               src='/images/lambda_preview.png'
               alt='Project preview'

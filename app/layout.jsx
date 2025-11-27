@@ -216,7 +216,7 @@ export default function RootLayout({ children }) {
         {/* Preload LCP image for better performance - WebP only (PNG is fallback) */}
         <link
           rel='preload'
-          href='/images/screencapture-lambda-ortho.webp'
+          href='/images/screely-lambda.webp'
           as='image'
           type='image/webp'
           fetchPriority='high'

@@ -6,10 +6,11 @@
 // List of images that have WebP versions available
 // Add images here as WebP versions are created
 const IMAGES_WITH_WEBP = [
-  '/images/dice-roller.png',
+  '/images/screely-dice.png',
+  '/images/screely-profilcard.png',
   '/images/lambda_stepweaver.png',
-  '/images/screencapture-lambda-ortho.png',
-  '/images/screencapture-soap-stache.png',
+  '/images/screely-lambda.png',
+  '/images/screely-stache.png',
 ];
 
 export default function OptimizedImage({

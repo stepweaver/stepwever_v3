@@ -17,7 +17,7 @@ const PROJECTS = [
   {
     title: 'Lambda Orthodontics Website - Demo',
     description: 'Modern responsive website with functional forms.',
-    imageUrl: '/images/screencapture-lambda-ortho.png',
+    imageUrl: '/images/screely-lambda.png',
     keywords: ['Healthcare', 'Website', 'Form Validation'],
     actions: [
       'Three fully functional forms with validation',
@@ -30,7 +30,7 @@ const PROJECTS = [
   {
     title: 'Soap Stache',
     description: 'E-commerce platform with shopping cart and Stripe payments.',
-    imageUrl: '/images/screencapture-soap-stache.png',
+    imageUrl: '/images/screely-stache.png',
     keywords: ['E-commerce', 'Next.js', 'Sanity CMS', 'Stripe'],
     actions: [
       'Complete shopping cart and checkout with Stripe integration',
@@ -43,7 +43,7 @@ const PROJECTS = [
   {
     title: 'RPG Dice Roller',
     description: 'Interactive dice rolling app for tabletop RPGs.',
-    imageUrl: '/images/dice-roller.png',
+    imageUrl: '/images/screely-dice.png',
     keywords: ['Gaming', 'Interactive', 'Web App'],
     actions: [
       'Roll any combination of RPG dice instantly',
@@ -57,7 +57,7 @@ const PROJECTS = [
     title: 'Neon Profile Card',
     description:
       'Glassmorphism-inspired ID card with neon CRT glow and animated Matrix Sync terminal sequence.',
-    imageUrl: null,
+    imageUrl: '/images/screely-profilcard.png',
     keywords: ['UI System', 'Tailwind CSS', 'Neon', 'React'],
     actions: [
       'Reusable React component with profile data model and IBM/OCR typography',
