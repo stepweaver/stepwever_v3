@@ -70,26 +70,28 @@ export default function ThemeToggle() {
   return (
     <div className='flex items-center gap-3'>
       {!mounted ? (
-        // Skeleton state - minimal to match collapsed state
-        <div className='w-8 h-8 animate-pulse bg-terminal-border rounded' />
+        // Skeleton state - matches the structure of the actual component
+        <div className='w-32 h-10 animate-pulse bg-terminal-border rounded' />
       ) : (
-        // Minimal lambda icon that expands to grid
+        // CRT-style dropdown
         <div className='theme-dropdown-container' ref={dropdownRef}>
           <button
             onClick={() => setIsOpen(!isOpen)}
             onKeyDown={handleKeyDown}
-            className={`theme-icon-trigger ${theme}`}
-            aria-label={`Select theme (current: ${currentTheme?.label})`}
+            className={`theme-dropdown-trigger ${theme}`}
+            aria-label='Select theme'
             aria-haspopup='listbox'
             aria-expanded={isOpen}
           >
             <Image
               src='/images/lambda_stepweaver.png'
               alt='Lambda'
-              width={20}
-              height={20}
+              width={16}
+              height={16}
               className={`lambda-icon ${theme}`}
             />
+            <span className='theme-dropdown-label'>{currentTheme?.label}</span>
+            <span className={`theme-dropdown-arrow ${isOpen ? 'open' : ''}`}>▼</span>
           </button>
 
           {isOpen && (

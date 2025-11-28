@@ -7,19 +7,91 @@
   font-family: 'OCR-A', 'Courier New', monospace;
 }
 
-/* Minimal Lambda Icon Button */
-.theme-icon-trigger {
-  @apply flex items-center justify-center cursor-pointer select-none;
-  width: 32px;
-  height: 32px;
+/* Dropdown Trigger Button */
+.theme-dropdown-trigger {
+  @apply flex items-center gap-2 px-3 py-2 cursor-pointer select-none;
+  min-width: 150px;
   background: transparent;
   border: none;
   transition: all 0.2s ease;
-  padding: 0;
+  text-align: left;
+  position: relative;
 }
 
-.theme-icon-trigger:hover {
-  transform: scale(1.15);
+.theme-dropdown-trigger.dark {
+  @apply text-terminal-green;
+}
+
+.theme-dropdown-trigger.light {
+  @apply text-terminal-magenta;
+}
+
+.theme-dropdown-trigger.monochrome {
+  @apply text-white;
+}
+
+.theme-dropdown-trigger.monochrome-inverted {
+  @apply text-black;
+}
+
+.theme-dropdown-trigger.vintage {
+  color: #55ffff;
+}
+
+.theme-dropdown-trigger.apple {
+  color: #33ff33;
+}
+
+.theme-dropdown-trigger.c64 {
+  color: #a3e6ff;
+}
+
+.theme-dropdown-trigger.amber {
+  color: #ffb000;
+}
+
+.theme-dropdown-trigger.synthwave {
+  color: #ff1493;
+}
+
+.theme-dropdown-trigger.dracula {
+  color: #bd93f9;
+}
+
+.theme-dropdown-trigger.solarized {
+  color: #2aa198;
+}
+
+.theme-dropdown-trigger.nord {
+  color: #88c0d0;
+}
+
+.theme-dropdown-trigger.cobalt {
+  color: #ffc600;
+}
+
+.theme-dropdown-trigger:hover {
+  filter: brightness(1.2);
+}
+
+.theme-dropdown-trigger:hover .lambda-icon {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.theme-dropdown-label {
+  @apply font-bold text-sm tracking-wide;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.theme-dropdown-arrow {
+  @apply text-xs;
+  margin-left: 6px;
+  transition: transform 0.2s ease;
+  text-shadow: 0 0 6px currentColor;
+}
+
+.theme-dropdown-arrow.open {
+  transform: rotate(180deg);
 }
 
 /* Lambda icon styling - colored by theme */
@@ -28,9 +100,6 @@
   transition: all 0.2s ease;
 }
 
-.theme-icon-trigger:hover .lambda-icon {
-  filter: brightness(1.15) drop-shadow(0 0 8px currentColor);
-}
 
 .lambda-icon.dark {
   filter: brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 6px rgba(0, 255, 0, 0.7));
@@ -386,10 +455,9 @@
 }
 
 /* Focus state for accessibility */
-.theme-icon-trigger:focus-visible {
+.theme-dropdown-trigger:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
-  border-radius: 4px;
 }
 
 .theme-grid-option:focus-visible {
