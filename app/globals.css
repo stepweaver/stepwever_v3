@@ -548,6 +548,46 @@
     0 0 10px rgba(136, 192, 208, 0.4);
 }
 
+[data-theme="cobalt"] {
+  /* Cobalt Theme - Wes Bos' Iconic Deep Blue & Yellow */
+  --color-terminal-dark: #001b2e;
+  --color-terminal-light: #193549;
+  --color-terminal-border: #15232d;
+  /* Cobalt signature colors */
+  --color-terminal-green: #3ad900;
+  --color-terminal-text: #ffffff;
+  --color-terminal-muted: #0088ff;
+  --color-terminal-yellow: #ffc600;
+  --color-terminal-red: #ff0088;
+  --color-terminal-blue: #0088ff;
+  --color-terminal-cyan: #00bbff;
+  --color-terminal-dimmed: #628b97;
+  --color-terminal-magenta: #ff00ff;
+  --color-terminal-pink: #ff0088;
+  --color-terminal-purple: #ae81ff;
+  --color-terminal-orange: #ff9d00;
+  --color-terminal-white: #ffffff;
+
+  /* Background and Foreground - Deep blue and bright yellow */
+  --background: #193549;
+  --foreground: #ffc600;
+
+  /* Bright yellow glows for Cobalt */
+  --terminal-title-glow: 0 0 3px rgba(255, 198, 0, 0.7);
+  --terminal-text-glow: 0 0 1px rgba(255, 198, 0, 0.3);
+  --terminal-shadow: 0 0 1px rgba(255, 198, 0, 0.7),
+    0 0 20px rgba(255, 198, 0, 0.3);
+  --terminal-inner-glow: inset 0 0 80px rgba(255, 198, 0, 0.08);
+  --terminal-strong-glow: 0 0 5px rgba(255, 198, 0, 0.8),
+    0 0 10px rgba(255, 198, 0, 0.4);
+  --crt-glow: 0 0 30px rgba(255, 198, 0, 0.15);
+
+  /* Glitch Effect Colors — bright yellow */
+  --theme-glitch-color: #ffc600;
+  --theme-glitch-shadow: 0 0 5px rgba(255, 198, 0, 0.8),
+    0 0 10px rgba(255, 198, 0, 0.4);
+}
+
 /* Font weight improvements for better readability */
 .font-ocr {
   font-weight: 800;
@@ -1782,6 +1822,26 @@ body::after {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
+/* Cobalt - Bright Yellow Pulse Glow */
+@keyframes pulseGlowCobalt {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 198, 0, 0.2),
+      0 0 20px rgba(255, 198, 0, 0.1),
+      0 0 30px rgba(255, 198, 0, 0.05);
+    border-color: rgba(255, 198, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 198, 0, 0.25),
+      0 0 30px rgba(255, 198, 0, 0.15),
+      0 0 45px rgba(255, 198, 0, 0.08);
+    border-color: rgba(255, 198, 0, 0.4);
+  }
+}
+
+[data-theme="cobalt"] .animate-pulse-glow {
+  animation: pulseGlowCobalt 3s ease-in-out infinite;
+}
+
 /* ========================================
    RIBBON/SUB-HEADER SECTIONS - ALL THEMES
    ======================================== */
@@ -1870,6 +1930,20 @@ body::after {
 [data-theme="nord"] .bg-terminal-green\/80,
 [data-theme="nord"] *[class*="bg-terminal-green/80"] {
   background-color: rgba(136, 192, 208, 0.8) !important;
+}
+
+/* Cobalt - Bright Yellow Ribbons */
+[data-theme="cobalt"] *[class*="shadow-[0_0_30px_rgba(0,255,0"] {
+  box-shadow: 0 0 30px rgba(255, 198, 0, 0.15) !important;
+}
+
+[data-theme="cobalt"] *[class*="border-terminal-green"] {
+  border-color: rgba(255, 198, 0, 0.5) !important;
+}
+
+[data-theme="cobalt"] .bg-terminal-green\/80,
+[data-theme="cobalt"] *[class*="bg-terminal-green/80"] {
+  background-color: rgba(255, 198, 0, 0.8) !important;
 }
 
 /* Vintage - Bright Cyan Ribbons */
@@ -3628,6 +3702,199 @@ body::after {
 }
 
 /* ========================================
+   COBALT THEME - Comprehensive Overrides
+   ======================================== */
+
+[data-theme="cobalt"] body::after {
+  background: 
+    radial-gradient(ellipse at center, transparent 0%, rgba(25, 53, 73, 0.3) 100%),
+    linear-gradient(
+      transparent 0%,
+      transparent 45%,
+      rgba(255, 198, 0, 0.03) 45%,
+      rgba(255, 198, 0, 0.03) 55%,
+      transparent 55%,
+      transparent 100%
+    );
+  background-size: 100% 100%, 100% 6px;
+  background-repeat: no-repeat, repeat-y;
+  top: -6px;
+  height: calc(100% + 12px);
+  animation: scanlines-light 0.15s linear infinite;
+}
+
+[data-theme="cobalt"] .glitch-button:hover {
+  box-shadow: 0 0 10px rgba(255, 198, 0, 0.3);
+}
+
+[data-theme="cobalt"] .card-glow {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(255, 198, 0, 0.25);
+}
+
+[data-theme="cobalt"] .card-glow-tight {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="cobalt"] .card-glow-tight::after {
+  border: 1px solid rgba(255, 198, 0, 0.35);
+  box-shadow: inset 0 0 18px rgba(255, 198, 0, 0.2);
+  opacity: 0.75;
+}
+
+[data-theme="cobalt"] .theme-toggle:hover {
+  box-shadow: 0 0 15px rgba(255, 198, 0, 0.4);
+}
+
+[data-theme="cobalt"] .cyber-border-green,
+[data-theme="cobalt"] .cyber-border-magenta,
+[data-theme="cobalt"] .cyber-border-yellow,
+[data-theme="cobalt"] .cyber-border-cyan,
+[data-theme="cobalt"] .cyber-border-red {
+  border-color: rgba(255, 198, 0, 0.4) !important;
+  filter: drop-shadow(0 0 8px rgba(255, 198, 0, 0.2));
+}
+
+[data-theme="cobalt"] .cyber-border-green:hover,
+[data-theme="cobalt"] .cyber-border-magenta:hover,
+[data-theme="cobalt"] .cyber-border-yellow:hover,
+[data-theme="cobalt"] .cyber-border-cyan:hover,
+[data-theme="cobalt"] .cyber-border-red:hover {
+  border-color: rgba(255, 198, 0, 0.6) !important;
+  filter: drop-shadow(0 0 12px rgba(255, 198, 0, 0.3));
+}
+
+[data-theme="cobalt"] article.cyber-border-green,
+[data-theme="cobalt"] article.cyber-border.cyber-border-green,
+[data-theme="cobalt"] div.cyber-border-green.card-glow,
+[data-theme="cobalt"] div.cyber-border-green.card-glow-tight,
+[data-theme="cobalt"] div.cyber-border-lg.cyber-border-green {
+  border-color: rgba(255, 198, 0, 0.4);
+}
+
+[data-theme="cobalt"] article.cyber-border-green:hover,
+[data-theme="cobalt"] article.cyber-border.cyber-border-green:hover,
+[data-theme="cobalt"] div.cyber-border-green.card-glow:hover,
+[data-theme="cobalt"] div.cyber-border-green.card-glow-tight:hover,
+[data-theme="cobalt"] div.cyber-border-lg.cyber-border-green:hover {
+  border-color: rgba(255, 198, 0, 0.6);
+}
+
+[data-theme="cobalt"] article.card-glow-tight:hover,
+[data-theme="cobalt"] article.cyber-border.cyber-border-green:hover {
+  border-color: rgba(255, 198, 0, 0.6);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 198, 0, 0.2);
+}
+
+[data-theme="cobalt"] .cyber-border-sm.cyber-border-green {
+  border-color: rgba(255, 198, 0, 0.4);
+}
+
+[data-theme="cobalt"] .card-glow.cyber-border-green,
+[data-theme="cobalt"] article.card-glow.cyber-border-green {
+  border-color: rgba(255, 198, 0, 0.4);
+}
+
+[data-theme="cobalt"] .card-glow.cyber-border-green:hover,
+[data-theme="cobalt"] article.card-glow.cyber-border-green:hover {
+  border-color: rgba(255, 198, 0, 0.6);
+}
+
+[data-theme="cobalt"] article[class*="card-glow"]:hover,
+[data-theme="cobalt"] div[class*="card-glow"]:hover,
+[data-theme="cobalt"] article.cyber-border[class*="hover:border"]:hover,
+[data-theme="cobalt"] div.cyber-border[class*="hover:border"]:hover {
+  border-color: rgba(255, 198, 0, 0.6);
+}
+
+[data-theme="cobalt"] button.cyber-border-green,
+[data-theme="cobalt"] button.cyber-border-sm.cyber-border-green,
+[data-theme="cobalt"] .glitchButton,
+[data-theme="cobalt"] button[class*="cyber-border-green"],
+[data-theme="cobalt"] a[class*="cyber-border-green"] {
+  border-color: rgba(255, 198, 0, 0.4);
+}
+
+[data-theme="cobalt"] button.cyber-border-green:hover,
+[data-theme="cobalt"] button.cyber-border-sm.cyber-border-green:hover,
+[data-theme="cobalt"] .glitchButton:hover,
+[data-theme="cobalt"] button[class*="cyber-border-green"]:hover,
+[data-theme="cobalt"] a[class*="cyber-border-green"]:hover {
+  border-color: rgba(255, 198, 0, 0.6);
+}
+
+[data-theme="cobalt"] button[class*="border-terminal-green"],
+[data-theme="cobalt"] a[class*="border-terminal-green"] {
+  border-color: rgba(255, 198, 0, 0.4);
+}
+
+[data-theme="cobalt"] button[class*="border-terminal-green"]:hover,
+[data-theme="cobalt"] a[class*="border-terminal-green"]:hover {
+  border-color: rgba(255, 198, 0, 0.6);
+}
+
+[data-theme="cobalt"] .terminal-glow {
+  text-shadow: 0 0 2px rgba(255, 198, 0, 0.25), 0 0 4px rgba(255, 198, 0, 0.12);
+}
+
+[data-theme="cobalt"] .terminal-glow h1,
+[data-theme="cobalt"] .terminal-glow h2,
+[data-theme="cobalt"] .terminal-glow h3,
+[data-theme="cobalt"] .terminal-glow h4,
+[data-theme="cobalt"] .terminal-glow h5,
+[data-theme="cobalt"] .terminal-glow h6 {
+  text-shadow: 0 0 3px rgba(255, 198, 0, 0.35), 0 0 6px rgba(255, 198, 0, 0.18);
+}
+
+[data-theme="cobalt"] .terminal-glow code,
+[data-theme="cobalt"] .terminal-glow pre,
+[data-theme="cobalt"] .terminal-glow .terminal-output,
+[data-theme="cobalt"] .terminal-glow .terminal-input,
+[data-theme="cobalt"] .terminal-glow .terminal-line {
+  text-shadow: 0 0 1px rgba(255, 198, 0, 0.25), 0 0 2px rgba(255, 198, 0, 0.1);
+}
+
+[data-theme="cobalt"] .terminal-glow .text-terminal-green,
+[data-theme="cobalt"] .terminal-glow [class*="text-terminal-green"] {
+  text-shadow: 0 0 2px rgba(255, 198, 0, 0.35), 0 0 3px rgba(255, 198, 0, 0.15);
+}
+
+[data-theme="cobalt"] .terminal-glow .text-terminal-cyan,
+[data-theme="cobalt"] .terminal-glow .text-terminal-magenta,
+[data-theme="cobalt"] .terminal-glow .text-terminal-yellow,
+[data-theme="cobalt"] .terminal-glow .text-terminal-blue,
+[data-theme="cobalt"] .terminal-glow .text-terminal-red {
+  text-shadow: 0 0 2px rgba(255, 198, 0, 0.35), 0 0 3px rgba(255, 198, 0, 0.15);
+}
+
+[data-theme="cobalt"] .cyber-border-border {
+  border-color: rgba(255, 198, 0, 0.3);
+  filter: drop-shadow(0 0 8px rgba(255, 198, 0, 0.2));
+}
+
+[data-theme="cobalt"] .cyber-border-border:hover {
+  border-color: rgba(255, 198, 0, 0.5);
+  filter: drop-shadow(0 0 12px rgba(255, 198, 0, 0.3));
+}
+
+[data-theme="cobalt"] .hover-glow {
+  text-shadow: 0 0 5px rgba(255, 198, 0, 0.8), 0 0 10px rgba(255, 198, 0, 0.4);
+}
+
+[data-theme="cobalt"] *[class*="hover:shadow-"]:hover {
+  box-shadow: 0 0 15px rgba(255, 198, 0, 0.3) !important;
+}
+
+[data-theme="cobalt"] *[class*="text-shadow-"] {
+  text-shadow: 0 0 2px rgba(255, 198, 0, 0.35) !important;
+}
+
+[data-theme="cobalt"] *[class*="before:via-[rgba(0,255,0"]::before,
+[data-theme="cobalt"] *[class*="before:via-[rgba(0,255"]::before {
+  --tw-gradient-to: rgba(255, 198, 0, 0.02) !important;
+  --tw-gradient-via: rgba(255, 198, 0, 0.02) !important;
+}
+
+/* ========================================
    FORM INPUT FOCUS STATES - ALL THEMES
    ======================================== */
 
@@ -3676,7 +3943,15 @@ body::after {
 [data-theme="nord"] textarea:focus,
 [data-theme="nord"] select:focus {
   border-color: rgba(136, 192, 208, 0.6) !important;
-  box-shadow: 0 0 0 1px rgba(136, 192, 208, 0.3), 0 0 10px rgba(136, 192, 208, 0.2) !important;
+  box-shadow: 0 0 0 1px rgba(136, 192, 208, 0.3), 0 0 10px rgba(136, 192, 208, 0.3) !important;
+}
+
+/* Cobalt - Form inputs */
+[data-theme="cobalt"] input:focus,
+[data-theme="cobalt"] textarea:focus,
+[data-theme="cobalt"] select:focus {
+  border-color: rgba(255, 198, 0, 0.6) !important;
+  box-shadow: 0 0 0 1px rgba(255, 198, 0, 0.3), 0 0 10px rgba(255, 198, 0, 0.2) !important;
 }
 
 /* Vintage - Form inputs */
@@ -3746,6 +4021,11 @@ body::after {
   box-shadow: 0 0 15px rgba(136, 192, 208, 0.3) !important;
 }
 
+[data-theme="cobalt"] button[class*="shadow-[0_0_15px_rgba(0,255,0"]:hover,
+[data-theme="cobalt"] a[class*="shadow-[0_0_15px_rgba(0,255,0"]:hover {
+  box-shadow: 0 0 15px rgba(255, 198, 0, 0.3) !important;
+}
+
 [data-theme="vintage"] button[class*="shadow-[0_0_15px_rgba(0,255,0"]:hover,
 [data-theme="vintage"] a[class*="shadow-[0_0_15px_rgba(0,255,0"]:hover {
   box-shadow: 0 0 15px rgba(85, 255, 255, 0.3) !important;
@@ -3793,6 +4073,10 @@ body::after {
 
 [data-theme="nord"] *[class*="text-shadow-[0_0_2px_rgba(0,255,65"] {
   text-shadow: 0 0 2px rgba(136, 192, 208, 0.5) !important;
+}
+
+[data-theme="cobalt"] *[class*="text-shadow-[0_0_2px_rgba(0,255,65"] {
+  text-shadow: 0 0 2px rgba(255, 198, 0, 0.5) !important;
 }
 
 [data-theme="vintage"] *[class*="text-shadow-[0_0_2px_rgba(0,255,65"] {

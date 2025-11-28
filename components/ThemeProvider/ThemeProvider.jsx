@@ -29,7 +29,7 @@ export function ThemeProvider({ children }) {
 
       // Fallback to localStorage or system preference
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'monochrome' || savedTheme === 'monochrome-inverted' || savedTheme === 'vintage' || savedTheme === 'apple' || savedTheme === 'c64' || savedTheme === 'amber' || savedTheme === 'synthwave' || savedTheme === 'dracula' || savedTheme === 'solarized' || savedTheme === 'nord') {
+      if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'monochrome' || savedTheme === 'monochrome-inverted' || savedTheme === 'vintage' || savedTheme === 'apple' || savedTheme === 'c64' || savedTheme === 'amber' || savedTheme === 'synthwave' || savedTheme === 'dracula' || savedTheme === 'solarized' || savedTheme === 'nord' || savedTheme === 'cobalt') {
         return savedTheme;
       }
       return getSystemTheme();
@@ -101,7 +101,8 @@ export function ThemeProvider({ children }) {
       if (prevTheme === 'synthwave') return 'dracula';
       if (prevTheme === 'dracula') return 'solarized';
       if (prevTheme === 'solarized') return 'nord';
-      return 'dark'; // nord -> dark (full circle)
+      if (prevTheme === 'nord') return 'cobalt';
+      return 'dark'; // cobalt -> dark (full circle)
     });
   };
 

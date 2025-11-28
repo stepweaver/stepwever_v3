@@ -23,6 +23,7 @@ export default function ThemeToggle() {
     { value: 'dracula', label: 'DRACULA' },
     { value: 'solarized', label: 'SOLAR' },
     { value: 'nord', label: 'NORD' },
+    { value: 'cobalt', label: 'COBALT' },
   ];
 
   const currentTheme = themes.find(t => t.value === theme);
@@ -69,38 +70,36 @@ export default function ThemeToggle() {
   return (
     <div className='flex items-center gap-3'>
       {!mounted ? (
-        // Skeleton state - matches the structure of the actual component
-        <div className='w-32 h-10 animate-pulse bg-terminal-border rounded' />
+        // Skeleton state - minimal to match collapsed state
+        <div className='w-8 h-8 animate-pulse bg-terminal-border rounded' />
       ) : (
-        // CRT-style dropdown
+        // Minimal lambda icon that expands to grid
         <div className='theme-dropdown-container' ref={dropdownRef}>
           <button
             onClick={() => setIsOpen(!isOpen)}
             onKeyDown={handleKeyDown}
-            className={`theme-dropdown-trigger ${theme}`}
-            aria-label='Select theme'
+            className={`theme-icon-trigger ${theme}`}
+            aria-label={`Select theme (current: ${currentTheme?.label})`}
             aria-haspopup='listbox'
             aria-expanded={isOpen}
           >
             <Image
               src='/images/lambda_stepweaver.png'
               alt='Lambda'
-              width={16}
-              height={16}
+              width={20}
+              height={20}
               className={`lambda-icon ${theme}`}
             />
-            <span className='theme-dropdown-label'>{currentTheme?.label}</span>
-            <span className={`theme-dropdown-arrow ${isOpen ? 'open' : ''}`}>▼</span>
           </button>
 
           {isOpen && (
-            <div className={`theme-dropdown-menu ${theme}`} role='listbox'>
+            <div className={`theme-grid-menu ${theme}`} role='listbox'>
               {themes.map((themeOption) => (
                 <button
                   key={themeOption.value}
                   onClick={() => handleThemeSelect(themeOption.value)}
                   onKeyDown={(e) => handleOptionKeyDown(e, themeOption.value)}
-                  className={`theme-dropdown-option ${themeOption.value} ${
+                  className={`theme-grid-option ${themeOption.value} ${
                     theme === themeOption.value ? 'active' : ''
                   }`}
                   role='option'
@@ -110,11 +109,11 @@ export default function ThemeToggle() {
                   <Image
                     src='/images/lambda_stepweaver.png'
                     alt='Lambda'
-                    width={12}
-                    height={12}
-                    className={`lambda-icon-small ${themeOption.value}`}
+                    width={14}
+                    height={14}
+                    className={`lambda-icon-grid ${themeOption.value}`}
                   />
-                  {themeOption.label}
+                  <span className='theme-label'>{themeOption.label}</span>
                 </button>
               ))}
             </div>

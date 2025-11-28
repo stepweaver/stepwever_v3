@@ -158,6 +158,17 @@ export default function BackgroundCanvas() {
     [180, 142, 173], // Aurora Purple
   ];
 
+  const colorsCobalt = [
+    [255, 198, 0], // Bright Yellow (starting color)
+    [255, 157, 0], // Orange
+    [255, 0, 136], // Hot Pink
+    [174, 129, 255], // Purple
+    [0, 136, 255], // Blue
+    [0, 187, 255], // Cyan
+    [58, 217, 0], // Green
+    [255, 198, 0], // Back to Yellow
+  ];
+
   // Select color palette based on theme
   const neonColors = 
     theme === 'light' ? colorsLight : 
@@ -171,6 +182,7 @@ export default function BackgroundCanvas() {
     theme === 'dracula' ? colorsDracula :
     theme === 'solarized' ? colorsSolarized :
     theme === 'nord' ? colorsNord :
+    theme === 'cobalt' ? colorsCobalt :
     neonColorsDark;
 
   // Use safe scroll hook
