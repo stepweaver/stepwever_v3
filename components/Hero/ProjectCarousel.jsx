@@ -41,6 +41,20 @@ const PROJECTS = [
     slug: 'soap-stache',
   },
   {
+    title: 'I AM [RESIST]',
+    description:
+      'A powerful headless CMS integration using Notion API with automatic YouTube RSS feeds.',
+    imageUrl: '/images/screely-resist.png',
+    keywords: ['Headless CMS', 'Notion API', 'Next.js', 'RSS Integration'],
+    actions: [
+      'Publish content directly from Notion - no deployment needed',
+      'Automatic YouTube content aggregation via RSS feeds',
+    ],
+    link: 'https://iamresist.org',
+    tags: ['Web Development', 'Headless CMS', 'Notion API', 'RSS Integration'],
+    slug: 'iam-resist',
+  },
+  {
     title: 'RPG Dice Roller',
     description: 'Interactive dice rolling app for tabletop RPGs.',
     imageUrl: '/images/screely-dice.png',
@@ -459,7 +473,14 @@ function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [isMobile, nextProject, prevProject, nextPage, prevPage, handleUserInteraction]);
+  }, [
+    isMobile,
+    nextProject,
+    prevProject,
+    nextPage,
+    prevPage,
+    handleUserInteraction,
+  ]);
 
   // Add event listeners with non-passive options (mobile only)
   useEffect(() => {
@@ -593,7 +614,10 @@ function ProjectCarousel() {
     return getCardsForPage(desktopPageIndex);
   }, [desktopPageIndex, getCardsForPage]);
 
-  const visibleMobileIndices = useMemo(() => getVisibleMobileIndices(), [getVisibleMobileIndices]);
+  const visibleMobileIndices = useMemo(
+    () => getVisibleMobileIndices(),
+    [getVisibleMobileIndices]
+  );
 
   return (
     <div className='w-full relative mt-8 sm:mt-16'>
@@ -783,7 +807,10 @@ function ProjectCarousel() {
           >
             <div className='flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden]'>
               {visibleDesktopProjects.map((project, index) => (
-                <div key={`${project.slug}-${index}`} className='w-full md:w-1/2 lg:w-1/3'>
+                <div
+                  key={`${project.slug}-${index}`}
+                  className='w-full md:w-1/2 lg:w-1/3'
+                >
                   {project.slug || project.link ? (
                     <Link
                       href={

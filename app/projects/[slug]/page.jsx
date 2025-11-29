@@ -343,6 +343,46 @@ export default function ProjectPage({ params }) {
                       </ul>
                     </div>
                   )}
+                  {project.techStack.contentManagement && (
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                      <div className='flex items-center mb-4'>
+                        <Server className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Content Management
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.contentManagement.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.contentAggregation && (
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                      <div className='flex items-center mb-4'>
+                        <Code className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Content Aggregation
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.contentAggregation.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </section>
             )}
@@ -366,9 +406,30 @@ export default function ProjectPage({ params }) {
             {project.contentManagement && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Content Management with Sanity
+                  {project.contentManagement.notionIntegration
+                    ? 'Content Management with Notion'
+                    : 'Content Management with Sanity'}
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
+                {project.contentManagement.notionIntegration && (
+                  <div className='mb-8'>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Notion Integration
+                    </h3>
+                    <ul className='space-y-2 ml-6'>
+                      {project.contentManagement.notionIntegration.map(
+                        (feature, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {feature}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
                 {project.contentManagement.productSchema && (
                   <div className='mb-8'>
                     <h3 className='text-xl font-ibm text-terminal-green mb-4'>
@@ -406,16 +467,22 @@ export default function ProjectPage({ params }) {
                           <h4 className='font-ibm text-terminal-green mb-3'>
                             {type.name}
                           </h4>
-                          <ul className='space-y-2 ml-6'>
-                            {type.features.map((feature, featIndex) => (
-                              <li
-                                key={featIndex}
-                                className='font-ocr text-terminal-text text-sm'
-                              >
-                                • {feature}
-                              </li>
-                            ))}
-                          </ul>
+                          {type.features ? (
+                            <ul className='space-y-2 ml-6'>
+                              {type.features.map((feature, featIndex) => (
+                                <li
+                                  key={featIndex}
+                                  className='font-ocr text-terminal-text text-sm'
+                                >
+                                  • {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className='font-ocr text-terminal-text text-sm'>
+                              {type.description}
+                            </p>
+                          )}
                         </div>
                       )
                     )}
@@ -519,46 +586,113 @@ export default function ProjectPage({ params }) {
                   Design System
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                  <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
-                    <div className='flex items-center mb-4'>
-                      <Palette className='w-6 h-6 text-terminal-green mr-3' />
-                      <h3 className='text-xl font-ibm text-terminal-green'>
-                        Components
-                      </h3>
+                {project.designSystem.components ? (
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                      <div className='flex items-center mb-4'>
+                        <Palette className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Components
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.designSystem.components.map(
+                          (component, index) => (
+                            <li
+                              key={index}
+                              className='font-ocr text-terminal-text text-sm'
+                            >
+                              • {component}
+                            </li>
+                          )
+                        )}
+                      </ul>
                     </div>
-                    <ul className='space-y-2'>
-                      {project.designSystem.components.map(
-                        (component, index) => (
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                      <div className='flex items-center mb-4'>
+                        <Palette className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Styling
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.designSystem.styling.map((style, index) => (
                           <li
                             key={index}
                             className='font-ocr text-terminal-text text-sm'
                           >
-                            • {component}
+                            • {style}
                           </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                  <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
-                    <div className='flex items-center mb-4'>
-                      <Palette className='w-6 h-6 text-terminal-green mr-3' />
-                      <h3 className='text-xl font-ibm text-terminal-green'>
-                        Styling
-                      </h3>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className='space-y-2'>
-                      {project.designSystem.styling.map((style, index) => (
-                        <li
-                          key={index}
-                          className='font-ocr text-terminal-text text-sm'
-                        >
-                          • {style}
-                        </li>
-                      ))}
-                    </ul>
                   </div>
-                </div>
+                ) : (
+                  <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                    {project.designSystem.typography && (
+                      <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                        <div className='flex items-center mb-4'>
+                          <Palette className='w-6 h-6 text-terminal-green mr-3' />
+                          <h3 className='text-xl font-ibm text-terminal-green'>
+                            Typography
+                          </h3>
+                        </div>
+                        <ul className='space-y-2'>
+                          {project.designSystem.typography.map(
+                            (item, index) => (
+                              <li
+                                key={index}
+                                className='font-ocr text-terminal-text text-sm'
+                              >
+                                • {item}
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                    {project.designSystem.colors && (
+                      <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                        <div className='flex items-center mb-4'>
+                          <Palette className='w-6 h-6 text-terminal-green mr-3' />
+                          <h3 className='text-xl font-ibm text-terminal-green'>
+                            Colors
+                          </h3>
+                        </div>
+                        <ul className='space-y-2'>
+                          {project.designSystem.colors.map((item, index) => (
+                            <li
+                              key={index}
+                              className='font-ocr text-terminal-text text-sm'
+                            >
+                              • {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {project.designSystem.symbols && (
+                      <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                        <div className='flex items-center mb-4'>
+                          <Palette className='w-6 h-6 text-terminal-green mr-3' />
+                          <h3 className='text-xl font-ibm text-terminal-green'>
+                            Symbols
+                          </h3>
+                        </div>
+                        <ul className='space-y-2'>
+                          {project.designSystem.symbols.map((item, index) => (
+                            <li
+                              key={index}
+                              className='font-ocr text-terminal-text text-sm'
+                            >
+                              • {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
               </section>
             )}
 
@@ -602,25 +736,85 @@ export default function ProjectPage({ params }) {
               </section>
             )}
 
+            {/* YouTube Integration */}
+            {project.youtubeIntegration && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  YouTube Integration
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                {project.youtubeIntegration.description && (
+                  <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
+                    {project.youtubeIntegration.description}
+                  </p>
+                )}
+                {project.youtubeIntegration.features && (
+                  <div className='mb-6'>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Features
+                    </h3>
+                    <ul className='space-y-2 ml-6'>
+                      {project.youtubeIntegration.features.map((feature, index) => (
+                        <li
+                          key={index}
+                          className='font-ocr text-terminal-text text-sm'
+                        >
+                          • {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {project.youtubeIntegration.workflow && (
+                  <div className='mb-6'>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Workflow
+                    </h3>
+                    <ul className='space-y-2 ml-6'>
+                      {project.youtubeIntegration.workflow.map((step, index) => (
+                        <li
+                          key={index}
+                          className='font-ocr text-terminal-text text-sm'
+                        >
+                          {step}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
+            )}
+
             {/* Security */}
-            {project.security && project.security.length > 0 && (
+            {(project.security && project.security.length > 0) ||
+            (project.securityFeatures && project.securityFeatures.length > 0) ? (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
                   Security
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
                 <ul className='space-y-3'>
-                  {project.security.map((item, index) => (
-                    <li key={index} className='flex items-start'>
-                      <Shield className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
-                        {item}
-                      </span>
-                    </li>
-                  ))}
+                  {project.security &&
+                    project.security.map((item, index) => (
+                      <li key={index} className='flex items-start'>
+                        <Shield className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  {project.securityFeatures &&
+                    project.securityFeatures.map((item, index) => (
+                      <li key={`security-${index}`} className='flex items-start'>
+                        <Shield className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                          {item}
+                        </span>
+                      </li>
+                    ))}
                 </ul>
               </section>
-            )}
+            ) : null}
 
             {/* Terminal Integration */}
             {project.terminalIntegration && (

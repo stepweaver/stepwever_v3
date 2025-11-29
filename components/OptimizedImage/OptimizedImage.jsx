@@ -8,6 +8,7 @@
 const IMAGES_WITH_WEBP = [
   '/images/screely-dice.png',
   '/images/screely-profilcard.png',
+  '/images/screely-resist.png',
   '/images/lambda_stepweaver.png',
   '/images/screely-lambda.png',
   '/images/screely-stache.png',

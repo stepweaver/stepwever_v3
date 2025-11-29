@@ -7,6 +7,7 @@ const imagesToConvert = [
   'screely-stache.png',
   'screely-dice.png',
   'screely-profilcard.png',
+  'screely-resist.png',
   'lambda_stepweaver.png',
 ];
 
