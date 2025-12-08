@@ -25,8 +25,8 @@ const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
   { ssr: false }
 );
-const NeonProfileCard = dynamic(
-  () => import('@/components/NeonProfileCard/NeonProfileCard')
+const NeonProfileCard = dynamic(() =>
+  import('@/components/NeonProfileCard/NeonProfileCard')
 );
 const GlitchButton = dynamic(() => import('@/components/ui/GlitchButton'));
 
@@ -63,9 +63,20 @@ export default function ProjectPage({ params }) {
             {/* Header */}
             <header className='mb-12 md:mb-16'>
               <div className='mb-6'>
-                <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-terminal-green'>
-                  {project.title}
-                </h1>
+                {project.isAgencySubcontract ? (
+                  <div className='mb-4'>
+                    <span className='text-sm md:text-base font-ocr text-terminal-cyan uppercase tracking-wider'>
+                      Agency Subcontract Project
+                    </span>
+                    <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-terminal-green'>
+                      {project.title}
+                    </h1>
+                  </div>
+                ) : (
+                  <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-terminal-green'>
+                    {project.title}
+                  </h1>
+                )}
               </div>
 
               <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl leading-relaxed mb-8'>
@@ -115,73 +126,78 @@ export default function ProjectPage({ params }) {
               )}
             </header>
 
-            {DemoComponent && (
+            {/* The Problem Section */}
+            {project.problem && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Live Neon Profile Card Demo
+                  The Problem
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
-                  <div className='flex justify-center'>
-                    <DemoComponent />
-                  </div>
-                  <div className='space-y-6 cyber-border-lg cyber-border-border bg-terminal-light/20 p-6 card-glow'>
-                    <p className='font-ocr text-terminal-text text-base leading-relaxed'>
-                      This component brings the NETRUNNER challenge card into
-                      our CRT palette. Built as a React component with
-                      client-side state management for the automated Matrix Sync
-                      terminal sequence. Styling uses Tailwind CSS utilities for
-                      glow, glass effects, and responsive stacking.
-                    </p>
-                    {project.demoHighlights && (
-                      <ul className='space-y-3'>
-                        {project.demoHighlights.map((highlight, index) => (
-                          <li key={index} className='flex items-start'>
-                            <CheckCircle className='mr-3 mt-0.5 h-5 w-5 text-terminal-green' />
-                            <span className='font-ocr text-terminal-text text-sm leading-relaxed'>
-                              {highlight}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    <p className='text-sm font-ocr text-terminal-muted'>
-                      Inspired by the Neon Profile Card brief from Codenhack,
-                      adapted to reuse our IBM headers, OCR body copy, and
-                      BackgroundCanvas lighting.
-                    </p>
-                  </div>
-                </div>
+                <p className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                  {project.problem}
+                </p>
               </section>
             )}
 
-            {/* Features Section */}
-            {project.features && project.features.length > 0 && (
+            {/* My Role Section */}
+            {project.role && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Features
+                  My Role
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <ul className='space-y-4'>
-                  {project.features.map((feature, index) => (
-                    <li key={index} className='flex items-start'>
-                      <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <p className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                  {project.role}
+                </p>
               </section>
             )}
 
-            {/* Tech Stack Section */}
+            {/* The Solution Section */}
+            {(project.solution || project.features) && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  The Solution
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                {project.solution && (
+                  <p className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed mb-6'>
+                    {project.solution}
+                  </p>
+                )}
+                {project.features && project.features.length > 0 && (
+                  <ul className='space-y-4'>
+                    {project.features.map((feature, index) => (
+                      <li key={index} className='flex items-start'>
+                        <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            )}
+
+            {/* The Tech Section */}
             {project.techStack && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Tech Stack
+                  The Tech
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
+                {project.projectStructure && (
+                  <div className='mb-8'>
+                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                      Architecture
+                    </h3>
+                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                      <pre className='font-mono text-terminal-text text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap'>
+                        {project.projectStructure}
+                      </pre>
+                    </div>
+                  </div>
+                )}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                   {project.techStack.frontend && (
                     <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
@@ -352,14 +368,16 @@ export default function ProjectPage({ params }) {
                         </h3>
                       </div>
                       <ul className='space-y-2'>
-                        {project.techStack.contentManagement.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-terminal-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
+                        {project.techStack.contentManagement.map(
+                          (tech, index) => (
+                            <li
+                              key={index}
+                              className='font-ocr text-terminal-text text-sm'
+                            >
+                              • {tech}
+                            </li>
+                          )
+                        )}
                       </ul>
                     </div>
                   )}
@@ -372,7 +390,49 @@ export default function ProjectPage({ params }) {
                         </h3>
                       </div>
                       <ul className='space-y-2'>
-                        {project.techStack.contentAggregation.map((tech, index) => (
+                        {project.techStack.contentAggregation.map(
+                          (tech, index) => (
+                            <li
+                              key={index}
+                              className='font-ocr text-terminal-text text-sm'
+                            >
+                              • {tech}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.utilities && (
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                      <div className='flex items-center mb-4'>
+                        <Code className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Utilities
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.utilities.map((tech, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.techStack.design && (
+                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                      <div className='flex items-center mb-4'>
+                        <Palette className='w-6 h-6 text-terminal-green mr-3' />
+                        <h3 className='text-xl font-ibm text-terminal-green'>
+                          Design
+                        </h3>
+                      </div>
+                      <ul className='space-y-2'>
+                        {project.techStack.design.map((tech, index) => (
                           <li
                             key={index}
                             className='font-ocr text-terminal-text text-sm'
@@ -387,17 +447,62 @@ export default function ProjectPage({ params }) {
               </section>
             )}
 
-            {/* Project Structure */}
-            {project.projectStructure && (
+            {/* The Outcome Section */}
+            {project.outcome && project.outcome.length > 0 && (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
-                  Project Structure
+                  The Outcome
                 </h2>
                 <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
-                  <pre className='font-mono text-terminal-text text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap'>
-                    {project.projectStructure}
-                  </pre>
+                <ul className='space-y-3'>
+                  {project.outcome.map((item, index) => (
+                    <li key={index} className='flex items-start'>
+                      <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {DemoComponent && (
+              <section className='mb-16'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  Live Neon Profile Card Demo
+                </h2>
+                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
+                  <div className='flex justify-center'>
+                    <DemoComponent />
+                  </div>
+                  <div className='space-y-6 cyber-border-lg cyber-border-border bg-terminal-light/20 p-6 card-glow'>
+                    <p className='font-ocr text-terminal-text text-base leading-relaxed'>
+                      This component brings the NETRUNNER challenge card into
+                      our CRT palette. Built as a React component with
+                      client-side state management for the automated Matrix Sync
+                      terminal sequence. Styling uses Tailwind CSS utilities for
+                      glow, glass effects, and responsive stacking.
+                    </p>
+                    {project.demoHighlights && (
+                      <ul className='space-y-3'>
+                        {project.demoHighlights.map((highlight, index) => (
+                          <li key={index} className='flex items-start'>
+                            <CheckCircle className='mr-3 mt-0.5 h-5 w-5 text-terminal-green' />
+                            <span className='font-ocr text-terminal-text text-sm leading-relaxed'>
+                              {highlight}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <p className='text-sm font-ocr text-terminal-muted'>
+                      Inspired by the Neon Profile Card brief from Codenhack,
+                      adapted to reuse our IBM headers, OCR body copy, and
+                      BackgroundCanvas lighting.
+                    </p>
+                  </div>
                 </div>
               </section>
             )}
@@ -754,14 +859,16 @@ export default function ProjectPage({ params }) {
                       Features
                     </h3>
                     <ul className='space-y-2 ml-6'>
-                      {project.youtubeIntegration.features.map((feature, index) => (
-                        <li
-                          key={index}
-                          className='font-ocr text-terminal-text text-sm'
-                        >
-                          • {feature}
-                        </li>
-                      ))}
+                      {project.youtubeIntegration.features.map(
+                        (feature, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            • {feature}
+                          </li>
+                        )
+                      )}
                     </ul>
                   </div>
                 )}
@@ -771,14 +878,16 @@ export default function ProjectPage({ params }) {
                       Workflow
                     </h3>
                     <ul className='space-y-2 ml-6'>
-                      {project.youtubeIntegration.workflow.map((step, index) => (
-                        <li
-                          key={index}
-                          className='font-ocr text-terminal-text text-sm'
-                        >
-                          {step}
-                        </li>
-                      ))}
+                      {project.youtubeIntegration.workflow.map(
+                        (step, index) => (
+                          <li
+                            key={index}
+                            className='font-ocr text-terminal-text text-sm'
+                          >
+                            {step}
+                          </li>
+                        )
+                      )}
                     </ul>
                   </div>
                 )}
@@ -787,7 +896,8 @@ export default function ProjectPage({ params }) {
 
             {/* Security */}
             {(project.security && project.security.length > 0) ||
-            (project.securityFeatures && project.securityFeatures.length > 0) ? (
+            (project.securityFeatures &&
+              project.securityFeatures.length > 0) ? (
               <section className='mb-16'>
                 <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
                   Security
@@ -805,7 +915,10 @@ export default function ProjectPage({ params }) {
                     ))}
                   {project.securityFeatures &&
                     project.securityFeatures.map((item, index) => (
-                      <li key={`security-${index}`} className='flex items-start'>
+                      <li
+                        key={`security-${index}`}
+                        className='flex items-start'
+                      >
                         <Shield className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
                         <span className='font-ocr text-terminal-text text-base leading-relaxed'>
                           {item}
