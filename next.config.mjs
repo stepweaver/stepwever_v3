@@ -164,8 +164,8 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://calendly.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https:",
-              "connect-src 'self' https://calendly.com https://api.calendly.com https://api.openweathermap.org https://va.vercel-scripts.com",
-              "frame-src 'self' https://calendly.com",
+              "connect-src 'self' https://calendly.com https://api.calendly.com https://api.openweathermap.org https://va.vercel-scripts.com https://script.google.com",
+              "frame-src 'self' https://calendly.com https://script.google.com",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self' https://calendly.com"
