@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 const GOOGLE_SCRIPT_URL =
-  'https://script.google.com/macros/s/AKfycbxM9t2zVj2Ws7wAZtCALZpyQUM-V2E2dxCHS1CSYRkge1isQxQQnZBXVlwEvs9rXeTqkA/exec';
+  'https://script.google.com/macros/s/AKfycbwUIeiaLpUlDIaU2aaVBWSWHHcGLOnGzJNYQpBw2Y0lKn2SASuoOOe-WHA_BYzawaNVlA/exec';
 
 export default function BookShowerPage() {
   const [bookingEnabled, setBookingEnabled] = useState(true);
