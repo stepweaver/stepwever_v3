@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwR1AWdInKRg4yaKE4NRxTX_99yqJ3RyxyCrsWSgVe6flYgIO6ZLzHZX8AsOyNGy0Ks/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwvYQ0hZz1MKGOWR7_6lSFexmtjLUM8wXMH3Kj-GemwCj3X21AqIlOiCIZMyUTpqaekaA/exec';
 
 export default function BookShowerPage() {
   useEffect(() => {
