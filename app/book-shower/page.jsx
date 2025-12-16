@@ -1,17 +1,28 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const GOOGLE_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycbyjvVhJ9UzjPHErwZ7tju4rSzBj7zeegW6HAnBdGNAafiUuWPFKDUysD3jnUFBtMZdQ3A/exec';
 
 export default function BookShowerPage() {
+  const searchParams = useSearchParams();
   const [bookingEnabled, setBookingEnabled] = useState(true);
   const [closedMessage, setClosedMessage] = useState(
     'Bookings are currently closed.'
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Build the Google Script URL with query parameters
+  const getGoogleScriptUrl = () => {
+    const queryString = searchParams.toString();
+    if (queryString) {
+      return `${GOOGLE_SCRIPT_URL}?${queryString}`;
+    }
+    return GOOGLE_SCRIPT_URL;
+  };
 
   useEffect(() => {
     // Hide navbar and footer, remove main padding
@@ -124,7 +135,7 @@ export default function BookShowerPage() {
   return (
     <div className='fixed inset-0 w-full h-full' style={{ zIndex: 9999 }}>
       <iframe
-        src={GOOGLE_SCRIPT_URL}
+        src={getGoogleScriptUrl()}
         width='100%'
         height='100%'
         frameBorder='0'
