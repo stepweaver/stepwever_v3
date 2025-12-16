@@ -1,13 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 const GOOGLE_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycbyjvVhJ9UzjPHErwZ7tju4rSzBj7zeegW6HAnBdGNAafiUuWPFKDUysD3jnUFBtMZdQ3A/exec';
 
 export default function BookShowerPage() {
-  const searchParams = useSearchParams();
+  const [queryString, setQueryString] = useState('');
   const [bookingEnabled, setBookingEnabled] = useState(true);
   const [closedMessage, setClosedMessage] = useState(
     'Bookings are currently closed.'
@@ -17,14 +16,22 @@ export default function BookShowerPage() {
 
   // Build the Google Script URL with query parameters
   const getGoogleScriptUrl = () => {
-    const queryString = searchParams.toString();
     if (queryString) {
-      return `${GOOGLE_SCRIPT_URL}?${queryString}`;
+      // Remove leading '?' if present
+      const cleanQuery = queryString.startsWith('?')
+        ? queryString.slice(1)
+        : queryString;
+      return `${GOOGLE_SCRIPT_URL}?${cleanQuery}`;
     }
     return GOOGLE_SCRIPT_URL;
   };
 
   useEffect(() => {
+    // Capture query parameters from URL
+    if (typeof window !== 'undefined') {
+      setQueryString(window.location.search);
+    }
+
     // Hide navbar and footer, remove main padding
     const navbar = document.querySelector('nav');
     const footer = document.querySelector('footer');
