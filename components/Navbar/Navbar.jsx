@@ -67,7 +67,7 @@ export default function Navbar() {
               stepweaver
             </span>
             <span id='logo-description' className='sr-only'>
-              λstepweaver - Practical transformations, powered by code
+              Stephen Weaver - Developer Portfolio
             </span>
           </button>
 
@@ -78,25 +78,27 @@ export default function Navbar() {
             aria-label='Main menu'
           >
             <button
-              type='button'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               onClick={() => {
-                // If we're on the home page, scroll to section
                 if (window.location.pathname === '/') {
-                  const element = document.getElementById('about');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
+                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
                 } else {
-                  // If we're on another page, navigate to home and scroll
                   window.location.href = '/#about';
                 }
               }}
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='About section'
             >
               About
             </button>
+            <Link
+              href='/resume'
+              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+              role='menuitem'
+              aria-label='Resume page'
+            >
+              Resume
+            </Link>
             <Link
               href='/codex'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
@@ -109,23 +111,15 @@ export default function Navbar() {
               href='/terminal'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
-              aria-label='Interactive terminal interface'
+              aria-label='Interactive terminal'
             >
               Terminal
-            </Link>
-            <Link
-              href='/services'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-              role='menuitem'
-              aria-label='View services and pricing'
-            >
-              Services
             </Link>
             <Link
               href='/contact'
               className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
-              aria-label='Contact us about your project'
+              aria-label='Contact page'
             >
               Contact
             </Link>

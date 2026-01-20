@@ -15,9 +15,9 @@ export default function MobileNav() {
 
   const navLinks = [
     { name: 'ABOUT', path: '/#about', scroll: true },
+    { name: 'RESUME', path: '/resume' },
     { name: 'CODEX', path: '/codex' },
     { name: 'TERMINAL', path: '/terminal' },
-    { name: 'SERVICES', path: '/services' },
     { name: 'CONTACT', path: '/contact' },
     {
       name: 'BLUESKY',
@@ -61,23 +61,6 @@ export default function MobileNav() {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
-
-  const handleNavClick = (link) => {
-    setIsOpen(false);
-
-    if (link.scroll) {
-      // If we're on the home page, scroll to section
-      if (window.location.pathname === '/') {
-        const element = document.getElementById(link.path.split('#')[1]);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        // If we're on another page, navigate to home and scroll
-        window.location.href = link.path;
-      }
-    }
-  };
 
   return (
     <div
@@ -169,7 +152,17 @@ export default function MobileNav() {
                     </Link>
                   ) : item.scroll ? (
                     <button
-                      onClick={() => handleNavClick(item)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (window.location.pathname === '/') {
+                          const element = document.getElementById(item.path.split('#')[1]);
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        } else {
+                          window.location.href = item.path;
+                        }
+                      }}
                       className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40 w-full text-left bg-transparent border-none'
                     >
                       <span className='truncate'>{item.name}</span>

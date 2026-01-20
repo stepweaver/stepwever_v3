@@ -18,7 +18,7 @@ const REQUIRED_ENV_VARS = {
   EMAIL_TO: {
     required: false,
     description: 'Email address to receive contact form submissions',
-    example: 'info@stepweaver.dev'
+    example: 'stephen@stepweaver.dev'
   },
   EMAIL_SERVICE: {
     required: false,

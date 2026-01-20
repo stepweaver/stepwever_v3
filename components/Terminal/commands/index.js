@@ -4,7 +4,9 @@ import { fetchWeather, fetchWeatherWithGeolocation } from '../data/weather.js';
 import { displayContactForm } from '../data/content.js';
 import { handleZorkCommand, startZorkGame, getZorkGameState } from '../data/zork.js';
 import { handleCodexCommand, startCodexMode, isCodexModeActive } from '../data/codex.js';
+import { handleResumeCommand, startResumeMode, isInResumeMode } from '../data/resume.js';
 import { roll, formatRollResult, parseDiceNotation } from '@/lib/roller.js';
+import { sendAIMessage } from '../data/ai.js';
 
 // Main command handler
 export const handleCommand = async (
@@ -30,7 +32,13 @@ export const handleCommand = async (
     return await handleCodexCommand(trimmedCommand, callback);
   }
 
-  // Regular terminal commands (only when not in Zork or Codex mode)
+  // Check if we're in Resume mode
+  if (isInResumeMode()) {
+    // Handle Resume commands
+    return handleResumeCommand(trimmedCommand, callback);
+  }
+
+  // Regular terminal commands (only when not in special modes)
   switch (cmd) {
     case 'help':
       return [
@@ -40,18 +48,20 @@ export const handleCommand = async (
         `<span class="text-terminal-text">clear - Clear terminal screen</span>`,
         `<span class="text-terminal-text">cancel - Exit current form or selection</span>`,
         ``,
+        `<span class="text-terminal-cyan">Content:</span>`,
+        `<span class="text-terminal-text">resume - View Stephen's resume (experience, education, skills)</span>`,
+        `<span class="text-terminal-text">codex - Browse blog posts, projects, and community content</span>`,
+        `<span class="text-terminal-text">chat &lt;message&gt; - Discuss Stephen's experience with an LLM</span>`,
+        ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
         `<span class="text-terminal-text">cd contact - Go to contact page</span>`,
-        `<span class="text-terminal-text">cd services - Go to services page</span>`,
-        `<span class="text-terminal-text">cd codex - Go to blog page (alias)</span>`,
+        `<span class="text-terminal-text">cd codex - Go to blog page</span>`,
         `<span class="text-terminal-text">cd dice-roller - Go to full dice roller</span>`,
-        `<span class="text-terminal-text">codex - Enter codex mode to browse posts</span>`,
         ``,
         `<span class="text-terminal-cyan">Features:</span>`,
-        `<span class="text-terminal-text">weather [location] [--forecast] - Get weather info (add --forecast for 5-day forecast)</span>`,
-        `<span class="text-terminal-text">  Examples: weather london, weather new york --forecast</span>`,
+        `<span class="text-terminal-text">weather [location] [--forecast] - Get weather info</span>`,
         `<span class="text-terminal-text">roll [notation] - Roll dice (e.g., roll 3d6+2, roll 1d20)</span>`,
-        `<span class="text-terminal-text">contact - Send a message to λstepweaver</span>`,
+        `<span class="text-terminal-text">contact - Send a message to Stephen</span>`,
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
         `<span class="text-terminal-text">zork - Play ZORK I: The Great Underground Empire</span>`
@@ -63,7 +73,7 @@ export const handleCommand = async (
         return [`<span class="text-terminal-red">Usage: cd [destination]</span>`];
       }
 
-      const validDestinations = ['contact', 'services', 'codex', 'dice-roller', 'github'];
+      const validDestinations = ['contact', 'codex', 'dice-roller', 'github'];
       if (validDestinations.includes(destination)) {
         if (callback && callback.setLines && callback.setInput && callback.router) {
           // Map 'codex' to 'blog' for navigation
@@ -130,6 +140,31 @@ export const handleCommand = async (
     case 'codex':
       const codexOutput = startCodexMode(callback);
       return codexOutput;
+
+    case 'resume':
+      const resumeOutput = startResumeMode(callback);
+      return resumeOutput;
+
+    case 'chat':
+      const chatMessage = args.join(' ').trim();
+      
+      if (!chatMessage) {
+        return [
+          `<span class="text-terminal-green">Chat Command:</span>`,
+          ``,
+          `<span class="text-terminal-cyan">Usage:</span>`,
+          `<span class="text-terminal-text">chat &lt;your message&gt; - Discuss Stephen's experience with an LLM</span>`,
+          ``,
+          `<span class="text-terminal-cyan">Examples:</span>`,
+          `<span class="text-terminal-text">chat What's your tech stack?</span>`,
+          `<span class="text-terminal-text">chat Tell me about your background</span>`,
+          `<span class="text-terminal-text">chat Are you open to work?</span>`,
+        ];
+      }
+      
+      // Send message to AI (async - updates lines via callback)
+      await sendAIMessage(chatMessage, callback);
+      return [];
 
     case 'roll':
       const rollNotation = args.join(' ').trim();

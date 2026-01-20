@@ -649,7 +649,7 @@ function ProjectCarousel() {
               return (
                 <div
                   key={index}
-                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide min-h-[500px] sm:min-h-[600px]'
+                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide h-[580px]'
                 >
                   {project.slug || project.link ? (
                     <Link
@@ -805,7 +805,7 @@ function ProjectCarousel() {
             aria-label='Project carousel'
             onMouseEnter={handleUserInteraction}
           >
-            <div className='flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden]'>
+            <div className='flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] h-[620px]'>
               {visibleDesktopProjects.map((project, index) => (
                 <div
                   key={`${project.slug}-${index}`}

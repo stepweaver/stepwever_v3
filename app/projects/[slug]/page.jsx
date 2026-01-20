@@ -14,10 +14,8 @@ import {
   Palette,
   Zap,
   Shield,
-  Mail,
 } from 'lucide-react';
 import Link from 'next/link';
-import { SERVICES_DATA } from '@/lib/servicesData';
 import OptimizedImage from '@/components/OptimizedImage/OptimizedImage';
 
 // Lazy load heavy components
@@ -28,7 +26,6 @@ const BackgroundCanvas = dynamic(
 const NeonProfileCard = dynamic(() =>
   import('@/components/NeonProfileCard/NeonProfileCard')
 );
-const GlitchButton = dynamic(() => import('@/components/ui/GlitchButton'));
 
 export default function ProjectPage({ params }) {
   const { slug } = use(params);
@@ -1194,79 +1191,23 @@ export default function ProjectPage({ params }) {
                 </section>
               )}
 
-            {/* CTA Section - Different for Services vs Projects */}
-            {project.isService ? (
-              <section className='text-center bg-terminal-light/10 p-8 md:p-12 cyber-border-lg cyber-border-green card-glow'>
-                <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
-                  Ready to Get Started?
-                </h2>
-                <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
-                  Let's discuss how I can help with{' '}
-                  {project.title.toLowerCase()}. I'll work with you to
-                  understand your needs and create a solution that fits your
-                  business.
-                </p>
-                <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-                  <GlitchButton
-                    onClick={() => {
-                      window.open(
-                        SERVICES_DATA.contact.calendlyUrl,
-                        '_blank',
-                        'noopener,noreferrer'
-                      );
-                    }}
-                    className='px-8 py-3 text-lg'
-                  >
-                    Schedule a Call
-                  </GlitchButton>
-                  <Link href='/contact'>
-                    <button className='px-8 py-3 bg-terminal-cyan/20 hover:bg-terminal-cyan/30 cyber-border-sm cyber-border-cyan text-terminal-cyan font-ocr transition-colors duration-200 flex items-center gap-2'>
-                      <Mail className='w-5 h-5' />
-                      Send a Message
-                    </button>
-                  </Link>
-                </div>
-                <div className='mt-6 text-sm font-ocr text-terminal-dimmed'>
-                  <p>Or reach out directly:</p>
-                  <a
-                    href={`mailto:${SERVICES_DATA.contact.email}`}
-                    className='text-terminal-cyan hover:text-terminal-green transition-colors'
-                  >
-                    {SERVICES_DATA.contact.email}
-                  </a>
-                </div>
-              </section>
-            ) : (
-              <section className='text-center bg-terminal-light/10 p-8 md:p-12 rounded-xl'>
-                {project.link ? (
-                  <>
-                    <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
-                      Interested in a similar project?
-                    </h2>
-                    <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
-                      Let's discuss how we can build something similar for your
-                      business.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
-                      Ready to get started?
-                    </h2>
-                    <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
-                      Let's discuss how I can help with your project.
-                    </p>
-                  </>
-                )}
-                <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-                  <Link href='/contact'>
-                    <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 cyber-border-sm cyber-border-green text-terminal-green font-ocr transition-colors duration-200 cursor-pointer'>
-                      Get in Touch
-                    </button>
-                  </Link>
-                </div>
-              </section>
-            )}
+            {/* CTA Section */}
+            <section className='text-center bg-terminal-light/10 p-8 md:p-12 rounded-xl'>
+              <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
+                Like what you see?
+              </h2>
+              <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
+                Feel free to reach out if you have questions about this project
+                or want to chat about working together.
+              </p>
+              <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
+                <Link href='/contact'>
+                  <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 cyber-border-sm cyber-border-green text-terminal-green font-ocr transition-colors duration-200 cursor-pointer'>
+                    Get in Touch
+                  </button>
+                </Link>
+              </div>
+            </section>
           </div>
         </main>
       </div>

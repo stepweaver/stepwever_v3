@@ -137,7 +137,7 @@ const NeonProfileCard = ({ profile }) => {
 
           <div className='flex flex-col gap-4 items-start text-left'>
             {mergedProfile.avatar && (
-              <div className='relative h-28 w-28 overflow-hidden cyber-border cyber-border-magenta shadow-[0_0_18px_rgba(255,0,255,0.2)]'>
+              <div className='relative w-full h-full overflow-hidden cyber-border cyber-border-magenta shadow-[0_0_18px_rgba(255,0,255,0.2)]'>
                 <img
                   src={mergedProfile.avatar}
                   alt={`${mergedProfile.name} avatar`}

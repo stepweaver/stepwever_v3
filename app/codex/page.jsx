@@ -3,7 +3,6 @@
 import { useEffect, useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import GlitchLambda from '@/components/ui/GlitchLambda';
 
 // Lazy load BackgroundCanvas
 const BackgroundCanvas = dynamic(
@@ -288,13 +287,8 @@ function CodexContent() {
               Stephen Weaver
             </h1>
             <p className='max-w-5xl text-terminal-text text-lg md:text-4xl leading-relaxed'>
-              I'm Stephen, founder of{' '}
-              <span className='inline-block whitespace-nowrap'>
-                <GlitchLambda className='text-terminal-text' />
-                stepweaver
-              </span>
-              . I don't follow the script-I build my own and help others do the
-              same.
+              I'm Stephen. Developer, veteran, and perpetual learner. This is
+              my digital codex: thoughts, projects, and things I'm exploring.
             </p>
           </div>
 

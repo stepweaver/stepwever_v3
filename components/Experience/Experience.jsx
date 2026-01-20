@@ -22,9 +22,6 @@ import {
   SiCloudflare,
 } from 'react-icons/si';
 import {
-  Cloud,
-  Shield,
-  Globe,
   BarChart3,
   Calculator,
   FileText,
@@ -34,7 +31,6 @@ import {
   Palette,
   Server,
 } from 'lucide-react';
-import GlitchLambda from '@/components/ui/GlitchLambda';
 
 // 1) Data lives outside the component
 const TECH_CATEGORIES = [
@@ -213,25 +209,18 @@ function Experience() {
         {/* Section Header */}
         <header className='mb-12 md:mb-16 ml-auto w-full max-w-6xl'>
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
-            HOW I BUILD
+            TECH I WORK WITH
           </h2>
 
           {/* Experience Message */}
           <div className='mb-8 md:mb-12'>
             <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight text-left font-ibm text-terminal-green'>
-              I use modern, secure tools to deliver reliable solutions.
+              Modern tools, battle-tested solutions.
             </h3>
-            <p className='text-terminal-text font-ibm text-base md:text-lg leading-relaxed'>
-              <GlitchLambda className='text-terminal-text' />
-              stepweaver is veteran-owned and built on 8 years of solving real
-              business problems.
-            </p>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-4'>
-              No outdated technology. No security risks. No cutting corners.
-            </p>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed mt-2'>
-              Your business deserves tools that work today and grow with you
-              tomorrow.
+            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
+              8+ years bridging business and tech. From Air Force intelligence
+              to AI-native development, I've learned that the right tools, and
+              knowing when to use them, make all the difference.
             </p>
           </div>
         </header>

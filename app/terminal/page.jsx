@@ -3,7 +3,7 @@
 import {
   Command,
   Map,
-  MessageSquare,
+  BookOpen,
   Sparkles,
   Terminal as TerminalIcon,
 } from 'lucide-react';
@@ -26,50 +26,51 @@ const Terminal = dynamic(() => import('@/components/Terminal/Terminal'), {
 
 const TERMINAL_COPY = {
   hero: {
-    title: 'Codex terminal: hands-on mission control.',
+    title: 'Interactive terminal.',
     subtitle:
-      "A tiny ops-style shell wired into my site content. Explore work, read, and reach out from the same green glow I use for real tooling.",
+      "A command-line interface to explore my site. Browse my blog, projects, and more!",
     ribbon:
       'Runs fully in your browser. Type `help` to start.',
   },
   overview: {
     title: 'Why a terminal?',
-    text: "I'd rather show you how I think than hide behind marketing copy. The terminal behaves like a small ops console: list posts, open retros, follow prompts. It mirrors how I design real tools—opinionated commands, readable output, guardrails that keep you oriented.",
+    text: "Because I spend most of my day in one. This is how I think and work — opinionated commands, readable output, and a bit of fun. It's also a chance to show off some skills while you explore my content.",
   },
   usage: {
     title: 'Quick start',
     steps: [
-      'Type `help` to see commands. Use `codex` to enter content mode.',
-      'Navigate `blog`, `projects`, or `community`. Use `ls` to list, `cat [number]` to open.',
-      '`contact` launches a guided brief. `back` climbs up a level.',
+      'Type `help` to see available commands.',
+      'Use `codex` to enter content mode, then explore `blog`, `projects`, or `community`.',
+      'Use `ls` to list items and `cat [number]` to read. `back` climbs up a level.',
     ],
   },
 };
 
 const FEATURE_CARDS = [
   {
-    title: 'Guided contact',
-    body: 'The `contact` flow asks goals, constraints, priorities upfront—so my first reply includes options, not more forms.',
-    icon: MessageSquare,
+    title: 'Interactive resume',
+    body: 'Type `resume` to explore my experience, education, and skills — or download the PDF directly.',
+    icon: BookOpen,
   },
   {
-    title: 'Content drill-down',
-    body: 'Point at `blog`, `projects`, or `community` to pull up posts and retros. Everything stays in one viewport.',
-    icon: Map,
-  },
-  {
-    title: 'Command-grade UX',
-    body: 'History, autocomplete, and CRT theming keep it fun—but the layout and prompts are designed like real tooling.',
+    title: 'Chat with an LLM',
+    body: 'Use `chat <message>` to discuss my background with an AI trained on my experience.',
     icon: Sparkles,
+  },
+  {
+    title: 'Content exploration',
+    body: 'Use `codex` to browse my blog posts, projects, and community contributions.',
+    icon: Map,
   },
 ];
 
 const COMMAND_GUIDE = [
-  { command: 'codex', summary: 'Enter codex mode for content navigation.' },
-  { command: 'blog | projects | community', summary: 'Browse content. Use `ls` to list, `cat [number]` to open.' },
-  { command: 'contact', summary: 'Guided intake for potential work.' },
-  { command: 'back / cd ..', summary: 'Climb up a level.' },
-  { command: 'help', summary: 'Command reference.' },
+  { command: 'help', summary: 'Show available commands.' },
+  { command: 'resume', summary: 'View experience, education, skills, or download PDF.' },
+  { command: 'chat <message>', summary: 'Discuss Stephen\'s experience with an LLM.' },
+  { command: 'codex', summary: 'Browse blog posts, projects, and community content.' },
+  { command: 'contact', summary: 'Send a message to Stephen.' },
+  { command: 'back', summary: 'Exit current mode.' },
 ];
 
 const JumpToTerminalButton = () => {

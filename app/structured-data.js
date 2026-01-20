@@ -1,86 +1,16 @@
 export default function generateStructuredData() {
   const baseUrl = 'https://stepweaver.dev';
 
-  // Main organization data
-  const organizationData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "λstepweaver",
-    "url": baseUrl,
-    "logo": `${baseUrl}/images/lambda_stepweaver.png`,
-    "description": "Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.",
-    "foundingDate": "2023",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "US"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer service",
-      "email": "info@stepweaver.dev"
-    },
-    "sameAs": [
-      "https://github.com/stepweaver",
-      "https://bsky.app/profile/stepweaver.dev"
-    ],
-    "founder": {
-      "@type": "Person",
-      "name": "Stephen Weaver",
-      "jobTitle": "Founder & Lead Developer",
-      "description": "Veteran, business analyst, and rebel developer obsessed with helping businesses scale."
-    },
-    "serviceType": [
-      "Business Automation",
-      "Data Pipeline Development",
-      "Web Application Development",
-      "Process Optimization",
-      "API Integration",
-      "Business Intelligence"
-    ],
-    "areaServed": "Worldwide",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Growth Systems",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Data Pipeline Development",
-            "description": "Build lean data pipelines that connect your POS, accounting, and SaaS APIs into one live source of truth."
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Web Application Development",
-            "description": "Craft lightning-fast marketing sites and web applications using React, Next.js, and modern technologies."
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Business Process Automation",
-            "description": "AI-powered process automations that free up whole roles, not just tasks."
-          }
-        }
-      ]
-    }
-  };
-
   // Website schema
   const websiteData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "λstepweaver",
+    "name": "Stephen Weaver - Developer Portfolio",
     "url": baseUrl,
-    "description": "Practical transformations, powered by code. I build lean data pipelines, automations, and high-impact web experiences.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "λstepweaver",
-      "url": baseUrl
+    "description": "Full-stack developer portfolio showcasing web development, automation, and software projects. Built with Next.js, React, and modern web technologies.",
+    "author": {
+      "@type": "Person",
+      "name": "Stephen Weaver"
     },
     "potentialAction": {
       "@type": "SearchAction",
@@ -89,6 +19,45 @@ export default function generateStructuredData() {
         "urlTemplate": `${baseUrl}/codex?search={search_term_string}`
       },
       "query-input": "required name=search_term_string"
+    }
+  };
+
+  // Person schema for Stephen
+  const personData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Stephen Weaver",
+    "alternateName": "Yankee Samurai",
+    "jobTitle": "Full-Stack Developer",
+    "description": "Full-stack developer with a background in Air Force intelligence, business analysis, and software development. Passionate about building web applications and automation solutions.",
+    "url": baseUrl,
+    "image": `${baseUrl}/images/pixarMe.png`,
+    "sameAs": [
+      "https://github.com/stepweaver",
+      "https://bsky.app/profile/stepweaver.dev"
+    ],
+    "email": "stephen@stepweaver.dev",
+    "knowsAbout": [
+      "Web Development",
+      "React",
+      "Next.js",
+      "Node.js",
+      "TypeScript",
+      "JavaScript",
+      "Python",
+      "PostgreSQL",
+      "Automation",
+      "API Development",
+      "Full-Stack Development"
+    ],
+    "hasOccupation": {
+      "@type": "Occupation",
+      "name": "Full-Stack Developer",
+      "occupationLocation": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "skills": "React, Next.js, Node.js, TypeScript, PostgreSQL, API Development"
     }
   };
 
@@ -106,114 +75,33 @@ export default function generateStructuredData() {
       {
         "@type": "ListItem",
         "position": 2,
+        "name": "Resume",
+        "item": `${baseUrl}/resume`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
         "name": "Codex",
         "item": `${baseUrl}/codex`
       },
       {
         "@type": "ListItem",
-        "position": 3,
+        "position": 4,
         "name": "Terminal",
         "item": `${baseUrl}/terminal`
       },
       {
         "@type": "ListItem",
-        "position": 4,
+        "position": 5,
         "name": "Contact",
         "item": `${baseUrl}/contact`
       }
     ]
   };
 
-  // Local business schema for better local SEO
-  const localBusinessData = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "λstepweaver",
-    "description": "Practical transformations, powered by code. I build lean data pipelines, automations, and high-impact web experiences.",
-    "url": baseUrl,
-    "telephone": "+1-555-0123", // Replace with actual phone if available
-    "email": "info@stepweaver.dev",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "US"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "40.7128", // Replace with actual coordinates
-      "longitude": "-74.0060"
-    },
-    "openingHours": "Mo-Fr 09:00-17:00",
-    "priceRange": "$$",
-    "currenciesAccepted": "USD",
-    "paymentAccepted": "Cash, Credit Card, Bank Transfer"
-  };
-
-  // Person schema for founder
-  const personData = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Stephen Weaver",
-    "jobTitle": "Founder & Lead Developer",
-    "description": "Veteran, business analyst, and rebel developer obsessed with helping businesses scale.",
-    "url": baseUrl,
-    "image": `${baseUrl}/images/pixarMe.png`,
-    "sameAs": [
-      "https://github.com/stepweaver",
-      "https://bsky.app/profile/stepweaver.dev"
-    ],
-    "worksFor": {
-      "@type": "Organization",
-      "name": "λstepweaver"
-    },
-    "knowsAbout": [
-      "Business Automation",
-      "Data Pipeline Development",
-      "Web Application Development",
-      "React",
-      "Next.js",
-      "Node.js",
-      "Business Intelligence"
-    ]
-  };
-
-  // FAQ schema for common questions
-  const faqData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What services does λstepweaver offer?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "I offer data pipeline development, web application development, business process automation, API integration, and business intelligence services."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How can I contact λstepweaver?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You can contact me through the contact form at stepweaver.dev/contact or email me directly at info@stepweaver.dev"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What technologies does λstepweaver use?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "I use modern technologies including React, Next.js, Node.js, Python, and various cloud platforms to build scalable solutions."
-        }
-      }
-    ]
-  };
-
   return {
-    organization: organizationData,
     website: websiteData,
-    breadcrumb: breadcrumbData,
-    localBusiness: localBusinessData,
     person: personData,
-    faq: faqData
+    breadcrumb: breadcrumbData
   };
-} 
+}

@@ -18,6 +18,7 @@ const PageTransition = dynamic(
     ssr: true,
   }
 );
+import ChatWidgetWrapper from '@/components/ChatWidget/ChatWidgetWrapper';
 
 // Environment validation in development
 if (process.env.NODE_ENV === 'development') {
@@ -40,31 +41,29 @@ const ibm3270 = localFont({
 export const metadata = {
   metadataBase: new URL('https://stepweaver.dev'),
   title: {
-    template: '%s | λstepweaver',
-    default: 'λstepweaver - Practical transformations, powered by code.',
+    template: '%s | Stephen Weaver',
+    default: 'Stephen Weaver - Full-Stack Developer',
   },
   description:
-    'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
+    'Full-stack developer portfolio featuring web applications, automation projects, and software development. Explore my work, skills, and experience.',
   keywords: [
-    'business automation',
-    'data pipelines',
-    'web development',
-    'growth systems',
-    'business intelligence',
-    'process automation',
-    'full-stack development',
-    'React',
-    'Next.js',
+    'full-stack developer',
+    'web developer',
+    'software engineer',
+    'React developer',
+    'Next.js developer',
+    'JavaScript',
+    'TypeScript',
     'Node.js',
-    'data analytics',
-    'business optimization',
-    'startup technology',
-    'SaaS development',
-    'API integration',
+    'portfolio',
+    'developer portfolio',
+    'web development',
+    'frontend developer',
+    'backend developer',
   ],
   authors: [{ name: 'Stephen Weaver' }],
   creator: 'Stephen Weaver',
-  publisher: 'λstepweaver LLC',
+  publisher: 'Stephen Weaver',
   formatDetection: {
     email: false,
     address: false,
@@ -74,31 +73,31 @@ export const metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://stepweaver.dev/',
-    siteName: 'λstepweaver',
-    title: 'λstepweaver - Practical transformations, powered by code.',
+    siteName: 'Stephen Weaver',
+    title: 'Stephen Weaver - Full-Stack Developer',
     description:
-      'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
+      'Full-stack developer portfolio featuring web applications, automation projects, and software development. Explore my work, skills, and experience.',
     images: [
       {
         url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
-        alt: 'λstepweaver - Practical transformations, powered by code.',
+        alt: 'Stephen Weaver - Full-Stack Developer Portfolio',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'λstepweaver - Practical transformations, powered by code.',
+    title: 'Stephen Weaver - Full-Stack Developer',
     description:
-      'Websites, automations, and dashboards that save you time and grow your business. Practical transformations, powered by code.',
+      'Full-stack developer portfolio featuring web applications, automation projects, and software development.',
     images: [
       {
         url: '/images/lambda_preview.png',
         width: 1200,
         height: 630,
-        alt: 'λstepweaver - Practical transformations, powered by code.',
+        alt: 'Stephen Weaver - Full-Stack Developer Portfolio',
       },
     ],
     creator: '@stepweaver',
@@ -195,7 +194,7 @@ export default function RootLayout({ children }) {
           name='apple-mobile-web-app-status-bar-style'
           content='black-translucent'
         />
-        <meta name='apple-mobile-web-app-title' content='λstepweaver' />
+        <meta name='apple-mobile-web-app-title' content='Stephen Weaver' />
 
         {/* Additional Open Graph tags for better mobile support */}
         <meta property='og:image:width' content='1200' />
@@ -238,6 +237,7 @@ export default function RootLayout({ children }) {
               <PageTransition>{children}</PageTransition>
             </main>
             <Footer />
+            <ChatWidgetWrapper />
           </ThemeProvider>
           {/* Load Analytics after initial render to reduce blocking */}
           <Analytics />

@@ -25,7 +25,7 @@ Practical transformations, powered by code.
    EMAIL_SERVICE=gmail
    EMAIL_USER=your-email@gmail.com
    EMAIL_PASS=your-app-password
-   EMAIL_TO=info@stepweaver.dev
+   EMAIL_TO=stephen@stepweaver.dev
    SEND_CONFIRMATION_EMAIL=false
    ```
 
@@ -37,13 +37,13 @@ Practical transformations, powered by code.
 
 4. Test email configuration:
    - Use the contact form to send test messages
-   - Emails will be sent to info@stepweaver.dev
+   - Emails will be sent to stephen@stepweaver.dev
 
 ## Email Setup
 
 For detailed email configuration instructions, see [EMAIL_SETUP.md](./EMAIL_SETUP.md).
 
-**Important**: To send emails to `info@stepweaver.dev`, add `EMAIL_TO=info@stepweaver.dev` to your `.env.local` file.
+**Important**: To send emails to `stephen@stepweaver.dev`, add `EMAIL_TO=stephen@stepweaver.dev` to your `.env.local` file.
 
 ## Available Scripts
 

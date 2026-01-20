@@ -38,7 +38,7 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ submitting: true, success: null, error: null });
-    setStatusText('Submitting...');
+    setStatusText('Sending...');
 
     try {
       const response = await fetch('/api/contact', {
@@ -120,7 +120,7 @@ export default function ContactForm() {
                   htmlFor='name'
                   className='text-terminal-green text-base block mb-1'
                 >
-                  Who am I chatting with?
+                  Your name:
                 </label>
                 <input
                   id='name'
@@ -129,7 +129,7 @@ export default function ContactForm() {
                   value={formData.name}
                   onChange={handleChange}
                   className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-base focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
-                  placeholder='Your name'
+                  placeholder='Jane Doe'
                   required
                   aria-required='true'
                   aria-describedby='name-error'
@@ -142,7 +142,7 @@ export default function ContactForm() {
                   htmlFor='email'
                   className='text-terminal-green text-base block mb-1'
                 >
-                  Your best email:
+                  Your email:
                 </label>
                 <input
                   id='email'
@@ -151,7 +151,7 @@ export default function ContactForm() {
                   value={formData.email}
                   onChange={handleChange}
                   className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-base focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
-                  placeholder='your.email@company.com'
+                  placeholder='jane@example.com'
                   required
                   aria-required='true'
                   aria-describedby='email-error'
@@ -164,7 +164,7 @@ export default function ContactForm() {
                   htmlFor='message'
                   className='text-terminal-green text-base block mb-1'
                 >
-                  What are you building, fixing, or exploring?
+                  What's on your mind?
                 </label>
                 <textarea
                   id='message'
@@ -172,7 +172,7 @@ export default function ContactForm() {
                   value={formData.message}
                   onChange={handleChange}
                   className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-sm h-48 focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
-                  placeholder='Include goals, timeline, budget, blockers, or any context you have handy.'
+                  placeholder='Say hello, ask a question, or share something interesting...'
                   required
                   aria-required='true'
                   aria-describedby='message-help message-error'
@@ -181,8 +181,7 @@ export default function ContactForm() {
                   id='message-help'
                   className='text-terminal-muted text-sm mt-1'
                 >
-                  Feel free to include goals, timeline, budget, or anything else
-                  that helps.
+                  Whether it's a job opportunity, a question, or just saying hi, I'd love to hear from you.
                 </p>
                 <div id='message-error' className='sr-only' role='alert'></div>
               </div>
@@ -195,11 +194,10 @@ export default function ContactForm() {
                   loadingText='SENDING...'
                   className='w-fit max-w-[95%]'
                 >
-                  [SEND TRANSMISSION]
+                  [SEND MESSAGE]
                 </GlitchButton>
                 <p className='text-terminal-muted text-sm'>
-                  No perfect brief required. Write what you know - I'll help
-                  clarify the rest.
+                  I typically respond within a day or two.
                 </p>
               </div>
             </form>

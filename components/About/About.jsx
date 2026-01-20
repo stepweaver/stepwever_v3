@@ -1,7 +1,6 @@
 'use client';
 
 import { memo } from 'react';
-import GlitchLambda from '@/components/ui/GlitchLambda';
 import NeonProfileCard from '@/components/NeonProfileCard/NeonProfileCard';
 
 function About() {
@@ -16,14 +15,13 @@ function About() {
             <NeonProfileCard
               profile={{
                 name: 'Stephen Weaver',
-                role: 'Founder',
-                tagline: 'Principal Builder · λstepweaver',
-                status: 'ACTIVE',
+                role: 'Full-Stack Developer',
+                tagline: 'Builder of Things · Solver of Problems',
+                status: 'OPEN TO WORK',
                 avatar: '/images/pixarMe.png',
                 badges: [
                   'Developer',
                   'Data Strategist',
-                  'IT Consultant',
                   'Veteran',
                   'Yankee Samurai',
                   { text: 'Rebel', accent: true },
@@ -49,51 +47,50 @@ function About() {
             {/* Narrative */}
             <div className='prose prose-invert font-ibm max-w-none space-y-4 text-terminal-text'>
               <p className='text-lg'>
-                I'm Stephen Weaver, founder of{' '}
-                <GlitchLambda className='text-terminal-text' />
-                stepweaver - a one-man skunkworks delivering fast, no-nonsense
-                solutions: websites, automations, dashboards, and marketing
-                systems that actually work.
+                I'm Stephen Weaver, a full-stack developer with an unconventional
+                path. I've worn a lot of hats: Air Force linguist, restaurant
+                manager, business analyst, and now a developer who loves building
+                things that actually work.
               </p>
 
-              <p className='text-lg'>My background spans both worlds:</p>
+              <p className='text-lg'>My journey so far:</p>
 
-              <ul className='space-y-3 font- text-lg'>
+              <ul className='space-y-3 text-lg'>
                 <li>U.S. Air Force veteran (Airborne Linguist)</li>
-                <li>Business analyst who built reporting systems</li>
-                <li>Restaurant manager who learned operations</li>
-                <li>Developer who builds what businesses actually need</li>
+                <li>Restaurant manager</li>
+                <li>Business analyst</li>
+                <li>Self-taught developer</li>
+                <li>DevOps engineering (Current Focus)</li>
               </ul>
 
               <p className='text-lg'>
-                This unique combination means I don't just build websites and
-                apps - I understand your business challenges and create
-                solutions that actually solve them. No tech jargon, no corporate
-                bloat. Just working systems that help you grow.
+                That mix of experiences means I don't just write code, I understand
+                the problems that code is supposed to solve. I've been on both sides
+                of the equation, and I bring that perspective to everything I build.
               </p>
             </div>
 
             {/* CTA */}
             <footer className='space-y-4'>
               <p className='font-ibm text-terminal-cyan text-2xl lg:text-3xl'>
-                Every business needs a secret weapon. I just happen to be one
-                you can hire.
+                Curious about my work or want to chat?
               </p>
               <p className='text-lg font-ibm text-terminal-text'>
+                Check out my{' '}
                 <a
-                  href='/services'
+                  href='/resume'
                   className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
                 >
-                  Browse services and pricing
+                  resume
                 </a>{' '}
                 or{' '}
                 <a
                   href='/contact'
                   className='text-terminal-green hover:text-terminal-yellow transition-colors underline hover:no-underline font-bold'
                 >
-                  get in touch
-                </a>{' '}
-                to discuss your project.
+                  drop me a message
+                </a>
+                .
               </p>
             </footer>
           </article>

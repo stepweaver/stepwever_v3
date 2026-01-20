@@ -75,7 +75,7 @@ const ProjectCard = memo(function ProjectCard({
 
         {/* Sample Actions - simplified */}
         {actions.length > 0 && (
-          <div className='mb-2 sm:mb-3'>
+          <div className='mb-2 sm:mb-3 h-[88px] sm:h-[96px] overflow-hidden'>
             <div className='text-terminal-cyan font-ibm text-sm sm:text-base mb-1'>
               KEY FEATURES:
             </div>
@@ -85,8 +85,8 @@ const ProjectCard = memo(function ProjectCard({
                   key={index}
                   className='text-terminal-yellow font-ibm text-sm sm:text-base flex'
                 >
-                  <span className='text-terminal-green mr-2'>▶</span>
-                  {action}
+                  <span className='text-terminal-green mr-2 flex-shrink-0'>▶</span>
+                  <span className='line-clamp-2'>{action}</span>
                 </li>
               ))}
             </ul>
@@ -102,7 +102,7 @@ const ProjectCard = memo(function ProjectCard({
   // Match SuccessStories structure exactly - plain article element (no Link wrapper)
   // Navigation handled by parent carousel
   return (
-    <article className='bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-full min-h-[500px] sm:min-h-[600px] flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
+    <article className='bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-[580px] flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
       {cardContent}
     </article>
   );

@@ -62,7 +62,7 @@ export default function Footer() {
               href='/contact'
               className='text-lg md:text-xl lg:text-4xl text-terminal-green font-ibm hover:text-terminal-white transition-colors duration-200 text-center'
             >
-              info@stepweaver.dev
+              stephen@stepweaver.dev
             </Link>
           </div>
         </div>
@@ -113,10 +113,8 @@ export default function Footer() {
 
             {/* Bottom Right - Legal */}
             <div className='text-terminal-muted font-ocr text-sm md:text-base leading-tight flex items-center min-h-[3rem] md:min-h-0'>
-              <GlitchLambda className='text-terminal-green' />
               <span>
-                stepweaver LLC · Veteran-owned · All rights reserved ·{' '}
-                {currentYear}
+                © {currentYear} Stephen Weaver · All rights reserved
               </span>
             </div>
           </div>
