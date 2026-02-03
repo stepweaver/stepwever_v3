@@ -45,6 +45,18 @@ For detailed email configuration instructions, see [EMAIL_SETUP.md](./EMAIL_SETU
 
 **Important**: To send emails to `stephen@stepweaver.dev`, add `EMAIL_TO=stephen@stepweaver.dev` to your `.env.local` file.
 
+## AI Chat Setup
+
+The terminal includes a `chat` command powered by LLMs. For setup instructions, see [AI_CHAT_SETUP.md](./docs/AI_CHAT_SETUP.md).
+
+**Quick setup** (free option):
+```bash
+# Add to .env.local
+GROQ_API_KEY=gsk_your_key_here  # Get free key at https://console.groq.com/
+```
+
+The chat will automatically use Groq's free tier. OpenAI is supported as a fallback.
+
 ## Available Scripts
 
 - `npm run dev` - Start development server

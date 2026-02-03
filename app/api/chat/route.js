@@ -4,18 +4,20 @@ import { NextResponse } from 'next/server';
 const SYSTEM_PROMPT = `You are an AI assistant representing Stephen Weaver on his personal portfolio website. You should respond as if you are Stephen's digital twin - knowledgeable, friendly, and with a bit of wit.
 
 About Stephen:
-- Full-stack developer with 8+ years of experience across various industries
-- U.S. Air Force veteran (served as an Airborne Cryptologic Linguist)
-- Background includes: business analysis, restaurant management, and software development
-- Self-taught developer who's passionate about continuous learning
+- Full-stack developer with 9 years of experience spanning development, data analysis, and automation
+- U.S. Air Force veteran (served as an Airborne Cryptologic Linguist, Aug 2003 - Aug 2007)
+- Background includes: business analysis, operations management, and software development
+- Founder & Developer at λstepweaver (Nov 2024 - Present)
+- Former Business Analyst at University of Notre Dame (Nov 2017 - May 2025)
+- Former Operations Manager at University of Notre Dame Campus Dining (Aug 2014 - Nov 2017)
 - Goes by the moniker "Yankee Samurai" - a reflection of his disciplined, focused approach to problem-solving
 
 Technical Skills:
-- Frontend: React, Next.js 15, Tailwind CSS, TypeScript, JavaScript
-- Backend: Node.js, Express, PostgreSQL, MySQL, Supabase, Firebase
-- AI & Automation: OpenAI API, Zapier, n8n, custom automation workflows
-- DevOps: Git, GitHub, Vercel, Netlify, Docker
-- Other: REST APIs, GraphQL, MDX, Contentlayer
+- Languages & Frameworks: JavaScript, TypeScript, Python, SQL, React, Next.js, Node.js, Tailwind CSS
+- Databases & Tools: PostgreSQL, MongoDB, Git, AWS, Vercel, Netlify
+- Automation & AI: ChatGPT, Claude, Gemini, Prompt Engineering, Zapier, n8n
+- BI & Reporting: Tableau, SQL, Excel, Data Storytelling, Reporting Automation
+- Business Analysis: Requirements Gathering, Agile/Scrum, UAT, Documentation, Stakeholder Collaboration
 
 Personality Traits:
 - Confident but humble
@@ -57,40 +59,72 @@ export async function POST(request) {
       );
     }
 
-    // Check for API key
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      console.error('OPENAI_API_KEY is not configured');
-      return NextResponse.json(
-        { error: 'AI chat is not configured. Please contact Stephen directly.' },
-        { status: 503 }
-      );
-    }
-
     // Prepare messages with system prompt
     const apiMessages = [
       { role: 'system', content: SYSTEM_PROMPT },
       ...messages.slice(-10), // Keep last 10 messages for context
     ];
 
-    // Call OpenAI API
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: apiMessages,
-        max_tokens: 500,
-        temperature: 0.7,
-      }),
-    });
+    // Try Groq first (FREE tier), fallback to OpenAI if needed
+    const groqApiKey = process.env.GROQ_API_KEY;
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+
+    let response;
+    let provider = 'unknown';
+
+    // Try Groq first (free and fast)
+    if (groqApiKey) {
+      try {
+        response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${groqApiKey}`,
+          },
+          body: JSON.stringify({
+            model: 'llama-3.1-70b-versatile', // Free, fast, and good quality
+            messages: apiMessages,
+            max_tokens: 500,
+            temperature: 0.7,
+          }),
+        });
+        provider = 'groq';
+      } catch (error) {
+        console.error('Groq API error:', error);
+        // Fall through to OpenAI
+      }
+    }
+
+    // Fallback to OpenAI if Groq failed or not configured
+    if (!response && openaiApiKey) {
+      response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${openaiApiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          messages: apiMessages,
+          max_tokens: 500,
+          temperature: 0.7,
+        }),
+      });
+      provider = 'openai';
+    }
+
+    // If neither is configured
+    if (!response) {
+      console.error('No AI API key configured (GROQ_API_KEY or OPENAI_API_KEY)');
+      return NextResponse.json(
+        { error: 'AI chat is not configured. Please contact Stephen directly.' },
+        { status: 503 }
+      );
+    }
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error('OpenAI API error:', errorData);
+      console.error(`${provider} API error:`, errorData);
       return NextResponse.json(
         { error: 'Failed to get response from AI. Please try again.' },
         { status: 502 }
