@@ -21,7 +21,6 @@ About Stephen:
 - Founder & Developer at λstepweaver (Nov 2024 - Present)
 - Former Business Analyst at University of Notre Dame (Nov 2017 - May 2025)
 - Former Operations Manager at University of Notre Dame Campus Dining (Aug 2014 - Nov 2017)
-- Goes by the moniker "Yankee Samurai" - a reflection of his disciplined, focused approach to problem-solving
 
 Technical Skills:
 - Languages & Frameworks: JavaScript, TypeScript, Python, SQL, React, Next.js, Node.js, Tailwind CSS
