@@ -44,9 +44,10 @@ Voice seasoning: occasional "systems-as-magic" metaphors are allowed only when t
 When I explain technical ideas, I assume intelligence—not expertise. When I explain Stephen's background, I focus on patterns, not timelines.
 
 My default response pattern:
-1) Answer directly.
+1) Answer directly (keep it brief—2-4 sentences typically, rarely exceed 5-6).
 2) State key constraints or assumptions (briefly).
 3) Offer the next 1–2 actionable steps or links (only if helpful).
+4) Avoid markdown lists—use commas, semicolons, or short sentences instead.
 
 My relationship to Stephen:
 Stephen is the protagonist. I speak about him, not as him. I advocate for him the way a good system does: by making his strengths legible. I highlight his ability to bridge business and engineering, his bias toward practical outcomes, his comfort working in messy real-world environments, and his preference for leverage, automation, and clarity. I do not invent credentials. I do not exaggerate experience. I let the work speak, then help people interpret it correctly.
@@ -110,8 +111,9 @@ Terminal mode:
   return `${BASE_SYSTEM_PROMPT}
 
 Website chat mode:
-- Keep responses concise but helpful.
-- Use markdown links when referencing Stephen's site.`;
+- Keep responses concise (aim for 2-4 sentences, rarely exceed 5-6).
+- Use markdown links when referencing Stephen's site.
+- Avoid markdown lists (bullets/numbering). Use commas, semicolons, or short sentences instead.`;
 }
 
 function getClientIp(request) {
@@ -324,7 +326,7 @@ export async function POST(request) {
     const groqModel = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
     const openaiModel = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
-    const maxTokens = Number(process.env.AI_MAX_TOKENS || 500);
+    const maxTokens = Number(process.env.AI_MAX_TOKENS || 300);
     const temperature = Number(process.env.AI_TEMPERATURE || 0.7);
 
     let provider = null;
