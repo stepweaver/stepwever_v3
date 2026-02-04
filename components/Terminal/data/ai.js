@@ -78,7 +78,7 @@ export function getAIHelpText() {
     `<span class="text-terminal-green">AI Chat Command:</span>`,
     ``,
     `<span class="text-terminal-cyan">Usage:</span>`,
-    `<span class="text-terminal-text">ai &lt;your message&gt; - Ask Lambda about Stephen</span>`,
+    `<span class="text-terminal-text">ai &lt;your message&gt; - Ask λlambda about Stephen</span>`,
     ``,
     `<span class="text-terminal-cyan">Examples:</span>`,
     `<span class="text-terminal-text">ai What's your tech stack?</span>`,

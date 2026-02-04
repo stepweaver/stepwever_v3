@@ -4,10 +4,9 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { MessageCircle, X, Send, User, Loader2, Minimize2, Maximize2 } from 'lucide-react';
 import { parseChatLinks } from '@/utils/parseChatLinks';
-
-// Same green filter as theme selector lambda (dark/terminal)
-const LAMBDA_ICON_FILTER =
-  'brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 6px rgba(0, 255, 0, 0.7))';
+import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
+import GlitchLambda from '@/components/ui/GlitchLambda';
+import '@/components/ThemeToggle/ThemeToggle.css';
 
 const EXAMPLE_QUESTIONS = [
   "What's your tech stack?",
@@ -16,13 +15,14 @@ const EXAMPLE_QUESTIONS = [
 ];
 
 export default function ChatWidget() {
+  const { theme, mounted } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
       content:
-        "Hello! I'm Lambda, Stephen's AI advocate. I can answer questions about his background, skills, and experience. What would you like to know?",
+        "Hello! I'm λlambda, Stephen's AI advocate. I can answer questions about his background, skills, and experience. What would you like to know?",
     },
   ]);
   const [input, setInput] = useState('');
@@ -201,8 +201,8 @@ export default function ChatWidget() {
                             alt=''
                             width={14}
                             height={14}
-                            className='object-contain'
-                            style={{ width: 'auto', height: 'auto', filter: LAMBDA_ICON_FILTER }}
+                            className={`lambda-icon object-contain ${mounted ? theme : 'dark'}`}
+                            style={{ width: 'auto', height: 'auto' }}
                             aria-hidden
                           />
                         )}
@@ -216,7 +216,11 @@ export default function ChatWidget() {
                             : 'bg-terminal-dark/50 border border-terminal-border text-terminal-text'
                         }`}
                       >
-                        {parseChatLinks(message.content)}
+                        {parseChatLinks(message.content, {
+                          renderAgentName: (key) => (
+                            <GlitchLambda key={key} size='small' className='inline' />
+                          ),
+                        })}
                       </div>
                     </div>
                   ))}
@@ -230,8 +234,8 @@ export default function ChatWidget() {
                           alt=''
                           width={14}
                           height={14}
-                          className='object-contain'
-                          style={{ width: 'auto', height: 'auto', filter: LAMBDA_ICON_FILTER }}
+                          className={`lambda-icon object-contain ${mounted ? theme : 'dark'}`}
+                          style={{ width: 'auto', height: 'auto' }}
                           aria-hidden
                         />
                       </div>
