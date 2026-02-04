@@ -56,11 +56,12 @@ export default function ChatBot() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          channel: 'widget',
           messages: newMessages.map((m) => ({
             role: m.role,
             content: m.content,
           })),
-        }),
+        }),        
       });
 
       const data = await response.json();
