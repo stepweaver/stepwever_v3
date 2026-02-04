@@ -82,6 +82,7 @@ export const getClientIP = (request) => {
 /**
  * Create rate limit middleware for Next.js API routes
  * @param {Object} options - Rate limit options
+ * @param {Function} [options.getKey] - Optional (request) => string to derive rate-limit key (e.g. IP + UA). Defaults to getClientIP(request).
  * @returns {Function} - Middleware function
  */
 export const createRateLimit = (options = {}) => {
@@ -89,12 +90,13 @@ export const createRateLimit = (options = {}) => {
     maxRequests = 5,
     windowMs = 15 * 60 * 1000, // 15 minutes
     message = 'Too many requests, please try again later.',
-    statusCode = 429
+    statusCode = 429,
+    getKey = null,
   } = options;
 
   return async (request) => {
-    const clientIP = getClientIP(request);
-    const rateLimit = checkRateLimit(clientIP, maxRequests, windowMs);
+    const key = typeof getKey === 'function' ? getKey(request) : getClientIP(request);
+    const rateLimit = checkRateLimit(key, maxRequests, windowMs);
 
     if (rateLimit.isLimited) {
       return new Response(
