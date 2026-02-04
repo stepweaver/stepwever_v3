@@ -15,7 +15,7 @@ export default function ChatBot() {
     {
       role: 'assistant',
       content:
-        "Hey there! I'm Stephen's AI assistant. Ask me anything about his background, skills, or experience. I'll do my best to help!",
+        "Hello! I'm Lambda, Stephen's AI advocate. I can answer questions about his background, skills, and experience. What would you like to know?",
     },
   ]);
   const [input, setInput] = useState('');

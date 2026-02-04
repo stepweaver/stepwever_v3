@@ -16,7 +16,7 @@ export default function ChatWidget() {
     {
       role: 'assistant',
       content:
-        "Hey! I'm Stephen's AI assistant. Ask me anything about his background, skills, or experience!",
+        "Hello! I'm Lambda, Stephen's AI advocate. I can answer questions about his background, skills, and experience. What would you like to know?",
     },
   ]);
   const [input, setInput] = useState('');
