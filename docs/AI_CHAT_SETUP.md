@@ -29,7 +29,7 @@ Your chat feature is now configured to use **Groq** (free tier) as the primary L
 - **30 requests per minute**
 - **Generous daily limits** (varies, but typically enough for personal sites)
 - **Very fast responses** (often < 1 second)
-- **Models available**: Llama 3.1 70B, Mixtral, and more
+- **Models available**: Llama 3.3 70B, Mixtral, and more
 
 ---
 
