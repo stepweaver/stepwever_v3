@@ -1,8 +1,13 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Loader2, Minimize2, Maximize2 } from 'lucide-react';
+import Image from 'next/image';
+import { MessageCircle, X, Send, User, Loader2, Minimize2, Maximize2 } from 'lucide-react';
 import { parseChatLinks } from '@/utils/parseChatLinks';
+
+// Same green filter as theme selector lambda (dark/terminal)
+const LAMBDA_ICON_FILTER =
+  'brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 6px rgba(0, 255, 0, 0.7))';
 
 const EXAMPLE_QUESTIONS = [
   "What's your tech stack?",
@@ -139,7 +144,7 @@ export default function ChatWidget() {
                   <span className='w-2.5 h-2.5 rounded-full bg-terminal-yellow' />
                   <span className='w-2.5 h-2.5 rounded-full bg-terminal-green' />
                 </div>
-                <span className='font-ocr text-sm text-terminal-green ml-2'>
+                <span className='font-ocr text-base text-terminal-green ml-2'>
                   AI Chat
                 </span>
                 {hasNewMessage && isMinimized && (
@@ -182,22 +187,30 @@ export default function ChatWidget() {
                     >
                       {/* Avatar */}
                       <div
-                        className={`flex-shrink-0 w-6 h-6 rounded flex items-center justify-center ${
+                        className={`flex-shrink-0 w-7 h-7 rounded flex items-center justify-center overflow-hidden ${
                           message.role === 'user'
                             ? 'bg-terminal-cyan/20 text-terminal-cyan'
                             : 'bg-terminal-green/20 text-terminal-green'
                         }`}
                       >
                         {message.role === 'user' ? (
-                          <User className='w-3 h-3' />
+                          <User className='w-3.5 h-3.5' />
                         ) : (
-                          <Bot className='w-3 h-3' />
+                          <Image
+                            src='/images/lambda_stepweaver.png'
+                            alt=''
+                            width={14}
+                            height={14}
+                            className='object-contain'
+                            style={{ width: 'auto', height: 'auto', filter: LAMBDA_ICON_FILTER }}
+                            aria-hidden
+                          />
                         )}
                       </div>
 
                       {/* Message Bubble */}
                       <div
-                        className={`max-w-[80%] p-2 rounded font-ocr text-xs leading-relaxed ${
+                        className={`max-w-[80%] p-2.5 rounded font-ocr text-sm leading-relaxed ${
                           message.role === 'user'
                             ? 'bg-terminal-cyan/10 border border-terminal-cyan/30 text-terminal-text'
                             : 'bg-terminal-dark/50 border border-terminal-border text-terminal-text'
@@ -211,19 +224,27 @@ export default function ChatWidget() {
                   {/* Loading indicator */}
                   {isLoading && (
                     <div className='flex gap-2'>
-                      <div className='flex-shrink-0 w-6 h-6 rounded flex items-center justify-center bg-terminal-green/20 text-terminal-green'>
-                        <Bot className='w-3 h-3' />
+                      <div className='flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-terminal-green/20 overflow-hidden'>
+                        <Image
+                          src='/images/lambda_stepweaver.png'
+                          alt=''
+                          width={14}
+                          height={14}
+                          className='object-contain'
+                          style={{ width: 'auto', height: 'auto', filter: LAMBDA_ICON_FILTER }}
+                          aria-hidden
+                        />
                       </div>
-                      <div className='bg-terminal-dark/50 border border-terminal-border p-2 rounded'>
-                        <Loader2 className='w-3 h-3 text-terminal-green animate-spin' />
+                      <div className='bg-terminal-dark/50 border border-terminal-border p-2.5 rounded'>
+                        <Loader2 className='w-4 h-4 text-terminal-green animate-spin' />
                       </div>
                     </div>
                   )}
 
                   {/* Error message */}
                   {error && (
-                    <div className='p-2 bg-terminal-red/10 border border-terminal-red/30 rounded'>
-                      <p className='text-terminal-red font-ocr text-xs'>{error}</p>
+                    <div className='p-2.5 bg-terminal-red/10 border border-terminal-red/30 rounded'>
+                      <p className='text-terminal-red font-ocr text-sm'>{error}</p>
                     </div>
                   )}
 
@@ -233,15 +254,15 @@ export default function ChatWidget() {
                 {/* Example Questions */}
                 {messages.length <= 1 && (
                   <div className='px-3 pb-2'>
-                    <p className='text-terminal-text/50 font-ocr text-[10px] mb-1'>
+                    <p className='text-terminal-text/60 font-ocr text-xs mb-1.5'>
                       Try asking:
                     </p>
-                    <div className='flex flex-wrap gap-1'>
+                    <div className='flex flex-wrap gap-1.5'>
                       {EXAMPLE_QUESTIONS.map((question, index) => (
                         <button
                           key={index}
                           onClick={() => handleExampleClick(question)}
-                          className='px-2 py-1 text-[10px] font-ocr text-terminal-green border border-terminal-green/30 rounded hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-colors cursor-pointer'
+                          className='px-2.5 py-1.5 text-xs font-ocr text-terminal-green border border-terminal-green/30 rounded hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-colors cursor-pointer'
                           disabled={isLoading}
                         >
                           {question}
@@ -263,7 +284,7 @@ export default function ChatWidget() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       placeholder='Ask me anything...'
-                      className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-xs p-2 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_8px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/40'
+                      className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-sm min-h-[2.75rem] p-2.5 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_8px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/50'
                       disabled={isLoading}
                     />
                     <button
@@ -272,7 +293,7 @@ export default function ChatWidget() {
                       className='px-3 py-2 bg-terminal-green/10 border border-terminal-green text-terminal-green rounded hover:bg-terminal-green/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer'
                       aria-label='Send message'
                     >
-                      <Send className='w-3 h-3' />
+                      <Send className='w-4 h-4' />
                     </button>
                   </div>
                 </form>

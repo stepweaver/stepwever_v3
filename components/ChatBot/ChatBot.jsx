@@ -1,8 +1,13 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { Send, User, Loader2 } from 'lucide-react';
 import { parseChatLinks } from '@/utils/parseChatLinks';
+
+// Same green filter as theme selector lambda (dark/terminal)
+const LAMBDA_ICON_FILTER =
+  'brightness(0) saturate(100%) invert(73%) sepia(97%) saturate(2488%) hue-rotate(73deg) brightness(101%) contrast(101%) drop-shadow(0 0 6px rgba(0, 255, 0, 0.7))';
 
 const EXAMPLE_QUESTIONS = [
   "What's your tech stack?",
@@ -104,7 +109,7 @@ export default function ChatBot() {
           >
             {/* Avatar */}
             <div
-              className={`flex-shrink-0 w-8 h-8 rounded flex items-center justify-center ${
+              className={`flex-shrink-0 w-9 h-9 rounded flex items-center justify-center overflow-hidden ${
                 message.role === 'user'
                   ? 'bg-terminal-cyan/20 text-terminal-cyan'
                   : 'bg-terminal-green/20 text-terminal-green'
@@ -113,13 +118,21 @@ export default function ChatBot() {
               {message.role === 'user' ? (
                 <User className='w-4 h-4' />
               ) : (
-                <Bot className='w-4 h-4' />
+                <Image
+                  src='/images/lambda_stepweaver.png'
+                  alt=''
+                  width={18}
+                  height={18}
+                  className='object-contain'
+                  style={{ width: 'auto', height: 'auto', filter: LAMBDA_ICON_FILTER }}
+                  aria-hidden
+                />
               )}
             </div>
 
             {/* Message Bubble */}
             <div
-              className={`max-w-[80%] p-3 rounded font-ocr text-sm leading-relaxed ${
+              className={`max-w-[80%] p-3 rounded font-ocr text-base leading-relaxed ${
                 message.role === 'user'
                   ? 'bg-terminal-cyan/10 border border-terminal-cyan/30 text-terminal-text'
                   : 'bg-terminal-dark/50 border border-terminal-border text-terminal-text'
@@ -133,11 +146,19 @@ export default function ChatBot() {
         {/* Loading indicator */}
         {isLoading && (
           <div className='flex gap-3'>
-            <div className='flex-shrink-0 w-8 h-8 rounded flex items-center justify-center bg-terminal-green/20 text-terminal-green'>
-              <Bot className='w-4 h-4' />
+            <div className='flex-shrink-0 w-9 h-9 rounded flex items-center justify-center bg-terminal-green/20 overflow-hidden'>
+              <Image
+                src='/images/lambda_stepweaver.png'
+                alt=''
+                width={18}
+                height={18}
+                className='object-contain'
+                style={{ width: 'auto', height: 'auto', filter: LAMBDA_ICON_FILTER }}
+                aria-hidden
+              />
             </div>
             <div className='bg-terminal-dark/50 border border-terminal-border p-3 rounded'>
-              <Loader2 className='w-4 h-4 text-terminal-green animate-spin' />
+              <Loader2 className='w-5 h-5 text-terminal-green animate-spin' />
             </div>
           </div>
         )}
@@ -145,7 +166,7 @@ export default function ChatBot() {
         {/* Error message */}
         {error && (
           <div className='p-3 bg-terminal-red/10 border border-terminal-red/30 rounded'>
-            <p className='text-terminal-red font-ocr text-sm'>{error}</p>
+            <p className='text-terminal-red font-ocr text-base'>{error}</p>
           </div>
         )}
 
@@ -155,7 +176,7 @@ export default function ChatBot() {
       {/* Example Questions */}
       {messages.length <= 1 && (
         <div className='px-4 pb-2'>
-          <p className='text-terminal-text/60 font-ocr text-xs mb-2'>
+          <p className='text-terminal-text/60 font-ocr text-sm mb-2'>
             Try asking:
           </p>
           <div className='flex flex-wrap gap-2'>
@@ -163,7 +184,7 @@ export default function ChatBot() {
               <button
                 key={index}
                 onClick={() => handleExampleClick(question)}
-                className='px-3 py-1.5 text-xs font-ocr text-terminal-green border border-terminal-green/30 rounded hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-colors cursor-pointer'
+                className='px-3 py-2 text-sm font-ocr text-terminal-green border border-terminal-green/30 rounded hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-colors cursor-pointer'
                 disabled={isLoading}
               >
                 {question}
@@ -185,7 +206,7 @@ export default function ChatBot() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder='Ask me anything about Stephen...'
-            className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-sm p-3 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/40'
+            className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-base min-h-[2.75rem] p-3 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/50'
             disabled={isLoading}
           />
           <button
