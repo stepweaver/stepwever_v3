@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Loader2 } from 'lucide-react';
+import { parseChatLinks } from '@/utils/parseChatLinks';
 
 const EXAMPLE_QUESTIONS = [
   "What's your tech stack?",
@@ -123,7 +124,7 @@ export default function ChatBot() {
                   : 'bg-terminal-dark/50 border border-terminal-border text-terminal-text'
               }`}
             >
-              {message.content}
+              {parseChatLinks(message.content)}
             </div>
           </div>
         ))}
