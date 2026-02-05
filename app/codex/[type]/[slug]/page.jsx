@@ -90,8 +90,8 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  // Use custom image from frontmatter or fallback to default
-  const previewImage = frontmatter.image || '/images/lambda-preview.png';
+  // Use custom image from frontmatter or fallback to default (underscore: lambda_preview.png)
+  const previewImage = frontmatter.image || '/images/lambda_preview.png';
   const absoluteImageUrl = previewImage.startsWith('http')
     ? previewImage
     : `https://stepweaver.dev${previewImage}`;
