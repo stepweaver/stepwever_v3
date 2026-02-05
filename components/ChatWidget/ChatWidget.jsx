@@ -300,6 +300,18 @@ export default function ChatWidget() {
                       <Send className='w-4 h-4' />
                     </button>
                   </div>
+                  {/* Privacy Disclosure */}
+                  <p className='text-xs text-terminal-muted mt-2 text-center'>
+                    Conversations are processed by Groq API and not stored.{' '}
+                    <a
+                      href='/privacy'
+                      className='text-terminal-green hover:text-terminal-cyan underline'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      Privacy Policy
+                    </a>
+                  </p>
                 </form>
               </>
             )}

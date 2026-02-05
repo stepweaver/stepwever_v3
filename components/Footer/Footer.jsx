@@ -114,7 +114,14 @@ export default function Footer() {
             {/* Bottom Right - Legal */}
             <div className='text-terminal-muted font-ocr text-sm md:text-base leading-tight flex items-center min-h-[3rem] md:min-h-0'>
               <span>
-                © {currentYear} Stephen Weaver · All rights reserved
+                © {currentYear} Stephen Weaver ·{' '}
+                <Link
+                  href='/privacy'
+                  className='text-terminal-green hover:text-terminal-white transition-colors'
+                >
+                  Privacy Policy
+                </Link>
+                {' · '}All rights reserved
               </span>
             </div>
           </div>
