@@ -372,12 +372,12 @@ const Terminal = forwardRef((props, ref) => {
       // For future implementation
     },
     updateFilters: ({ type, tags }) => {
-      // For future implementation
-      if (type) {
-        processCommand(type === 'all' ? 'codex all' : `codex ${type}`);
-      }
-      if (tags && tags.length > 0) {
-        processCommand(`filter ${tags[0]}`);
+      // Codex is a single blog list (hashtags + dates). Enter codex, optionally run grep by tag.
+      if (type || (tags && tags.length > 0)) {
+        processCommand('codex');
+        if (tags && tags.length > 0) {
+          setTimeout(() => processCommand(`grep ${tags[0]}`), 400);
+        }
       }
     },
   }));
