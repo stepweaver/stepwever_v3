@@ -1,59 +1,37 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { getInitialBlogEntries } from '@/lib/blog';
+
+function safeParseDate(dateStr) {
+  if (!dateStr) return new Date(0);
+  try {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    if (!year || !month || !day) return new Date(0);
+    return new Date(Date.UTC(year, month - 1, day));
+  } catch (e) {
+    return new Date(0);
+  }
+}
 
 export async function GET() {
   const posts = [];
 
-  // Helper function to safely parse dates - using UTC to avoid timezone issues
-  const safeParseDate = (dateStr) => {
-    if (!dateStr) return new Date(0);
+  if (process.env.NOTION_BLOG_DB_ID) {
     try {
-      const [year, month, day] = dateStr.split('-').map(Number);
-      if (!year || !month || !day) return new Date(0);
-      // Use Date.UTC to avoid timezone conversion
-      return new Date(Date.UTC(year, month - 1, day));
-    } catch (e) {
-      console.error(`Invalid date format: ${dateStr}`);
-      return new Date(0);
-    }
-  };
-
-  // Helper function to process a directory of posts
-  const processDirectory = (dir, type) => {
-    if (fs.existsSync(dir)) {
-      const files = fs.readdirSync(dir);
-      files.forEach((file) => {
-        if (file.endsWith('.mdx')) {
-          try {
-            const filePath = path.join(dir, file);
-            const source = fs.readFileSync(filePath, 'utf8');
-            const { data } = matter(source);
-            posts.push({
-              type,
-              title: data.title || 'Untitled',
-              slug: file.replace(/\.mdx$/, ''),
-              date: data.date,
-              updated: data.updated || null,
-              description: data.excerpt || data.description || '',
-              hashtags: data.hashtags || [],
-            });
-          } catch (error) {
-            console.error(`Error processing file ${file}:`, error);
-          }
-        }
+      const blogEntries = await getInitialBlogEntries(200);
+      blogEntries.forEach((entry) => {
+        posts.push({
+          title: entry.title || 'Untitled',
+          slug: entry.slug,
+          date: entry.date || '',
+          updated: entry.updated || null,
+          description: entry.description || '',
+          hashtags: entry.hashtags || [],
+        });
       });
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') console.error('[codex] Notion blog:', err);
     }
-  };
+  }
 
-  // Process each content type
-  processDirectory(path.join(process.cwd(), 'content', 'blog'), 'blog');
-  processDirectory(path.join(process.cwd(), 'content', 'projects'), 'projects');
-  processDirectory(path.join(process.cwd(), 'content', 'articles'), 'articles');
-  processDirectory(path.join(process.cwd(), 'content', 'tools'), 'tools');
-  processDirectory(path.join(process.cwd(), 'content', 'community'), 'community');
-
-  // Sort posts by date descending (using updated date if available)
   posts.sort((a, b) => {
     const dateA = a.updated ? safeParseDate(a.updated) : safeParseDate(a.date);
     const dateB = b.updated ? safeParseDate(b.updated) : safeParseDate(b.date);

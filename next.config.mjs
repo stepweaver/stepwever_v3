@@ -9,7 +9,7 @@ const nextConfig = {
 
   // Performance optimizations
   experimental: {
-    optimizePackageImports: ['lucide-react', 'react-icons'],
+    optimizePackageImports: ['lucide-react', 'react-icons', '@notionhq/client'],
   },
 
   // Compiler configuration to target modern browsers and exclude unnecessary polyfills
@@ -164,7 +164,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://calendly.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https:",
-              "connect-src 'self' https://calendly.com https://api.calendly.com https://api.openweathermap.org https://va.vercel-scripts.com https://script.google.com",
+              "connect-src 'self' https://calendly.com https://api.calendly.com https://api.openweathermap.org https://va.vercel-scripts.com https://script.google.com https://www.notion.so https://api.notion.so",
               "frame-src 'self' https://calendly.com https://script.google.com",
               "object-src 'none'",
               "base-uri 'self'",

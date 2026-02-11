@@ -28,7 +28,7 @@ const TERMINAL_COPY = {
   hero: {
     title: 'Interactive terminal.',
     subtitle:
-      "A command-line interface to explore my site. Browse my blog, projects, and more!",
+      "A command-line interface to explore my site. Browse my blog and more!",
     ribbon:
       'Runs fully in your browser. Type `help` to start.',
   },
@@ -40,7 +40,7 @@ const TERMINAL_COPY = {
     title: 'Quick start',
     steps: [
       'Type `help` to see available commands.',
-      'Use `codex` to enter content mode, then explore `blog`, `projects`, or `community`.',
+      'Use `codex` to enter content mode and browse posts by hashtags and dates.',
       'Use `ls` to list items and `cat [number]` to read. `back` climbs up a level.',
     ],
   },
@@ -68,7 +68,7 @@ const COMMAND_GUIDE = [
   { command: 'help', summary: 'Show available commands.' },
   { command: 'resume', summary: 'View experience, education, skills, or download PDF.' },
   { command: 'chat <message>', summary: 'Discuss Stephen\'s experience with an LLM.' },
-  { command: 'codex', summary: 'Browse blog posts, projects, and community content.' },
+  { command: 'codex', summary: 'Browse blog (hashtags and dates).' },
   { command: 'contact', summary: 'Send a message to Stephen.' },
   { command: 'back', summary: 'Exit current mode.' },
 ];

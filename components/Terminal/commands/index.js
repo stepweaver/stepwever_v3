@@ -50,7 +50,7 @@ export const handleCommand = async (
         ``,
         `<span class="text-terminal-cyan">Content:</span>`,
         `<span class="text-terminal-text">resume - View Stephen's resume (experience, education, skills)</span>`,
-        `<span class="text-terminal-text">codex - Browse blog posts, projects, and community content</span>`,
+        `<span class="text-terminal-text">codex - Browse blog (hashtags and dates)</span>`,
         `<span class="text-terminal-text">chat &lt;message&gt; - Discuss Stephen's experience with an LLM</span>`,
         ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
@@ -76,9 +76,7 @@ export const handleCommand = async (
       const validDestinations = ['contact', 'codex', 'dice-roller', 'github'];
       if (validDestinations.includes(destination)) {
         if (callback && callback.setLines && callback.setInput && callback.router) {
-          // Map 'codex' to 'blog' for navigation
-          const navDestination = destination === 'codex' ? 'blog' : destination;
-          handleNavigationCommand(navDestination, currentPath, callback, destination);
+          handleNavigationCommand(destination, currentPath, callback, destination);
         } else {
           return [`<span class="text-terminal-red">Navigation not available</span>`];
         }
