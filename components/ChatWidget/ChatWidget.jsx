@@ -298,7 +298,7 @@ export default function ChatWidget() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       placeholder='Ask me anything...'
-                      className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-sm min-h-[2.75rem] p-2.5 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_8px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/50'
+                      className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-base sm:text-sm min-h-[2.75rem] p-2.5 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_8px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/50'
                       disabled={isLoading}
                     />
                     <button
