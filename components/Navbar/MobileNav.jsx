@@ -49,7 +49,7 @@ export default function MobileNav() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className='cursor-pointer p-3 text-2xl text-neon hover:text-accent transition-colors duration-200 rounded-xl border border-neon/20 bg-panel/50 backdrop-blur hover:border-neon/40 hover:bg-panel/70'
+          className='cursor-pointer p-3 text-2xl text-neon hover:text-accent transition-colors duration-200 rounded-xl bg-panel/50 backdrop-blur hover:bg-panel/70'
           aria-expanded={isOpen}
           aria-label='Open navigation menu'
           aria-controls='mobile-navigation-menu'
@@ -63,7 +63,7 @@ export default function MobileNav() {
 
       {isOpen && mounted && createPortal(
         <div
-          className='fixed inset-0 z-[9999] flex flex-col bg-[var(--panel)]/98 backdrop-blur-xl'
+          className='fixed inset-0 z-[9999] flex flex-col bg-panel/98 backdrop-blur-xl'
           id='mobile-navigation-menu'
         >
           {/* Tron frame - full bleed */}
