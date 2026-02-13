@@ -63,6 +63,17 @@
   --theme-glitch-color: #ff00ff;
   --theme-glitch-shadow: 0 0 5px rgba(255, 0, 255, 0.8),
     0 0 10px rgba(255, 0, 255, 0.4);
+
+  /* Ops Console Palette (Neon Rain) */
+  --bg: 7 10 16;
+  --panel: 14 18 28;
+  --text: 236 240 248;
+  --muted: 150 160 180;
+  --neon: 90 255 140;
+  --accent: 90 210 255;
+  --warn: 255 190 80;
+  --danger: 255 80 110;
+  --ring: 90 255 140;
 }
 
 /* Animation delay utilities */
@@ -1254,6 +1265,24 @@ body::after {
   animation: fade-in 0.6s ease-out both;
 }
 
+@keyframes status-ping {
+  75%, 100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes status-indicator-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 6px currentColor, 0 0 12px currentColor;
+  }
+  50% {
+    opacity: 0.75;
+    box-shadow: 0 0 12px currentColor, 0 0 24px currentColor;
+  }
+}
+
 /* Subtle pulsating green glow animation for terminal */
 @keyframes pulseGlow {
   0%, 100% {
@@ -1294,6 +1323,54 @@ body::after {
   clip-path: inset(40% 0 0 0);
   left: -2px;
   text-shadow: -2px 0 var(--color-terminal-red);
+}
+
+/* Tron-style frame: angular corners + neon border (official-document aesthetic) */
+.tron-frame {
+  position: relative;
+  border: 1.5px solid rgba(90, 255, 140, 0.35);
+  background: rgba(14, 18, 28, 0.6);
+  backdrop-filter: blur(12px);
+  clip-path: polygon(
+    12px 0%,
+    calc(100% - 12px) 0%,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0% calc(100% - 12px),
+    0% 12px
+  );
+  filter: drop-shadow(0 0 10px rgba(90, 255, 140, 0.15));
+}
+.tron-frame-sm {
+  position: relative;
+  border: 1px solid rgba(90, 255, 140, 0.3);
+  clip-path: polygon(
+    6px 0%,
+    calc(100% - 6px) 0%,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0% calc(100% - 6px),
+    0% 6px
+  );
+}
+
+/* Document label: MODULE / SECTION_ID for official-document aesthetic */
+.doc-label-module {
+  font-family: var(--font-ocr);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(90, 255, 140, 0.7);
+}
+.doc-label-id {
+  font-family: monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: rgba(236, 240, 248, 0.5);
 }
 
 /* Cyberpunk Border Styles - Rounded corners for softer cyberpunk aesthetic */

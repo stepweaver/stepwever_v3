@@ -2,7 +2,7 @@ import GlitchLambda from '@/components/ui/GlitchLambda';
 
 export default function TerminalLink() {
   return (
-    <div className='max-w-6xl ml-auto mb-6 sm:mb-10'>
+    <div className='mb-6 sm:mb-10'>
       <a
         href='/terminal'
         className='inline-flex items-center gap-2 sm:gap-3 text-terminal-cyan hover:text-terminal-green transition-all duration-300 font-ibm text-base sm:text-xl md:text-2xl hover:scale-105'

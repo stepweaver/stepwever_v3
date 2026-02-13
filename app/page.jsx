@@ -1,19 +1,16 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import Hero from '@/components/Hero/Hero';
+import { InkDivider } from '@/components/ui/InkDivider';
 import generateStructuredData from './structured-data';
 
-// Lazy load BackgroundCanvas - heavy canvas operations
 const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
   { ssr: false }
 );
 
-// Lazy load below-the-fold components
-const About = dynamic(() => import('@/components/About/About'), {
-  loading: () => <div className='min-h-[400px]' />,
-});
 const Experience = dynamic(() => import('@/components/Experience/Experience'), {
   loading: () => <div className='min-h-[400px]' />,
 });
@@ -41,14 +38,23 @@ export default function HomePage() {
       <div className='relative'>
         <BackgroundCanvas />
 
-        {/* Hero Section */}
         <Hero />
+        <InkDivider showSeal={true} />
 
-        {/* About Section */}
-        <About />
-
-        {/* Experience & Tech Arsenal Section */}
         <Experience />
+        <InkDivider showSeal={false} />
+
+        <section className='relative z-30 py-8'>
+          <div className='w-full px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none text-center'>
+            <p className='text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-2'>RECENT INTEL</p>
+            <Link
+              href='/codex'
+              className='text-neon hover:text-accent transition-colors font-ibm text-lg underline'
+            >
+              View Codex →
+            </Link>
+          </div>
+        </section>
       </div>
     </>
   );

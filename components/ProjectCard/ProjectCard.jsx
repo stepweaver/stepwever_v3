@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import Link from 'next/link';
 import OptimizedImage from '@/components/OptimizedImage/OptimizedImage';
+import { HUDPanel } from '@/components/ui/HUDPanel';
 
 const ProjectCard = memo(function ProjectCard({
   title,
@@ -13,96 +14,83 @@ const ProjectCard = memo(function ProjectCard({
   slug,
   isLCP = false,
 }) {
-  const handleExternalClick = (e) => {
-    e.preventDefault();
-    if (link && link.startsWith('http')) {
-      window.open(link, '_blank', 'noopener,noreferrer');
-    }
-  };
-
   const cardContent = (
-    <>
-      {/* Terminal Header */}
-      <div className='bg-terminal-light px-3 py-2 border-b border-terminal-border flex items-center justify-between'>
-        <div className='flex items-center space-x-2'>
-          <div className='w-3 h-3 bg-terminal-red rounded-full'></div>
-          <div className='w-3 h-3 bg-terminal-yellow rounded-full'></div>
-          <div className='w-3 h-3 bg-terminal-green rounded-full'></div>
+    <HUDPanel
+      title={title}
+      className="h-full flex flex-col hover:shadow-neon transition-all duration-200 hover:-translate-y-0.5 min-h-[580px]"
+    >
+      <div className='flex items-center gap-2 mb-4'>
+        <div className='flex gap-1.5'>
+          <span className='w-2.5 h-2.5 rounded-full bg-danger' />
+          <span className='w-2.5 h-2.5 rounded-full bg-warn' />
+          <span className='w-2.5 h-2.5 rounded-full bg-neon' />
         </div>
-        <div className='text-terminal-dimmed text-sm sm:text-base font-ocr truncate max-w-[60%]'>
-          {title}
-        </div>
-      </div>
-
-      {/* Terminal Content */}
-      <div className='p-3 sm:p-4 bg-terminal-dark/30 backdrop-blur-xl flex flex-col h-full'>
-        {/* Project Image */}
-        {imageUrl && (
-          <div className={`mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-48 sm:h-72 ${slug === 'neon-profile-card' ? 'bg-terminal-dark/50' : ''}`}>
-            <OptimizedImage
-              src={imageUrl}
-              alt={title}
-              className={`w-full h-full transition-transform duration-300 hover:scale-105 ${slug === 'neon-profile-card' ? 'object-contain' : 'object-cover object-top'}`}
-              loading={isLCP ? 'eager' : 'lazy'}
-              fetchPriority={isLCP ? 'high' : 'auto'}
-            />
-          </div>
-        )}
-        {!imageUrl && (
-          <div className='mb-2 sm:mb-3 border border-terminal-border cyber-border-sm overflow-hidden h-48 sm:h-72'>
-            <OptimizedImage
-              src='/images/lambda_preview.png'
-              alt='Project preview'
-              className='w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105'
-              loading='lazy'
-            />
-          </div>
-        )}
-
-        {/* Project Title */}
-        <h3 className='text-terminal-green font-ibm text-base sm:text-lg mb-2 sm:mb-3 leading-tight'>
-          {title}
-        </h3>
-
-        {/* Keywords as Category */}
         {keywords.length > 0 && (
-          <div className='mb-2 sm:mb-3'>
-            <span className='inline-block bg-terminal-green/20 text-terminal-green text-sm sm:text-base font-ocr px-2 py-1 cyber-border-sm cyber-border-green'>
-              {keywords[0]}
-            </span>
-          </div>
+          <span className='text-xs text-muted font-ocr uppercase tracking-wider ml-auto'>
+            {keywords[0]}
+          </span>
         )}
-
-        {/* Sample Actions - simplified */}
-        {actions.length > 0 && (
-          <div className='mb-2 sm:mb-3 h-[88px] sm:h-[96px] overflow-hidden'>
-            <div className='text-terminal-cyan font-ibm text-sm sm:text-base mb-1'>
-              KEY FEATURES:
-            </div>
-            <ul className='space-y-1'>
-              {actions.slice(0, 2).map((action, index) => (
-                <li
-                  key={index}
-                  className='text-terminal-yellow font-ibm text-sm sm:text-base flex'
-                >
-                  <span className='text-terminal-green mr-2 flex-shrink-0'>▶</span>
-                  <span className='line-clamp-2'>{action}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Bottom spacing */}
-        <div className='mt-auto pt-2 sm:pt-4'></div>
       </div>
-    </>
+
+      {imageUrl && (
+        <div className={`mb-4 border border-neon/20 overflow-hidden rounded-lg h-48 sm:h-56 ${slug === 'neon-profile-card' ? 'bg-panel/50' : ''}`}>
+          <OptimizedImage
+            src={imageUrl}
+            alt={title}
+            className={`w-full h-full transition-transform duration-300 hover:scale-105 object-top ${slug === 'neon-profile-card' ? 'object-contain' : 'object-cover'}`}
+            loading={isLCP ? 'eager' : 'lazy'}
+            fetchPriority={isLCP ? 'high' : 'auto'}
+          />
+        </div>
+      )}
+      {!imageUrl && (
+        <div className='mb-4 border border-neon/20 overflow-hidden rounded-lg h-48 sm:h-56'>
+          <OptimizedImage
+            src='/images/lambda_preview.png'
+            alt='Project preview'
+            className='w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105'
+            loading='lazy'
+          />
+        </div>
+      )}
+
+      {description && (
+        <p className='text-sm text-text/80 font-ibm mb-4 line-clamp-2'>
+          {description}
+        </p>
+      )}
+
+      {actions.length > 0 && (
+        <div className='mb-4 flex-1'>
+          <div className='text-xs text-neon/70 font-ocr uppercase tracking-wider mb-2'>KEY FEATURES:</div>
+          <ul className='space-y-1.5'>
+            {actions.slice(0, 2).map((action, index) => (
+              <li key={index} className='text-xs text-text/70 font-ibm flex items-start'>
+                <span className='text-neon mr-2 flex-shrink-0 mt-0.5'>▶</span>
+                <span className='line-clamp-2'>{action}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {tags.length > 0 && (
+        <div className='flex flex-wrap gap-1.5 mt-auto pt-4 border-t border-neon/10'>
+          {tags.slice(0, 3).map((tag, index) => (
+            <span
+              key={index}
+              className='text-[10px] text-neon/60 font-ocr uppercase tracking-wider px-2 py-0.5 border border-neon/20 rounded'
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </HUDPanel>
   );
 
-  // Match SuccessStories structure exactly - plain article element (no Link wrapper)
-  // Navigation handled by parent carousel
   return (
-    <article className='bg-terminal-dark/30 backdrop-blur-xl cyber-border cyber-border-green overflow-hidden transition-all duration-300 group h-[580px] flex flex-col hover:border-terminal-green/50 hover:shadow-lg hover:shadow-terminal-green/20 card-glow-tight'>
+    <article className='h-full flex flex-col'>
       {cardContent}
     </article>
   );

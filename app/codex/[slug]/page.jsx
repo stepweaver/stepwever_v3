@@ -78,7 +78,7 @@ export default async function CodexPostPage({ params }) {
     notFound();
   }
 
-  const typeColor = 'var(--color-terminal-green)';
+  const typeColor = 'var(--neon)';
 
   return (
     <div className="min-h-screen relative">

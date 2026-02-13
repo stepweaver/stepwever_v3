@@ -7,18 +7,18 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className='max-w-4xl mx-auto px-4 md:px-6 py-12 md:py-16'>
-      <h1 className='text-4xl md:text-5xl font-ibm text-terminal-green mb-8'>
+    <div className='max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-12 md:py-16'>
+      <h1 className='text-4xl md:text-5xl font-ibm text-neon mb-8'>
         Privacy Policy
       </h1>
 
-      <div className='prose prose-invert max-w-none space-y-6 font-ocr text-terminal-text leading-relaxed'>
-        <p className='text-sm text-terminal-muted'>
+      <div className='prose prose-invert max-w-none space-y-6 font-ocr text-text leading-relaxed'>
+        <p className='text-sm text-text/70'>
           Last updated: February 5, 2025
         </p>
 
         <section>
-          <h2 className='text-2xl font-ibm text-terminal-green mt-8 mb-4'>
+          <h2 className='text-2xl font-ibm text-neon mt-8 mb-4'>
             AI Chat Widget
           </h2>
           <p>
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
                 href='https://groq.com/privacy-policy'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-terminal-green hover:text-terminal-cyan underline'
+                className='text-neon hover:text-accent underline'
               >
                 Privacy Policy
               </a>{' '}
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
                 href='https://console.groq.com/docs/legal/services-agreement'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-terminal-green hover:text-terminal-cyan underline'
+                className='text-neon hover:text-accent underline'
               >
                 Services Agreement
               </a>
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
             at{' '}
             <a
               href='/contact'
-              className='text-terminal-green hover:text-terminal-cyan underline'
+              className='text-neon hover:text-accent underline'
             >
               stephen@stepweaver.dev
             </a>{' '}
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className='text-2xl font-ibm text-terminal-green mt-8 mb-4'>
+          <h2 className='text-2xl font-ibm text-neon mt-8 mb-4'>
             Website Analytics
           </h2>
           <p>
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className='text-2xl font-ibm text-terminal-green mt-8 mb-4'>
+          <h2 className='text-2xl font-ibm text-neon mt-8 mb-4'>
             Contact Forms
           </h2>
           <p>
@@ -95,7 +95,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className='text-2xl font-ibm text-terminal-green mt-8 mb-4'>
+          <h2 className='text-2xl font-ibm text-neon mt-8 mb-4'>
             Your Rights
           </h2>
           <p>
@@ -104,7 +104,7 @@ export default function PrivacyPage() {
             please contact me at{' '}
             <a
               href='/contact'
-              className='text-terminal-green hover:text-terminal-cyan underline'
+              className='text-neon hover:text-accent underline'
             >
               stephen@stepweaver.dev
             </a>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className='text-2xl font-ibm text-terminal-green mt-8 mb-4'>
+          <h2 className='text-2xl font-ibm text-neon mt-8 mb-4'>
             Changes to This Policy
           </h2>
           <p>
@@ -122,12 +122,12 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <section className='mt-12 pt-8 border-t border-terminal-border'>
-          <p className='text-sm text-terminal-muted'>
+        <section className='mt-12 pt-8 border-t border-neon/20'>
+          <p className='text-sm text-text/70'>
             If you have questions about this privacy policy, please{' '}
             <a
               href='/contact'
-              className='text-terminal-green hover:text-terminal-cyan underline'
+              className='text-neon hover:text-accent underline'
             >
               contact me
             </a>

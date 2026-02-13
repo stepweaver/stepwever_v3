@@ -19,7 +19,7 @@ const BackgroundCanvas = dynamic(
 const Terminal = dynamic(() => import('@/components/Terminal/Terminal'), {
   loading: () => (
     <div className='min-h-[400px] flex items-center justify-center'>
-      <p className='text-terminal-text font-ocr'>Loading terminal...</p>
+      <p className='text-text font-ocr'>Loading terminal...</p>
     </div>
   ),
 });
@@ -91,7 +91,7 @@ const JumpToTerminalButton = () => {
   return (
     <button
       onClick={scrollToTerminal}
-      className='xl:hidden w-full mt-6 py-3 px-4 cyber-border-sm cyber-border-green bg-terminal-dark/30 backdrop-blur-xl hover:bg-terminal-dark/50 text-terminal-green font-ocr text-sm transition-all duration-200 hover:border-terminal-green hover:shadow-[0_0_15px_rgba(0,255,0,0.3)] flex items-center justify-center gap-2'
+      className='xl:hidden w-full mt-6 py-3 px-4 border-2 border-neon rounded-lg bg-panel/50 backdrop-blur-xl hover:bg-neon/10 text-neon font-ocr text-sm transition-all duration-200 hover:shadow-[0_0_15px_rgba(0,255,0,0.3)] flex items-center justify-center gap-2'
       aria-label='Jump to terminal'
     >
       <TerminalIcon className='w-4 h-4' />
@@ -119,21 +119,21 @@ export default function TerminalPage() {
       <BackgroundCanvas />
 
       <div className='relative z-10 w-full'>
-        <section className='w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24'>
+        <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
           <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
             <header className='space-y-6'>
               <div className='space-y-4'>
-                <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl text-terminal-green leading-tight'>
+                <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl text-neon leading-tight'>
                   {TERMINAL_COPY.hero.title}
                 </h1>
-                <p className='font-ocr text-base sm:text-lg md:text-xl text-terminal-text/85 leading-relaxed max-w-5xl'>
+                <p className='font-ocr text-base sm:text-lg md:text-xl text-text/85 leading-relaxed max-w-5xl'>
                   {TERMINAL_COPY.hero.subtitle}
                 </p>
               </div>
-              <div className='relative cyber-border cyber-border-green bg-terminal-dark/20 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
+              <div className='relative border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
                 <span>{TERMINAL_COPY.hero.ribbon}</span>
                 <span
-                  className='absolute inset-y-0 left-0 w-1 bg-terminal-green/80'
+                  className='absolute inset-y-0 left-0 w-1 bg-neon/80 rounded-l-lg'
                   aria-hidden='true'
                 ></span>
               </div>
@@ -142,10 +142,10 @@ export default function TerminalPage() {
             <section className='grid gap-10 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1.8fr)]'>
               <div className='space-y-8'>
                 <article className='space-y-3'>
-                  <h2 className='font-ibm text-2xl sm:text-3xl text-terminal-green'>
+                  <h2 className='font-ibm text-2xl sm:text-3xl text-neon'>
                     {TERMINAL_COPY.overview.title}
                   </h2>
-                  <p className='font-ocr text-sm text-terminal-text/85 leading-relaxed'>
+                  <p className='font-ocr text-sm text-text/85 leading-relaxed'>
                     {TERMINAL_COPY.overview.text}
                   </p>
                   <JumpToTerminalButton />
@@ -157,15 +157,15 @@ export default function TerminalPage() {
                     return (
                       <div
                         key={card.title}
-                        className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 space-y-2'
+                        className='border border-neon/20 rounded-lg bg-panel/50 backdrop-blur-xl p-4 space-y-2'
                       >
                         <div className='flex items-center gap-2'>
-                          <Icon className='w-4 h-4 text-terminal-green' />
-                          <p className='font-ibm text-base text-terminal-green'>
+                          <Icon className='w-4 h-4 text-neon' />
+                          <p className='font-ibm text-base text-neon'>
                             {card.title}
                           </p>
                         </div>
-                        <p className='font-ocr text-xs text-terminal-text/80 leading-relaxed'>
+                        <p className='font-ocr text-xs text-text/80 leading-relaxed'>
                           {card.body}
                         </p>
                       </div>
@@ -174,14 +174,14 @@ export default function TerminalPage() {
                 </div>
 
                 <article className='space-y-3'>
-                  <h3 className='font-ibm text-xl text-terminal-green'>
+                  <h3 className='font-ibm text-xl text-neon'>
                     {TERMINAL_COPY.usage.title}
                   </h3>
-                  <ul className='space-y-2 font-ocr text-xs text-terminal-text/85'>
+                  <ul className='space-y-2 font-ocr text-xs text-text/85'>
                     {TERMINAL_COPY.usage.steps.map((step, idx) => (
                       <li
                         key={idx}
-                        className='cyber-border-sm cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-3 leading-relaxed'
+                        className='border border-neon/20 rounded-lg bg-panel/50 backdrop-blur-xl p-3 leading-relaxed'
                       >
                         {step}
                       </li>
@@ -192,8 +192,8 @@ export default function TerminalPage() {
 
                 <article className='space-y-3'>
                   <div className='flex items-center gap-2'>
-                    <Command className='w-4 h-4 text-terminal-green' />
-                    <h3 className='font-ibm text-xl text-terminal-green'>
+                    <Command className='w-4 h-4 text-neon' />
+                    <h3 className='font-ibm text-xl text-neon'>
                       Commands
                     </h3>
                   </div>
@@ -201,9 +201,9 @@ export default function TerminalPage() {
                     {COMMAND_GUIDE.map((item) => (
                       <div
                         key={item.command}
-                        className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-3 font-ocr text-xs text-terminal-text/85'
+                        className='border border-neon/20 rounded-lg bg-panel/50 backdrop-blur-xl p-3 font-ocr text-xs text-text/85'
                       >
-                        <p className='text-terminal-green'>
+                        <p className='text-neon'>
                           <span className='font-ibm text-sm'>
                             {item.command}
                           </span>{' '}
@@ -218,9 +218,9 @@ export default function TerminalPage() {
 
               <aside
                 id='terminal-section'
-                className='cyber-border cyber-border-green bg-transparent p-4 md:p-6 animate-pulse-glow'
+                className='border-2 border-neon rounded-lg bg-panel/30 p-4 md:p-6 animate-pulse-glow'
               >
-                <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
+                <p className='font-ocr text-sm text-text/70 mb-4'>
                   Type `help` to see commands. Use `codex` to navigate content.
                 </p>
                 <div className='w-full'>

@@ -621,13 +621,6 @@ function ProjectCarousel() {
 
   return (
     <div className='w-full relative mt-8 sm:mt-16'>
-      {/* Swipe instruction */}
-      <div className='text-center mb-4'>
-        <p className='text-terminal-dimmed text-base sm:text-lg font-ocr'>
-          Swipe to navigate
-        </p>
-      </div>
-
       {/* Mobile Carousel - Only render visible items */}
       <div className='md:hidden'>
         <div

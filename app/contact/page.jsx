@@ -35,7 +35,7 @@ const SOCIAL_LINKS = [
     icon: GlitchLambda,
     external: false,
     iconProps: {
-      className: 'text-terminal-green text-base',
+      className: 'text-neon text-base',
       size: 'small',
       'aria-hidden': true,
     },
@@ -48,21 +48,21 @@ function ContactPage() {
       <BackgroundCanvas />
 
       <div className='relative z-10 w-full'>
-        <section className='w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24'>
+        <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
           <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
             <header className='space-y-6'>
               <div className='space-y-4'>
-                <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-terminal-green leading-tight'>
+                <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-neon leading-tight'>
                   Let's connect.
                 </h1>
-                <p className='font-ocr text-base sm:text-lg md:text-xl text-terminal-text/80 max-w-6xl leading-relaxed'>
+                <p className='font-ocr text-base sm:text-lg md:text-xl text-text/80 max-w-6xl leading-relaxed'>
                   Have a question, opportunity, or just want to say hello? My inbox is always open.
                 </p>
               </div>
-              <div className='relative border border-terminal-green/50 bg-terminal-dark/20 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
+              <div className='relative border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
                 <span>I typically respond within a day or two. Looking forward to hearing from you!</span>
                 <span
-                  className='absolute inset-y-0 left-0 w-1 bg-terminal-green/80'
+                  className='absolute inset-y-0 left-0 w-1 bg-neon/80 rounded-l-lg'
                   aria-hidden='true'
                 ></span>
               </div>
@@ -74,30 +74,30 @@ function ContactPage() {
               </div>
 
               <aside className='space-y-6'>
-                <div className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-5 space-y-3'>
+                <div className='border border-neon/20 rounded-lg bg-panel/50 backdrop-blur-xl p-5 space-y-3'>
                   <div className='flex items-center gap-3'>
-                    <Mail className='w-5 h-5 text-terminal-green' />
+                    <Mail className='w-5 h-5 text-neon' />
                     <div>
-                      <p className='font-ibm text-lg text-terminal-green'>
+                      <p className='font-ibm text-lg text-neon'>
                         Email directly
                       </p>
-                      <p className='font-ocr text-xs text-terminal-text/70'>
+                      <p className='font-ocr text-xs text-text/70'>
                         For those who prefer the classic approach.
                       </p>
                     </div>
                   </div>
-                  <div className='font-ocr text-sm text-terminal-text/90'>
+                  <div className='font-ocr text-sm text-text/90'>
                     <Link
                       href='mailto:stephen@stepweaver.dev'
-                      className='inline-flex items-center gap-2 text-terminal-green hover:text-terminal-white transition-colors'
+                      className='inline-flex items-center gap-2 text-neon hover:text-accent transition-colors'
                     >
                       stephen@stepweaver.dev
                     </Link>
                   </div>
                 </div>
 
-                <div className='border border-terminal-border/60 bg-terminal-dark/30 backdrop-blur-xl rounded-lg p-5 space-y-4'>
-                  <p className='font-ibm text-lg text-terminal-green'>
+                <div className='border border-neon/20 rounded-lg bg-panel/50 backdrop-blur-xl p-5 space-y-4'>
+                  <p className='font-ibm text-lg text-neon'>
                     Find me elsewhere
                   </p>
                   <div className='flex flex-wrap gap-4'>
@@ -116,7 +116,7 @@ function ContactPage() {
                         <Link
                           key={link.label}
                           href={link.href}
-                          className={`inline-flex items-center font-ocr text-sm text-terminal-green hover:text-terminal-white transition-colors ${
+                          className={`inline-flex items-center font-ocr text-sm text-neon hover:text-accent transition-colors ${
                             isTerminalLink ? 'gap-0' : 'gap-2'
                           }`}
                           {...sharedProps}

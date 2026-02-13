@@ -94,43 +94,68 @@ function CodexContent() {
   return (
     <div className="min-h-screen relative">
       <BackgroundCanvas />
-      <div className="relative z-10 p-4">
+      <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16">
         <div className="max-w-7xl mx-auto">
           <div className="mt-20 mb-36">
-            <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-terminal-green mb-8 md:mb-20 font-ibm whitespace-nowrap">
+            <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-neon mb-8 md:mb-20 font-ibm whitespace-nowrap">
               Stephen Weaver
             </h1>
-            <p className="max-w-5xl text-terminal-text text-lg md:text-4xl leading-relaxed">
+            <p className="max-w-5xl text-text text-lg md:text-4xl leading-relaxed">
               I'm Stephen. Developer, veteran, and perpetual learner. This is my digital codex: thoughts and things I'm exploring.
             </p>
           </div>
 
           <div className="mb-8 text-2xl">
-            <nav className="flex items-center font-ibm text-terminal-green">
-              <span className="text-terminal-green">user@stepweaver</span>
-              <span className="text-terminal-text ml-2">~</span>
-              <span className="text-terminal-text">/</span>
+            <nav className="flex items-center font-ibm text-neon">
+              <span className="text-neon">user@stepweaver</span>
+              <span className="text-text ml-2">~</span>
+              <span className="text-text">/</span>
               <button
                 onClick={() => setActiveHashtags([])}
-                className="text-terminal-text hover:text-terminal-green transition-colors cursor-pointer"
+                className="text-text hover:text-neon transition-colors cursor-pointer"
               >
                 codex
               </button>
-              <span className="text-terminal-green ml-2 animate-blink">_</span>
+              <span className="text-neon ml-2 animate-blink">_</span>
             </nav>
           </div>
 
           {loading ? (
             <div className="flex justify-center items-center min-h-64">
-              <div className="text-terminal-green font-ibm text-lg animate-pulse">Loading...</div>
+              <div className="text-neon font-ibm text-lg animate-pulse">Loading...</div>
             </div>
           ) : error ? (
-            <div className="border border-terminal-red/50 bg-terminal-red/10 backdrop-blur-xl text-terminal-red p-4 my-4 rounded">
+            <div className="border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl text-neon p-4 my-4">
               {error}
             </div>
           ) : (
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="flex-1 max-w-4xl">
+                {/* Mobile: TAGS above post list */}
+                {filteredHashtags.length > 0 && (
+                  <div className="mb-8 pb-6 border-b border-neon/20 lg:hidden">
+                    <h3 className="text-text font-bold uppercase text-sm mb-4">Tags</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {filteredHashtags.map((tag) => {
+                        const count = allPosts.filter((p) => p.hashtags?.includes(tag)).length;
+                        return (
+                          <button
+                            key={tag}
+                            onClick={() => handleHashtagClick(tag)}
+                            className={`px-3 py-1 text-sm rounded-lg transition-colors font-medium cursor-pointer ${
+                              activeHashtags.includes(tag)
+                                ? 'bg-neon/20 text-neon border border-neon/50'
+                                : 'bg-text/10 text-text hover:text-neon hover:bg-neon/10'
+                            }`}
+                          >
+                            #{tag} {count}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-20">
                   {filteredPosts.map((post, index) => (
                     <PostItem
@@ -150,32 +175,6 @@ function CodexContent() {
                       >
                         Clear filters
                       </button>
-                    </div>
-                  )}
-                </div>
-
-                <div className="mt-16 pt-8 border-t border-terminal-dimmed/20 lg:hidden">
-                  {filteredHashtags.length > 0 && (
-                    <div>
-                      <h3 className="text-terminal-text font-bold uppercase text-sm mb-4">Tags</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {filteredHashtags.map((tag) => {
-                          const count = allPosts.filter((p) => p.hashtags?.includes(tag)).length;
-                          return (
-                            <button
-                              key={tag}
-                              onClick={() => handleHashtagClick(tag)}
-                              className={`px-3 py-1 text-sm rounded transition-colors font-medium cursor-pointer ${
-                                activeHashtags.includes(tag)
-                                  ? 'bg-terminal-green/20 text-terminal-green border border-terminal-green/50'
-                                  : 'bg-terminal-text/10 text-terminal-text hover:text-terminal-green hover:bg-terminal-green/10'
-                              }`}
-                            >
-                              #{tag} {count}
-                            </button>
-                          );
-                        })}
-                      </div>
                     </div>
                   )}
                 </div>
@@ -215,7 +214,7 @@ function CodexContent() {
 function PostItem({ post, formatDate, getGlowStyle, onHashtagClick }) {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredTag, setHoveredTag] = useState(null);
-  const typeColor = 'var(--color-terminal-green)';
+  const typeColor = 'var(--neon)';
 
   const handleTagClick = (e, tag) => {
     e.preventDefault();
@@ -232,7 +231,7 @@ function PostItem({ post, formatDate, getGlowStyle, onHashtagClick }) {
         onMouseLeave={() => setIsHovered(false)}
       >
         <h2
-          className="text-2xl font-bold mb-2 transition-all duration-200 text-terminal-green"
+          className="text-2xl font-bold mb-2 transition-all duration-200 text-neon"
           style={isHovered ? getGlowStyle() : {}}
         >
           {post.title}
@@ -249,10 +248,10 @@ function PostItem({ post, formatDate, getGlowStyle, onHashtagClick }) {
             {post.hashtags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 text-sm rounded font-medium transition-colors cursor-pointer"
+                className="px-3 py-1 text-sm rounded-lg font-medium transition-colors cursor-pointer"
                 style={{
                   backgroundColor: hoveredTag === tag ? `color-mix(in srgb, ${typeColor} 20%, transparent)` : `color-mix(in srgb, ${typeColor} 10%, transparent)`,
-                  color: hoveredTag === tag ? typeColor : 'var(--color-terminal-text)',
+                  color: hoveredTag === tag ? typeColor : 'var(--text)',
                   border: `1px solid color-mix(in srgb, ${typeColor} 30%, transparent)`,
                 }}
                 onMouseEnter={() => setHoveredTag(tag)}
@@ -275,9 +274,9 @@ export default function CodexPage() {
       fallback={
         <div className="min-h-screen relative">
           <BackgroundCanvas />
-          <div className="relative z-10 p-4">
+          <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16">
             <div className="max-w-4xl mx-auto mt-16">
-              <div className="text-terminal-green text-xl font-mono">Loading...</div>
+              <div className="text-neon text-xl font-mono">Loading...</div>
             </div>
           </div>
         </div>

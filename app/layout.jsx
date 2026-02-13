@@ -221,7 +221,7 @@ export default function RootLayout({ children }) {
           fetchPriority='high'
         />
       </head>
-      <body className='text-terminal-text'>
+      <body className='text-text'>
         {/* Skip to main content link for accessibility */}
         <a
           href='#main-content'

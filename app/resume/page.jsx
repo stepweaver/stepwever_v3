@@ -18,6 +18,8 @@ import {
   SiOpenai,
   SiGithub,
 } from 'react-icons/si';
+import { ModuleHeader } from '@/components/ui/ModuleHeader';
+import { HUDPanel } from '@/components/ui/HUDPanel';
 
 // Lazy load BackgroundCanvas - heavy canvas operations
 const BackgroundCanvas = dynamic(
@@ -131,167 +133,156 @@ export default function ResumePage() {
       <BackgroundCanvas />
 
       <div className='relative z-10 w-full'>
-        <section className='w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24'>
+        <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
           <div className='w-full max-w-7xl mx-auto'>
-            {/* Page Header */}
             <header className='mb-12 md:mb-16'>
-              <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6'>
-                <div>
-                  <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-terminal-green leading-tight mb-4'>
-                    Resume
-                  </h1>
-                  <div className='font-ocr text-base sm:text-lg text-terminal-text/80 max-w-3xl leading-relaxed'>
-                    <p>Full-Stack Developer | AI-Native Technologist | Business Analyst</p>
-                    <p>8+ years of experience bridging business and tech.</p>
-                  </div>
+              <div className='relative rounded-2xl border border-neon/20 bg-panel/70 p-6 md:p-8 shadow-neon-sm backdrop-blur overflow-hidden'>
+                <div className='pointer-events-none absolute left-3 top-3 h-2 w-8 border-l border-t border-neon/50' />
+                <div className='pointer-events-none absolute bottom-3 right-3 h-2 w-8 border-b border-r border-neon/50' />
+                <div className='flex flex-wrap items-center justify-between gap-2 mb-4'>
+                  <span className='doc-label-module'>DOCUMENT</span>
+                  <span className='doc-label-id'>ID: RESUME-2025</span>
                 </div>
-                <a
-                  href='/weaver_resume.pdf'
-                  download='weaver_resume.pdf'
-                  className='inline-flex items-center gap-2 px-6 py-3 cyber-border cyber-border-green bg-terminal-dark/30 backdrop-blur-xl text-terminal-green font-ibm hover:bg-terminal-green/10 transition-all duration-200 self-start'
-                >
-                  <Download className='w-5 h-5' />
-                  Download PDF
-                </a>
+                <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6'>
+                  <div>
+                    <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-neon leading-tight mb-4'>
+                      Resume
+                    </h1>
+                    <div className='font-ocr text-base sm:text-lg text-text/80 max-w-3xl leading-relaxed'>
+                      <p>Full-Stack Developer | AI-Native Technologist | Business Analyst</p>
+                      <p>8+ years of experience bridging business and tech.</p>
+                    </div>
+                  </div>
+                  <a
+                    href='/weaver_resume.pdf'
+                    download='weaver_resume.pdf'
+                    className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-lg bg-panel/50 backdrop-blur-xl text-neon font-ibm hover:bg-neon/10 transition-all duration-200 self-start'
+                  >
+                    <Download className='w-5 h-5' />
+                    Download PDF
+                  </a>
+                </div>
               </div>
             </header>
 
-            {/* Skills Section */}
-            <section className='mb-16 md:mb-24'>
-              <h2 className='font-ibm text-terminal-cyan text-2xl md:text-3xl lg:text-4xl mb-8'>
-                SKILLS & TECHNOLOGIES
-              </h2>
+            <section className='mb-16 md:mb-24' aria-labelledby='section-skills'>
+              <div className='mb-6'>
+                <ModuleHeader name='Skills & Technologies' />
+              </div>
 
               <div className='grid gap-8 md:grid-cols-2'>
-                {SKILLS.map((skillGroup) => (
-                  <div
+                {SKILLS.map((skillGroup, idx) => (
+                  <HUDPanel
                     key={skillGroup.category}
-                    className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-6'
+                    title={skillGroup.category}
+                    id={`RES-SK-${String(idx + 1).padStart(2, '0')}`}
+                    className='p-5'
                   >
-                    <h3 className='font-ibm text-terminal-green text-lg md:text-xl mb-4'>
-                      {skillGroup.category}
-                    </h3>
                     <div className='flex flex-wrap gap-3'>
                       {skillGroup.items.map((skill) => {
                         const Icon = skill.icon;
                         return (
                           <div
                             key={skill.name}
-                            className='flex items-center gap-2 px-3 py-2 bg-terminal-dark/50 border border-terminal-border/50 rounded'
+                            className='flex items-center gap-2 px-3 py-2 rounded-lg border border-neon/20 bg-panel/30'
                           >
                             <Icon
-                              className='w-4 h-4'
+                              className='w-4 h-4 shrink-0'
                               style={{ color: skill.color }}
                             />
-                            <span className='font-ocr text-sm text-terminal-text'>
+                            <span className='font-ocr text-sm text-text'>
                               {skill.name}
                             </span>
                           </div>
                         );
                       })}
                     </div>
-                  </div>
+                  </HUDPanel>
                 ))}
               </div>
             </section>
 
-            {/* Experience Section */}
-            <section className='mb-16 md:mb-24'>
-              <h2 className='font-ibm text-terminal-magenta text-2xl md:text-3xl lg:text-4xl mb-8'>
-                EXPERIENCE
-              </h2>
+            <section className='mb-16 md:mb-24' aria-labelledby='section-experience'>
+              <div className='mb-6'>
+                <ModuleHeader name='Experience' id='RES-EXP' />
+              </div>
 
               <div className='space-y-8'>
                 {EXPERIENCE.map((job, index) => (
-                  <article
+                  <HUDPanel
                     key={index}
-                    className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-6 md:p-8'
+                    title={job.title}
+                    id={`RES-EXP-${String(index + 1).padStart(2, '0')}`}
+                    className='p-6 md:p-8'
                   >
-                    <div className='flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4'>
-                      <div>
-                        <h3 className='font-ibm text-terminal-green text-xl md:text-2xl'>
-                          {job.title}
-                        </h3>
-                        <p className='font-ocr text-terminal-cyan text-base'>
-                          {job.company}
-                        </p>
-                      </div>
-                      <span className='font-ocr text-terminal-text/60 text-sm md:text-base'>
-                        {job.period}
-                      </span>
-                    </div>
-
-                    <p className='font-ocr text-terminal-text text-base leading-relaxed mb-4'>
+                    <p className='font-ocr text-accent text-base mb-2'>
+                      {job.company}
+                    </p>
+                    <span className='font-ocr text-text/60 text-sm md:text-base block mb-4'>
+                      {job.period}
+                    </span>
+                    <p className='font-ocr text-text text-base leading-relaxed mb-4'>
                       {job.description}
                     </p>
-
                     <ul className='space-y-2'>
                       {job.highlights.map((highlight, i) => (
                         <li
                           key={i}
-                          className='flex items-start font-ocr text-terminal-text/80 text-sm'
+                          className='flex items-start font-ocr text-text/80 text-sm'
                         >
-                          <span className='text-terminal-green mr-2'>→</span>
+                          <span className='text-neon mr-2'>→</span>
                           {highlight}
                         </li>
                       ))}
                     </ul>
-                  </article>
+                  </HUDPanel>
                 ))}
               </div>
             </section>
 
-            {/* Education & Certifications */}
-            <section className='mb-16 md:mb-24'>
-              <h2 className='font-ibm text-terminal-yellow text-2xl md:text-3xl lg:text-4xl mb-8'>
-                EDUCATION
-              </h2>
+            <section className='mb-16 md:mb-24' aria-labelledby='section-education'>
+              <div className='mb-6'>
+                <ModuleHeader name='Education' id='RES-EDU' />
+              </div>
 
               <div className='grid gap-6 md:grid-cols-3'>
-                <article className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-6'>
-                  <h3 className='font-ibm text-terminal-green text-lg mb-2'>
-                    Bachelor of Arts, Communication Studies
-                  </h3>
-                  <p className='font-ocr text-terminal-text text-base'>
-                    Grand Valley State University
-                  </p>
-                  <p className='font-ocr text-terminal-text/60 text-sm mt-2'>
-                    Allendale, MI
-                  </p>
-                </article>
-
-                <article className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-6'>
-                  <h3 className='font-ibm text-terminal-green text-lg mb-2'>
-                    Associate of Arts, Business Administration
-                  </h3>
-                  <p className='font-ocr text-terminal-text text-base'>
-                    Ivy Tech Community College
-                  </p>
-                  <p className='font-ocr text-terminal-text/60 text-sm mt-2'>
-                    South Bend, IN
-                  </p>
-                </article>
-
-                <article className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-6'>
-                  <h3 className='font-ibm text-terminal-green text-lg mb-2'>
-                    Certificate, Intensive Spanish Language Program
-                  </h3>
-                  <p className='font-ocr text-terminal-text text-base'>
-                    Defense Language Institute (DLI)
-                  </p>
-                  <p className='font-ocr text-terminal-text/60 text-sm mt-2'>
-                    Monterey, CA
-                  </p>
-                </article>
+                {[
+                  {
+                    id: 'RES-EDU-01',
+                    title: 'Bachelor of Arts, Communication Studies',
+                    institution: 'Grand Valley State University',
+                    location: 'Allendale, MI',
+                  },
+                  {
+                    id: 'RES-EDU-02',
+                    title: 'Associate of Arts, Business Administration',
+                    institution: 'Ivy Tech Community College',
+                    location: 'South Bend, IN',
+                  },
+                  {
+                    id: 'RES-EDU-03',
+                    title: 'Certificate, Intensive Spanish Language Program',
+                    institution: 'Defense Language Institute (DLI)',
+                    location: 'Monterey, CA',
+                  },
+                ].map((edu) => (
+                  <HUDPanel key={edu.id} title={edu.title} id={edu.id} className='p-5'>
+                    <p className='font-ocr text-text text-base'>
+                      {edu.institution}
+                    </p>
+                    <p className='font-ocr text-text/60 text-sm mt-2'>
+                      {edu.location}
+                    </p>
+                  </HUDPanel>
+                ))}
               </div>
             </section>
 
-            {/* CTA */}
-            <section className='pt-8 border-t border-terminal-border/30'>
+            <section className='pt-8 border-t border-neon/20' aria-label='Document actions'>
               <div className='flex flex-col sm:flex-row gap-4 items-start'>
                 <a
                   href='/contact'
-                  className='inline-flex items-center gap-2 px-6 py-3 cyber-border cyber-border-cyan bg-terminal-dark/30 backdrop-blur-xl text-terminal-cyan font-ibm hover:bg-terminal-cyan/10 transition-all duration-200'
+                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-lg bg-panel/50 backdrop-blur-xl text-neon font-ibm hover:bg-neon/10 transition-all duration-200'
                 >
                   Get in Touch
                 </a>
@@ -299,7 +290,7 @@ export default function ResumePage() {
                   href='https://github.com/stepweaver'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='inline-flex items-center gap-2 px-6 py-3 cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl text-terminal-text font-ibm hover:bg-terminal-green/10 hover:text-terminal-green hover:border-terminal-green transition-all duration-200'
+                  className='inline-flex items-center gap-2 px-6 py-3 border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl text-text font-ibm hover:bg-neon/10 hover:text-neon hover:border-neon transition-all duration-200'
                 >
                   <SiGithub className='w-5 h-5' />
                   View GitHub

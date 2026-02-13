@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useEffect, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import {
   SiReact,
   SiNextdotjs,
@@ -186,35 +186,30 @@ function Experience() {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
 
-  // Handle tab click - disable auto-rotation when user interacts
   const handleTabClick = (index) => {
     setCurrentCategory(index);
     setUserInteracted(true);
   };
 
   useEffect(() => {
-    // Only auto-rotate if user hasn't interacted
     if (!userInteracted) {
       const interval = setInterval(() => {
         setCurrentCategory((prev) => (prev + 1) % TECH_CATEGORIES.length);
       }, 3000);
-
       return () => clearInterval(interval);
     }
-  }, [TECH_CATEGORIES.length, userInteracted]);
+  }, [userInteracted]);
 
   return (
     <section className='relative z-30 py-20'>
-      <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none'>
-        {/* Section Header */}
-        <header className='mb-12 md:mb-16 ml-auto w-full max-w-6xl'>
-          <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight text-left font-ibm text-terminal-green'>
+      <div className='w-full px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)]'>
+        <header className='mb-12 md:mb-16 w-full max-w-6xl text-center md:text-right md:ml-auto'>
+          <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
             TECH I WORK WITH
           </h2>
 
-          {/* Experience Message */}
           <div className='mb-8 md:mb-12'>
-            <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight text-left font-ibm text-terminal-green'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight font-ibm text-terminal-green'>
               Modern tools, battle-tested solutions.
             </h3>
             <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
@@ -225,18 +220,16 @@ function Experience() {
           </div>
         </header>
 
-        {/* Tech Arsenal - Compact Rotating Layout */}
-        <div className='ml-auto w-full max-w-6xl'>
-          {/* Category Navigation - Improved Tab Design */}
-          <nav className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center'>
+        <div className='w-full max-w-6xl md:ml-auto'>
+          <nav className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center md:justify-end' aria-label="Tech categories">
             {TECH_CATEGORIES.map((category, index) => (
               <button
                 key={category.name}
                 onClick={() => handleTabClick(index)}
                 className={`px-2 md:px-3 py-1 md:py-2 font-ibm text-sm md:text-base font-bold uppercase tracking-wider border-2 transition-all duration-300 cursor-pointer rounded-lg shadow-lg hover:shadow-xl ${
                   currentCategory === index
-                    ? 'border-terminal-green text-terminal-green bg-terminal-green/10 shadow-terminal-green/20 hover:shadow-terminal-green/30 transform scale-105'
-                    : 'border-terminal-border text-terminal-muted hover:border-terminal-green hover:text-terminal-green hover:bg-terminal-green/5'
+                    ? 'border-neon text-neon bg-neon/10 shadow-neon/20 hover:shadow-neon/30 transform scale-105'
+                    : 'border-neon/30 text-text/80 hover:border-neon hover:text-neon hover:bg-neon/5'
                 }`}
                 style={{
                   textShadow:
@@ -250,57 +243,55 @@ function Experience() {
             ))}
           </nav>
 
-          {/* Current Category Display */}
-          <div className='mb-6 md:mb-8 text-center'>
-            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-terminal-green mb-4 md:mb-5 font-bold uppercase tracking-wider'>
+          {/* Current category header */}
+          <div className='mb-6 md:mb-8 text-center md:text-left'>
+            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-neon font-bold uppercase tracking-wider'>
               {TECH_CATEGORIES[currentCategory].name}
             </h3>
           </div>
 
-          {/* Tech Icons - Compact Grid */}
-          <div className='flex justify-center'>
-            <div className='flex flex-wrap justify-center gap-4 max-w-fit mx-auto'>
-              {TECH_CATEGORIES[currentCategory].technologies.map(
-                (tech, index) => {
-                  const IconComponent = tech.isComponent ? tech.icon : null;
-                  return (
-                    <div
-                      key={tech.name}
-                      className='group flex flex-col items-center justify-center p-3 border border-terminal-border rounded-lg bg-terminal-dark/30 backdrop-blur-xl transition-all duration-500 hover:border-terminal-green hover:bg-terminal-green/10 min-w-24 w-auto h-auto min-h-24 animate-[fadeIn_0.6s_ease-out_both] hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(0,255,65,0.15)] card-glow-tight'
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <div className='mb-1 flex items-center justify-center w-12 h-12'>
-                        {tech.isComponent ? (
-                          <IconComponent
-                            size={24}
-                            color={tech.color}
-                            className='transition-all duration-300 hover:scale-110'
-                          />
-                        ) : (
-                          <span className='text-2xl'>{tech.icon}</span>
-                        )}
-                      </div>
-                      <span className='font-ocr text-terminal-text group-hover:text-terminal-green group-hover:[text-shadow:0_0_5px_rgba(0,255,65,0.8),0_0_10px_rgba(0,255,65,0.4)] text-sm sm:text-base text-center leading-tight transition-all duration-300'>
-                        {tech.name}
-                      </span>
-                    </div>
-                  );
-                }
-              )}
-            </div>
+          {/* Tech cards — single row for current category */}
+          <div className='flex flex-wrap justify-center md:justify-end gap-4'>
+            {TECH_CATEGORIES[currentCategory].technologies.map((tech, index) => {
+              const IconComponent = tech.isComponent ? tech.icon : null;
+              return (
+                <div
+                  key={tech.name}
+                  className='group flex flex-col items-center justify-center p-3 border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl transition-all duration-500 hover:border-neon hover:bg-neon/10 min-w-24 w-auto h-auto min-h-24 hover:-translate-y-0.5 hover:shadow-neon-sm card-glow-tight'
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <div className='mb-1 flex items-center justify-center w-12 h-12'>
+                    {tech.isComponent ? (
+                      <IconComponent
+                        size={24}
+                        color={tech.color}
+                        className='transition-all duration-300 hover:scale-110'
+                      />
+                    ) : (
+                      <span className='text-2xl'>{tech.icon}</span>
+                    )}
+                  </div>
+                  <span className='font-ocr text-terminal-text group-hover:text-terminal-green text-sm sm:text-base text-center leading-tight transition-all duration-300'>
+                    {tech.name}
+                  </span>
+                </div>
+              );
+            })}
           </div>
 
-          {/* Category Indicators - Improved Design */}
-          <div className='flex justify-center mt-8 gap-3'>
+          <div className='flex justify-center md:justify-end mt-8 gap-3' role="tablist" aria-label="Category indicators">
             {TECH_CATEGORIES.map((_, index) => (
               <button
                 key={index}
                 onClick={() => handleTabClick(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
                   currentCategory === index
-                    ? 'bg-terminal-green shadow-lg shadow-terminal-green/50 scale-125'
-                    : 'bg-terminal-border hover:bg-terminal-muted hover:scale-110'
+                    ? 'bg-neon shadow-lg shadow-neon/50 scale-125'
+                    : 'bg-neon/30 hover:bg-neon/50 hover:scale-110'
                 }`}
+                aria-label={`Show ${TECH_CATEGORIES[index].name}`}
+                aria-selected={currentCategory === index}
+                role="tab"
               />
             ))}
           </div>

@@ -7,6 +7,7 @@ import styles from './BackgroundCanvas.module.css';
 
 export default function BackgroundCanvas() {
   const canvasRef = useRef(null);
+  const rainCanvasRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [originalImageData, setOriginalImageData] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -344,6 +345,69 @@ export default function BackgroundCanvas() {
     };
   }, [scrollProgress, originalImageData, hasError, neonColors, theme]);
 
+  // Rain effect: random raindrops (window-on-a-rainy-day), not repeated columns
+  useEffect(() => {
+    const rainCanvas = rainCanvasRef.current;
+    if (!rainCanvas || typeof window === 'undefined') return;
+
+    const ctx = rainCanvas.getContext('2d');
+    if (!ctx) return;
+
+    const setSize = () => {
+      rainCanvas.width = window.innerWidth;
+      rainCanvas.height = window.innerHeight;
+    };
+    setSize();
+    window.addEventListener('resize', setSize);
+
+    const count = Math.min(500, Math.floor((rainCanvas.width * rainCanvas.height) / 6000));
+    const drops = Array.from({ length: count }, () => ({
+      x: Math.random() * rainCanvas.width,
+      y: Math.random() * (rainCanvas.height + 200) - 200,
+      speed: 1.2 + Math.random() * 5,
+      length: 6 + Math.random() * 14,
+      thickness: 0.4 + Math.random() * 1.2,
+      drift: (Math.random() - 0.5) * 0.4,
+    }));
+    let animationId;
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(7, 10, 16, 0.035)';
+      ctx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
+
+      const isLight = theme === 'light' || theme === 'monochrome-inverted';
+      const r = 90, g = 255, b = 140;
+      const alpha = isLight ? 0.06 : 0.1;
+
+      for (let i = 0; i < drops.length; i++) {
+        const d = drops[i];
+        d.y += d.speed;
+        d.x += d.drift;
+        if (d.x < 0) d.x += rainCanvas.width;
+        if (d.x > rainCanvas.width) d.x -= rainCanvas.width;
+        if (d.y > rainCanvas.height + d.length) {
+          d.y = -d.length - Math.random() * rainCanvas.height * 0.5;
+          d.x = Math.random() * rainCanvas.width;
+          d.speed = 1.2 + Math.random() * 5;
+          d.drift = (Math.random() - 0.5) * 0.4;
+        }
+        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.lineWidth = d.thickness;
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y - d.length);
+        ctx.lineTo(d.x, d.y);
+        ctx.stroke();
+      }
+      animationId = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', setSize);
+    };
+  }, [theme]);
+
   // Don't render if there's an error
   if (hasError) {
     return null;
@@ -351,6 +415,16 @@ export default function BackgroundCanvas() {
 
   return (
     <>
+      {/* Rain effect layer (behind main canvas) */}
+      <div className="fixed inset-0 z-[9] pointer-events-none" aria-hidden>
+        <canvas
+          ref={rainCanvasRef}
+          className="w-full h-full"
+          style={{
+            opacity: theme === 'light' || theme === 'monochrome-inverted' ? 0.2 : 0.4,
+          }}
+        />
+      </div>
       {/* Fixed background canvas */}
       <div className='fixed inset-0 z-10 flex items-center justify-start'>
         <canvas

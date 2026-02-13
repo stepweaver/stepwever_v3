@@ -58,9 +58,9 @@ export default function Navbar() {
             aria-label='Go to homepage'
             aria-describedby='logo-description'
           >
-            <span className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
+            <span className='text-neon font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
               <GlitchLambda
-                className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'
+                className='text-neon font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'
                 size='large'
                 aria-hidden='true'
               />
@@ -85,7 +85,7 @@ export default function Navbar() {
                   window.location.href = '/#about';
                 }
               }}
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='About section'
             >
@@ -93,7 +93,7 @@ export default function Navbar() {
             </button>
             <Link
               href='/resume'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='Resume page'
             >
@@ -101,7 +101,7 @@ export default function Navbar() {
             </Link>
             <Link
               href='/codex'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='View blog'
             >
@@ -109,7 +109,7 @@ export default function Navbar() {
             </Link>
             <Link
               href='/terminal'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='Interactive terminal'
             >
@@ -117,7 +117,7 @@ export default function Navbar() {
             </Link>
             <Link
               href='/contact'
-              className='text-terminal-text hover:text-terminal-green transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
               aria-label='Contact page'
             >

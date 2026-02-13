@@ -45,12 +45,12 @@ export default function ProjectPage({ params }) {
         <BackgroundCanvas />
 
         <main className='relative z-30 min-h-screen pt-20 pb-12'>
-          <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-6xl'>
+          <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 max-w-6xl'>
             {/* Back Navigation */}
             <div className='mb-8'>
               <Link
                 href='/'
-                className='inline-flex items-center text-terminal-cyan font-ocr text-sm hover:text-terminal-green transition-colors duration-200'
+                className='inline-flex items-center text-neon font-ocr text-sm hover:text-accent transition-colors duration-200'
               >
                 <ArrowLeft className='w-4 h-4 mr-2' />
                 Back to Home
@@ -62,27 +62,27 @@ export default function ProjectPage({ params }) {
               <div className='mb-6'>
                 {project.isAgencySubcontract ? (
                   <div className='mb-4'>
-                    <span className='text-sm md:text-base font-ocr text-terminal-cyan uppercase tracking-wider'>
+                    <span className='text-sm md:text-base font-ocr text-neon uppercase tracking-wider'>
                       Agency Subcontract Project
                     </span>
-                    <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-terminal-green'>
+                    <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-neon'>
                       {project.title}
                     </h1>
                   </div>
                 ) : (
-                  <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-terminal-green'>
+                  <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-neon'>
                     {project.title}
                   </h1>
                 )}
               </div>
 
-              <p className='text-lg md:text-xl font-ocr text-terminal-text max-w-4xl leading-relaxed mb-8'>
+              <p className='text-lg md:text-xl font-ocr text-text max-w-4xl leading-relaxed mb-8'>
                 {project.description}
               </p>
 
               {/* Project Image - 16:9 aspect ratio */}
               {project.imageUrl && (
-                <div className='mb-8 cyber-border-lg cyber-border-border overflow-hidden aspect-video card-glow'>
+                <div className='mb-8 border border-neon/20 rounded-lg overflow-hidden aspect-video card-glow'>
                   <OptimizedImage
                     src={project.imageUrl}
                     alt={project.title}
@@ -100,7 +100,7 @@ export default function ProjectPage({ params }) {
                     href={project.link}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='inline-flex items-center px-6 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 cyber-border-sm cyber-border-green text-terminal-green font-ocr transition-colors duration-200'
+                    className='inline-flex items-center px-6 py-3 bg-neon/20 hover:bg-neon/30 border-2 border-neon rounded-lg text-neon font-ocr transition-colors duration-200'
                   >
                     <ExternalLink className='w-5 h-5 mr-2' />
                     View Live Project
@@ -114,7 +114,7 @@ export default function ProjectPage({ params }) {
                   {project.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className='px-3 py-1 bg-terminal-light/20 text-terminal-cyan font-ocr text-sm cyber-border-sm cyber-border-border'
+                      className='px-3 py-1 bg-panel/50 text-neon font-ocr text-sm border border-neon/20 rounded-lg'
                     >
                       {tag}
                     </span>
@@ -126,11 +126,11 @@ export default function ProjectPage({ params }) {
             {/* The Problem Section */}
             {project.problem && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   The Problem
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <p className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                <div className='h-0.5 bg-neon mb-8'></div>
+                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
                   {project.problem}
                 </p>
               </section>
@@ -139,11 +139,11 @@ export default function ProjectPage({ params }) {
             {/* My Role Section */}
             {project.role && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   My Role
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <p className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                <div className='h-0.5 bg-neon mb-8'></div>
+                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
                   {project.role}
                 </p>
               </section>
@@ -152,12 +152,12 @@ export default function ProjectPage({ params }) {
             {/* The Solution Section */}
             {(project.solution || project.features) && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   The Solution
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 {project.solution && (
-                  <p className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed mb-6'>
+                  <p className='font-ocr text-text text-base md:text-lg leading-relaxed mb-6'>
                     {project.solution}
                   </p>
                 )}
@@ -165,8 +165,8 @@ export default function ProjectPage({ params }) {
                   <ul className='space-y-4'>
                     {project.features.map((feature, index) => (
                       <li key={index} className='flex items-start'>
-                        <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-terminal-text text-base md:text-lg leading-relaxed'>
+                        <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-text text-base md:text-lg leading-relaxed'>
                           {feature}
                         </span>
                       </li>
@@ -179,17 +179,17 @@ export default function ProjectPage({ params }) {
             {/* The Tech Section */}
             {project.techStack && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   The Tech
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 {project.projectStructure && (
                   <div className='mb-8'>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Architecture
                     </h3>
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
-                      <pre className='font-mono text-terminal-text text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap'>
+                    <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
+                      <pre className='font-mono text-text text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap'>
                         {project.projectStructure}
                       </pre>
                     </div>
@@ -197,10 +197,10 @@ export default function ProjectPage({ params }) {
                 )}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                   {project.techStack.frontend && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Code className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Frontend
                         </h3>
                       </div>
@@ -208,7 +208,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.frontend.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -217,10 +217,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.backend && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Server className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Server className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Backend & CMS
                         </h3>
                       </div>
@@ -228,7 +228,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.backend.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -237,10 +237,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.payment && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <CreditCard className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <CreditCard className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Payment & E-commerce
                         </h3>
                       </div>
@@ -248,7 +248,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.payment.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -257,10 +257,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.development && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Zap className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Zap className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Development Tools
                         </h3>
                       </div>
@@ -268,7 +268,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.development.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -277,10 +277,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.consulting && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Server className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Server className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Consulting Services
                         </h3>
                       </div>
@@ -288,7 +288,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.consulting.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -297,10 +297,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.automation && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Zap className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Zap className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Automation Tools
                         </h3>
                       </div>
@@ -308,7 +308,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.automation.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -317,10 +317,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.ai && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Code className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           AI & Machine Learning
                         </h3>
                       </div>
@@ -328,7 +328,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.ai.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -337,10 +337,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.analytics && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Code className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Analytics Tools
                         </h3>
                       </div>
@@ -348,7 +348,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.analytics.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -357,10 +357,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.contentManagement && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Server className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Server className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Content Management
                         </h3>
                       </div>
@@ -369,7 +369,7 @@ export default function ProjectPage({ params }) {
                           (tech, index) => (
                             <li
                               key={index}
-                              className='font-ocr text-terminal-text text-sm'
+                              className='font-ocr text-text text-sm'
                             >
                               • {tech}
                             </li>
@@ -379,10 +379,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.contentAggregation && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Code className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Content Aggregation
                         </h3>
                       </div>
@@ -391,7 +391,7 @@ export default function ProjectPage({ params }) {
                           (tech, index) => (
                             <li
                               key={index}
-                              className='font-ocr text-terminal-text text-sm'
+                              className='font-ocr text-text text-sm'
                             >
                               • {tech}
                             </li>
@@ -401,10 +401,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.utilities && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Code className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Utilities
                         </h3>
                       </div>
@@ -412,7 +412,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.utilities.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -421,10 +421,10 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.techStack.design && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Palette className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Palette className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Design
                         </h3>
                       </div>
@@ -432,7 +432,7 @@ export default function ProjectPage({ params }) {
                         {project.techStack.design.map((tech, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {tech}
                           </li>
@@ -447,15 +447,15 @@ export default function ProjectPage({ params }) {
             {/* The Outcome Section */}
             {project.outcome && project.outcome.length > 0 && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   The Outcome
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 <ul className='space-y-3'>
                   {project.outcome.map((item, index) => (
                     <li key={index} className='flex items-start'>
-                      <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                      <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-text text-base leading-relaxed'>
                         {item}
                       </span>
                     </li>
@@ -466,16 +466,16 @@ export default function ProjectPage({ params }) {
 
             {DemoComponent && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   Live Neon Profile Card Demo
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
                   <div className='flex justify-center'>
                     <DemoComponent />
                   </div>
-                  <div className='space-y-6 cyber-border-lg cyber-border-border bg-terminal-light/20 p-6 card-glow'>
-                    <p className='font-ocr text-terminal-text text-base leading-relaxed'>
+                  <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
+                    <p className='font-ocr text-text text-base leading-relaxed'>
                       This component brings the NETRUNNER challenge card into
                       our CRT palette. Built as a React component with
                       client-side state management for the automated Matrix Sync
@@ -486,15 +486,15 @@ export default function ProjectPage({ params }) {
                       <ul className='space-y-3'>
                         {project.demoHighlights.map((highlight, index) => (
                           <li key={index} className='flex items-start'>
-                            <CheckCircle className='mr-3 mt-0.5 h-5 w-5 text-terminal-green' />
-                            <span className='font-ocr text-terminal-text text-sm leading-relaxed'>
+                            <CheckCircle className='mr-3 mt-0.5 h-5 w-5 text-neon' />
+                            <span className='font-ocr text-text text-sm leading-relaxed'>
                               {highlight}
                             </span>
                           </li>
                         ))}
                       </ul>
                     )}
-                    <p className='text-sm font-ocr text-terminal-muted'>
+                    <p className='text-sm font-ocr text-text/70'>
                       Inspired by the Neon Profile Card brief from Codenhack,
                       adapted to reuse our IBM headers, OCR body copy, and
                       BackgroundCanvas lighting.
@@ -507,15 +507,15 @@ export default function ProjectPage({ params }) {
             {/* Content Management */}
             {project.contentManagement && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   {project.contentManagement.notionIntegration
                     ? 'Content Management with Notion'
                     : 'Content Management with Sanity'}
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 {project.contentManagement.notionIntegration && (
                   <div className='mb-8'>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Notion Integration
                     </h3>
                     <ul className='space-y-2 ml-6'>
@@ -523,7 +523,7 @@ export default function ProjectPage({ params }) {
                         (feature, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {feature}
                           </li>
@@ -534,10 +534,10 @@ export default function ProjectPage({ params }) {
                 )}
                 {project.contentManagement.productSchema && (
                   <div className='mb-8'>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Product Schema
                     </h3>
-                    <p className='font-ocr text-terminal-text mb-4'>
+                    <p className='font-ocr text-text mb-4'>
                       The project includes a comprehensive product schema with
                       the following fields:
                     </p>
@@ -546,7 +546,7 @@ export default function ProjectPage({ params }) {
                         (field, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {field}
                           </li>
@@ -557,16 +557,16 @@ export default function ProjectPage({ params }) {
                 )}
                 {project.contentManagement.contentTypes && (
                   <div className='mb-8'>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Content Types
                     </h3>
                     {project.contentManagement.contentTypes.map(
                       (type, index) => (
                         <div
                           key={index}
-                          className='mb-6 bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'
+                          className='mb-6 bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
                         >
-                          <h4 className='font-ibm text-terminal-green mb-3'>
+                          <h4 className='font-ibm text-neon mb-3'>
                             {type.name}
                           </h4>
                           {type.features ? (
@@ -574,14 +574,14 @@ export default function ProjectPage({ params }) {
                               {type.features.map((feature, featIndex) => (
                                 <li
                                   key={featIndex}
-                                  className='font-ocr text-terminal-text text-sm'
+                                  className='font-ocr text-text text-sm'
                                 >
                                   • {feature}
                                 </li>
                               ))}
                             </ul>
                           ) : (
-                            <p className='font-ocr text-terminal-text text-sm'>
+                            <p className='font-ocr text-text text-sm'>
                               {type.description}
                             </p>
                           )}
@@ -592,7 +592,7 @@ export default function ProjectPage({ params }) {
                 )}
                 {project.contentManagement.studioFeatures && (
                   <div>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Sanity Studio Features
                     </h3>
                     <ul className='space-y-2 ml-6'>
@@ -600,7 +600,7 @@ export default function ProjectPage({ params }) {
                         (feature, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {feature}
                           </li>
@@ -615,14 +615,14 @@ export default function ProjectPage({ params }) {
             {/* E-commerce Features */}
             {project.ecommerceFeatures && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   E-commerce Features
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                   {project.ecommerceFeatures.shoppingCart && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
-                      <h3 className='text-lg font-ibm text-terminal-green mb-4'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
+                      <h3 className='text-lg font-ibm text-neon mb-4'>
                         Shopping Cart
                       </h3>
                       <ul className='space-y-2'>
@@ -630,7 +630,7 @@ export default function ProjectPage({ params }) {
                           (feature, index) => (
                             <li
                               key={index}
-                              className='font-ocr text-terminal-text text-sm'
+                              className='font-ocr text-text text-sm'
                             >
                               • {feature}
                             </li>
@@ -640,8 +640,8 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.ecommerceFeatures.checkout && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
-                      <h3 className='text-lg font-ibm text-terminal-green mb-4'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
+                      <h3 className='text-lg font-ibm text-neon mb-4'>
                         Checkout Process
                       </h3>
                       <ul className='space-y-2'>
@@ -649,7 +649,7 @@ export default function ProjectPage({ params }) {
                           (feature, index) => (
                             <li
                               key={index}
-                              className='font-ocr text-terminal-text text-sm'
+                              className='font-ocr text-text text-sm'
                             >
                               • {feature}
                             </li>
@@ -659,8 +659,8 @@ export default function ProjectPage({ params }) {
                     </div>
                   )}
                   {project.ecommerceFeatures.productManagement && (
-                    <div className='bg-terminal-light/20 p-6 cyber-border cyber-border-border card-glow'>
-                      <h3 className='text-lg font-ibm text-terminal-green mb-4'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
+                      <h3 className='text-lg font-ibm text-neon mb-4'>
                         Product Management
                       </h3>
                       <ul className='space-y-2'>
@@ -668,7 +668,7 @@ export default function ProjectPage({ params }) {
                           (feature, index) => (
                             <li
                               key={index}
-                              className='font-ocr text-terminal-text text-sm'
+                              className='font-ocr text-text text-sm'
                             >
                               • {feature}
                             </li>
@@ -684,16 +684,16 @@ export default function ProjectPage({ params }) {
             {/* Design System */}
             {project.designSystem && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   Design System
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 {project.designSystem.components ? (
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Palette className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Palette className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Components
                         </h3>
                       </div>
@@ -702,7 +702,7 @@ export default function ProjectPage({ params }) {
                           (component, index) => (
                             <li
                               key={index}
-                              className='font-ocr text-terminal-text text-sm'
+                              className='font-ocr text-text text-sm'
                             >
                               • {component}
                             </li>
@@ -710,10 +710,10 @@ export default function ProjectPage({ params }) {
                         )}
                       </ul>
                     </div>
-                    <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                    <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
                       <div className='flex items-center mb-4'>
-                        <Palette className='w-6 h-6 text-terminal-green mr-3' />
-                        <h3 className='text-xl font-ibm text-terminal-green'>
+                        <Palette className='w-6 h-6 text-neon mr-3' />
+                        <h3 className='text-xl font-ibm text-neon'>
                           Styling
                         </h3>
                       </div>
@@ -721,7 +721,7 @@ export default function ProjectPage({ params }) {
                         {project.designSystem.styling.map((style, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {style}
                           </li>
@@ -732,10 +732,10 @@ export default function ProjectPage({ params }) {
                 ) : (
                   <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                     {project.designSystem.typography && (
-                      <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                      <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
                         <div className='flex items-center mb-4'>
-                          <Palette className='w-6 h-6 text-terminal-green mr-3' />
-                          <h3 className='text-xl font-ibm text-terminal-green'>
+                          <Palette className='w-6 h-6 text-neon mr-3' />
+                          <h3 className='text-xl font-ibm text-neon'>
                             Typography
                           </h3>
                         </div>
@@ -744,7 +744,7 @@ export default function ProjectPage({ params }) {
                             (item, index) => (
                               <li
                                 key={index}
-                                className='font-ocr text-terminal-text text-sm'
+                                className='font-ocr text-text text-sm'
                               >
                                 • {item}
                               </li>
@@ -754,10 +754,10 @@ export default function ProjectPage({ params }) {
                       </div>
                     )}
                     {project.designSystem.colors && (
-                      <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                      <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
                         <div className='flex items-center mb-4'>
-                          <Palette className='w-6 h-6 text-terminal-green mr-3' />
-                          <h3 className='text-xl font-ibm text-terminal-green'>
+                          <Palette className='w-6 h-6 text-neon mr-3' />
+                          <h3 className='text-xl font-ibm text-neon'>
                             Colors
                           </h3>
                         </div>
@@ -765,7 +765,7 @@ export default function ProjectPage({ params }) {
                           {project.designSystem.colors.map((item, index) => (
                             <li
                               key={index}
-                              className='font-ocr text-terminal-text text-sm'
+                              className='font-ocr text-text text-sm'
                             >
                               • {item}
                             </li>
@@ -774,10 +774,10 @@ export default function ProjectPage({ params }) {
                       </div>
                     )}
                     {project.designSystem.symbols && (
-                      <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
+                      <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
                         <div className='flex items-center mb-4'>
-                          <Palette className='w-6 h-6 text-terminal-green mr-3' />
-                          <h3 className='text-xl font-ibm text-terminal-green'>
+                          <Palette className='w-6 h-6 text-neon mr-3' />
+                          <h3 className='text-xl font-ibm text-neon'>
                             Symbols
                           </h3>
                         </div>
@@ -785,7 +785,7 @@ export default function ProjectPage({ params }) {
                           {project.designSystem.symbols.map((item, index) => (
                             <li
                               key={index}
-                              className='font-ocr text-terminal-text text-sm'
+                              className='font-ocr text-text text-sm'
                             >
                               • {item}
                             </li>
@@ -801,15 +801,15 @@ export default function ProjectPage({ params }) {
             {/* API Routes */}
             {project.apiRoutes && project.apiRoutes.length > 0 && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   API Routes
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 <ul className='space-y-3'>
                   {project.apiRoutes.map((route, index) => (
                     <li key={index} className='flex items-start'>
-                      <Code className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                      <Code className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-text text-base leading-relaxed'>
                         {route}
                       </span>
                     </li>
@@ -821,15 +821,15 @@ export default function ProjectPage({ params }) {
             {/* Performance */}
             {project.performance && project.performance.length > 0 && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   Performance
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 <ul className='space-y-3'>
                   {project.performance.map((item, index) => (
                     <li key={index} className='flex items-start'>
-                      <Zap className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                      <Zap className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-text text-base leading-relaxed'>
                         {item}
                       </span>
                     </li>
@@ -841,18 +841,18 @@ export default function ProjectPage({ params }) {
             {/* YouTube Integration */}
             {project.youtubeIntegration && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   YouTube Integration
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 {project.youtubeIntegration.description && (
-                  <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
+                  <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
                     {project.youtubeIntegration.description}
                   </p>
                 )}
                 {project.youtubeIntegration.features && (
                   <div className='mb-6'>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Features
                     </h3>
                     <ul className='space-y-2 ml-6'>
@@ -860,7 +860,7 @@ export default function ProjectPage({ params }) {
                         (feature, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             • {feature}
                           </li>
@@ -871,7 +871,7 @@ export default function ProjectPage({ params }) {
                 )}
                 {project.youtubeIntegration.workflow && (
                   <div className='mb-6'>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Workflow
                     </h3>
                     <ul className='space-y-2 ml-6'>
@@ -879,7 +879,7 @@ export default function ProjectPage({ params }) {
                         (step, index) => (
                           <li
                             key={index}
-                            className='font-ocr text-terminal-text text-sm'
+                            className='font-ocr text-text text-sm'
                           >
                             {step}
                           </li>
@@ -896,16 +896,16 @@ export default function ProjectPage({ params }) {
             (project.securityFeatures &&
               project.securityFeatures.length > 0) ? (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   Security
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 <ul className='space-y-3'>
                   {project.security &&
                     project.security.map((item, index) => (
                       <li key={index} className='flex items-start'>
-                        <Shield className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        <Shield className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-text text-base leading-relaxed'>
                           {item}
                         </span>
                       </li>
@@ -916,8 +916,8 @@ export default function ProjectPage({ params }) {
                         key={`security-${index}`}
                         className='flex items-start'
                       >
-                        <Shield className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        <Shield className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-text text-base leading-relaxed'>
                           {item}
                         </span>
                       </li>
@@ -929,23 +929,23 @@ export default function ProjectPage({ params }) {
             {/* Terminal Integration */}
             {project.terminalIntegration && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   Terminal Integration
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
+                <div className='h-0.5 bg-neon mb-8'></div>
+                <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
                   {project.terminalIntegration.description}
                 </p>
                 {project.terminalIntegration.usage && (
                   <div className='mb-6'>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Usage
                     </h3>
                     <ul className='space-y-2 ml-6'>
                       {project.terminalIntegration.usage.map((usage, index) => (
                         <li
                           key={index}
-                          className='font-ocr text-terminal-text text-sm'
+                          className='font-ocr text-text text-sm'
                         >
                           • {usage}
                         </li>
@@ -954,8 +954,8 @@ export default function ProjectPage({ params }) {
                   </div>
                 )}
                 {project.terminalIntegration.example && (
-                  <div className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'>
-                    <pre className='font-mono text-terminal-green text-sm overflow-x-auto whitespace-pre-wrap'>
+                  <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
+                    <pre className='font-mono text-neon text-sm overflow-x-auto whitespace-pre-wrap'>
                       {project.terminalIntegration.example}
                     </pre>
                   </div>
@@ -967,15 +967,15 @@ export default function ProjectPage({ params }) {
             {project.keyboardShortcuts &&
               project.keyboardShortcuts.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                     Keyboard Shortcuts
                   </h2>
-                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <div className='h-0.5 bg-neon mb-8'></div>
                   <ul className='space-y-3'>
                     {project.keyboardShortcuts.map((shortcut, index) => (
                       <li key={index} className='flex items-start'>
-                        <Code className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        <Code className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-text text-base leading-relaxed'>
                           {shortcut}
                         </span>
                       </li>
@@ -987,18 +987,18 @@ export default function ProjectPage({ params }) {
             {/* Dice Notation */}
             {project.diceNotation && project.diceNotation.length > 0 && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   Dice Notation
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
+                <div className='h-0.5 bg-neon mb-8'></div>
+                <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
                   The dice roller uses standard RPG dice notation:
                 </p>
                 <ul className='space-y-3'>
                   {project.diceNotation.map((notation, index) => (
                     <li key={index} className='flex items-start'>
-                      <Code className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                      <span className='font-mono text-terminal-text text-base leading-relaxed'>
+                      <Code className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                      <span className='font-mono text-text text-base leading-relaxed'>
                         {notation}
                       </span>
                     </li>
@@ -1010,15 +1010,15 @@ export default function ProjectPage({ params }) {
             {/* Planned Features */}
             {project.plannedFeatures && project.plannedFeatures.length > 0 && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   Planned Features
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
+                <div className='h-0.5 bg-neon mb-8'></div>
                 <ul className='space-y-3'>
                   {project.plannedFeatures.map((feature, index) => (
                     <li key={index} className='flex items-start'>
-                      <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                      <Zap className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                      <span className='font-ocr text-text text-base leading-relaxed'>
                         {feature}
                       </span>
                     </li>
@@ -1030,23 +1030,23 @@ export default function ProjectPage({ params }) {
             {/* Demo Forms */}
             {project.demoForms && project.demoForms.length > 0 && (
               <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                   Demo Forms
                 </h2>
-                <div className='h-0.5 bg-terminal-green mb-8'></div>
-                <p className='font-ocr text-terminal-text text-base md:text-lg mb-6 leading-relaxed'>
+                <div className='h-0.5 bg-neon mb-8'></div>
+                <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
                   The website includes three fully functional demo forms:
                 </p>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
                   {project.demoForms.map((form, index) => (
                     <div
                       key={index}
-                      className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'
+                      className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
                     >
-                      <h3 className='text-lg font-ibm text-terminal-green mb-2'>
+                      <h3 className='text-lg font-ibm text-neon mb-2'>
                         {form.name}
                       </h3>
-                      <p className='font-ocr text-terminal-text text-sm'>
+                      <p className='font-ocr text-text text-sm'>
                         {form.description}
                       </p>
                     </div>
@@ -1054,14 +1054,14 @@ export default function ProjectPage({ params }) {
                 </div>
                 {project.formFeatures && project.formFeatures.length > 0 && (
                   <div>
-                    <h3 className='text-xl font-ibm text-terminal-green mb-4'>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>
                       Each form:
                     </h3>
                     <ul className='space-y-2 ml-6'>
                       {project.formFeatures.map((feature, index) => (
                         <li key={index} className='flex items-start'>
-                          <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                          <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                          <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                          <span className='font-ocr text-text text-base leading-relaxed'>
                             {feature}
                           </span>
                         </li>
@@ -1077,15 +1077,15 @@ export default function ProjectPage({ params }) {
               project.benefits &&
               project.benefits.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                     Benefits
                   </h2>
-                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <div className='h-0.5 bg-neon mb-8'></div>
                   <ul className='space-y-3'>
                     {project.benefits.map((benefit, index) => (
                       <li key={index} className='flex items-start'>
-                        <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-text text-base leading-relaxed'>
                           {benefit}
                         </span>
                       </li>
@@ -1099,22 +1099,22 @@ export default function ProjectPage({ params }) {
               project.process &&
               project.process.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                     Process
                   </h2>
-                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <div className='h-0.5 bg-neon mb-8'></div>
                   <div className='space-y-4'>
                     {project.process.map((step, index) => (
                       <div
                         key={index}
-                        className='bg-terminal-light/20 p-6 rounded-xl border border-terminal-border card-glow'
+                        className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
                       >
                         <div className='flex items-start gap-4'>
-                          <div className='flex-shrink-0 w-8 h-8 bg-terminal-green text-terminal-dark font-ibm font-bold rounded-full flex items-center justify-center'>
+                          <div className='flex-shrink-0 w-8 h-8 bg-neon text-background font-ibm font-bold rounded-full flex items-center justify-center'>
                             {index + 1}
                           </div>
                           <div className='flex-1'>
-                            <p className='font-ocr text-terminal-text text-base leading-relaxed'>
+                            <p className='font-ocr text-text text-base leading-relaxed'>
                               {step}
                             </p>
                           </div>
@@ -1130,15 +1130,15 @@ export default function ProjectPage({ params }) {
               project.commonUseCases &&
               project.commonUseCases.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                     Common Use Cases
                   </h2>
-                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <div className='h-0.5 bg-neon mb-8'></div>
                   <ul className='space-y-3'>
                     {project.commonUseCases.map((useCase, index) => (
                       <li key={index} className='flex items-start'>
-                        <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        <Zap className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-text text-base leading-relaxed'>
                           {useCase}
                         </span>
                       </li>
@@ -1152,15 +1152,15 @@ export default function ProjectPage({ params }) {
               project.useCases &&
               project.useCases.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                     Use Cases
                   </h2>
-                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <div className='h-0.5 bg-neon mb-8'></div>
                   <ul className='space-y-3'>
                     {project.useCases.map((useCase, index) => (
                       <li key={index} className='flex items-start'>
-                        <Zap className='w-5 h-5 text-terminal-yellow shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        <Zap className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-text text-base leading-relaxed'>
                           {useCase}
                         </span>
                       </li>
@@ -1174,15 +1174,15 @@ export default function ProjectPage({ params }) {
               project.services &&
               project.services.length > 0 && (
                 <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-terminal-green mb-6'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
                     Services Included
                   </h2>
-                  <div className='h-0.5 bg-terminal-green mb-8'></div>
+                  <div className='h-0.5 bg-neon mb-8'></div>
                   <ul className='space-y-3'>
                     {project.services.map((service, index) => (
                       <li key={index} className='flex items-start'>
-                        <CheckCircle className='w-5 h-5 text-terminal-green shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-terminal-text text-base leading-relaxed'>
+                        <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
+                        <span className='font-ocr text-text text-base leading-relaxed'>
                           {service}
                         </span>
                       </li>
@@ -1192,17 +1192,17 @@ export default function ProjectPage({ params }) {
               )}
 
             {/* CTA Section */}
-            <section className='text-center bg-terminal-light/10 p-8 md:p-12 rounded-xl'>
-              <h2 className='text-2xl md:text-3xl font-ibm text-terminal-green mb-4'>
+            <section className='text-center bg-panel/30 p-8 md:p-12 rounded-xl'>
+              <h2 className='text-2xl md:text-3xl font-ibm text-neon mb-4'>
                 Like what you see?
               </h2>
-              <p className='font-ocr text-terminal-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
+              <p className='font-ocr text-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
                 Feel free to reach out if you have questions about this project
                 or want to chat about working together.
               </p>
               <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
                 <Link href='/contact'>
-                  <button className='px-8 py-3 bg-terminal-green/20 hover:bg-terminal-green/30 cyber-border-sm cyber-border-green text-terminal-green font-ocr transition-colors duration-200 cursor-pointer'>
+                  <button className='px-8 py-3 bg-neon/20 hover:bg-neon/30 border-2 border-neon rounded-lg text-neon font-ocr transition-colors duration-200 cursor-pointer'>
                     Get in Touch
                   </button>
                 </Link>

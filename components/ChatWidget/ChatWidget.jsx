@@ -145,7 +145,7 @@ export default function ChatWidget() {
                   <span className='w-2.5 h-2.5 rounded-full bg-terminal-green' />
                 </div>
                 <span className='font-ocr text-base text-terminal-green ml-2'>
-                  AI Chat
+                  λlambda
                 </span>
                 {hasNewMessage && isMinimized && (
                   <span className='w-2 h-2 rounded-full bg-terminal-cyan animate-pulse' />

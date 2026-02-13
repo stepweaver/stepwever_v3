@@ -98,11 +98,11 @@ export default function BookShowerPage() {
   if (loading) {
     return (
       <div
-        className='fixed inset-0 w-full h-full flex items-center justify-center bg-terminal-dark'
+        className='fixed inset-0 w-full h-full flex items-center justify-center bg-background'
         style={{ zIndex: 9999 }}
       >
         <div className='text-center'>
-          <p className='text-terminal-text font-ocr text-lg'>Loading...</p>
+          <p className='text-text font-ocr text-lg'>Loading...</p>
         </div>
       </div>
     );
@@ -112,11 +112,11 @@ export default function BookShowerPage() {
     // If there's an error and we defaulted to disabled, show error
     return (
       <div
-        className='fixed inset-0 w-full h-full flex items-center justify-center bg-terminal-dark'
+        className='fixed inset-0 w-full h-full flex items-center justify-center bg-background'
         style={{ zIndex: 9999 }}
       >
-        <div className='text-center max-w-md mx-auto p-8 border border-terminal-red bg-terminal-dark/30 backdrop-blur-xl'>
-          <p className='text-terminal-red font-ocr text-base'>
+        <div className='text-center max-w-md mx-auto p-8 border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl'>
+          <p className='text-neon font-ocr text-base'>
             [ERROR] Error loading booking system: {error}
           </p>
         </div>
@@ -127,11 +127,11 @@ export default function BookShowerPage() {
   if (!bookingEnabled) {
     return (
       <div
-        className='fixed inset-0 w-full h-full flex items-center justify-center bg-terminal-dark'
+        className='fixed inset-0 w-full h-full flex items-center justify-center bg-background'
         style={{ zIndex: 9999 }}
       >
-        <div className='text-center max-w-md mx-auto p-8 border border-terminal-yellow bg-terminal-dark/30 backdrop-blur-xl'>
-          <p className='text-terminal-yellow font-ocr text-lg whitespace-pre-line'>
+        <div className='text-center max-w-md mx-auto p-8 border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl'>
+          <p className='text-neon font-ocr text-lg whitespace-pre-line'>
             {closedMessage}
           </p>
         </div>
