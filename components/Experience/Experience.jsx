@@ -202,7 +202,7 @@ function Experience() {
 
   return (
     <section className='relative z-30 py-20'>
-      <div className='w-full px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)]'>
+      <div className='w-full px-4 sm:px-6 md:px-8 lg:pl-6 lg:pr-12 xl:pl-8 xl:pr-16 2xl:pl-10 2xl:pr-20 max-w-none lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)]'>
         <header className='mb-12 md:mb-16 w-full max-w-6xl text-center md:text-right md:ml-auto'>
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
             TECH I WORK WITH

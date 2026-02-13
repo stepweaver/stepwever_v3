@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import GlitchButton from '@/components/ui/GlitchButton';
-import TerminalWindow from '@/components/ui/TerminalWindow/TerminalWindow';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -17,15 +16,10 @@ export default function ContactForm() {
   });
   const [statusText, setStatusText] = useState('Ready');
 
-  // Reset status text after success
   useEffect(() => {
     if (status.success) {
       setStatusText('Message Sent!');
-
-      const timer = setTimeout(() => {
-        setStatusText('Ready');
-      }, 5000);
-
+      const timer = setTimeout(() => setStatusText('Ready'), 5000);
       return () => clearTimeout(timer);
     }
   }, [status.success]);
@@ -70,141 +64,128 @@ export default function ContactForm() {
     }
   };
 
-  const formattedDate = `[${new Date().getFullYear()}-${String(
-    new Date().getMonth() + 1
-  ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}]`;
+  const inputBase =
+    'w-full bg-panel/40 backdrop-blur-sm border border-neon/25 rounded-md text-text py-2.5 px-2 text-base font-ibm transition-colors focus:outline-none focus:border-neon/70 focus:ring-1 focus:ring-neon/30 placeholder:text-muted hover:border-neon/40';
+  const labelClass = 'text-neon/90 font-ocr text-sm uppercase tracking-widest block mb-2';
 
   return (
-    <div className='space-y-6 sm:space-y-8'>
-      <div className='relative z-10'>
-        <TerminalWindow
-          showStatusBar={true}
-          statusText={statusText}
-          lastUpdated={formattedDate}
-          customTitleContent={
-            <div className='text-neon font-ibm'>/contact</div>
-          }
-        >
-          <div className='p-4 sm:p-5 relative z-10'>
-            {status.error && (
-              <div
-                className='mb-4 p-3 border border-danger/60 bg-danger/10 rounded-lg backdrop-blur-xl'
-                role='alert'
-                aria-live='polite'
-              >
-                <p className='text-danger text-base font-ocr'>
-                  [ERROR] {status.error}
-                </p>
-              </div>
-            )}
-
-            {status.success && (
-              <div
-                className='mb-4 p-3 border border-neon/50 bg-neon/10 rounded-lg backdrop-blur-xl'
-                role='status'
-                aria-live='polite'
-              >
-                <p className='text-neon text-base font-ocr'>
-                  [SUCCESS] {status.success}
-                </p>
-              </div>
-            )}
-
-            <form
-              className='space-y-4'
-              onSubmit={handleSubmit}
-              aria-label='Contact form'
-            >
-              <div>
-                <label
-                  htmlFor='name'
-                  className='text-neon font-ocr text-base block mb-1.5'
-                >
-                  Your name:
-                </label>
-                <input
-                  id='name'
-                  type='text'
-                  name='name'
-                  value={formData.name}
-                  onChange={handleChange}
-                  className='w-full bg-panel/50 backdrop-blur-xl border border-neon/30 rounded-lg text-text p-2.5 text-base font-ibm focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon/30 placeholder:text-muted'
-                  placeholder='Jane Doe'
-                  required
-                  aria-required='true'
-                  aria-describedby='name-error'
-                />
-                <div id='name-error' className='sr-only' role='alert'></div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor='email'
-                  className='text-neon font-ocr text-base block mb-1.5'
-                >
-                  Your email:
-                </label>
-                <input
-                  id='email'
-                  type='email'
-                  name='email'
-                  value={formData.email}
-                  onChange={handleChange}
-                  className='w-full bg-panel/50 backdrop-blur-xl border border-neon/30 rounded-lg text-text p-2.5 text-base font-ibm focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon/30 placeholder:text-muted'
-                  placeholder='jane@example.com'
-                  required
-                  aria-required='true'
-                  aria-describedby='email-error'
-                />
-                <div id='email-error' className='sr-only' role='alert'></div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor='message'
-                  className='text-neon font-ocr text-base block mb-1.5'
-                >
-                  What&apos;s on your mind?
-                </label>
-                <textarea
-                  id='message'
-                  name='message'
-                  value={formData.message}
-                  onChange={handleChange}
-                  className='w-full bg-panel/50 backdrop-blur-xl border border-neon/30 rounded-lg text-text p-2.5 text-sm font-ibm h-48 focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon/30 placeholder:text-muted resize-y'
-                  placeholder='Say hello, ask a question, or share something interesting...'
-                  required
-                  aria-required='true'
-                  aria-describedby='message-help message-error'
-                ></textarea>
-                <p
-                  id='message-help'
-                  className='text-text/70 text-sm mt-1.5 font-ocr'
-                >
-                  Whether it&apos;s a job opportunity, a question, or just saying hi, I&apos;d love to hear from you.
-                </p>
-                <div id='message-error' className='sr-only' role='alert'></div>
-              </div>
-
-              <div className='pt-2 flex flex-col gap-3'>
-                <GlitchButton
-                  type='submit'
-                  disabled={status.submitting}
-                  isLoading={status.submitting}
-                  loadingText='SENDING...'
-                  brackets={false}
-                  className='w-fit max-w-[95%]'
-                >
-                  [[ SEND MESSAGE ]]
-                </GlitchButton>
-                <p className='text-text/70 text-sm font-ocr'>
-                  I typically respond within a day or two.
-                </p>
-              </div>
-            </form>
+    <div className='border-l-2 border-neon/50 pl-4'>
+        {status.error && (
+          <div
+            className='mb-6 p-4 border border-danger/50 bg-danger/10 rounded-lg font-ocr text-sm text-danger'
+            role='alert'
+            aria-live='polite'
+          >
+            [ERROR] {status.error}
           </div>
-        </TerminalWindow>
-      </div>
+        )}
+
+        {status.success && (
+          <div
+            className='mb-6 p-4 border border-neon/40 bg-neon/10 rounded-lg font-ocr text-sm text-neon'
+            role='status'
+            aria-live='polite'
+          >
+            [SUCCESS] {status.success}
+          </div>
+        )}
+
+        <form
+          className='space-y-6'
+          onSubmit={handleSubmit}
+          aria-label='Contact form'
+        >
+          <div>
+            <label htmlFor='name' className={labelClass}>
+              Your name
+            </label>
+            <input
+              id='name'
+              type='text'
+              name='name'
+              value={formData.name}
+              onChange={handleChange}
+              className={inputBase}
+              placeholder='Jane Doe'
+              required
+              aria-required='true'
+              aria-describedby='name-error'
+            />
+            <div id='name-error' className='sr-only' role='alert' />
+          </div>
+
+          <div>
+            <label htmlFor='email' className={labelClass}>
+              Your email
+            </label>
+            <input
+              id='email'
+              type='email'
+              name='email'
+              value={formData.email}
+              onChange={handleChange}
+              className={inputBase}
+              placeholder='jane@example.com'
+              required
+              aria-required='true'
+              aria-describedby='email-error'
+            />
+            <div id='email-error' className='sr-only' role='alert' />
+          </div>
+
+          <div>
+            <label htmlFor='message' className={labelClass}>
+              What&apos;s on your mind?
+            </label>
+            <textarea
+              id='message'
+              name='message'
+              value={formData.message}
+              onChange={handleChange}
+              className={`${inputBase} min-h-[140px] resize-y`}
+              placeholder='Say hello, ask a question, or share something interesting...'
+              required
+              aria-required='true'
+              aria-describedby='message-help message-error'
+            />
+            <p id='message-help' className='text-muted text-sm mt-2 font-ocr'>
+              Job opportunity, question, or just saying hi — I&apos;d love to hear from you.
+            </p>
+            <div id='message-error' className='sr-only' role='alert' />
+          </div>
+
+          <div className='pt-2 flex flex-col gap-3'>
+            <GlitchButton
+              type='submit'
+              disabled={status.submitting}
+              isLoading={status.submitting}
+              loadingText='SENDING...'
+              brackets={false}
+              className='w-fit'
+            >
+              [[ SEND MESSAGE ]]
+            </GlitchButton>
+            <p className='text-muted text-sm font-ocr'>
+              I typically respond within a day or two.
+            </p>
+          </div>
+        </form>
+
+        {/* Minimal status line */}
+        <div className='mt-6 pt-4 border-t border-neon/20 flex items-center gap-2 font-ocr text-xs text-muted'>
+          <span className='text-neon/60'>Status:</span>
+          <span
+            className={
+              statusText === 'Message Sent!'
+                ? 'text-neon'
+                : statusText.startsWith('Error')
+                ? 'text-danger'
+                : 'text-text/80 font-ibm'
+            }
+          >
+            {statusText}
+          </span>
+        </div>
     </div>
   );
 }

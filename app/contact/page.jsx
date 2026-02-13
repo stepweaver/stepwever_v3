@@ -69,7 +69,7 @@ function ContactPage() {
             </HUDPanel>
 
             <section className='grid gap-10 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]'>
-              <HUDPanel title='Send a message' id='CONTACT-01' className='p-5 md:p-6'>
+              <HUDPanel title='Send a message' id='CONTACT-01' className='p-6 md:p-8 lg:p-10'>
                 <ContactForm />
               </HUDPanel>
 

@@ -3,7 +3,7 @@
 export function HUDPanel({ title, id, children, className = '' }) {
   return (
     <section
-      className={`relative overflow-hidden rounded-2xl border border-neon/20 bg-panel/70 p-5 shadow-neon-sm backdrop-blur ${className}`}
+      className={`relative overflow-hidden rounded-2xl border border-neon/20 bg-panel/70 p-5 shadow-neon-sm backdrop-blur transition-all duration-200 md:hover:-translate-y-1 md:hover:shadow-neon ${className}`}
     >
       <div className="pointer-events-none absolute inset-0 opacity-30 [background:linear-gradient(180deg,rgba(255,255,255,0.10),transparent_35%)]" />
       <div className="pointer-events-none absolute left-3 top-3 h-2 w-8 border-l border-t border-accent/50" />
