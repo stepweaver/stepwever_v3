@@ -201,9 +201,10 @@ function Experience() {
   }, [userInteracted]);
 
   return (
-    <section className='relative z-30 py-20'>
-      <div className='w-full px-4 sm:px-6 md:px-8 lg:pl-6 lg:pr-12 xl:pl-8 xl:pr-16 2xl:pl-10 2xl:pr-20 max-w-none lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)]'>
-        <header className='mb-12 md:mb-16 w-full max-w-6xl text-center md:text-right md:ml-auto'>
+    <section className='relative z-30 py-20 overflow-x-hidden'>
+      {/* Right column: width = viewport minus lambda space so it never overflows */}
+      <div className='w-full px-4 sm:px-6 md:px-8 lg:pl-6 lg:pr-16 xl:pl-8 xl:pr-20 2xl:pr-24 min-w-0 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] lg:w-[calc(100%-390px-2.5rem)] xl:w-[calc(100%-390px-3rem)]'>
+        <header className='mb-12 md:mb-16 w-full max-w-6xl text-center md:text-left'>
           <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
             TECH I WORK WITH
           </h2>
@@ -220,8 +221,8 @@ function Experience() {
           </div>
         </header>
 
-        <div className='w-full max-w-6xl md:ml-auto'>
-          <nav className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center md:justify-end' aria-label="Tech categories">
+        <div className='w-full max-w-6xl min-w-0'>
+          <nav className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center md:justify-start' aria-label="Tech categories">
             {TECH_CATEGORIES.map((category, index) => (
               <button
                 key={category.name}
@@ -251,7 +252,7 @@ function Experience() {
           </div>
 
           {/* Tech cards — single row for current category */}
-          <div className='flex flex-wrap justify-center md:justify-end gap-4'>
+          <div className='flex flex-wrap justify-center md:justify-start gap-4'>
             {TECH_CATEGORIES[currentCategory].technologies.map((tech, index) => {
               const IconComponent = tech.isComponent ? tech.icon : null;
               return (
@@ -279,7 +280,7 @@ function Experience() {
             })}
           </div>
 
-          <div className='flex justify-center md:justify-end mt-8 gap-3' role="tablist" aria-label="Category indicators">
+          <div className='flex justify-center md:justify-start mt-8 gap-3' role="tablist" aria-label="Category indicators">
             {TECH_CATEGORIES.map((_, index) => (
               <button
                 key={index}

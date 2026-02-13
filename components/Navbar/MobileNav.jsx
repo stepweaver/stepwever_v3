@@ -1,17 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import styles from '@/styles/terminal-ui.module.css';
-import terminalStyles from '@/styles/terminal.module.css';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
-  const [animatedItems, setAnimatedItems] = useState([]);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => setMounted(true), []);
 
   const navLinks = [
     { name: 'ABOUT', path: '/#about', scroll: true },
@@ -26,29 +27,6 @@ export default function MobileNav() {
     },
     { name: 'GITHUB', path: 'https://github.com/stepweaver', external: true },
   ];
-
-  // First effect just tracks open state
-  useEffect(() => {
-    if (!isOpen) {
-      setAnimatedItems([]);
-    }
-  }, [isOpen]);
-
-  // Second effect handles animations when open
-  useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(() => {
-        const items = [];
-        navLinks.forEach((_, index) => {
-          setTimeout(() => {
-            setAnimatedItems((prev) => [...prev, index]);
-          }, index * 100);
-        });
-        return items;
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -71,132 +49,109 @@ export default function MobileNav() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className='cursor-pointer p-3 text-3xl text-terminal-green hover:text-terminal-yellow transition-colors duration-200'
+          className='cursor-pointer p-3 text-2xl text-neon hover:text-accent transition-colors duration-200 rounded-xl border border-neon/20 bg-panel/50 backdrop-blur hover:border-neon/40 hover:bg-panel/70'
           aria-expanded={isOpen}
           aria-label='Open navigation menu'
           aria-controls='mobile-navigation-menu'
-          // Ensure minimum touch target size
           style={{ minHeight: '44px', minWidth: '44px' }}
         >
-          <span className='block' aria-hidden='true'>
+          <span className='block font-ocr tracking-wider' aria-hidden='true'>
             ≡
           </span>
         </button>
       )}
 
-      {isOpen && (
+      {isOpen && mounted && createPortal(
         <div
-          className={`fixed inset-0 animate-fadeIn overflow-hidden ${terminalStyles.crtEffect} z-[9999] bg-terminal-dark`}
-          style={{
-            boxShadow: 'inset 0 0 60px rgba(0, 255, 65, 0.15)',
-          }}
+          className='fixed inset-0 z-[9999] flex flex-col bg-[var(--panel)]/98 backdrop-blur-xl'
+          id='mobile-navigation-menu'
         >
-          {/* Scanline effect */}
-          <div className={terminalStyles.scanlinePattern}></div>
-
-          <div className={styles.terminalHeader}>
-            <div className='text-xl font-ibm text-terminal-green flex items-center gap-2'>
-              <GlitchLambda autoGlitch={isOpen} />
-              ~/menu
-            </div>
-
-            <div className='flex gap-2 items-center'>
-              {/* Theme Toggle */}
-              <div className='mr-2'>
-                <ThemeToggle />
-              </div>
-
-              <div
-                className={`${styles.terminalButton} bg-terminal-yellow cursor-pointer`}
-                onClick={() => setIsOpen(false)}
-              ></div>
-              <div
-                className={`${styles.terminalButton} bg-terminal-green cursor-pointer`}
-                onClick={() => setIsOpen(false)}
-              ></div>
-              <div
-                className={`${styles.terminalButton} bg-terminal-red cursor-pointer`}
-                onClick={() => setIsOpen(false)}
-              ></div>
-            </div>
+          {/* Tron frame - full bleed */}
+          <div className='pointer-events-none absolute inset-0 rounded-none'>
+            <div className='absolute left-0 top-0 h-6 w-8 border-l-2 border-t-2 border-neon/40' />
+            <div className='absolute bottom-0 right-0 h-6 w-8 border-b-2 border-r-2 border-neon/40' />
           </div>
 
-          <div className='p-4 md:p-6 text-lg md:text-xl h-[calc(100vh-56px)] overflow-y-auto'>
-            <div className='mb-6 text-terminal-dimmed text-sm border-b border-terminal-dimmed/20 pb-2'>
-              # Navigation options |{' '}
-              <span className='text-terminal-green'>user@stepweaver.dev</span>
+          {/* One header row: MODULE // menu · NAV-00 · theme · close */}
+          <header className='flex items-center justify-between gap-3 px-5 py-4 shrink-0'>
+            <div className='flex items-baseline gap-2 min-w-0'>
+              <span className='font-ocr text-[10px] tracking-[0.3em] text-neon/60 uppercase'>
+                MODULE
+              </span>
+              <span className='font-ocr text-neon/40 text-xs' aria-hidden>//</span>
+              <span className='font-ibm text-lg font-semibold text-neon truncate flex items-center gap-1.5'>
+                <GlitchLambda autoGlitch={true} size='small' />
+                menu
+              </span>
             </div>
+            <div className='flex items-center gap-3 shrink-0'>
+              <span className='font-mono text-[10px] text-neon/40 hidden sm:inline'>NAV-00</span>
+              <ThemeToggle />
+              <button
+                type='button'
+                onClick={() => setIsOpen(false)}
+                className='flex items-center justify-center w-11 h-11 rounded-lg text-neon hover:bg-neon/10 transition-colors touch-manipulation'
+                aria-label='Close menu'
+              >
+                <span className='text-xl font-light'>×</span>
+              </button>
+            </div>
+          </header>
 
-            <ul className='py-3 font-ibm space-y-4 md:space-y-6'>
-              {navLinks.map((item, index) => (
-                <li
-                  key={item.path}
-                  className={`transition-all duration-300 ${
-                    animatedItems.includes(index)
-                      ? 'opacity-100 translate-x-0'
-                      : 'opacity-0 translate-x-4'
-                  }`}
-                >
+          {/* Main nav - lots of space, simple list */}
+          <nav className='flex-1 min-h-0 overflow-y-auto px-5 pb-6 pt-2' aria-label='Site navigation'>
+            <ul className='font-ibm space-y-1'>
+              {navLinks.map((item) => (
+                <li key={item.path}>
                   {item.external ? (
                     <Link
                       href={item.path}
                       onClick={() => setIsOpen(false)}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40'
+                      className='block py-4 text-text hover:text-neon transition-colors text-base tracking-wide border-b border-white/5 last:border-b-0'
                     >
-                      <span className='truncate'>{item.name}</span>
-                      <span className='ml-2 text-terminal-dimmed text-sm flex-shrink-0'>
-                        [ext]
-                      </span>
+                      <span>{item.name}</span>
+                      <span className='ml-2 text-text/40 text-xs'>[ext]</span>
                     </Link>
                   ) : item.scroll ? (
                     <button
+                      type='button'
                       onClick={() => {
                         setIsOpen(false);
                         if (window.location.pathname === '/') {
-                          const element = document.getElementById(item.path.split('#')[1]);
-                          if (element) {
-                            element.scrollIntoView({ behavior: 'smooth' });
-                          }
-                        } else {
-                          window.location.href = item.path;
-                        }
+                          const el = document.getElementById(item.path.split('#')[1]);
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        } else window.location.href = item.path;
                       }}
-                      className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40 w-full text-left bg-transparent border-none'
+                      className='block py-4 text-text hover:text-neon transition-colors w-full text-left text-base tracking-wide border-b border-white/5 last:border-b-0 bg-transparent'
                     >
-                      <span className='truncate'>{item.name}</span>
+                      {item.name}
                     </button>
                   ) : (
                     <Link
                       href={item.path}
                       onClick={() => setIsOpen(false)}
-                      className='flex items-center py-2 px-3 transition-all duration-200 rounded-sm text-terminal-text hover:text-terminal-green hover:bg-terminal/40'
+                      className='block py-4 text-text hover:text-neon transition-colors text-base tracking-wide border-b border-white/5 last:border-b-0'
                     >
-                      <span className='truncate'>{item.name}</span>
+                      {item.name}
                     </Link>
                   )}
                 </li>
               ))}
             </ul>
+          </nav>
 
-            <div className='absolute bottom-0 left-0 right-0 border-t border-terminal-dimmed/30 py-4 px-4 md:px-6 text-terminal-dimmed text-sm backdrop-blur-sm'>
-              <div className='flex justify-between items-center'>
-                <div className='truncate'>stepweaver@v3.7</div>
-                <div className='flex items-center flex-shrink-0'>
-                  <span className='h-2 w-2 rounded-full bg-terminal-green mr-2 animate-pulse'></span>
-                  <span>connected</span>
-                </div>
-              </div>
-
-              {/* Simulated terminal input */}
-              <div className='mt-3 flex items-center'>
-                <span className='text-terminal-text'>navigate</span>
-                <span className='ml-1 h-4 w-2 bg-terminal-green animate-blink'></span>
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* Minimal footer */}
+          <footer className='shrink-0 px-5 py-3 border-t border-neon/10 flex items-center justify-between text-[11px] font-mono text-text/50'>
+            <span>stepweaver@v3.7</span>
+            <span className='flex items-center gap-1.5'>
+              <span className='h-1.5 w-1.5 rounded-full bg-neon/80' />
+              connected
+            </span>
+          </footer>
+        </div>,
+        document.body
       )}
     </div>
   );
