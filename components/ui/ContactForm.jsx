@@ -82,17 +82,17 @@ export default function ContactForm() {
           statusText={statusText}
           lastUpdated={formattedDate}
           customTitleContent={
-            <div className='text-terminal-green'>~/contact</div>
+            <div className='text-neon font-ibm'>/contact</div>
           }
         >
-          <div className='p-4 relative z-10'>
+          <div className='p-4 sm:p-5 relative z-10'>
             {status.error && (
               <div
-                className='mb-4 p-2 border border-terminal-red bg-terminal-red/20 backdrop-blur-xl'
+                className='mb-4 p-3 border border-danger/60 bg-danger/10 rounded-lg backdrop-blur-xl'
                 role='alert'
                 aria-live='polite'
               >
-                <p className='text-terminal-red text-base'>
+                <p className='text-danger text-base font-ocr'>
                   [ERROR] {status.error}
                 </p>
               </div>
@@ -100,25 +100,25 @@ export default function ContactForm() {
 
             {status.success && (
               <div
-                className='mb-4 p-2 border border-terminal-green bg-terminal-green/20 backdrop-blur-xl'
+                className='mb-4 p-3 border border-neon/50 bg-neon/10 rounded-lg backdrop-blur-xl'
                 role='status'
                 aria-live='polite'
               >
-                <p className='text-terminal-green text-base'>
+                <p className='text-neon text-base font-ocr'>
                   [SUCCESS] {status.success}
                 </p>
               </div>
             )}
 
             <form
-              className='space-y-3'
+              className='space-y-4'
               onSubmit={handleSubmit}
               aria-label='Contact form'
             >
               <div>
                 <label
                   htmlFor='name'
-                  className='text-terminal-green text-base block mb-1'
+                  className='text-neon font-ocr text-base block mb-1.5'
                 >
                   Your name:
                 </label>
@@ -128,7 +128,7 @@ export default function ContactForm() {
                   name='name'
                   value={formData.name}
                   onChange={handleChange}
-                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-base focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-panel/50 backdrop-blur-xl border border-neon/30 rounded-lg text-text p-2.5 text-base font-ibm focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon/30 placeholder:text-muted'
                   placeholder='Jane Doe'
                   required
                   aria-required='true'
@@ -140,7 +140,7 @@ export default function ContactForm() {
               <div>
                 <label
                   htmlFor='email'
-                  className='text-terminal-green text-base block mb-1'
+                  className='text-neon font-ocr text-base block mb-1.5'
                 >
                   Your email:
                 </label>
@@ -150,7 +150,7 @@ export default function ContactForm() {
                   name='email'
                   value={formData.email}
                   onChange={handleChange}
-                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-base focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-panel/50 backdrop-blur-xl border border-neon/30 rounded-lg text-text p-2.5 text-base font-ibm focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon/30 placeholder:text-muted'
                   placeholder='jane@example.com'
                   required
                   aria-required='true'
@@ -162,16 +162,16 @@ export default function ContactForm() {
               <div>
                 <label
                   htmlFor='message'
-                  className='text-terminal-green text-base block mb-1'
+                  className='text-neon font-ocr text-base block mb-1.5'
                 >
-                  What's on your mind?
+                  What&apos;s on your mind?
                 </label>
                 <textarea
                   id='message'
                   name='message'
                   value={formData.message}
                   onChange={handleChange}
-                  className='w-full bg-terminal-dark/30 backdrop-blur-xl border border-terminal-border text-terminal-text p-1.5 text-sm h-48 focus:outline-none focus:border-terminal-green focus:shadow-terminal-glow'
+                  className='w-full bg-panel/50 backdrop-blur-xl border border-neon/30 rounded-lg text-text p-2.5 text-sm font-ibm h-48 focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon/30 placeholder:text-muted resize-y'
                   placeholder='Say hello, ask a question, or share something interesting...'
                   required
                   aria-required='true'
@@ -179,9 +179,9 @@ export default function ContactForm() {
                 ></textarea>
                 <p
                   id='message-help'
-                  className='text-terminal-muted text-sm mt-1'
+                  className='text-text/70 text-sm mt-1.5 font-ocr'
                 >
-                  Whether it's a job opportunity, a question, or just saying hi, I'd love to hear from you.
+                  Whether it&apos;s a job opportunity, a question, or just saying hi, I&apos;d love to hear from you.
                 </p>
                 <div id='message-error' className='sr-only' role='alert'></div>
               </div>
@@ -192,11 +192,12 @@ export default function ContactForm() {
                   disabled={status.submitting}
                   isLoading={status.submitting}
                   loadingText='SENDING...'
+                  brackets={false}
                   className='w-fit max-w-[95%]'
                 >
-                  [SEND MESSAGE]
+                  [[ SEND MESSAGE ]]
                 </GlitchButton>
-                <p className='text-terminal-muted text-sm'>
+                <p className='text-text/70 text-sm font-ocr'>
                   I typically respond within a day or two.
                 </p>
               </div>

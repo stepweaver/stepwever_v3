@@ -12,46 +12,46 @@ export default function TerminalWindow({
 }) {
   return (
     <div
-      className={`bg-terminal-dark/20 backdrop-blur-xl cyber-border cyber-border-green overflow-hidden relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-[rgba(0,255,0,0.02)] before:to-transparent before:bg-[length:100%_4px] before:pointer-events-none before:animate-[scanlines_20s_linear_infinite] before:z-[1] animate-pulse-glow ${className}`}
+      className={`bg-panel/50 backdrop-blur-xl border border-neon/30 rounded-lg overflow-hidden relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-[rgba(0,255,0,0.02)] before:to-transparent before:bg-[length:100%_4px] before:pointer-events-none before:animate-[scanlines_20s_linear_infinite] before:z-[1] before:rounded-lg ${className}`}
     >
       {showHeader && (
-        <div className='bg-terminal-light border-b border-terminal-border px-4 py-3 relative z-[2]'>
+        <div className='bg-panel/80 border-b border-neon/30 px-4 py-3 relative z-[2]'>
           <div className='flex items-center justify-between'>
             <div className='flex gap-2'>
-              <div className='w-3 h-3 rounded-full border border-terminal-border bg-[#ff5f56]'></div>
-              <div className='w-3 h-3 rounded-full border border-terminal-border bg-[#ffbd2e]'></div>
-              <div className='w-3 h-3 rounded-full border border-terminal-border bg-[#27ca3f]'></div>
+              <div className='w-3 h-3 rounded-full border border-neon/40 bg-[#ff5f56]'></div>
+              <div className='w-3 h-3 rounded-full border border-neon/40 bg-[#ffbd2e]'></div>
+              <div className='w-3 h-3 rounded-full border border-neon/40 bg-[#27ca3f]'></div>
             </div>
-            <div className='text-terminal-text font-ibm text-sm text-shadow-[0_0_2px_rgba(0,255,65,0.5)] absolute left-1/2 transform -translate-x-1/2'>
+            <div className='text-neon font-ibm text-sm absolute left-1/2 transform -translate-x-1/2'>
               {customTitleContent || title}
             </div>
             <div className='w-12'></div>
           </div>
         </div>
       )}
-      <div className='relative z-[2] bg-transparent terminal-glow'>
+      <div className='relative z-[2] bg-transparent'>
         {children}
       </div>
 
       {showStatusBar && (
-        <div className='bg-terminal-light border-t border-terminal-border px-4 py-2 relative z-[2]'>
-          <div className='flex items-center justify-between text-terminal-text text-sm sm:text-base'>
-            <div className='flex items-center gap-4'>
-              <span className='text-terminal-green'>Status:</span>
+        <div className='bg-panel/80 border-t border-neon/30 px-4 py-3 relative z-[2]'>
+          <div className='flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-sm sm:text-base'>
+            <div className='flex items-center gap-2 min-w-0'>
+              <span className='text-neon font-ocr shrink-0'>Status:</span>
               <span
                 className={
                   statusText === 'Message Sent!'
-                    ? 'text-terminal-green'
+                    ? 'text-neon font-ibm'
                     : statusText.includes('Error')
-                    ? 'text-terminal-red'
-                    : 'text-terminal-text'
+                    ? 'text-danger font-ibm'
+                    : 'text-text font-ibm'
                 }
               >
                 {statusText}
               </span>
             </div>
             {lastUpdated && (
-              <div className='text-terminal-muted'>
+              <div className='text-muted font-ocr text-sm shrink-0'>
                 Last updated: {lastUpdated}
               </div>
             )}

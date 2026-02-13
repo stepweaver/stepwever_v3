@@ -10,6 +10,7 @@ import {
 import { useEffect } from 'react';
 
 import dynamic from 'next/dynamic';
+import { HUDPanel } from '@/components/ui/HUDPanel';
 
 // Lazy load heavy components
 const BackgroundCanvas = dynamic(
@@ -121,23 +122,22 @@ export default function TerminalPage() {
       <div className='relative z-10 w-full'>
         <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
           <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
-            <header className='space-y-6'>
-              <div className='space-y-4'>
-                <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl text-neon leading-tight'>
-                  {TERMINAL_COPY.hero.title}
-                </h1>
-                <p className='font-ocr text-base sm:text-lg md:text-xl text-text/85 leading-relaxed max-w-5xl'>
-                  {TERMINAL_COPY.hero.subtitle}
-                </p>
-              </div>
+            <HUDPanel
+              title={TERMINAL_COPY.hero.title}
+              id='TERM-00'
+              className='p-6 md:p-8'
+            >
+              <p className='font-ocr text-base sm:text-lg md:text-xl text-text/85 leading-relaxed max-w-5xl mb-4'>
+                {TERMINAL_COPY.hero.subtitle}
+              </p>
               <div className='relative border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
                 <span>{TERMINAL_COPY.hero.ribbon}</span>
                 <span
                   className='absolute inset-y-0 left-0 w-1 bg-neon/80 rounded-l-lg'
                   aria-hidden='true'
-                ></span>
+                />
               </div>
-            </header>
+            </HUDPanel>
 
             <section className='grid gap-10 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1.8fr)]'>
               <div className='space-y-8'>
@@ -218,8 +218,10 @@ export default function TerminalPage() {
 
               <aside
                 id='terminal-section'
-                className='border-2 border-neon rounded-lg bg-panel/30 p-4 md:p-6 animate-pulse-glow'
+                className='relative overflow-hidden rounded-2xl border-2 border-neon/30 bg-panel/30 p-4 md:p-6 animate-pulse-glow'
               >
+                <div className='pointer-events-none absolute left-3 top-3 h-2 w-8 border-l border-t border-neon/50' />
+                <div className='pointer-events-none absolute bottom-3 right-3 h-2 w-8 border-b border-r border-neon/50' />
                 <p className='font-ocr text-sm text-text/70 mb-4'>
                   Type `help` to see commands. Use `codex` to navigate content.
                 </p>

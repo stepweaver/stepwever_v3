@@ -58,7 +58,7 @@ export default function Navbar() {
             aria-label='Go to homepage'
             aria-describedby='logo-description'
           >
-            <span className='text-neon font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
+            <span className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
               <GlitchLambda
                 className='text-neon font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'
                 size='large'

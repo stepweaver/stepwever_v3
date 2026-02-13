@@ -3,6 +3,8 @@
 import { useEffect, useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import { ModuleHeader } from '@/components/ui/ModuleHeader';
+import { HUDPanel } from '@/components/ui/HUDPanel';
 
 const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
@@ -86,39 +88,29 @@ function CodexContent() {
     }
   };
 
-  const codexGreen = '0, 255, 65';
-  const getGlowStyle = () => ({
-    textShadow: `0 0 2px rgba(${codexGreen}, 0.8), 0 0 7px rgba(${codexGreen}, 0.8), 0 0 11px rgba(${codexGreen}, 0.6)`,
-  });
-
   return (
     <div className="min-h-screen relative">
       <BackgroundCanvas />
       <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16">
         <div className="max-w-7xl mx-auto">
-          <div className="mt-20 mb-36">
-            <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-neon mb-8 md:mb-20 font-ibm whitespace-nowrap">
-              Stephen Weaver
-            </h1>
-            <p className="max-w-5xl text-text text-lg md:text-4xl leading-relaxed">
+          <HUDPanel title="Stephen Weaver" id="CODEX-00" className="p-6 md:p-8 mb-8">
+            <p className="text-text text-lg md:text-xl leading-relaxed mb-6">
               I'm Stephen. Developer, veteran, and perpetual learner. This is my digital codex: thoughts and things I'm exploring.
             </p>
-          </div>
-
-          <div className="mb-8 text-2xl">
-            <nav className="flex items-center font-ibm text-neon">
+            <nav className="flex items-center font-ibm text-neon text-lg" aria-label="Breadcrumb">
               <span className="text-neon">user@stepweaver</span>
               <span className="text-text ml-2">~</span>
               <span className="text-text">/</span>
               <button
+                type="button"
                 onClick={() => setActiveHashtags([])}
                 className="text-text hover:text-neon transition-colors cursor-pointer"
               >
                 codex
               </button>
-              <span className="text-neon ml-2 animate-blink">_</span>
+              <span className="text-neon ml-2 animate-blink" aria-hidden>_</span>
             </nav>
-          </div>
+          </HUDPanel>
 
           {loading ? (
             <div className="flex justify-center items-center min-h-64">
@@ -133,14 +125,66 @@ function CodexContent() {
               <div className="flex-1 max-w-4xl">
                 {/* Mobile: TAGS above post list */}
                 {filteredHashtags.length > 0 && (
-                  <div className="mb-8 pb-6 border-b border-neon/20 lg:hidden">
-                    <h3 className="text-text font-bold uppercase text-sm mb-4">Tags</h3>
+                  <div className="mb-8 lg:hidden">
+                    <HUDPanel title="Tags" id="CODEX-TAGS" className="p-5">
+                      <div className="flex flex-wrap gap-2">
+                        {filteredHashtags.map((tag) => {
+                          const count = allPosts.filter((p) => p.hashtags?.includes(tag)).length;
+                          return (
+                            <button
+                              key={tag}
+                              type="button"
+                              onClick={() => handleHashtagClick(tag)}
+                              className={`px-3 py-1 text-sm rounded-lg transition-colors font-medium cursor-pointer ${
+                                activeHashtags.includes(tag)
+                                  ? 'bg-neon/20 text-neon border border-neon/50'
+                                  : 'bg-text/10 text-text hover:text-neon hover:bg-neon/10'
+                              }`}
+                            >
+                              #{tag} {count}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </HUDPanel>
+                  </div>
+                )}
+
+                <div className="space-y-8">
+                  {filteredPosts.map((post, index) => (
+                    <PostItem
+                      key={`${post.slug}-${index}`}
+                      post={post}
+                      index={index}
+                      formatDate={formatDate}
+                      onHashtagClick={handleHashtagClick}
+                    />
+                  ))}
+                  {filteredPosts.length === 0 && (
+                    <div className="text-center py-12 text-text/70">
+                      <p>No posts found with the current filters.</p>
+                      <button
+                        type="button"
+                        onClick={() => setActiveHashtags([])}
+                        className="text-neon hover:text-accent transition-colors mt-2 cursor-pointer"
+                      >
+                        Clear filters
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {filteredHashtags.length > 0 && (
+                <div className="w-72 flex-shrink-0 hidden lg:block">
+                  <HUDPanel title="Tags" id="CODEX-TAGS" className="p-5">
                     <div className="flex flex-wrap gap-2">
                       {filteredHashtags.map((tag) => {
                         const count = allPosts.filter((p) => p.hashtags?.includes(tag)).length;
                         return (
                           <button
                             key={tag}
+                            type="button"
                             onClick={() => handleHashtagClick(tag)}
                             className={`px-3 py-1 text-sm rounded-lg transition-colors font-medium cursor-pointer ${
                               activeHashtags.includes(tag)
@@ -153,54 +197,7 @@ function CodexContent() {
                         );
                       })}
                     </div>
-                  </div>
-                )}
-
-                <div className="space-y-20">
-                  {filteredPosts.map((post, index) => (
-                    <PostItem
-                      key={`${post.slug}-${index}`}
-                      post={post}
-                      formatDate={formatDate}
-                      getGlowStyle={getGlowStyle}
-                      onHashtagClick={handleHashtagClick}
-                    />
-                  ))}
-                  {filteredPosts.length === 0 && (
-                    <div className="text-center py-12 text-terminal-dimmed">
-                      <p>No posts found with the current filters.</p>
-                      <button
-                        onClick={() => setActiveHashtags([])}
-                        className="text-terminal-green hover:text-terminal-white transition-colors mt-2 cursor-pointer"
-                      >
-                        Clear filters
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {filteredHashtags.length > 0 && (
-                <div className="w-72 flex-shrink-0 hidden lg:block">
-                  <h3 className="text-terminal-text font-bold uppercase text-sm mb-4">Tags</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {filteredHashtags.map((tag) => {
-                      const count = allPosts.filter((p) => p.hashtags?.includes(tag)).length;
-                      return (
-                        <button
-                          key={tag}
-                          onClick={() => handleHashtagClick(tag)}
-                          className={`px-3 py-1 text-sm rounded transition-colors font-medium cursor-pointer ${
-                            activeHashtags.includes(tag)
-                              ? 'bg-terminal-green/20 text-terminal-green border border-terminal-green/50'
-                              : 'bg-terminal-text/10 text-terminal-text hover:text-terminal-green hover:bg-terminal-green/10'
-                          }`}
-                        >
-                          #{tag} {count}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  </HUDPanel>
                 </div>
               )}
             </div>
@@ -211,8 +208,7 @@ function CodexContent() {
   );
 }
 
-function PostItem({ post, formatDate, getGlowStyle, onHashtagClick }) {
-  const [isHovered, setIsHovered] = useState(false);
+function PostItem({ post, index, formatDate, onHashtagClick }) {
   const [hoveredTag, setHoveredTag] = useState(null);
   const typeColor = 'var(--neon)';
 
@@ -223,31 +219,26 @@ function PostItem({ post, formatDate, getGlowStyle, onHashtagClick }) {
   };
 
   return (
-    <article className="group">
-      <a
-        href={`/codex/${post.slug}`}
-        className="block py-0.5 px-2 rounded-sm hover:bg-terminal-dimmed/5 transition-all duration-200"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <h2
-          className="text-2xl font-bold mb-2 transition-all duration-200 text-neon"
-          style={isHovered ? getGlowStyle() : {}}
-        >
-          {post.title}
-        </h2>
-        <div className="text-terminal-text text-sm mb-3 font-medium">
+    <HUDPanel
+      title={post.title}
+      id={`CODEX-${String(index + 1).padStart(2, '0')}`}
+      className="p-5 transition-all duration-200 hover:border-neon/40"
+    >
+      <a href={`/codex/${post.slug}`} className="block group">
+        <div className="text-text text-sm mb-3 font-ocr font-medium">
           Published: {formatDate(post.date)}
           {post.updated && post.updated !== post.date && (
-            <span className="text-terminal-green ml-3">| Updated: {formatDate(post.updated)}</span>
+            <span className="text-neon ml-3">| Updated: {formatDate(post.updated)}</span>
           )}
         </div>
-        <p className="text-terminal-text mb-3 leading-relaxed">{post.description}</p>
+        <p className="text-text mb-3 leading-relaxed text-sm font-ocr">{post.description}</p>
         {post.hashtags?.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-3">
             {post.hashtags.map((tag) => (
               <span
                 key={tag}
+                role="button"
+                tabIndex={0}
                 className="px-3 py-1 text-sm rounded-lg font-medium transition-colors cursor-pointer"
                 style={{
                   backgroundColor: hoveredTag === tag ? `color-mix(in srgb, ${typeColor} 20%, transparent)` : `color-mix(in srgb, ${typeColor} 10%, transparent)`,
@@ -264,7 +255,7 @@ function PostItem({ post, formatDate, getGlowStyle, onHashtagClick }) {
           </div>
         )}
       </a>
-    </article>
+    </HUDPanel>
   );
 }
 

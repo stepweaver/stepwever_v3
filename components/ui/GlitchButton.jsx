@@ -35,7 +35,7 @@ export default function GlitchButton({
     <div className='flex items-center justify-center'>
       {brackets && (
         <span
-          className={`text-terminal-green ${
+          className={`text-neon ${
             isHovering ? animStyles.glitchEffect : ''
           }`}
         >
@@ -43,7 +43,7 @@ export default function GlitchButton({
         </span>
       )}
       <span
-        className={`px-1 whitespace-nowrap text-terminal-text ${
+        className={`px-1 whitespace-nowrap text-text ${
           isHovering ? animStyles.textGlitchEffect : ''
         }`}
       >
@@ -51,7 +51,7 @@ export default function GlitchButton({
       </span>
       {brackets && (
         <span
-          className={`text-terminal-green ${
+          className={`text-neon ${
             isHovering ? animStyles.glitchEffect : ''
           }`}
         >
@@ -62,7 +62,7 @@ export default function GlitchButton({
         <span
           className={`ml-0.5 ${cursorVisible ? 'opacity-100' : 'opacity-0'} ${
             styles.crtText
-          } text-terminal-green`}
+          } text-neon`}
         >
           ▮
         </span>

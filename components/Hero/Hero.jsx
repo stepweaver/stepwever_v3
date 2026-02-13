@@ -78,7 +78,7 @@ function Hero() {
                         <span
                           className={[
                             'inline-block px-2.5 py-1 rounded border text-xs font-ibm',
-                            i === 1 ? 'border-accent text-accent' : 'border-neon/60 text-neon/90',
+                            label === 'Rebel' ? 'border-terminal-magenta/70 text-terminal-magenta' : i === 1 ? 'border-accent text-accent' : 'border-neon/60 text-text/90',
                           ].join(' ')}
                         >
                           {label}

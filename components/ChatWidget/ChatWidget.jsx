@@ -135,26 +135,34 @@ export default function ChatWidget() {
               : 'w-[calc(100vw-2rem)] sm:w-96 h-[500px] max-h-[70vh]'
           }`}
         >
-          <div className='h-full flex flex-col cyber-border cyber-border-green bg-terminal-dark/95 backdrop-blur-xl shadow-[0_0_40px_rgba(0,255,0,0.2)] overflow-hidden'>
+          <div className='h-full flex flex-col relative rounded-2xl border border-neon/25 bg-panel/95 backdrop-blur-xl shadow-[0_0_40px_rgba(90,255,140,0.15)] overflow-hidden'>
+            {/* Tron corner embellishments */}
+            <div className='pointer-events-none absolute left-2 top-2 h-1.5 w-6 border-l border-t border-neon/50 z-10' />
+            <div className='pointer-events-none absolute bottom-2 right-2 h-1.5 w-6 border-b border-r border-neon/50 z-10' />
             {/* Header */}
-            <div className='flex items-center justify-between px-4 py-3 border-b border-terminal-border/30 bg-terminal-dark/80'>
-              <div className='flex items-center gap-2'>
-                <div className='flex gap-1.5'>
-                  <span className='w-2.5 h-2.5 rounded-full bg-terminal-red' />
-                  <span className='w-2.5 h-2.5 rounded-full bg-terminal-yellow' />
-                  <span className='w-2.5 h-2.5 rounded-full bg-terminal-green' />
-                </div>
-                <span className='font-ocr text-base text-terminal-green ml-2'>
+            <div className='flex items-center justify-between px-4 py-3 border-b border-neon/20 bg-panel/80'>
+              <div className='flex items-center gap-2 flex-wrap min-w-0'>
+                <span className='font-ocr text-[10px] sm:text-xs tracking-[0.28em] text-neon/70 uppercase whitespace-nowrap'>
+                  MODULE
+                </span>
+                <span className='font-ocr text-neon/50 text-xs sm:text-sm' aria-hidden>
+                  //
+                </span>
+                <span className='font-ibm text-base sm:text-lg font-semibold text-neon whitespace-nowrap'>
                   λlambda
                 </span>
+                <span className='font-mono text-[10px] text-neon/50 ml-1 shrink-0 hidden sm:inline'>
+                  CHAT-00
+                </span>
                 {hasNewMessage && isMinimized && (
-                  <span className='w-2 h-2 rounded-full bg-terminal-cyan animate-pulse' />
+                  <span className='w-2 h-2 rounded-full bg-neon animate-pulse shrink-0' />
                 )}
               </div>
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2 shrink-0'>
                 <button
+                  type='button'
                   onClick={toggleMinimize}
-                  className='p-1 text-terminal-text/60 hover:text-terminal-green transition-colors cursor-pointer'
+                  className='p-1 text-text/60 hover:text-neon transition-colors cursor-pointer'
                   aria-label={isMinimized ? 'Expand chat' : 'Minimize chat'}
                 >
                   {isMinimized ? (
@@ -164,8 +172,9 @@ export default function ChatWidget() {
                   )}
                 </button>
                 <button
+                  type='button'
                   onClick={toggleOpen}
-                  className='p-1 text-terminal-text/60 hover:text-terminal-red transition-colors cursor-pointer'
+                  className='p-1 text-text/60 hover:text-neon transition-colors cursor-pointer'
                   aria-label='Close chat'
                 >
                   <X className='w-4 h-4' />
@@ -189,8 +198,8 @@ export default function ChatWidget() {
                       <div
                         className={`flex-shrink-0 w-7 h-7 rounded flex items-center justify-center overflow-hidden ${
                           message.role === 'user'
-                            ? 'bg-terminal-cyan/20 text-terminal-cyan'
-                            : 'bg-terminal-green/20 text-terminal-green'
+                            ? 'bg-accent/20 text-accent'
+                            : 'bg-neon/20 text-neon'
                         }`}
                       >
                         {message.role === 'user' ? (
@@ -228,7 +237,7 @@ export default function ChatWidget() {
                   {/* Loading indicator */}
                   {isLoading && (
                     <div className='flex gap-2'>
-                      <div className='flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-terminal-green/20 overflow-hidden'>
+                      <div className='flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-neon/20 overflow-hidden'>
                         <Image
                           src='/images/lambda_stepweaver.png'
                           alt=''
@@ -239,16 +248,16 @@ export default function ChatWidget() {
                           aria-hidden
                         />
                       </div>
-                      <div className='bg-terminal-dark/50 border border-terminal-border p-2.5 rounded'>
-                        <Loader2 className='w-4 h-4 text-terminal-green animate-spin' />
+                      <div className='bg-panel/50 border border-neon/20 p-2.5 rounded-lg'>
+                        <Loader2 className='w-4 h-4 text-neon animate-spin' />
                       </div>
                     </div>
                   )}
 
                   {/* Error message */}
                   {error && (
-                    <div className='p-2.5 bg-terminal-red/10 border border-terminal-red/30 rounded'>
-                      <p className='text-terminal-red font-ocr text-sm'>{error}</p>
+                    <div className='p-2.5 bg-danger/10 border border-danger/30 rounded-lg'>
+                      <p className='text-danger font-ocr text-sm'>{error}</p>
                     </div>
                   )}
 
@@ -258,15 +267,16 @@ export default function ChatWidget() {
                 {/* Example Questions */}
                 {messages.length <= 1 && (
                   <div className='px-3 pb-2'>
-                    <p className='text-terminal-text/60 font-ocr text-xs mb-1.5'>
+                    <p className='text-text/60 font-ocr text-xs mb-1.5'>
                       Try asking:
                     </p>
                     <div className='flex flex-wrap gap-1.5'>
                       {EXAMPLE_QUESTIONS.map((question, index) => (
                         <button
                           key={index}
+                          type='button'
                           onClick={() => handleExampleClick(question)}
-                          className='px-2.5 py-1.5 text-xs font-ocr text-terminal-green border border-terminal-green/30 rounded hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-colors cursor-pointer'
+                          className='px-2.5 py-1.5 text-xs font-ocr text-neon border border-neon/30 rounded-lg hover:bg-neon/10 hover:border-neon/50 transition-colors cursor-pointer'
                           disabled={isLoading}
                         >
                           {question}
@@ -279,7 +289,7 @@ export default function ChatWidget() {
                 {/* Input Form */}
                 <form
                   onSubmit={handleSubmit}
-                  className='p-3 border-t border-terminal-border/30'
+                  className='p-3 border-t border-neon/20'
                 >
                   <div className='flex gap-2'>
                     <input
@@ -294,7 +304,7 @@ export default function ChatWidget() {
                     <button
                       type='submit'
                       disabled={isLoading || !input.trim()}
-                      className='px-3 py-2 bg-terminal-green/10 border border-terminal-green text-terminal-green rounded hover:bg-terminal-green/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer'
+                      className='px-3 py-2 bg-neon/10 border border-neon text-neon rounded hover:bg-neon/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer'
                       aria-label='Send message'
                     >
                       <Send className='w-4 h-4' />
@@ -305,7 +315,7 @@ export default function ChatWidget() {
                     Conversations are processed by Groq API and not stored.{' '}
                     <a
                       href='/privacy'
-                      className='text-terminal-green hover:text-terminal-cyan underline'
+                      className='text-neon hover:text-accent underline'
                       target='_blank'
                       rel='noopener noreferrer'
                     >
@@ -321,11 +331,12 @@ export default function ChatWidget() {
 
       {/* Floating Action Button */}
       <button
+        type='button'
         onClick={toggleOpen}
-        className={`fixed bottom-4 right-4 sm:right-6 z-[100] w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer shadow-lg ${
+        className={`fixed bottom-4 right-4 sm:right-6 z-[100] w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer ${
           isOpen
-            ? 'bg-terminal-red/20 border-2 border-terminal-red text-terminal-red hover:bg-terminal-red/30'
-            : 'bg-terminal-green/20 border-2 border-terminal-green text-terminal-green hover:bg-terminal-green/30 hover:shadow-[0_0_20px_rgba(0,255,0,0.4)]'
+            ? 'bg-panel/80 border-2 border-neon/50 text-neon hover:bg-neon/10'
+            : 'bg-neon/20 border-2 border-neon text-neon hover:bg-neon/30 hover:shadow-[0_0_24px_rgba(90,255,140,0.35)]'
         }`}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
@@ -335,7 +346,7 @@ export default function ChatWidget() {
           <>
             <MessageCircle className='w-6 h-6' />
             {hasNewMessage && (
-              <span className='absolute top-0 right-0 w-3 h-3 rounded-full bg-terminal-cyan animate-pulse' />
+              <span className='absolute top-0 right-0 w-3 h-3 rounded-full bg-neon animate-pulse' />
             )}
           </>
         )}
