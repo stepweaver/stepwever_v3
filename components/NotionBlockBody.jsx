@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getHeadingsFromBlocks } from '@/lib/meshtastic-docs-headings';
 
 /**
  * Render a single Notion rich_text segment (bold, italic, code, link).
@@ -31,6 +32,8 @@ function RichText({ richText }) {
 
 export default function NotionBlockBody({ blocks }) {
   if (!blocks?.length) return null;
+  const headings = getHeadingsFromBlocks(blocks);
+  let headingIndex = 0;
 
   return (
     <article className="prose prose-invert max-w-none">
@@ -50,24 +53,30 @@ export default function NotionBlockBody({ blocks }) {
 
           if (block.type === 'heading_1' && block.heading_1?.rich_text) {
             const text = block.heading_1.rich_text.map((t) => t.plain_text).join('');
+            const id = headings[headingIndex]?.id;
+            if (headingIndex < headings.length) headingIndex += 1;
             return (
-              <h2 key={index} className="text-2xl sm:text-3xl font-bold text-terminal-green mt-8 mb-4">
+              <h2 key={index} id={id} className="text-2xl sm:text-3xl font-bold text-terminal-green mt-8 mb-4 scroll-mt-24">
                 {text}
               </h2>
             );
           }
           if (block.type === 'heading_2' && block.heading_2?.rich_text) {
             const text = block.heading_2.rich_text.map((t) => t.plain_text).join('');
+            const id = headings[headingIndex]?.id;
+            if (headingIndex < headings.length) headingIndex += 1;
             return (
-              <h3 key={index} className="text-xl sm:text-2xl font-bold text-terminal-green mt-6 mb-3">
+              <h3 key={index} id={id} className="text-xl sm:text-2xl font-bold text-terminal-green mt-6 mb-3 scroll-mt-24">
                 {text}
               </h3>
             );
           }
           if (block.type === 'heading_3' && block.heading_3?.rich_text) {
             const text = block.heading_3.rich_text.map((t) => t.plain_text).join('');
+            const id = headings[headingIndex]?.id;
+            if (headingIndex < headings.length) headingIndex += 1;
             return (
-              <h4 key={index} className="text-lg sm:text-xl font-bold text-terminal-green mt-4 mb-2">
+              <h4 key={index} id={id} className="text-lg sm:text-xl font-bold text-terminal-green mt-4 mb-2 scroll-mt-24">
                 {text}
               </h4>
             );
@@ -112,7 +121,37 @@ export default function NotionBlockBody({ blocks }) {
             return <hr key={index} className="border-terminal-dimmed/40 my-8" />;
           }
 
-          return null;
+          if (block.type === 'callout' && block.callout?.rich_text) {
+            const icon = block.callout.icon?.emoji ?? 'ℹ️';
+            return (
+              <div key={index} className="border border-terminal-dimmed/40 rounded-xl p-4 my-4 flex gap-3">
+                <span className="shrink-0" aria-hidden>{icon}</span>
+                <div className="text-terminal-text leading-relaxed min-w-0">
+                  <RichText richText={block.callout.rich_text} />
+                </div>
+              </div>
+            );
+          }
+
+          if (block.type === 'image' && block.image) {
+            const img = block.image;
+            const url = img.type === 'external' ? img.external?.url : img.type === 'file' ? img.file?.url : null;
+            const caption = img.caption?.length ? img.caption.map((t) => t.plain_text).join('') : '';
+            if (!url) return null;
+            return (
+              <figure key={index} className="my-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={url} alt={caption || 'Notion image'} className="max-w-full h-auto rounded border border-terminal-dimmed/40" />
+                {caption ? <figcaption className="mt-2 text-sm text-terminal-text/80">{caption}</figcaption> : null}
+              </figure>
+            );
+          }
+
+          return (
+            <div key={index} className="opacity-70 text-sm border border-terminal-dimmed/40 rounded p-2 my-2">
+              Unsupported block: <code>{block.type}</code>
+            </div>
+          );
         })}
       </div>
     </article>

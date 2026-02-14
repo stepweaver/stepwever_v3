@@ -18,6 +18,7 @@ export default function MobileNav() {
     { name: 'ABOUT', path: '/#about', scroll: true },
     { name: 'RESUME', path: '/resume' },
     { name: 'CODEX', path: '/codex' },
+    { name: 'MESHTASTIC', path: '/meshtastic' },
     { name: 'TERMINAL', path: '/terminal' },
     { name: 'CONTACT', path: '/contact' },
     {

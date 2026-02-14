@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ModuleHeader } from '@/components/ui/ModuleHeader';
 import { HUDPanel } from '@/components/ui/HUDPanel';
@@ -97,9 +98,9 @@ function CodexContent() {
             <p className="text-text text-lg md:text-xl leading-relaxed mb-6">
               I'm Stephen. Developer, veteran, and perpetual learner. This is my digital codex: thoughts and things I'm exploring.
             </p>
-            <nav className="flex items-center font-ibm text-neon text-lg" aria-label="Breadcrumb">
+            <nav className="flex flex-wrap items-center gap-x-2 font-ibm text-neon text-lg" aria-label="Breadcrumb">
               <span className="text-neon">user@stepweaver</span>
-              <span className="text-text ml-2">~</span>
+              <span className="text-text">~</span>
               <span className="text-text">/</span>
               <button
                 type="button"
@@ -108,7 +109,14 @@ function CodexContent() {
               >
                 codex
               </button>
-              <span className="text-neon ml-2 animate-blink" aria-hidden>_</span>
+              <span className="text-neon animate-blink" aria-hidden>_</span>
+              <span className="text-text/60">·</span>
+              <Link
+                href="/meshtastic"
+                className="text-text hover:text-neon transition-colors underline underline-offset-2"
+              >
+                Meshtastic image.png
+              </Link>
             </nav>
           </HUDPanel>
 

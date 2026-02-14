@@ -108,6 +108,14 @@ export default function Navbar() {
               Codex
             </Link>
             <Link
+              href='/meshtastic'
+              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+              role='menuitem'
+              aria-label='Meshtastic field notes'
+            >
+              Meshtastic
+            </Link>
+            <Link
               href='/terminal'
               className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
               role='menuitem'
