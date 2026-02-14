@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { headingIndentClass } from '@/lib/meshtastic-docs-headings';
 
 /**
  * Right sidebar "On this page" table of contents from document headings (meshtastic.org-style).
@@ -17,18 +18,15 @@ export default function OnThisPage({ headings }) {
         On this page
       </p>
       <nav className="space-y-1">
-        {headings.map(({ level, text, id }) => {
-          const indentClass = level === 1 ? 'pl-0 font-medium' : level === 2 ? 'pl-4' : 'pl-6';
-          return (
-            <Link
-              key={id}
-              href={`#${id}`}
-              className={`block text-sm text-text/80 hover:text-neon transition-colors py-0.5 ${indentClass}`}
-            >
-              {text}
-            </Link>
-          );
-        })}
+        {headings.map(({ level, text, id }, index) => (
+          <Link
+            key={id}
+            href={`#${id}`}
+            className={`block text-sm text-text/80 hover:text-neon transition-colors py-0.5 ${headingIndentClass(level, index === 0)}`}
+          >
+            {text}
+          </Link>
+        ))}
       </nav>
     </aside>
   );

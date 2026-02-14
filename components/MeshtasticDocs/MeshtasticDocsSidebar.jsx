@@ -3,11 +3,10 @@
 import Link from 'next/link';
 
 /**
- * Sidebar: Introduction (index) then sections with their pages (like meshtastic.org left menu).
- * Each doc appears once under its section; right menu is "On this page" (headers only).
+ * Sidebar: sections with their pages only (like meshtastic.org). No duplicate "Introduction";
+ * index/landing is reached via the header "Meshtastic" / "Field Notes" link.
  */
 export default function MeshtasticDocsSidebar({ grouped, currentSlug, currentSection }) {
-  const isIntro = currentSlug === null;
   const linkClass = (active) =>
     `block py-1.5 px-2 rounded text-sm transition-colors border-l-2 -ml-0.5 pl-2.5 ${
       active
@@ -34,11 +33,6 @@ export default function MeshtasticDocsSidebar({ grouped, currentSlug, currentSec
         <p className="text-xs tracking-[0.2em] text-neon/60 uppercase font-ocr mt-1">Field Notes</p>
       </div>
       <nav className="relative z-10 flex-1 overflow-y-auto p-3 space-y-1">
-        <div className="pb-2 border-b border-neon/20">
-          <Link href="/meshtastic" className={linkClass(isIntro)}>
-            Introduction
-          </Link>
-        </div>
         {grouped.map(({ section, pages }) => {
           if (!pages?.length) return null;
           const isOpen = currentSection === section;

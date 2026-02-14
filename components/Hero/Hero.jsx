@@ -25,9 +25,9 @@ function Hero() {
   return (
     <section className='relative z-30 pt-0 pb-2 sm:pb-4 md:pb-6 w-full'>
       <div className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12'>
-        <div className='grid grid-cols-1 lg:grid-cols-[390px_1fr] gap-8 lg:gap-10 xl:gap-12 items-start'>
-          <div className='w-full max-w-[390px] lg:max-w-none'>
-            <HUDPanel title="BOOT + IDENTITY" id="λ-SCOUT-01" className="p-6">
+        <div className='grid grid-cols-1 lg:grid-cols-[390px_1fr] gap-8 lg:gap-10 xl:gap-12 lg:items-stretch'>
+          <div className='min-w-0 flex flex-col'>
+            <HUDPanel title="BOOT + IDENTITY" id="λ-SCOUT-01" className="p-6 h-full min-h-full flex flex-col">
               <div className='flex flex-col gap-6'>
                 <div className='flex flex-col gap-3'>
                   <div className='flex flex-row items-start gap-4'>
@@ -94,12 +94,13 @@ function Hero() {
             </HUDPanel>
           </div>
 
-          {/* About content — fills empty space on desktop, below card on mobile */}
-          <div className='min-w-0'>
+          {/* About content — same row height as left on desktop so bottom borders align */}
+          <div className='min-w-0 flex flex-col h-full min-h-0'>
             <About />
           </div>
         </div>
 
+        {/* Below the two panels so it never affects their height */}
         <div className='mt-6 sm:mt-8 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)]'>
           <TerminalLink />
         </div>

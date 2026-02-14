@@ -24,7 +24,7 @@ export function HUDPanel({ title, id, children, className = '' }) {
           )}
         </header>
       )}
-      <div className="relative z-10 text-sm text-text/90">{children}</div>
+      <div className="relative z-10 text-sm text-text/90 flex-1 min-h-0 flex flex-col">{children}</div>
     </section>
   );
 }

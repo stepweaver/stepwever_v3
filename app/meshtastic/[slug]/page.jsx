@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import {
@@ -13,6 +14,9 @@ import MeshtasticDocsLayout from '@/components/MeshtasticDocs/MeshtasticDocsLayo
 import OnThisPage from '@/components/MeshtasticDocs/OnThisPage';
 import MeshtasticDocsDropdown from '@/components/MeshtasticDocs/MeshtasticDocsDropdown';
 import DocPrevNext from '@/components/MeshtasticDocs/DocPrevNext';
+
+/** Per-request cache so generateMetadata + page share a single Notion call. */
+const getCachedDocBySlug = cache((slug) => getDocBySlug(slug));
 
 const BackgroundCanvas = dynamic(() =>
   import('@/components/BackgroundCanvas/BackgroundCanvas')
@@ -33,7 +37,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const doc = await getDocBySlug(slug);
+  const doc = await getCachedDocBySlug(slug);
   if (!doc)
     return { title: 'Not Found', description: 'The page you requested was not found' };
   const title = doc.title || 'Meshtastic Doc';
@@ -59,7 +63,7 @@ export async function generateMetadata({ params }) {
 export default async function MeshtasticDocPage({ params }) {
   const { slug } = await params;
 
-  const doc = await getDocBySlug(slug);
+  const doc = await getCachedDocBySlug(slug);
   if (!doc) notFound();
 
   const [blocks, docs] = await Promise.all([
@@ -67,16 +71,17 @@ export default async function MeshtasticDocPage({ params }) {
     listPublishedDocs(),
   ]);
   const grouped = groupDocsBySection(docs);
-  const flatList = getFlatDocList(docs);
+  const flatList = getFlatDocList(grouped);
   const headings = getHeadingsFromBlocks(blocks);
 
   const formatUpdated = (lastEditedTime) => {
     if (!lastEditedTime) return '';
     try {
-      return new Date(lastEditedTime).toLocaleString(undefined, {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      });
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }).format(new Date(lastEditedTime));
     } catch {
       return '';
     }
@@ -94,12 +99,7 @@ export default async function MeshtasticDocPage({ params }) {
           <div className="flex-1 flex min-h-0 w-full px-4 pt-0 gap-8 xl:flex-row flex-col">
             <div className="min-w-0 flex-1 flex flex-col min-h-0">
               <div className="lg:hidden flex-shrink-0 mb-3">
-                <MeshtasticDocsDropdown
-                  grouped={grouped}
-                  currentSlug={doc.slug}
-                  currentSection={doc.section}
-                  headings={headings}
-                />
+                <MeshtasticDocsDropdown headings={headings} />
               </div>
               <article className="flex-1 flex flex-col min-h-0 rounded-xl border border-neon/20 bg-panel/50 backdrop-blur overflow-hidden">
                 <header className="border-b border-neon/20 px-6 py-5 flex-shrink-0">

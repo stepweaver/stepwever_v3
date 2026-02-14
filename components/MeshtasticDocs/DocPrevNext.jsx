@@ -26,9 +26,7 @@ export default function DocPrevNext({ flatList, currentSlug }) {
             <span className="shrink-0" aria-hidden>←</span>
             <span className="truncate">Previous: {prev.title}</span>
           </Link>
-        ) : (
-          <span className="text-sm text-text/40">Previous</span>
-        )}
+        ) : null}
       </div>
       <div className="min-w-0 text-right">
         {next ? (
