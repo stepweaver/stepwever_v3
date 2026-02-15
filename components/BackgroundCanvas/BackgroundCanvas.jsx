@@ -350,7 +350,7 @@ export default function BackgroundCanvas() {
     };
   }, [scrollProgress, originalImageData, hasError, neonColors, theme]);
 
-  // Rain effect: random raindrops (window-on-a-rainy-day), not repeated columns
+  // Circuit-board data sprites: glowing pulses traveling along PCB-style traces
   useEffect(() => {
     const rainCanvas = rainCanvasRef.current;
     if (!rainCanvas || typeof window === 'undefined') return;
@@ -358,53 +358,288 @@ export default function BackgroundCanvas() {
     const ctx = rainCanvas.getContext('2d');
     if (!ctx) return;
 
+    let W, H;
+    const isLightMode = theme === 'light' || theme === 'monochrome-inverted';
+    const gDim = isLightMode ? 0.3 : 1.0;
+
+    let nodes = [];
+    let edges = [];
+    let sprites = [];
+
+    // ---- Rectilinear trace between two nodes (PCB routing) ----
+    function makeTrace(a, b) {
+      const pts = [{ x: a.x, y: a.y }];
+      const roll = Math.random();
+      if (roll < 0.3) {
+        // Horizontal first, then vertical (L-shape)
+        pts.push({ x: b.x, y: a.y });
+      } else if (roll < 0.6) {
+        // Vertical first, then horizontal (L-shape)
+        pts.push({ x: a.x, y: b.y });
+      } else {
+        // Z-shape: H-V-H or V-H-V
+        if (Math.random() > 0.5) {
+          const midX = a.x + (b.x - a.x) * (0.3 + Math.random() * 0.4);
+          pts.push({ x: midX, y: a.y });
+          pts.push({ x: midX, y: b.y });
+        } else {
+          const midY = a.y + (b.y - a.y) * (0.3 + Math.random() * 0.4);
+          pts.push({ x: a.x, y: midY });
+          pts.push({ x: b.x, y: midY });
+        }
+      }
+      pts.push({ x: b.x, y: b.y });
+      return pts;
+    }
+
+    function pathLen(pts) {
+      let l = 0;
+      for (let i = 1; i < pts.length; i++) {
+        const dx = pts[i].x - pts[i - 1].x;
+        const dy = pts[i].y - pts[i - 1].y;
+        l += Math.sqrt(dx * dx + dy * dy);
+      }
+      return l || 1;
+    }
+
+    function posOnPath(pts, len, t) {
+      const target = Math.max(0, Math.min(1, t)) * len;
+      let acc = 0;
+      for (let i = 1; i < pts.length; i++) {
+        const dx = pts[i].x - pts[i - 1].x;
+        const dy = pts[i].y - pts[i - 1].y;
+        const seg = Math.sqrt(dx * dx + dy * dy);
+        if (acc + seg >= target && seg > 0) {
+          const f = (target - acc) / seg;
+          return { x: pts[i - 1].x + dx * f, y: pts[i - 1].y + dy * f };
+        }
+        acc += seg;
+      }
+      return { x: pts[pts.length - 1].x, y: pts[pts.length - 1].y };
+    }
+
+    // ---- Build the circuit network ----
+    function buildCircuit() {
+      nodes = [];
+      edges = [];
+      sprites = [];
+
+      const cell = 80 + Math.floor(Math.random() * 30);
+      const cols = Math.ceil(W / cell) + 2;
+      const rows = Math.ceil(H / cell) + 2;
+
+      // Place nodes on a jittered grid (~65% fill)
+      for (let r = -1; r < rows; r++) {
+        for (let c = -1; c < cols; c++) {
+          if (Math.random() > 0.65) continue;
+          nodes.push({
+            x: c * cell + (Math.random() - 0.5) * cell * 0.55,
+            y: r * cell + (Math.random() - 0.5) * cell * 0.55,
+            edges: [],
+            flash: 0,
+          });
+        }
+      }
+
+      // Connect nearby pairs with rectilinear traces
+      const maxDist = cell * 2.2;
+      const edgeSet = new Set();
+
+      for (let i = 0; i < nodes.length; i++) {
+        const cands = [];
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[j].x - nodes[i].x;
+          const dy = nodes[j].y - nodes[i].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < maxDist && d > 25) cands.push({ j, d });
+        }
+        cands.sort((a, b) => a.d - b.d);
+
+        let added = 0;
+        for (const { j } of cands) {
+          if (added >= 3) break;
+          const key = `${i}-${j}`;
+          if (edgeSet.has(key)) continue;
+          // Limit max connections per node to keep it clean
+          if (nodes[i].edges.length >= 5 || nodes[j].edges.length >= 5) continue;
+          edgeSet.add(key);
+
+          const pts = makeTrace(nodes[i], nodes[j]);
+          const len = pathLen(pts);
+          const eIdx = edges.length;
+          edges.push({ from: i, to: j, pts, len });
+          nodes[i].edges.push(eIdx);
+          nodes[j].edges.push(eIdx);
+          added++;
+        }
+      }
+
+      // Spawn data sprites
+      if (edges.length === 0) return;
+      const count = Math.max(10, Math.min(50, Math.floor(edges.length * 0.35)));
+      for (let i = 0; i < count; i++) sprites.push(newSprite());
+    }
+
+    // Neon cyberpunk sprite color palette
+    const spriteColors = [
+      { r: 90,  g: 255, b: 140, hr: 190, hg: 255, hb: 215 }, // Matrix green (most common)
+      { r: 90,  g: 255, b: 140, hr: 190, hg: 255, hb: 215 }, // Matrix green (weighted)
+      { r: 0,   g: 200, b: 255, hr: 160, hg: 230, hb: 255 }, // Cyan
+      { r: 255, g: 60,  b: 180, hr: 255, hg: 180, hb: 220 }, // Hot pink
+      { r: 160, g: 80,  b: 255, hr: 210, hg: 180, hb: 255 }, // Purple
+      { r: 255, g: 200, b: 0,   hr: 255, hg: 235, hb: 160 }, // Gold
+      { r: 255, g: 80,  b: 60,  hr: 255, hg: 190, hb: 180 }, // Red-orange
+      { r: 0,   g: 255, b: 255, hr: 180, hg: 255, hb: 255 }, // Teal
+    ];
+
+    function newSprite() {
+      const eIdx = Math.floor(Math.random() * edges.length);
+      const fwd = Math.random() > 0.5;
+      const color = spriteColors[Math.floor(Math.random() * spriteColors.length)];
+      return {
+        eIdx,
+        t: fwd ? 0 : 1,
+        speed: 0.0015 + Math.random() * 0.005,
+        forward: fwd,
+        size: 1.5 + Math.random() * 1.5,
+        brightness: 0.7 + Math.random() * 0.3,
+        trail: [],
+        trailMax: 8 + Math.floor(Math.random() * 10),
+        pulse: Math.random() * Math.PI * 2,
+        color,
+      };
+    }
+
     const setSize = () => {
-      rainCanvas.width = window.innerWidth;
-      rainCanvas.height = window.innerHeight;
+      W = rainCanvas.width = window.innerWidth;
+      H = rainCanvas.height = window.innerHeight;
+      buildCircuit();
     };
     setSize();
     window.addEventListener('resize', setSize);
 
-    const count = Math.min(500, Math.floor((rainCanvas.width * rainCanvas.height) / 6000));
-    const drops = Array.from({ length: count }, () => ({
-      x: Math.random() * rainCanvas.width,
-      y: Math.random() * (rainCanvas.height + 200) - 200,
-      speed: 1.2 + Math.random() * 5,
-      length: 6 + Math.random() * 14,
-      thickness: 0.4 + Math.random() * 1.2,
-      drift: (Math.random() - 0.5) * 0.4,
-    }));
     let animationId;
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(7, 10, 16, 0.035)';
-      ctx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
+      ctx.clearRect(0, 0, W, H);
 
-      const isLight = theme === 'light' || theme === 'monochrome-inverted';
-      const r = 90, g = 255, b = 140;
-      const alpha = isLight ? 0.06 : 0.1;
-
-      for (let i = 0; i < drops.length; i++) {
-        const d = drops[i];
-        d.y += d.speed;
-        d.x += d.drift;
-        if (d.x < 0) d.x += rainCanvas.width;
-        if (d.x > rainCanvas.width) d.x -= rainCanvas.width;
-        if (d.y > rainCanvas.height + d.length) {
-          d.y = -d.length - Math.random() * rainCanvas.height * 0.5;
-          d.x = Math.random() * rainCanvas.width;
-          d.speed = 1.2 + Math.random() * 5;
-          d.drift = (Math.random() - 0.5) * 0.4;
-        }
-        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
-        ctx.lineWidth = d.thickness;
+      // ==== Draw traces (faint circuit paths) ====
+      ctx.lineCap = 'square';
+      ctx.lineJoin = 'miter';
+      for (const e of edges) {
         ctx.beginPath();
-        ctx.moveTo(d.x, d.y - d.length);
-        ctx.lineTo(d.x, d.y);
+        ctx.moveTo(e.pts[0].x, e.pts[0].y);
+        for (let i = 1; i < e.pts.length; i++) ctx.lineTo(e.pts[i].x, e.pts[i].y);
+        ctx.strokeStyle = `rgba(90,255,140,${0.07 * gDim})`;
+        ctx.lineWidth = 1;
         ctx.stroke();
       }
+
+      // ==== Draw nodes (junction pads) ====
+      for (const n of nodes) {
+        if (n.edges.length === 0) continue;
+
+        let flashA = 0;
+        if (n.flash > 0) { flashA = n.flash / 25; n.flash--; }
+
+        // Small square pad
+        const s = 1.5 + (n.edges.length > 2 ? 1 : 0);
+        const baseA = 0.1 + flashA * 0.6;
+        ctx.fillStyle = `rgba(90,255,140,${baseA * gDim})`;
+        ctx.fillRect(n.x - s, n.y - s, s * 2, s * 2);
+
+        // Flash burst when a sprite arrives (in sprite's color)
+        if (flashA > 0.05) {
+          const fc = n.flashColor || { r: 90, g: 255, b: 140 };
+          ctx.shadowBlur = 14;
+          ctx.shadowColor = `rgba(${fc.r},${fc.g},${fc.b},${flashA * 0.5 * gDim})`;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 5 + flashA * 4, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${fc.r},${fc.g},${fc.b},${flashA * 0.2 * gDim})`;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      // ==== Update & draw data sprites ====
+      for (const sp of sprites) {
+        if (!sp) continue;
+        const edge = edges[sp.eIdx];
+        if (!edge) continue;
+
+        // Advance position
+        sp.t += sp.forward ? sp.speed : -sp.speed;
+        sp.pulse += 0.07;
+
+        const pos = posOnPath(edge.pts, edge.len, sp.t);
+
+        // Record trail
+        sp.trail.push({ x: pos.x, y: pos.y });
+        if (sp.trail.length > sp.trailMax) sp.trail.shift();
+
+        // Reached a node → flash it and pick next edge
+        if (sp.t >= 1 || sp.t <= 0) {
+          const nodeIdx = sp.t >= 1 ? edge.to : edge.from;
+          const node = nodes[nodeIdx];
+          if (node && node.edges.length > 0) {
+            node.flash = 25;
+            node.flashColor = sp.color;
+
+            // Prefer a different edge than the one we arrived on
+            const others = node.edges.filter((e) => e !== sp.eIdx);
+            const nextEIdx =
+              others.length > 0
+                ? others[Math.floor(Math.random() * others.length)]
+                : node.edges[Math.floor(Math.random() * node.edges.length)];
+            const next = edges[nextEIdx];
+            if (next) {
+              sp.eIdx = nextEIdx;
+              if (next.from === nodeIdx) {
+                sp.forward = true;
+                sp.t = 0;
+              } else {
+                sp.forward = false;
+                sp.t = 1;
+              }
+            }
+          }
+          sp.trail = [];
+        }
+
+        // Draw trail (fading afterglow in sprite color)
+        const sc = sp.color;
+        for (let i = 0; i < sp.trail.length; i++) {
+          const fade = (i + 1) / sp.trail.length;
+          ctx.beginPath();
+          ctx.arc(sp.trail[i].x, sp.trail[i].y, sp.size * fade * 0.7, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${sc.r},${sc.g},${sc.b},${fade * 0.35 * sp.brightness * gDim})`;
+          ctx.fill();
+        }
+
+        // Draw sprite core (bright pulse)
+        const pulseSz = 1 + Math.sin(sp.pulse) * 0.12;
+        const sz = sp.size * pulseSz;
+
+        // Neon glow in sprite color
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = `rgba(${sc.r},${sc.g},${sc.b},${0.55 * sp.brightness * gDim})`;
+
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, sz, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${sc.hr},${sc.hg},${sc.hb},${0.95 * sp.brightness * gDim})`;
+        ctx.fill();
+
+        // Soft outer halo
+        ctx.shadowBlur = 0;
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, sz * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${sc.r},${sc.g},${sc.b},${0.08 * sp.brightness * gDim})`;
+        ctx.fill();
+      }
+
       animationId = requestAnimationFrame(draw);
     };
+
     draw();
 
     return () => {
