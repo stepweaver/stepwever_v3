@@ -6,11 +6,11 @@ import {
   BookOpen,
   Sparkles,
   Terminal as TerminalIcon,
+  ChevronRight,
 } from 'lucide-react';
 import { useEffect } from 'react';
 
 import dynamic from 'next/dynamic';
-import { HUDPanel } from '@/components/ui/HUDPanel';
 
 // Lazy load heavy components
 const BackgroundCanvas = dynamic(
@@ -129,22 +129,46 @@ export default function TerminalPage() {
       <div className='relative z-10 w-full'>
         <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
           <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
-            <HUDPanel
-              title={TERMINAL_COPY.hero.title}
-              id='TERM-00'
-              className='p-6 md:p-8'
-            >
-              <p className='font-ocr text-base sm:text-lg md:text-xl text-text/85 leading-relaxed max-w-5xl mb-4'>
-                {TERMINAL_COPY.hero.subtitle}
-              </p>
-              <div className='relative border border-neon/30 rounded-sm bg-panel/50 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-text/90'>
-                <span>{TERMINAL_COPY.hero.ribbon}</span>
-                <span
-                  className='absolute inset-y-0 left-0 w-1 bg-neon/80 rounded-l-sm'
-                  aria-hidden='true'
-                />
+            {/* Hero */}
+            <div className='space-y-6 md:space-y-8'>
+              <div className='space-y-4'>
+                <p className='text-xs tracking-[0.3em] text-neon/60 font-ocr uppercase'>
+                  MODULE &mdash; TERM-00
+                </p>
+                <h1 className='font-ibm text-4xl sm:text-5xl md:text-6xl font-bold text-text leading-tight'>
+                  {TERMINAL_COPY.hero.title}
+                </h1>
+                <p className='font-ocr text-base sm:text-lg md:text-xl text-text/70 leading-relaxed max-w-3xl'>
+                  {TERMINAL_COPY.hero.subtitle}
+                </p>
               </div>
-            </HUDPanel>
+
+              <div className='flex flex-col sm:flex-row items-start gap-4'>
+                <button
+                  onClick={() => {
+                    const terminal = document.getElementById('terminal-section');
+                    if (terminal) {
+                      terminal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      setTimeout(() => {
+                        const input = terminal.querySelector('input[type="text"]');
+                        if (input) input.focus();
+                      }, 500);
+                    }
+                  }}
+                  className='group flex items-center gap-2 py-3 px-6 border border-neon text-neon font-ocr text-sm hover:bg-neon/10 transition-all duration-200'
+                >
+                  <TerminalIcon className='w-4 h-4' />
+                  <span>Launch terminal</span>
+                  <ChevronRight className='w-4 h-4 transition-transform group-hover:translate-x-0.5' />
+                </button>
+                <span className='font-ocr text-xs text-text/50 self-center'>
+                  {TERMINAL_COPY.hero.ribbon}
+                </span>
+              </div>
+
+              {/* Divider */}
+              <div className='w-full h-px bg-gradient-to-r from-neon/40 via-neon/10 to-transparent' />
+            </div>
 
             <section className='grid gap-10 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1.8fr)]'>
               <div className='space-y-8'>
@@ -164,7 +188,7 @@ export default function TerminalPage() {
                     return (
                       <div
                         key={card.title}
-                        className='border border-neon/20 rounded-sm bg-panel/50 backdrop-blur-xl p-4 space-y-2'
+                        className='rounded-sm bg-panel/50 backdrop-blur-xl p-4 space-y-2'
                       >
                         <div className='flex items-center gap-2'>
                           <Icon className='w-4 h-4 text-neon' />
@@ -208,7 +232,7 @@ export default function TerminalPage() {
                     {COMMAND_GUIDE.map((item) => (
                       <div
                         key={item.command}
-                        className='border border-neon/20 rounded-sm bg-panel/50 backdrop-blur-xl p-3 font-ocr text-xs text-text/85'
+                        className='rounded-sm bg-panel/50 backdrop-blur-xl p-3 font-ocr text-xs text-text/85'
                       >
                         <p className='text-neon'>
                           <span className='font-ibm text-sm'>

@@ -13,15 +13,15 @@ function RichTextSegment({ part }) {
         href={part.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-terminal-green hover:underline"
+        className="text-neon hover:text-accent transition-colors underline hover:no-underline"
       >
         {content}
       </Link>
     );
   }
-  if (ann.code) content = <code className="bg-terminal-dimmed/30 px-1 py-0.5 rounded text-sm text-terminal-text">{content}</code>;
+  if (ann.code) content = <code className="bg-neon/10 px-1.5 py-0.5 rounded-sm text-sm text-neon/90 font-mono">{content}</code>;
   if (ann.italic) content = <em>{content}</em>;
-  if (ann.bold) content = <strong>{content}</strong>;
+  if (ann.bold) content = <strong className="text-text font-semibold">{content}</strong>;
   return <span>{content}</span>;
 }
 
@@ -71,7 +71,7 @@ export default function NotionBlockBody({ blocks }) {
       const textParts = block.paragraph.rich_text;
       if (textParts.length === 0) return <div key={key} className="h-4" aria-hidden />;
       return (
-        <p key={key} className="text-terminal-text leading-relaxed text-base sm:text-lg">
+        <p key={key} className="text-text leading-relaxed text-base sm:text-lg font-ibm">
           <RichText richText={textParts} />
         </p>
       );
@@ -82,7 +82,7 @@ export default function NotionBlockBody({ blocks }) {
       const id = headings[headingIndex]?.id;
       if (headingIndex < headings.length) headingIndex += 1;
       return (
-        <h2 key={key} id={id} className="text-2xl sm:text-3xl font-bold text-terminal-green mt-8 mb-4 scroll-mt-24">
+        <h2 key={key} id={id} className="text-2xl sm:text-3xl font-bold text-neon mt-8 mb-4 scroll-mt-24 [text-shadow:var(--terminal-title-glow)]">
           {text}
         </h2>
       );
@@ -92,7 +92,7 @@ export default function NotionBlockBody({ blocks }) {
       const id = headings[headingIndex]?.id;
       if (headingIndex < headings.length) headingIndex += 1;
       return (
-        <h3 key={key} id={id} className="text-xl sm:text-2xl font-bold text-terminal-green mt-6 mb-3 scroll-mt-24">
+        <h3 key={key} id={id} className="text-xl sm:text-2xl font-bold text-neon mt-6 mb-3 scroll-mt-24 [text-shadow:var(--terminal-text-glow)]">
           {text}
         </h3>
       );
@@ -102,7 +102,7 @@ export default function NotionBlockBody({ blocks }) {
       const id = headings[headingIndex]?.id;
       if (headingIndex < headings.length) headingIndex += 1;
       return (
-        <h4 key={key} id={id} className="text-lg sm:text-xl font-bold text-terminal-green mt-4 mb-2 scroll-mt-24">
+        <h4 key={key} id={id} className="text-lg sm:text-xl font-bold text-neon mt-4 mb-2 scroll-mt-24 [text-shadow:var(--terminal-text-glow)]">
           {text}
         </h4>
       );
@@ -110,7 +110,7 @@ export default function NotionBlockBody({ blocks }) {
 
     if (block.type === 'quote' && block.quote?.rich_text) {
       return (
-        <blockquote key={key} className="border-l-4 border-terminal-green pl-4 py-2 my-4 italic text-terminal-text/90">
+        <blockquote key={key} className="border-l-2 border-neon/40 pl-4 py-2 my-4 italic text-text/90 font-ibm bg-neon/[0.03]">
           <RichText richText={block.quote.rich_text} />
         </blockquote>
       );
@@ -119,22 +119,22 @@ export default function NotionBlockBody({ blocks }) {
     if (block.type === 'code' && block.code?.rich_text) {
       const text = block.code.rich_text.map((t) => t.plain_text).join('');
       return (
-        <pre key={key} className="bg-terminal-dimmed/20 p-4 rounded border border-terminal-dimmed/40 overflow-x-auto my-4">
-          <code className="text-sm text-terminal-text">{text}</code>
+        <pre key={key} className="bg-panel/80 p-4 rounded-sm border border-neon/20 overflow-x-auto my-4 shadow-neon-sm">
+          <code className="text-sm text-neon/90 font-mono">{text}</code>
         </pre>
       );
     }
 
     if (block.type === 'divider') {
-      return <hr key={key} className="border-terminal-dimmed/40 my-8" />;
+      return <hr key={key} className="border-neon/15 my-8" />;
     }
 
     if (block.type === 'callout' && block.callout?.rich_text) {
       const icon = block.callout.icon?.emoji ?? '\u2139\uFE0F';
       return (
-        <div key={key} className="border border-terminal-dimmed/40 rounded-xl p-4 my-4 flex gap-3">
+        <div key={key} className="rounded-sm p-4 my-4 flex gap-3 bg-panel/40 backdrop-blur-sm">
           <span className="shrink-0" aria-hidden>{icon}</span>
-          <div className="text-terminal-text leading-relaxed min-w-0">
+          <div className="text-text leading-relaxed min-w-0 font-ibm">
             <RichText richText={block.callout.rich_text} />
           </div>
         </div>
@@ -152,15 +152,15 @@ export default function NotionBlockBody({ blocks }) {
           {/* Notion file-type image URLs are temporary (~1 hr). revalidate=60 limits
               exposure, but consider proxying via Next Image or using external URLs
               in Notion for long-lived links. */}
-          <img src={url} alt={caption || 'Notion image'} className="max-w-full h-auto rounded border border-terminal-dimmed/40" />
-          {caption ? <figcaption className="mt-2 text-sm text-terminal-text/80">{caption}</figcaption> : null}
+          <img src={url} alt={caption || 'Notion image'} className="max-w-full h-auto rounded-sm border border-neon/20 shadow-neon-sm" />
+          {caption ? <figcaption className="mt-2 text-sm text-text/60 font-ocr">{caption}</figcaption> : null}
         </figure>
       );
     }
 
     return (
-      <div key={key} className="opacity-70 text-sm border border-terminal-dimmed/40 rounded p-2 my-2">
-        Unsupported block: <code>{block.type}</code>
+      <div key={key} className="opacity-70 text-sm rounded-sm p-2 my-2 font-ocr bg-panel/30">
+        Unsupported block: <code className="text-neon/80">{block.type}</code>
       </div>
     );
   }
@@ -171,9 +171,9 @@ export default function NotionBlockBody({ blocks }) {
         {groups.map((group, gi) => {
           if (group.type === 'bulleted_list') {
             return (
-              <ul key={gi} className="list-disc ml-6 my-2 space-y-1">
+              <ul key={gi} className="list-disc ml-6 my-2 space-y-1 marker:text-neon/50">
                 {group.items.map((block, li) => (
-                  <li key={li} className="text-terminal-text leading-relaxed">
+                  <li key={li} className="text-text leading-relaxed font-ibm">
                     <RichText richText={block.bulleted_list_item.rich_text} />
                   </li>
                 ))}
@@ -182,9 +182,9 @@ export default function NotionBlockBody({ blocks }) {
           }
           if (group.type === 'numbered_list') {
             return (
-              <ol key={gi} className="list-decimal ml-6 my-2 space-y-1">
+              <ol key={gi} className="list-decimal ml-6 my-2 space-y-1 marker:text-neon/50">
                 {group.items.map((block, li) => (
-                  <li key={li} className="text-terminal-text leading-relaxed">
+                  <li key={li} className="text-text leading-relaxed font-ibm">
                     <RichText richText={block.numbered_list_item.rich_text} />
                   </li>
                 ))}

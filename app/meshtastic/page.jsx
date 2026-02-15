@@ -38,11 +38,18 @@ export default async function MeshtasticDocsIndex() {
     <div className="min-h-screen relative">
       <BackgroundCanvas />
       <div className="relative z-10 flex items-center justify-center min-h-[60vh] px-4">
-        <div className="max-w-2xl rounded-xl border border-neon/20 bg-panel/50 backdrop-blur p-8">
-          <p className="text-neon font-semibold text-lg mb-3 font-ocr">
+        <div className="max-w-2xl rounded-sm bg-panel/50 backdrop-blur p-8 shadow-neon-sm">
+          <div className="flex items-start justify-between gap-4 mb-3">
+            <p className="text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase">STATUS</p>
+            <div className="text-right text-xs text-muted font-mono shrink-0">
+              <div className="tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]">ID</div>
+              <div className="font-mono text-neon/80 whitespace-nowrap">MESH-00</div>
+            </div>
+          </div>
+          <p className="text-neon font-semibold text-lg mb-3 font-ibm [text-shadow:var(--terminal-title-glow)]">
             Meshtastic Field Notes
           </p>
-          <p className="text-text/80 font-ocr text-sm">
+          <p className="text-text/80 font-ocr text-sm leading-relaxed">
             {!hasDb
               ? 'Configure NOTION_MESHTASTIC_DOCS_DB_ID and share the Meshtastic Docs database with your Notion integration to see published docs here.'
               : 'No docs published yet. Add pages in Notion with Status = Published.'}

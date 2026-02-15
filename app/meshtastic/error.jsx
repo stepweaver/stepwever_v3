@@ -7,7 +7,7 @@
 export default function MeshtasticError({ error, reset }) {
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <div className="max-w-md rounded-xl border border-danger/30 bg-panel/60 backdrop-blur p-8 text-center">
+      <div className="max-w-md rounded-xl bg-panel/60 backdrop-blur p-8 text-center ring-1 ring-danger/20">
         <p className="text-danger font-semibold text-lg mb-2">
           Something went wrong
         </p>
@@ -16,7 +16,7 @@ export default function MeshtasticError({ error, reset }) {
         </p>
         <button
           onClick={() => reset()}
-          className="inline-block px-5 py-2 rounded-lg border border-neon/40 text-neon hover:bg-neon/10 transition-colors text-sm font-ocr"
+          className="inline-block px-5 py-2 rounded-lg bg-neon/10 text-neon hover:bg-neon/20 transition-colors text-sm font-ocr"
         >
           Try again
         </button>

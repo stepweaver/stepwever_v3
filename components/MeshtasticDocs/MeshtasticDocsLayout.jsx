@@ -1,7 +1,10 @@
 import MeshtasticDocsSidebar from './MeshtasticDocsSidebar';
 
 /**
- * Meshtastic docs layout: desktop = left sidebar (transparent, HUD); mobile = no sidebar (use in-page dropdown below body).
+ * Traditional docs layout (like meshtastic.org/docs):
+ * - Left: sticky nav sidebar with border
+ * - Main: scrollable content area
+ * - No fixed viewport height; page scrolls naturally
  */
 export default function MeshtasticDocsLayout({
   grouped,
@@ -10,20 +13,18 @@ export default function MeshtasticDocsLayout({
   children,
 }) {
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row lg:h-[calc(100vh-3.5rem)] lg:pt-14">
-      {/* Sidebar: desktop only; same height as main */}
-      <div className="hidden lg:block lg:w-72 lg:flex-shrink-0 lg:h-full lg:relative">
-        <div className="lg:sticky lg:top-16 lg:h-full lg:overflow-y-auto lg:pr-2">
-          <MeshtasticDocsSidebar
-            grouped={grouped}
-            currentSlug={currentSlug}
-            currentSection={currentSection}
-          />
-        </div>
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left sidebar: sticky nav rail, docs-style border */}
+      <div className="hidden lg:block lg:w-64 xl:w-72 lg:flex-shrink-0 lg:sticky lg:top-16 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-r lg:border-neon/20 lg:bg-panel/30 lg:backdrop-blur-sm">
+        <MeshtasticDocsSidebar
+          grouped={grouped}
+          currentSlug={currentSlug}
+          currentSection={currentSection}
+        />
       </div>
 
-      {/* Main content area: same height as sidebar (no top padding so right panel aligns with left) */}
-      <main className="flex-1 min-w-0 min-h-0 flex flex-col lg:h-full">
+      {/* Main content: flex-1, scrolls with page */}
+      <main className="flex-1 min-w-0">
         {children}
       </main>
     </div>

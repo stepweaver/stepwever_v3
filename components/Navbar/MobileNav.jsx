@@ -76,10 +76,6 @@ export default function MobileNav() {
           {/* One header row: MODULE // menu · NAV-00 · theme · close */}
           <header className='flex items-center justify-between gap-3 px-5 py-4 shrink-0'>
             <div className='flex items-baseline gap-2 min-w-0'>
-              <span className='font-ocr text-[10px] tracking-[0.3em] text-neon/60 uppercase'>
-                MODULE
-              </span>
-              <span className='font-ocr text-neon/40 text-xs' aria-hidden>//</span>
               <span className='font-ibm text-lg font-semibold text-neon truncate flex items-center gap-1.5'>
                 <GlitchLambda autoGlitch={true} size='small' />
                 menu

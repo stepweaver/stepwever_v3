@@ -13,6 +13,7 @@ import NotionBlockBody from '@/components/NotionBlockBody';
 import MeshtasticDocsLayout from '@/components/MeshtasticDocs/MeshtasticDocsLayout';
 import OnThisPage from '@/components/MeshtasticDocs/OnThisPage';
 import MeshtasticDocsDropdown from '@/components/MeshtasticDocs/MeshtasticDocsDropdown';
+import MeshtasticDocsMobileNav from '@/components/MeshtasticDocs/MeshtasticDocsMobileNav';
 import DocPrevNext from '@/components/MeshtasticDocs/DocPrevNext';
 
 /** Per-request cache so generateMetadata + page share a single Notion call. */
@@ -96,43 +97,62 @@ export default async function MeshtasticDocPage({ params }) {
           currentSlug={doc.slug}
           currentSection={doc.section}
         >
-          <div className="flex-1 flex min-h-0 w-full px-4 pt-0 gap-8 xl:flex-row flex-col">
-            <div className="min-w-0 flex-1 flex flex-col min-h-0">
-              <div className="lg:hidden flex-shrink-0 mb-3">
-                <MeshtasticDocsDropdown headings={headings} />
+          {/* Traditional docs: content + optional right TOC */}
+          <div className="flex flex-col xl:flex-row xl:gap-12 w-full px-4 sm:px-6 lg:px-8 pb-16">
+            {/* Mobile: Docs menu and On this page as separate, independent controls */}
+            <div className="xl:hidden space-y-3 mb-6">
+              <div>
+                <MeshtasticDocsMobileNav
+                  grouped={grouped}
+                  currentSlug={doc.slug}
+                  currentSection={doc.section}
+                />
               </div>
-              <article className="flex-1 flex flex-col min-h-0 rounded-xl border border-neon/20 bg-panel/50 backdrop-blur overflow-hidden">
-                <header className="border-b border-neon/20 px-6 py-5 flex-shrink-0">
-                  <div className="max-w-3xl mx-auto">
-                    <p className="text-xs tracking-[0.22em] text-neon/60 font-ocr uppercase">{doc.section}</p>
-                    <h1 className="text-3xl font-semibold text-neon mt-1">
-                      {doc.title}
-                    </h1>
-                    {doc.summary ? (
-                      <p className="mt-2 text-text/80">{doc.summary}</p>
-                    ) : null}
-                    {doc.lastEditedTime ? (
-                      <p className="mt-3 text-xs text-text/60 font-ocr">
-                        Updated {formatUpdated(doc.lastEditedTime)}
-                      </p>
-                    ) : null}
-                  </div>
+              <div>
+                <MeshtasticDocsDropdown headings={headings} className="w-full" />
+              </div>
+            </div>
+
+            {/* Main doc content: bordered on desktop only; mobile = less borders */}
+            <div className="flex-1 min-w-0">
+              <article className="border-0 rounded-md bg-panel/40 backdrop-blur-sm overflow-hidden lg:border lg:border-neon/20">
+                <header className="border-b border-neon/10 lg:border-neon/20 px-5 sm:px-6 lg:px-8 py-6">
+                  {doc.section && doc.section.toLowerCase() !== doc.title?.toLowerCase() && (
+                    <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-1">
+                      {doc.section}
+                    </p>
+                  )}
+                  <h1 className="text-2xl sm:text-3xl font-semibold text-text font-ibm [text-shadow:var(--terminal-title-glow)]">
+                    {doc.title}
+                  </h1>
+                  {doc.summary ? (
+                    <p className="mt-2 text-text/80 font-ocr text-sm leading-relaxed">
+                      {doc.summary}
+                    </p>
+                  ) : null}
+                  {doc.lastEditedTime ? (
+                    <p className="mt-3 text-xs text-neon/50 font-ocr">
+                      Updated {formatUpdated(doc.lastEditedTime)}
+                    </p>
+                  ) : null}
                 </header>
 
-                <div className="flex-1 min-h-0 overflow-auto px-6 pb-8 lg:pb-10">
-                  <div className="max-w-3xl mx-auto">
+                <div className="px-5 sm:px-6 lg:px-8 py-6 lg:py-8">
+                  <div className="max-w-3xl">
                     {blocks.length > 0 ? (
                       <div className="prose prose-invert max-w-none">
                         <NotionBlockBody blocks={blocks} />
                       </div>
                     ) : (
-                      <p className="text-text/70">No content yet.</p>
+                      <p className="text-text/70 font-ocr">No content yet.</p>
                     )}
                     <DocPrevNext flatList={flatList} currentSlug={doc.slug} />
                   </div>
                 </div>
               </article>
             </div>
+
+            {/* Right: On this page (desktop only, sticky) */}
             <OnThisPage headings={headings} />
           </div>
         </MeshtasticDocsLayout>

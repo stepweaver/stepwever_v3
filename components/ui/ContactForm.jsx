@@ -71,7 +71,7 @@ export default function ContactForm() {
   const labelClass = 'text-neon/90 font-ocr text-sm uppercase tracking-widest block mb-2';
 
   return (
-    <div className='border-l-2 border-neon/50 pl-4'>
+    <div>
         {status.error && (
           <div
             className='mb-6 p-4 border border-danger/50 bg-danger/10 rounded-lg font-ocr text-sm text-danger'

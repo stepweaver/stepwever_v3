@@ -424,14 +424,16 @@ export default function BackgroundCanvas() {
       edges = [];
       sprites = [];
 
-      const cell = 80 + Math.floor(Math.random() * 30);
+      const isMobileCircuit = W < 768;
+      const cell = isMobileCircuit ? (140 + Math.floor(Math.random() * 40)) : (100 + Math.floor(Math.random() * 30));
       const cols = Math.ceil(W / cell) + 2;
       const rows = Math.ceil(H / cell) + 2;
 
-      // Place nodes on a jittered grid (~65% fill)
+      // Place nodes on a jittered grid
+      const fillRate = isMobileCircuit ? 0.4 : 0.55;
       for (let r = -1; r < rows; r++) {
         for (let c = -1; c < cols; c++) {
-          if (Math.random() > 0.65) continue;
+          if (Math.random() > fillRate) continue;
           nodes.push({
             x: c * cell + (Math.random() - 0.5) * cell * 0.55,
             y: r * cell + (Math.random() - 0.5) * cell * 0.55,
@@ -457,11 +459,12 @@ export default function BackgroundCanvas() {
 
         let added = 0;
         for (const { j } of cands) {
-          if (added >= 3) break;
+          if (added >= (isMobileCircuit ? 2 : 3)) break;
           const key = `${i}-${j}`;
           if (edgeSet.has(key)) continue;
           // Limit max connections per node to keep it clean
-          if (nodes[i].edges.length >= 5 || nodes[j].edges.length >= 5) continue;
+          const maxConn = isMobileCircuit ? 3 : 4;
+          if (nodes[i].edges.length >= maxConn || nodes[j].edges.length >= maxConn) continue;
           edgeSet.add(key);
 
           const pts = makeTrace(nodes[i], nodes[j]);
@@ -476,7 +479,8 @@ export default function BackgroundCanvas() {
 
       // Spawn data sprites
       if (edges.length === 0) return;
-      const count = Math.max(10, Math.min(50, Math.floor(edges.length * 0.35)));
+      const spriteRatio = isMobileCircuit ? 0.2 : 0.3;
+      const count = Math.max(4, Math.min(isMobileCircuit ? 15 : 40, Math.floor(edges.length * spriteRatio)));
       for (let i = 0; i < count; i++) sprites.push(newSprite());
     }
 
@@ -501,8 +505,8 @@ export default function BackgroundCanvas() {
         t: fwd ? 0 : 1,
         speed: 0.0015 + Math.random() * 0.005,
         forward: fwd,
-        size: 1.5 + Math.random() * 1.5,
-        brightness: 0.7 + Math.random() * 0.3,
+        size: 1.4 + Math.random() * 1.6,
+        brightness: 0.65 + Math.random() * 0.35,
         trail: [],
         trailMax: 8 + Math.floor(Math.random() * 10),
         pulse: Math.random() * Math.PI * 2,
@@ -530,8 +534,8 @@ export default function BackgroundCanvas() {
         ctx.beginPath();
         ctx.moveTo(e.pts[0].x, e.pts[0].y);
         for (let i = 1; i < e.pts.length; i++) ctx.lineTo(e.pts[i].x, e.pts[i].y);
-        ctx.strokeStyle = `rgba(90,255,140,${0.07 * gDim})`;
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = `rgba(90,255,140,${0.09 * gDim})`;
+        ctx.lineWidth = 1.2;
         ctx.stroke();
       }
 
@@ -543,18 +547,18 @@ export default function BackgroundCanvas() {
         if (n.flash > 0) { flashA = n.flash / 25; n.flash--; }
 
         // Small square pad
-        const s = 1.5 + (n.edges.length > 2 ? 1 : 0);
-        const baseA = 0.1 + flashA * 0.6;
+        const s = 1.5;
+        const baseA = 0.1 + flashA * 0.4;
         ctx.fillStyle = `rgba(90,255,140,${baseA * gDim})`;
         ctx.fillRect(n.x - s, n.y - s, s * 2, s * 2);
 
         // Flash burst when a sprite arrives (in sprite's color)
         if (flashA > 0.05) {
           const fc = n.flashColor || { r: 90, g: 255, b: 140 };
-          ctx.shadowBlur = 14;
-          ctx.shadowColor = `rgba(${fc.r},${fc.g},${fc.b},${flashA * 0.5 * gDim})`;
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = `rgba(${fc.r},${fc.g},${fc.b},${flashA * 0.45 * gDim})`;
           ctx.beginPath();
-          ctx.arc(n.x, n.y, 5 + flashA * 4, 0, Math.PI * 2);
+          ctx.arc(n.x, n.y, 4 + flashA * 4, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(${fc.r},${fc.g},${fc.b},${flashA * 0.2 * gDim})`;
           ctx.fill();
           ctx.shadowBlur = 0;
@@ -612,7 +616,7 @@ export default function BackgroundCanvas() {
           const fade = (i + 1) / sp.trail.length;
           ctx.beginPath();
           ctx.arc(sp.trail[i].x, sp.trail[i].y, sp.size * fade * 0.7, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${sc.r},${sc.g},${sc.b},${fade * 0.35 * sp.brightness * gDim})`;
+          ctx.fillStyle = `rgba(${sc.r},${sc.g},${sc.b},${fade * 0.5 * sp.brightness * gDim})`;
           ctx.fill();
         }
 
@@ -621,8 +625,8 @@ export default function BackgroundCanvas() {
         const sz = sp.size * pulseSz;
 
         // Neon glow in sprite color
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = `rgba(${sc.r},${sc.g},${sc.b},${0.55 * sp.brightness * gDim})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `rgba(${sc.r},${sc.g},${sc.b},${0.5 * sp.brightness * gDim})`;
 
         ctx.beginPath();
         ctx.arc(pos.x, pos.y, sz, 0, Math.PI * 2);

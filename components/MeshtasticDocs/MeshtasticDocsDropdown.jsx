@@ -25,9 +25,9 @@ export default function MeshtasticDocsDropdown({ headings = [], className = '' }
   return (
     <details
       id={DROPDOWN_ID}
-      className={`group lg:hidden rounded-lg border border-neon/20 bg-panel/50 backdrop-blur ${className}`}
+      className={`group lg:hidden rounded-sm border border-neon/25 bg-panel/50 backdrop-blur ${className}`}
     >
-      <summary className="list-none cursor-pointer flex items-center justify-between gap-2 px-3 py-2 text-neon/90 hover:text-neon transition-colors font-ocr text-xs uppercase tracking-wider">
+      <summary className="list-none cursor-pointer flex items-center justify-between gap-2 px-3 py-2 text-neon/90 hover:text-neon transition-colors font-ocr text-xs uppercase tracking-[0.2em]">
         <span>On this page</span>
         <span className="text-neon/60 group-open:rotate-180 transition-transform">{CHEVRON_DOWN}</span>
       </summary>
@@ -38,7 +38,7 @@ export default function MeshtasticDocsDropdown({ headings = [], className = '' }
               <Link
                 href={`#${id}`}
                 onClick={closeDropdown}
-                className={`block py-1 px-2 rounded text-sm text-text/80 hover:text-neon hover:bg-neon/5 transition-colors ${headingIndentClass(level, index === 0)}`}
+                className={`block py-1 px-2 rounded-sm text-sm text-text/70 hover:text-neon hover:bg-neon/5 transition-colors font-ocr ${headingIndentClass(level, index === 0)}`}
               >
                 {text}
               </Link>

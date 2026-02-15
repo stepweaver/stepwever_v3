@@ -11,23 +11,25 @@ export default function OnThisPage({ headings }) {
 
   return (
     <aside
-      className="hidden xl:block w-52 shrink-0 pt-8 sticky top-24 self-start"
+      className="hidden xl:block min-w-64 max-w-80 flex-1 pt-8 sticky top-24 self-start border-l border-neon/20 pl-8 pr-4"
       aria-label="On this page"
     >
-      <p className="text-xs font-semibold uppercase tracking-wider text-neon/70 mb-3 font-ocr">
-        On this page
-      </p>
-      <nav className="space-y-1">
-        {headings.map(({ level, text, id }, index) => (
-          <Link
-            key={id}
-            href={`#${id}`}
-            className={`block text-sm text-text/80 hover:text-neon transition-colors py-0.5 ${headingIndentClass(level, index === 0)}`}
-          >
-            {text}
-          </Link>
-        ))}
-      </nav>
+      <div className="bg-panel/30 backdrop-blur-sm py-5 px-5 rounded-sm border border-neon/15">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neon/70 mb-3 font-ocr">
+          On this page
+        </p>
+        <nav className="space-y-1.5">
+          {headings.map(({ level, text, id }, index) => (
+            <Link
+              key={id}
+              href={`#${id}`}
+              className={`block text-sm text-text/70 hover:text-neon transition-colors py-1 font-ocr ${headingIndentClass(level, index === 0)}`}
+            >
+              {text}
+            </Link>
+          ))}
+        </nav>
+      </div>
     </aside>
   );
 }

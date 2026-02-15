@@ -51,22 +51,25 @@ function ContactPage() {
       <div className='relative z-10 w-full'>
         <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
           <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
-            {/* Intro — unbounded, just text */}
-            <div className='px-2'>
-              <div className='flex items-start justify-between gap-4 mb-4'>
-                <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>CONTACT</p>
-                <div className='text-right text-xs text-muted font-mono shrink-0'>
-                  <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
-                  <div className='font-mono text-neon/80 whitespace-nowrap'>CONTACT-00</div>
-                </div>
+            {/* Hero */}
+            <div className='space-y-6 md:space-y-8'>
+              <div className='space-y-4'>
+                <p className='text-xs tracking-[0.3em] text-neon/60 font-ocr uppercase'>
+                  CONTACT &mdash; CONTACT-00
+                </p>
+                <h1 className='font-ibm text-4xl sm:text-5xl md:text-6xl font-bold text-text leading-tight'>
+                  Let&apos;s connect.
+                </h1>
+                <p className='font-ocr text-base sm:text-lg md:text-xl text-text/70 leading-relaxed max-w-3xl'>
+                  Have a question, opportunity, or just want to say hello? My inbox is always open.
+                </p>
+                <p className='font-ocr text-sm text-text/50'>
+                  I typically respond within a day or two. Looking forward to hearing from you!
+                </p>
               </div>
-              <h2 className='text-lg font-semibold text-text font-ibm mb-4'>Let&apos;s connect.</h2>
-              <p className='font-ocr text-base sm:text-lg md:text-xl text-text/80 max-w-6xl leading-relaxed mb-4'>
-                Have a question, opportunity, or just want to say hello? My inbox is always open.
-              </p>
-              <p className='font-ocr text-sm text-text/60'>
-                I typically respond within a day or two. Looking forward to hearing from you!
-              </p>
+
+              {/* Divider */}
+              <div className='w-full h-px bg-gradient-to-r from-neon/40 via-neon/10 to-transparent' />
             </div>
 
             <section className='grid gap-10 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]'>

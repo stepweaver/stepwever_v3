@@ -4,7 +4,6 @@ import { useEffect, useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { ModuleHeader } from '@/components/ui/ModuleHeader';
 const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
   { ssr: false }
@@ -92,19 +91,20 @@ function CodexContent() {
       <BackgroundCanvas />
       <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16">
         <div className="max-w-7xl mx-auto">
-          {/* Hero — unbounded, just labels and text */}
-          <div className="mb-12">
-            <div className="flex items-start justify-between gap-4 mb-4">
-              <p className="text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase">CODEX</p>
-              <div className="text-right text-xs text-muted font-mono shrink-0">
-                <div className="tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]">ID</div>
-                <div className="font-mono text-neon/80 whitespace-nowrap">CODEX-00</div>
-              </div>
+          {/* Hero */}
+          <div className="mb-12 space-y-6 md:space-y-8">
+            <div className="space-y-4">
+              <p className="text-xs tracking-[0.3em] text-neon/60 font-ocr uppercase">
+                CODEX &mdash; CODEX-00
+              </p>
+              <h1 className="font-ibm text-4xl sm:text-5xl md:text-6xl font-bold text-text leading-tight">
+                Digital codex.
+              </h1>
+              <p className="font-ocr text-base sm:text-lg md:text-xl text-text/70 leading-relaxed max-w-3xl">
+                Thoughts and things I&apos;m exploring &mdash; developer notes, projects, and community contributions.
+              </p>
             </div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-text font-ibm mb-4">Stephen Weaver</h1>
-            <p className="text-text/80 text-base md:text-lg leading-relaxed mb-6 font-ocr">
-              Developer, veteran, and perpetual learner. This is my digital codex: thoughts and things I'm exploring.
-            </p>
+
             <nav className="flex flex-wrap items-center gap-x-2 font-ibm text-neon text-lg" aria-label="Breadcrumb">
               <span className="text-neon">user@stepweaver</span>
               <span className="text-text">~</span>
@@ -118,7 +118,9 @@ function CodexContent() {
               </button>
               <span className="text-neon motion-safe:animate-blink" aria-hidden>_</span>
             </nav>
-            <div className="mt-6 border-b border-neon/15" />
+
+            {/* Divider */}
+            <div className="w-full h-px bg-gradient-to-r from-neon/40 via-neon/10 to-transparent" />
           </div>
 
           {loading ? (
@@ -140,7 +142,7 @@ function CodexContent() {
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="flex-1 max-w-4xl">
                 {/* Mobile: TAGS + PROJECTS above post list */}
-                <div className="mb-8 lg:hidden border border-neon/15 bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
+                <div className="mb-8 lg:hidden bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
                   {filteredHashtags.length > 0 && (
                     <>
                       <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-3">FILTER BY TAG</p>
@@ -219,7 +221,7 @@ function CodexContent() {
                 <div className="sticky top-28 space-y-4">
                   {/* Tag filter */}
                   {filteredHashtags.length > 0 && (
-                    <div className="border border-neon/15 bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
+                    <div className="bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
                       <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-3">FILTER BY TAG</p>
                       <div className="flex flex-wrap gap-2">
                         {filteredHashtags.map((tag) => {
@@ -253,7 +255,7 @@ function CodexContent() {
                   )}
 
                   {/* Projects quick-nav */}
-                  <div className="border border-neon/15 bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
+                  <div className="bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
                     <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-3">PROJECTS</p>
                     <div className="space-y-1">
                       <Link href="/meshtastic" className="flex items-center gap-2 px-3 py-2 rounded-sm text-sm text-text hover:text-neon hover:bg-neon/10 transition-colors font-medium group">
