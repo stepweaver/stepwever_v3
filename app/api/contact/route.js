@@ -7,6 +7,7 @@ import {
 } from '@/utils/email';
 import { sanitizeFormData } from '@/utils/sanitize';
 import { createRateLimit } from '@/utils/rateLimit';
+import { detectBot, stripBotFields } from '@/utils/botProtection';
 
 export async function POST(request) {
   try {
@@ -24,8 +25,19 @@ export async function POST(request) {
 
     const formData = await request.json();
 
+    // ── Bot detection ───────────────────────────────────────────────
+    const botCheck = detectBot(formData, { checkContent: true, requireTimestamp: true });
+    if (botCheck.isBot) {
+      // Return a generic success to avoid leaking detection logic to bots
+      console.warn(`[CONTACT] Bot blocked — reason: ${botCheck.reason}`);
+      return NextResponse.json({ message: 'Message sent successfully! I\'ll get back to you soon.' });
+    }
+
+    // Strip bot-protection meta-fields before processing
+    const cleanData = stripBotFields(formData);
+
     // Sanitize all form data
-    const sanitizedData = sanitizeFormData(formData);
+    const sanitizedData = sanitizeFormData(cleanData);
     const { name, email, message } = sanitizedData;
 
     // Validate required fields

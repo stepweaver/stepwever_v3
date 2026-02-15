@@ -126,10 +126,10 @@ const NeonProfileCard = ({ profile }) => {
           </p>
 
           {mergedProfile.status && (
-            <div className='inline-flex items-center gap-2 text-terminal-green uppercase text-xs sm:text-sm tracking-[0.3em] sm:tracking-[0.4em] bg-terminal-dark/60 px-3 py-1.5 cyber-border-sm cyber-border-green shadow-[0_0_12px_rgba(0,255,65,0.25)]'>
+            <div className='inline-flex items-center gap-2 text-terminal-green uppercase text-xs sm:text-sm tracking-[0.3em] sm:tracking-[0.4em] bg-terminal-dark/60 px-3 py-1.5 cyber-border-sm cyber-border-green'>
               <span className='relative flex h-3.5 w-3.5'>
                 <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-50' />
-                <span className='relative inline-flex h-3.5 w-3.5 rounded-full bg-terminal-green shadow-[0_0_10px_rgba(0,255,65,0.45)]' />
+                <span className='relative inline-flex h-3.5 w-3.5 rounded-full bg-terminal-green' />
               </span>
               {mergedProfile.status}
             </div>
@@ -196,7 +196,7 @@ const NeonProfileCard = ({ profile }) => {
           )}
 
           <div
-            className='cyber-border cyber-border-green bg-terminal-dark/70 p-4 space-y-1 card-glow-tight'
+            className='cyber-border cyber-border-green bg-terminal-dark/70 p-4 space-y-1'
             aria-live='polite'
           >
             <div className='flex items-center justify-between text-sm sm:text-base uppercase tracking-[0.15em] sm:tracking-[0.2em] text-terminal-muted whitespace-nowrap font-bold font-ocr'>
@@ -214,7 +214,7 @@ const NeonProfileCard = ({ profile }) => {
                   </div>
                 )}
                 {showPrompt && (
-                  <span className='terminal-caret animate-pulse text-terminal-green text-base sm:text-lg'>
+                  <span className='terminal-caret motion-safe:animate-pulse text-terminal-green text-base sm:text-lg'>
                     _
                   </span>
                 )}

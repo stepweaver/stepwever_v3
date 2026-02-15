@@ -43,7 +43,7 @@ export function StatusPill({ status = 'ONLINE', size = 'default', className = ''
         />
         <span
           className={`relative inline-flex rounded-full ${config.pulse} ring-2 ring-white/30 ${isSmall ? 'h-2 w-2' : 'h-3 w-3'}`}
-          style={{ animation: 'status-indicator-pulse 1.2s ease-in-out infinite', boxShadow: '0 0 8px currentColor' }}
+          style={{ animation: 'status-indicator-pulse 1.2s ease-in-out infinite' }}
         />
       </span>
       <span className={`${config.textColor} uppercase font-ocr font-bold whitespace-nowrap ${isSmall ? 'text-[10px] tracking-[0.2em]' : 'text-xs tracking-[0.3em]'}`}>

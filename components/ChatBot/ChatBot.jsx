@@ -6,6 +6,7 @@ import { Send, User, Loader2 } from 'lucide-react';
 import { parseChatLinks } from '@/utils/parseChatLinks';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import { useBotProtection } from '@/hooks/useBotProtection';
 import '@/components/ThemeToggle/ThemeToggle.css';
 
 const EXAMPLE_QUESTIONS = [
@@ -17,6 +18,7 @@ const EXAMPLE_QUESTIONS = [
 
 export default function ChatBot() {
   const { theme, mounted } = useTheme();
+  const { getBotFields } = useBotProtection();
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -66,6 +68,7 @@ export default function ChatBot() {
             role: m.role,
             content: m.content,
           })),
+          ...getBotFields(),
         }),        
       });
 

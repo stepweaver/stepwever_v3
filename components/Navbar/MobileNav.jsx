@@ -50,7 +50,7 @@ export default function MobileNav() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className='cursor-pointer p-3 text-2xl text-neon hover:text-accent transition-colors duration-200 rounded-xl bg-panel/50 backdrop-blur hover:bg-panel/70'
+          className='cursor-pointer p-3 text-2xl text-neon hover:text-accent transition-colors duration-200 rounded-sm bg-panel/50 backdrop-blur hover:bg-panel/70'
           aria-expanded={isOpen}
           aria-label='Open navigation menu'
           aria-controls='mobile-navigation-menu'
@@ -91,7 +91,7 @@ export default function MobileNav() {
               <button
                 type='button'
                 onClick={() => setIsOpen(false)}
-                className='flex items-center justify-center w-11 h-11 rounded-lg text-neon hover:bg-neon/10 transition-colors touch-manipulation'
+                className='flex items-center justify-center w-11 h-11 rounded-sm text-neon hover:bg-neon/10 transition-colors touch-manipulation'
                 aria-label='Close menu'
               >
                 <span className='text-xl font-light'>×</span>

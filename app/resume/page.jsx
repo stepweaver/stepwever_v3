@@ -134,37 +134,31 @@ export default function ResumePage() {
 
       <div className='relative z-10 w-full'>
         <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
-          <div className='w-full max-w-7xl mx-auto'>
+          <HUDPanel title='Resume' id='RESUME-2025' className='w-full max-w-7xl mx-auto p-6 md:p-8 lg:p-10'>
+            {/* Header */}
             <header className='mb-12 md:mb-16'>
-              <div className='relative rounded-2xl border border-neon/20 bg-panel/70 p-6 md:p-8 shadow-neon-sm backdrop-blur overflow-hidden'>
-                <div className='pointer-events-none absolute left-3 top-3 h-2 w-8 border-l border-t border-neon/50' />
-                <div className='pointer-events-none absolute bottom-3 right-3 h-2 w-8 border-b border-r border-neon/50' />
-                <div className='flex flex-wrap items-center justify-between gap-2 mb-4'>
-                  <span className='doc-label-module'>DOCUMENT</span>
-                  <span className='doc-label-id'>ID: RESUME-2025</span>
-                </div>
-                <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6'>
-                  <div>
-                    <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-neon leading-tight mb-4'>
-                      Resume
-                    </h1>
-                    <div className='font-ocr text-base sm:text-lg text-text/80 max-w-3xl leading-relaxed'>
-                      <p>Full-Stack Developer | AI-Native Technologist | Business Analyst</p>
-                      <p>8+ years of experience bridging business and tech.</p>
-                    </div>
+              <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6'>
+                <div>
+                  <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-neon leading-tight mb-4'>
+                    Resume
+                  </h1>
+                  <div className='font-ocr text-base sm:text-lg text-text/80 max-w-3xl leading-relaxed'>
+                    <p>Full-Stack Developer | AI-Native Technologist | Business Analyst</p>
+                    <p>8+ years of experience bridging business and tech.</p>
                   </div>
-                  <a
-                    href='/weaver_resume.pdf'
-                    download='weaver_resume.pdf'
-                    className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-lg bg-panel/50 backdrop-blur-xl text-neon font-ibm hover:bg-neon/10 transition-all duration-200 self-start'
-                  >
-                    <Download className='w-5 h-5' />
-                    Download PDF
-                  </a>
                 </div>
+                <a
+                  href='/weaver_resume.pdf'
+                  download='weaver_resume.pdf'
+                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-sm bg-panel/50 backdrop-blur-xl text-neon font-ibm hover:bg-neon/10 transition-all duration-200 self-start'
+                >
+                  <Download className='w-5 h-5' />
+                  Download PDF
+                </a>
               </div>
             </header>
 
+            {/* Skills */}
             <section className='mb-16 md:mb-24' aria-labelledby='section-skills'>
               <div className='mb-6'>
                 <ModuleHeader name='Skills & Technologies' />
@@ -172,19 +166,18 @@ export default function ResumePage() {
 
               <div className='grid gap-8 md:grid-cols-2'>
                 {SKILLS.map((skillGroup, idx) => (
-                  <HUDPanel
-                    key={skillGroup.category}
-                    title={skillGroup.category}
-                    id={`RES-SK-${String(idx + 1).padStart(2, '0')}`}
-                    className='p-5'
-                  >
+                  <div key={skillGroup.category}>
+                    <div className='mb-3 flex items-baseline justify-between'>
+                      <h3 className='text-sm font-semibold text-text font-ibm'>{skillGroup.category}</h3>
+                      <span className='font-mono text-[10px] text-neon/60'>RES-SK-{String(idx + 1).padStart(2, '0')}</span>
+                    </div>
                     <div className='flex flex-wrap gap-3'>
                       {skillGroup.items.map((skill) => {
                         const Icon = skill.icon;
                         return (
                           <div
                             key={skill.name}
-                            className='flex items-center gap-2 px-3 py-2 rounded-lg border border-neon/20 bg-panel/30'
+                            className='flex items-center gap-2 px-3 py-2 rounded-sm border border-neon/20 bg-panel/30'
                           >
                             <Icon
                               className='w-4 h-4 shrink-0'
@@ -197,25 +190,25 @@ export default function ResumePage() {
                         );
                       })}
                     </div>
-                  </HUDPanel>
+                  </div>
                 ))}
               </div>
             </section>
 
+            {/* Experience */}
             <section className='mb-16 md:mb-24' aria-labelledby='section-experience'>
               <div className='mb-6'>
                 <ModuleHeader name='Experience' id='RES-EXP' />
               </div>
 
-              <div className='space-y-8'>
+              <div className='space-y-10'>
                 {EXPERIENCE.map((job, index) => (
-                  <HUDPanel
-                    key={index}
-                    title={job.title}
-                    id={`RES-EXP-${String(index + 1).padStart(2, '0')}`}
-                    className='p-6 md:p-8'
-                  >
-                    <p className='font-ocr text-accent text-base mb-2'>
+                  <article key={index} className='border-l-2 border-neon/20 pl-6'>
+                    <div className='flex items-start justify-between gap-4 mb-2'>
+                      <h3 className='text-lg font-semibold text-text font-ibm'>{job.title}</h3>
+                      <span className='font-mono text-[10px] text-neon/60 shrink-0'>RES-EXP-{String(index + 1).padStart(2, '0')}</span>
+                    </div>
+                    <p className='font-ocr text-accent text-base mb-1'>
                       {job.company}
                     </p>
                     <span className='font-ocr text-text/60 text-sm md:text-base block mb-4'>
@@ -235,11 +228,12 @@ export default function ResumePage() {
                         </li>
                       ))}
                     </ul>
-                  </HUDPanel>
+                  </article>
                 ))}
               </div>
             </section>
 
+            {/* Education */}
             <section className='mb-16 md:mb-24' aria-labelledby='section-education'>
               <div className='mb-6'>
                 <ModuleHeader name='Education' id='RES-EDU' />
@@ -266,23 +260,28 @@ export default function ResumePage() {
                     location: 'Monterey, CA',
                   },
                 ].map((edu) => (
-                  <HUDPanel key={edu.id} title={edu.title} id={edu.id} className='p-5'>
+                  <div key={edu.id} className='border-l-2 border-accent/20 pl-4'>
+                    <div className='flex items-baseline justify-between mb-1'>
+                      <h3 className='text-sm font-semibold text-text font-ibm'>{edu.title}</h3>
+                    </div>
                     <p className='font-ocr text-text text-base'>
                       {edu.institution}
                     </p>
-                    <p className='font-ocr text-text/60 text-sm mt-2'>
+                    <p className='font-ocr text-text/60 text-sm mt-1'>
                       {edu.location}
                     </p>
-                  </HUDPanel>
+                    <span className='font-mono text-[10px] text-neon/40'>{edu.id}</span>
+                  </div>
                 ))}
               </div>
             </section>
 
+            {/* Actions */}
             <section className='pt-8 border-t border-neon/20' aria-label='Document actions'>
               <div className='flex flex-col sm:flex-row gap-4 items-start'>
                 <a
                   href='/contact'
-                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-lg bg-panel/50 backdrop-blur-xl text-neon font-ibm hover:bg-neon/10 transition-all duration-200'
+                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-sm bg-panel/50 backdrop-blur-xl text-neon font-ibm hover:bg-neon/10 transition-all duration-200'
                 >
                   Get in Touch
                 </a>
@@ -290,7 +289,7 @@ export default function ResumePage() {
                   href='https://github.com/stepweaver'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='inline-flex items-center gap-2 px-6 py-3 border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl text-text font-ibm hover:bg-neon/10 hover:text-neon hover:border-neon transition-all duration-200'
+                  className='inline-flex items-center gap-2 px-6 py-3 border border-neon/30 rounded-sm bg-panel/50 backdrop-blur-xl text-text font-ibm hover:bg-neon/10 hover:text-neon hover:border-neon transition-all duration-200'
                 >
                   <SiGithub className='w-5 h-5' />
                   View GitHub
@@ -298,7 +297,7 @@ export default function ResumePage() {
                 </a>
               </div>
             </section>
-          </div>
+          </HUDPanel>
         </section>
       </div>
     </div>

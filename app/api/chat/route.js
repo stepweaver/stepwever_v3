@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createRateLimit } from '@/utils/rateLimit';
 import { sanitizeText } from '@/utils/sanitize';
+import { detectBot, stripBotFields } from '@/utils/botProtection';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -301,8 +302,20 @@ export async function POST(request) {
     if (rateLimitResult) return rateLimitResult;
 
     const body = await request.json().catch(() => null);
-    const messages = body?.messages;
-    const channel = body?.channel === 'terminal' ? 'terminal' : 'widget';
+
+    // ── Bot detection (honeypot + timing; skip gibberish for chat) ──
+    if (body) {
+      const botCheck = detectBot(body, { checkContent: false, requireTimestamp: true });
+      if (botCheck.isBot) {
+        console.warn(`[CHAT] Bot blocked — reason: ${botCheck.reason}`);
+        // Return a plausible-looking response so bots don't retry
+        return safeJson({ message: 'I appreciate the question! Feel free to ask more.', role: 'assistant' });
+      }
+    }
+
+    const cleanBody = body ? stripBotFields(body) : body;
+    const messages = cleanBody?.messages;
+    const channel = cleanBody?.channel === 'terminal' ? 'terminal' : 'widget';
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return safeJson({ error: 'Messages array is required' }, { status: 400 });

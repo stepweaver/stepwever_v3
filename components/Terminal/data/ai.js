@@ -1,6 +1,9 @@
 // AI Chat handler for Terminal
 // Sends messages to the AI API and returns responses
 
+// Record module load time for bot-protection timing check
+const MODULE_LOADED_AT = Date.now();
+
 export async function sendAIMessage(message, callback) {
   // Show loading indicator
   if (callback && callback.setLines) {
@@ -17,6 +20,8 @@ export async function sendAIMessage(message, callback) {
       body: JSON.stringify({
         channel: 'terminal',
         messages: [{ role: 'user', content: message }],
+        _hp_website: '',            // honeypot (always empty)
+        _t: MODULE_LOADED_AT,       // timing stamp
       }),
     });
 

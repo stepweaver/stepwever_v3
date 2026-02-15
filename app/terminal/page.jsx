@@ -20,7 +20,14 @@ const BackgroundCanvas = dynamic(
 const Terminal = dynamic(() => import('@/components/Terminal/Terminal'), {
   loading: () => (
     <div className='min-h-[400px] flex items-center justify-center'>
-      <p className='text-text font-ocr'>Loading terminal...</p>
+      <div className='hud-panel p-6 w-full max-w-md motion-safe:animate-pulse'>
+        <div className='text-xs tracking-[0.2em] text-neon/50 font-ocr uppercase'>LINK ESTABLISHED...</div>
+        <div className='mt-4 space-y-3'>
+          <div className='h-4 bg-neon/10 w-3/4' />
+          <div className='h-4 bg-neon/10 w-1/2' />
+          <div className='h-4 bg-neon/10 w-2/3' />
+        </div>
+      </div>
     </div>
   ),
 });
@@ -92,7 +99,7 @@ const JumpToTerminalButton = () => {
   return (
     <button
       onClick={scrollToTerminal}
-      className='xl:hidden w-full mt-6 py-3 px-4 border-2 border-neon rounded-lg bg-panel/50 backdrop-blur-xl hover:bg-neon/10 text-neon font-ocr text-sm transition-all duration-200 hover:shadow-[0_0_15px_rgba(0,255,0,0.3)] flex items-center justify-center gap-2'
+      className='xl:hidden w-full mt-6 py-3 px-4 border-2 border-neon rounded-sm bg-panel/50 backdrop-blur-xl hover:bg-neon/10 text-neon font-ocr text-sm transition-all duration-200 flex items-center justify-center gap-2'
       aria-label='Jump to terminal'
     >
       <TerminalIcon className='w-4 h-4' />
@@ -130,10 +137,10 @@ export default function TerminalPage() {
               <p className='font-ocr text-base sm:text-lg md:text-xl text-text/85 leading-relaxed max-w-5xl mb-4'>
                 {TERMINAL_COPY.hero.subtitle}
               </p>
-              <div className='relative border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
+              <div className='relative border border-neon/30 rounded-sm bg-panel/50 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-text/90'>
                 <span>{TERMINAL_COPY.hero.ribbon}</span>
                 <span
-                  className='absolute inset-y-0 left-0 w-1 bg-neon/80 rounded-l-lg'
+                  className='absolute inset-y-0 left-0 w-1 bg-neon/80 rounded-l-sm'
                   aria-hidden='true'
                 />
               </div>
@@ -157,7 +164,7 @@ export default function TerminalPage() {
                     return (
                       <div
                         key={card.title}
-                        className='border border-neon/20 rounded-lg bg-panel/50 backdrop-blur-xl p-4 space-y-2'
+                        className='border border-neon/20 rounded-sm bg-panel/50 backdrop-blur-xl p-4 space-y-2'
                       >
                         <div className='flex items-center gap-2'>
                           <Icon className='w-4 h-4 text-neon' />
@@ -181,7 +188,7 @@ export default function TerminalPage() {
                     {TERMINAL_COPY.usage.steps.map((step, idx) => (
                       <li
                         key={idx}
-                        className='border border-neon/20 rounded-lg bg-panel/50 backdrop-blur-xl p-3 leading-relaxed'
+                        className='border border-neon/20 rounded-sm bg-panel/50 backdrop-blur-xl p-3 leading-relaxed'
                       >
                         {step}
                       </li>
@@ -201,7 +208,7 @@ export default function TerminalPage() {
                     {COMMAND_GUIDE.map((item) => (
                       <div
                         key={item.command}
-                        className='border border-neon/20 rounded-lg bg-panel/50 backdrop-blur-xl p-3 font-ocr text-xs text-text/85'
+                        className='border border-neon/20 rounded-sm bg-panel/50 backdrop-blur-xl p-3 font-ocr text-xs text-text/85'
                       >
                         <p className='text-neon'>
                           <span className='font-ibm text-sm'>
@@ -218,10 +225,8 @@ export default function TerminalPage() {
 
               <aside
                 id='terminal-section'
-                className='relative overflow-hidden rounded-2xl border-2 border-neon/30 bg-panel/30 p-4 md:p-6 animate-pulse-glow'
+                className='hud-panel relative overflow-hidden p-4 md:p-6'
               >
-                <div className='pointer-events-none absolute left-3 top-3 h-2 w-8 border-l border-t border-neon/50' />
-                <div className='pointer-events-none absolute bottom-3 right-3 h-2 w-8 border-b border-r border-neon/50' />
                 <p className='font-ocr text-sm text-text/70 mb-4'>
                   Type `help` to see commands. Use `codex` to navigate content.
                 </p>

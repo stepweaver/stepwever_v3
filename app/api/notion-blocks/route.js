@@ -1,4 +1,5 @@
 import { Client } from '@notionhq/client';
+import { createRateLimit } from '@/utils/rateLimit';
 
 // Validate and sanitize Notion page ID format
 function isValidNotionId(id) {
@@ -16,6 +17,15 @@ function normalizeNotionId(id) {
 
 export async function POST(request) {
   try {
+    // Rate limit: 30 requests per minute
+    const rateLimit = createRateLimit({
+      maxRequests: 30,
+      windowMs: 60 * 1000,
+      message: 'Too many requests. Please try again shortly.'
+    });
+    const rateLimitResult = await rateLimit(request);
+    if (rateLimitResult) return rateLimitResult;
+
     const contentType = request.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
       return Response.json(

@@ -11,7 +11,7 @@ export default function TerminalLink() {
         <span className='font-bold whitespace-nowrap'>
           Explore my terminal
         </span>
-        <span className='text-terminal-green text-lg sm:text-2xl md:text-3xl animate-pulse'>
+        <span className='text-terminal-green text-lg sm:text-2xl md:text-3xl motion-safe:animate-pulse'>
           →
         </span>
       </a>

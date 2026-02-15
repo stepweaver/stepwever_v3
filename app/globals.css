@@ -1073,6 +1073,89 @@ html.theme-loaded {
   text-shadow: var(--terminal-strong-glow);
 }
 
+/* ── HUD Panel: chamfered corners + corner tick accents ── */
+.hud-panel {
+  position: relative;
+  background: rgb(var(--panel) / 0.75);
+  border: 1px solid rgb(var(--neon) / 0.20);
+  box-shadow: 0 0 22px rgb(var(--neon) / 0.18);
+  backdrop-filter: blur(10px);
+
+  /* chamfered corners */
+  --c: 10px;
+  clip-path: polygon(
+    var(--c) 0, calc(100% - var(--c)) 0,
+    100% var(--c), 100% calc(100% - var(--c)),
+    calc(100% - var(--c)) 100%, var(--c) 100%,
+    0 calc(100% - var(--c)), 0 var(--c)
+  );
+}
+
+/* corner accents */
+.hud-panel::before,
+.hud-panel::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  pointer-events: none;
+}
+
+.hud-panel::before {
+  /* top-left + bottom-right ticks */
+  background:
+    linear-gradient(rgb(var(--accent) / 0.7), rgb(var(--accent) / 0.7)) left top / 28px 1px no-repeat,
+    linear-gradient(rgb(var(--accent) / 0.7), rgb(var(--accent) / 0.7)) left top / 1px 10px no-repeat,
+    linear-gradient(rgb(var(--accent) / 0.7), rgb(var(--accent) / 0.7)) right bottom / 28px 1px no-repeat,
+    linear-gradient(rgb(var(--accent) / 0.7), rgb(var(--accent) / 0.7)) right bottom / 1px 10px no-repeat;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.hud-panel::after {
+  /* inner sheen */
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), transparent 35%);
+  opacity: 0.35;
+  z-index: 1;
+}
+
+/* Light mode: toned-down HUD panel */
+[data-theme="light"] .hud-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .hud-panel::before {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) left top / 28px 1px no-repeat,
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) left top / 1px 10px no-repeat,
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) right bottom / 28px 1px no-repeat,
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) right bottom / 1px 10px no-repeat;
+}
+
+[data-theme="light"] .hud-panel::after {
+  opacity: 0;
+}
+
+/* Monochrome inverted: toned-down HUD panel */
+[data-theme="monochrome-inverted"] .hud-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="monochrome-inverted"] .hud-panel::before {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) left top / 28px 1px no-repeat,
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) left top / 1px 10px no-repeat,
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) right bottom / 28px 1px no-repeat,
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) right bottom / 1px 10px no-repeat;
+}
+
+[data-theme="monochrome-inverted"] .hud-panel::after {
+  opacity: 0;
+}
+
 .card-glow {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(0, 255, 65, 0.25);
 }
@@ -4197,4 +4280,16 @@ picture {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+/* ── Reduced motion: kill all animations & transitions ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

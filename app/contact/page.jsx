@@ -51,30 +51,34 @@ function ContactPage() {
       <div className='relative z-10 w-full'>
         <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
           <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
-            <HUDPanel
-              title="Let's connect."
-              id='CONTACT-00'
-              className='p-6 md:p-8'
-            >
+            {/* Intro — unbounded, just text */}
+            <div className='px-2'>
+              <div className='flex items-start justify-between gap-4 mb-4'>
+                <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>CONTACT</p>
+                <div className='text-right text-xs text-muted font-mono shrink-0'>
+                  <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
+                  <div className='font-mono text-neon/80 whitespace-nowrap'>CONTACT-00</div>
+                </div>
+              </div>
+              <h2 className='text-lg font-semibold text-text font-ibm mb-4'>Let&apos;s connect.</h2>
               <p className='font-ocr text-base sm:text-lg md:text-xl text-text/80 max-w-6xl leading-relaxed mb-4'>
                 Have a question, opportunity, or just want to say hello? My inbox is always open.
               </p>
-              <div className='relative border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-text/90 shadow-[0_0_30px_rgba(0,255,0,0.15)]'>
-                <span>I typically respond within a day or two. Looking forward to hearing from you!</span>
-                <span
-                  className='absolute inset-y-0 left-0 w-1 bg-neon/80 rounded-l-lg'
-                  aria-hidden='true'
-                />
-              </div>
-            </HUDPanel>
+              <p className='font-ocr text-sm text-text/60'>
+                I typically respond within a day or two. Looking forward to hearing from you!
+              </p>
+            </div>
 
             <section className='grid gap-10 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]'>
+              {/* Form — this one gets the bordered HUDPanel */}
               <HUDPanel title='Send a message' id='CONTACT-01' className='p-6 md:p-8 lg:p-10'>
                 <ContactForm />
               </HUDPanel>
 
-              <aside className='space-y-6'>
-                <HUDPanel title='Email directly' id='CONTACT-02' className='p-5'>
+              {/* Sidebar — unbounded, simple content */}
+              <aside className='space-y-8 px-2'>
+                <div>
+                  <p className='text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-2'>EMAIL DIRECTLY</p>
                   <p className='font-ocr text-xs text-text/70 mb-3'>
                     For those who prefer the classic approach.
                   </p>
@@ -85,9 +89,10 @@ function ContactPage() {
                     <Mail className='w-4 h-4 shrink-0' />
                     stephen@stepweaver.dev
                   </Link>
-                </HUDPanel>
+                </div>
 
-                <HUDPanel title='Find me elsewhere' id='CONTACT-03' className='p-5'>
+                <div>
+                  <p className='text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-3'>FIND ME ELSEWHERE</p>
                   <div className='flex flex-wrap gap-4'>
                     {SOCIAL_LINKS.map((link) => {
                       const Icon = link.icon;
@@ -125,7 +130,7 @@ function ContactPage() {
                       );
                     })}
                   </div>
-                </HUDPanel>
+                </div>
               </aside>
             </section>
           </div>

@@ -204,22 +204,25 @@ function Experience() {
     <section className='relative z-30 py-20 overflow-x-hidden'>
       {/* Right column: width = viewport minus lambda space so it never overflows */}
       <div className='w-full px-4 sm:px-6 md:px-8 lg:pl-6 lg:pr-16 xl:pl-8 xl:pr-20 2xl:pr-24 min-w-0 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] lg:w-[calc(100%-390px-2.5rem)] xl:w-[calc(100%-390px-3rem)]'>
-        <header className='mb-12 md:mb-16 w-full max-w-6xl text-center md:text-left'>
-          <h2 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 md:mb-8 leading-tight font-ibm text-terminal-green'>
-            TECH I WORK WITH
-          </h2>
-
-          <div className='mb-8 md:mb-12'>
-            <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight font-ibm text-terminal-green'>
-              Modern tools, battle-tested solutions.
-            </h3>
-            <p className='text-terminal-text font-ocr text-base md:text-lg leading-relaxed'>
-              8+ years bridging business and tech. From Air Force intelligence
-              to AI-native development, I've learned that the right tools, and
-              knowing when to use them, make all the difference.
-            </p>
+        {/* Section ID tag — unbounded, no panel wrapper */}
+        <div className='mb-6 flex items-start justify-between gap-4'>
+          <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>LOADOUT</p>
+          <div className='text-right text-xs text-muted font-mono shrink-0'>
+            <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
+            <div className='font-mono text-neon/80 whitespace-nowrap'>KIT-02</div>
           </div>
-        </header>
+        </div>
+
+        <div className='mb-8 md:mb-12'>
+          <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight font-ibm text-neon'>
+            Modern tools, battle-tested solutions.
+          </h3>
+          <p className='text-text/90 font-ocr text-base md:text-lg leading-relaxed'>
+            8+ years bridging business and tech. From Air Force intelligence
+            to AI-native development, I've learned that the right tools, and
+            knowing when to use them, make all the difference.
+          </p>
+        </div>
 
         <div className='w-full max-w-6xl min-w-0'>
           <nav className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center md:justify-start' aria-label="Tech categories">
@@ -227,17 +230,11 @@ function Experience() {
               <button
                 key={category.name}
                 onClick={() => handleTabClick(index)}
-                className={`px-2 md:px-3 py-1 md:py-2 font-ibm text-sm md:text-base font-bold uppercase tracking-wider border-2 transition-all duration-300 cursor-pointer rounded-lg shadow-lg hover:shadow-xl ${
+                className={`px-2 md:px-3 py-1 md:py-2 font-ibm text-sm md:text-base font-bold uppercase tracking-wider border-2 transition-all duration-300 cursor-pointer rounded-sm ${
                   currentCategory === index
-                    ? 'border-neon text-neon bg-neon/10 shadow-neon/20 hover:shadow-neon/30 transform scale-105'
+                    ? 'border-neon text-neon bg-neon/10'
                     : 'border-neon/30 text-text/80 hover:border-neon hover:text-neon hover:bg-neon/5'
                 }`}
-                style={{
-                  textShadow:
-                    currentCategory === index
-                      ? '0 0 8px rgba(0, 255, 65, 0.8), 0 0 16px rgba(0, 255, 65, 0.4)'
-                      : 'none',
-                }}
               >
                 {category.name}
               </button>
@@ -258,7 +255,7 @@ function Experience() {
               return (
                 <div
                   key={tech.name}
-                  className='group flex flex-col items-center justify-center p-3 border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl transition-all duration-500 hover:border-neon hover:bg-neon/10 min-w-24 w-auto h-auto min-h-24 hover:-translate-y-0.5 hover:shadow-neon-sm card-glow-tight'
+                  className='group flex flex-col items-center justify-center p-3 border border-neon/30 rounded-sm bg-panel/50 backdrop-blur-xl transition-all duration-500 hover:border-neon hover:bg-neon/10 min-w-24 w-auto h-auto min-h-24 hover:-translate-y-0.5'
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <div className='mb-1 flex items-center justify-center w-12 h-12'>
@@ -272,7 +269,7 @@ function Experience() {
                       <span className='text-2xl'>{tech.icon}</span>
                     )}
                   </div>
-                  <span className='font-ocr text-terminal-text group-hover:text-terminal-green text-sm sm:text-base text-center leading-tight transition-all duration-300'>
+                  <span className='font-ocr text-text/80 group-hover:text-neon text-sm sm:text-base text-center leading-tight transition-all duration-300'>
                     {tech.name}
                   </span>
                 </div>
@@ -287,7 +284,7 @@ function Experience() {
                 onClick={() => handleTabClick(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
                   currentCategory === index
-                    ? 'bg-neon shadow-lg shadow-neon/50 scale-125'
+                    ? 'bg-neon scale-125'
                     : 'bg-neon/30 hover:bg-neon/50 hover:scale-110'
                 }`}
                 aria-label={`Show ${TECH_CATEGORIES[index].name}`}

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
 export const useContactForm = (setLines, setInput, setCursorPosition) => {
   const [isInContactMode, setIsInContactMode] = useState(false);
@@ -8,6 +8,8 @@ export const useContactForm = (setLines, setInput, setCursorPosition) => {
     email: '',
     message: '',
   });
+  // Bot protection: record when contact mode was activated
+  const contactStartedAt = useRef(null);
 
   const resetContact = useCallback(() => {
     setIsInContactMode(false);
@@ -107,6 +109,8 @@ export const useContactForm = (setLines, setInput, setCursorPosition) => {
               name: contactData.name,
               email: contactData.email,
               message: contactData.message,
+              _hp_website: '',               // honeypot (always empty for legit submissions)
+              _t: contactStartedAt.current,  // timing stamp
             }),
           });
 
@@ -170,6 +174,7 @@ export const useContactForm = (setLines, setInput, setCursorPosition) => {
   const activateContactMode = useCallback(() => {
     setIsInContactMode(true);
     setContactStep(0);
+    contactStartedAt.current = Date.now();
   }, []);
 
   return {

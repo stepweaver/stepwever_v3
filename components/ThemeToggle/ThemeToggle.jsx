@@ -71,7 +71,7 @@ export default function ThemeToggle() {
     <div className='flex items-center gap-3'>
       {!mounted ? (
         // Skeleton state - matches the structure of the actual component
-        <div className='w-32 h-10 animate-pulse bg-terminal-border rounded' />
+        <div className='w-32 h-10 motion-safe:animate-pulse bg-terminal-border rounded-sm' />
       ) : (
         // CRT-style dropdown
         <div className='theme-dropdown-container' ref={dropdownRef}>

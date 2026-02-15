@@ -85,7 +85,7 @@ export function MatrixSync() {
         {terminalOutput && (
           <span className="font-ocr whitespace-nowrap truncate">{terminalOutput}</span>
         )}
-        {showPrompt && <span className="animate-pulse">_</span>}
+        {showPrompt && <span className="motion-safe:animate-pulse">_</span>}
       </div>
       <div className="grid grid-cols-6 gap-0.5">
         {matrixCells.map((cell, index) => (

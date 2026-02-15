@@ -17,7 +17,7 @@ const ProjectCard = memo(function ProjectCard({
   const cardContent = (
     <HUDPanel
       title={title}
-      className="h-full flex flex-col hover:shadow-neon transition-all duration-200 hover:-translate-y-0.5 min-h-[580px]"
+      className="h-full flex flex-col transition-all duration-200 hover:-translate-y-0.5 min-h-[580px]"
     >
       <div className='flex items-center gap-2 mb-4'>
         <div className='flex gap-1.5'>
@@ -33,7 +33,7 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {imageUrl && (
-        <div className={`mb-4 border border-neon/20 overflow-hidden rounded-lg h-48 sm:h-56 ${slug === 'neon-profile-card' ? 'bg-panel/50' : ''}`}>
+        <div className={`mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56 ${slug === 'neon-profile-card' ? 'bg-panel/50' : ''}`}>
           <OptimizedImage
             src={imageUrl}
             alt={title}
@@ -44,7 +44,7 @@ const ProjectCard = memo(function ProjectCard({
         </div>
       )}
       {!imageUrl && (
-        <div className='mb-4 border border-neon/20 overflow-hidden rounded-lg h-48 sm:h-56'>
+        <div className='mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56'>
           <OptimizedImage
             src='/images/lambda_preview.png'
             alt='Project preview'

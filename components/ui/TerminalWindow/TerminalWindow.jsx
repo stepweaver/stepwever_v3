@@ -12,7 +12,7 @@ export default function TerminalWindow({
 }) {
   return (
     <div
-      className={`bg-panel/50 backdrop-blur-xl border border-neon/30 rounded-lg overflow-hidden relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-[rgba(0,255,0,0.02)] before:to-transparent before:bg-[length:100%_4px] before:pointer-events-none before:animate-[scanlines_20s_linear_infinite] before:z-[1] before:rounded-lg ${className}`}
+      className={`hud-panel overflow-hidden relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-[rgba(0,255,0,0.02)] before:to-transparent before:bg-[length:100%_4px] before:pointer-events-none before:motion-safe:animate-[scanlines_20s_linear_infinite] before:z-[1] ${className}`}
     >
       {showHeader && (
         <div className='bg-panel/80 border-b border-neon/30 px-4 py-3 relative z-[2]'>

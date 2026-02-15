@@ -6,6 +6,7 @@ import { MessageCircle, X, Send, User, Loader2, Minimize2, Maximize2 } from 'luc
 import { parseChatLinks } from '@/utils/parseChatLinks';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import { useBotProtection } from '@/hooks/useBotProtection';
 import '@/components/ThemeToggle/ThemeToggle.css';
 
 const EXAMPLE_QUESTIONS = [
@@ -16,6 +17,7 @@ const EXAMPLE_QUESTIONS = [
 
 export default function ChatWidget() {
   const { theme, mounted } = useTheme();
+  const { getBotFields } = useBotProtection();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState([
@@ -76,6 +78,7 @@ export default function ChatWidget() {
             role: m.role,
             content: m.content,
           })),
+          ...getBotFields(),
         }),        
       });
 
@@ -135,10 +138,7 @@ export default function ChatWidget() {
               : 'w-[calc(100vw-2rem)] sm:w-96 h-[500px] max-h-[70vh]'
           }`}
         >
-          <div className='h-full flex flex-col relative rounded-2xl border border-neon/25 bg-panel/95 backdrop-blur-xl shadow-[0_0_40px_rgba(90,255,140,0.15)] overflow-hidden'>
-            {/* Tron corner embellishments */}
-            <div className='pointer-events-none absolute left-2 top-2 h-1.5 w-6 border-l border-t border-neon/50 z-10' />
-            <div className='pointer-events-none absolute bottom-2 right-2 h-1.5 w-6 border-b border-r border-neon/50 z-10' />
+          <div className='hud-panel h-full flex flex-col relative overflow-hidden'>
             {/* Header */}
             <div className='flex items-center justify-between px-4 py-3 border-b border-neon/20 bg-panel/80'>
               <div className='flex items-center gap-2 flex-wrap min-w-0'>
@@ -336,7 +336,7 @@ export default function ChatWidget() {
         className={`fixed bottom-4 right-4 sm:right-6 z-[100] w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer ${
           isOpen
             ? 'bg-panel/80 border-2 border-neon/50 text-neon hover:bg-neon/10'
-            : 'bg-neon/20 border-2 border-neon text-neon hover:bg-neon/30 hover:shadow-[0_0_24px_rgba(90,255,140,0.35)]'
+            : 'bg-neon/20 border-2 border-neon text-neon hover:bg-neon/30'
         }`}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
@@ -346,7 +346,7 @@ export default function ChatWidget() {
           <>
             <MessageCircle className='w-6 h-6' />
             {hasNewMessage && (
-              <span className='absolute top-0 right-0 w-3 h-3 rounded-full bg-neon animate-pulse' />
+              <span className='absolute top-0 right-0 w-3 h-3 rounded-full bg-neon motion-safe:animate-pulse' />
             )}
           </>
         )}

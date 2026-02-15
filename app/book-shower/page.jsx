@@ -102,7 +102,7 @@ export default function BookShowerPage() {
         style={{ zIndex: 9999 }}
       >
         <div className='text-center'>
-          <p className='text-text font-ocr text-lg'>Loading...</p>
+          <p className='text-neon/50 font-ocr text-xs tracking-[0.2em] uppercase'>SCANNING MODULES...</p>
         </div>
       </div>
     );

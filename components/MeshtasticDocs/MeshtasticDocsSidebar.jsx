@@ -16,12 +16,9 @@ export default function MeshtasticDocsSidebar({ grouped, currentSlug, currentSec
 
   return (
     <aside
-      className="relative h-full flex flex-col overflow-hidden rounded-r-2xl border border-neon/20 bg-panel/70 shadow-neon-sm backdrop-blur"
+      className="hud-panel relative h-full flex flex-col overflow-hidden"
       aria-label="Docs navigation"
     >
-      <div className="pointer-events-none absolute inset-0 opacity-20 [background:linear-gradient(180deg,rgba(255,255,255,0.08),transparent_40%)]" />
-      <div className="pointer-events-none absolute left-3 top-3 h-2 w-8 border-l border-t border-neon/50" />
-      <div className="pointer-events-none absolute bottom-3 right-3 h-2 w-8 border-b border-r border-neon/50" />
       <div className="relative z-10 p-4 border-b border-neon/20 shrink-0">
         <Link
           href="/meshtastic"

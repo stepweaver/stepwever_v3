@@ -16,7 +16,14 @@ const ProjectCarousel = dynamic(() => import('./ProjectCarousel'), {
   ssr: false,
   loading: () => (
     <div className='min-h-[400px] flex items-center justify-center'>
-      <div className='text-muted font-ocr'>Loading projects...</div>
+      <div className='hud-panel p-6 w-full max-w-md motion-safe:animate-pulse'>
+        <div className='text-xs tracking-[0.2em] text-neon/50 font-ocr uppercase'>SCANNING MODULES...</div>
+        <div className='mt-4 space-y-3'>
+          <div className='h-4 bg-neon/10 w-3/4' />
+          <div className='h-4 bg-neon/10 w-1/2' />
+          <div className='h-4 bg-neon/10 w-2/3' />
+        </div>
+      </div>
     </div>
   ),
 });
@@ -27,16 +34,15 @@ function Hero() {
       <div className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12'>
         <div className='grid grid-cols-1 lg:grid-cols-[390px_1fr] gap-8 lg:gap-10 xl:gap-12 lg:items-stretch'>
           <div className='min-w-0 flex flex-col'>
-            <HUDPanel title="BOOT + IDENTITY" id="λ-SCOUT-01" className="p-6 h-full min-h-full flex flex-col">
+            <HUDPanel title="OPERATOR" id="OPS-00" className="p-6 h-full min-h-full flex flex-col">
               <div className='flex flex-col gap-6'>
                 <div className='flex flex-col gap-3'>
                   <div className='flex flex-row items-start gap-4'>
                     <div className='relative w-32 h-32 shrink-0'>
                       <div
-                        className='absolute inset-0 rounded-lg border-2 border-accent/50 animate-pulse'
-                        style={{ boxShadow: '0 0 20px rgba(90, 210, 255, 0.3)' }}
+                        className='absolute inset-0 rounded-sm border-2 border-accent/50 motion-safe:animate-pulse'
                       />
-                      <div className='relative w-full h-full rounded-lg overflow-hidden border-2 border-neon/30'>
+                      <div className='relative w-full h-full rounded-sm overflow-hidden border-2 border-neon/30'>
                         <Image
                           src='/images/pixarMe.png'
                           alt='Stephen Weaver'

@@ -5,8 +5,6 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ModuleHeader } from '@/components/ui/ModuleHeader';
-import { HUDPanel } from '@/components/ui/HUDPanel';
-
 const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
   { ssr: false }
@@ -94,9 +92,18 @@ function CodexContent() {
       <BackgroundCanvas />
       <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16">
         <div className="max-w-7xl mx-auto">
-          <HUDPanel title="Stephen Weaver" id="CODEX-00" className="p-6 md:p-8 mb-8">
-            <p className="text-text text-lg md:text-xl leading-relaxed mb-6">
-              I'm Stephen. Developer, veteran, and perpetual learner. This is my digital codex: thoughts and things I'm exploring.
+          {/* Hero — unbounded, just labels and text */}
+          <div className="mb-12">
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <p className="text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase">CODEX</p>
+              <div className="text-right text-xs text-muted font-mono shrink-0">
+                <div className="tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]">ID</div>
+                <div className="font-mono text-neon/80 whitespace-nowrap">CODEX-00</div>
+              </div>
+            </div>
+            <h1 className="text-2xl md:text-3xl font-semibold text-text font-ibm mb-4">Stephen Weaver</h1>
+            <p className="text-text/80 text-base md:text-lg leading-relaxed mb-6 font-ocr">
+              Developer, veteran, and perpetual learner. This is my digital codex: thoughts and things I'm exploring.
             </p>
             <nav className="flex flex-wrap items-center gap-x-2 font-ibm text-neon text-lg" aria-label="Breadcrumb">
               <span className="text-neon">user@stepweaver</span>
@@ -109,32 +116,34 @@ function CodexContent() {
               >
                 codex
               </button>
-              <span className="text-neon animate-blink" aria-hidden>_</span>
-              <span className="text-text/60">·</span>
-              <Link
-                href="/meshtastic"
-                className="text-text hover:text-neon transition-colors underline underline-offset-2"
-              >
-                Meshtastic image.png
-              </Link>
+              <span className="text-neon motion-safe:animate-blink" aria-hidden>_</span>
             </nav>
-          </HUDPanel>
+            <div className="mt-6 border-b border-neon/15" />
+          </div>
 
           {loading ? (
             <div className="flex justify-center items-center min-h-64">
-              <div className="text-neon font-ibm text-lg animate-pulse">Loading...</div>
+              <div className='hud-panel p-6 w-full max-w-md motion-safe:animate-pulse'>
+                <div className='text-xs tracking-[0.2em] text-neon/50 font-ocr uppercase'>INDEXING CODEX...</div>
+                <div className='mt-4 space-y-3'>
+                  <div className='h-4 bg-neon/10 w-3/4' />
+                  <div className='h-4 bg-neon/10 w-1/2' />
+                  <div className='h-4 bg-neon/10 w-2/3' />
+                </div>
+              </div>
             </div>
           ) : error ? (
-            <div className="border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl text-neon p-4 my-4">
+            <div className="border border-neon/30 rounded-sm bg-panel/50 backdrop-blur-xl text-neon p-4 my-4">
               {error}
             </div>
           ) : (
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="flex-1 max-w-4xl">
-                {/* Mobile: TAGS above post list */}
-                {filteredHashtags.length > 0 && (
-                  <div className="mb-8 lg:hidden">
-                    <HUDPanel title="Tags" id="CODEX-TAGS" className="p-5">
+                {/* Mobile: TAGS + PROJECTS above post list */}
+                <div className="mb-8 lg:hidden border border-neon/15 bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
+                  {filteredHashtags.length > 0 && (
+                    <>
+                      <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-3">FILTER BY TAG</p>
                       <div className="flex flex-wrap gap-2">
                         {filteredHashtags.map((tag) => {
                           const count = allPosts.filter((p) => p.hashtags?.includes(tag)).length;
@@ -143,20 +152,42 @@ function CodexContent() {
                               key={tag}
                               type="button"
                               onClick={() => handleHashtagClick(tag)}
-                              className={`px-3 py-1 text-sm rounded-lg transition-colors font-medium cursor-pointer ${
+                              className={`px-3 py-1 text-sm rounded-sm transition-colors font-medium cursor-pointer border ${
                                 activeHashtags.includes(tag)
-                                  ? 'bg-neon/20 text-neon border border-neon/50'
-                                  : 'bg-text/10 text-text hover:text-neon hover:bg-neon/10'
+                                  ? 'bg-neon/20 text-neon border-neon/50'
+                                  : 'border-neon/20 bg-panel/50 text-text hover:text-neon hover:bg-neon/10 hover:border-neon/40'
                               }`}
                             >
-                              #{tag} {count}
+                              #{tag} <span className="text-text/40 text-xs">{count}</span>
                             </button>
                           );
                         })}
                       </div>
-                    </HUDPanel>
+                      {activeHashtags.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setActiveHashtags([])}
+                          className="mt-3 text-xs text-neon/60 hover:text-neon font-ocr cursor-pointer transition-colors"
+                        >
+                          Clear all filters
+                        </button>
+                      )}
+                      <div className="border-t border-neon/10 my-3" />
+                    </>
+                  )}
+                  <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-3">PROJECTS</p>
+                  <div className="flex flex-wrap gap-2">
+                    <Link href="/meshtastic" className="px-3 py-1 text-sm rounded-sm border border-neon/20 bg-panel/50 text-text hover:text-neon hover:bg-neon/10 hover:border-neon/40 transition-colors font-medium">
+                      Meshtastic
+                    </Link>
+                    <Link href="/terminal" className="px-3 py-1 text-sm rounded-sm border border-neon/20 bg-panel/50 text-text hover:text-neon hover:bg-neon/10 hover:border-neon/40 transition-colors font-medium">
+                      Terminal
+                    </Link>
+                    <Link href="/dice-roller" className="px-3 py-1 text-sm rounded-sm border border-neon/20 bg-panel/50 text-text hover:text-neon hover:bg-neon/10 hover:border-neon/40 transition-colors font-medium">
+                      Dice Roller
+                    </Link>
                   </div>
-                )}
+                </div>
 
                 <div className="space-y-8">
                   {filteredPosts.map((post, index) => (
@@ -183,31 +214,64 @@ function CodexContent() {
                 </div>
               </div>
 
-              {filteredHashtags.length > 0 && (
-                <div className="w-72 flex-shrink-0 hidden lg:block">
-                  <HUDPanel title="Tags" id="CODEX-TAGS" className="p-5">
-                    <div className="flex flex-wrap gap-2">
-                      {filteredHashtags.map((tag) => {
-                        const count = allPosts.filter((p) => p.hashtags?.includes(tag)).length;
-                        return (
-                          <button
-                            key={tag}
-                            type="button"
-                            onClick={() => handleHashtagClick(tag)}
-                            className={`px-3 py-1 text-sm rounded-lg transition-colors font-medium cursor-pointer ${
-                              activeHashtags.includes(tag)
-                                ? 'bg-neon/20 text-neon border border-neon/50'
-                                : 'bg-text/10 text-text hover:text-neon hover:bg-neon/10'
-                            }`}
-                          >
-                            #{tag} {count}
-                          </button>
-                        );
-                      })}
+              {/* Desktop sidebar — always visible */}
+              <div className="w-72 flex-shrink-0 hidden lg:block">
+                <div className="sticky top-28 space-y-4">
+                  {/* Tag filter */}
+                  {filteredHashtags.length > 0 && (
+                    <div className="border border-neon/15 bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
+                      <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-3">FILTER BY TAG</p>
+                      <div className="flex flex-wrap gap-2">
+                        {filteredHashtags.map((tag) => {
+                          const count = allPosts.filter((p) => p.hashtags?.includes(tag)).length;
+                          return (
+                            <button
+                              key={tag}
+                              type="button"
+                              onClick={() => handleHashtagClick(tag)}
+                              className={`px-3 py-1 text-sm rounded-sm transition-colors font-medium cursor-pointer border ${
+                                activeHashtags.includes(tag)
+                                  ? 'bg-neon/20 text-neon border-neon/50'
+                                  : 'border-neon/20 bg-panel/50 text-text hover:text-neon hover:bg-neon/10 hover:border-neon/40'
+                              }`}
+                            >
+                              #{tag} <span className="text-text/40 text-xs">{count}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {activeHashtags.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setActiveHashtags([])}
+                          className="mt-3 text-xs text-neon/60 hover:text-neon font-ocr cursor-pointer transition-colors"
+                        >
+                          Clear all filters
+                        </button>
+                      )}
                     </div>
-                  </HUDPanel>
+                  )}
+
+                  {/* Projects quick-nav */}
+                  <div className="border border-neon/15 bg-panel/40 backdrop-blur-sm p-4 rounded-sm">
+                    <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-3">PROJECTS</p>
+                    <div className="space-y-1">
+                      <Link href="/meshtastic" className="flex items-center gap-2 px-3 py-2 rounded-sm text-sm text-text hover:text-neon hover:bg-neon/10 transition-colors font-medium group">
+                        <span className="w-1.5 h-1.5 rounded-full bg-neon/40 group-hover:bg-neon transition-colors shrink-0" />
+                        Meshtastic
+                      </Link>
+                      <Link href="/terminal" className="flex items-center gap-2 px-3 py-2 rounded-sm text-sm text-text hover:text-neon hover:bg-neon/10 transition-colors font-medium group">
+                        <span className="w-1.5 h-1.5 rounded-full bg-neon/40 group-hover:bg-neon transition-colors shrink-0" />
+                        Terminal
+                      </Link>
+                      <Link href="/dice-roller" className="flex items-center gap-2 px-3 py-2 rounded-sm text-sm text-text hover:text-neon hover:bg-neon/10 transition-colors font-medium group">
+                        <span className="w-1.5 h-1.5 rounded-full bg-neon/40 group-hover:bg-neon transition-colors shrink-0" />
+                        Dice Roller
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           )}
         </div>
@@ -227,19 +291,19 @@ function PostItem({ post, index, formatDate, onHashtagClick }) {
   };
 
   return (
-    <HUDPanel
-      title={post.title}
-      id={`CODEX-${String(index + 1).padStart(2, '0')}`}
-      className="p-5 transition-all duration-200 hover:border-neon/40"
-    >
+    <article className="border-l-2 border-neon/20 pl-5 py-4 hover:border-neon/70 hover:bg-neon/[0.03] hover:shadow-[inset_2px_0_8px_-4px_rgb(var(--neon)/0.3)] transition-all duration-200">
       <a href={`/codex/${post.slug}`} className="block group">
-        <div className="text-text text-sm mb-3 font-ocr font-medium">
-          Published: {formatDate(post.date)}
+        <div className="flex items-start justify-between gap-4 mb-1">
+          <h3 className="text-lg font-semibold text-text font-ibm group-hover:text-neon transition-all duration-200 group-hover:[text-shadow:var(--terminal-title-glow)]">{post.title}</h3>
+          <span className="font-mono text-[10px] text-neon/50 shrink-0">CODEX-{String(index + 1).padStart(2, '0')}</span>
+        </div>
+        <div className="text-text/60 text-sm mb-2 font-ocr">
+          {formatDate(post.date)}
           {post.updated && post.updated !== post.date && (
-            <span className="text-neon ml-3">| Updated: {formatDate(post.updated)}</span>
+            <span className="text-neon/70 ml-3">Updated: {formatDate(post.updated)}</span>
           )}
         </div>
-        <p className="text-text mb-3 leading-relaxed text-sm font-ocr">{post.description}</p>
+        <p className="text-text/80 mb-3 leading-relaxed text-sm font-ocr">{post.description}</p>
         {post.hashtags?.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-3">
             {post.hashtags.map((tag) => (
@@ -247,7 +311,7 @@ function PostItem({ post, index, formatDate, onHashtagClick }) {
                 key={tag}
                 role="button"
                 tabIndex={0}
-                className="px-3 py-1 text-sm rounded-lg font-medium transition-colors cursor-pointer"
+                className="px-3 py-1 text-sm rounded-sm font-medium transition-colors cursor-pointer"
                 style={{
                   backgroundColor: hoveredTag === tag ? `color-mix(in srgb, ${typeColor} 20%, transparent)` : `color-mix(in srgb, ${typeColor} 10%, transparent)`,
                   color: hoveredTag === tag ? typeColor : 'var(--text)',
@@ -263,7 +327,7 @@ function PostItem({ post, index, formatDate, onHashtagClick }) {
           </div>
         )}
       </a>
-    </HUDPanel>
+    </article>
   );
 }
 
@@ -275,7 +339,14 @@ export default function CodexPage() {
           <BackgroundCanvas />
           <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16">
             <div className="max-w-4xl mx-auto mt-16">
-              <div className="text-neon text-xl font-mono">Loading...</div>
+              <div className='hud-panel p-6 w-full max-w-md motion-safe:animate-pulse'>
+                <div className='text-xs tracking-[0.2em] text-neon/50 font-ocr uppercase'>INDEXING CODEX...</div>
+                <div className='mt-4 space-y-3'>
+                  <div className='h-4 bg-neon/10 w-3/4' />
+                  <div className='h-4 bg-neon/10 w-1/2' />
+                  <div className='h-4 bg-neon/10 w-2/3' />
+                </div>
+              </div>
             </div>
           </div>
         </div>

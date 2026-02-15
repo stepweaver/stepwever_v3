@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { useSafeScroll } from '@/utils/useSafeScroll';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import styles from './BackgroundCanvas.module.css';
@@ -170,8 +170,8 @@ export default function BackgroundCanvas() {
     [255, 198, 0], // Back to Yellow
   ];
 
-  // Select color palette based on theme
-  const neonColors = 
+  // Select color palette based on theme (memoised to prevent re-render loops)
+  const neonColors = useMemo(() =>
     theme === 'light' ? colorsLight : 
     theme === 'monochrome' ? colorsMonochrome : 
     theme === 'monochrome-inverted' ? colorsMonochromeInverted :
@@ -184,13 +184,18 @@ export default function BackgroundCanvas() {
     theme === 'solarized' ? colorsSolarized :
     theme === 'nord' ? colorsNord :
     theme === 'cobalt' ? colorsCobalt :
-    neonColorsDark;
+    neonColorsDark,
+    [theme]
+  );
+
+  // Stable scroll callback (memoised to prevent re-attaching listener)
+  const handleScroll = useCallback((scrollData) => {
+    setScrollProgress(scrollData.scrollProgressY);
+  }, []);
 
   // Use safe scroll hook
   useSafeScroll({
-    onScroll: (scrollData) => {
-      setScrollProgress(scrollData.scrollProgressY);
-    },
+    onScroll: handleScroll,
     throttleMs: 16, // ~60fps
   });
 

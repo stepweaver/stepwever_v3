@@ -1,13 +1,20 @@
 'use client';
 
 import { memo } from 'react';
-import { HUDPanel } from '@/components/ui/HUDPanel';
-import { ModuleHeader } from '@/components/ui/ModuleHeader';
 
 function About() {
   return (
     <section id='about' className='relative z-30 h-full flex flex-col'>
-      <HUDPanel title="OPERATOR PROFILE" id="λ-ABOUT-01" className="flex-1 flex flex-col min-h-0">
+      <div className="flex-1 flex flex-col min-h-0 p-6">
+        {/* Section ID tag — no border, just a label */}
+        <div className='mb-4 flex items-start justify-between gap-4'>
+          <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>BACKGROUND</p>
+          <div className='text-right text-xs text-muted font-mono shrink-0'>
+            <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
+            <div className='font-mono text-neon/80 whitespace-nowrap'>BIO-01</div>
+          </div>
+        </div>
+
         <h3 className='font-ibm text-text text-xl md:text-2xl lg:text-3xl leading-tight mb-6 shrink-0'>
           I speak both business and tech.
         </h3>
@@ -49,7 +56,7 @@ function About() {
             .
           </p>
         </footer>
-      </HUDPanel>
+      </div>
     </section>
   );
 }

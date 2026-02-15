@@ -6,7 +6,7 @@ export default function MeshtasticLoading() {
     <div className="min-h-screen flex flex-col lg:flex-row lg:h-[calc(100vh-3.5rem)] lg:pt-14">
       {/* Sidebar skeleton (desktop) */}
       <div className="hidden lg:block lg:w-72 lg:flex-shrink-0 lg:h-full">
-        <div className="h-full rounded-r-2xl border border-neon/10 bg-panel/40 backdrop-blur p-4 space-y-4 animate-pulse">
+        <div className="h-full border border-neon/10 bg-panel/40 backdrop-blur p-4 space-y-4 motion-safe:animate-pulse">
           <div className="h-5 w-28 bg-neon/10 rounded" />
           <div className="h-3 w-20 bg-neon/5 rounded" />
           <div className="space-y-3 mt-6">
@@ -19,7 +19,7 @@ export default function MeshtasticLoading() {
 
       {/* Main content skeleton */}
       <main className="flex-1 min-w-0 min-h-0 px-4 pt-0">
-        <div className="rounded-xl border border-neon/10 bg-panel/30 backdrop-blur overflow-hidden animate-pulse">
+        <div className="hud-panel border border-neon/10 bg-panel/30 backdrop-blur overflow-hidden motion-safe:animate-pulse">
           {/* Header skeleton */}
           <div className="border-b border-neon/10 px-6 py-5">
             <div className="max-w-3xl mx-auto space-y-3">

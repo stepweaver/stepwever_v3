@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import GlitchButton from '@/components/ui/GlitchButton';
+import { useBotProtection } from '@/hooks/useBotProtection';
 
 export default function ContactForm() {
+  const { honeypotProps, getBotFields } = useBotProtection();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -38,7 +40,7 @@ export default function ContactForm() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, ...getBotFields() }),
       });
 
       const data = await response.json();
@@ -95,6 +97,12 @@ export default function ContactForm() {
           onSubmit={handleSubmit}
           aria-label='Contact form'
         >
+          {/* Honeypot — invisible to humans, traps bots */}
+          <div aria-hidden='true' className='absolute -left-[9999px] opacity-0 h-0 overflow-hidden'>
+            <label htmlFor='_hp_website'>Website</label>
+            <input {...honeypotProps} id='_hp_website' />
+          </div>
+
           <div>
             <label htmlFor='name' className={labelClass}>
               Your name

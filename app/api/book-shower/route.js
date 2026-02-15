@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
+import { createRateLimit } from '@/utils/rateLimit';
 
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyjvVhJ9UzjPHErwZ7tju4rSzBj7zeegW6HAnBdGNAafiUuWPFKDUysD3jnUFBtMZdQ3A/exec';
 
 export async function GET(request) {
   try {
+    // Rate limit: 30 requests per minute
+    const rateLimit = createRateLimit({
+      maxRequests: 30,
+      windowMs: 60 * 1000,
+      message: 'Too many requests. Please try again shortly.'
+    });
+    const rateLimitResult = await rateLimit(request);
+    if (rateLimitResult) return rateLimitResult;
+
     const { searchParams } = new URL(request.url);
     
     // Build query string from search params if any
@@ -53,6 +63,15 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
+    // Rate limit: 10 POST requests per minute
+    const rateLimit = createRateLimit({
+      maxRequests: 10,
+      windowMs: 60 * 1000,
+      message: 'Too many requests. Please try again shortly.'
+    });
+    const rateLimitResult = await rateLimit(request);
+    if (rateLimitResult) return rateLimitResult;
+
     const body = await request.json().catch(() => ({}));
     
     // Fetch data from Google Apps Script with POST
