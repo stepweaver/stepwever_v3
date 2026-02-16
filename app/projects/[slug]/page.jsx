@@ -9,14 +9,17 @@ import {
   ExternalLink,
   CheckCircle,
   Code,
-  Server,
-  CreditCard,
-  Palette,
   Zap,
   Shield,
 } from 'lucide-react';
 import Link from 'next/link';
 import OptimizedImage from '@/components/OptimizedImage/OptimizedImage';
+import ProjectSection from '@/components/ProjectDetail/ProjectSection';
+import SectionList from '@/components/ProjectDetail/SectionList';
+import BulletList from '@/components/ProjectDetail/BulletList';
+import TechStackGrid from '@/components/ProjectDetail/TechStackGrid';
+import TechStackCard from '@/components/ProjectDetail/TechStackCard';
+import { Palette } from 'lucide-react';
 
 // Lazy load heavy components
 const BackgroundCanvas = dynamic(
@@ -39,6 +42,12 @@ export default function ProjectPage({ params }) {
     notFound();
   }
 
+  // Merge security + securityFeatures into one array
+  const securityItems = [
+    ...(project.security || []),
+    ...(project.securityFeatures || []),
+  ];
+
   return (
     <>
       <div className='relative'>
@@ -60,33 +69,27 @@ export default function ProjectPage({ params }) {
             {/* Header */}
             <header className='mb-12 md:mb-16'>
               <div className='mb-6'>
-                {project.isAgencySubcontract ? (
-                  <div className='mb-4'>
-                    <span className='text-sm md:text-base font-ocr text-neon uppercase tracking-wider'>
-                      Agency Subcontract Project
-                    </span>
-                    <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-neon'>
-                      {project.title}
-                    </h1>
-                  </div>
-                ) : (
-                  <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-neon'>
-                    {project.title}
-                  </h1>
+                {project.isAgencySubcontract && (
+                  <span className='text-sm md:text-base font-ocr text-neon uppercase tracking-wider block mb-4'>
+                    Agency Subcontract Project
+                  </span>
                 )}
+                <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-neon'>
+                  {project.title}
+                </h1>
               </div>
 
               <p className='text-lg md:text-xl font-ocr text-text max-w-4xl leading-relaxed mb-8'>
                 {project.description}
               </p>
 
-              {/* Project Image - 16:9 aspect ratio */}
+              {/* Project Image */}
               {project.imageUrl && (
-                <div className='mb-8 border border-neon/20 rounded-lg overflow-hidden aspect-video card-glow'>
+                <div className='mb-8 border border-neon/20 rounded-lg overflow-hidden card-glow'>
                   <OptimizedImage
                     src={project.imageUrl}
                     alt={project.title}
-                    className='w-full h-full object-cover object-top'
+                    className='w-full h-auto'
                     loading='eager'
                     fetchPriority='high'
                   />
@@ -109,7 +112,7 @@ export default function ProjectPage({ params }) {
               )}
 
               {/* Tags */}
-              {project.tags && project.tags.length > 0 && (
+              {project.tags?.length > 0 && (
                 <div className='flex flex-wrap gap-2 mb-8'>
                   {project.tags.map((tag, index) => (
                     <span
@@ -123,66 +126,39 @@ export default function ProjectPage({ params }) {
               )}
             </header>
 
-            {/* The Problem Section */}
+            {/* The Problem */}
             {project.problem && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  The Problem
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='The Problem'>
                 <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
                   {project.problem}
                 </p>
-              </section>
+              </ProjectSection>
             )}
 
-            {/* My Role Section */}
+            {/* My Role */}
             {project.role && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  My Role
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='My Role'>
                 <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
                   {project.role}
                 </p>
-              </section>
+              </ProjectSection>
             )}
 
-            {/* The Solution Section */}
+            {/* The Solution */}
             {(project.solution || project.features) && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  The Solution
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='The Solution'>
                 {project.solution && (
                   <p className='font-ocr text-text text-base md:text-lg leading-relaxed mb-6'>
                     {project.solution}
                   </p>
                 )}
-                {project.features && project.features.length > 0 && (
-                  <ul className='space-y-4'>
-                    {project.features.map((feature, index) => (
-                      <li key={index} className='flex items-start'>
-                        <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-text text-base md:text-lg leading-relaxed'>
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </section>
+                <SectionList items={project.features} icon={CheckCircle} />
+              </ProjectSection>
             )}
 
-            {/* The Tech Section */}
+            {/* The Tech */}
             {project.techStack && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  The Tech
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='The Tech'>
                 {project.projectStructure && (
                   <div className='mb-8'>
                     <h3 className='text-xl font-ibm text-neon mb-4'>
@@ -195,281 +171,20 @@ export default function ProjectPage({ params }) {
                     </div>
                   </div>
                 )}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                  {project.techStack.frontend && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Frontend
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.frontend.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.backend && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Server className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Backend & CMS
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.backend.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.payment && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <CreditCard className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Payment & E-commerce
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.payment.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.development && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Zap className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Development Tools
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.development.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.consulting && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Server className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Consulting Services
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.consulting.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.automation && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Zap className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Automation Tools
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.automation.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.ai && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          AI & Machine Learning
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.ai.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.analytics && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Analytics Tools
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.analytics.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.contentManagement && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Server className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Content Management
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.contentManagement.map(
-                          (tech, index) => (
-                            <li
-                              key={index}
-                              className='font-ocr text-text text-sm'
-                            >
-                              • {tech}
-                            </li>
-                          )
-                        )}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.contentAggregation && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Content Aggregation
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.contentAggregation.map(
-                          (tech, index) => (
-                            <li
-                              key={index}
-                              className='font-ocr text-text text-sm'
-                            >
-                              • {tech}
-                            </li>
-                          )
-                        )}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.utilities && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Code className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Utilities
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.utilities.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.techStack.design && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Palette className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Design
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.techStack.design.map((tech, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {tech}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </section>
+                <TechStackGrid techStack={project.techStack} />
+              </ProjectSection>
             )}
 
-            {/* The Outcome Section */}
-            {project.outcome && project.outcome.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  The Outcome
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.outcome.map((item, index) => (
-                    <li key={index} className='flex items-start'>
-                      <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-text text-base leading-relaxed'>
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            {/* The Outcome */}
+            {project.outcome?.length > 0 && (
+              <ProjectSection title='The Outcome'>
+                <SectionList items={project.outcome} icon={CheckCircle} />
+              </ProjectSection>
             )}
 
+            {/* Live Demo */}
             {DemoComponent && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  Live Neon Profile Card Demo
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='Live Neon Profile Card Demo'>
                 <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
                   <div className='flex justify-center'>
                     <DemoComponent />
@@ -482,18 +197,10 @@ export default function ProjectPage({ params }) {
                       terminal sequence. Styling uses Tailwind CSS utilities for
                       glow, glass effects, and responsive stacking.
                     </p>
-                    {project.demoHighlights && (
-                      <ul className='space-y-3'>
-                        {project.demoHighlights.map((highlight, index) => (
-                          <li key={index} className='flex items-start'>
-                            <CheckCircle className='mr-3 mt-0.5 h-5 w-5 text-neon' />
-                            <span className='font-ocr text-text text-sm leading-relaxed'>
-                              {highlight}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    <SectionList
+                      items={project.demoHighlights}
+                      icon={CheckCircle}
+                    />
                     <p className='text-sm font-ocr text-text/70'>
                       Inspired by the Neon Profile Card brief from Codenhack,
                       adapted to reuse our IBM headers, OCR body copy, and
@@ -501,35 +208,26 @@ export default function ProjectPage({ params }) {
                     </p>
                   </div>
                 </div>
-              </section>
+              </ProjectSection>
             )}
 
             {/* Content Management */}
             {project.contentManagement && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  {project.contentManagement.notionIntegration
+              <ProjectSection
+                title={
+                  project.contentManagement.notionIntegration
                     ? 'Content Management with Notion'
-                    : 'Content Management with Sanity'}
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+                    : 'Content Management with Sanity'
+                }
+              >
                 {project.contentManagement.notionIntegration && (
                   <div className='mb-8'>
                     <h3 className='text-xl font-ibm text-neon mb-4'>
                       Notion Integration
                     </h3>
-                    <ul className='space-y-2 ml-6'>
-                      {project.contentManagement.notionIntegration.map(
-                        (feature, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {feature}
-                          </li>
-                        )
-                      )}
-                    </ul>
+                    <BulletList
+                      items={project.contentManagement.notionIntegration}
+                    />
                   </div>
                 )}
                 {project.contentManagement.productSchema && (
@@ -541,18 +239,9 @@ export default function ProjectPage({ params }) {
                       The project includes a comprehensive product schema with
                       the following fields:
                     </p>
-                    <ul className='space-y-2 ml-6'>
-                      {project.contentManagement.productSchema.map(
-                        (field, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {field}
-                          </li>
-                        )
-                      )}
-                    </ul>
+                    <BulletList
+                      items={project.contentManagement.productSchema}
+                    />
                   </div>
                 )}
                 {project.contentManagement.contentTypes && (
@@ -570,16 +259,7 @@ export default function ProjectPage({ params }) {
                             {type.name}
                           </h4>
                           {type.features ? (
-                            <ul className='space-y-2 ml-6'>
-                              {type.features.map((feature, featIndex) => (
-                                <li
-                                  key={featIndex}
-                                  className='font-ocr text-text text-sm'
-                                >
-                                  • {feature}
-                                </li>
-                              ))}
-                            </ul>
+                            <BulletList items={type.features} />
                           ) : (
                             <p className='font-ocr text-text text-sm'>
                               {type.description}
@@ -595,256 +275,101 @@ export default function ProjectPage({ params }) {
                     <h3 className='text-xl font-ibm text-neon mb-4'>
                       Sanity Studio Features
                     </h3>
-                    <ul className='space-y-2 ml-6'>
-                      {project.contentManagement.studioFeatures.map(
-                        (feature, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {feature}
-                          </li>
-                        )
-                      )}
-                    </ul>
+                    <BulletList
+                      items={project.contentManagement.studioFeatures}
+                    />
                   </div>
                 )}
-              </section>
+              </ProjectSection>
             )}
 
             {/* E-commerce Features */}
             {project.ecommerceFeatures && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  E-commerce Features
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='E-commerce Features'>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-                  {project.ecommerceFeatures.shoppingCart && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <h3 className='text-lg font-ibm text-neon mb-4'>
-                        Shopping Cart
-                      </h3>
-                      <ul className='space-y-2'>
-                        {project.ecommerceFeatures.shoppingCart.map(
-                          (feature, index) => (
-                            <li
-                              key={index}
-                              className='font-ocr text-text text-sm'
-                            >
-                              • {feature}
-                            </li>
-                          )
-                        )}
-                      </ul>
-                    </div>
-                  )}
-                  {project.ecommerceFeatures.checkout && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <h3 className='text-lg font-ibm text-neon mb-4'>
-                        Checkout Process
-                      </h3>
-                      <ul className='space-y-2'>
-                        {project.ecommerceFeatures.checkout.map(
-                          (feature, index) => (
-                            <li
-                              key={index}
-                              className='font-ocr text-text text-sm'
-                            >
-                              • {feature}
-                            </li>
-                          )
-                        )}
-                      </ul>
-                    </div>
-                  )}
-                  {project.ecommerceFeatures.productManagement && (
-                    <div className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'>
-                      <h3 className='text-lg font-ibm text-neon mb-4'>
-                        Product Management
-                      </h3>
-                      <ul className='space-y-2'>
-                        {project.ecommerceFeatures.productManagement.map(
-                          (feature, index) => (
-                            <li
-                              key={index}
-                              className='font-ocr text-text text-sm'
-                            >
-                              • {feature}
-                            </li>
-                          )
-                        )}
-                      </ul>
-                    </div>
-                  )}
+                  {[
+                    {
+                      key: 'shoppingCart',
+                      label: 'Shopping Cart',
+                    },
+                    {
+                      key: 'checkout',
+                      label: 'Checkout Process',
+                    },
+                    {
+                      key: 'productManagement',
+                      label: 'Product Management',
+                    },
+                  ]
+                    .filter((s) => project.ecommerceFeatures[s.key])
+                    .map((s) => (
+                      <div
+                        key={s.key}
+                        className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'
+                      >
+                        <h3 className='text-lg font-ibm text-neon mb-4'>
+                          {s.label}
+                        </h3>
+                        <BulletList
+                          items={project.ecommerceFeatures[s.key]}
+                          className='ml-0'
+                        />
+                      </div>
+                    ))}
                 </div>
-              </section>
+              </ProjectSection>
             )}
 
             {/* Design System */}
             {project.designSystem && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  Design System
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='Design System'>
                 {project.designSystem.components ? (
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                    <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Palette className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Components
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.designSystem.components.map(
-                          (component, index) => (
-                            <li
-                              key={index}
-                              className='font-ocr text-text text-sm'
-                            >
-                              • {component}
-                            </li>
-                          )
-                        )}
-                      </ul>
-                    </div>
-                    <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
-                      <div className='flex items-center mb-4'>
-                        <Palette className='w-6 h-6 text-neon mr-3' />
-                        <h3 className='text-xl font-ibm text-neon'>
-                          Styling
-                        </h3>
-                      </div>
-                      <ul className='space-y-2'>
-                        {project.designSystem.styling.map((style, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {style}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <TechStackCard
+                      icon={Palette}
+                      title='Components'
+                      items={project.designSystem.components}
+                    />
+                    <TechStackCard
+                      icon={Palette}
+                      title='Styling'
+                      items={project.designSystem.styling}
+                    />
                   </div>
                 ) : (
                   <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                    {project.designSystem.typography && (
-                      <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
-                        <div className='flex items-center mb-4'>
-                          <Palette className='w-6 h-6 text-neon mr-3' />
-                          <h3 className='text-xl font-ibm text-neon'>
-                            Typography
-                          </h3>
-                        </div>
-                        <ul className='space-y-2'>
-                          {project.designSystem.typography.map(
-                            (item, index) => (
-                              <li
-                                key={index}
-                                className='font-ocr text-text text-sm'
-                              >
-                                • {item}
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    )}
-                    {project.designSystem.colors && (
-                      <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
-                        <div className='flex items-center mb-4'>
-                          <Palette className='w-6 h-6 text-neon mr-3' />
-                          <h3 className='text-xl font-ibm text-neon'>
-                            Colors
-                          </h3>
-                        </div>
-                        <ul className='space-y-2'>
-                          {project.designSystem.colors.map((item, index) => (
-                            <li
-                              key={index}
-                              className='font-ocr text-text text-sm'
-                            >
-                              • {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {project.designSystem.symbols && (
-                      <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
-                        <div className='flex items-center mb-4'>
-                          <Palette className='w-6 h-6 text-neon mr-3' />
-                          <h3 className='text-xl font-ibm text-neon'>
-                            Symbols
-                          </h3>
-                        </div>
-                        <ul className='space-y-2'>
-                          {project.designSystem.symbols.map((item, index) => (
-                            <li
-                              key={index}
-                              className='font-ocr text-text text-sm'
-                            >
-                              • {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    {['typography', 'colors', 'symbols']
+                      .filter((key) => project.designSystem[key])
+                      .map((key) => (
+                        <TechStackCard
+                          key={key}
+                          icon={Palette}
+                          title={key.charAt(0).toUpperCase() + key.slice(1)}
+                          items={project.designSystem[key]}
+                        />
+                      ))}
                   </div>
                 )}
-              </section>
+              </ProjectSection>
             )}
 
             {/* API Routes */}
-            {project.apiRoutes && project.apiRoutes.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  API Routes
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.apiRoutes.map((route, index) => (
-                    <li key={index} className='flex items-start'>
-                      <Code className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-text text-base leading-relaxed'>
-                        {route}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            {project.apiRoutes?.length > 0 && (
+              <ProjectSection title='API Routes'>
+                <SectionList items={project.apiRoutes} icon={Code} />
+              </ProjectSection>
             )}
 
             {/* Performance */}
-            {project.performance && project.performance.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  Performance
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.performance.map((item, index) => (
-                    <li key={index} className='flex items-start'>
-                      <Zap className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-text text-base leading-relaxed'>
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            {project.performance?.length > 0 && (
+              <ProjectSection title='Performance'>
+                <SectionList items={project.performance} icon={Zap} />
+              </ProjectSection>
             )}
 
             {/* YouTube Integration */}
             {project.youtubeIntegration && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  YouTube Integration
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='YouTube Integration'>
                 {project.youtubeIntegration.description && (
                   <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
                     {project.youtubeIntegration.description}
@@ -855,18 +380,7 @@ export default function ProjectPage({ params }) {
                     <h3 className='text-xl font-ibm text-neon mb-4'>
                       Features
                     </h3>
-                    <ul className='space-y-2 ml-6'>
-                      {project.youtubeIntegration.features.map(
-                        (feature, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            • {feature}
-                          </li>
-                        )
-                      )}
-                    </ul>
+                    <BulletList items={project.youtubeIntegration.features} />
                   </div>
                 )}
                 {project.youtubeIntegration.workflow && (
@@ -874,83 +388,29 @@ export default function ProjectPage({ params }) {
                     <h3 className='text-xl font-ibm text-neon mb-4'>
                       Workflow
                     </h3>
-                    <ul className='space-y-2 ml-6'>
-                      {project.youtubeIntegration.workflow.map(
-                        (step, index) => (
-                          <li
-                            key={index}
-                            className='font-ocr text-text text-sm'
-                          >
-                            {step}
-                          </li>
-                        )
-                      )}
-                    </ul>
+                    <BulletList items={project.youtubeIntegration.workflow} />
                   </div>
                 )}
-              </section>
+              </ProjectSection>
             )}
 
             {/* Security */}
-            {(project.security && project.security.length > 0) ||
-            (project.securityFeatures &&
-              project.securityFeatures.length > 0) ? (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  Security
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.security &&
-                    project.security.map((item, index) => (
-                      <li key={index} className='flex items-start'>
-                        <Shield className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-text text-base leading-relaxed'>
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  {project.securityFeatures &&
-                    project.securityFeatures.map((item, index) => (
-                      <li
-                        key={`security-${index}`}
-                        className='flex items-start'
-                      >
-                        <Shield className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-text text-base leading-relaxed'>
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                </ul>
-              </section>
-            ) : null}
+            {securityItems.length > 0 && (
+              <ProjectSection title='Security'>
+                <SectionList items={securityItems} icon={Shield} />
+              </ProjectSection>
+            )}
 
             {/* Terminal Integration */}
             {project.terminalIntegration && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  Terminal Integration
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+              <ProjectSection title='Terminal Integration'>
                 <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
                   {project.terminalIntegration.description}
                 </p>
                 {project.terminalIntegration.usage && (
                   <div className='mb-6'>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
-                      Usage
-                    </h3>
-                    <ul className='space-y-2 ml-6'>
-                      {project.terminalIntegration.usage.map((usage, index) => (
-                        <li
-                          key={index}
-                          className='font-ocr text-text text-sm'
-                        >
-                          • {usage}
-                        </li>
-                      ))}
-                    </ul>
+                    <h3 className='text-xl font-ibm text-neon mb-4'>Usage</h3>
+                    <BulletList items={project.terminalIntegration.usage} />
                   </div>
                 )}
                 {project.terminalIntegration.example && (
@@ -960,80 +420,40 @@ export default function ProjectPage({ params }) {
                     </pre>
                   </div>
                 )}
-              </section>
+              </ProjectSection>
             )}
 
             {/* Keyboard Shortcuts */}
-            {project.keyboardShortcuts &&
-              project.keyboardShortcuts.length > 0 && (
-                <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                    Keyboard Shortcuts
-                  </h2>
-                  <div className='h-0.5 bg-neon mb-8'></div>
-                  <ul className='space-y-3'>
-                    {project.keyboardShortcuts.map((shortcut, index) => (
-                      <li key={index} className='flex items-start'>
-                        <Code className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-text text-base leading-relaxed'>
-                          {shortcut}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
+            {project.keyboardShortcuts?.length > 0 && (
+              <ProjectSection title='Keyboard Shortcuts'>
+                <SectionList items={project.keyboardShortcuts} icon={Code} />
+              </ProjectSection>
+            )}
 
             {/* Dice Notation */}
-            {project.diceNotation && project.diceNotation.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  Dice Notation
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+            {project.diceNotation?.length > 0 && (
+              <ProjectSection title='Dice Notation'>
                 <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
                   The dice roller uses standard RPG dice notation:
                 </p>
-                <ul className='space-y-3'>
-                  {project.diceNotation.map((notation, index) => (
-                    <li key={index} className='flex items-start'>
-                      <Code className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                      <span className='font-mono text-text text-base leading-relaxed'>
-                        {notation}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+                <SectionList
+                  items={project.diceNotation}
+                  icon={Code}
+                  fontClass='font-mono'
+                />
+              </ProjectSection>
             )}
 
             {/* Planned Features */}
-            {project.plannedFeatures && project.plannedFeatures.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  Planned Features
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
-                <ul className='space-y-3'>
-                  {project.plannedFeatures.map((feature, index) => (
-                    <li key={index} className='flex items-start'>
-                      <Zap className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                      <span className='font-ocr text-text text-base leading-relaxed'>
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            {project.plannedFeatures?.length > 0 && (
+              <ProjectSection title='Planned Features'>
+                <SectionList items={project.plannedFeatures} icon={Zap} />
+              </ProjectSection>
             )}
 
             {/* Demo Forms */}
-            {project.demoForms && project.demoForms.length > 0 && (
-              <section className='mb-16'>
-                <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                  Demo Forms
-                </h2>
-                <div className='h-0.5 bg-neon mb-8'></div>
+            {project.demoForms?.length > 0 && (
+              <ProjectSection title='Demo Forms'>
                 <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
                   The website includes three fully functional demo forms:
                 </p>
@@ -1052,144 +472,60 @@ export default function ProjectPage({ params }) {
                     </div>
                   ))}
                 </div>
-                {project.formFeatures && project.formFeatures.length > 0 && (
-                  <div>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
-                      Each form:
-                    </h3>
-                    <ul className='space-y-2 ml-6'>
-                      {project.formFeatures.map((feature, index) => (
-                        <li key={index} className='flex items-start'>
-                          <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                          <span className='font-ocr text-text text-base leading-relaxed'>
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </section>
+                <SectionList items={project.formFeatures} icon={CheckCircle} />
+              </ProjectSection>
             )}
 
-            {/* Benefits Section - Services Only */}
-            {project.isService &&
-              project.benefits &&
-              project.benefits.length > 0 && (
-                <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                    Benefits
-                  </h2>
-                  <div className='h-0.5 bg-neon mb-8'></div>
-                  <ul className='space-y-3'>
-                    {project.benefits.map((benefit, index) => (
-                      <li key={index} className='flex items-start'>
-                        <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-text text-base leading-relaxed'>
-                          {benefit}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
+            {/* Benefits (Services) */}
+            {project.isService && project.benefits?.length > 0 && (
+              <ProjectSection title='Benefits'>
+                <SectionList items={project.benefits} icon={CheckCircle} />
+              </ProjectSection>
+            )}
 
-            {/* Process Section - Services Only */}
-            {project.isService &&
-              project.process &&
-              project.process.length > 0 && (
-                <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                    Process
-                  </h2>
-                  <div className='h-0.5 bg-neon mb-8'></div>
-                  <div className='space-y-4'>
-                    {project.process.map((step, index) => (
-                      <div
-                        key={index}
-                        className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
-                      >
-                        <div className='flex items-start gap-4'>
-                          <div className='flex-shrink-0 w-8 h-8 bg-neon text-background font-ibm font-bold rounded-full flex items-center justify-center'>
-                            {index + 1}
-                          </div>
-                          <div className='flex-1'>
-                            <p className='font-ocr text-text text-base leading-relaxed'>
-                              {step}
-                            </p>
-                          </div>
+            {/* Process (Services) */}
+            {project.isService && project.process?.length > 0 && (
+              <ProjectSection title='Process'>
+                <div className='space-y-4'>
+                  {project.process.map((step, index) => (
+                    <div
+                      key={index}
+                      className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
+                    >
+                      <div className='flex items-start gap-4'>
+                        <div className='flex-shrink-0 w-8 h-8 bg-neon text-background font-ibm font-bold rounded-full flex items-center justify-center'>
+                          {index + 1}
                         </div>
+                        <p className='flex-1 font-ocr text-text text-base leading-relaxed'>
+                          {step}
+                        </p>
                       </div>
-                    ))}
-                  </div>
-                </section>
-              )}
+                    </div>
+                  ))}
+                </div>
+              </ProjectSection>
+            )}
 
-            {/* Common Use Cases - Services Only */}
-            {project.isService &&
-              project.commonUseCases &&
-              project.commonUseCases.length > 0 && (
-                <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                    Common Use Cases
-                  </h2>
-                  <div className='h-0.5 bg-neon mb-8'></div>
-                  <ul className='space-y-3'>
-                    {project.commonUseCases.map((useCase, index) => (
-                      <li key={index} className='flex items-start'>
-                        <Zap className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-text text-base leading-relaxed'>
-                          {useCase}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
+            {/* Common Use Cases (Services) */}
+            {project.isService && project.commonUseCases?.length > 0 && (
+              <ProjectSection title='Common Use Cases'>
+                <SectionList items={project.commonUseCases} icon={Zap} />
+              </ProjectSection>
+            )}
 
-            {/* Use Cases - Services Only */}
-            {project.isService &&
-              project.useCases &&
-              project.useCases.length > 0 && (
-                <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                    Use Cases
-                  </h2>
-                  <div className='h-0.5 bg-neon mb-8'></div>
-                  <ul className='space-y-3'>
-                    {project.useCases.map((useCase, index) => (
-                      <li key={index} className='flex items-start'>
-                        <Zap className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-text text-base leading-relaxed'>
-                          {useCase}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
+            {/* Use Cases (Services) */}
+            {project.isService && project.useCases?.length > 0 && (
+              <ProjectSection title='Use Cases'>
+                <SectionList items={project.useCases} icon={Zap} />
+              </ProjectSection>
+            )}
 
-            {/* Services List - Services Only */}
-            {project.isService &&
-              project.services &&
-              project.services.length > 0 && (
-                <section className='mb-16'>
-                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-ibm text-neon mb-6'>
-                    Services Included
-                  </h2>
-                  <div className='h-0.5 bg-neon mb-8'></div>
-                  <ul className='space-y-3'>
-                    {project.services.map((service, index) => (
-                      <li key={index} className='flex items-start'>
-                        <CheckCircle className='w-5 h-5 text-neon shrink-0 mt-0.5 mr-3' />
-                        <span className='font-ocr text-text text-base leading-relaxed'>
-                          {service}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
+            {/* Services Included (Services) */}
+            {project.isService && project.services?.length > 0 && (
+              <ProjectSection title='Services Included'>
+                <SectionList items={project.services} icon={CheckCircle} />
+              </ProjectSection>
+            )}
 
             {/* CTA Section */}
             <section className='text-center bg-panel/30 p-8 md:p-12 rounded-xl'>

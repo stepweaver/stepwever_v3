@@ -1,18 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import { getLinkClass } from '@/lib/meshtasticNavUtils';
 
 /**
  * Sidebar: sections with their pages only (like meshtastic.org). No duplicate "Introduction";
  * index/landing is reached via the header "Meshtastic" / "Field Notes" link.
  */
 export default function MeshtasticDocsSidebar({ grouped, currentSlug, currentSection }) {
-  const linkClass = (active) =>
-    `block py-1.5 px-2 rounded-sm text-sm transition-colors border-l-2 -ml-0.5 pl-2.5 font-ocr ${
-      active
-        ? 'text-neon bg-neon/10 border-neon [text-shadow:var(--terminal-text-glow)]'
-        : 'text-text/70 hover:text-neon hover:bg-neon/5 border-transparent'
-    }`;
 
   return (
     <aside
@@ -51,7 +46,7 @@ export default function MeshtasticDocsSidebar({ grouped, currentSlug, currentSec
                     const active = p.slug === currentSlug;
                     return (
                       <li key={p.id}>
-                        <Link href={`/meshtastic/${p.slug}`} className={linkClass(active)}>
+                        <Link href={`/meshtastic/${p.slug}`} className={getLinkClass(active)}>
                           {p.title}
                         </Link>
                       </li>

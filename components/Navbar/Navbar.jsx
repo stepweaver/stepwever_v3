@@ -5,6 +5,7 @@ import Link from 'next/link';
 import MobileNav from './MobileNav';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
+import { NAV_LINKS } from '@/lib/navigation';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -77,60 +78,37 @@ export default function Navbar() {
             role='menubar'
             aria-label='Main menu'
           >
-            <button
-              onClick={() => {
-                if (window.location.pathname === '/') {
-                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  window.location.href = '/#about';
-                }
-              }}
-              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-              role='menuitem'
-              aria-label='About section'
-            >
-              About
-            </button>
-            <Link
-              href='/resume'
-              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-              role='menuitem'
-              aria-label='Resume page'
-            >
-              Resume
-            </Link>
-            <Link
-              href='/codex'
-              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-              role='menuitem'
-              aria-label='View blog'
-            >
-              Codex
-            </Link>
-            <Link
-              href='/meshtastic'
-              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-              role='menuitem'
-              aria-label='Meshtastic field notes'
-            >
-              Meshtastic
-            </Link>
-            <Link
-              href='/terminal'
-              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-              role='menuitem'
-              aria-label='Interactive terminal'
-            >
-              Terminal
-            </Link>
-            <Link
-              href='/contact'
-              className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-              role='menuitem'
-              aria-label='Contact page'
-            >
-              Contact
-            </Link>
+            {NAV_LINKS.map((link) =>
+              link.scroll ? (
+                <button
+                  key={link.path}
+                  onClick={() => {
+                    if (window.location.pathname === '/') {
+                      document
+                        .getElementById(link.path.split('#')[1])
+                        ?.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                      window.location.href = link.path;
+                    }
+                  }}
+                  className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+                  role='menuitem'
+                  aria-label={link.ariaLabel}
+                >
+                  {link.name}
+                </button>
+              ) : (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
+                  role='menuitem'
+                  aria-label={link.ariaLabel}
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
           </div>
         </div>
       </div>

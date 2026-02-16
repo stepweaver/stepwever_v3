@@ -10,125 +10,7 @@ import React, {
 } from 'react';
 import Link from 'next/link';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
-
-/* ---------- 1. data ---------- */
-
-const PROJECTS = [
-  {
-    title: 'Lambda Orthodontics Website - Demo',
-    description: 'Modern responsive website with functional forms.',
-    imageUrl: '/images/screely-lambda.png',
-    keywords: ['Healthcare', 'Website', 'Form Validation'],
-    actions: [
-      'Three fully functional forms with validation',
-      'Modern responsive design built with vanilla JavaScript',
-    ],
-    link: 'https://lambdaortho.vercel.app/',
-    tags: ['Web Development', 'Healthcare', 'Forms'],
-    slug: 'lambda-orthodontics',
-  },
-  {
-    title: 'Soap Stache',
-    description: 'E-commerce platform with shopping cart and Stripe payments.',
-    imageUrl: '/images/screely-stache.png',
-    keywords: ['E-commerce', 'Next.js', 'Sanity CMS', 'Stripe'],
-    actions: [
-      'Complete shopping cart and checkout with Stripe integration',
-      'Content management through Sanity CMS',
-    ],
-    link: 'https://app-soap-stache.vercel.app/',
-    tags: ['E-commerce', 'Next.js', 'Sanity CMS', 'Stripe'],
-    slug: 'soap-stache',
-  },
-  {
-    title: 'I AM [RESIST]',
-    description:
-      'A powerful headless CMS integration using Notion API with automatic YouTube RSS feeds.',
-    imageUrl: '/images/screely-resist.png',
-    keywords: ['Headless CMS', 'Notion API', 'Next.js', 'RSS Integration'],
-    actions: [
-      'Publish content directly from Notion - no deployment needed',
-      'Automatic YouTube content aggregation via RSS feeds',
-    ],
-    link: 'https://iamresist.org',
-    tags: ['Web Development', 'Headless CMS', 'Notion API', 'RSS Integration'],
-    slug: 'iam-resist',
-  },
-  {
-    title: 'RPG Dice Roller',
-    description: 'Interactive dice rolling app for tabletop RPGs.',
-    imageUrl: '/images/screely-dice.png',
-    keywords: ['Gaming', 'Interactive', 'Web App'],
-    actions: [
-      'Roll any combination of RPG dice instantly',
-      'Track roll history and copy results',
-    ],
-    link: '/dice-roller',
-    tags: ['Web Development', 'Gaming', 'Interactive'],
-    slug: 'rpg-dice-roller',
-  },
-  {
-    title: 'Neon Profile Card',
-    description:
-      'Glassmorphism-inspired ID card with neon CRT glow and animated Matrix Sync terminal sequence.',
-    imageUrl: '/images/screely-profilcard.png',
-    keywords: ['UI System', 'Tailwind CSS', 'Neon', 'React'],
-    actions: [
-      'Reusable React component with profile data model and IBM/OCR typography',
-      'Animated Matrix Sync terminal sequence with React state and animation hooks',
-    ],
-    tags: ['UI Design', 'Tailwind CSS', 'Animation', 'React'],
-    slug: 'neon-profile-card',
-  },
-  {
-    title: 'IT Consulting',
-    description: 'Strategic IT consulting to streamline operations.',
-    imageUrl: null,
-    keywords: ['IT Consulting', 'Strategic Planning', 'System Integration'],
-    actions: [
-      'Technology planning and implementation',
-      'System optimization and workflow improvement',
-    ],
-    tags: ['IT Consulting', 'Strategic Planning', 'System Integration'],
-    slug: 'it-consulting',
-  },
-  {
-    title: 'Google Analytics',
-    description: 'Analytics setup and optimization for tracking.',
-    imageUrl: null,
-    keywords: ['Analytics', 'Data Tracking', 'Business Intelligence'],
-    actions: [
-      'Comprehensive tracking setup and configuration',
-      'Actionable insights from business data',
-    ],
-    tags: ['Analytics', 'Data Tracking', 'Business Intelligence'],
-    slug: 'google-analytics',
-  },
-  {
-    title: 'n8n Automations',
-    description: 'Custom automation workflows to connect apps.',
-    imageUrl: null,
-    keywords: ['Automation', 'n8n', 'Workflow Integration'],
-    actions: [
-      'Connect apps and services seamlessly',
-      'Automate repetitive tasks and data transfers',
-    ],
-    tags: ['Automation', 'n8n', 'Workflow Integration'],
-    slug: 'n8n-automations',
-  },
-  {
-    title: 'AI Integrations',
-    description: 'AI tool integration to enhance workflows.',
-    imageUrl: null,
-    keywords: ['AI Integration', 'Machine Learning', 'Productivity'],
-    actions: [
-      'Custom AI solutions for business needs',
-      'Enhanced workflows with intelligent automation',
-    ],
-    tags: ['AI Integration', 'Machine Learning', 'Productivity'],
-    slug: 'ai-integrations',
-  },
-];
+import { CAROUSEL_PROJECTS } from '@/lib/carouselProjects';
 
 /* ---------- 2. carousel + grid ---------- */
 
@@ -170,7 +52,7 @@ function ProjectCarousel() {
   const nextProject = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % PROJECTS.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % CAROUSEL_PROJECTS.length);
     setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning]);
 
@@ -178,7 +60,7 @@ function ProjectCarousel() {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + PROJECTS.length) % PROJECTS.length
+      (prevIndex) => (prevIndex - 1 + CAROUSEL_PROJECTS.length) % CAROUSEL_PROJECTS.length
     );
     setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning]);
@@ -198,7 +80,7 @@ function ProjectCarousel() {
   const nextPage = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    const total = Math.ceil(PROJECTS.length / cardsPerPage);
+    const total = Math.ceil(CAROUSEL_PROJECTS.length / cardsPerPage);
     const nextPageIndex = (desktopPageIndex + 1) % total;
     setDesktopPageIndex(nextPageIndex);
     setTimeout(() => setIsTransitioning(false), 600);
@@ -207,7 +89,7 @@ function ProjectCarousel() {
   const prevPage = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    const total = Math.ceil(PROJECTS.length / cardsPerPage);
+    const total = Math.ceil(CAROUSEL_PROJECTS.length / cardsPerPage);
     const prevPageIndex = (desktopPageIndex - 1 + total) % total;
     setDesktopPageIndex(prevPageIndex);
     setTimeout(() => setIsTransitioning(false), 600);
@@ -556,14 +438,14 @@ function ProjectCarousel() {
   }, [getCardsPerPage]);
 
   // Calculate total pages for desktop
-  const totalPages = Math.ceil(PROJECTS.length / cardsPerPage);
+  const totalPages = Math.ceil(CAROUSEL_PROJECTS.length / cardsPerPage);
   const currentPage = desktopPageIndex;
 
   // Get cards for a specific page
   const getCardsForPage = useCallback(
     (pageIndex) => {
       const startIndex = pageIndex * cardsPerPage;
-      return PROJECTS.slice(startIndex, startIndex + cardsPerPage);
+      return CAROUSEL_PROJECTS.slice(startIndex, startIndex + cardsPerPage);
     },
     [cardsPerPage]
   );
@@ -603,8 +485,8 @@ function ProjectCarousel() {
   // Calculate visible items for mobile (current, prev, next)
   const getVisibleMobileIndices = useCallback(() => {
     const indices = [];
-    const prev = (currentIndex - 1 + PROJECTS.length) % PROJECTS.length;
-    const next = (currentIndex + 1) % PROJECTS.length;
+    const prev = (currentIndex - 1 + CAROUSEL_PROJECTS.length) % CAROUSEL_PROJECTS.length;
+    const next = (currentIndex + 1) % CAROUSEL_PROJECTS.length;
     indices.push(prev, currentIndex, next);
     return indices;
   }, [currentIndex]);
@@ -637,7 +519,7 @@ function ProjectCarousel() {
             style={transformStyle}
           >
             {visibleMobileIndices.map((index) => {
-              const project = PROJECTS[index];
+              const project = CAROUSEL_PROJECTS[index];
               const isCurrent = index === currentIndex;
               return (
                 <div
@@ -715,7 +597,7 @@ function ProjectCarousel() {
           role='tablist'
           aria-label='Project carousel navigation'
         >
-          {PROJECTS.map((_, index) => (
+          {CAROUSEL_PROJECTS.map((_, index) => (
             <button
               key={index}
               onClick={() => {
@@ -727,7 +609,7 @@ function ProjectCarousel() {
                   ? 'bg-terminal-green'
                   : 'bg-terminal-dimmed hover:bg-terminal-green/50'
               }`}
-              aria-label={`Go to project ${index + 1} of ${PROJECTS.length}`}
+              aria-label={`Go to project ${index + 1} of ${CAROUSEL_PROJECTS.length}`}
               aria-selected={index === currentIndex}
               role='tab'
             />

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
+import { MOBILE_NAV_LINKS } from '@/lib/navigation';
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,20 +15,11 @@ export default function MobileNav() {
 
   useEffect(() => setMounted(true), []);
 
-  const navLinks = [
-    { name: 'ABOUT', path: '/#about', scroll: true },
-    { name: 'RESUME', path: '/resume' },
-    { name: 'CODEX', path: '/codex' },
-    { name: 'MESHTASTIC', path: '/meshtastic' },
-    { name: 'TERMINAL', path: '/terminal' },
-    { name: 'CONTACT', path: '/contact' },
-    {
-      name: 'BLUESKY',
-      path: 'https://bsky.app/profile/stepweaver.dev',
-      external: true,
-    },
-    { name: 'GITHUB', path: 'https://github.com/stepweaver', external: true },
-  ];
+  // Uppercase names for mobile nav aesthetic
+  const navLinks = MOBILE_NAV_LINKS.map((link) => ({
+    ...link,
+    name: link.name.toUpperCase(),
+  }));
 
   // Prevent body scroll when menu is open
   useEffect(() => {

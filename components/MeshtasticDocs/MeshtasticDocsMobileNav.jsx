@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { getLinkClass } from '@/lib/meshtasticNavUtils';
 
 /**
  * Mobile-only slide-out drawer for navigating between Meshtastic doc sections/pages.
@@ -47,12 +48,7 @@ export default function MeshtasticDocsMobileNav({ grouped, currentSlug, currentS
     }
   }, [open, handleKeyDown]);
 
-  const linkClass = (active) =>
-    `block py-1.5 px-2 rounded-sm text-sm transition-colors border-l-2 -ml-0.5 pl-2.5 font-ocr ${
-      active
-        ? 'text-neon bg-neon/10 border-neon [text-shadow:var(--terminal-text-glow)]'
-        : 'text-text/70 hover:text-neon hover:bg-neon/5 border-transparent'
-    }`;
+  // Uses shared getLinkClass from lib/meshtasticNavUtils
 
   return (
     <>
@@ -165,7 +161,7 @@ export default function MeshtasticDocsMobileNav({ grouped, currentSlug, currentS
                               <li key={p.id}>
                                 <Link
                                   href={`/meshtastic/${p.slug}`}
-                                  className={linkClass(active)}
+                                  className={getLinkClass(active)}
                                   onClick={() => setOpen(false)}
                                 >
                                   {p.title}

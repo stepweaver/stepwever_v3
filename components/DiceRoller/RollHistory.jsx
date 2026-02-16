@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { DICE_ICONS, DICE_COLORS, UI_CONSTANTS } from '@/lib/diceConstants';
 import { formatTimestamp } from '@/utils/dateFormatter';

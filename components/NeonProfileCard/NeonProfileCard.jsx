@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import { useMatrixSync } from '@/hooks/useMatrixSync';
 
 const MATRIX_GLYPHS = ['λ', 'ネ', 'ホ', 'ミ', 'ツ'];
 
@@ -19,94 +19,8 @@ const NeonProfileCard = ({ profile }) => {
   const mergedProfile = profile ?? defaultProfile;
   const tagline = mergedProfile.tagline ?? mergedProfile.department;
 
-  const createMatrixCells = () =>
-    Array.from({ length: 6 }, () =>
-      [
-        MATRIX_GLYPHS[Math.floor(Math.random() * MATRIX_GLYPHS.length)],
-        MATRIX_GLYPHS[Math.floor(Math.random() * MATRIX_GLYPHS.length)],
-      ].join('')
-    );
-
-  const [attempt, setAttempt] = useState(1);
-  const [terminalOutput, setTerminalOutput] = useState('');
-  // Use fixed initial value to avoid hydration mismatch
-  const [matrixCells, setMatrixCells] = useState([
-    '  ',
-    '  ',
-    '  ',
-    '  ',
-    '  ',
-    '  ',
-  ]);
-  const [showPrompt, setShowPrompt] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Initialize matrix cells only on client to avoid hydration mismatch
-  useEffect(() => {
-    setIsMounted(true);
-    setMatrixCells(createMatrixCells());
-  }, []);
-
-  useEffect(() => {
-    if (!isMounted) return;
-
-    let step = 0;
-    let timeoutId;
-    let matrixIntervalId;
-    let currentAttempt = 1;
-
-    const getRandomDelay = (base, variance) => {
-      return base + Math.random() * variance;
-    };
-
-    const runSequence = () => {
-      step++;
-
-      if (step === 1) {
-        // INIT: Start connection attempt
-        setTerminalOutput(`connect user`);
-        setAttempt(currentAttempt);
-        timeoutId = setTimeout(runSequence, getRandomDelay(1200, 400));
-      } else if (step === 2) {
-        // DIALING: Show dialing with matrix code
-        setTerminalOutput(`handshake failed`);
-        // Start rapid matrix cycling
-        let cycleCount = 0;
-        matrixIntervalId = setInterval(() => {
-          setMatrixCells(createMatrixCells());
-          cycleCount++;
-          if (cycleCount >= 10) {
-            clearInterval(matrixIntervalId);
-            timeoutId = setTimeout(runSequence, getRandomDelay(600, 200));
-          }
-        }, 180);
-      } else if (step === 3) {
-        // Connection failed
-        setTerminalOutput(`user unplugged`);
-        timeoutId = setTimeout(runSequence, getRandomDelay(1500, 500));
-      } else if (step === 4) {
-        // Show hanging prompt
-        setTerminalOutput('');
-        setShowPrompt(true);
-        timeoutId = setTimeout(runSequence, getRandomDelay(2000, 800));
-      } else if (step === 5) {
-        // Reset and start new attempt
-        setTerminalOutput('');
-        setShowPrompt(false);
-        currentAttempt = currentAttempt >= 97 ? 1 : currentAttempt + 1;
-        step = 0;
-        timeoutId = setTimeout(runSequence, getRandomDelay(400, 200));
-      }
-    };
-
-    // Start the sequence
-    runSequence();
-
-    return () => {
-      clearTimeout(timeoutId);
-      clearInterval(matrixIntervalId);
-    };
-  }, [isMounted]);
+  const { attempt, terminalOutput, matrixCells, showPrompt, isMounted } =
+    useMatrixSync({ glyphs: MATRIX_GLYPHS });
 
   const badges = Array.isArray(mergedProfile.badges)
     ? mergedProfile.badges

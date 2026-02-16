@@ -15,6 +15,7 @@ import { useContactForm } from './hooks/useContactForm';
 import { useWeatherSelection } from './hooks/useWeatherSelection';
 import { getCurrentPath, isCodexModeActive } from './data/codex.js';
 import { useRouter } from 'next/navigation';
+import DOMPurify from 'dompurify';
 import styles from '../../styles/terminal.module.css';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 
@@ -32,14 +33,8 @@ const WELCOME_MESSAGES = [
   '<span>Type <span class="text-terminal-cyan">"help"</span> to see available commands.</span>',
 ];
 
-// Utility functions
-const sanitizeHTML = (html) => {
-  // Basic HTML sanitization - in production, use a proper library like DOMPurify
-  return html.replace(
-    /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
-    ''
-  );
-};
+// Utility: robust HTML sanitization via DOMPurify
+const sanitizeHTML = (html) => DOMPurify.sanitize(html);
 
 const Terminal = forwardRef((props, ref) => {
   // Core state
