@@ -82,7 +82,7 @@ export default function NotionBlockBody({ blocks }) {
       const id = headings[headingIndex]?.id;
       if (headingIndex < headings.length) headingIndex += 1;
       return (
-        <h2 key={key} id={id} className="text-2xl sm:text-3xl font-bold text-neon mt-8 mb-4 scroll-mt-24 [text-shadow:var(--terminal-title-glow)]">
+        <h2 key={key} id={id} className="text-2xl sm:text-3xl font-bold text-text mt-8 mb-4 scroll-mt-24">
           {text}
         </h2>
       );
@@ -92,7 +92,7 @@ export default function NotionBlockBody({ blocks }) {
       const id = headings[headingIndex]?.id;
       if (headingIndex < headings.length) headingIndex += 1;
       return (
-        <h3 key={key} id={id} className="text-xl sm:text-2xl font-bold text-neon mt-6 mb-3 scroll-mt-24 [text-shadow:var(--terminal-text-glow)]">
+        <h3 key={key} id={id} className="text-xl sm:text-2xl font-bold text-text mt-6 mb-3 scroll-mt-24">
           {text}
         </h3>
       );
@@ -102,7 +102,7 @@ export default function NotionBlockBody({ blocks }) {
       const id = headings[headingIndex]?.id;
       if (headingIndex < headings.length) headingIndex += 1;
       return (
-        <h4 key={key} id={id} className="text-lg sm:text-xl font-bold text-neon mt-4 mb-2 scroll-mt-24 [text-shadow:var(--terminal-text-glow)]">
+        <h4 key={key} id={id} className="text-lg sm:text-xl font-bold text-text mt-4 mb-2 scroll-mt-24">
           {text}
         </h4>
       );
