@@ -18,6 +18,7 @@ const BackgroundCanvas = dynamic(
   { ssr: false }
 );
 const Terminal = dynamic(() => import('@/components/Terminal/Terminal'), {
+  ssr: false,
   loading: () => (
     <div className='min-h-[400px] flex items-center justify-center'>
       <div className='hud-panel p-6 w-full max-w-md motion-safe:animate-pulse'>
