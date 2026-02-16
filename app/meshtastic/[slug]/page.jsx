@@ -122,7 +122,7 @@ export default async function MeshtasticDocPage({ params }) {
                       {doc.section}
                     </p>
                   )}
-                  <h1 className="text-2xl sm:text-3xl font-semibold text-text font-ibm [text-shadow:var(--terminal-title-glow)]">
+                  <h1 className="text-2xl sm:text-3xl font-semibold text-text font-ibm">
                     {doc.title}
                   </h1>
                   {doc.summary ? (
