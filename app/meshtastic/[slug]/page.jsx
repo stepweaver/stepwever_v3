@@ -99,6 +99,7 @@ export default async function MeshtasticDocPage({ params }) {
           grouped={grouped}
           currentSlug={doc.slug}
           currentSection={doc.section}
+          hasFieldNotes={hasFieldNotes}
         >
           {/* Traditional docs: content + optional right TOC */}
           <div className="flex flex-col xl:flex-row xl:gap-12 w-full px-4 sm:px-6 lg:px-8 pb-16">

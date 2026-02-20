@@ -70,15 +70,6 @@ export default function ChatWidget() {
             {/* Header */}
             <div className='flex items-center justify-between px-4 py-3 border-b border-neon/20' style={{ background: 'rgb(var(--panel))' }}>
               <div className='flex items-center gap-2 flex-wrap min-w-0'>
-                <span className='font-ocr text-[10px] sm:text-xs tracking-[0.28em] text-neon/70 uppercase whitespace-nowrap'>
-                  MODULE
-                </span>
-                <span
-                  className='font-ocr text-neon/50 text-xs sm:text-sm'
-                  aria-hidden
-                >
-                  //
-                </span>
                 <span className='font-ibm text-base sm:text-lg font-semibold text-neon whitespace-nowrap'>
                   λlambda
                 </span>
