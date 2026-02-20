@@ -6,6 +6,7 @@ import {
   listPublishedDocs,
   groupDocsBySection,
   getFlatDocList,
+  listFieldNotes,
 } from '@/lib/notion/meshtastic-docs.repo';
 import { getPageBlocks } from '@/lib/notion-blocks';
 import { getHeadingsFromBlocks } from '@/lib/meshtastic-docs-headings';
@@ -67,13 +68,15 @@ export default async function MeshtasticDocPage({ params }) {
   const doc = await getCachedDocBySlug(slug);
   if (!doc) notFound();
 
-  const [blocks, docs] = await Promise.all([
+  const [blocks, docs, fieldNotes] = await Promise.all([
     getPageBlocks(doc.id, 10),
     listPublishedDocs(),
+    listFieldNotes(),
   ]);
   const grouped = groupDocsBySection(docs);
   const flatList = getFlatDocList(grouped);
   const headings = getHeadingsFromBlocks(blocks);
+  const hasFieldNotes = fieldNotes && fieldNotes.length > 0;
 
   const formatUpdated = (lastEditedTime) => {
     if (!lastEditedTime) return '';
@@ -106,6 +109,7 @@ export default async function MeshtasticDocPage({ params }) {
                   grouped={grouped}
                   currentSlug={doc.slug}
                   currentSection={doc.section}
+                  hasFieldNotes={hasFieldNotes}
                 />
               </div>
               <div>

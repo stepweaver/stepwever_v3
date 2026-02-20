@@ -5,9 +5,10 @@ import { getLinkClass } from '@/lib/meshtasticNavUtils';
 
 /**
  * Sidebar: sections with their pages only (like meshtastic.org). No duplicate "Introduction";
- * index/landing is reached via the header "Meshtastic" / "Field Notes" link.
+ * index/landing is reached via the header "Meshtastic" link.
+ * Field Notes is its own section, separate from other doc sections.
  */
-export default function MeshtasticDocsSidebar({ grouped, currentSlug, currentSection }) {
+export default function MeshtasticDocsSidebar({ grouped, currentSlug, currentSection, hasFieldNotes = false }) {
 
   return (
     <aside
@@ -22,9 +23,18 @@ export default function MeshtasticDocsSidebar({ grouped, currentSlug, currentSec
           <span className="text-lg font-mono" aria-hidden>//\</span>
           <span className="font-ibm">Meshtastic</span>
         </Link>
-        <p className="text-xs tracking-[0.2em] text-neon/60 uppercase font-ocr mt-1">Field Notes</p>
       </div>
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto min-h-0">
+        {/* Field Notes as a direct link - appears FIRST */}
+        {hasFieldNotes && (
+          <div className="border-b border-neon/10 pb-1 mb-1">
+            <Link href="/meshtastic/field-notes" className={getLinkClass(currentSlug === 'field-notes')}>
+              Field Notes
+            </Link>
+          </div>
+        )}
+        
+        {/* Regular doc sections */}
         {grouped.map(({ section, pages }) => {
           if (!pages?.length) return null;
           const isOpen = currentSection === section;

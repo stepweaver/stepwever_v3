@@ -12,7 +12,7 @@ import { getLinkClass } from '@/lib/meshtasticNavUtils';
  * Uses a portal to render the backdrop + drawer at document.body level so it
  * sits above the fixed navbar (z-50) regardless of parent stacking contexts.
  */
-export default function MeshtasticDocsMobileNav({ grouped, currentSlug, currentSection }) {
+export default function MeshtasticDocsMobileNav({ grouped, currentSlug, currentSection, hasFieldNotes = false }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
@@ -127,12 +127,22 @@ export default function MeshtasticDocsMobileNav({ grouped, currentSlug, currentS
                 </button>
               </div>
 
-              <p className="text-xs tracking-[0.2em] text-neon/60 uppercase font-ocr px-4 pt-3">
-                Field Notes
-              </p>
-
               {/* Navigation */}
               <nav className="flex-1 overflow-y-auto p-3 space-y-1">
+                {/* Field Notes as a direct link - appears FIRST */}
+                {hasFieldNotes && (
+                  <div className="border-b border-neon/5 pb-1 mb-1">
+                    <Link
+                      href="/meshtastic/field-notes"
+                      className={getLinkClass(currentSlug === 'field-notes')}
+                      onClick={() => setOpen(false)}
+                    >
+                      Field Notes
+                    </Link>
+                  </div>
+                )}
+                
+                {/* Regular doc sections */}
                 {grouped.map(({ section, pages }) => {
                   if (!pages?.length) return null;
                   const sectionOpen = currentSection === section;

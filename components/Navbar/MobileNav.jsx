@@ -65,12 +65,12 @@ export default function MobileNav() {
             <div className='absolute bottom-0 right-0 h-6 w-8 border-b-2 border-r-2 border-neon/40' />
           </div>
 
-          {/* One header row: MODULE // menu · NAV-00 · theme · close */}
+          {/* One header row: MODULE // stepweaver · NAV-00 · theme · close */}
           <header className='flex items-center justify-between gap-3 px-5 py-4 shrink-0'>
             <div className='flex items-baseline gap-2 min-w-0'>
               <span className='font-ibm text-lg font-semibold text-neon truncate flex items-center gap-1.5'>
                 <GlitchLambda autoGlitch={true} size='small' />
-                menu
+                stepweaver
               </span>
             </div>
             <div className='flex items-center gap-3 shrink-0'>

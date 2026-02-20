@@ -11,6 +11,7 @@ export default function MeshtasticDocsLayout({
   currentSlug,
   currentSection,
   children,
+  hasFieldNotes = false,
 }) {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -20,6 +21,7 @@ export default function MeshtasticDocsLayout({
           grouped={grouped}
           currentSlug={currentSlug}
           currentSection={currentSection}
+          hasFieldNotes={hasFieldNotes}
         />
       </div>
 
