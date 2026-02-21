@@ -133,7 +133,7 @@ export default function MobileNav() {
 
           {/* Minimal footer */}
           <footer className='shrink-0 px-5 py-3 border-t border-neon/10 flex items-center justify-between text-[11px] font-mono text-text/50'>
-            <span>stepweaver@v3.7</span>
+            <span>stepweaver@v3.8</span>
             <span className='flex items-center gap-1.5'>
               <span className='h-1.5 w-1.5 rounded-full bg-neon/80' />
               connected

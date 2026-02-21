@@ -84,7 +84,7 @@ export default async function CodexPostPage({ params }) {
     <div className="min-h-screen relative">
       <BackgroundCanvas />
       <div className="relative z-10 p-4">
-        <div className="max-w-4xl mx-auto mt-16">
+        <div className="max-w-4xl mx-auto">
           <a
             href="/codex"
             className="inline-block mb-8 transition-colors text-terminal-green hover:text-terminal-white"

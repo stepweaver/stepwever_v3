@@ -134,6 +134,7 @@ export default function RootLayout({ children }) {
       lang='en'
       className={`${ocrFont.variable} ${ibm3270.variable} antialiased`}
       data-theme='dark'
+      data-scroll-behavior='smooth'
       suppressHydrationWarning // Suppress hydration warning for data-theme attribute which is set by client script
     >
       <head>

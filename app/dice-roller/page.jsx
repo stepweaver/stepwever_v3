@@ -108,7 +108,7 @@ export default function DiceRollerPage() {
         <BackgroundCanvas />
         
         <div className='relative z-10 w-full overflow-x-hidden'>
-          <section className='w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24 overflow-x-hidden'>
+          <section className='w-full px-4 sm:px-6 lg:px-8 pt-0 pb-16 md:pb-24 overflow-x-hidden'>
             <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
               <header className='space-y-6'>
                 <div className='space-y-4'>

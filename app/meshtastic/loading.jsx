@@ -18,7 +18,7 @@ export default function MeshtasticLoading() {
       </div>
 
       {/* Main content skeleton */}
-      <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-8 pt-6 lg:pt-8 pb-16">
+      <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-8 pt-0 pb-16">
         <div className="border border-neon/20 rounded-md bg-panel/40 overflow-hidden motion-safe:animate-pulse">
           <div className="border-b border-neon/20 px-5 sm:px-6 lg:px-8 py-6 space-y-3">
             <div className="h-3 w-16 bg-neon/10 rounded" />

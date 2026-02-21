@@ -7,6 +7,7 @@ import ChatMessage, {
   ChatLoadingIndicator,
 } from '@/components/Chat/ChatMessage';
 import ExampleQuestions from '@/components/Chat/ExampleQuestions';
+import GlitchLambda from '@/components/ui/GlitchLambda';
 import '@/components/ThemeToggle/ThemeToggle.css';
 
 const EXAMPLE_QUESTIONS = [
@@ -57,6 +58,15 @@ export default function ChatWidget() {
 
   return (
     <>
+      {/* Backdrop blur when chat is open */}
+      {isOpen && (
+        <button
+          type='button'
+          aria-label='Close chat'
+          onClick={toggleOpen}
+          className='fixed inset-0 z-[90] backdrop-blur-md bg-black/30 cursor-pointer'
+        />
+      )}
       {/* Chat Widget Container */}
       {isOpen && (
         <div
@@ -68,10 +78,11 @@ export default function ChatWidget() {
         >
           <div className='hud-panel h-full flex flex-col relative overflow-hidden' style={{ background: 'rgb(var(--panel))', backdropFilter: 'none' }}>
             {/* Header */}
-            <div className='flex items-center justify-between px-4 py-3 border-b border-neon/20' style={{ background: 'rgb(var(--panel))' }}>
+            <div className='flex items-center justify-between px-4 pt-4 pb-3 border-b border-neon/20' style={{ background: 'rgb(var(--panel))' }}>
               <div className='flex items-center gap-2 flex-wrap min-w-0'>
                 <span className='font-ibm text-base sm:text-lg font-semibold text-neon whitespace-nowrap'>
-                  λlambda
+                  <GlitchLambda className='text-neon' size='small' />
+                  lambda
                 </span>
                 <span className='font-mono text-[10px] text-neon/50 ml-1 shrink-0 hidden sm:inline'>
                   CHAT-00

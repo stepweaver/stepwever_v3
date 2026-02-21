@@ -256,12 +256,10 @@
   font-weight: 900;
 }
 
-/* Lambda Icons in Dropdown */
+/* Lambda Icons in Dropdown - size via Next/Image width/height to avoid aspect-ratio warning */
 .lambda-icon-grid {
   @apply object-contain;
   transition: all 0.15s ease;
-  width: 14px;
-  height: 14px;
 }
 
 .lambda-icon-grid.dark {

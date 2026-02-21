@@ -91,7 +91,7 @@ function CodexContent() {
   return (
     <div className="min-h-screen relative">
       <BackgroundCanvas />
-      <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16">
+      <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 pb-16">
         <div className="max-w-7xl mx-auto">
           {/* Hero */}
           <div className="mb-12 space-y-6 md:space-y-8">
@@ -290,7 +290,7 @@ export default function CodexPage() {
       fallback={
         <div className="min-h-screen relative">
           <BackgroundCanvas />
-          <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16">
+          <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 pb-16">
             <div className="max-w-4xl mx-auto mt-16">
               <div className='hud-panel p-6 w-full max-w-md motion-safe:animate-pulse'>
                 <div className='text-xs tracking-[0.2em] text-neon/50 font-ocr uppercase'>INDEXING CODEX...</div>

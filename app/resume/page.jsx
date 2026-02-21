@@ -133,17 +133,17 @@ export default function ResumePage() {
       <BackgroundCanvas />
 
       <div className='relative z-10 w-full'>
-        <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
-          <HUDPanel title='Resume' id='RESUME-2025' className='w-full max-w-7xl mx-auto p-6 md:p-8 lg:p-10'>
+        <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 pt-0 pb-6 sm:pb-8 md:pb-10'>
+          <HUDPanel title='Resume' id='RESUME-2025' className='w-full max-w-7xl mx-auto p-5 md:p-6 lg:p-8'>
             {/* Header */}
-            <header className='mb-12 md:mb-16'>
-              <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6'>
-                <div>
-                  <h1 className='font-ibm font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-neon leading-tight mb-4'>
-                    Resume
+            <header className='mb-6 md:mb-8'>
+              <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
+                <div className='min-w-0'>
+                  <h1 className='font-ibm font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-neon leading-tight mb-3 sm:whitespace-nowrap'>
+                    Stephen Weaver
                   </h1>
-                  <div className='font-ocr text-base sm:text-lg text-text/80 max-w-3xl leading-relaxed'>
-                    <p>Full-Stack Developer | AI-Native Technologist | Business Analyst</p>
+                  <div className='font-ocr text-base sm:text-lg text-text/80 max-w-3xl leading-snug'>
+                    <p className='text-pretty'>Full-Stack Developer | AI-Native Technologist | Business Analyst</p>
                     <p>8+ years of experience bridging business and tech.</p>
                   </div>
                 </div>
@@ -159,8 +159,8 @@ export default function ResumePage() {
             </header>
 
             {/* Skills */}
-            <section className='mb-16 md:mb-24' aria-labelledby='section-skills'>
-              <div className='mb-6'>
+            <section className='mb-8 md:mb-12' aria-labelledby='section-skills'>
+              <div className='mb-4'>
                 <ModuleHeader name='Skills & Technologies' />
               </div>
 
@@ -196,12 +196,12 @@ export default function ResumePage() {
             </section>
 
             {/* Experience */}
-            <section className='mb-16 md:mb-24' aria-labelledby='section-experience'>
-              <div className='mb-6'>
+            <section className='mb-8 md:mb-12' aria-labelledby='section-experience'>
+              <div className='mb-4'>
                 <ModuleHeader name='Experience' id='RES-EXP' />
               </div>
 
-              <div className='space-y-10'>
+              <div className='space-y-8'>
                 {EXPERIENCE.map((job, index) => (
                   <article key={index} className='border-l-2 border-neon/20 pl-6'>
                     <div className='flex items-start justify-between gap-4 mb-2'>
@@ -234,8 +234,8 @@ export default function ResumePage() {
             </section>
 
             {/* Education */}
-            <section className='mb-16 md:mb-24' aria-labelledby='section-education'>
-              <div className='mb-6'>
+            <section className='mb-8 md:mb-12' aria-labelledby='section-education'>
+              <div className='mb-4'>
                 <ModuleHeader name='Education' id='RES-EDU' />
               </div>
 
@@ -277,7 +277,7 @@ export default function ResumePage() {
             </section>
 
             {/* Actions */}
-            <section className='pt-8 border-t border-neon/20' aria-label='Document actions'>
+            <section className='pt-6 border-t border-neon/20' aria-label='Document actions'>
               <div className='flex flex-col sm:flex-row gap-4 items-start'>
                 <a
                   href='/contact'

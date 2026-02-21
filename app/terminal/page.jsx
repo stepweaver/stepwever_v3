@@ -128,7 +128,7 @@ export default function TerminalPage() {
       <BackgroundCanvas />
 
       <div className='relative z-10 w-full'>
-        <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 py-16 md:py-24'>
+        <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 pt-0 pb-16 md:pb-24'>
           <div className='w-full max-w-7xl mx-auto flex flex-col gap-12'>
             {/* Hero */}
             <div className='space-y-6 md:space-y-8'>

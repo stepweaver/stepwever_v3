@@ -53,7 +53,7 @@ export default function ProjectPage({ params }) {
       <div className='relative'>
         <BackgroundCanvas />
 
-        <main className='relative z-30 min-h-screen pt-20 pb-12'>
+        <div className='relative z-30 min-h-screen pb-12'>
           <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 max-w-6xl'>
             {/* Back Navigation */}
             <div className='mb-8'>
@@ -545,7 +545,7 @@ export default function ProjectPage({ params }) {
               </div>
             </section>
           </div>
-        </main>
+        </div>
       </div>
     </>
   );
