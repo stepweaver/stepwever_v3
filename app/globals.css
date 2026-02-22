@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 @import "../styles/terminal-components.css";
 
 /* Font declarations */
@@ -1454,6 +1454,12 @@ body::after {
   font-size: 0.6rem;
   letter-spacing: 0.12em;
   color: rgba(236, 240, 248, 0.5);
+}
+
+/* Field notes log date dropdown: ensure options are readable (dark bg, neon text) */
+.field-notes-select option {
+  background-color: #0e1218;
+  color: #00ff41;
 }
 
 /* Cyberpunk Border Styles - Rounded corners for softer cyberpunk aesthetic */

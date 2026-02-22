@@ -9,28 +9,22 @@ export default function FieldNotesSelector({ notes, selectedNoteId, onNoteChange
   };
 
   return (
-    <div>
-      <label htmlFor="field-notes-selector" className="sr-only">
-        Select field note date
+    <div className="flex items-center gap-2">
+      <label htmlFor="field-notes-selector" className="text-neon/60 shrink-0 font-mono">
+        $
       </label>
       <select
         id="field-notes-selector"
         value={selectedNoteId || ''}
-        className="bg-panel border-2 border-neon/50 text-neon font-ocr text-sm font-semibold px-4 py-2 rounded-sm focus:outline-none focus:border-neon focus:ring-2 focus:ring-neon/50 cursor-pointer hover:border-neon/70 transition-all w-full max-w-xs"
-        style={{
-          color: 'rgb(90, 255, 140)',
-          backgroundColor: 'rgba(14, 18, 28, 0.95)',
-        }}
+        className="field-notes-select bg-[#0e1218] border border-neon/50 text-[#00ff41] font-mono text-sm px-3 py-2.5 rounded-sm focus:outline-none focus:border-neon focus:ring-2 focus:ring-neon/40 cursor-pointer hover:border-neon transition-colors min-w-[10rem]"
         onChange={handleChange}
+        aria-label="Select log date"
       >
         {notes.map((note) => (
-          <option 
-            key={note.id} 
+          <option
+            key={note.id}
             value={note.id}
-            style={{
-              backgroundColor: 'rgb(14, 18, 28)',
-              color: 'rgb(90, 255, 140)',
-            }}
+            style={{ backgroundColor: '#0e1218', color: '#00ff41' }}
           >
             {note.title}
           </option>

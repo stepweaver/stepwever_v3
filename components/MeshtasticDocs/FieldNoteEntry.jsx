@@ -1,16 +1,16 @@
 'use client';
 
-import NotionBlockBody from '@/components/NotionBlockBody';
+import FieldNoteLogBody from './FieldNoteLogBody';
 
 export default function FieldNoteEntry({ note, blocks, isExpanded = true }) {
   return (
-    <div id={`note-${note.id}`}>
+    <div id={`note-${note.id}`} className="field-note-log-entry">
       {blocks && blocks.length > 0 ? (
-        <div className="prose prose-invert max-w-none">
-          <NotionBlockBody blocks={blocks} />
-        </div>
+        <FieldNoteLogBody blocks={blocks} noteTitle={note.title} />
       ) : (
-        <p className="text-text/70 font-ocr">No content yet.</p>
+        <div className="font-mono text-sm text-text/70">
+          <span className="text-neon/70">[—]</span> No content yet.
+        </div>
       )}
     </div>
   );
