@@ -3,23 +3,11 @@
 import Link from 'next/link';
 
 /**
- * Format note title (e.g. "[2024-01-15]") as date for log timestamp. Fallback to today.
+ * Short time for line N (date is global in header): 12:00, 12:01, ...
  */
-function getLogDate(noteTitle) {
-  const match = noteTitle?.match(/\d{4}-\d{2}-\d{2}/);
-  if (match) return match[0];
-  const d = new Date();
-  return d.toISOString().slice(0, 10);
-}
-
-/**
- * Synthetic time for line N: 12:00:00, 12:00:01, ...
- */
-function getLogTime(lineIndex) {
-  const sec = 0 + lineIndex;
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return `12:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+function getLogTimeShort(lineIndex) {
+  const m = lineIndex % 60;
+  return `12:${String(m).padStart(2, '0')}`;
 }
 
 function LogRichText({ richText }) {
@@ -71,24 +59,23 @@ function getBlockText(block) {
 }
 
 /**
- * Flatten blocks into lines (list items become separate lines).
+ * Flatten blocks into lines. List items = bullet only (no timestamp). Headings = no separator line.
  */
 function blocksToLines(blocks) {
   const lines = [];
   for (const block of blocks || []) {
     if (!block?.type) continue;
     if (block.type === 'bulleted_list_item' || block.type === 'numbered_list_item') {
-      lines.push({ block, prefix: '  • ' });
+      lines.push({ block, bullet: true, prefix: '  ' });
       continue;
     }
     if (block.type === 'heading_1' || block.type === 'heading_2' || block.type === 'heading_3') {
-      lines.push({ block, prefix: '' });
-      lines.push({ block: null, separator: true });
+      lines.push({ block, heading: true, prefix: '' });
       continue;
     }
     const text = getBlockText(block);
     if (block.type === 'divider') {
-      lines.push({ block: null, separator: true });
+      lines.push({ block: null, spacer: true });
       continue;
     }
     if (block.type === 'image' && block.image) {
@@ -105,28 +92,23 @@ function blocksToLines(blocks) {
 }
 
 export default function FieldNoteLogBody({ blocks, noteTitle }) {
-  const logDate = getLogDate(noteTitle);
   const lines = blocksToLines(blocks);
-  let lineIndex = 0;
+  let timeIndex = 0;
 
   return (
     <div className="font-mono text-sm md:text-base leading-loose select-text space-y-1">
       {lines.map((item, i) => {
-        if (item.separator) {
-          return (
-            <div key={i} className="text-neon/40 py-2">
-              ─────────────────────────────────────────
-            </div>
-          );
+        if (item.spacer) {
+          return <div key={i} className="h-3" aria-hidden />;
         }
-        const stamp = `${logDate} ${getLogTime(lineIndex)}`;
-        lineIndex += 1;
 
         if (item.block?.type === 'image') {
+          const stamp = getLogTimeShort(timeIndex);
+          timeIndex += 1;
           return (
-            <div key={i} className="flex flex-wrap items-start gap-x-2 gap-y-1 py-2">
-              <span className="shrink-0 text-neon/70">[{stamp}]</span>
-              <span className="text-neon/90">[IMG]</span>
+            <div key={i} className="py-1.5">
+              <span className="whitespace-nowrap text-neon/60 text-xs">[{stamp}] -</span>{' '}
+              <span className="text-neon/90">[IMG]</span>{' '}
               {item.block.url && (
                 <a
                   href={item.block.url}
@@ -144,25 +126,48 @@ export default function FieldNoteLogBody({ blocks, noteTitle }) {
         const richText = getBlockRichText(item.block);
         const isEmpty = !richText?.length || (richText.length === 1 && !richText[0].plain_text?.trim());
 
-        if (isEmpty) {
+        if (isEmpty && !item.heading) {
+          return null;
+        }
+
+        const isHeading = item.heading;
+        const isBullet = item.bullet;
+
+        if (isHeading) {
+          const level = item.block?.type === 'heading_1' ? 1 : item.block?.type === 'heading_2' ? 2 : 3;
           return (
-            <div key={i} className="py-2">
-              <span className="text-neon/70">[{stamp}]</span>
-              <span className="text-text/50">—</span>
+            <div
+              key={i}
+              className={`py-1.5 ${level === 1 ? 'mt-6 first:mt-0' : level === 2 ? 'mt-4 first:mt-0' : 'mt-3 first:mt-0'}`}
+            >
+              <span
+                className={`inline-block border-l-2 border-neon/40 pl-2 text-neon font-semibold ${
+                  level === 1 ? 'text-lg' : level === 2 ? 'text-base' : 'text-sm'
+                }`}
+              >
+                <LogRichText richText={richText} />
+              </span>
             </div>
           );
         }
 
-        const isHeading =
-          item.block?.type === 'heading_1' ||
-          item.block?.type === 'heading_2' ||
-          item.block?.type === 'heading_3';
+        if (isBullet) {
+          return (
+            <div key={i} className="py-1.5">
+              <span className="whitespace-nowrap text-neon/50">• -</span>{' '}
+              <span className="text-text/95">
+                <LogRichText richText={richText} />
+              </span>
+            </div>
+          );
+        }
 
+        const stamp = getLogTimeShort(timeIndex);
+        timeIndex += 1;
         return (
-          <div key={i} className="py-2 flex flex-col sm:flex-row sm:gap-3 min-w-0">
-            <span className="shrink-0 text-neon/70 text-xs sm:text-sm mb-0.5 sm:mb-0 sm:w-[11rem]">[{stamp}]</span>
-            <span className={`min-w-0 flex-1 ${isHeading ? 'text-neon font-semibold' : 'text-text/95'}`}>
-              {item.prefix}
+          <div key={i} className="py-1.5">
+            <span className="whitespace-nowrap text-neon/60 text-xs">[{stamp}] -</span>{' '}
+            <span className="text-text/95">
               <LogRichText richText={richText} />
             </span>
           </div>
