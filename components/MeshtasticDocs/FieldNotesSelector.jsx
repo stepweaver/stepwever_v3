@@ -9,14 +9,14 @@ export default function FieldNotesSelector({ notes, selectedNoteId, onNoteChange
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <label htmlFor="field-notes-selector" className="text-neon/60 shrink-0 font-mono">
+    <div className="flex items-center gap-1.5">
+      <label htmlFor="field-notes-selector" className="text-neon/50 shrink-0 font-mono text-xs">
         $
       </label>
       <select
         id="field-notes-selector"
         value={selectedNoteId || ''}
-        className="field-notes-select bg-[#0e1218] border border-neon/50 text-[#00ff41] font-mono text-sm px-3 py-2.5 rounded-sm focus:outline-none focus:border-neon focus:ring-2 focus:ring-neon/40 cursor-pointer hover:border-neon transition-colors min-w-[10rem]"
+        className="field-notes-select bg-panel/90 border border-neon/30 text-neon font-mono text-xs py-1.5 px-2 rounded-sm focus:outline-none focus:border-neon/60 focus:ring-1 focus:ring-neon/30 cursor-pointer hover:border-neon/50 transition-colors min-w-0"
         onChange={handleChange}
         aria-label="Select log date"
       >

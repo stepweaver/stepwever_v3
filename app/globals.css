@@ -1460,6 +1460,40 @@ body::after {
 .field-notes-select option {
   background-color: #0e1218;
   color: #00ff41;
+  font-size: 0.8125rem;
+}
+
+/* Field notes: keep log entry text small and sharp (override prose sizes) */
+.field-note-prose .prose p,
+.field-note-prose .prose li,
+.field-note-prose .prose blockquote,
+.field-note-prose .prose code {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+.field-note-prose .prose ul,
+.field-note-prose .prose ol {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.field-note-prose .prose p {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+/* Headings: slight step up from body, minimal */
+.field-note-prose .prose h2,
+.field-note-prose .prose h3,
+.field-note-prose .prose h4 {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-top: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.field-note-prose .prose h2:first-child,
+.field-note-prose .prose h3:first-child,
+.field-note-prose .prose h4:first-child {
+  margin-top: 0;
 }
 
 /* Cyberpunk Border Styles - Rounded corners for softer cyberpunk aesthetic */
