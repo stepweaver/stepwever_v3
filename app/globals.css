@@ -1039,6 +1039,11 @@
   100% { opacity: 1; }
 }
 
+@keyframes hudFadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* Base styles */
 html {
   /* Improve mobile scrolling performance */
