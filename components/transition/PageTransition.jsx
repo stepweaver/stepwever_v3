@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const TRANSITION_PREFIXES = ['/codex', '/meshtastic'];
-const MIN_DISPLAY_MS = 1800;
+const MIN_DISPLAY_MS = 3000;
 const FADE_OUT_MS = 350;
 
 function shouldShowTransition(fromPath, toPath) {
@@ -44,7 +44,7 @@ export default function PageTransition({ children }) {
       {children}
       {phase !== 'idle' && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-sm transition-none ${
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-background transition-none ${
             phase === 'out'
               ? 'motion-safe:animate-[hudFadeOut_0.35s_ease-in_forwards]'
               : 'motion-safe:animate-[hudFadeIn_0.2s_ease-out]'
@@ -87,9 +87,9 @@ export default function PageTransition({ children }) {
               </p>
             </div>
 
-            <div className='space-y-1.5 motion-safe:animate-[hudFadeIn_0.4s_ease-out_0.8s_both]'>
+            <div className='space-y-1.5 motion-safe:animate-[hudFadeIn_0.4s_ease-out_0.4s_both]'>
               <div className='relative h-[2px] w-full bg-neon/10 overflow-hidden rounded-full'>
-                <div className='absolute inset-y-0 left-0 w-1/3 bg-terminal-green rounded-full motion-safe:animate-[hudSlide_1.2s_ease-in-out_infinite]' />
+                <div className='absolute inset-y-0 left-0 w-1/3 bg-terminal-green rounded-full motion-safe:animate-[hudSlide_0.8s_ease-in-out_infinite]' />
               </div>
               <p className='text-[10px] tracking-[0.18em] text-neon/40 font-ocr uppercase text-right'>
                 ROUTE_TRANSIT ACTIVE
