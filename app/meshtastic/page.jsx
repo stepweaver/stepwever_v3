@@ -8,46 +8,26 @@ const BackgroundCanvas = dynamic(() =>
 
 export const revalidate = 60;
 
+const absoluteImageUrl = 'https://stepweaver.dev/images/lambda_preview.png';
+
 export const metadata = {
   title: 'Meshtastic Field Notes',
   description:
     'A beginner-to-operator path for Meshtastic: real hardware, real configs, and real mistakes. T-Beam, Heltec V3, channels, privacy, and range.',
-  keywords: [
-    'Meshtastic',
-    'mesh networking',
-    'LoRa',
-    'off-grid communication',
-    'T-Beam',
-    'Heltec V3',
-    'field notes',
-  ],
-  authors: [{ name: 'Stephen Weaver', url: 'https://stepweaver.dev' }],
-  alternates: { canonical: 'https://stepweaver.dev/meshtastic' },
   openGraph: {
     title: 'Meshtastic Field Notes',
     description:
       'A beginner-to-operator path for Meshtastic: real hardware, real configs, and real mistakes.',
     type: 'website',
     url: 'https://stepweaver.dev/meshtastic',
-    siteName: 'Stephen Weaver',
-    locale: 'en_US',
-    images: [
-      {
-        url: 'https://stepweaver.dev/images/lambda_preview.png',
-        width: 1200,
-        height: 630,
-        alt: 'Meshtastic Field Notes – Stephen Weaver',
-      },
-    ],
+    images: [{ url: absoluteImageUrl, width: 1200, height: 630, alt: 'Meshtastic Field Notes' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Meshtastic Field Notes',
     description:
       'A beginner-to-operator path for Meshtastic: real hardware, real configs, and real mistakes.',
-    creator: '@stepweaver',
-    site: '@stepweaver',
-    images: ['https://stepweaver.dev/images/lambda_preview.png'],
+    images: [absoluteImageUrl],
   },
 };
 

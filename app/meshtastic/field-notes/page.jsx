@@ -27,60 +27,28 @@ export async function generateMetadata() {
   }
 
   const noteCount = notes.length;
-  const latest = notes
-    .map((n) => n.lastEditedTime)
-    .filter(Boolean)
-    .sort()
-    .pop();
-
   const title = 'Field Notes | Meshtastic';
   const description =
     noteCount > 0
       ? `${noteCount} field note${noteCount === 1 ? '' : 's'} from real-world Meshtastic mesh networking tests — signal reports, range logs, and hardware observations.`
       : 'Live notes and experiences from Meshtastic exploration and testing.';
-  const url = 'https://stepweaver.dev/meshtastic/field-notes';
-  const fallbackImage = 'https://stepweaver.dev/images/lambda_preview.png';
+  const absoluteImageUrl = 'https://stepweaver.dev/images/lambda_preview.png';
 
   return {
     title,
     description,
-    keywords: [
-      'Meshtastic',
-      'field notes',
-      'mesh networking',
-      'LoRa',
-      'range test',
-      'signal report',
-      'off-grid communication',
-    ],
-    authors: [{ name: 'Stephen Weaver', url: 'https://stepweaver.dev' }],
-    alternates: { canonical: url },
     openGraph: {
       title,
       description,
       type: 'article',
-      url,
-      siteName: 'Stephen Weaver',
-      locale: 'en_US',
-      ...(latest && { modifiedTime: latest }),
-      authors: ['Stephen Weaver'],
-      section: 'Meshtastic',
-      images: [
-        {
-          url: fallbackImage,
-          width: 1200,
-          height: 630,
-          alt: 'Meshtastic Field Notes – Stephen Weaver',
-        },
-      ],
+      url: 'https://stepweaver.dev/meshtastic/field-notes',
+      images: [{ url: absoluteImageUrl, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      creator: '@stepweaver',
-      site: '@stepweaver',
-      images: [fallbackImage],
+      images: [absoluteImageUrl],
     },
   };
 }

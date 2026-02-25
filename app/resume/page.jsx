@@ -1,7 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Download, ExternalLink } from 'lucide-react';
+import {
+  Download,
+  ExternalLink,
+  FileText,
+  ChevronRight,
+  Briefcase,
+  GraduationCap,
+  Cpu,
+  Mail,
+} from 'lucide-react';
 import {
   SiReact,
   SiNextdotjs,
@@ -18,10 +28,7 @@ import {
   SiOpenai,
   SiGithub,
 } from 'react-icons/si';
-import { ModuleHeader } from '@/components/ui/ModuleHeader';
-import { HUDPanel } from '@/components/ui/HUDPanel';
 
-// Lazy load BackgroundCanvas - heavy canvas operations
 const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
   { ssr: false }
@@ -30,6 +37,7 @@ const BackgroundCanvas = dynamic(
 const SKILLS = [
   {
     category: 'Languages & Frameworks',
+    tag: 'SK-01',
     items: [
       { name: 'JavaScript (ES6+)', icon: SiJavascript, color: '#F7DF1E' },
       { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
@@ -43,6 +51,7 @@ const SKILLS = [
   },
   {
     category: 'Databases & Cloud',
+    tag: 'SK-02',
     items: [
       { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791' },
       { name: 'MySQL', icon: SiMysql, color: '#4479A1' },
@@ -54,6 +63,7 @@ const SKILLS = [
   },
   {
     category: 'AI & Automation',
+    tag: 'SK-03',
     items: [
       { name: 'OpenAI/ChatGPT', icon: SiOpenai, color: '#412991' },
       { name: 'Claude', icon: SiOpenai, color: '#D97706' },
@@ -63,6 +73,7 @@ const SKILLS = [
   },
   {
     category: 'Business Intelligence',
+    tag: 'SK-04',
     items: [
       { name: 'Tableau', icon: SiGithub, color: '#E97627' },
       { name: 'SQL Analytics', icon: SiPostgresql, color: '#336791' },
@@ -77,6 +88,7 @@ const EXPERIENCE = [
     title: 'Founder & Principal Consultant',
     company: 'λstepweaver – stepweaver.dev',
     period: 'Nov 2024 – Present',
+    tag: 'EXP-01',
     description:
       'Founded and operate a solo digital consultancy focused on automation, optimization, and scaling for modern businesses. Launched and branded λstepweaver as an AI-native studio.',
     highlights: [
@@ -90,12 +102,13 @@ const EXPERIENCE = [
     title: 'Business Analyst',
     company: 'University of Notre Dame – Irish1Card Office',
     period: 'Nov 2017 – May 2025',
+    tag: 'EXP-02',
     description:
       'Administered and optimized reporting platforms via SQL and Tableau, driving actionable insights for campus operations and revenue processes.',
     highlights: [
       'Designed, built, and maintained SQL-based reports and Tableau dashboards with parameterized and interactive reports',
       'Translated complex business needs into clear, scalable technical requirements for IT and engineering teams',
-      'Administered the university\'s ID card transaction system (CSGold), managing system operations and data integrity',
+      "Administered the university's ID card transaction system (CSGold), managing system operations and data integrity",
       'Spearheaded initiatives to optimize internal workflows, significantly reducing time-to-insight for campus departments',
     ],
   },
@@ -103,6 +116,7 @@ const EXPERIENCE = [
     title: 'Operations Manager',
     company: 'University of Notre Dame – Campus Dining',
     period: 'Aug 2014 – Nov 2017',
+    tag: 'EXP-03',
     description:
       'Led operational logistics and staff management in a fast-paced, service-driven environment for high-volume dining venues.',
     highlights: [
@@ -116,6 +130,7 @@ const EXPERIENCE = [
     title: 'Airborne Cryptologic Linguist',
     company: 'U.S. Air Force – Active Duty',
     period: 'Aug 2003 – Aug 2007',
+    tag: 'EXP-04',
     description:
       'Analyzed complex data streams and produced actionable intelligence under high-pressure, mission-critical conditions.',
     highlights: [
@@ -127,178 +142,435 @@ const EXPERIENCE = [
   },
 ];
 
+const EDUCATION = [
+  {
+    tag: 'EDU-01',
+    title: 'Bachelor of Arts, Communication Studies',
+    institution: 'Grand Valley State University',
+    location: 'Allendale, MI',
+  },
+  {
+    tag: 'EDU-02',
+    title: 'Associate of Arts, Business Administration',
+    institution: 'Ivy Tech Community College',
+    location: 'South Bend, IN',
+  },
+  {
+    tag: 'EDU-03',
+    title: 'Certificate, Intensive Spanish Language Program',
+    institution: 'Defense Language Institute (DLI)',
+    location: 'Monterey, CA',
+  },
+];
+
+const SIDEBAR_NAV = [
+  { label: 'Skills', href: '#skills', icon: Cpu },
+  { label: 'Experience', href: '#experience', icon: Briefcase },
+  { label: 'Education', href: '#education', icon: GraduationCap },
+];
+
+function SidebarPanel({ children, label, className = '' }) {
+  return (
+    <div className={`hud-panel p-3 ${className}`}>
+      {label && (
+        <p className='font-ocr text-[9px] tracking-[0.25em] text-neon/45 uppercase mb-2'>
+          {label}
+        </p>
+      )}
+      {children}
+    </div>
+  );
+}
+
+function MobileResumeBrief() {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div className='lg:hidden shrink-0 border-b border-neon/15'>
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className='w-full px-3 py-2 flex items-center justify-between text-left hover:bg-panel/30 transition-colors'
+      >
+        <div className='flex items-center gap-2'>
+          <FileText className='w-3 h-3 text-neon/50' />
+          <span className='font-ocr text-[10px] tracking-[0.2em] text-neon/50 uppercase'>
+            Dossier info
+          </span>
+        </div>
+        <ChevronRight
+          className={`w-3 h-3 text-neon/40 transition-transform duration-200 ${
+            expanded ? 'rotate-90' : ''
+          }`}
+        />
+      </button>
+
+      {expanded && (
+        <div className='px-3 pb-3 space-y-3 motion-safe:animate-[hudFadeIn_0.15s_ease-out]'>
+          <div>
+            <p className='font-ibm text-sm text-text'>Stephen Weaver</p>
+            <p className='font-ocr text-[10px] text-text/40'>
+              Full-Stack Developer | AI-Native Technologist
+            </p>
+          </div>
+          <div className='flex flex-wrap gap-2'>
+            <a
+              href='/weaver_resume.pdf'
+              download='weaver_resume.pdf'
+              className='inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-panel/30 border border-neon/15 font-ocr text-[10px] text-neon/70 hover:text-neon hover:border-neon/30 transition-colors'
+            >
+              <Download className='w-3 h-3' />
+              PDF
+            </a>
+            <a
+              href='/contact'
+              className='inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-panel/30 border border-neon/15 font-ocr text-[10px] text-neon/70 hover:text-neon hover:border-neon/30 transition-colors'
+            >
+              <Mail className='w-3 h-3' />
+              Contact
+            </a>
+            <a
+              href='https://github.com/stepweaver'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-panel/30 border border-neon/15 font-ocr text-[10px] text-neon/70 hover:text-neon hover:border-neon/30 transition-colors'
+            >
+              <SiGithub className='w-3 h-3' />
+              GitHub
+            </a>
+          </div>
+          <div className='w-full h-px bg-gradient-to-r from-neon/15 via-neon/8 to-transparent' />
+          <div className='flex flex-wrap gap-x-3 gap-y-1'>
+            {SIDEBAR_NAV.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className='font-ocr text-[9px] text-neon/50 hover:text-neon/80 transition-colors'
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SectionDivider({ label, id, icon: Icon }) {
+  return (
+    <div id={id} className='flex items-center gap-3 scroll-mt-4'>
+      {Icon && <Icon className='w-3.5 h-3.5 text-neon/50 shrink-0' />}
+      <span className='font-ocr text-[9px] tracking-[0.25em] text-neon/45 uppercase'>
+        {label}
+      </span>
+      <div className='flex-1 h-px bg-gradient-to-r from-neon/20 to-transparent' />
+    </div>
+  );
+}
+
 export default function ResumePage() {
   return (
-    <div className='relative min-h-screen'>
+    <div className='relative h-[calc(100vh-6rem)] flex flex-col overflow-hidden'>
       <BackgroundCanvas />
 
-      <div className='relative z-10 w-full'>
-        <section className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 pt-0 pb-6 sm:pb-8 md:pb-10'>
-          <HUDPanel title='Resume' id='RESUME-2025' className='w-full max-w-7xl mx-auto p-5 md:p-6 lg:p-8'>
-            {/* Header */}
-            <header className='mb-6 md:mb-8'>
-              <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
-                <div className='min-w-0'>
-                  <h1 className='font-ibm font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-neon leading-tight mb-3 sm:whitespace-nowrap'>
-                    Stephen Weaver
-                  </h1>
-                  <div className='font-ocr text-base sm:text-lg text-text/80 max-w-3xl leading-snug'>
-                    <p className='text-pretty'>Full-Stack Developer | AI-Native Technologist | Business Analyst</p>
-                    <p>8+ years of experience bridging business and tech.</p>
-                  </div>
+      <div className='relative z-10 flex flex-col h-full'>
+        {/* ── System Header ── */}
+        <header className='shrink-0 border-b border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-2 flex items-center justify-between gap-4'>
+          <div className='flex items-center gap-2.5'>
+            <FileText className='w-3.5 h-3.5 text-neon/60' />
+            <span className='font-ocr text-[10px] tracking-[0.3em] text-neon/50 uppercase'>
+              DOSSIER-00
+            </span>
+            <span className='text-neon/15 hidden sm:inline'>│</span>
+            <span className='font-ibm text-xs text-text/50 hidden sm:inline'>
+              λstepweaver dossier
+            </span>
+          </div>
+          <div className='flex items-center gap-2.5'>
+            <span className='font-ocr text-[10px] text-neon/35 hidden sm:inline'>
+              2025
+            </span>
+            <span className='inline-flex items-center gap-1.5'>
+              <span className='relative flex h-2 w-2'>
+                <span className='absolute inline-flex h-full w-full rounded-full bg-neon opacity-40 motion-safe:animate-ping' />
+                <span className='relative inline-flex h-2 w-2 rounded-full bg-neon' />
+              </span>
+              <span className='font-ocr text-[10px] tracking-[0.15em] text-neon/60 uppercase'>
+                Current
+              </span>
+            </span>
+          </div>
+        </header>
+
+        {/* ── Mobile expandable brief ── */}
+        <MobileResumeBrief />
+
+        {/* ── Main Console ── */}
+        <div className='flex-1 flex flex-col lg:flex-row min-h-0'>
+          {/* ── Sidebar ── */}
+          <aside className='hidden lg:flex lg:flex-col lg:w-72 2xl:w-80 shrink-0 border-r border-neon/15 overflow-y-auto'>
+            <div className='p-3 space-y-3 flex-1'>
+              {/* Identity */}
+              <SidebarPanel label='IDENTITY'>
+                <h1 className='font-ibm text-lg text-neon leading-snug'>
+                  Stephen Weaver
+                </h1>
+                <p className='font-ocr text-[11px] text-text/50 leading-relaxed mt-1'>
+                  Full-Stack Developer
+                  <br />
+                  AI-Native Technologist
+                  <br />
+                  Business Analyst
+                </p>
+                <div className='mt-3 w-full h-px bg-gradient-to-r from-neon/30 via-neon/10 to-transparent' />
+                <p className='font-ocr text-[10px] text-text/35 mt-2'>
+                  8+ years bridging business and tech.
+                </p>
+              </SidebarPanel>
+
+              {/* Section Nav */}
+              <div>
+                <p className='font-ocr text-[9px] tracking-[0.25em] text-neon/40 uppercase px-1 mb-2'>
+                  Sections
+                </p>
+                <div className='space-y-1'>
+                  {SIDEBAR_NAV.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        className='group flex items-center gap-2.5 px-3 py-2 rounded-sm bg-panel/30 border border-neon/8 hover:border-neon/20 hover:bg-panel/50 transition-all duration-200'
+                      >
+                        <Icon className='w-3.5 h-3.5 text-neon/55 shrink-0 group-hover:text-neon/80 transition-colors' />
+                        <span className='font-ibm text-xs text-neon/80 group-hover:text-neon transition-colors'>
+                          {item.label}
+                        </span>
+                      </a>
+                    );
+                  })}
                 </div>
-                <a
-                  href='/weaver_resume.pdf'
-                  download='weaver_resume.pdf'
-                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-sm bg-panel/50  text-neon font-ibm hover:bg-neon/10 transition-all duration-200 self-start'
-                >
-                  <Download className='w-5 h-5' />
-                  Download PDF
-                </a>
-              </div>
-            </header>
-
-            {/* Skills */}
-            <section className='mb-8 md:mb-12' aria-labelledby='section-skills'>
-              <div className='mb-4'>
-                <ModuleHeader name='Skills & Technologies' />
               </div>
 
-              <div className='grid gap-8 md:grid-cols-2'>
-                {SKILLS.map((skillGroup, idx) => (
-                  <div key={skillGroup.category}>
-                    <div className='mb-3 flex items-baseline justify-between'>
-                      <h3 className='text-sm font-semibold text-text font-ibm'>{skillGroup.category}</h3>
-                      <span className='font-mono text-[10px] text-neon/60'>RES-SK-{String(idx + 1).padStart(2, '0')}</span>
+              {/* Actions */}
+              <SidebarPanel label='ACTIONS'>
+                <div className='space-y-1.5'>
+                  <a
+                    href='/weaver_resume.pdf'
+                    download='weaver_resume.pdf'
+                    className='group flex items-center gap-2.5 px-2 py-2 rounded-sm bg-panel/30 border border-neon/8 hover:border-neon/20 hover:bg-panel/50 transition-all duration-200'
+                  >
+                    <Download className='w-3.5 h-3.5 text-neon/55 shrink-0 group-hover:text-neon/80 transition-colors' />
+                    <div>
+                      <p className='font-ibm text-xs text-neon/80 group-hover:text-neon transition-colors'>
+                        Download PDF
+                      </p>
+                      <p className='font-ocr text-[9px] text-text/30'>
+                        weaver_resume.pdf
+                      </p>
                     </div>
-                    <div className='flex flex-wrap gap-3'>
-                      {skillGroup.items.map((skill) => {
-                        const Icon = skill.icon;
-                        return (
-                          <div
-                            key={skill.name}
-                            className='flex items-center gap-2 px-3 py-2 rounded-sm border border-neon/20 bg-panel/30'
-                          >
-                            <Icon
-                              className='w-4 h-4 shrink-0'
-                              style={{ color: skill.color }}
-                            />
-                            <span className='font-ocr text-sm text-text'>
-                              {skill.name}
-                            </span>
-                          </div>
-                        );
-                      })}
+                  </a>
+                  <a
+                    href='/contact'
+                    className='group flex items-center gap-2.5 px-2 py-2 rounded-sm bg-panel/30 border border-neon/8 hover:border-neon/20 hover:bg-panel/50 transition-all duration-200'
+                  >
+                    <Mail className='w-3.5 h-3.5 text-neon/55 shrink-0 group-hover:text-neon/80 transition-colors' />
+                    <p className='font-ibm text-xs text-neon/80 group-hover:text-neon transition-colors'>
+                      Get in touch
+                    </p>
+                  </a>
+                  <a
+                    href='https://github.com/stepweaver'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='group flex items-center gap-2.5 px-2 py-2 rounded-sm bg-panel/30 border border-neon/8 hover:border-neon/20 hover:bg-panel/50 transition-all duration-200'
+                  >
+                    <SiGithub className='w-3.5 h-3.5 text-neon/55 shrink-0 group-hover:text-neon/80 transition-colors' />
+                    <div className='flex items-center gap-1.5'>
+                      <p className='font-ibm text-xs text-neon/80 group-hover:text-neon transition-colors'>
+                        GitHub
+                      </p>
+                      <ExternalLink className='w-2.5 h-2.5 text-neon/30' />
                     </div>
+                  </a>
+                </div>
+              </SidebarPanel>
+
+              {/* System Info */}
+              <div className='px-1 space-y-1 mt-auto'>
+                <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
+                  <span className='w-1 h-1 rounded-full bg-neon/30' />
+                  <span>Last updated: 2025</span>
+                </div>
+                <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
+                  <span className='w-1 h-1 rounded-full bg-neon/30' />
+                  <span>PDF available for download</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* ── Resume Content ── */}
+          <section className='flex-1 min-h-0 flex flex-col'>
+            {/* Chrome header */}
+            <div className='shrink-0 bg-panel/50 border-b border-neon/20 px-4 py-2 flex items-center justify-between'>
+              <div className='flex items-center gap-2'>
+                <Briefcase className='w-3 h-3 text-neon/40' />
+                <span className='font-ocr text-[10px] tracking-[0.18em] text-neon/40 uppercase'>
+                  Personnel file
+                </span>
+              </div>
+              <span className='font-ocr text-[10px] text-text/20 hidden sm:inline'>
+                RESUME-2025
+              </span>
+            </div>
+
+            {/* Scrollable content */}
+            <div className='flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 md:p-8'>
+              <div className='max-w-4xl mx-auto space-y-8'>
+                {/* ── Skills ── */}
+                <section>
+                  <SectionDivider
+                    label='Skills & Technologies'
+                    id='skills'
+                    icon={Cpu}
+                  />
+                  <div className='mt-4 grid gap-6 md:grid-cols-2'>
+                    {SKILLS.map((group) => (
+                      <div key={group.tag}>
+                        <div className='mb-2.5 flex items-baseline justify-between'>
+                          <h3 className='text-sm font-semibold text-text font-ibm'>
+                            {group.category}
+                          </h3>
+                          <span className='font-mono text-[9px] text-neon/30'>
+                            {group.tag}
+                          </span>
+                        </div>
+                        <div className='flex flex-wrap gap-2'>
+                          {group.items.map((skill) => {
+                            const Icon = skill.icon;
+                            return (
+                              <div
+                                key={skill.name}
+                                className='flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-neon/12 bg-panel/25 hover:border-neon/25 hover:bg-panel/40 transition-colors'
+                              >
+                                <Icon
+                                  className='w-3.5 h-3.5 shrink-0'
+                                  style={{ color: skill.color }}
+                                />
+                                <span className='font-ocr text-[11px] text-text/80'>
+                                  {skill.name}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </section>
+                </section>
 
-            {/* Experience */}
-            <section className='mb-8 md:mb-12' aria-labelledby='section-experience'>
-              <div className='mb-4'>
-                <ModuleHeader name='Experience' id='RES-EXP' />
-              </div>
-
-              <div className='space-y-8'>
-                {EXPERIENCE.map((job, index) => (
-                  <article key={index} className='border-l-2 border-neon/20 pl-6'>
-                    <div className='flex items-start justify-between gap-4 mb-2'>
-                      <h3 className='text-lg font-semibold text-text font-ibm'>{job.title}</h3>
-                      <span className='font-mono text-[10px] text-neon/60 shrink-0'>RES-EXP-{String(index + 1).padStart(2, '0')}</span>
-                    </div>
-                    <p className='font-ocr text-accent text-base mb-1'>
-                      {job.company}
-                    </p>
-                    <span className='font-ocr text-text/60 text-sm md:text-base block mb-4'>
-                      {job.period}
-                    </span>
-                    <p className='font-ocr text-text text-base leading-relaxed mb-4'>
-                      {job.description}
-                    </p>
-                    <ul className='space-y-2'>
-                      {job.highlights.map((highlight, i) => (
-                        <li
-                          key={i}
-                          className='flex items-start font-ocr text-text/80 text-sm'
-                        >
-                          <span className='text-neon mr-2'>→</span>
-                          {highlight}
-                        </li>
-                      ))}
-                    </ul>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            {/* Education */}
-            <section className='mb-8 md:mb-12' aria-labelledby='section-education'>
-              <div className='mb-4'>
-                <ModuleHeader name='Education' id='RES-EDU' />
-              </div>
-
-              <div className='grid gap-6 md:grid-cols-3'>
-                {[
-                  {
-                    id: 'RES-EDU-01',
-                    title: 'Bachelor of Arts, Communication Studies',
-                    institution: 'Grand Valley State University',
-                    location: 'Allendale, MI',
-                  },
-                  {
-                    id: 'RES-EDU-02',
-                    title: 'Associate of Arts, Business Administration',
-                    institution: 'Ivy Tech Community College',
-                    location: 'South Bend, IN',
-                  },
-                  {
-                    id: 'RES-EDU-03',
-                    title: 'Certificate, Intensive Spanish Language Program',
-                    institution: 'Defense Language Institute (DLI)',
-                    location: 'Monterey, CA',
-                  },
-                ].map((edu) => (
-                  <div key={edu.id} className='border-l-2 border-accent/20 pl-4'>
-                    <div className='flex items-baseline justify-between mb-1'>
-                      <h3 className='text-sm font-semibold text-text font-ibm'>{edu.title}</h3>
-                    </div>
-                    <p className='font-ocr text-text text-base'>
-                      {edu.institution}
-                    </p>
-                    <p className='font-ocr text-text/60 text-sm mt-1'>
-                      {edu.location}
-                    </p>
-                    <span className='font-mono text-[10px] text-neon/40'>{edu.id}</span>
+                {/* ── Experience ── */}
+                <section>
+                  <SectionDivider
+                    label='Experience'
+                    id='experience'
+                    icon={Briefcase}
+                  />
+                  <div className='mt-4 space-y-6'>
+                    {EXPERIENCE.map((job) => (
+                      <article
+                        key={job.tag}
+                        className='relative border-l-2 border-neon/15 pl-5 hover:border-neon/30 transition-colors'
+                      >
+                        <div className='absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-neon/40 border border-panel' />
+                        <div className='flex items-start justify-between gap-3 mb-1'>
+                          <h3 className='text-base font-semibold text-text font-ibm leading-snug'>
+                            {job.title}
+                          </h3>
+                          <span className='font-mono text-[9px] text-neon/30 shrink-0 mt-1'>
+                            {job.tag}
+                          </span>
+                        </div>
+                        <p className='font-ocr text-xs text-accent/80'>
+                          {job.company}
+                        </p>
+                        <span className='font-ocr text-[11px] text-text/40 block mb-3'>
+                          {job.period}
+                        </span>
+                        <p className='font-ocr text-[12px] text-text/70 leading-relaxed mb-3'>
+                          {job.description}
+                        </p>
+                        <ul className='space-y-1.5'>
+                          {job.highlights.map((highlight, i) => (
+                            <li
+                              key={i}
+                              className='flex items-start font-ocr text-[11px] text-text/60 leading-snug'
+                            >
+                              <span className='text-neon/50 mr-2 mt-px shrink-0'>
+                                →
+                              </span>
+                              {highlight}
+                            </li>
+                          ))}
+                        </ul>
+                      </article>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </section>
+                </section>
 
-            {/* Actions */}
-            <section className='pt-6 border-t border-neon/20' aria-label='Document actions'>
-              <div className='flex flex-col sm:flex-row gap-4 items-start'>
-                <a
-                  href='/contact'
-                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-sm bg-panel/50  text-neon font-ibm hover:bg-neon/10 transition-all duration-200'
-                >
-                  Get in Touch
-                </a>
-                <a
-                  href='https://github.com/stepweaver'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='inline-flex items-center gap-2 px-6 py-3 border border-neon/30 rounded-sm bg-panel/50  text-text font-ibm hover:bg-neon/10 hover:text-neon hover:border-neon transition-all duration-200'
-                >
-                  <SiGithub className='w-5 h-5' />
-                  View GitHub
-                  <ExternalLink className='w-4 h-4' />
-                </a>
+                {/* ── Education ── */}
+                <section>
+                  <SectionDivider
+                    label='Education'
+                    id='education'
+                    icon={GraduationCap}
+                  />
+                  <div className='mt-4 grid gap-4 md:grid-cols-3'>
+                    {EDUCATION.map((edu) => (
+                      <div
+                        key={edu.tag}
+                        className='border-l-2 border-accent/15 pl-4 hover:border-accent/30 transition-colors'
+                      >
+                        <h3 className='text-xs font-semibold text-text font-ibm leading-snug'>
+                          {edu.title}
+                        </h3>
+                        <p className='font-ocr text-[11px] text-text/70 mt-1'>
+                          {edu.institution}
+                        </p>
+                        <p className='font-ocr text-[10px] text-text/40 mt-0.5'>
+                          {edu.location}
+                        </p>
+                        <span className='font-mono text-[9px] text-neon/25 mt-1 block'>
+                          {edu.tag}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
               </div>
-            </section>
-          </HUDPanel>
-        </section>
+            </div>
+          </section>
+        </div>
+
+        {/* ── Status Bar ── */}
+        <footer className='shrink-0 border-t border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-1.5 flex items-center gap-2 sm:gap-3 overflow-x-auto'>
+          <span className='font-ocr text-[10px] text-neon/45 whitespace-nowrap'>
+            &gt; resume
+          </span>
+          <span className='text-neon/15'>│</span>
+          <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap'>
+            Document ready
+          </span>
+          <span className='text-neon/15 hidden sm:inline'>│</span>
+          <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap hidden sm:inline'>
+            PDF available
+          </span>
+          <span className='text-neon/15 hidden md:inline'>│</span>
+          <span className='font-ocr text-[10px] text-text/20 uppercase whitespace-nowrap hidden md:inline'>
+            Last updated 2025
+          </span>
+        </footer>
       </div>
     </div>
   );

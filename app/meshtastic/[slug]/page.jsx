@@ -47,52 +47,26 @@ export async function generateMetadata({ params }) {
   const title = doc.title || 'Meshtastic Doc';
   const description =
     doc.summary || `${title} – Meshtastic Field Notes | Stephen Weaver`;
-  const url = `https://stepweaver.dev/meshtastic/${slug}`;
-  const fallbackImage = 'https://stepweaver.dev/images/lambda_preview.png';
-  const ogImage = doc.coverImage || fallbackImage;
-
-  const keywords = [
-    'Meshtastic',
-    'mesh networking',
-    'LoRa',
-    'off-grid communication',
-    doc.section,
-    doc.title,
-  ].filter(Boolean);
+  const previewImage = doc.coverImage || '/images/lambda_preview.png';
+  const absoluteImageUrl = previewImage.startsWith('http')
+    ? previewImage
+    : `https://stepweaver.dev${previewImage}`;
 
   return {
     title,
     description,
-    keywords,
-    authors: [{ name: 'Stephen Weaver', url: 'https://stepweaver.dev' }],
-    alternates: { canonical: url },
     openGraph: {
       title,
       description,
       type: 'article',
-      url,
-      siteName: 'Stephen Weaver',
-      locale: 'en_US',
-      publishedTime: doc.createdTime || undefined,
-      modifiedTime: doc.lastEditedTime || undefined,
-      authors: ['Stephen Weaver'],
-      section: doc.section || 'Meshtastic',
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: `${title} – Meshtastic Field Notes`,
-        },
-      ],
+      url: `https://stepweaver.dev/meshtastic/${slug}`,
+      images: [{ url: absoluteImageUrl, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      creator: '@stepweaver',
-      site: '@stepweaver',
-      images: [ogImage],
+      images: [absoluteImageUrl],
     },
   };
 }

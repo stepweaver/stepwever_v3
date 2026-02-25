@@ -28,15 +28,9 @@ function CodexContent() {
       setLoading(true);
       setError(null);
       try {
-        const MIN_DISPLAY_MS = 2400;
-        const start = Date.now();
         const res = await fetch('/api/codex');
         if (!res.ok) throw new Error('Failed to fetch content');
         const data = await res.json();
-        const elapsed = Date.now() - start;
-        if (elapsed < MIN_DISPLAY_MS) {
-          await new Promise((r) => setTimeout(r, MIN_DISPLAY_MS - elapsed));
-        }
         setPosts(data);
       } catch (err) {
         console.error('Error fetching posts:', err);
@@ -133,15 +127,15 @@ function CodexContent() {
 
           {loading ? (
             <div className="flex justify-center items-center min-h-64">
-              <div className='hud-panel p-8 sm:p-10 max-w-md w-full space-y-5 motion-safe:animate-[hudFadeIn_0.3s_ease-out]'>
+              <div className='px-8 sm:px-10 space-y-5 motion-safe:animate-[hudFadeIn_0.3s_ease-out]'>
                 <div className='flex items-start justify-between gap-4'>
                   <div>
                     <p className='text-[10px] tracking-[0.3em] text-neon/50 font-ocr uppercase'>MODULE</p>
                     <p className='text-sm tracking-[0.18em] text-neon/80 font-ocr uppercase mt-0.5'>CODEX // INDEX</p>
                   </div>
                   <div className='text-right'>
-                    <p className='text-[10px] tracking-[0.22em] text-neon/50 font-ocr uppercase'>CLEARANCE</p>
-                    <p className='text-xs font-mono text-terminal-yellow mt-0.5'>LVL-3</p>
+                    <p className='text-[10px] tracking-[0.22em] text-neon/50 font-ocr uppercase'>STATUS</p>
+                    <p className='text-xs font-mono text-terminal-yellow mt-0.5'>LOADING</p>
                   </div>
                 </div>
                 <div className='font-mono text-xs space-y-1.5 text-neon/60'>
@@ -158,7 +152,7 @@ function CodexContent() {
                 </div>
                 <div className='space-y-1.5 motion-safe:animate-[hudFadeIn_0.4s_ease-out_1.3s_both]'>
                   <div className='relative h-[2px] w-full bg-neon/10 overflow-hidden rounded-full'>
-                    <div className='absolute inset-y-0 left-0 w-1/3 bg-terminal-green rounded-full motion-safe:animate-[hudSlide_1.2s_ease-in-out_infinite]' />
+                    <div className='absolute inset-y-0 left-0 w-1/3 bg-terminal-green rounded-full motion-safe:animate-[hudSlide_0.8s_ease-in-out_infinite]' />
                   </div>
                   <p className='text-[10px] tracking-[0.18em] text-neon/40 font-ocr uppercase text-right'>ARCHIVE_SCAN ACTIVE</p>
                 </div>
@@ -348,15 +342,15 @@ export default function CodexPage() {
         <div className="min-h-screen relative">
           <BackgroundCanvas />
           <div className="relative z-10 flex items-center justify-center min-h-[60vh] px-4">
-            <div className='hud-panel p-8 sm:p-10 max-w-md w-full space-y-5 motion-safe:animate-[hudFadeIn_0.3s_ease-out]'>
+            <div className='px-8 sm:px-10 space-y-5 motion-safe:animate-[hudFadeIn_0.3s_ease-out]'>
               <div className='flex items-start justify-between gap-4'>
                 <div>
                   <p className='text-[10px] tracking-[0.3em] text-neon/50 font-ocr uppercase'>MODULE</p>
                   <p className='text-sm tracking-[0.18em] text-neon/80 font-ocr uppercase mt-0.5'>CODEX // INDEX</p>
                 </div>
                 <div className='text-right'>
-                  <p className='text-[10px] tracking-[0.22em] text-neon/50 font-ocr uppercase'>CLEARANCE</p>
-                  <p className='text-xs font-mono text-terminal-yellow mt-0.5'>LVL-3</p>
+                  <p className='text-[10px] tracking-[0.22em] text-neon/50 font-ocr uppercase'>STATUS</p>
+                  <p className='text-xs font-mono text-terminal-yellow mt-0.5'>LOADING</p>
                 </div>
               </div>
               <div className='font-mono text-xs space-y-1.5 text-neon/60'>
@@ -373,7 +367,7 @@ export default function CodexPage() {
               </div>
               <div className='space-y-1.5 motion-safe:animate-[hudFadeIn_0.4s_ease-out_1.3s_both]'>
                 <div className='relative h-[2px] w-full bg-neon/10 overflow-hidden rounded-full'>
-                  <div className='absolute inset-y-0 left-0 w-1/3 bg-terminal-green rounded-full motion-safe:animate-[hudSlide_1.2s_ease-in-out_infinite]' />
+                  <div className='absolute inset-y-0 left-0 w-1/3 bg-terminal-green rounded-full motion-safe:animate-[hudSlide_0.8s_ease-in-out_infinite]' />
                 </div>
                 <p className='text-[10px] tracking-[0.18em] text-neon/40 font-ocr uppercase text-right'>MODULE_INIT</p>
               </div>
