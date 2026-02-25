@@ -126,38 +126,7 @@ function CodexContent() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center min-h-64">
-              <div className='px-8 sm:px-10 space-y-5 motion-safe:animate-[hudFadeIn_0.3s_ease-out]'>
-                <div className='flex items-start justify-between gap-4'>
-                  <div>
-                    <p className='text-[10px] tracking-[0.3em] text-neon/50 font-ocr uppercase'>MODULE</p>
-                    <p className='text-sm tracking-[0.18em] text-neon/80 font-ocr uppercase mt-0.5'>CODEX // INDEX</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='text-[10px] tracking-[0.22em] text-neon/50 font-ocr uppercase'>STATUS</p>
-                    <p className='text-xs font-mono text-terminal-yellow mt-0.5'>LOADING</p>
-                  </div>
-                </div>
-                <div className='font-mono text-xs space-y-1.5 text-neon/60'>
-                  <p className='motion-safe:animate-[hudLineIn_0.3s_ease-out_0.2s_both]'>
-                    <span className='text-neon/40'>{'>'}</span> indexing archive manifest&hellip;
-                  </p>
-                  <p className='motion-safe:animate-[hudLineIn_0.3s_ease-out_0.6s_both]'>
-                    <span className='text-neon/40'>{'>'}</span> cross-referencing tags
-                  </p>
-                  <p className='text-neon/30 motion-safe:animate-[hudLineIn_0.3s_ease-out_1.0s_both]'>
-                    <span className='text-neon/40'>{'>'}</span> compiling entry list
-                    <span className='terminal-caret ml-0.5 text-terminal-green'>&#9608;</span>
-                  </p>
-                </div>
-                <div className='space-y-1.5 motion-safe:animate-[hudFadeIn_0.4s_ease-out_1.3s_both]'>
-                  <div className='relative h-[2px] w-full bg-neon/10 overflow-hidden rounded-full'>
-                    <div className='absolute inset-y-0 left-0 w-1/3 bg-terminal-green rounded-full motion-safe:animate-[hudSlide_0.8s_ease-in-out_infinite]' />
-                  </div>
-                  <p className='text-[10px] tracking-[0.18em] text-neon/40 font-ocr uppercase text-right'>ARCHIVE_SCAN ACTIVE</p>
-                </div>
-              </div>
-            </div>
+            <div className="min-h-64" />
           ) : error ? (
             <div className="border border-neon/30 rounded-sm bg-panel/50 text-neon p-4 my-4">
               {error}
@@ -337,45 +306,7 @@ function CodexContent() {
 
 export default function CodexPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen relative">
-          <BackgroundCanvas />
-          <div className="relative z-10 flex items-center justify-center min-h-[60vh] px-4">
-            <div className='px-8 sm:px-10 space-y-5 motion-safe:animate-[hudFadeIn_0.3s_ease-out]'>
-              <div className='flex items-start justify-between gap-4'>
-                <div>
-                  <p className='text-[10px] tracking-[0.3em] text-neon/50 font-ocr uppercase'>MODULE</p>
-                  <p className='text-sm tracking-[0.18em] text-neon/80 font-ocr uppercase mt-0.5'>CODEX // INDEX</p>
-                </div>
-                <div className='text-right'>
-                  <p className='text-[10px] tracking-[0.22em] text-neon/50 font-ocr uppercase'>STATUS</p>
-                  <p className='text-xs font-mono text-terminal-yellow mt-0.5'>LOADING</p>
-                </div>
-              </div>
-              <div className='font-mono text-xs space-y-1.5 text-neon/60'>
-                <p className='motion-safe:animate-[hudLineIn_0.3s_ease-out_0.2s_both]'>
-                  <span className='text-neon/40'>{'>'}</span> initializing codex module&hellip;
-                </p>
-                <p className='motion-safe:animate-[hudLineIn_0.3s_ease-out_0.6s_both]'>
-                  <span className='text-neon/40'>{'>'}</span> loading search params
-                </p>
-                <p className='text-neon/30 motion-safe:animate-[hudLineIn_0.3s_ease-out_1.0s_both]'>
-                  <span className='text-neon/40'>{'>'}</span> standby
-                  <span className='terminal-caret ml-0.5 text-terminal-green'>&#9608;</span>
-                </p>
-              </div>
-              <div className='space-y-1.5 motion-safe:animate-[hudFadeIn_0.4s_ease-out_1.3s_both]'>
-                <div className='relative h-[2px] w-full bg-neon/10 overflow-hidden rounded-full'>
-                  <div className='absolute inset-y-0 left-0 w-1/3 bg-terminal-green rounded-full motion-safe:animate-[hudSlide_0.8s_ease-in-out_infinite]' />
-                </div>
-                <p className='text-[10px] tracking-[0.18em] text-neon/40 font-ocr uppercase text-right'>MODULE_INIT</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      }
-    >
+    <Suspense fallback={null}>
       <CodexContent />
     </Suspense>
   );

@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getBlogEntryBySlug, getAllBlogEntries } from '@/lib/blog';
 import { getPageBlocks } from '@/lib/notion-blocks';
