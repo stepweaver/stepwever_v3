@@ -9,6 +9,8 @@ const imagesToConvert = [
   'screely-profilcard.png',
   'screely-resist.png',
   'lambda_stepweaver.png',
+  'lambda_preview.png',
+  'pixarMe.png',
 ];
 
 const imagesDir = path.join(__dirname, '..', 'public', 'images');

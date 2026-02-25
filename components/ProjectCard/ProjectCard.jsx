@@ -33,23 +33,23 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {imageUrl && (
-        <div className={`mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56 ${slug === 'neon-profile-card' ? 'bg-panel/50' : ''}`}>
+        <div className={`relative mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56 ${slug === 'neon-profile-card' ? 'bg-panel/50' : ''}`}>
           <OptimizedImage
             src={imageUrl}
             alt={title}
-            className={`w-full h-full transition-transform duration-300 hover:scale-105 object-top ${slug === 'neon-profile-card' ? 'object-contain' : 'object-cover'}`}
-            loading={isLCP ? 'eager' : 'lazy'}
-            fetchPriority={isLCP ? 'high' : 'auto'}
+            className={`transition-transform duration-300 hover:scale-105 object-top ${slug === 'neon-profile-card' ? 'object-contain' : 'object-cover'}`}
+            priority={isLCP}
+            sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
           />
         </div>
       )}
       {!imageUrl && (
-        <div className='mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56'>
+        <div className='relative mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56'>
           <OptimizedImage
             src='/images/lambda_preview.png'
             alt='Project preview'
-            className='w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105'
-            loading='lazy'
+            className='object-cover object-top transition-transform duration-300 hover:scale-105'
+            sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
           />
         </div>
       )}

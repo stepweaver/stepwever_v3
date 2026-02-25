@@ -244,6 +244,7 @@
   @apply w-full px-4 py-3 text-left text-sm font-bold tracking-wide cursor-pointer flex items-center gap-2;
   background: transparent;
   border: none;
+  border-left: 3px solid transparent;
   transition: all 0.15s ease;
   position: relative;
   min-height: 40px;
@@ -255,7 +256,23 @@
 
 .theme-grid-option.active {
   font-weight: 900;
+  border-left-color: currentColor;
+  background: rgba(255, 255, 255, 0.06);
 }
+
+.theme-grid-option.dark { color: #00ff41; }
+.theme-grid-option.light { color: #ff10f0; }
+.theme-grid-option.monochrome { color: #ffffff; }
+.theme-grid-option.monochrome-inverted { color: #888888; }
+.theme-grid-option.vintage { color: #55ffff; }
+.theme-grid-option.apple { color: #33ff33; }
+.theme-grid-option.c64 { color: #a3e6ff; }
+.theme-grid-option.amber { color: #ffb000; }
+.theme-grid-option.synthwave { color: #ff1493; }
+.theme-grid-option.dracula { color: #bd93f9; }
+.theme-grid-option.solarized { color: #2aa198; }
+.theme-grid-option.nord { color: #88c0d0; }
+.theme-grid-option.cobalt { color: #ffc600; }
 
 /* Lambda Icons in Dropdown - size via Next/Image width/height to avoid aspect-ratio warning */
 .lambda-icon-grid {

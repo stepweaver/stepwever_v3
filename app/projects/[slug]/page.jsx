@@ -85,13 +85,13 @@ export default function ProjectPage({ params }) {
 
               {/* Project Image */}
               {project.imageUrl && (
-                <div className='mb-8 border border-neon/20 rounded-lg overflow-hidden card-glow'>
+                <div className='relative mb-8 border border-neon/20 rounded-lg overflow-hidden card-glow aspect-video'>
                   <OptimizedImage
                     src={project.imageUrl}
                     alt={project.title}
-                    className='w-full h-auto'
-                    loading='eager'
-                    fetchPriority='high'
+                    className='object-cover'
+                    priority
+                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px'
                   />
                 </div>
               )}

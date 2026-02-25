@@ -1,18 +1,4 @@
-/**
- * OptimizedImage component that serves WebP images with PNG fallback
- * Uses the <picture> element to provide modern format support with graceful degradation
- */
-
-// List of images that have WebP versions available
-// Add images here as WebP versions are created
-const IMAGES_WITH_WEBP = [
-  '/images/screely-dice.png',
-  '/images/screely-profilcard.png',
-  '/images/screely-resist.png',
-  '/images/lambda_stepweaver.png',
-  '/images/screely-lambda.png',
-  '/images/screely-stache.png',
-];
+import Image from 'next/image';
 
 export default function OptimizedImage({
   src,
@@ -20,70 +6,48 @@ export default function OptimizedImage({
   className = '',
   loading = 'lazy',
   fetchPriority = 'auto',
+  sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+  fill = true,
+  width,
+  height,
+  priority,
   ...props
 }) {
-  // Ensure loading attribute is explicitly set (not undefined)
-  const loadingAttr = loading || 'lazy';
-  
-  // Prevent context menu on images (right-click)
   const handleContextMenu = (e) => {
     e.preventDefault();
     return false;
   };
-  
-  // If src doesn't end with .png, assume it's already optimized or not a PNG
-  if (!src || !src.endsWith('.png')) {
+
+  const isPriority = priority || loading === 'eager' || fetchPriority === 'high';
+
+  if (fill && !width && !height) {
     return (
-      <img
+      <Image
         src={src}
         alt={alt}
+        fill
+        sizes={sizes}
         className={className}
-        loading={loadingAttr}
-        fetchPriority={fetchPriority}
+        priority={isPriority}
         onContextMenu={handleContextMenu}
         draggable={false}
         {...props}
       />
     );
   }
-
-  // Only use WebP if we know the WebP version exists
-  const hasWebPVersion = IMAGES_WITH_WEBP.includes(src);
-
-  // If no WebP version exists, just use the PNG directly
-  if (!hasWebPVersion) {
-    return (
-      <img
-        src={src}
-        alt={alt}
-        className={className}
-        loading={loadingAttr}
-        fetchPriority={fetchPriority}
-        onContextMenu={handleContextMenu}
-        draggable={false}
-        {...props}
-      />
-    );
-  }
-
-  // Generate WebP version path
-  const webpSrc = src.replace('.png', '.webp');
 
   return (
-    <picture onContextMenu={handleContextMenu}>
-      <source srcSet={webpSrc} type="image/webp" />
-      <img
-        src={src}
-        alt={alt}
-        className={className}
-        loading={loadingAttr}
-        fetchPriority={fetchPriority}
-        decoding="async"
-        onContextMenu={handleContextMenu}
-        draggable={false}
-        {...props}
-      />
-    </picture>
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      sizes={sizes}
+      className={className}
+      priority={isPriority}
+      onContextMenu={handleContextMenu}
+      draggable={false}
+      {...props}
+    />
   );
 }
-

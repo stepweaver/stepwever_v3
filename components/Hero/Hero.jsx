@@ -44,11 +44,12 @@ function Hero() {
                       />
                       <div className='relative w-full h-full rounded-sm overflow-hidden border-2 border-neon/30'>
                         <Image
-                          src='/images/pixarMe.png'
+                          src='/images/pixarMe-256.png'
                           alt='Stephen Weaver'
                           width={128}
                           height={128}
                           className='w-full h-full object-cover'
+                          priority
                         />
                       </div>
                     </div>
