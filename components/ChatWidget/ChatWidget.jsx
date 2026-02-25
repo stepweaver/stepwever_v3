@@ -76,7 +76,7 @@ export default function ChatWidget() {
               : 'w-[calc(100vw-2rem)] sm:w-96 h-[500px] max-h-[70vh]'
           }`}
         >
-          <div className='hud-panel h-full flex flex-col relative overflow-hidden' style={{ background: 'rgb(var(--panel))', backdropFilter: 'none' }}>
+          <div className='hud-panel h-full flex flex-col relative overflow-hidden' style={{ background: 'rgb(var(--panel))', backdropFilter: 'none', boxShadow: '0 0 24px rgb(var(--neon) / 0.25), 0 4px 30px rgba(0,0,0,0.4)' }}>
             {/* Header */}
             <div className='flex items-center justify-between px-4 pt-4 pb-3 border-b border-neon/20' style={{ background: 'rgb(var(--panel))' }}>
               <div className='flex items-center gap-2 flex-wrap min-w-0'>
@@ -195,7 +195,7 @@ export default function ChatWidget() {
         className={`fixed bottom-4 right-4 sm:right-6 z-[100] w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer border-2 ${
           isOpen
             ? 'border-neon/50 text-neon hover:bg-neon/10'
-            : 'border-neon text-neon hover:bg-neon/30'
+            : 'border-neon text-neon hover:bg-neon/30 hover:shadow-[0_0_18px_rgb(var(--neon)/0.4)]'
         }`}
         style={{
           background: 'rgb(var(--panel))'

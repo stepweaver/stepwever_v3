@@ -157,6 +157,17 @@
   /* Glitch Effect Colors — dark shadows */
   --theme-glitch-color: #9900ff;
   --theme-glitch-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  /* Ops Console Palette */
+  --bg: 229 229 229;
+  --panel: 255 255 255;
+  --text: 13 13 13;
+  --muted: 100 100 100;
+  --neon: 0 153 51;
+  --accent: 153 0 255;
+  --warn: 255 102 0;
+  --danger: 255 51 51;
+  --ring: 0 153 51;
 }
 
 [data-theme="monochrome"] {
@@ -197,6 +208,17 @@
   --theme-glitch-color: #ffffff;
   --theme-glitch-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
     0 0 10px rgba(255, 255, 255, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 0 0 0;
+  --panel: 15 15 15;
+  --text: 255 255 255;
+  --muted: 170 170 170;
+  --neon: 255 255 255;
+  --accent: 200 200 200;
+  --warn: 255 255 255;
+  --danger: 255 255 255;
+  --ring: 255 255 255;
 }
 
 [data-theme="monochrome-inverted"] {
@@ -237,6 +259,17 @@
   --theme-glitch-color: #000000;
   --theme-glitch-shadow: 0 0 5px rgba(0, 0, 0, 0.8),
     0 0 10px rgba(0, 0, 0, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 255 255 255;
+  --panel: 245 245 245;
+  --text: 0 0 0;
+  --muted: 80 80 80;
+  --neon: 0 0 0;
+  --accent: 60 60 60;
+  --warn: 0 0 0;
+  --danger: 0 0 0;
+  --ring: 0 0 0;
 }
 
 [data-theme="vintage"] {
@@ -277,6 +310,17 @@
   --theme-glitch-color: #55ffff;
   --theme-glitch-shadow: 0 0 5px rgba(85, 255, 255, 0.8),
     0 0 10px rgba(85, 255, 255, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 0 0 0;
+  --panel: 0 0 30;
+  --text: 170 170 170;
+  --muted: 128 128 128;
+  --neon: 85 255 255;
+  --accent: 85 85 255;
+  --warn: 255 255 85;
+  --danger: 255 85 85;
+  --ring: 85 255 255;
 }
 
 [data-theme="apple"] {
@@ -317,6 +361,17 @@
   --theme-glitch-color: #33ff33;
   --theme-glitch-shadow: 0 0 5px rgba(51, 255, 51, 0.8),
     0 0 10px rgba(51, 255, 51, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 0 0 0;
+  --panel: 0 17 0;
+  --text: 102 255 102;
+  --muted: 68 204 68;
+  --neon: 51 255 51;
+  --accent: 136 255 136;
+  --warn: 136 255 136;
+  --danger: 68 255 68;
+  --ring: 51 255 51;
 }
 
 [data-theme="c64"] {
@@ -324,10 +379,10 @@
   --color-terminal-dark: #40318d;
   --color-terminal-light: #4a3b9f;
   --color-terminal-border: #5a4bbf;
-  /* C64 classic blue palette */
+  /* C64 classic blue palette — text brightened for WCAG AA contrast */
   --color-terminal-green: #a3e6ff;
-  --color-terminal-text: #7c70da;
-  --color-terminal-muted: #6058b8;
+  --color-terminal-text: #b0a8e8;
+  --color-terminal-muted: #7c70da;
   --color-terminal-yellow: #d8d8ff;
   --color-terminal-red: #9f95e6;
   --color-terminal-blue: #a3a3ff;
@@ -341,7 +396,7 @@
 
   /* Background and Foreground - Classic C64 blue */
   --background: #40318d;
-  --foreground: #7c70da;
+  --foreground: #a3e6ff;
 
   /* Light blue glows for C64 CRT effect */
   --terminal-title-glow: 0 0 3px rgba(163, 230, 255, 0.7);
@@ -357,6 +412,17 @@
   --theme-glitch-color: #a3e6ff;
   --theme-glitch-shadow: 0 0 5px rgba(163, 230, 255, 0.8),
     0 0 10px rgba(163, 230, 255, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 64 49 141;
+  --panel: 50 38 112;
+  --text: 176 168 232;
+  --muted: 124 112 218;
+  --neon: 163 230 255;
+  --accent: 124 112 218;
+  --warn: 216 216 255;
+  --danger: 159 149 230;
+  --ring: 163 230 255;
 }
 
 [data-theme="amber"] {
@@ -397,6 +463,17 @@
   --theme-glitch-color: #ff9900;
   --theme-glitch-shadow: 0 0 5px rgba(255, 153, 0, 0.8),
     0 0 10px rgba(255, 153, 0, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 26 15 0;
+  --panel: 38 22 0;
+  --text: 255 204 102;
+  --muted: 204 136 51;
+  --neon: 255 176 0;
+  --accent: 255 153 0;
+  --warn: 255 221 136;
+  --danger: 255 102 0;
+  --ring: 255 176 0;
 }
 
 [data-theme="synthwave"] {
@@ -437,6 +514,17 @@
   --theme-glitch-color: #ff1493;
   --theme-glitch-shadow: 0 0 5px rgba(255, 20, 147, 0.8),
     0 0 10px rgba(255, 20, 147, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 10 10 20;
+  --panel: 20 20 45;
+  --text: 255 255 255;
+  --muted: 184 184 255;
+  --neon: 255 20 147;
+  --accent: 0 255 255;
+  --warn: 255 255 0;
+  --danger: 255 20 147;
+  --ring: 255 20 147;
 }
 
 [data-theme="dracula"] {
@@ -477,6 +565,17 @@
   --theme-glitch-color: #bd93f9;
   --theme-glitch-shadow: 0 0 5px rgba(189, 147, 249, 0.8),
     0 0 10px rgba(189, 147, 249, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 40 42 54;
+  --panel: 50 52 68;
+  --text: 248 248 242;
+  --muted: 98 114 164;
+  --neon: 189 147 249;
+  --accent: 139 233 253;
+  --warn: 241 250 140;
+  --danger: 255 85 85;
+  --ring: 189 147 249;
 }
 
 [data-theme="solarized"] {
@@ -484,10 +583,10 @@
   --color-terminal-dark: #002b36;
   --color-terminal-light: #073642;
   --color-terminal-border: #0f4d5c;
-  /* Solarized colors */
+  /* Solarized colors — text brightened for WCAG AA contrast */
   --color-terminal-green: #859900;
-  --color-terminal-text: #839496;
-  --color-terminal-muted: #586e75;
+  --color-terminal-text: #93a1a1;
+  --color-terminal-muted: #657b83;
   --color-terminal-yellow: #b58900;
   --color-terminal-red: #dc322f;
   --color-terminal-blue: #268bd2;
@@ -517,6 +616,17 @@
   --theme-glitch-color: #2aa198;
   --theme-glitch-shadow: 0 0 5px rgba(42, 161, 152, 0.8),
     0 0 10px rgba(42, 161, 152, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 0 43 54;
+  --panel: 7 54 66;
+  --text: 147 161 161;
+  --muted: 101 123 131;
+  --neon: 42 161 152;
+  --accent: 38 139 210;
+  --warn: 181 137 0;
+  --danger: 220 50 47;
+  --ring: 42 161 152;
 }
 
 [data-theme="nord"] {
@@ -557,6 +667,17 @@
   --theme-glitch-color: #88c0d0;
   --theme-glitch-shadow: 0 0 5px rgba(136, 192, 208, 0.8),
     0 0 10px rgba(136, 192, 208, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 46 52 64;
+  --panel: 59 66 82;
+  --text: 216 222 233;
+  --muted: 129 161 193;
+  --neon: 136 192 208;
+  --accent: 94 129 172;
+  --warn: 235 203 139;
+  --danger: 191 97 106;
+  --ring: 136 192 208;
 }
 
 [data-theme="cobalt"] {
@@ -597,6 +718,17 @@
   --theme-glitch-color: #ffc600;
   --theme-glitch-shadow: 0 0 5px rgba(255, 198, 0, 0.8),
     0 0 10px rgba(255, 198, 0, 0.4);
+
+  /* Ops Console Palette */
+  --bg: 25 53 73;
+  --panel: 0 27 46;
+  --text: 255 255 255;
+  --muted: 0 136 255;
+  --neon: 255 198 0;
+  --accent: 0 187 255;
+  --warn: 255 157 0;
+  --danger: 255 0 136;
+  --ring: 255 198 0;
 }
 
 /* Font weight improvements for better readability */
@@ -969,8 +1101,24 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-ibm);
 }
 
-/* Theme transition styles */
-* {
+/* Theme transition styles -- scoped to elements that actually change on theme swap.
+   The previous `*` selector forced the browser to track transitions on every DOM node. */
+html,
+body,
+.hud-panel,
+.card-glow,
+.card-glow-tight,
+.cyber-border-green,
+.cyber-border-magenta,
+.cyber-border-yellow,
+.cyber-border-cyan,
+.cyber-border-red,
+.cyber-border-border,
+.glitch-button,
+.theme-toggle,
+.terminal-glow,
+nav,
+footer {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 

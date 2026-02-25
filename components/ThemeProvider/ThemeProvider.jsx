@@ -1,121 +1,88 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 
 const ThemeContext = createContext();
 
+export const VALID_THEMES = [
+  'dark', 'light', 'monochrome', 'monochrome-inverted',
+  'vintage', 'apple', 'c64', 'amber', 'synthwave',
+  'dracula', 'solarized', 'nord', 'cobalt',
+];
+
+const VALID_THEME_SET = new Set(VALID_THEMES);
+
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('dark'); // Default fallback
+  const [theme, setTheme] = useState('dark');
   const [mounted, setMounted] = useState(false);
 
-  // Get system theme preference
-  const getSystemTheme = () => {
+  const getSystemTheme = useCallback(() => {
     if (typeof window !== 'undefined') {
       return window.matchMedia('(prefers-color-scheme: light)').matches
         ? 'light'
         : 'dark';
     }
-    return 'dark'; // Default fallback
-  };
+    return 'dark';
+  }, []);
 
-  // Get user's preferred theme from DOM (set by script), localStorage, or system preference
-  const getUserPreferredTheme = () => {
-    if (typeof window !== 'undefined') {
-      // First check if theme is already set on the document element (by our script)
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      if (currentTheme === 'light' || currentTheme === 'dark' || currentTheme === 'monochrome' || currentTheme === 'monochrome-inverted' || currentTheme === 'vintage' || currentTheme === 'apple' || currentTheme === 'c64' || currentTheme === 'amber' || currentTheme === 'synthwave' || currentTheme === 'dracula' || currentTheme === 'solarized' || currentTheme === 'nord') {
-        return currentTheme;
-      }
-
-      // Fallback to localStorage or system preference
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'monochrome' || savedTheme === 'monochrome-inverted' || savedTheme === 'vintage' || savedTheme === 'apple' || savedTheme === 'c64' || savedTheme === 'amber' || savedTheme === 'synthwave' || savedTheme === 'dracula' || savedTheme === 'solarized' || savedTheme === 'nord' || savedTheme === 'cobalt') {
-        return savedTheme;
-      }
-      return getSystemTheme();
-    }
-    return 'dark'; // SSR fallback
-  };
-
-  // Initialize theme after component mounts to avoid hydration mismatch
   useEffect(() => {
-    const userPreferredTheme = getUserPreferredTheme();
+    const domTheme = document.documentElement.getAttribute('data-theme');
+    const resolved = VALID_THEME_SET.has(domTheme)
+      ? domTheme
+      : VALID_THEME_SET.has(localStorage.getItem('theme'))
+        ? localStorage.getItem('theme')
+        : getSystemTheme();
 
-    // Only update if the theme is different to prevent unnecessary re-renders
-    if (userPreferredTheme !== theme) {
-      setTheme(userPreferredTheme);
+    if (resolved !== theme) {
+      setTheme(resolved);
     }
 
     setMounted(true);
 
-    // Listen for system theme changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
     const handleSystemThemeChange = (e) => {
-      // Only update if user hasn't manually set a preference
       if (!localStorage.getItem('theme')) {
         setTheme(e.matches ? 'light' : 'dark');
       }
     };
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+    return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // Use modern event listener API for better performance
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleSystemThemeChange);
-    } else {
-      // Fallback for older browsers
-      mediaQuery.addListener(handleSystemThemeChange);
-    }
-
-    return () => {
-      if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleSystemThemeChange);
-      } else {
-        // Fallback for older browsers
-        mediaQuery.removeListener(handleSystemThemeChange);
-      }
-    };
-  }, []); // Empty dependency array to run only once on mount
-
-  // Update document class and localStorage when theme changes
   useEffect(() => {
     if (mounted) {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      // Only update if the theme is different to prevent unnecessary DOM updates
-      if (currentTheme !== theme) {
+      if (document.documentElement.getAttribute('data-theme') !== theme) {
         document.documentElement.setAttribute('data-theme', theme);
       }
-      // Always update localStorage to persist the preference
       localStorage.setItem('theme', theme);
     }
   }, [theme, mounted]);
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => {
-      if (prevTheme === 'dark') return 'light';
-      if (prevTheme === 'light') return 'monochrome';
-      if (prevTheme === 'monochrome') return 'monochrome-inverted';
-      if (prevTheme === 'monochrome-inverted') return 'vintage';
-      if (prevTheme === 'vintage') return 'apple';
-      if (prevTheme === 'apple') return 'c64';
-      if (prevTheme === 'c64') return 'amber';
-      if (prevTheme === 'amber') return 'synthwave';
-      if (prevTheme === 'synthwave') return 'dracula';
-      if (prevTheme === 'dracula') return 'solarized';
-      if (prevTheme === 'solarized') return 'nord';
-      if (prevTheme === 'nord') return 'cobalt';
-      return 'dark'; // cobalt -> dark (full circle)
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const idx = VALID_THEMES.indexOf(prev);
+      return VALID_THEMES[(idx + 1) % VALID_THEMES.length];
     });
-  };
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('themeManual', '1');
+    }
+  }, []);
 
-  const changeTheme = (newTheme) => {
-    setTheme(newTheme);
-  };
+  const changeTheme = useCallback((newTheme) => {
+    if (VALID_THEME_SET.has(newTheme)) {
+      setTheme(newTheme);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('themeManual', '1');
+      }
+    }
+  }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     theme,
     toggleTheme,
     changeTheme,
     mounted,
-  };
+  }), [theme, toggleTheme, changeTheme, mounted]);
 
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

@@ -3,229 +3,195 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { useSafeScroll } from '@/utils/useSafeScroll';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
-import styles from './BackgroundCanvas.module.css';
+
+const COLOR_PALETTES = {
+  dark: [
+    [0, 255, 0], [255, 255, 0], [255, 165, 0], [255, 0, 0],
+    [255, 0, 255], [138, 43, 226], [0, 191, 255], [0, 255, 255],
+  ],
+  light: [
+    [0, 0, 0], [51, 51, 51], [102, 51, 102], [102, 0, 102],
+    [153, 0, 153], [153, 0, 51], [51, 51, 102], [0, 51, 102],
+  ],
+  monochrome: [
+    [255, 255, 255], [245, 245, 245], [235, 235, 235], [225, 225, 225],
+    [215, 215, 215], [205, 205, 205], [195, 195, 195], [185, 185, 185],
+  ],
+  'monochrome-inverted': [
+    [0, 0, 0], [10, 10, 10], [20, 20, 20], [30, 30, 30],
+    [40, 40, 40], [50, 50, 50], [60, 60, 60], [70, 70, 70],
+  ],
+  vintage: [
+    [85, 255, 255], [255, 255, 255], [85, 85, 255], [255, 255, 85],
+    [85, 255, 85], [255, 85, 255], [170, 170, 170], [85, 85, 85],
+  ],
+  apple: [
+    [51, 255, 51], [102, 255, 102], [68, 204, 68], [136, 255, 136],
+    [119, 255, 119], [85, 255, 85], [153, 255, 153], [34, 136, 34],
+  ],
+  c64: [
+    [163, 230, 255], [124, 112, 218], [163, 163, 255], [216, 216, 255],
+    [149, 149, 221], [184, 184, 255], [200, 200, 255], [96, 88, 184],
+  ],
+  amber: [
+    [255, 176, 0], [255, 187, 34], [255, 153, 0], [255, 204, 102],
+    [221, 136, 68], [255, 170, 85], [255, 221, 136], [204, 136, 51],
+  ],
+  synthwave: [
+    [255, 20, 147], [0, 255, 255], [157, 0, 255], [255, 255, 0],
+    [255, 105, 180], [65, 105, 225], [255, 0, 255], [0, 191, 255],
+  ],
+  dracula: [
+    [189, 147, 249], [255, 121, 198], [139, 233, 253], [80, 250, 123],
+    [241, 250, 140], [255, 184, 108], [255, 85, 85], [248, 248, 242],
+  ],
+  solarized: [
+    [42, 161, 152], [38, 139, 210], [133, 153, 0], [181, 137, 0],
+    [203, 75, 22], [211, 54, 130], [108, 113, 196], [131, 148, 150],
+  ],
+  nord: [
+    [136, 192, 208], [129, 161, 193], [94, 129, 172], [163, 190, 140],
+    [235, 203, 139], [208, 135, 112], [191, 97, 106], [180, 142, 173],
+  ],
+  cobalt: [
+    [255, 198, 0], [255, 157, 0], [255, 0, 136], [174, 129, 255],
+    [0, 136, 255], [0, 187, 255], [58, 217, 0], [255, 198, 0],
+  ],
+};
+
+const GLOW_FILTERS = {
+  light: 'drop-shadow(8px 8px 12px rgba(0,0,0,0.9)) drop-shadow(0 0 30px rgba(0,0,0,0.6)) drop-shadow(0 0 60px rgba(0,0,0,0.3))',
+  monochrome: 'drop-shadow(0 0 8px rgba(255,255,255,1)) drop-shadow(0 0 20px rgba(255,255,255,0.4))',
+  'monochrome-inverted': 'drop-shadow(0 0 8px rgba(0,0,0,1)) drop-shadow(0 0 20px rgba(0,0,0,0.4))',
+  vintage: 'drop-shadow(0 0 8px rgba(85,255,255,1)) drop-shadow(0 0 20px rgba(85,255,255,0.4))',
+  apple: 'drop-shadow(0 0 8px rgba(51,255,51,1)) drop-shadow(0 0 20px rgba(51,255,51,0.4))',
+  c64: 'drop-shadow(0 0 8px rgba(163,230,255,1)) drop-shadow(0 0 20px rgba(163,230,255,0.4))',
+  amber: 'drop-shadow(0 0 8px rgba(255,176,0,1)) drop-shadow(0 0 20px rgba(255,176,0,0.4))',
+  synthwave: 'drop-shadow(0 0 8px rgba(255,20,147,1)) drop-shadow(0 0 20px rgba(255,20,147,0.4))',
+  dracula: 'drop-shadow(0 0 8px rgba(189,147,249,1)) drop-shadow(0 0 20px rgba(189,147,249,0.4))',
+  solarized: 'drop-shadow(0 0 8px rgba(42,161,152,1)) drop-shadow(0 0 20px rgba(42,161,152,0.4))',
+  nord: 'drop-shadow(0 0 8px rgba(136,192,208,1)) drop-shadow(0 0 20px rgba(136,192,208,0.4))',
+  cobalt: 'drop-shadow(0 0 8px rgba(255,198,0,1)) drop-shadow(0 0 20px rgba(255,198,0,0.4))',
+  dark: 'drop-shadow(0 0 8px rgba(0,255,65,1)) drop-shadow(0 0 20px rgba(0,255,65,0.4))',
+};
+
+const SPRITE_COLORS = [
+  { r: 90,  g: 255, b: 140, hr: 190, hg: 255, hb: 215 },
+  { r: 90,  g: 255, b: 140, hr: 190, hg: 255, hb: 215 },
+  { r: 0,   g: 200, b: 255, hr: 160, hg: 230, hb: 255 },
+  { r: 255, g: 60,  b: 180, hr: 255, hg: 180, hb: 220 },
+  { r: 160, g: 80,  b: 255, hr: 210, hg: 180, hb: 255 },
+  { r: 255, g: 200, b: 0,   hr: 255, hg: 235, hb: 160 },
+  { r: 255, g: 80,  b: 60,  hr: 255, hg: 190, hb: 180 },
+  { r: 0,   g: 255, b: 255, hr: 180, hg: 255, hb: 255 },
+];
 
 export default function BackgroundCanvas() {
   const canvasRef = useRef(null);
   const rainCanvasRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [originalImageData, setOriginalImageData] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const scrollProgressRef = useRef(0);
+  const originalImageDataRef = useRef(null);
+  const isMobileRef = useRef(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const { theme } = useTheme();
 
-  // Neon rainbow colors for dark mode - starting with green
-  const neonColorsDark = [
-    [0, 255, 0], // Neon Green (starting color)
-    [255, 255, 0], // Neon Yellow
-    [255, 165, 0], // Neon Orange
-    [255, 0, 0], // Neon Red
-    [255, 0, 255], // Neon Pink/Magenta
-    [138, 43, 226], // Neon Purple
-    [0, 191, 255], // Neon Blue
-    [0, 255, 255], // Neon Cyan
-  ];
-
-  // Colors for light mode - starting with black, transitioning through darker tones
-  const colorsLight = [
-    [0, 0, 0], // Black (starting color for light mode)
-    [51, 51, 51], // Dark Gray
-    [102, 51, 102], // Dark Purple
-    [102, 0, 102], // Darker Magenta
-    [153, 0, 153], // Deep Magenta
-    [153, 0, 51], // Deep Red-Purple
-    [51, 51, 102], // Dark Blue-Gray
-    [0, 51, 102], // Dark Blue
-  ];
-
-  // Pure white/grayscale colors for monochrome mode
-  const colorsMonochrome = [
-    [255, 255, 255], // Pure White (starting color)
-    [245, 245, 245], // Very Light Gray
-    [235, 235, 235], // Light Gray
-    [225, 225, 225], // Light-Medium Gray
-    [215, 215, 215], // Medium Gray
-    [205, 205, 205], // Medium-Dark Gray
-    [195, 195, 195], // Dark Gray
-    [185, 185, 185], // Very Dark Gray
-  ];
-
-  // Pure black/grayscale colors for monochrome inverted mode
-  const colorsMonochromeInverted = [
-    [0, 0, 0], // Pure Black (starting color)
-    [10, 10, 10], // Very Dark Gray
-    [20, 20, 20], // Dark Gray
-    [30, 30, 30], // Dark-Medium Gray
-    [40, 40, 40], // Medium Gray
-    [50, 50, 50], // Medium-Light Gray
-    [60, 60, 60], // Light Gray
-    [70, 70, 70], // Very Light Gray
-  ];
-
-  // Vintage DOS/IBM PC colors for vintage mode
-  const colorsVintage = [
-    [85, 255, 255], // Bright Cyan (starting color)
-    [255, 255, 255], // White
-    [85, 85, 255], // Bright Blue
-    [255, 255, 85], // Bright Yellow
-    [85, 255, 85], // Bright Green
-    [255, 85, 255], // Bright Magenta
-    [170, 170, 170], // Light Gray
-    [85, 85, 85], // Dark Gray
-  ];
-
-  // Apple II soft lime green colors
-  const colorsApple = [
-    [51, 255, 51], // Soft Lime (starting color)
-    [102, 255, 102], // Medium Lime
-    [68, 204, 68], // Muted Lime
-    [136, 255, 136], // Pale Lime
-    [119, 255, 119], // Light Lime
-    [85, 255, 85], // Bright Lime
-    [153, 255, 153], // Very Light Lime
-    [34, 136, 34], // Dark Lime
-  ];
-
-  // Commodore 64 blue colors
-  const colorsC64 = [
-    [163, 230, 255], // Light Blue (starting color)
-    [124, 112, 218], // Purple-Blue
-    [163, 163, 255], // Bright Blue
-    [216, 216, 255], // Very Light Blue
-    [149, 149, 221], // Medium Blue
-    [184, 184, 255], // Pale Blue
-    [200, 200, 255], // Ultra Light Blue
-    [96, 88, 184], // Dark Blue
-  ];
-
-  // Amber CRT colors
-  const colorsAmber = [
-    [255, 176, 0], // Amber (starting color)
-    [255, 187, 34], // Light Amber
-    [255, 153, 0], // Deep Amber/Orange
-    [255, 204, 102], // Pale Amber
-    [221, 136, 68], // Burnt Orange
-    [255, 170, 85], // Soft Orange
-    [255, 221, 136], // Cream Amber
-    [204, 136, 51], // Dark Amber
-  ];
-
-  // Synthwave hot pink/cyan colors
-  const colorsSynthwave = [
-    [255, 20, 147], // Hot Pink (starting color)
-    [0, 255, 255], // Cyan
-    [157, 0, 255], // Purple
-    [255, 255, 0], // Yellow
-    [255, 105, 180], // Light Pink
-    [65, 105, 225], // Royal Blue
-    [255, 0, 255], // Magenta
-    [0, 191, 255], // Deep Sky Blue
-  ];
-
-  // Dracula purple/pink colors
-  const colorsDracula = [
-    [189, 147, 249], // Purple (starting color)
-    [255, 121, 198], // Pink
-    [139, 233, 253], // Cyan
-    [80, 250, 123], // Green
-    [241, 250, 140], // Yellow
-    [255, 184, 108], // Orange
-    [255, 85, 85], // Red
-    [248, 248, 242], // White
-  ];
-
-  // Solarized teal/cyan colors
-  const colorsSolarized = [
-    [42, 161, 152], // Teal (starting color)
-    [38, 139, 210], // Blue
-    [133, 153, 0], // Green
-    [181, 137, 0], // Yellow
-    [203, 75, 22], // Orange
-    [211, 54, 130], // Magenta
-    [108, 113, 196], // Violet
-    [131, 148, 150], // Base0
-  ];
-
-  // Nord frost blue colors
-  const colorsNord = [
-    [136, 192, 208], // Frost Blue (starting color)
-    [129, 161, 193], // Frost Blue 2
-    [94, 129, 172], // Frost Blue 3
-    [163, 190, 140], // Aurora Green
-    [235, 203, 139], // Aurora Yellow
-    [208, 135, 112], // Aurora Orange
-    [191, 97, 106], // Aurora Red
-    [180, 142, 173], // Aurora Purple
-  ];
-
-  const colorsCobalt = [
-    [255, 198, 0], // Bright Yellow (starting color)
-    [255, 157, 0], // Orange
-    [255, 0, 136], // Hot Pink
-    [174, 129, 255], // Purple
-    [0, 136, 255], // Blue
-    [0, 187, 255], // Cyan
-    [58, 217, 0], // Green
-    [255, 198, 0], // Back to Yellow
-  ];
-
-  // Select color palette based on theme (memoised to prevent re-render loops)
-  const neonColors = useMemo(() =>
-    theme === 'light' ? colorsLight : 
-    theme === 'monochrome' ? colorsMonochrome : 
-    theme === 'monochrome-inverted' ? colorsMonochromeInverted :
-    theme === 'vintage' ? colorsVintage :
-    theme === 'apple' ? colorsApple :
-    theme === 'c64' ? colorsC64 :
-    theme === 'amber' ? colorsAmber :
-    theme === 'synthwave' ? colorsSynthwave :
-    theme === 'dracula' ? colorsDracula :
-    theme === 'solarized' ? colorsSolarized :
-    theme === 'nord' ? colorsNord :
-    theme === 'cobalt' ? colorsCobalt :
-    neonColorsDark,
+  const neonColors = useMemo(
+    () => COLOR_PALETTES[theme] || COLOR_PALETTES.dark,
     [theme]
   );
 
-  // Stable scroll callback (memoised to prevent re-attaching listener)
-  const handleScroll = useCallback((scrollData) => {
-    setScrollProgress(scrollData.scrollProgressY);
+  const neonColorsRef = useRef(neonColors);
+  useEffect(() => { neonColorsRef.current = neonColors; }, [neonColors]);
+
+  const rafIdRef = useRef(null);
+  const lastColorKeyRef = useRef(null);
+
+  const updateCanvasColors = useCallback(() => {
+    const canvas = canvasRef.current;
+    const imgData = originalImageDataRef.current;
+    if (!canvas || !imgData) return;
+
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    if (!ctx) return;
+
+    const colors = neonColorsRef.current;
+    const progress = scrollProgressRef.current;
+
+    const colorProgress = progress * (colors.length - 1);
+    const colorIndex = Math.floor(colorProgress);
+    const nextColorIndex = Math.min(colorIndex + 1, colors.length - 1);
+    const blend = colorProgress - colorIndex;
+
+    const cur = colors[colorIndex];
+    const nxt = colors[nextColorIndex];
+    const r = Math.round(cur[0] * (1 - blend) + nxt[0] * blend);
+    const g = Math.round(cur[1] * (1 - blend) + nxt[1] * blend);
+    const b = Math.round(cur[2] * (1 - blend) + nxt[2] * blend);
+
+    const colorKey = `${r},${g},${b}`;
+    if (lastColorKeyRef.current === colorKey) return;
+    lastColorKeyRef.current = colorKey;
+
+    const imageData = new ImageData(
+      new Uint8ClampedArray(imgData.data),
+      imgData.width,
+      imgData.height
+    );
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] > 0) {
+        data[i] = r;
+        data[i + 1] = g;
+        data[i + 2] = b;
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
   }, []);
 
-  // Use safe scroll hook
+  const updateTransform = useCallback(() => {
+    if (!canvasRef.current) return;
+    const mobile = isMobileRef.current;
+    const sp = scrollProgressRef.current;
+    const scale = mobile ? 0.9 - sp * 0.4 : 1.4 - sp * 0.8;
+    const tx = mobile ? -30 - sp * 20 : -15 - sp * 25;
+    const ty = mobile ? '2%' : '5%';
+    canvasRef.current.style.transform = `scale(${scale}) translateX(${tx}%) translateY(${ty})`;
+  }, []);
+
+  const handleScroll = useCallback((scrollData) => {
+    scrollProgressRef.current = scrollData.scrollProgressY;
+    if (rafIdRef.current === null) {
+      rafIdRef.current = requestAnimationFrame(() => {
+        rafIdRef.current = null;
+        updateCanvasColors();
+        updateTransform();
+      });
+    }
+  }, [updateCanvasColors, updateTransform]);
+
   useSafeScroll({
     onScroll: handleScroll,
-    throttleMs: 16, // ~60fps
+    throttleMs: 16,
   });
 
-  // Handle resize events
   useEffect(() => {
     const handleResize = () => {
-      try {
-        if (typeof window === 'undefined') return;
-        setIsMobile(window.innerWidth < 768);
-      } catch (error) {
-        console.error('Error in resize handler:', error);
-        setIsMobile(false);
-      }
+      if (typeof window === 'undefined') return;
+      isMobileRef.current = window.innerWidth < 768;
+      updateTransform();
     };
-
-    // Only add event listener if window is available
     if (typeof window !== 'undefined') {
       window.addEventListener('resize', handleResize, { passive: true });
-      handleResize(); // Set initial value
+      handleResize();
     }
-
     return () => {
       if (typeof window !== 'undefined') {
         window.removeEventListener('resize', handleResize);
       }
     };
-  }, []);
+  }, [updateTransform]);
 
-  // Load image once and store original data
-  // Try WebP first for better compression, fallback to PNG
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -241,10 +207,10 @@ export default function BackgroundCanvas() {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        setOriginalImageData(imageData);
+        originalImageDataRef.current = ctx.getImageData(0, 0, canvas.width, canvas.height);
         setHasError(false);
-        // Trigger fade-in after a short delay to ensure first paint
+        updateCanvasColors();
+        updateTransform();
         setTimeout(() => setIsLoaded(true), 100);
       } catch (error) {
         console.error('Error processing background image:', error);
@@ -252,105 +218,26 @@ export default function BackgroundCanvas() {
       }
     };
 
-    // Try WebP first, fallback to PNG if WebP fails
     let webpFailed = false;
     img.onerror = () => {
       if (!webpFailed) {
-        // WebP failed, try PNG fallback
         webpFailed = true;
         img.src = '/images/lambda_stepweaver.png';
       } else {
-        // Both formats failed
-        console.error(
-          'Failed to load background image: /images/lambda_stepweaver.webp and .png'
-        );
+        console.error('Failed to load background image');
         setHasError(true);
       }
     };
-
-    // Start with WebP for better compression
     img.src = '/images/lambda_stepweaver.webp';
-  }, []);
+  }, [updateCanvasColors, updateTransform]);
 
-  // Update colors and scale based on scroll
-  // Use requestAnimationFrame for smooth color transitions
+  // Re-color when theme changes
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || !originalImageData || hasError) return;
+    lastColorKeyRef.current = null;
+    updateCanvasColors();
+  }, [neonColors, updateCanvasColors]);
 
-    let rafId = null;
-    let lastColorKey = null;
-
-    const updateCanvas = () => {
-      try {
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        if (!ctx) return;
-
-        // Calculate which color to use based on scroll progress
-        const colorProgress = scrollProgress * (neonColors.length - 1);
-        const colorIndex = Math.floor(colorProgress);
-        const nextColorIndex = Math.min(colorIndex + 1, neonColors.length - 1);
-        const blend = colorProgress - colorIndex;
-
-        // Interpolate between current and next color for smooth transitions
-        const currentColor = neonColors[colorIndex];
-        const nextColor = neonColors[nextColorIndex];
-
-        const r = Math.round(
-          currentColor[0] * (1 - blend) + nextColor[0] * blend
-        );
-        const g = Math.round(
-          currentColor[1] * (1 - blend) + nextColor[1] * blend
-        );
-        const b = Math.round(
-          currentColor[2] * (1 - blend) + nextColor[2] * blend
-        );
-
-        // Skip update if color hasn't changed (reduces unnecessary processing)
-        const colorKey = `${r},${g},${b}`;
-        if (lastColorKey === colorKey) {
-          return;
-        }
-        lastColorKey = colorKey;
-
-        // Create new image data and process all pixels at once for smooth transition
-        const imageData = new ImageData(
-          new Uint8ClampedArray(originalImageData.data),
-          originalImageData.width,
-          originalImageData.height
-        );
-        const data = imageData.data;
-
-        // Process all pixels in one frame (image is small enough to handle)
-        for (let i = 0; i < data.length; i += 4) {
-          if (data[i + 3] > 0) {
-            // Only change non-transparent pixels
-            data[i] = r; // Red
-            data[i + 1] = g; // Green
-            data[i + 2] = b; // Blue
-            // Keep original alpha (data[i + 3])
-          }
-        }
-
-        // Update canvas with new colors
-        ctx.putImageData(imageData, 0, 0);
-      } catch (error) {
-        console.error('Error updating canvas colors:', error);
-        setHasError(true);
-      }
-    };
-
-    // Update immediately and then on any dependency change
-    updateCanvas();
-
-    return () => {
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId);
-      }
-    };
-  }, [scrollProgress, originalImageData, hasError, neonColors, theme]);
-
-  // Circuit-board data sprites: glowing pulses traveling along PCB-style traces
+  // Circuit-board data sprites
   useEffect(() => {
     const rainCanvas = rainCanvasRef.current;
     if (!rainCanvas || typeof window === 'undefined') return;
@@ -366,18 +253,14 @@ export default function BackgroundCanvas() {
     let edges = [];
     let sprites = [];
 
-    // ---- Rectilinear trace between two nodes (PCB routing) ----
     function makeTrace(a, b) {
       const pts = [{ x: a.x, y: a.y }];
       const roll = Math.random();
       if (roll < 0.3) {
-        // Horizontal first, then vertical (L-shape)
         pts.push({ x: b.x, y: a.y });
       } else if (roll < 0.6) {
-        // Vertical first, then horizontal (L-shape)
         pts.push({ x: a.x, y: b.y });
       } else {
-        // Z-shape: H-V-H or V-H-V
         if (Math.random() > 0.5) {
           const midX = a.x + (b.x - a.x) * (0.3 + Math.random() * 0.4);
           pts.push({ x: midX, y: a.y });
@@ -418,7 +301,6 @@ export default function BackgroundCanvas() {
       return { x: pts[pts.length - 1].x, y: pts[pts.length - 1].y };
     }
 
-    // ---- Build the circuit network ----
     function buildCircuit() {
       nodes = [];
       edges = [];
@@ -429,7 +311,6 @@ export default function BackgroundCanvas() {
       const cols = Math.ceil(W / cell) + 2;
       const rows = Math.ceil(H / cell) + 2;
 
-      // Place nodes on a jittered grid
       const fillRate = isMobileCircuit ? 0.55 : 0.7;
       for (let r = -1; r < rows; r++) {
         for (let c = -1; c < cols; c++) {
@@ -443,7 +324,6 @@ export default function BackgroundCanvas() {
         }
       }
 
-      // Connect nearby pairs with rectilinear traces
       const maxDist = cell * 2.2;
       const edgeSet = new Set();
 
@@ -462,7 +342,6 @@ export default function BackgroundCanvas() {
           if (added >= (isMobileCircuit ? 3 : 5)) break;
           const key = `${i}-${j}`;
           if (edgeSet.has(key)) continue;
-          // Limit max connections per node to keep it clean
           const maxConn = isMobileCircuit ? 4 : 6;
           if (nodes[i].edges.length >= maxConn || nodes[j].edges.length >= maxConn) continue;
           edgeSet.add(key);
@@ -477,29 +356,16 @@ export default function BackgroundCanvas() {
         }
       }
 
-      // Spawn data sprites
       if (edges.length === 0) return;
       const spriteRatio = isMobileCircuit ? 0.35 : 0.5;
       const count = Math.max(8, Math.min(isMobileCircuit ? 30 : 80, Math.floor(edges.length * spriteRatio)));
       for (let i = 0; i < count; i++) sprites.push(newSprite());
     }
 
-    // Neon cyberpunk sprite color palette
-    const spriteColors = [
-      { r: 90,  g: 255, b: 140, hr: 190, hg: 255, hb: 215 }, // Matrix green (most common)
-      { r: 90,  g: 255, b: 140, hr: 190, hg: 255, hb: 215 }, // Matrix green (weighted)
-      { r: 0,   g: 200, b: 255, hr: 160, hg: 230, hb: 255 }, // Cyan
-      { r: 255, g: 60,  b: 180, hr: 255, hg: 180, hb: 220 }, // Hot pink
-      { r: 160, g: 80,  b: 255, hr: 210, hg: 180, hb: 255 }, // Purple
-      { r: 255, g: 200, b: 0,   hr: 255, hg: 235, hb: 160 }, // Gold
-      { r: 255, g: 80,  b: 60,  hr: 255, hg: 190, hb: 180 }, // Red-orange
-      { r: 0,   g: 255, b: 255, hr: 180, hg: 255, hb: 255 }, // Teal
-    ];
-
     function newSprite() {
       const eIdx = Math.floor(Math.random() * edges.length);
       const fwd = Math.random() > 0.5;
-      const color = spriteColors[Math.floor(Math.random() * spriteColors.length)];
+      const color = SPRITE_COLORS[Math.floor(Math.random() * SPRITE_COLORS.length)];
       return {
         eIdx,
         t: fwd ? 0 : 1,
@@ -527,7 +393,6 @@ export default function BackgroundCanvas() {
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
 
-      // ==== Draw traces (faint circuit paths) ====
       ctx.lineCap = 'square';
       ctx.lineJoin = 'miter';
       for (const e of edges) {
@@ -539,20 +404,17 @@ export default function BackgroundCanvas() {
         ctx.stroke();
       }
 
-      // ==== Draw nodes (junction pads) ====
       for (const n of nodes) {
         if (n.edges.length === 0) continue;
 
         let flashA = 0;
         if (n.flash > 0) { flashA = n.flash / 25; n.flash--; }
 
-        // Small square pad
         const s = 1.5;
         const baseA = 0.1 + flashA * 0.4;
         ctx.fillStyle = `rgba(90,255,140,${baseA * gDim})`;
         ctx.fillRect(n.x - s, n.y - s, s * 2, s * 2);
 
-        // Flash burst when a sprite arrives (in sprite's color)
         if (flashA > 0.05) {
           const fc = n.flashColor || { r: 90, g: 255, b: 140 };
           ctx.shadowBlur = 12;
@@ -565,23 +427,19 @@ export default function BackgroundCanvas() {
         }
       }
 
-      // ==== Update & draw data sprites ====
       for (const sp of sprites) {
         if (!sp) continue;
         const edge = edges[sp.eIdx];
         if (!edge) continue;
 
-        // Advance position
         sp.t += sp.forward ? sp.speed : -sp.speed;
         sp.pulse += 0.07;
 
         const pos = posOnPath(edge.pts, edge.len, sp.t);
 
-        // Record trail
         sp.trail.push({ x: pos.x, y: pos.y });
         if (sp.trail.length > sp.trailMax) sp.trail.shift();
 
-        // Reached a node → flash it and pick next edge
         if (sp.t >= 1 || sp.t <= 0) {
           const nodeIdx = sp.t >= 1 ? edge.to : edge.from;
           const node = nodes[nodeIdx];
@@ -589,7 +447,6 @@ export default function BackgroundCanvas() {
             node.flash = 25;
             node.flashColor = sp.color;
 
-            // Prefer a different edge than the one we arrived on
             const others = node.edges.filter((e) => e !== sp.eIdx);
             const nextEIdx =
               others.length > 0
@@ -610,7 +467,6 @@ export default function BackgroundCanvas() {
           sp.trail = [];
         }
 
-        // Draw trail (fading afterglow in sprite color)
         const sc = sp.color;
         for (let i = 0; i < sp.trail.length; i++) {
           const fade = (i + 1) / sp.trail.length;
@@ -620,11 +476,9 @@ export default function BackgroundCanvas() {
           ctx.fill();
         }
 
-        // Draw sprite core (bright pulse)
         const pulseSz = 1 + Math.sin(sp.pulse) * 0.12;
         const sz = sp.size * pulseSz;
 
-        // Neon glow in sprite color
         ctx.shadowBlur = 10;
         ctx.shadowColor = `rgba(${sc.r},${sc.g},${sc.b},${0.5 * sp.brightness * gDim})`;
 
@@ -633,7 +487,6 @@ export default function BackgroundCanvas() {
         ctx.fillStyle = `rgba(${sc.hr},${sc.hg},${sc.hb},${0.95 * sp.brightness * gDim})`;
         ctx.fill();
 
-        // Soft outer halo
         ctx.shadowBlur = 0;
         ctx.beginPath();
         ctx.arc(pos.x, pos.y, sz * 3, 0, Math.PI * 2);
@@ -652,56 +505,33 @@ export default function BackgroundCanvas() {
     };
   }, [theme]);
 
-  // Don't render if there's an error
   if (hasError) {
     return null;
   }
 
+  const isLightish = theme === 'light' || theme === 'monochrome-inverted';
+  const glowFilter = GLOW_FILTERS[theme] || GLOW_FILTERS.dark;
+
   return (
     <>
-      {/* Rain effect layer (behind main canvas) */}
       <div className="fixed inset-0 z-[9] pointer-events-none" aria-hidden>
         <canvas
           ref={rainCanvasRef}
           className="w-full h-full"
-          style={{
-            opacity: theme === 'light' || theme === 'monochrome-inverted' ? 0.2 : 0.4,
-          }}
+          style={{ opacity: isLightish ? 0.2 : 0.4 }}
         />
       </div>
-      {/* Fixed background canvas */}
       <div className='fixed inset-0 z-10 flex items-center justify-start'>
         <canvas
           ref={canvasRef}
           width={1024}
           height={1536}
-          className={`origin-center transition-all duration-700 ease-out ${
+          className={`origin-center transition-opacity duration-700 ease-out ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
-            filter: 
-              theme === 'light' ? 'drop-shadow(8px 8px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 60px rgba(0, 0, 0, 0.3))' :
-              theme === 'monochrome' ? 'drop-shadow(0 0 8px rgba(255, 255, 255, 1)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))' :
-              theme === 'monochrome-inverted' ? 'drop-shadow(0 0 8px rgba(0, 0, 0, 1)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.4))' :
-              theme === 'vintage' ? 'drop-shadow(0 0 8px rgba(85, 255, 255, 1)) drop-shadow(0 0 20px rgba(85, 255, 255, 0.4))' :
-              theme === 'apple' ? 'drop-shadow(0 0 8px rgba(51, 255, 51, 1)) drop-shadow(0 0 20px rgba(51, 255, 51, 0.4))' :
-              theme === 'c64' ? 'drop-shadow(0 0 8px rgba(163, 230, 255, 1)) drop-shadow(0 0 20px rgba(163, 230, 255, 0.4))' :
-              theme === 'amber' ? 'drop-shadow(0 0 8px rgba(255, 176, 0, 1)) drop-shadow(0 0 20px rgba(255, 176, 0, 0.4))' :
-              theme === 'synthwave' ? 'drop-shadow(0 0 8px rgba(255, 20, 147, 1)) drop-shadow(0 0 20px rgba(255, 20, 147, 0.4))' :
-              theme === 'dracula' ? 'drop-shadow(0 0 8px rgba(189, 147, 249, 1)) drop-shadow(0 0 20px rgba(189, 147, 249, 0.4))' :
-              theme === 'solarized' ? 'drop-shadow(0 0 8px rgba(42, 161, 152, 1)) drop-shadow(0 0 20px rgba(42, 161, 152, 0.4))' :
-              theme === 'nord' ? 'drop-shadow(0 0 8px rgba(136, 192, 208, 1)) drop-shadow(0 0 20px rgba(136, 192, 208, 0.4))' :
-              'drop-shadow(0 0 8px rgba(0, 255, 65, 1)) drop-shadow(0 0 20px rgba(0, 255, 65, 0.4))',
-            opacity: theme === 'light' || theme === 'monochrome-inverted' ? 0.2 : 0.3,
-            transform: `scale(${
-              isMobile
-                ? 0.9 - scrollProgress * 0.4 // Mobile: 0.9 to 0.5
-                : 1.4 - scrollProgress * 0.8 // Desktop: 1.4 to 0.6
-            }) translateX(${
-              isMobile
-                ? -30 - scrollProgress * 20 // Mobile: -30% to -50%
-                : -15 - scrollProgress * 25 // Desktop: -15% to -40%
-            }%) translateY(${isMobile ? '2%' : '5%'})`,
+            filter: glowFilter,
+            opacity: isLightish ? 0.2 : 0.3,
           }}
         />
       </div>

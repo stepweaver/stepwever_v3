@@ -38,14 +38,18 @@ function ProjectCarousel() {
   const desktopCarouselRef = useRef(null);
   const desktopContainerRef = useRef(null);
   const autoScrollIntervalRef = useRef(null);
+  const pauseTimeoutRef = useRef(null);
   const minSwipeDistance = 50;
 
   // Pause auto-scroll on user interaction - defined early so it can be used in handlers
   const handleUserInteraction = useCallback(() => {
     setIsPaused(true);
-    // Resume after 15 seconds of no interaction
-    setTimeout(() => {
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+    pauseTimeoutRef.current = setTimeout(() => {
       setIsPaused(false);
+      pauseTimeoutRef.current = null;
     }, 15000);
   }, []);
 
@@ -434,7 +438,12 @@ function ProjectCarousel() {
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+    };
   }, [getCardsPerPage]);
 
   // Calculate total pages for desktop

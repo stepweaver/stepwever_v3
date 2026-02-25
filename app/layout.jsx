@@ -152,30 +152,41 @@ export default function RootLayout({ children }) {
             __html: `
               (function() {
                 try {
-                  // Only run in browser environment
-                  if (typeof window === 'undefined' || typeof document === 'undefined') {
-                    return;
+                  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+                  var THEMES = ['dark','light','monochrome','monochrome-inverted','vintage','apple','c64','amber','synthwave','dracula','solarized','nord','cobalt'];
+                  var META_COLORS = {dark:'#0d1211',light:'#e5e5e5',monochrome:'#000000','monochrome-inverted':'#ffffff',vintage:'#000000',apple:'#000000',c64:'#40318d',amber:'#1a0f00',synthwave:'#0a0a14',dracula:'#282a36',solarized:'#002b36',nord:'#2e3440',cobalt:'#193549'};
+                  var COOLDOWN = 4 * 60 * 60 * 1000; // 4 hours
+
+                  var savedTheme = localStorage.getItem('theme');
+                  var manualPick = localStorage.getItem('themeManual') === '1';
+                  var lastRotation = parseInt(localStorage.getItem('lastThemeRotation') || '0', 10);
+                  var now = Date.now();
+
+                  var theme;
+                  if (manualPick && savedTheme && THEMES.indexOf(savedTheme) !== -1) {
+                    // User explicitly chose this theme -- respect it
+                    theme = savedTheme;
+                  } else if (!manualPick && (now - lastRotation > COOLDOWN || !savedTheme)) {
+                    // Enough time passed (or first visit) -- pick a random theme
+                    var pool = THEMES.filter(function(t) { return t !== savedTheme; });
+                    theme = pool[Math.floor(Math.random() * pool.length)];
+                    localStorage.setItem('theme', theme);
+                    localStorage.setItem('lastThemeRotation', String(now));
+                    localStorage.removeItem('themeManual');
+                  } else {
+                    theme = (savedTheme && THEMES.indexOf(savedTheme) !== -1) ? savedTheme : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                   }
-                  
-                  // Check for saved theme preference or default to system preference
-                  const savedTheme = localStorage.getItem('theme');
-                  const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-                  const theme = savedTheme || systemTheme;
-                  
-                  // Set the theme immediately to prevent flashing
+
                   document.documentElement.setAttribute('data-theme', theme);
-                  
-                  // Update meta tags for better mobile experience
-                  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-                  if (metaThemeColor) {
-                    const themeColor = theme === 'light' ? '#e5e5e5' : theme === 'monochrome' ? '#000000' : theme === 'monochrome-inverted' ? '#ffffff' : theme === 'vintage' ? '#000000' : theme === 'apple' ? '#000000' : theme === 'c64' ? '#40318d' : theme === 'amber' ? '#1a0f00' : theme === 'synthwave' ? '#0a0a14' : theme === 'dracula' ? '#282a36' : theme === 'solarized' ? '#002b36' : theme === 'nord' ? '#2e3440' : theme === 'cobalt' ? '#193549' : '#0d1211';
-                    metaThemeColor.setAttribute('content', themeColor);
+
+                  var metaThemeColor = document.querySelector('meta[name="theme-color"]');
+                  if (metaThemeColor && META_COLORS[theme]) {
+                    metaThemeColor.setAttribute('content', META_COLORS[theme]);
                   }
-                  
-                  // Add a class to prevent layout shift during theme transition
+
                   document.documentElement.classList.add('theme-loaded');
                 } catch (e) {
-                  // Fallback to dark theme if there's an error
                   if (typeof document !== 'undefined') {
                     document.documentElement.setAttribute('data-theme', 'dark');
                     document.documentElement.classList.add('theme-loaded');

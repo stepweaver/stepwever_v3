@@ -63,6 +63,17 @@ export default function ThemeToggle() {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleThemeSelect(themeValue);
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const options = dropdownRef.current?.querySelectorAll('.theme-grid-option');
+      if (!options) return;
+      const idx = Array.from(options).indexOf(e.currentTarget);
+      const next = e.key === 'ArrowDown'
+        ? options[(idx + 1) % options.length]
+        : options[(idx - 1 + options.length) % options.length];
+      next?.focus();
+    } else if (e.key === 'Escape') {
+      setIsOpen(false);
     }
   };
 

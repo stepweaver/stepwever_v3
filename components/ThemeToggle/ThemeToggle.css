@@ -159,7 +159,8 @@
   background: rgba(0, 0, 0, 0.95);
   animation: dropdown-fade-in 0.15s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  min-width: 140px;
+  min-width: 160px;
+  padding: 4px 0;
 }
 
 @keyframes dropdown-fade-in {
@@ -240,11 +241,12 @@
 
 /* Dropdown Option Items */
 .theme-grid-option {
-  @apply w-full px-3 py-2.5 text-left text-sm font-bold tracking-wide cursor-pointer flex items-center gap-2;
+  @apply w-full px-4 py-3 text-left text-sm font-bold tracking-wide cursor-pointer flex items-center gap-2;
   background: transparent;
   border: none;
   transition: all 0.15s ease;
   position: relative;
+  min-height: 40px;
 }
 
 .theme-grid-option:hover {
