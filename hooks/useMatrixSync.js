@@ -1,18 +1,27 @@
 import { useEffect, useState, useCallback } from 'react';
 
-const DEFAULT_GLYPHS = ['λ', 'ネ', 'ホ', 'ミ', 'ツ', '入'];
+const DEFAULT_GLYPHS = [
+  'ﾊ', 'ﾐ', 'ﾋ', 'ｰ', 'ｳ', 'ｼ', 'ﾅ', 'ﾓ', 'ﾆ', 'ｻ',
+  'ﾜ', 'ﾂ', 'ｵ', 'ﾘ', 'ｱ', 'ﾎ', 'ﾃ', 'ﾏ', 'ｹ', 'ﾒ',
+  'ｴ', 'ｶ', 'ｷ', 'ﾑ', 'ﾕ', 'ﾗ', 'ｾ', 'ﾈ', 'ｽ', 'ﾀ',
+];
+
+const randomHex = (len = 4) =>
+  Array.from({ length: len }, () =>
+    Math.floor(Math.random() * 16).toString(16)
+  ).join('');
 
 /**
- * Shared hook for the Matrix Sync terminal animation sequence.
- * Used by MatrixSync component and NeonProfileCard.
+ * Matrix uplink terminal animation — simulates a construct search that
+ * repeatedly fails because the target user is unplugged.
  *
  * @param {Object} options
  * @param {string[]} [options.glyphs] - Character set for matrix cells
- * @param {number} [options.cellCount] - Number of matrix cells (default: 6)
- * @returns {{ attempt, terminalOutput, matrixCells, showPrompt, isMounted }}
+ * @param {number}   [options.cellCount] - Number of matrix cells (default: 6)
+ * @returns {{ attempt, terminalOutput, matrixCells, showPrompt, isMounted, phase }}
  */
 export function useMatrixSync({ glyphs = DEFAULT_GLYPHS, cellCount = 6 } = {}) {
-  const createMatrixCells = useCallback(
+  const createCells = useCallback(
     () =>
       Array.from({ length: cellCount }, () =>
         [
@@ -23,6 +32,11 @@ export function useMatrixSync({ glyphs = DEFAULT_GLYPHS, cellCount = 6 } = {}) {
     [glyphs, cellCount]
   );
 
+  const createDimCells = useCallback(
+    () => Array.from({ length: cellCount }, () => '··'),
+    [cellCount]
+  );
+
   const [attempt, setAttempt] = useState(1);
   const [terminalOutput, setTerminalOutput] = useState('');
   const [matrixCells, setMatrixCells] = useState(
@@ -30,14 +44,13 @@ export function useMatrixSync({ glyphs = DEFAULT_GLYPHS, cellCount = 6 } = {}) {
   );
   const [showPrompt, setShowPrompt] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [phase, setPhase] = useState('idle');
 
-  // Hydration-safe: initialise cells only on client
   useEffect(() => {
     setIsMounted(true);
-    setMatrixCells(createMatrixCells());
-  }, [createMatrixCells]);
+    setMatrixCells(createCells());
+  }, [createCells]);
 
-  // Run the looping terminal sequence
   useEffect(() => {
     if (!isMounted) return;
 
@@ -46,48 +59,81 @@ export function useMatrixSync({ glyphs = DEFAULT_GLYPHS, cellCount = 6 } = {}) {
     let matrixIntervalId;
     let currentAttempt = 1;
 
-    const getRandomDelay = (base, variance) => base + Math.random() * variance;
+    const delay = (base, variance) => base + Math.random() * variance;
 
-    const runSequence = () => {
+    const scramble = (cycles, interval, onDone) => {
+      let count = 0;
+      matrixIntervalId = setInterval(() => {
+        setMatrixCells(createCells());
+        count++;
+        if (count >= cycles) {
+          clearInterval(matrixIntervalId);
+          onDone();
+        }
+      }, interval);
+    };
+
+    const run = () => {
       step++;
 
       if (step === 1) {
-        setTerminalOutput('connect user');
+        setPhase('init');
+        setTerminalOutput('INIT UPLINK');
         setAttempt(currentAttempt);
-        timeoutId = setTimeout(runSequence, getRandomDelay(1200, 400));
+        setShowPrompt(false);
+        timeoutId = setTimeout(run, delay(900, 300));
       } else if (step === 2) {
-        setTerminalOutput('handshake failed');
-        let cycleCount = 0;
-        matrixIntervalId = setInterval(() => {
-          setMatrixCells(createMatrixCells());
-          cycleCount++;
-          if (cycleCount >= 10) {
-            clearInterval(matrixIntervalId);
-            timeoutId = setTimeout(runSequence, getRandomDelay(600, 200));
-          }
-        }, 180);
+        setPhase('scan');
+        setTerminalOutput('SCANNING CONSTRUCT');
+        scramble(8, 150, () => {
+          timeoutId = setTimeout(run, delay(400, 200));
+        });
       } else if (step === 3) {
-        setTerminalOutput('user unplugged');
-        timeoutId = setTimeout(runSequence, getRandomDelay(1500, 500));
+        setPhase('trace');
+        setTerminalOutput(`TRACE 0x${randomHex(6)}`);
+        scramble(5, 120, () => {
+          timeoutId = setTimeout(run, delay(600, 200));
+        });
       } else if (step === 4) {
+        setPhase('lock');
+        setTerminalOutput('SIGNAL LOCK');
+        timeoutId = setTimeout(run, delay(500, 200));
+      } else if (step === 5) {
+        setPhase('fail');
+        setTerminalOutput('HANDSHAKE FAIL');
+        scramble(12, 100, () => {
+          timeoutId = setTimeout(run, delay(500, 200));
+        });
+      } else if (step === 6) {
+        setPhase('lost');
+        setTerminalOutput('CARRIER LOST');
+        setMatrixCells(createDimCells());
+        timeoutId = setTimeout(run, delay(1000, 400));
+      } else if (step === 7) {
+        setPhase('unplugged');
+        setTerminalOutput('USR UNPLUGGED');
+        timeoutId = setTimeout(run, delay(1500, 500));
+      } else if (step === 8) {
+        setPhase('idle');
         setTerminalOutput('');
         setShowPrompt(true);
-        timeoutId = setTimeout(runSequence, getRandomDelay(2000, 800));
-      } else if (step === 5) {
-        setTerminalOutput('');
+        timeoutId = setTimeout(run, delay(2000, 800));
+      } else {
         setShowPrompt(false);
+        setTerminalOutput('');
+        setMatrixCells(createCells());
         currentAttempt = currentAttempt >= 97 ? 1 : currentAttempt + 1;
         step = 0;
-        timeoutId = setTimeout(runSequence, getRandomDelay(400, 200));
+        timeoutId = setTimeout(run, delay(400, 200));
       }
     };
 
-    runSequence();
+    run();
     return () => {
       clearTimeout(timeoutId);
       clearInterval(matrixIntervalId);
     };
-  }, [isMounted, createMatrixCells]);
+  }, [isMounted, createCells, createDimCells]);
 
-  return { attempt, terminalOutput, matrixCells, showPrompt, isMounted };
+  return { attempt, terminalOutput, matrixCells, showPrompt, isMounted, phase };
 }

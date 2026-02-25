@@ -1528,6 +1528,11 @@ body::after {
   }
 }
 
+@keyframes matrix-sweep {
+  0%   { background-position: 0 -100%; }
+  100% { background-position: 0 200%; }
+}
+
 /* Subtle pulsating green glow animation for terminal */
 @keyframes pulseGlow {
   0%, 100% {
