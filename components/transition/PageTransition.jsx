@@ -3,8 +3,8 @@
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-const TRANSITION_PREFIXES = ['/codex'];
-const MIN_DISPLAY_MS = 1200;
+const TRANSITION_PREFIXES = ['/codex', '/meshtastic'];
+const MIN_DISPLAY_MS = 1800;
 const FADE_OUT_MS = 350;
 
 function shouldShowTransition(fromPath, toPath) {

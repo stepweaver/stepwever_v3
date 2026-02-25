@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getBlogEntryBySlug, getAllBlogEntries } from '@/lib/blog';
 import { getPageBlocks } from '@/lib/notion-blocks';
@@ -84,12 +85,12 @@ export default async function CodexPostPage({ params }) {
       <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 pb-16">
         <div className="max-w-4xl mx-auto">
           {/* Back nav */}
-          <a
+          <Link
             href="/codex"
             className="inline-flex items-center gap-2 mb-10 font-ocr text-xs tracking-[0.15em] uppercase text-neon/60 hover:text-neon transition-colors"
           >
             <span className="text-neon/40">&larr;</span> Back to Codex
-          </a>
+          </Link>
 
           <article>
             {/* Article header */}
@@ -123,13 +124,13 @@ export default async function CodexPostPage({ params }) {
               {entry.hashtags?.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-6">
                   {entry.hashtags.map((tag) => (
-                    <a
+                    <Link
                       key={tag}
                       href={`/codex?hashtag=${encodeURIComponent(tag)}`}
                       className="px-3 py-1 text-xs font-ocr tracking-wider uppercase border border-neon/30 text-text/70 rounded-sm hover:border-neon/70 hover:text-neon hover:bg-neon/10 transition-all duration-200"
                     >
                       #{tag}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}

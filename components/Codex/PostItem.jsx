@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 /**
  * Individual post entry for the Codex listing.
@@ -21,7 +22,7 @@ export default function PostItem({ post, index, formatDate, onHashtagClick }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href={`/codex/${post.slug}`} className="block py-6 sm:py-8">
+      <Link href={`/codex/${post.slug}`} className="block py-6 sm:py-8">
         {/* Index + date row */}
         <div className="flex items-center gap-3 mb-3">
           <span className="font-mono text-[10px] tracking-[0.25em] text-neon/40 uppercase">
@@ -72,7 +73,7 @@ export default function PostItem({ post, index, formatDate, onHashtagClick }) {
             ))}
           </div>
         )}
-      </a>
+      </Link>
 
       {/* Divider between posts */}
       <div className="h-px bg-neon/10" />

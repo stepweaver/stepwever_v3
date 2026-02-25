@@ -28,7 +28,7 @@ function CodexContent() {
       setLoading(true);
       setError(null);
       try {
-        const MIN_DISPLAY_MS = 1800;
+        const MIN_DISPLAY_MS = 2400;
         const start = Date.now();
         const res = await fetch('/api/codex');
         if (!res.ok) throw new Error('Failed to fetch content');
