@@ -115,7 +115,7 @@ export default function BookShowerPage() {
         className='fixed inset-0 w-full h-full flex items-center justify-center bg-background'
         style={{ zIndex: 9999 }}
       >
-        <div className='text-center max-w-md mx-auto p-8 border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl'>
+        <div className='text-center max-w-md mx-auto p-8 border border-neon/30 rounded-lg bg-panel/50 '>
           <p className='text-neon font-ocr text-base'>
             [ERROR] Error loading booking system: {error}
           </p>
@@ -130,7 +130,7 @@ export default function BookShowerPage() {
         className='fixed inset-0 w-full h-full flex items-center justify-center bg-background'
         style={{ zIndex: 9999 }}
       >
-        <div className='text-center max-w-md mx-auto p-8 border border-neon/30 rounded-lg bg-panel/50 backdrop-blur-xl'>
+        <div className='text-center max-w-md mx-auto p-8 border border-neon/30 rounded-lg bg-panel/50 '>
           <p className='text-neon font-ocr text-lg whitespace-pre-line'>
             {closedMessage}
           </p>

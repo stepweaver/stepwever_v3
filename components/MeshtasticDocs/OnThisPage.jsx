@@ -14,7 +14,7 @@ export default function OnThisPage({ headings }) {
       className="hidden xl:block min-w-64 max-w-80 flex-1 pt-8 sticky top-24 self-start border-l border-neon/20 pl-8 pr-4"
       aria-label="On this page"
     >
-      <div className="bg-panel/30 backdrop-blur-sm py-5 px-5 rounded-sm border border-neon/15">
+      <div className="bg-panel/30 py-5 px-5 rounded-sm border border-neon/15">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neon/70 mb-3 font-ocr">
           On this page
         </p>

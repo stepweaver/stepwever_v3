@@ -892,6 +892,21 @@
   }
 }
 
+@keyframes hudSlide {
+  0%   { left: -33%; }
+  100% { left: 100%; }
+}
+
+@keyframes hudLineIn {
+  0%   { opacity: 0; transform: translateX(-6px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes hudFadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 /* Base styles */
 html {
   /* Improve mobile scrolling performance */
@@ -1079,7 +1094,6 @@ html.theme-loaded {
   background: rgb(var(--panel) / 0.75);
   border: 1px solid rgb(var(--neon) / 0.20);
   box-shadow: 0 0 22px rgb(var(--neon) / 0.18);
-  backdrop-filter: blur(10px);
 
   /* chamfered corners */
   --c: 10px;
@@ -1413,7 +1427,6 @@ body::after {
   position: relative;
   border: 1.5px solid rgba(90, 255, 140, 0.35);
   background: rgba(14, 18, 28, 0.6);
-  backdrop-filter: blur(12px);
   clip-path: polygon(
     12px 0%,
     calc(100% - 12px) 0%,

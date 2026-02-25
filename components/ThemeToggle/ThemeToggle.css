@@ -157,7 +157,6 @@
 .theme-grid-menu {
   @apply absolute top-full right-0 mt-2 rounded overflow-hidden z-50;
   background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(16px);
   animation: dropdown-fade-in 0.15s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   min-width: 140px;

@@ -56,7 +56,7 @@ export default function MeshtasticDocsMobileNav({ grouped, currentSlug, currentS
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="lg:hidden flex items-center gap-2 px-3 py-2 rounded-sm border border-neon/25 bg-panel/50 backdrop-blur text-neon/90 hover:text-neon hover:bg-panel/70 hover:border-neon/40 transition-colors font-ocr text-xs uppercase tracking-[0.2em]"
+        className="lg:hidden flex items-center gap-2 px-3 py-2 rounded-sm border border-neon/25 bg-panel/50 text-neon/90 hover:text-neon hover:bg-panel/70 hover:border-neon/40 transition-colors font-ocr text-xs uppercase tracking-[0.2em]"
         aria-label="Open docs navigation"
         aria-expanded={open}
       >
@@ -82,7 +82,7 @@ export default function MeshtasticDocsMobileNav({ grouped, currentSlug, currentS
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[9998] bg-black/60 lg:hidden"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />

@@ -100,7 +100,7 @@ const JumpToTerminalButton = () => {
   return (
     <button
       onClick={scrollToTerminal}
-      className='xl:hidden w-full mt-6 py-3 px-4 border-2 border-neon rounded-sm bg-panel/50 backdrop-blur-xl hover:bg-neon/10 text-neon font-ocr text-sm transition-all duration-200 flex items-center justify-center gap-2'
+      className='xl:hidden w-full mt-6 py-3 px-4 border-2 border-neon rounded-sm bg-panel/50  hover:bg-neon/10 text-neon font-ocr text-sm transition-all duration-200 flex items-center justify-center gap-2'
       aria-label='Jump to terminal'
     >
       <TerminalIcon className='w-4 h-4' />
@@ -189,7 +189,7 @@ export default function TerminalPage() {
                     return (
                       <div
                         key={card.title}
-                        className='rounded-sm bg-panel/50 backdrop-blur-xl p-4 space-y-2'
+                        className='rounded-sm bg-panel/50  p-4 space-y-2'
                       >
                         <div className='flex items-center gap-2'>
                           <Icon className='w-4 h-4 text-neon' />
@@ -213,7 +213,7 @@ export default function TerminalPage() {
                     {TERMINAL_COPY.usage.steps.map((step, idx) => (
                       <li
                         key={idx}
-                        className='border border-neon/20 rounded-sm bg-panel/50 backdrop-blur-xl p-3 leading-relaxed'
+                        className='border border-neon/20 rounded-sm bg-panel/50  p-3 leading-relaxed'
                       >
                         {step}
                       </li>
@@ -233,7 +233,7 @@ export default function TerminalPage() {
                     {COMMAND_GUIDE.map((item) => (
                       <div
                         key={item.command}
-                        className='rounded-sm bg-panel/50 backdrop-blur-xl p-3 font-ocr text-xs text-text/85'
+                        className='rounded-sm bg-panel/50  p-3 font-ocr text-xs text-text/85'
                       >
                         <p className='text-neon'>
                           <span className='font-ibm text-sm'>

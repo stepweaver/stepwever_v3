@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getHeadingsFromBlocks } from '@/lib/meshtastic-docs-headings';
+import NotionImage from '@/components/NotionImage';
 
 /**
  * Render a single Notion rich_text segment (bold, italic, code, link).
@@ -67,6 +68,88 @@ export default function NotionBlockBody({ blocks }) {
   function renderSingleBlock(block, key) {
     if (!block?.type) return null;
 
+    if (block.type === 'table' && block.table) {
+      const rows = Array.isArray(block.children) ? block.children : [];
+      if (!rows.length) {
+        return (
+          <div key={key} className="opacity-70 text-sm rounded-sm p-2 my-2 font-ocr bg-panel/30">
+            <span className="mr-1">Table:</span>
+            <span className="text-text/80">No rows found.</span>
+          </div>
+        );
+      }
+
+      const hasColumnHeader = !!block.table.has_column_header;
+      const hasRowHeader = !!block.table.has_row_header;
+      const firstRowCells = rows[0]?.table_row?.cells || [];
+      const columnCount = firstRowCells.length;
+
+      // Heuristic: 2-column tables are usually spec/definition tables.
+      // Render them as responsive cards instead of a cramped grid.
+      if (columnCount === 2) {
+        const bodyRows = hasColumnHeader ? rows.slice(1) : rows;
+
+        return (
+          <div
+            key={key}
+            className="my-4 grid gap-3 md:grid-cols-2"
+          >
+            {bodyRows.map((row, rowIndex) => {
+              const cells = row.table_row?.cells || [];
+              const [labelCell = [], valueCell = []] = cells;
+              return (
+                <div
+                  key={row.id || rowIndex}
+                  className="border border-neon/25 rounded-sm bg-panel/40 px-3 py-2"
+                >
+                  <div className="text-[0.65rem] font-ocr tracking-[0.18em] text-neon/70 uppercase mb-0.5">
+                    <RichText richText={labelCell} />
+                  </div>
+                  <div className="text-xs sm:text-sm text-text/90 font-ibm leading-snug">
+                    <RichText richText={valueCell} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      }
+
+      // Fallback: generic table rendering for wider data sets.
+      return (
+        <div key={key} className="my-4 overflow-x-auto">
+          <table className="min-w-full border-collapse text-sm text-text/90 font-ibm">
+            <tbody>
+              {rows.map((row, rowIndex) => {
+                const cells = row.table_row?.cells || [];
+                const isHeaderRow = hasColumnHeader && rowIndex === 0;
+                const RowCellTag = isHeaderRow ? 'th' : 'td';
+
+                return (
+                  <tr key={row.id || rowIndex} className="border-b border-neon/10 last:border-b-0">
+                    {cells.map((cell, cellIndex) => {
+                      const isRowHeader = hasRowHeader && cellIndex === 0;
+                      const CellTag = isRowHeader ? 'th' : RowCellTag;
+                      return (
+                        <CellTag
+                          key={cellIndex}
+                          className={`px-3 py-2 align-top text-left border-r border-neon/10 last:border-r-0 ${
+                            isHeaderRow || isRowHeader ? 'font-semibold text-text' : 'text-text/90'
+                          }`}
+                        >
+                          <RichText richText={cell} />
+                        </CellTag>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+
     if (block.type === 'paragraph' && block.paragraph?.rich_text) {
       const textParts = block.paragraph.rich_text;
       if (textParts.length === 0) return <div key={key} className="h-4" aria-hidden />;
@@ -132,7 +215,7 @@ export default function NotionBlockBody({ blocks }) {
     if (block.type === 'callout' && block.callout?.rich_text) {
       const icon = block.callout.icon?.emoji ?? '\u2139\uFE0F';
       return (
-        <div key={key} className="rounded-sm p-4 my-4 flex gap-3 bg-panel/40 backdrop-blur-sm">
+        <div key={key} className="rounded-sm p-4 my-4 flex gap-3 bg-panel/40">
           <span className="shrink-0" aria-hidden>{icon}</span>
           <div className="text-text leading-relaxed min-w-0 font-ibm">
             <RichText richText={block.callout.rich_text} />
@@ -147,14 +230,13 @@ export default function NotionBlockBody({ blocks }) {
       const caption = img.caption?.length ? img.caption.map((t) => t.plain_text).join('') : '';
       if (!url) return null;
       return (
-        <figure key={key} className="my-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {/* Notion file-type image URLs are temporary (~1 hr). revalidate=60 limits
-              exposure, but consider proxying via Next Image or using external URLs
-              in Notion for long-lived links. */}
-          <img src={url} alt={caption || 'Notion image'} className="max-w-full h-auto rounded-sm border border-neon/20 shadow-neon-sm" />
-          {caption ? <figcaption className="mt-2 text-sm text-text/60 font-ocr">{caption}</figcaption> : null}
-        </figure>
+        <NotionImage
+          key={key}
+          src={url}
+          blockId={block.id}
+          alt={caption || 'Notion image'}
+          caption={caption}
+        />
       );
     }
 

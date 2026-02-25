@@ -106,7 +106,7 @@ export default async function FieldNotesPage() {
           >
             <div className="flex flex-col xl:flex-row xl:gap-12 w-full px-4 sm:px-6 lg:px-8 pb-16">
               <div className="flex-1 min-w-0">
-                <article className="border-0 rounded-md bg-panel/40 backdrop-blur-sm overflow-hidden lg:border lg:border-neon/20">
+                <article className="border-0 rounded-md bg-panel/40 overflow-hidden lg:border lg:border-neon/20">
                   <header className="border-b border-neon/10 lg:border-neon/20 px-5 sm:px-6 lg:px-8 py-6">
                     <h1 className="text-2xl sm:text-3xl font-semibold text-text font-ibm">
                       Field Notes

@@ -16,7 +16,7 @@ export default function MeshtasticDocsLayout({
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left sidebar: sticky nav rail, docs-style border */}
-      <div className="hidden lg:block lg:w-64 xl:w-72 lg:flex-shrink-0 lg:sticky lg:top-16 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-r lg:border-neon/20 lg:bg-panel/30 lg:backdrop-blur-sm">
+      <div className="hidden lg:block lg:w-64 xl:w-72 lg:flex-shrink-0 lg:sticky lg:top-16 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-r lg:border-neon/20 lg:bg-panel/30">
         <MeshtasticDocsSidebar
           grouped={grouped}
           currentSlug={currentSlug}

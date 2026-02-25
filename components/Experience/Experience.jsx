@@ -255,7 +255,7 @@ function Experience() {
               return (
                 <div
                   key={tech.name}
-                  className='group flex flex-col items-center justify-center p-3 border border-neon/30 rounded-sm bg-panel/50 backdrop-blur-xl transition-all duration-500 hover:border-neon hover:bg-neon/10 min-w-24 w-auto h-auto min-h-24 hover:-translate-y-0.5'
+                  className='group flex flex-col items-center justify-center p-3 border border-neon/30 rounded-sm bg-panel/50 transition-all duration-500 hover:border-neon hover:bg-neon/10 min-w-24 w-auto h-auto min-h-24 hover:-translate-y-0.5'
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <div className='mb-1 flex items-center justify-center w-12 h-12'>

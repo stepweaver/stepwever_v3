@@ -38,7 +38,7 @@ export default async function MeshtasticDocsIndex() {
     <div className="min-h-screen relative">
       <BackgroundCanvas />
       <div className="relative z-10 flex items-center justify-center min-h-[60vh] px-4">
-        <div className="max-w-2xl rounded-sm bg-panel/50 backdrop-blur p-8 shadow-neon-sm">
+        <div className="max-w-2xl rounded-sm bg-panel/50 p-8 shadow-neon-sm">
           <div className="flex items-start justify-between gap-4 mb-3">
             <p className="text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase">STATUS</p>
             <div className="text-right text-xs text-muted font-mono shrink-0">

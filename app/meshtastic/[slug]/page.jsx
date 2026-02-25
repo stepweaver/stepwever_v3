@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
   getDocBySlug,
@@ -105,13 +106,21 @@ export default async function MeshtasticDocPage({ params }) {
           <div className="flex flex-col xl:flex-row xl:gap-12 w-full px-4 sm:px-6 lg:px-8 pb-16">
             {/* Mobile: Docs menu and On this page as separate, independent controls */}
             <div className="xl:hidden space-y-3 mb-6">
-              <div>
+              <div className="flex gap-3">
                 <MeshtasticDocsMobileNav
                   grouped={grouped}
                   currentSlug={doc.slug}
                   currentSection={doc.section}
                   hasFieldNotes={hasFieldNotes}
                 />
+                {hasFieldNotes && (
+                  <Link
+                    href="/meshtastic/field-notes"
+                    className="inline-flex items-center justify-center px-3 py-2 rounded-sm border border-neon/25 bg-panel/50 text-neon/90 hover:text-neon hover:bg-panel/70 hover:border-neon/40 transition-colors font-ocr text-xs uppercase tracking-[0.2em]"
+                  >
+                    Field Notes
+                  </Link>
+                )}
               </div>
               <div>
                 <MeshtasticDocsDropdown headings={headings} className="w-full" />
@@ -120,7 +129,7 @@ export default async function MeshtasticDocPage({ params }) {
 
             {/* Main doc content: bordered on desktop only; mobile = less borders */}
             <div className="flex-1 min-w-0">
-              <article className="border-0 rounded-md bg-panel/40 backdrop-blur-sm overflow-hidden lg:border lg:border-neon/20">
+              <article className="border-0 rounded-md bg-panel/40 overflow-hidden lg:border lg:border-neon/20">
                 <header className="border-b border-neon/10 lg:border-neon/20 px-5 sm:px-6 lg:px-8 py-6">
                   {doc.section && doc.section.toLowerCase() !== doc.title?.toLowerCase() && (
                     <p className="text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-1">

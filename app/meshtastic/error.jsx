@@ -7,7 +7,7 @@
 export default function MeshtasticError({ error, reset }) {
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <div className="max-w-md rounded-xl bg-panel/60 backdrop-blur p-8 text-center ring-1 ring-danger/20">
+      <div className="max-w-md rounded-xl bg-panel/60 p-8 text-center ring-1 ring-danger/20">
         <p className="text-danger font-semibold text-lg mb-2">
           Something went wrong
         </p>

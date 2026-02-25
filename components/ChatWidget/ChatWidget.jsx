@@ -64,7 +64,7 @@ export default function ChatWidget() {
           type='button'
           aria-label='Close chat'
           onClick={toggleOpen}
-          className='fixed inset-0 z-[90] backdrop-blur-md bg-black/30 cursor-pointer'
+          className='fixed inset-0 z-[90] bg-black/30 cursor-pointer'
         />
       )}
       {/* Chat Widget Container */}

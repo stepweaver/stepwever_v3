@@ -77,7 +77,7 @@ const JumpToDiceButton = () => {
   return (
     <button
       onClick={scrollToDice}
-      className='xl:hidden w-full mt-6 py-3 px-4 cyber-border-sm cyber-border-cyan bg-terminal-dark/30 backdrop-blur-xl hover:bg-terminal-dark/50 text-terminal-cyan font-ocr text-sm transition-all duration-200 hover:border-terminal-cyan hover:shadow-[0_0_15px_rgba(0,255,255,0.3)] flex items-center justify-center gap-2'
+      className='xl:hidden w-full mt-6 py-3 px-4 cyber-border-sm cyber-border-cyan bg-terminal-dark/30  hover:bg-terminal-dark/50 text-terminal-cyan font-ocr text-sm transition-all duration-200 hover:border-terminal-cyan hover:shadow-[0_0_15px_rgba(0,255,255,0.3)] flex items-center justify-center gap-2'
       aria-label='Jump to dice roller'
     >
       <Dices className='w-4 h-4' />
@@ -119,7 +119,7 @@ export default function DiceRollerPage() {
                     {DICE_ROLLER_COPY.hero.subtitle}
                   </p>
                 </div>
-                <div className='relative cyber-border cyber-border-cyan bg-terminal-dark/20 backdrop-blur-xl px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,255,0.15)]'>
+                <div className='relative cyber-border cyber-border-cyan bg-terminal-dark/20  px-5 sm:px-8 py-4 font-ocr text-sm sm:text-base text-terminal-text/90 shadow-[0_0_30px_rgba(0,255,255,0.15)]'>
                   <span>{DICE_ROLLER_COPY.hero.ribbon}</span>
                   <span
                     className='absolute inset-y-0 left-0 w-1 bg-terminal-cyan/80'
@@ -146,7 +146,7 @@ export default function DiceRollerPage() {
                       return (
                         <div
                           key={card.title}
-                          className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-4 space-y-2'
+                          className='cyber-border cyber-border-border bg-terminal-dark/30  p-4 space-y-2'
                         >
                           <div className='flex items-center gap-2'>
                             <Icon className='w-4 h-4 text-terminal-cyan' />
@@ -170,7 +170,7 @@ export default function DiceRollerPage() {
                       {DICE_ROLLER_COPY.usage.steps.map((step, idx) => (
                         <li
                           key={idx}
-                          className='cyber-border-sm cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-3 leading-relaxed'
+                          className='cyber-border-sm cyber-border-border bg-terminal-dark/30  p-3 leading-relaxed'
                         >
                           {step}
                         </li>
@@ -190,7 +190,7 @@ export default function DiceRollerPage() {
                       {KEYBOARD_GUIDE.map((item) => (
                         <div
                           key={item.key}
-                          className='cyber-border cyber-border-border bg-terminal-dark/30 backdrop-blur-xl p-3 font-ocr text-xs text-terminal-text/85'
+                          className='cyber-border cyber-border-border bg-terminal-dark/30  p-3 font-ocr text-xs text-terminal-text/85'
                         >
                           <p className='text-terminal-cyan'>
                             <span className='font-ibm text-sm px-2 py-1 bg-terminal-dark cyber-border-sm cyber-border-cyan'>
@@ -207,7 +207,7 @@ export default function DiceRollerPage() {
 
                 <aside
                   id='dice-roller-section'
-                  className='cyber-border cyber-border-cyan bg-terminal-dark/30 backdrop-blur-xl p-4 md:p-6 animate-pulse-glow overflow-x-hidden max-w-full'
+                  className='cyber-border cyber-border-cyan bg-terminal-dark/30  p-4 md:p-6 animate-pulse-glow overflow-x-hidden max-w-full'
                 >
                   <p className='font-ocr text-sm text-terminal-text/70 mb-4'>
                     Click dice to add to your pool. Use modifiers and notes as needed.

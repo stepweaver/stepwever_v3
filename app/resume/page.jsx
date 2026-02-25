@@ -150,7 +150,7 @@ export default function ResumePage() {
                 <a
                   href='/weaver_resume.pdf'
                   download='weaver_resume.pdf'
-                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-sm bg-panel/50 backdrop-blur-xl text-neon font-ibm hover:bg-neon/10 transition-all duration-200 self-start'
+                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-sm bg-panel/50  text-neon font-ibm hover:bg-neon/10 transition-all duration-200 self-start'
                 >
                   <Download className='w-5 h-5' />
                   Download PDF
@@ -281,7 +281,7 @@ export default function ResumePage() {
               <div className='flex flex-col sm:flex-row gap-4 items-start'>
                 <a
                   href='/contact'
-                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-sm bg-panel/50 backdrop-blur-xl text-neon font-ibm hover:bg-neon/10 transition-all duration-200'
+                  className='inline-flex items-center gap-2 px-6 py-3 border-2 border-neon rounded-sm bg-panel/50  text-neon font-ibm hover:bg-neon/10 transition-all duration-200'
                 >
                   Get in Touch
                 </a>
@@ -289,7 +289,7 @@ export default function ResumePage() {
                   href='https://github.com/stepweaver'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='inline-flex items-center gap-2 px-6 py-3 border border-neon/30 rounded-sm bg-panel/50 backdrop-blur-xl text-text font-ibm hover:bg-neon/10 hover:text-neon hover:border-neon transition-all duration-200'
+                  className='inline-flex items-center gap-2 px-6 py-3 border border-neon/30 rounded-sm bg-panel/50  text-text font-ibm hover:bg-neon/10 hover:text-neon hover:border-neon transition-all duration-200'
                 >
                   <SiGithub className='w-5 h-5' />
                   View GitHub

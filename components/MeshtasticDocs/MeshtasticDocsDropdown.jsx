@@ -25,7 +25,7 @@ export default function MeshtasticDocsDropdown({ headings = [], className = '' }
   return (
     <details
       id={DROPDOWN_ID}
-      className={`group lg:hidden rounded-sm border border-neon/25 bg-panel/50 backdrop-blur ${className}`}
+      className={`group lg:hidden rounded-sm border border-neon/25 bg-panel/50 ${className}`}
     >
       <summary className="list-none cursor-pointer flex items-center justify-between gap-2 px-3 py-2 text-neon/90 hover:text-neon transition-colors font-ocr text-xs uppercase tracking-[0.2em]">
         <span>On this page</span>

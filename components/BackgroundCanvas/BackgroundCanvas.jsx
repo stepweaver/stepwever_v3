@@ -425,12 +425,12 @@ export default function BackgroundCanvas() {
       sprites = [];
 
       const isMobileCircuit = W < 768;
-      const cell = isMobileCircuit ? (140 + Math.floor(Math.random() * 40)) : (100 + Math.floor(Math.random() * 30));
+      const cell = isMobileCircuit ? (100 + Math.floor(Math.random() * 30)) : (70 + Math.floor(Math.random() * 20));
       const cols = Math.ceil(W / cell) + 2;
       const rows = Math.ceil(H / cell) + 2;
 
       // Place nodes on a jittered grid
-      const fillRate = isMobileCircuit ? 0.4 : 0.55;
+      const fillRate = isMobileCircuit ? 0.55 : 0.7;
       for (let r = -1; r < rows; r++) {
         for (let c = -1; c < cols; c++) {
           if (Math.random() > fillRate) continue;
@@ -459,11 +459,11 @@ export default function BackgroundCanvas() {
 
         let added = 0;
         for (const { j } of cands) {
-          if (added >= (isMobileCircuit ? 2 : 3)) break;
+          if (added >= (isMobileCircuit ? 3 : 5)) break;
           const key = `${i}-${j}`;
           if (edgeSet.has(key)) continue;
           // Limit max connections per node to keep it clean
-          const maxConn = isMobileCircuit ? 3 : 4;
+          const maxConn = isMobileCircuit ? 4 : 6;
           if (nodes[i].edges.length >= maxConn || nodes[j].edges.length >= maxConn) continue;
           edgeSet.add(key);
 
@@ -479,8 +479,8 @@ export default function BackgroundCanvas() {
 
       // Spawn data sprites
       if (edges.length === 0) return;
-      const spriteRatio = isMobileCircuit ? 0.2 : 0.3;
-      const count = Math.max(4, Math.min(isMobileCircuit ? 15 : 40, Math.floor(edges.length * spriteRatio)));
+      const spriteRatio = isMobileCircuit ? 0.35 : 0.5;
+      const count = Math.max(8, Math.min(isMobileCircuit ? 30 : 80, Math.floor(edges.length * spriteRatio)));
       for (let i = 0; i < count; i++) sprites.push(newSprite());
     }
 

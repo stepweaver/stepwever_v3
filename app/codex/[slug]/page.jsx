@@ -78,57 +78,67 @@ export default async function CodexPostPage({ params }) {
     notFound();
   }
 
-  const typeColor = 'var(--neon)';
-
   return (
     <div className="min-h-screen relative">
       <BackgroundCanvas />
-      <div className="relative z-10 p-4">
+      <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 pb-16">
         <div className="max-w-4xl mx-auto">
+          {/* Back nav */}
           <a
             href="/codex"
-            className="inline-block mb-8 transition-colors text-terminal-green hover:text-terminal-white"
+            className="inline-flex items-center gap-2 mb-10 font-ocr text-xs tracking-[0.15em] uppercase text-neon/60 hover:text-neon transition-colors"
           >
-            ← Back to Codex
+            <span className="text-neon/40">&larr;</span> Back to Codex
           </a>
 
-          <article className="mb-12">
-            <header className="mb-8">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-terminal-green">
+          <article>
+            {/* Article header */}
+            <header className="mb-10">
+              {/* Meta row */}
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-mono text-[10px] tracking-[0.25em] text-neon/40 uppercase">
+                  CODEX // ENTRY
+                </span>
+                <span className="font-ocr text-xs text-text/40 tracking-wide">
+                  {formatDate(entry.date)}
+                  {entry.updated && entry.updated !== entry.date && (
+                    <span className="text-neon/50 ml-2">Updated: {formatDate(entry.updated)}</span>
+                  )}
+                </span>
+              </div>
+
+              {/* Title */}
+              <h1 className="font-ibm text-3xl sm:text-4xl md:text-5xl font-bold text-text uppercase tracking-wide leading-tight mb-4">
                 {entry.title || 'Untitled'}
               </h1>
 
-              <div className="text-terminal-text text-lg mb-4 space-y-1">
-                <div>Published: {formatDate(entry.date)}</div>
-                {entry.updated && entry.updated !== entry.date && (
-                  <div className="text-terminal-green">Updated: {formatDate(entry.updated)}</div>
-                )}
-              </div>
-
+              {/* Description */}
               {entry.description && (
-                <p className="text-terminal-text text-xl leading-relaxed mb-6">{entry.description}</p>
+                <p className="font-ocr text-sm text-text/60 leading-relaxed mb-5 max-w-2xl">
+                  {entry.description}
+                </p>
               )}
 
+              {/* Hashtags */}
               {entry.hashtags?.length > 0 && (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {entry.hashtags.map((tag) => (
                     <a
                       key={tag}
                       href={`/codex?hashtag=${encodeURIComponent(tag)}`}
-                      className="px-3 py-1 text-sm rounded font-medium transition-colors duration-200 cursor-pointer hashtag-hover"
-                      style={{
-                        backgroundColor: `color-mix(in srgb, ${typeColor} 10%, transparent)`,
-                        color: 'var(--color-terminal-text)',
-                        border: `1px solid color-mix(in srgb, ${typeColor} 30%, transparent)`,
-                      }}
+                      className="px-3 py-1 text-xs font-ocr tracking-wider uppercase border border-neon/30 text-text/70 rounded-sm hover:border-neon/70 hover:text-neon hover:bg-neon/10 transition-all duration-200"
                     >
                       #{tag}
                     </a>
                   ))}
                 </div>
               )}
+
+              {/* Divider before content */}
+              <div className="h-px bg-neon/10" />
             </header>
 
+            {/* Article content */}
             {blocks.length > 0 && (
               <div className="prose prose-invert prose-lg max-w-none">
                 <NotionBlockBody blocks={blocks} />
