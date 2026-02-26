@@ -2101,6 +2101,34 @@ picture {
   -ms-user-select: none;
 }
 
+/* ── Cyberpunk scrollbars ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--neon) / 0.35) rgb(var(--panel) / 0.5);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(var(--panel) / 0.5);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--neon) / 0.35);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--neon) / 0.55);
+}
+
+*::-webkit-scrollbar-corner {
+  background: rgb(var(--panel) / 0.5);
+}
+
 /* ── Reduced motion: kill all animations & transitions ── */
 @media (prefers-reduced-motion: reduce) {
   *,
