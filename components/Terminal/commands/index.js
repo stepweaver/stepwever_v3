@@ -3,6 +3,7 @@ import { handleNavigationCommand } from '../data/navigation.js';
 import { fetchWeather, fetchWeatherWithGeolocation } from '../data/weather.js';
 import { displayContactForm } from '../data/content.js';
 import { handleZorkCommand, startZorkGame, getZorkGameState } from '../data/zork.js';
+import { handleBlackjackCommand, startBlackjackGame, getBlackjackGameState } from '../data/blackjack.js';
 import { handleCodexCommand, startCodexMode, isCodexModeActive } from '../data/codex.js';
 import { handleResumeCommand, startResumeMode, isInResumeMode } from '../data/resume.js';
 import { roll, formatRollResult, parseDiceNotation } from '@/lib/roller.js';
@@ -21,8 +22,14 @@ export const handleCommand = async (
   // Check if we're in Zork mode first
   const zorkGameState = getZorkGameState();
   if (zorkGameState.isActive) {
-    // Handle Zork commands
     handleZorkCommand(trimmedCommand, callback);
+    return [];
+  }
+
+  // Check if we're in Blackjack mode
+  const blackjackState = getBlackjackGameState();
+  if (blackjackState.isActive) {
+    handleBlackjackCommand(trimmedCommand, callback);
     return [];
   }
 
@@ -64,6 +71,7 @@ export const handleCommand = async (
         `<span class="text-terminal-text">contact - Send a message to Stephen</span>`,
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
+        `<span class="text-terminal-text">blackjack - Play Blackjack (hit, stand, score)</span>`,
         `<span class="text-terminal-text">zork - Play ZORK I: The Great Underground Empire</span>`
       ];
 
@@ -129,6 +137,11 @@ export const handleCommand = async (
 
     case 'clear':
       // System clear command - handled directly in Terminal component
+      return [];
+
+    case 'blackjack':
+    case 'bj':
+      startBlackjackGame(callback);
       return [];
 
     case 'zork':

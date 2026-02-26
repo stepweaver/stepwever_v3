@@ -426,7 +426,7 @@ const Terminal = forwardRef((props, ref) => {
   return (
     <div
       ref={containerRef}
-      className={`h-full overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm-normal leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
+      className={`h-full min-w-0 overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm-normal leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
       onClick={focusInput}
       role='application'
       aria-label='Terminal interface'
@@ -447,7 +447,7 @@ const Terminal = forwardRef((props, ref) => {
       </div>
 
       <div
-        className='terminal-content'
+        className='terminal-content min-w-0'
         onClick={handleContentClick}
         role='log'
         aria-label='Terminal output'
@@ -462,9 +462,9 @@ const Terminal = forwardRef((props, ref) => {
           ))}
         </div>
 
-        <div className='terminal-prompt' role='status' aria-live='polite'>
+        <div className='terminal-prompt min-w-0 break-words' role='status' aria-live='polite'>
           <div
-            className={`text-terminal-green mb-1 ${styles.crtText}`}
+            className={`text-terminal-green mb-1 break-words ${styles.crtText}`}
             aria-label='Current path'
           >
             user@stepweaver.dev {getPromptPath()}

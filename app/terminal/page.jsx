@@ -50,6 +50,7 @@ const COMMAND_GUIDE = [
   { command: 'resume', summary: 'View experience' },
   { command: 'chat <msg>', summary: 'Talk to LLM' },
   { command: 'codex', summary: 'Browse content' },
+  { command: 'blackjack', summary: 'Play Blackjack' },
   { command: 'contact', summary: 'Send message' },
   { command: 'clear', summary: 'Clear screen' },
 ];
@@ -246,7 +247,7 @@ export default function TerminalPage() {
           {/* ── Terminal Section ── */}
           <section
             id='terminal-section'
-            className='flex-1 min-h-0 flex flex-col'
+            className='flex-1 min-h-0 min-w-0 flex flex-col overflow-hidden'
           >
             {/* Terminal chrome header */}
             <div className='shrink-0 bg-panel/50 border-b border-neon/20 px-4 py-2 flex items-center justify-between'>
