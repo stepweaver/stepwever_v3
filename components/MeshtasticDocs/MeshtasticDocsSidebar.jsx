@@ -58,24 +58,16 @@ export default function MeshtasticDocsSidebar({
                 </span>
               </summary>
               <ul className='pb-2 pl-2 space-y-0.5'>
-                {pages
-                  .filter(
-                    (p, i, arr) =>
-                      arr.findIndex((x) => x.slug === p.slug) === i
-                  )
-                  .map((p) => {
-                    const active = p.slug === currentSlug;
-                    return (
-                      <li key={p.id}>
-                        <Link
-                          href={`/meshtastic/${p.slug}`}
-                          className={getLinkClass(active)}
-                        >
-                          {p.title}
-                        </Link>
-                      </li>
-                    );
-                  })}
+                {pages.map((p) => (
+                  <li key={p.id}>
+                    <Link
+                      href={`/meshtastic/${p.slug}`}
+                      className={getLinkClass(p.slug === currentSlug)}
+                    >
+                      {p.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </details>
           );

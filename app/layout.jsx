@@ -224,10 +224,10 @@ export default function RootLayout({ children }) {
           crossOrigin='anonymous'
         />
 
-        {/* Preload LCP image for better performance - WebP only (PNG is fallback) */}
+        {/* Preload LCP image - BackgroundCanvas uses this on homepage */}
         <link
           rel='preload'
-          href='/images/screely-lambda.webp'
+          href='/images/lambda_stepweaver.webp'
           as='image'
           type='image/webp'
           fetchPriority='high'

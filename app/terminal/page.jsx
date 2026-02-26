@@ -58,7 +58,7 @@ function SidebarPanel({ children, label, className = '' }) {
   return (
     <div className={`hud-panel p-3 ${className}`}>
       {label && (
-        <p className='font-ocr text-[9px] tracking-[0.25em] text-neon/45 uppercase mb-2'>
+        <p className='font-ocr text-xs tracking-[0.25em] text-neon/45 uppercase mb-2'>
           {label}
         </p>
       )}
@@ -78,7 +78,7 @@ function MobileBriefBar() {
       >
         <div className='flex items-center gap-2'>
           <Command className='w-3 h-3 text-neon/50' />
-          <span className='font-ocr text-[10px] tracking-[0.2em] text-neon/50 uppercase'>
+          <span className='font-ocr text-xs tracking-[0.2em] text-neon/50 uppercase'>
             System modules
           </span>
         </div>
@@ -101,10 +101,10 @@ function MobileBriefBar() {
                 >
                   <Icon className='w-3 h-3 text-neon/60 shrink-0' />
                   <div className='min-w-0'>
-                    <p className='font-ibm text-[10px] text-neon/80 truncate'>
+                    <p className='font-ibm text-xs text-neon/80 truncate'>
                       {mod.title}
                     </p>
-                    <p className='font-mono text-[9px] text-accent/40'>
+                    <p className='font-mono text-xs text-accent/40'>
                       {mod.cmd}
                     </p>
                   </div>
@@ -115,7 +115,7 @@ function MobileBriefBar() {
           <div className='w-full h-px bg-gradient-to-r from-neon/15 via-neon/8 to-transparent' />
           <div className='grid grid-cols-2 gap-x-4 gap-y-1.5 px-1'>
             {COMMAND_GUIDE.map((item) => (
-              <span key={item.command} className='font-ocr text-[9px]'>
+              <span key={item.command} className='font-ocr text-xs'>
                 <span className='text-neon/60'>{item.command}</span>
                 <span className='text-text/30'> — {item.summary}</span>
               </span>
@@ -145,7 +145,7 @@ export default function TerminalPage() {
         <header className='shrink-0 border-b border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-2 flex items-center justify-between gap-4'>
           <div className='flex items-center gap-2.5'>
             <TerminalIcon className='w-3.5 h-3.5 text-neon/60' />
-            <span className='font-ocr text-[10px] tracking-[0.3em] text-neon/50 uppercase'>
+            <span className='font-ocr text-xs tracking-[0.3em] text-neon/50 uppercase'>
               TERM-00
             </span>
             <span className='text-neon/15 hidden sm:inline'>│</span>
@@ -154,7 +154,7 @@ export default function TerminalPage() {
             </span>
           </div>
           <div className='flex items-center gap-2.5'>
-            <span className='font-ocr text-[10px] text-neon/35 hidden sm:inline'>
+            <span className='font-ocr text-xs text-neon/35 hidden sm:inline'>
               v3.8.0
             </span>
             <span className='inline-flex items-center gap-1.5'>
@@ -162,7 +162,7 @@ export default function TerminalPage() {
                 <span className='absolute inline-flex h-full w-full rounded-full bg-neon opacity-40 motion-safe:animate-ping' />
                 <span className='relative inline-flex h-2 w-2 rounded-full bg-neon' />
               </span>
-              <span className='font-ocr text-[10px] tracking-[0.15em] text-neon/60 uppercase'>
+              <span className='font-ocr text-xs tracking-[0.15em] text-neon/60 uppercase'>
                 Active
               </span>
             </span>
@@ -182,12 +182,12 @@ export default function TerminalPage() {
                 <p className='font-ibm text-lg text-text leading-snug'>
                   Interactive terminal.
                 </p>
-                <p className='font-ocr text-[11px] text-text/50 leading-relaxed mt-2'>
+                <p className='font-ocr text-sm text-text/50 leading-relaxed mt-2'>
                   A command-line interface to explore my site. Browse content,
                   chat with an AI, and more.
                 </p>
                 <div className='mt-3 w-full h-px bg-gradient-to-r from-neon/30 via-neon/10 to-transparent' />
-                <p className='font-ocr text-[10px] text-neon/40 mt-2'>
+                <p className='font-ocr text-xs text-neon/40 mt-2'>
                   Type <span className='text-neon/65'>help</span> to get
                   started.
                 </p>
@@ -195,7 +195,7 @@ export default function TerminalPage() {
 
               {/* Feature Modules */}
               <div>
-                <p className='font-ocr text-[9px] tracking-[0.25em] text-neon/40 uppercase px-1 mb-2'>
+                <p className='font-ocr text-xs tracking-[0.25em] text-neon/40 uppercase px-1 mb-2'>
                   Modules
                 </p>
                 <div className='space-y-1.5'>
@@ -216,10 +216,10 @@ export default function TerminalPage() {
                               {mod.tag}
                             </span>
                           </div>
-                          <p className='font-ocr text-[10px] text-text/40 leading-snug mt-0.5'>
+                          <p className='font-ocr text-sm text-text/40 leading-snug mt-0.5'>
                             {mod.body}
                           </p>
-                          <p className='font-mono text-[10px] text-accent/45 mt-1'>
+                          <p className='font-mono text-xs text-accent/45 mt-1'>
                             &gt; {mod.cmd}
                           </p>
                         </div>
@@ -235,9 +235,9 @@ export default function TerminalPage() {
                   {COMMAND_GUIDE.map((item) => (
                     <div
                       key={item.command}
-                      className='flex items-baseline gap-2 font-ocr text-[10px]'
+                      className='flex items-baseline gap-2 font-ocr text-xs'
                     >
-                      <code className='text-neon/65 shrink-0 font-ibm text-[11px]'>
+                      <code className='text-neon/65 shrink-0 font-ibm text-sm'>
                         {item.command}
                       </code>
                       <span className='text-text/30 truncate'>
@@ -250,11 +250,11 @@ export default function TerminalPage() {
 
               {/* System Info */}
               <div className='px-1 space-y-1'>
-                <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
-                  <span className='w-1 h-1 rounded-full bg-neon/30' />
-                  <span>Browser-based &middot; No data sent to server</span>
-                </div>
-                <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
+              <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
+                <span className='w-1 h-1 rounded-full bg-neon/30' />
+                <span>Browser-based &middot; No data sent to server</span>
+              </div>
+              <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
                   <span className='w-1 h-1 rounded-full bg-neon/30' />
                   <span>Runs locally in your browser</span>
                 </div>
@@ -274,10 +274,10 @@ export default function TerminalPage() {
                 <div className='w-2.5 h-2.5 rounded-full bg-[#ffbd2e]/70 border border-white/10' />
                 <div className='w-2.5 h-2.5 rounded-full bg-[#27ca3f]/70 border border-white/10' />
               </div>
-              <span className='font-ocr text-[10px] tracking-[0.18em] text-neon/40 uppercase'>
+              <span className='font-ocr text-xs tracking-[0.18em] text-neon/40 uppercase'>
                 ~/terminal
               </span>
-              <span className='font-ocr text-[10px] text-text/20 hidden sm:inline'>
+              <span className='font-ocr text-xs text-text/20 hidden sm:inline'>
                 user@stepweaver.dev
               </span>
             </div>
@@ -291,19 +291,19 @@ export default function TerminalPage() {
 
         {/* ── Status Bar ── */}
         <footer className='shrink-0 border-t border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-1.5 flex items-center gap-2 sm:gap-3 overflow-x-auto'>
-          <span className='font-ocr text-[10px] text-neon/45 whitespace-nowrap'>
+          <span className='font-ocr text-xs text-neon/45 whitespace-nowrap'>
             &gt; help
           </span>
           <span className='text-neon/15'>│</span>
-          <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap'>
+          <span className='font-ocr text-xs text-text/25 uppercase whitespace-nowrap'>
             Session active
           </span>
           <span className='text-neon/15 hidden sm:inline'>│</span>
-          <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap hidden sm:inline'>
+          <span className='font-ocr text-xs text-text/25 uppercase whitespace-nowrap hidden sm:inline'>
             Local runtime
           </span>
           <span className='text-neon/15 hidden md:inline'>│</span>
-          <span className='font-ocr text-[10px] text-text/20 uppercase whitespace-nowrap hidden md:inline'>
+          <span className='font-ocr text-xs text-text/20 uppercase whitespace-nowrap hidden md:inline'>
             No telemetry
           </span>
         </footer>
