@@ -231,6 +231,7 @@ export default function RootLayout({ children }) {
           as='image'
           type='image/webp'
           fetchPriority='high'
+          crossOrigin='anonymous'
         />
       </head>
       <body className='text-text'>

@@ -17,6 +17,16 @@ import OnThisPage from '@/components/MeshtasticDocs/OnThisPage';
 import MeshtasticDocsDropdown from '@/components/MeshtasticDocs/MeshtasticDocsDropdown';
 import MeshtasticDocsMobileNav from '@/components/MeshtasticDocs/MeshtasticDocsMobileNav';
 import DocPrevNext from '@/components/MeshtasticDocs/DocPrevNext';
+import {
+  AffiliateDisclosure,
+  AffiliateIntroCTA,
+  AffiliateGearSection,
+  AffiliateHardwareBlock,
+} from '@/components/MeshtasticDocs/Affiliate';
+import {
+  getConfiguredAffiliateLinks,
+  getPrimaryAffiliateUrl,
+} from '@/components/MeshtasticDocs/Affiliate/affiliateConfig';
 
 const getCachedDocBySlug = cache((slug) => getDocBySlug(slug));
 
@@ -86,6 +96,18 @@ export default async function MeshtasticDocPage({ params }) {
   const flatList = getFlatDocList(grouped);
   const headings = getHeadingsFromBlocks(blocks);
   const hasFieldNotes = fieldNotes && fieldNotes.length > 0;
+
+  const affiliateLinks = getConfiguredAffiliateLinks();
+  const primaryAffiliateUrl = getPrimaryAffiliateUrl(
+    process.env.NEXT_PUBLIC_ATLAVOX_AFFILIATE_URL
+  );
+  const affiliateGearLinks =
+    affiliateLinks.length > 0
+      ? affiliateLinks
+      : primaryAffiliateUrl
+        ? [{ url: primaryAffiliateUrl, label: 'Atlavox Radios & Accessories' }]
+        : [];
+  const hasAffiliate = affiliateGearLinks.length > 0;
 
   const formatUpdated = (lastEditedTime) => {
     if (!lastEditedTime) return '';
@@ -167,6 +189,8 @@ export default async function MeshtasticDocPage({ params }) {
             {/* Article body */}
             <div className='px-5 sm:px-6 lg:px-8 py-6 lg:py-8'>
               <div className='max-w-3xl'>
+                <AffiliateDisclosure />
+                <AffiliateIntroCTA />
                 {blocks.length > 0 ? (
                   <div className='prose prose-invert max-w-none'>
                     <NotionBlockBody blocks={blocks} />
@@ -174,7 +198,12 @@ export default async function MeshtasticDocPage({ params }) {
                 ) : (
                   <p className='text-text/70 font-ocr'>No content yet.</p>
                 )}
+                {(doc.section === 'Hardware' ||
+                  ['choosing-a-device', 'heltec-v3'].includes(doc.slug)) && (
+                  <AffiliateHardwareBlock affiliateUrl={primaryAffiliateUrl} />
+                )}
                 <DocPrevNext flatList={flatList} currentSlug={doc.slug} />
+                <AffiliateGearSection links={affiliateGearLinks} />
               </div>
             </div>
           </article>

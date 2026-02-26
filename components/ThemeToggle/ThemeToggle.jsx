@@ -101,7 +101,7 @@ export default function ThemeToggle() {
               height={16}
               className={`lambda-icon ${theme}`}
               sizes='16px'
-              style={{ width: 'auto', height: 'auto' }}
+              style={{ width: 16, height: 16, objectFit: 'contain' }}
             />
             <span className='theme-dropdown-label'>{currentTheme?.label}</span>
             <span className={`theme-dropdown-arrow ${isOpen ? 'open' : ''}`}>▼</span>
@@ -128,7 +128,7 @@ export default function ThemeToggle() {
                     height={14}
                     className={`lambda-icon-grid ${themeOption.value}`}
                     sizes='14px'
-                    style={{ width: 'auto', height: 'auto' }}
+                    style={{ width: 14, height: 14, objectFit: 'contain' }}
                   />
                   <span className='theme-label'>{themeOption.label}</span>
                 </button>

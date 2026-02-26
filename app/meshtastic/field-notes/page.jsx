@@ -6,6 +6,14 @@ import { groupDocsBySection } from '@/lib/notion/meshtastic-docs.repo';
 import MeshtasticDocsLayout from '@/components/MeshtasticDocs/MeshtasticDocsLayout';
 import MeshtasticDocsMobileNav from '@/components/MeshtasticDocs/MeshtasticDocsMobileNav';
 import FieldNotesDisplay from '@/components/MeshtasticDocs/FieldNotesDisplay';
+import {
+  AffiliateDisclosure,
+  AffiliateGearSection,
+} from '@/components/MeshtasticDocs/Affiliate';
+import {
+  getConfiguredAffiliateLinks,
+  getPrimaryAffiliateUrl,
+} from '@/components/MeshtasticDocs/Affiliate/affiliateConfig';
 
 const getCachedFieldNotes = cache(async () => {
   return await listFieldNotes();
@@ -119,6 +127,18 @@ export default async function FieldNotesPage() {
   const grouped = groupDocsBySection(docs);
   const hasFieldNotes = fieldNotes && fieldNotes.length > 0;
 
+  const affiliateLinks = getConfiguredAffiliateLinks();
+  const primaryAffiliateUrl = getPrimaryAffiliateUrl(
+    process.env.NEXT_PUBLIC_ATLAVOX_AFFILIATE_URL
+  );
+  const affiliateGearLinks =
+    affiliateLinks.length > 0
+      ? affiliateLinks
+      : primaryAffiliateUrl
+        ? [{ url: primaryAffiliateUrl, label: 'Atlavox Radios & Accessories' }]
+        : [];
+  const hasAffiliate = affiliateGearLinks.length > 0;
+
   const sortedNotes = [...(fieldNotes || [])].sort((a, b) => {
     const dateA = a.title.replace(/[\[\]]/g, '');
     const dateB = b.title.replace(/[\[\]]/g, '');
@@ -153,6 +173,10 @@ export default async function FieldNotesPage() {
                 </p>
               </header>
             </article>
+          </div>
+          <div className='mt-6 max-w-3xl'>
+            <AffiliateDisclosure show={hasAffiliate} />
+            <AffiliateGearSection links={affiliateGearLinks} />
           </div>
         </div>
       </MeshtasticDocsLayout>
@@ -198,6 +222,10 @@ export default async function FieldNotesPage() {
               ),
             }))}
           />
+          <div className='mt-6 max-w-3xl'>
+            <AffiliateDisclosure show={hasAffiliate} />
+            <AffiliateGearSection links={affiliateGearLinks} />
+          </div>
         </div>
       </div>
     </MeshtasticDocsLayout>

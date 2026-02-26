@@ -4,14 +4,14 @@
  */
 
 const REQUIRED_ENV_VARS = {
-  // Email configuration
+  // Email configuration (required only if using contact form)
   EMAIL_USER: {
-    required: true,
+    required: false,
     description: 'Email service username (Gmail, etc.)',
     example: 'your-email@gmail.com'
   },
   EMAIL_PASS: {
-    required: true,
+    required: false,
     description: 'Email service password or app password',
     example: 'your-app-password'
   },

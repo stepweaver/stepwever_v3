@@ -18,6 +18,8 @@ export default function GlitchButton({
   loadingText,
   disabled = false,
   download = false,
+  target,
+  rel,
 }) {
   const [cursorVisible, setCursorVisible] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
@@ -94,6 +96,20 @@ export default function GlitchButton({
   if (href && download) {
     return (
       <a href={href} download {...commonProps}>
+        {buttonContent}
+      </a>
+    );
+  }
+
+  // For external links with target="_blank", use anchor to support rel
+  if (href && (target === '_blank' || target === 'blank')) {
+    return (
+      <a
+        href={href}
+        target='_blank'
+        rel={rel || 'noopener noreferrer'}
+        {...commonProps}
+      >
         {buttonContent}
       </a>
     );
