@@ -90,35 +90,16 @@ function MobileBriefBar() {
       </button>
 
       {expanded && (
-        <div className='px-3 pb-3 space-y-2 motion-safe:animate-[hudFadeIn_0.15s_ease-out]'>
-          <div className='grid grid-cols-3 gap-2'>
-            {FEATURE_MODULES.map((mod) => {
-              const Icon = mod.icon;
-              return (
-                <div
-                  key={mod.tag}
-                  className='flex items-center gap-1.5 px-2 py-1.5 rounded-sm bg-panel/30 border border-neon/8'
-                >
-                  <Icon className='w-3 h-3 text-neon/60 shrink-0' />
-                  <div className='min-w-0'>
-                    <p className='font-ibm text-xs text-neon/80 truncate'>
-                      {mod.title}
-                    </p>
-                    <p className='font-mono text-xs text-accent/40'>
-                      {mod.cmd}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className='w-full h-px bg-gradient-to-r from-neon/15 via-neon/8 to-transparent' />
-          <div className='grid grid-cols-2 gap-x-4 gap-y-1.5 px-1'>
+        <div className='px-3 pb-3 motion-safe:animate-[hudFadeIn_0.15s_ease-out]'>
+          <div className='grid grid-cols-2 gap-x-4 gap-y-2'>
             {COMMAND_GUIDE.map((item) => (
-              <span key={item.command} className='font-ocr text-xs'>
-                <span className='text-neon/60'>{item.command}</span>
-                <span className='text-text/30'> — {item.summary}</span>
-              </span>
+              <div
+                key={item.command}
+                className='font-ocr text-xs text-neon/50'
+              >
+                <span className='text-neon/70'>{item.command}</span>
+                <span className='text-text/40'> — {item.summary}</span>
+              </div>
             ))}
           </div>
         </div>
