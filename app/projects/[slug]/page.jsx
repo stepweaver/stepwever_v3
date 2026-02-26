@@ -195,15 +195,20 @@ function ProjectPageLayout({ project, slug, children }) {
 
                 {project.techStack && (
                   <SidebarPanel label='TECH'>
-                    <div className='space-y-1.5'>
-                      {Object.keys(project.techStack).slice(0, 4).map((key) => (
-                        <div key={key}>
-                          <span className='font-ocr text-[9px] text-neon/40 uppercase'>
-                            {key}
+                    <div className='space-y-2'>
+                      {Object.entries(project.techStack).map(([category, items]) => (
+                        <div key={category}>
+                          <span className='font-ocr text-[9px] text-neon/40 uppercase block mb-0.5'>
+                            {category}
                           </span>
-                          <p className='font-ibm text-xs text-text/60 mt-0.5'>
-                            {project.techStack[key]?.length || 0} items
-                          </p>
+                          <ul className='font-ibm text-[11px] text-text/70 space-y-0.5'>
+                            {(Array.isArray(items) ? items : []).map((item, i) => {
+                              const name = typeof item === 'string' ? item.split(' - ')[0].trim() : item;
+                              return (
+                                <li key={i}>{name}</li>
+                              );
+                            })}
+                          </ul>
                         </div>
                       ))}
                     </div>
@@ -275,7 +280,7 @@ export default function ProjectPage({ params }) {
             <OptimizedImage
               src={project.imageUrl}
               alt={project.title}
-              className='object-cover'
+              className='object-cover object-top'
               priority
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
             />
@@ -321,19 +326,21 @@ export default function ProjectPage({ params }) {
             {/* The Tech */}
             {project.techStack && (
               <ProjectSection title='The Tech'>
+                <div className={project.projectStructure ? 'mb-8' : ''}>
+                  <TechStackGrid techStack={project.techStack} />
+                </div>
                 {project.projectStructure && (
-                  <div className='mb-8'>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
+                  <div>
+                    <h3 className='font-ocr text-xs tracking-[0.15em] text-neon/50 uppercase mb-3'>
                       Architecture
                     </h3>
-                    <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
+                    <div className='bg-panel/50 p-6 border border-neon/20 overflow-hidden'>
                       <pre className='font-mono text-text text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap'>
                         {project.projectStructure}
                       </pre>
                     </div>
                   </div>
                 )}
-                <TechStackGrid techStack={project.techStack} />
               </ProjectSection>
             )}
 
