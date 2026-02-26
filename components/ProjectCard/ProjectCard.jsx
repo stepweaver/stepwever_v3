@@ -48,7 +48,7 @@ const ProjectCard = memo(function ProjectCard({
           <OptimizedImage
             src='/images/lambda_preview.png'
             alt='Project preview'
-            className='object-cover object-top transition-transform duration-300 hover:scale-105'
+            className='object-cover object-center transition-transform duration-300 hover:scale-105'
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
           />
         </div>

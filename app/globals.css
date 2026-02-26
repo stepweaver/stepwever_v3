@@ -1045,8 +1045,29 @@
 }
 
 @keyframes progressFill {
-  0%   { width: 0; }
-  100% { width: 100%; }
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+/* Mobile nav panel slide from right - smooth open/close (translate3d for GPU) */
+@keyframes mobileNavSlideIn {
+  0%   { opacity: 0; transform: translate3d(100%, 0, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes mobileNavSlideOut {
+  0%   { opacity: 1; transform: translate3d(0, 0, 0); }
+  100% { opacity: 0; transform: translate3d(100%, 0, 0); }
+}
+
+.animate-mobile-nav-in {
+  animation: mobileNavSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-mobile-nav-out {
+  animation: mobileNavSlideOut 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform, opacity;
 }
 
 /* Base styles */
@@ -1188,7 +1209,7 @@ html.theme-loaded {
   }
 }
 
-/* Glitch Button Styles */
+/* Glitch Button Styles - no borders */
 .glitch-button {
   font-family: var(--font-ibm, monospace);
   font-size: 0.875rem;
@@ -1201,7 +1222,8 @@ html.theme-loaded {
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  border: 1.5px solid var(--color-terminal-green);
+  border: none !important;
+  outline: none;
   background-color: var(--color-terminal-dark, #0d1117);
   position: relative;
   overflow: hidden;
@@ -1211,7 +1233,6 @@ html.theme-loaded {
 
 .glitch-button:hover {
   background-color: var(--color-terminal-light, #161b22);
-  border-color: var(--color-terminal-green, #00ff41);
   box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 }
 
@@ -2032,6 +2053,27 @@ body::after {
    ======================================== */
 
 @import "../styles/theme-overrides.css";
+
+/* Override any theme border on glitch buttons - no borders */
+.glitch-button,
+[data-theme] .glitch-button,
+button.glitchButton,
+a.glitchButton,
+[class*='glitchButton'] {
+  border: none !important;
+}
+
+/* Dice roller: no faint backgrounds on buttons */
+#dice-roller-section .glitchButton,
+#dice-roller-section [class*='glitchButton'] {
+  background: transparent !important;
+}
+#dice-roller-section .glitchButton:hover,
+#dice-roller-section [class*='glitchButton']:hover {
+  background: transparent !important;
+  box-shadow: none;
+}
+
 [data-theme="light"] .cyber-border-border:hover {
   border-color: rgba(0, 0, 0, 0.28);
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));

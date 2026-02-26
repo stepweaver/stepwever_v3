@@ -10,7 +10,8 @@
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  border: 1.5px solid var(--color-terminal-green);
+  border: none !important;
+  outline: none;
   background-color: var(--color-terminal-dark, #0d1117);
   position: relative;
   overflow: hidden;
@@ -18,9 +19,9 @@
   border-radius: 4px;
 }
 
+
 .glitchButton:hover {
   background-color: var(--color-terminal-light, #161b22);
-  border-color: var(--color-terminal-green, #00ff41);
   box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 

@@ -8,12 +8,46 @@ import GlitchLambda from '@/components/ui/GlitchLambda';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 import { MOBILE_NAV_LINKS } from '@/lib/navigation';
 
+/** Animated hamburger that flips into X */
+function HamburgerIcon({ open }) {
+  return (
+    <span className='relative flex h-5 w-6 flex-col items-center justify-center' aria-hidden='true'>
+      <span
+        className={`absolute h-0.5 w-5 origin-center rounded-full bg-current transition-all duration-300 ease-out ${
+          open ? 'rotate-45 translate-y-1.5' : '-translate-y-1.5 rotate-0'
+        }`}
+      />
+      <span
+        className={`h-0.5 w-5 origin-center rounded-full bg-current transition-all duration-300 ease-out ${
+          open ? 'scale-x-0 opacity-0' : 'scale-x-100 opacity-100'
+        }`}
+      />
+      <span
+        className={`absolute h-0.5 w-5 origin-center rounded-full bg-current transition-all duration-300 ease-out ${
+          open ? '-rotate-45 -translate-y-1.5' : 'translate-y-1.5 rotate-0'
+        }`}
+      />
+    </span>
+  );
+}
+
+const SLIDE_OUT_DURATION = 400;
+
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => setMounted(true), []);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, SLIDE_OUT_DURATION);
+  };
 
   // Uppercase names for mobile nav aesthetic
   const navLinks = MOBILE_NAV_LINKS.map((link) => ({
@@ -21,9 +55,9 @@ export default function MobileNav() {
     name: link.name.toUpperCase(),
   }));
 
-  // Prevent body scroll when menu is open
+  // Prevent body scroll when menu is open or closing
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || isClosing) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -31,32 +65,31 @@ export default function MobileNav() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen]);
+  }, [isOpen, isClosing]);
 
   return (
-    <div
-      className={`md:hidden absolute z-50 ${
-        isOpen ? 'right-0 top-0' : 'right-4 top-3'
-      }`}
-    >
+    <div className='md:hidden'>
+      {/* Toggle button when closed - in navbar */}
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className='cursor-pointer p-3 text-2xl text-neon hover:text-accent transition-colors duration-200 rounded-sm bg-panel/50 backdrop-blur hover:bg-panel/70'
-          aria-expanded={isOpen}
-          aria-label='Open navigation menu'
-          aria-controls='mobile-navigation-menu'
-          style={{ minHeight: '44px', minWidth: '44px' }}
-        >
-          <span className='block font-ocr tracking-wider' aria-hidden='true'>
-            ≡
-          </span>
-        </button>
+        <div className='absolute right-4 top-3 z-50'>
+          <button
+            onClick={() => setIsOpen(true)}
+            className='flex cursor-pointer items-center justify-center rounded-sm bg-panel/50 p-3 text-neon backdrop-blur transition-colors duration-200 hover:bg-panel/70 hover:text-accent'
+            aria-expanded={false}
+            aria-label='Open navigation menu'
+            aria-controls='mobile-navigation-menu'
+            style={{ minHeight: '44px', minWidth: '44px' }}
+          >
+            <HamburgerIcon open={false} />
+          </button>
+        </div>
       )}
 
-      {isOpen && mounted && createPortal(
+      {(isOpen || isClosing) && mounted && createPortal(
         <div
-          className='fixed inset-0 z-[9999] flex flex-col bg-panel/98 backdrop-blur-xl'
+          className={`fixed inset-0 z-[9999] flex flex-col bg-panel/98 backdrop-blur-xl ${
+            isClosing ? 'animate-mobile-nav-out' : 'animate-mobile-nav-in'
+          }`}
           id='mobile-navigation-menu'
         >
           {/* Tron frame - full bleed */}
@@ -65,7 +98,7 @@ export default function MobileNav() {
             <div className='absolute bottom-0 right-0 h-6 w-8 border-b-2 border-r-2 border-neon/40' />
           </div>
 
-          {/* One header row: MODULE // stepweaver · NAV-00 · theme · close */}
+          {/* One header row: stepweaver · NAV-00 · theme · close (X in portal so always visible) */}
           <header className='flex items-center justify-between gap-3 px-5 py-4 shrink-0'>
             <div className='flex items-baseline gap-2 min-w-0'>
               <span className='font-ibm text-lg font-semibold text-neon truncate flex items-center gap-1.5'>
@@ -78,11 +111,11 @@ export default function MobileNav() {
               <ThemeToggle />
               <button
                 type='button'
-                onClick={() => setIsOpen(false)}
-                className='flex items-center justify-center w-11 h-11 rounded-sm text-neon hover:bg-neon/10 transition-colors touch-manipulation'
+                onClick={handleClose}
+                className='flex items-center justify-center w-11 h-11 rounded-sm text-neon hover:bg-neon/10 transition-colors touch-manipulation font-sans text-4xl'
                 aria-label='Close menu'
               >
-                <span className='text-xl font-light'>×</span>
+                »
               </button>
             </div>
           </header>
@@ -95,7 +128,7 @@ export default function MobileNav() {
                   {item.external ? (
                     <Link
                       href={item.path}
-                      onClick={() => setIsOpen(false)}
+                      onClick={handleClose}
                       target='_blank'
                       rel='noopener noreferrer'
                       className='block py-4 text-text hover:text-neon transition-colors text-base tracking-wide border-b border-white/5 last:border-b-0'
@@ -107,7 +140,7 @@ export default function MobileNav() {
                     <button
                       type='button'
                       onClick={() => {
-                        setIsOpen(false);
+                        handleClose();
                         if (window.location.pathname === '/') {
                           const el = document.getElementById(item.path.split('#')[1]);
                           if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -120,7 +153,7 @@ export default function MobileNav() {
                   ) : (
                     <Link
                       href={item.path}
-                      onClick={() => setIsOpen(false)}
+                      onClick={handleClose}
                       className='block py-4 text-text hover:text-neon transition-colors text-base tracking-wide border-b border-white/5 last:border-b-0'
                     >
                       {item.name}

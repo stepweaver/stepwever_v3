@@ -7,7 +7,7 @@ import TerminalLoader from './TerminalLoader';
 const CONTENT_PREFIXES = ['/codex', '/meshtastic'];
 const CONTENT_DURATION_MS = 4000;
 const STANDARD_DURATION_MS = 2200;
-const FADEOUT_MS = 300;
+const FADEOUT_MS = 500;
 
 function isContentRoute(path) {
   if (!path) return false;
@@ -60,7 +60,13 @@ export default function PageTransition({ children }) {
 
   return (
     <>
-      <div className={hideContent ? 'invisible' : undefined}>{children}</div>
+      <div
+        className={`transition-opacity duration-500 ease-out ${
+          hideContent ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+      >
+        {children}
+      </div>
       {showOverlay && (
         <TerminalLoader
           targetPath={targetPath}

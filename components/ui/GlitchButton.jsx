@@ -75,7 +75,7 @@ export default function GlitchButton({
     onMouseLeave: () => setIsHovering(false),
     className: `${
       buttonStyles.glitchButton
-    } ${className} font-ibm flex items-center justify-center ${
+    } ${className} font-ibm flex items-center justify-center cursor-pointer ${
       isHovering ? buttonStyles.scaleHover : buttonStyles.scaleNormal
     } ${disabled || isLoading ? 'opacity-70 cursor-not-allowed' : ''}`,
     disabled: disabled || isLoading,

@@ -30,7 +30,7 @@ export default function TerminalLoader({ targetPath, duration, phase }) {
   return (
     <div
       className={`fixed inset-0 z-50 flex flex-col bg-bg text-neon font-ocr text-xs tracking-[0.15em] uppercase overflow-hidden ${
-        phase === 'out' ? 'animate-[fadeOut_0.3s_ease-out_forwards]' : ''
+        phase === 'out' ? 'animate-[fadeOut_0.5s_ease-out_forwards]' : ''
       }`}
       style={{ backgroundColor: 'rgb(var(--bg))' }}
       aria-live="polite"
@@ -40,7 +40,7 @@ export default function TerminalLoader({ targetPath, duration, phase }) {
         <div className="w-full max-w-2xl">
           {/* Header */}
           <div className="text-neon/40 mb-6 tracking-[0.2em]">
-            STEPWEVER // TRANSITION v1.0
+            STEPWEAVER // LOADING MODULE
           </div>
 
           {/* Terminal lines */}
@@ -88,17 +88,17 @@ function TerminalLine({ cmd, status, delay, isProgress, progressDuration }) {
 }
 
 function ProgressBar({ duration, delay }) {
-  const durationSec = Math.max(0.3, duration / 1000);
+  const durationSec = Math.max(0.4, duration / 1000);
   return (
     <span
       className="ml-auto shrink-0 inline-block h-3 w-24 overflow-hidden rounded-sm border border-neon/30 bg-neon/5"
       aria-hidden
     >
       <span
-        className="block h-full bg-neon/80 origin-left"
+        className="block h-full w-full bg-neon/80 origin-left"
         style={{
           animation: `progressFill ${durationSec}s ease-out forwards`,
-          animationDelay: `${delay + 100}ms`,
+          animationDelay: `${delay + 80}ms`,
         }}
       />
     </span>

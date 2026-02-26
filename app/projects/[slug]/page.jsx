@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { use, useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { getProjectBySlug } from '@/lib/projectsData';
@@ -11,6 +11,8 @@ import {
   Code,
   Zap,
   Shield,
+  FolderOpen,
+  ChevronRight,
 } from 'lucide-react';
 import Link from 'next/link';
 import OptimizedImage from '@/components/OptimizedImage/OptimizedImage';
@@ -20,6 +22,7 @@ import BulletList from '@/components/ProjectDetail/BulletList';
 import TechStackGrid from '@/components/ProjectDetail/TechStackGrid';
 import TechStackCard from '@/components/ProjectDetail/TechStackCard';
 import { Palette } from 'lucide-react';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 // Lazy load heavy components
 const BackgroundCanvas = dynamic(
@@ -29,6 +32,221 @@ const BackgroundCanvas = dynamic(
 const NeonProfileCard = dynamic(() =>
   import('@/components/NeonProfileCard/NeonProfileCard')
 );
+
+function SidebarPanel({ children, label, className = '' }) {
+  return (
+    <div className={`hud-panel p-3 ${className}`}>
+      {label && (
+        <p className='font-ocr text-xs tracking-[0.25em] text-neon/45 uppercase mb-2'>
+          {label}
+        </p>
+      )}
+      {children}
+    </div>
+  );
+}
+
+function ProjectPageLayout({ project, slug, children }) {
+  const [mobileBriefExpanded, setMobileBriefExpanded] = useState(false);
+  const projId = `PROJ-${slug.toUpperCase().replace(/-/g, '').slice(0, 8)}`;
+
+  // Hide site footer for full-screen console feel (like dice roller)
+  useEffect(() => {
+    const footer = document.querySelector('footer');
+    if (footer) footer.style.display = 'none';
+    return () => {
+      if (footer) footer.style.display = '';
+    };
+  }, []);
+
+  return (
+    <ErrorBoundary>
+      <div className='relative h-[calc(100vh-6rem)] flex flex-col overflow-hidden'>
+        <BackgroundCanvas />
+
+        <div className='relative z-10 flex flex-col h-full'>
+          {/* ── System Header ── */}
+          <header className='shrink-0 border-b border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-2 flex items-center justify-between gap-4'>
+            <div className='flex items-center gap-2.5'>
+              <Link
+                href='/'
+                className='inline-flex items-center text-neon/70 hover:text-neon font-ocr text-xs transition-colors'
+              >
+                <ArrowLeft className='w-3.5 h-3.5 mr-1.5' />
+                <span className='hidden sm:inline'>Back</span>
+              </Link>
+              <span className='text-neon/15 hidden sm:inline'>│</span>
+              <FolderOpen className='w-3.5 h-3.5 text-neon/60' />
+              <span className='font-ocr text-xs tracking-[0.3em] text-neon/50 uppercase'>
+                {projId}
+              </span>
+              <span className='text-neon/15 hidden sm:inline'>│</span>
+              <span className='font-ibm text-xs text-text/50 hidden sm:inline truncate max-w-[200px]'>
+                {project.title}
+              </span>
+            </div>
+            <div className='flex items-center gap-2.5'>
+              <span className='inline-flex items-center gap-1.5'>
+                <span className='relative flex h-2 w-2'>
+                  <span className='absolute inline-flex h-full w-full rounded-full bg-neon opacity-40 motion-safe:animate-ping' />
+                  <span className='relative inline-flex h-2 w-2 rounded-full bg-neon' />
+                </span>
+                <span className='font-ocr text-xs tracking-[0.15em] text-neon/60 uppercase'>
+                  Loaded
+                </span>
+              </span>
+            </div>
+          </header>
+
+          {/* ── Mobile expandable brief ── */}
+          <div className='lg:hidden shrink-0 border-b border-neon/15'>
+            <button
+              onClick={() => setMobileBriefExpanded(!mobileBriefExpanded)}
+              className='w-full px-3 py-2 flex items-center justify-between text-left hover:bg-panel/30 transition-colors cursor-pointer'
+            >
+              <div className='flex items-center gap-2'>
+                <FolderOpen className='w-3 h-3 text-neon/50' />
+                <span className='font-ocr text-xs tracking-[0.2em] text-neon/50 uppercase'>
+                  Project brief
+                </span>
+              </div>
+              <ChevronRight
+                className={`w-3 h-3 text-neon/40 transition-transform duration-200 ${
+                  mobileBriefExpanded ? 'rotate-90' : ''
+                }`}
+              />
+            </button>
+
+            {mobileBriefExpanded && (
+              <div className='px-3 pb-3 space-y-3 motion-safe:animate-[hudFadeIn_0.15s_ease-out]'>
+                <p className='font-ocr text-sm text-text/70 leading-relaxed'>
+                  {project.description}
+                </p>
+                {project.tags?.length > 0 && (
+                  <div className='flex flex-wrap gap-1.5'>
+                    {project.tags.map((tag, i) => (
+                      <span
+                        key={i}
+                        className='px-2 py-0.5 font-ocr text-[10px] text-neon/70 border border-neon/20'
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='inline-flex items-center text-neon font-ocr text-xs hover:text-neon/80'
+                  >
+                    <ExternalLink className='w-3 h-3 mr-1.5' />
+                    View Live
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* ── Main Console ── */}
+          <div className='flex-1 flex flex-col lg:flex-row min-h-0'>
+            {/* ── Sidebar: HUD Panels ── */}
+            <aside className='hidden lg:flex lg:flex-col lg:w-72 2xl:w-80 shrink-0 border-r border-neon/15 overflow-y-auto'>
+              <div className='p-3 space-y-3 flex-1'>
+                <SidebarPanel label='SYS.BRIEF'>
+                  <p className='font-ibm text-base text-text leading-snug'>
+                    {project.title}
+                  </p>
+                  <p className='font-ocr text-sm text-text/50 leading-relaxed mt-2'>
+                    {project.description}
+                  </p>
+                  <div className='mt-3 w-full h-px bg-gradient-to-r from-neon/30 via-neon/10 to-transparent' />
+                </SidebarPanel>
+
+                {project.link && (
+                  <SidebarPanel label='LINK'>
+                    <a
+                      href={project.link}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='inline-flex items-center text-neon font-ocr text-sm hover:text-neon/80 transition-colors'
+                    >
+                      <ExternalLink className='w-3.5 h-3.5 mr-2' />
+                      View Live Project
+                    </a>
+                  </SidebarPanel>
+                )}
+
+                {project.tags?.length > 0 && (
+                  <SidebarPanel label='TAGS'>
+                    <div className='flex flex-wrap gap-1.5'>
+                      {project.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className='px-2 py-0.5 font-ocr text-[10px] text-neon/70 border border-neon/20'
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </SidebarPanel>
+                )}
+
+                {project.techStack && (
+                  <SidebarPanel label='TECH'>
+                    <div className='space-y-1.5'>
+                      {Object.keys(project.techStack).slice(0, 4).map((key) => (
+                        <div key={key}>
+                          <span className='font-ocr text-[9px] text-neon/40 uppercase'>
+                            {key}
+                          </span>
+                          <p className='font-ibm text-xs text-text/60 mt-0.5'>
+                            {project.techStack[key]?.length || 0} items
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </SidebarPanel>
+                )}
+              </div>
+            </aside>
+
+            {/* ── Main Content ── */}
+            <section className='flex-1 min-h-0 flex flex-col'>
+              <div className='shrink-0 bg-panel/50 border-b border-neon/20 px-4 py-2 flex items-center justify-between'>
+                <div className='flex items-center gap-2'>
+                  <FolderOpen className='w-3 h-3 text-neon/40' />
+                  <span className='font-ocr text-xs tracking-[0.18em] text-neon/40 uppercase'>
+                    Project detail
+                  </span>
+                </div>
+                <span className='font-ocr text-xs text-text/20 hidden sm:inline'>
+                  {projId}
+                </span>
+              </div>
+
+              <div className='flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 md:p-6'>
+                {children}
+              </div>
+            </section>
+          </div>
+
+          {/* ── Status Bar ── */}
+          <footer className='shrink-0 border-t border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-1.5 flex items-center gap-2 sm:gap-3 overflow-x-auto'>
+            <span className='font-ocr text-xs text-neon/45 whitespace-nowrap'>
+              &gt; {project.title}
+            </span>
+            <span className='text-neon/15'>│</span>
+            <span className='font-ocr text-xs text-text/25 uppercase whitespace-nowrap'>
+              {project.tags?.[0] || 'Project'}
+            </span>
+          </footer>
+        </div>
+      </div>
+    </ErrorBoundary>
+  );
+}
 
 export default function ProjectPage({ params }) {
   const { slug } = use(params);
@@ -49,82 +267,26 @@ export default function ProjectPage({ params }) {
   ];
 
   return (
-    <>
-      <div className='relative'>
-        <BackgroundCanvas />
+    <ProjectPageLayout project={project} slug={slug}>
+      <div className='max-w-4xl'>
+        {/* Project Image - Hero */}
+        {project.imageUrl && (
+          <div className='relative mb-8 border border-neon/20 overflow-hidden aspect-video'>
+            <OptimizedImage
+              src={project.imageUrl}
+              alt={project.title}
+              className='object-cover'
+              priority
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
+            />
+          </div>
+        )}
 
-        <div className='relative z-30 min-h-screen pb-12'>
-          <div className='mx-auto px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 max-w-6xl'>
-            {/* Back Navigation */}
-            <div className='mb-8'>
-              <Link
-                href='/'
-                className='inline-flex items-center text-neon font-ocr text-sm hover:text-accent transition-colors duration-200'
-              >
-                <ArrowLeft className='w-4 h-4 mr-2' />
-                Back to Home
-              </Link>
-            </div>
-
-            {/* Header */}
-            <header className='mb-12 md:mb-16'>
-              <div className='mb-6'>
-                {project.isAgencySubcontract && (
-                  <span className='text-sm md:text-base font-ocr text-neon uppercase tracking-wider block mb-4'>
-                    Agency Subcontract Project
-                  </span>
-                )}
-                <h1 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 leading-tight font-ibm text-neon'>
-                  {project.title}
-                </h1>
-              </div>
-
-              <p className='text-lg md:text-xl font-ocr text-text max-w-4xl leading-relaxed mb-8'>
-                {project.description}
-              </p>
-
-              {/* Project Image */}
-              {project.imageUrl && (
-                <div className='relative mb-8 border border-neon/20 rounded-lg overflow-hidden card-glow aspect-video'>
-                  <OptimizedImage
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className='object-cover'
-                    priority
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px'
-                  />
-                </div>
-              )}
-
-              {/* External Link */}
-              {project.link && (
-                <div className='mb-8'>
-                  <a
-                    href={project.link}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='inline-flex items-center px-6 py-3 bg-neon/20 hover:bg-neon/30 border-2 border-neon rounded-lg text-neon font-ocr transition-colors duration-200'
-                  >
-                    <ExternalLink className='w-5 h-5 mr-2' />
-                    View Live Project
-                  </a>
-                </div>
-              )}
-
-              {/* Tags */}
-              {project.tags?.length > 0 && (
-                <div className='flex flex-wrap gap-2 mb-8'>
-                  {project.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className='px-3 py-1 bg-panel/50 text-neon font-ocr text-sm border border-neon/20 rounded-lg'
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </header>
+        {project.isAgencySubcontract && (
+          <span className='text-sm font-ocr text-neon uppercase tracking-wider block mb-4'>
+            Agency Subcontract Project
+          </span>
+        )}
 
             {/* The Problem */}
             {project.problem && (
@@ -528,25 +690,21 @@ export default function ProjectPage({ params }) {
             )}
 
             {/* CTA Section */}
-            <section className='text-center bg-panel/30 p-8 md:p-12 rounded-xl'>
-              <h2 className='text-2xl md:text-3xl font-ibm text-neon mb-4'>
+            <section className='text-center hud-panel p-8 md:p-12'>
+              <h2 className='text-xl md:text-2xl font-ibm text-neon mb-4'>
                 Like what you see?
               </h2>
-              <p className='font-ocr text-text text-base md:text-lg mb-8 max-w-2xl mx-auto'>
+              <p className='font-ocr text-text text-sm md:text-base mb-6 max-w-2xl mx-auto'>
                 Feel free to reach out if you have questions about this project
                 or want to chat about working together.
               </p>
-              <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-                <Link href='/contact'>
-                  <button className='px-8 py-3 bg-neon/20 hover:bg-neon/30 border-2 border-neon rounded-lg text-neon font-ocr transition-colors duration-200 cursor-pointer'>
-                    Get in Touch
-                  </button>
-                </Link>
-              </div>
+              <Link href='/contact'>
+                <button className='px-6 py-2.5 border border-neon text-neon font-ocr text-sm hover:bg-neon/10 transition-colors cursor-pointer'>
+                  Get in Touch
+                </button>
+              </Link>
             </section>
-          </div>
-        </div>
       </div>
-    </>
+    </ProjectPageLayout>
   );
 }

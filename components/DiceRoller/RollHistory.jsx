@@ -1,12 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { DICE_ICONS, DICE_COLORS, UI_CONSTANTS } from '@/lib/diceConstants';
+import { ChevronRight } from 'lucide-react';
+import { UI_CONSTANTS } from '@/lib/diceConstants';
 import { formatTimestamp } from '@/utils/dateFormatter';
 
-/**
- * Display roll history with the last N rolls
- */
 export default function RollHistory({
   history,
   onSelectRoll,
@@ -36,182 +34,147 @@ export default function RollHistory({
 
   if (!history || history.length === 0) {
     return (
-      <div>
-        <div className='text-xl font-bold text-terminal-green tracking-wide'>
-          Roll History
-        </div>
-        <div className='text-terminal-muted italic text-center py-8'>
-          No rolls yet. Start rolling some dice!
-        </div>
+      <div className='bg-panel/10 px-3 py-2'>
+        <p className='font-ocr text-[11px] tracking-[0.2em] text-neon/40 uppercase'>
+          Roll history
+        </p>
+        <p className='font-ocr text-xs text-text/30 mt-1'>No rolls yet.</p>
       </div>
     );
   }
 
-  const displayedHistory = isExpanded ? history : history.slice(0, 3);
-  const hasMore = history.length > 3;
+  const displayedHistory = isExpanded ? history : history.slice(0, 2);
+  const hasMore = history.length > 2;
 
   return (
-    <div>
-      <div className='flex justify-between items-center mb-4 pb-2 border-b-2 border-terminal-border max-lg:mb-1'>
-        <div
-          className='mb-0 flex items-center gap-2 text-xl font-bold text-terminal-green tracking-wide max-lg:text-sm'
-          style={{
-            cursor: hasMore ? 'pointer' : 'default',
-          }}
-          onClick={hasMore ? onToggleExpanded : undefined}
+    <div className='flex flex-col rounded-sm border border-neon/15 bg-panel/10 overflow-hidden'>
+      <div className='w-full flex items-center justify-between px-3 py-2 hover:bg-panel/20 transition-colors'>
+        <button
+          onClick={() => hasMore && onToggleExpanded?.()}
+          className='flex items-center gap-2 text-left flex-1 min-w-0 bg-transparent border-none outline-none p-0 cursor-pointer'
         >
-          {hasMore && (
-            <span
-              className='text-terminal-green text-xl transition-transform duration-200 inline-block max-lg:text-sm'
-              style={{
-                transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
-              }}
-            >
-              ▸
-            </span>
-          )}
-          Roll History
-        </div>
-        {history.length > 0 && (
-          <button
-            onClick={onClearHistory}
-            className='py-1 px-2 bg-terminal-dark border-2 border-terminal-red rounded-md text-terminal-red font-ibm text-xs cursor-pointer transition-all hover:bg-terminal-red hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-red)]'
-            aria-label='Clear history'
-          >
-            CLEAR
-          </button>
-        )}
+          <ChevronRight
+            className={`w-3 h-3 text-neon/50 transition-transform duration-200 shrink-0 ${
+              isExpanded ? 'rotate-90' : ''
+            }`}
+          />
+          <span className='font-ocr text-[11px] tracking-[0.2em] text-neon/50 uppercase'>
+            Roll history
+          </span>
+          <span className='font-ocr text-xs text-text/40'>
+            ({history.length})
+          </span>
+        </button>
+        <button
+          onClick={() => onClearHistory?.()}
+          className='font-ocr text-[10px] text-danger/70 hover:text-danger transition-colors px-2 py-0.5 shrink-0 cursor-pointer border-none bg-transparent'
+        >
+          CLEAR
+        </button>
       </div>
-      {displayedHistory.map((roll, index) => (
-        <div
-          key={index}
-          className='p-1.5 mb-1 bg-[rgba(13,18,17,0.4)] border border-terminal-border rounded cursor-pointer transition-all text-xs hover:bg-[rgba(13,18,17,0.6)] hover:border-terminal-green hover:shadow-[0_0_10px_rgba(0,255,65,0.2)]'
-        >
+
+      <div
+        className={`overflow-y-auto max-h-[160px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-neon/20 [&::-webkit-scrollbar-thumb]:rounded ${
+          !isExpanded ? 'border-t border-neon/10' : ''
+        }`}
+      >
+        {displayedHistory.map((roll, index) => {
+            let compactNotation =
+            roll.breakdown?.length > 0
+              ? roll.breakdown
+                  .map((g) => `${g.notation}[ ${g.results.join(', ')} ]`)
+                  .join(' | ')
+              : roll.notation;
+          if (roll.modifier !== 0) {
+            compactNotation += roll.modifier > 0 ? ` +${roll.modifier}` : ` ${roll.modifier}`;
+          }
+          return (
           <div
-            onClick={() => !editingIndex && onSelectRoll && onSelectRoll(roll)}
-            style={{ cursor: editingIndex === index ? 'default' : 'pointer' }}
+            key={index}
+            onClick={() => !editingIndex && onSelectRoll?.(roll)}
+            className='px-2 py-1.5 border-b border-neon/5 last:border-b-0 hover:bg-panel/20 cursor-pointer transition-colors'
           >
-            <div className='flex justify-between items-center mb-0.5'>
-              <span className='font-bold text-terminal-cyan text-xs'>
-                {roll.notation}
+            <div className='flex justify-between items-baseline gap-2'>
+              <span className='font-mono text-xs text-neon/70 break-words min-w-0'>
+                {compactNotation}
               </span>
-              <span className='font-bold text-terminal-green text-xs'>
+              <span className='font-ibm text-sm font-bold text-neon shrink-0'>
                 = {roll.total}
               </span>
             </div>
 
-            {/* Individual Dice Results */}
-            {roll.breakdown && roll.breakdown.length > 0 && (
-              <div className='flex flex-col gap-0.5 mb-1 mt-0.5'>
-                {roll.breakdown.map((group, groupIndex) => {
-                  const sides = parseInt(
-                    group.notation.match(/\d+d(\d+)/)?.[1] || 0
-                  );
-                  const IconComponent = DICE_ICONS[sides];
-                  const diceColor =
-                    DICE_COLORS[sides] || 'var(--color-terminal-green)';
-                  return (
-                    <div
-                      key={groupIndex}
-                      className='flex flex-wrap items-center gap-1'
-                    >
-                      <div className='flex items-center gap-1 min-w-[50px]'>
-                        {IconComponent && (
-                          <IconComponent
-                            size={16}
-                            style={{ color: diceColor }}
-                          />
-                        )}
-                        <span
-                          className='font-bold text-xs'
-                          style={{ color: diceColor }}
-                        >
-                          {group.notation}:
-                        </span>
-                      </div>
-                      <div className='flex flex-wrap gap-0.5'>
-                        {group.results.map((rollValue, rollIndex) => (
-                          <span
-                            key={rollIndex}
-                            className='px-1 py-0.5 border rounded font-bold min-w-[22px] text-center text-xs'
-                            style={{
-                              borderColor: diceColor,
-                              color: diceColor,
-                            }}
-                          >
-                            {rollValue}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
             {editingIndex === index ? (
-              <div className='mt-2 flex gap-2 items-center'>
+              <div className='mt-2 flex gap-1.5 items-center'>
                 <input
                   type='text'
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
-                  className='flex-1 p-1 px-2 bg-terminal-dark border border-terminal-border rounded text-terminal-text font-ibm text-xs focus:outline-none focus:border-terminal-green focus:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
-                  placeholder='Add comment...'
+                  className='flex-1 py-1 px-2 rounded bg-panel/50 border border-neon/20 text-text font-ibm text-xs focus:outline-none focus:border-neon/50'
+                  placeholder='Comment...'
                   maxLength={UI_CONSTANTS.MAX_HISTORY_COMMENT_LENGTH}
                   autoFocus
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSaveEdit(index);
                     if (e.key === 'Escape') handleCancelEdit();
                   }}
+                  onClick={(e) => e.stopPropagation()}
                 />
                 <button
-                  onClick={() => handleSaveEdit(index)}
-                  className='py-1 px-2 bg-terminal-dark border-2 border-terminal-cyan rounded text-terminal-cyan font-ibm text-xs cursor-pointer transition-all hover:bg-terminal-cyan hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-cyan)]'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSaveEdit(index);
+                  }}
+                  className='py-0.5 px-1.5 rounded border border-neon/40 text-neon text-xs cursor-pointer'
                 >
                   ✓
                 </button>
                 <button
-                  onClick={handleCancelEdit}
-                  className='py-1 px-2 bg-terminal-dark border-2 border-terminal-red rounded text-terminal-red font-ibm text-xs cursor-pointer transition-all hover:bg-terminal-red hover:text-terminal-dark hover:shadow-[0_0_10px_var(--color-terminal-red)]'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCancelEdit();
+                  }}
+                  className='py-0.5 px-1.5 rounded border border-danger/40 text-danger text-xs cursor-pointer'
                 >
                   ✕
                 </button>
               </div>
             ) : (
-              <>
+              <div className='flex items-center gap-1.5 mt-0.5'>
                 {roll.comment ? (
-                  <div className='mt-1 text-xs text-terminal-cyan italic flex justify-between items-center'>
-                    <span>"{roll.comment}"</span>
+                  <>
+                    <span className='text-[9px] text-neon/45 italic truncate flex-1 min-w-0'>
+                      &quot;{roll.comment}&quot;
+                    </span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleStartEdit(index, roll.comment);
                       }}
-                      className='bg-transparent border-none text-terminal-muted cursor-pointer text-xs p-0.5 px-1'
-                      aria-label='Edit comment'
+                      className='text-[11px] text-text/30 hover:text-neon/60 shrink-0 cursor-pointer'
                     >
                       ✎
                     </button>
-                  </div>
+                  </>
                 ) : (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleStartEdit(index, '');
                     }}
-                    className='mt-1 bg-transparent border-none text-terminal-dimmed cursor-pointer text-xs italic p-0 text-left'
+                    className='text-[11px] text-text/25 italic hover:text-neon/50 cursor-pointer'
                   >
-                    + add comment
+                    + comment
                   </button>
                 )}
-                <div className='text-[0.7rem] text-terminal-dimmed'>
+                <span className='text-[10px] text-text/20 shrink-0'>
                   {formatTimestamp(roll.timestamp)}
-                </div>
-              </>
+                </span>
+              </div>
             )}
           </div>
-        </div>
-      ))}
+        );
+        })}
+      </div>
     </div>
   );
 }
