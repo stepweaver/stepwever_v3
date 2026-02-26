@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata = {
   title: 'Privacy Policy',
@@ -62,12 +63,12 @@ export default function PrivacyPage() {
           <p className='mt-4'>
             If you have concerns about data privacy, please contact me directly
             at{' '}
-            <a
+            <Link
               href='/contact'
               className='text-neon hover:text-accent underline'
             >
               stephen@stepweaver.dev
-            </a>{' '}
+            </Link>{' '}
             instead of using the chat widget.
           </p>
         </section>
@@ -125,12 +126,12 @@ export default function PrivacyPage() {
         <section className='mt-12 pt-8 border-t border-neon/20'>
           <p className='text-sm text-text/70'>
             If you have questions about this privacy policy, please{' '}
-            <a
+            <Link
               href='/contact'
               className='text-neon hover:text-accent underline'
             >
               contact me
-            </a>
+            </Link>
             .
           </p>
         </section>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import {
   Download,
   ExternalLink,
@@ -221,13 +222,13 @@ function MobileResumeBrief() {
               <Download className='w-3 h-3' />
               PDF
             </a>
-            <a
+            <Link
               href='/contact'
               className='inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-panel/30 border border-neon/15 font-ocr text-[10px] text-neon/70 hover:text-neon hover:border-neon/30 transition-colors'
             >
               <Mail className='w-3 h-3' />
               Contact
-            </a>
+            </Link>
             <a
               href='https://github.com/stepweaver'
               target='_blank'
@@ -370,7 +371,7 @@ export default function ResumePage() {
                       </p>
                     </div>
                   </a>
-                  <a
+                  <Link
                     href='/contact'
                     className='group flex items-center gap-2.5 px-2 py-2 rounded-sm bg-panel/30 border border-neon/8 hover:border-neon/20 hover:bg-panel/50 transition-all duration-200'
                   >
@@ -378,7 +379,7 @@ export default function ResumePage() {
                     <p className='font-ibm text-xs text-neon/80 group-hover:text-neon transition-colors'>
                       Get in touch
                     </p>
-                  </a>
+                  </Link>
                   <a
                     href='https://github.com/stepweaver'
                     target='_blank'

@@ -1049,6 +1049,13 @@
   100% { transform: scaleX(1); }
 }
 
+.terminal-progress-fill {
+  transform-origin: left center;
+  animation-name: progressFill;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
 /* Mobile nav panel slide from right - smooth open/close (translate3d for GPU) */
 @keyframes mobileNavSlideIn {
   0%   { opacity: 0; transform: translate3d(100%, 0, 0); }

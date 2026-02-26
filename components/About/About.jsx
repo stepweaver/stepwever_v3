@@ -1,6 +1,7 @@
 'use client';
 
 import { memo } from 'react';
+import Link from 'next/link';
 
 function About() {
   return (
@@ -46,13 +47,13 @@ function About() {
           </p>
           <p className='text-base md:text-lg font-ibm text-text leading-relaxed'>
             Check out my{' '}
-            <a href='/resume' className='text-neon hover:text-accent transition-colors underline hover:no-underline font-bold'>
+            <Link href='/resume' className='text-neon hover:text-accent transition-colors underline hover:no-underline font-bold'>
               resume
-            </a>{' '}
+            </Link>{' '}
             or{' '}
-            <a href='/contact' className='text-neon hover:text-accent transition-colors underline hover:no-underline font-bold'>
+            <Link href='/contact' className='text-neon hover:text-accent transition-colors underline hover:no-underline font-bold'>
               drop me a message
-            </a>
+            </Link>
             .
           </p>
         </footer>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { MessageCircle, X, Send, Minimize2, Maximize2 } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
 import ChatMessage, {
@@ -172,14 +173,14 @@ export default function ChatWidget() {
                   </div>
                   <p className='text-xs text-terminal-muted mt-2 text-center'>
                     Conversations are processed by Groq API and not stored.{' '}
-                    <a
+                    <Link
                       href='/privacy'
                       className='text-neon hover:text-accent underline'
                       target='_blank'
                       rel='noopener noreferrer'
                     >
                       Privacy Policy
-                    </a>
+                    </Link>
                   </p>
                 </form>
               </>

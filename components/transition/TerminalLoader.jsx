@@ -40,7 +40,7 @@ export default function TerminalLoader({ targetPath, duration, phase }) {
         <div className="w-full max-w-2xl">
           {/* Header */}
           <div className="text-neon/40 mb-6 tracking-[0.2em]">
-            STEPWEAVER // LOADING MODULE
+            λSTEPWEAVER // LOADING MODULE
           </div>
 
           {/* Terminal lines */}
@@ -88,17 +88,18 @@ function TerminalLine({ cmd, status, delay, isProgress, progressDuration }) {
 }
 
 function ProgressBar({ duration, delay }) {
-  const durationSec = Math.max(0.4, duration / 1000);
+  const durationSec = Math.max(0.5, duration / 1000);
   return (
     <span
-      className="ml-auto shrink-0 inline-block h-3 w-24 overflow-hidden rounded-sm border border-neon/30 bg-neon/5"
+      className="ml-auto shrink-0 block w-24 h-3 overflow-hidden rounded-sm border border-neon/30 bg-neon/10"
       aria-hidden
     >
       <span
-        className="block h-full w-full bg-neon/80 origin-left"
+        className="terminal-progress-fill block h-full w-full bg-neon/80"
         style={{
-          animation: `progressFill ${durationSec}s ease-out forwards`,
+          animationDuration: `${durationSec}s`,
           animationDelay: `${delay + 80}ms`,
+          backgroundColor: 'rgb(var(--neon) / 0.8)',
         }}
       />
     </span>

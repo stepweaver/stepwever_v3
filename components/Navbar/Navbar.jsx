@@ -50,12 +50,9 @@ export default function Navbar() {
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative'>
         <div className='flex justify-between items-center'>
           {/* Logo */}
-          <button
-            type='button'
-            className='flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity duration-200 bg-transparent border-none'
-            onClick={() => {
-              window.location.href = '/';
-            }}
+          <Link
+            href='/'
+            className='flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity duration-200'
             aria-label='Go to homepage'
             aria-describedby='logo-description'
           >
@@ -70,7 +67,7 @@ export default function Navbar() {
             <span id='logo-description' className='sr-only'>
               Stephen Weaver - Developer Portfolio
             </span>
-          </button>
+          </Link>
 
           {/* Desktop Navigation */}
           <div
@@ -80,23 +77,15 @@ export default function Navbar() {
           >
             {NAV_LINKS.map((link) =>
               link.scroll ? (
-                <button
+                <Link
                   key={link.path}
-                  onClick={() => {
-                    if (window.location.pathname === '/') {
-                      document
-                        .getElementById(link.path.split('#')[1])
-                        ?.scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                      window.location.href = link.path;
-                    }
-                  }}
+                  href={link.path}
                   className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
                   role='menuitem'
                   aria-label={link.ariaLabel}
                 >
                   {link.name}
-                </button>
+                </Link>
               ) : (
                 <Link
                   key={link.path}

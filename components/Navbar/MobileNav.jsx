@@ -137,19 +137,13 @@ export default function MobileNav() {
                       <span className='ml-2 text-text/40 text-xs'>[ext]</span>
                     </Link>
                   ) : item.scroll ? (
-                    <button
-                      type='button'
-                      onClick={() => {
-                        handleClose();
-                        if (window.location.pathname === '/') {
-                          const el = document.getElementById(item.path.split('#')[1]);
-                          if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        } else window.location.href = item.path;
-                      }}
-                      className='block py-4 text-text hover:text-neon transition-colors w-full text-left text-base tracking-wide border-b border-white/5 last:border-b-0 bg-transparent'
+                    <Link
+                      href={item.path}
+                      onClick={handleClose}
+                      className='block py-4 text-text hover:text-neon transition-colors text-base tracking-wide border-b border-white/5 last:border-b-0'
                     >
                       {item.name}
-                    </button>
+                    </Link>
                   ) : (
                     <Link
                       href={item.path}
