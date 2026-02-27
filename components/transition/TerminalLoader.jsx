@@ -24,7 +24,7 @@ export default function TerminalLoader({ targetPath, duration, phase }) {
   ];
 
   const lines = isContentRoute ? contentLines : standardLines;
-  const lineDelay = 180;
+  const lineDelay = 120;
   const progressBarDuration = Math.max(400, duration - lines.length * lineDelay);
 
   return (
@@ -36,7 +36,7 @@ export default function TerminalLoader({ targetPath, duration, phase }) {
       aria-live="polite"
       aria-label="Loading"
     >
-      <div className="relative flex-1 flex flex-col justify-center items-center w-full overflow-hidden px-4 sm:px-8">
+      <div className="relative flex-1 flex flex-col justify-start items-center w-full overflow-hidden px-4 sm:px-8 pt-16 sm:pt-24">
         <div className="w-full max-w-2xl">
           {/* Header */}
           <div className="text-neon/40 mb-6 tracking-[0.2em]">
