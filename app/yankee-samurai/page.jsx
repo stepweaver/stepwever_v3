@@ -29,7 +29,7 @@ function MobileBriefBar() {
     <div className='lg:hidden shrink-0 border-b border-neon/15'>
       <div className='px-3 py-2'>
         <div className='flex items-center gap-2'>
-          <BookOpen className='w-3 h-3 text-terminal-magenta/60' />
+          <BookOpen className='w-3 h-3 text-neon/60' />
           <span className='font-ocr text-xs tracking-[0.2em] text-neon/50 uppercase'>
             REFL-00
           </span>
@@ -65,7 +65,7 @@ export default function YankeeSamuraiPage() {
 
         <div className='relative z-10 flex flex-col h-full'>
           {/* ── System Header ── */}
-          <header className='shrink-0 border-b border-terminal-magenta/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-2 flex items-center justify-between gap-4'>
+          <header className='shrink-0 border-b border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-2 flex items-center justify-between gap-4'>
             <div className='flex items-center gap-2.5'>
               <Link
                 href='/'
@@ -75,8 +75,8 @@ export default function YankeeSamuraiPage() {
                 <span className='hidden sm:inline'>Back</span>
               </Link>
               <span className='text-neon/15 hidden sm:inline'>│</span>
-              <BookOpen className='w-3.5 h-3.5 text-terminal-magenta/70' />
-              <span className='font-ocr text-xs tracking-[0.3em] text-terminal-magenta/70 uppercase'>
+              <BookOpen className='w-3.5 h-3.5 text-neon/70' />
+              <span className='font-ocr text-xs tracking-[0.3em] text-neon/70 uppercase'>
                 REFL-00
               </span>
               <span className='text-neon/15 hidden sm:inline'>│</span>
@@ -87,10 +87,10 @@ export default function YankeeSamuraiPage() {
             <div className='flex items-center gap-2.5'>
               <span className='inline-flex items-center gap-1.5'>
                 <span className='relative flex h-2 w-2'>
-                  <span className='absolute inline-flex h-full w-full rounded-full bg-terminal-magenta opacity-40 motion-safe:animate-ping' />
-                  <span className='relative inline-flex h-2 w-2 rounded-full bg-terminal-magenta' />
+                  <span className='absolute inline-flex h-full w-full rounded-full bg-neon opacity-40 motion-safe:animate-ping' />
+                  <span className='relative inline-flex h-2 w-2 rounded-full bg-neon' />
                 </span>
-                <span className='font-ocr text-xs tracking-[0.15em] text-terminal-magenta/70 uppercase'>
+                <span className='font-ocr text-xs tracking-[0.15em] text-neon/70 uppercase'>
                   Loaded
                 </span>
               </span>
@@ -112,8 +112,8 @@ export default function YankeeSamuraiPage() {
                     A reflection on language as weapon, discipline under
                     consequence, and the weight of words.
                   </p>
-                  <div className='mt-3 w-full h-px bg-gradient-to-r from-terminal-magenta/30 via-terminal-magenta/10 to-transparent' />
-                  <p className='font-ocr text-xs text-terminal-magenta/50 mt-2'>
+                  <div className='mt-3 w-full h-px bg-gradient-to-r from-neon/30 via-neon/10 to-transparent' />
+                  <p className='font-ocr text-xs text-neon/50 mt-2'>
                     Easter egg. Not indexed.
                   </p>
                 </SidebarPanel>
@@ -136,12 +136,12 @@ export default function YankeeSamuraiPage() {
                     {THEMES.map((t) => (
                       <div
                         key={t.tag}
-                        className='group flex items-start gap-2.5 px-3 py-2.5 rounded-sm bg-panel/30 border border-neon/8 hover:border-terminal-magenta/25 hover:bg-panel/50 transition-all duration-200'
+                        className='group flex items-start gap-2.5 px-3 py-2.5 rounded-sm bg-panel/30 border border-neon/8 hover:border-neon/25 hover:bg-panel/50 transition-all duration-200'
                       >
-                        <Shield className='w-3.5 h-3.5 text-terminal-magenta/55 mt-0.5 shrink-0 group-hover:text-terminal-magenta/80 transition-colors' />
+                        <Shield className='w-3.5 h-3.5 text-neon/55 mt-0.5 shrink-0 group-hover:text-neon/80 transition-colors' />
                         <div className='min-w-0'>
                           <div className='flex items-baseline gap-2'>
-                            <p className='font-ibm text-xs text-text/90 group-hover:text-terminal-magenta/90 transition-colors'>
+                            <p className='font-ibm text-xs text-text/90 group-hover:text-neon/90 transition-colors'>
                               {t.label}
                             </p>
                             <span className='font-ocr text-[8px] text-neon/25'>
@@ -156,11 +156,11 @@ export default function YankeeSamuraiPage() {
 
                 <div className='px-1 space-y-1'>
                   <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
-                    <span className='w-1 h-1 rounded-full bg-terminal-magenta/30' />
+                    <span className='w-1 h-1 rounded-full bg-neon/30' />
                     <span>Personal reflection</span>
                   </div>
                   <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
-                    <MessageSquare className='w-3 h-3 text-terminal-magenta/30' />
+                    <MessageSquare className='w-3 h-3 text-neon/30' />
                     <span>Language is weapon</span>
                   </div>
                 </div>
@@ -171,7 +171,7 @@ export default function YankeeSamuraiPage() {
             <section className='flex-1 min-h-0 flex flex-col'>
               <div className='shrink-0 bg-panel/50 border-b border-neon/20 px-4 py-2 flex items-center justify-between'>
                 <div className='flex items-center gap-2'>
-                  <BookOpen className='w-3 h-3 text-terminal-magenta/50' />
+                  <BookOpen className='w-3 h-3 text-neon/50' />
                   <span className='font-ocr text-xs tracking-[0.18em] text-neon/40 uppercase'>
                     Document
                   </span>
@@ -183,7 +183,7 @@ export default function YankeeSamuraiPage() {
 
               <div className='flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8'>
                 <article className='max-w-2xl mx-auto space-y-6 font-ibm text-text/90 text-base sm:text-lg leading-relaxed'>
-                  <h1 className='text-2xl sm:text-3xl md:text-4xl font-ibm text-terminal-magenta mb-6 border-b border-terminal-magenta/30 pb-4'>
+                  <h1 className='text-2xl sm:text-3xl md:text-4xl font-ibm text-neon mb-6 border-b border-neon/30 pb-4'>
                     Yankee Samurai
                   </h1>
 
@@ -192,15 +192,19 @@ export default function YankeeSamuraiPage() {
                   </p>
 
                   <p>
-                    When I was in service, I was given a creed. It was not written for public consumption. It wasn&apos;t motivational poster material. It was something I internalized. It said language is my weapon. Not my sword. Not my rifle. My language. And it said I must not make an error. Because error, in that world, does not mean embarrassment. It can mean miscalculation. It can mean escalation. It can mean someone doesn&apos;t come home. That kind of pressure reshapes you. It makes you slower to speak. It makes you suspicious of certainty. It makes you allergic to exaggeration. You begin to understand that words are not symbols. They are levers.
+                    When I was in service, I was given a creed. It was not written for public consumption. It was something I internalized. It said &quot;language is my weapon&quot; - not my sword, not my rifle. My language. And it said I must not make an error. Because error could mean miscalculation or escalation. It could mean someone doesn&apos;t come home. That kind of pressure reshapes you. It makes you slower to speak. It makes you suspicious of certainty. It makes you allergic to exaggeration. You begin to understand that words are not symbols. They are levers.
                   </p>
 
                   <p>
-                    The term &quot;Yankee Samurai&quot; floats around in military culture. It&apos;s not official. It&apos;s not historical doctrine. It&apos;s metaphor. It likely emerged among American linguists trained at the Defense Language Institute. And like all good metaphors, it works because it points at something real. The historical samurai were not just warriors in lacquered armor. Most of them were bureaucrats. Administrators. Educated retainers bound by discipline and service. During long periods of peace, they studied. They wrote. They governed. The word samurai means &quot;one who serves.&quot; Not one who conquers. That distinction matters. The West romanticized the blade. But the reality was restraint. The code wasn&apos;t about violence. It was about order.
+                    The term &quot;Yankee Samurai&quot; is not official. It&apos;s not historical doctrine. It&apos;s metaphor. It likely emerged among American linguists trained at the Defense Language Institute. And like all good metaphors, it works because it points at something real. The historical samurai were not just warriors in lacquered armor. Most of them were bureaucrats. Administrators. Educated retainers bound by discipline and service. During long periods of peace, they studied. They wrote. They governed. The word samurai means &quot;one who serves.&quot; Not one who conquers. That distinction matters. The West romanticized the blade. But the reality was restraint. The code wasn&apos;t about violence. It was about order.
                   </p>
 
                   <p>
-                    The phrase as we use it today is almost certainly modern military vernacular. Esprit de corps. A way of saying: we are trained differently. We fight differently. We serve differently. Myth unexamined becomes propaganda. Metaphor examined becomes philosophy. So what is a Yankee Samurai? Not a warrior in the cinematic sense. Not a cosplay aesthetic. Not cultural appropriation. It&apos;s discipline under consequence. It&apos;s the understanding that language shapes reality. It&apos;s the refusal to speak casually about things that can cause harm. It&apos;s living with the knowledge that narratives can mobilize nations - or destroy them.
+                    The phrase as we use it today is almost certainly modern military vernacular. Esprit de corps. A way of saying: we are trained differently. We fight differently. We serve differently. Myth unexamined becomes propaganda. Metaphor examined becomes philosophy.
+                  </p>
+
+                  <p>
+                    So what is a Yankee Samurai? Not a warrior in the cinematic sense. Not a cosplay aesthetic. Not cultural appropriation. It&apos;s discipline under consequence. It&apos;s the understanding that language shapes reality. It&apos;s the refusal to speak casually about things that can cause harm. It&apos;s living with the knowledge that narratives can mobilize nations - or destroy them.
                   </p>
 
                   <p>
@@ -211,10 +215,10 @@ export default function YankeeSamuraiPage() {
                     The samurai served a lord. The linguist served a mission. The modern Yankee Samurai serves something harder to define. Truth, maybe. Or integrity. Or simply the discipline of refusing to be sloppy in a world that profits from sloppiness. I don&apos;t carry a sword. I carry pattern recognition. I carry skepticism. I carry the habit of checking twice before speaking once. And when I resist, I try to resist with precision. Not volume or rage. Because I know better. And once you know better, you are responsible for what you do with <strong>that knowledge.</strong>
                   </p>
 
-                  <footer className='mt-16 pt-8 border-t border-terminal-magenta/20'>
+                  <footer className='mt-16 pt-8 border-t border-neon/20'>
                     <Link
                       href='/'
-                      className='inline-flex items-center text-terminal-magenta hover:text-terminal-magenta/80 font-ibm text-sm transition-colors'
+                      className='inline-flex items-center text-neon hover:text-neon/80 font-ibm text-sm transition-colors'
                     >
                       <ArrowLeft className='w-3.5 h-3.5 mr-2' />
                       Back
@@ -226,8 +230,8 @@ export default function YankeeSamuraiPage() {
           </div>
 
           {/* ── Status Bar ── */}
-          <footer className='shrink-0 border-t border-terminal-magenta/15 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-1.5 flex items-center gap-2 sm:gap-3 overflow-x-auto'>
-            <span className='font-ocr text-xs text-terminal-magenta/60 whitespace-nowrap'>
+          <footer className='shrink-0 border-t border-neon/15 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-1.5 flex items-center gap-2 sm:gap-3 overflow-x-auto'>
+            <span className='font-ocr text-xs text-neon/60 whitespace-nowrap'>
               <span className='font-sans'>»</span> REFL-00
             </span>
             <span className='text-neon/15'>│</span>
