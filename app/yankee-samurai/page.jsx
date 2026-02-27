@@ -187,136 +187,28 @@ export default function YankeeSamuraiPage() {
                     Yankee Samurai
                   </h1>
 
-                  <p>There is no certificate that says it.</p>
-                  <p>No official designation.</p>
-                  <p>No patch stitched onto a sleeve.</p>
-                  <p>The phrase exists somewhere between joke and oath.</p>
-                  <p>But it has weight.</p>
-                  <p>And I carry it carefully.</p>
-
                   <p>
-                    When I was in service, I was given a creed. It was not
-                    written for public consumption. It wasn&apos;t motivational
-                    poster material. It was something I internalized.
-                  </p>
-                  <p>It said language is my weapon.</p>
-                  <p>
-                    Not my sword.<br />
-                    Not my rifle.<br />
-                    My language.
-                  </p>
-                  <p>And it said I must not make an error.</p>
-                  <p>
-                    Because error, in that world, does not mean embarrassment.
-                  </p>
-                  <p>
-                    It can mean miscalculation.<br />
-                    It can mean escalation.<br />
-                    It can mean someone doesn&apos;t come home.
-                  </p>
-                  <p>That kind of pressure reshapes you.</p>
-                  <p>
-                    It makes you slower to speak.<br />
-                    It makes you suspicious of certainty.<br />
-                    It makes you allergic to exaggeration.
-                  </p>
-                  <p>
-                    You begin to understand that words are not symbols. They are
-                    levers.
+                    There is no certificate that says it. No official designation. No patch stitched onto a sleeve. The phrase exists somewhere between joke and oath. But it has weight. And I carry it carefully.
                   </p>
 
                   <p>
-                    The term &quot;Yankee Samurai&quot; floats around in
-                    military culture. It&apos;s not official. It&apos;s not
-                    historical doctrine. It&apos;s metaphor. It likely emerged
-                    among American linguists trained at the Defense Language
-                    Institute.
-                  </p>
-                  <p>
-                    And like all good metaphors, it works because it points at
-                    something real.
+                    When I was in service, I was given a creed. It was not written for public consumption. It wasn&apos;t motivational poster material. It was something I internalized. It said language is my weapon. Not my sword. Not my rifle. My language. And it said I must not make an error. Because error, in that world, does not mean embarrassment. It can mean miscalculation. It can mean escalation. It can mean someone doesn&apos;t come home. That kind of pressure reshapes you. It makes you slower to speak. It makes you suspicious of certainty. It makes you allergic to exaggeration. You begin to understand that words are not symbols. They are levers.
                   </p>
 
                   <p>
-                    The historical samurai were not just warriors in lacquered
-                    armor. Most of them were bureaucrats. Administrators.
-                    Educated retainers bound by discipline and service. During
-                    long periods of peace, they studied. They wrote. They
-                    governed.
-                  </p>
-                  <p>The word samurai means &quot;one who serves.&quot;</p>
-                  <p>Not one who conquers.</p>
-                  <p>That distinction matters.</p>
-                  <p>The West romanticized the blade.</p>
-                  <p>But the reality was restraint.</p>
-                  <p>The code wasn&apos;t about violence. It was about order.</p>
-
-                  <p>
-                    The phrase as we use it today is almost certainly modern
-                    military vernacular. Esprit de corps. A way of saying: we
-                    are trained differently. We fight differently. We serve
-                    differently.
-                  </p>
-
-                  <p>Myth unexamined becomes propaganda.</p>
-                  <p>Metaphor examined becomes philosophy.</p>
-
-                  <p>So what is a Yankee Samurai?</p>
-                  <p>Not a warrior in the cinematic sense.</p>
-                  <p>Not a cosplay aesthetic.</p>
-                  <p>Not cultural appropriation.</p>
-                  <p>It&apos;s discipline under consequence.</p>
-                  <p>It&apos;s the understanding that language shapes reality.</p>
-                  <p>
-                    It&apos;s the refusal to speak casually about things that
-                    can cause harm.
-                  </p>
-                  <p>
-                    It&apos;s living with the knowledge that narratives can
-                    mobilize nations - or destroy them.
+                    The term &quot;Yankee Samurai&quot; floats around in military culture. It&apos;s not official. It&apos;s not historical doctrine. It&apos;s metaphor. It likely emerged among American linguists trained at the Defense Language Institute. And like all good metaphors, it works because it points at something real. The historical samurai were not just warriors in lacquered armor. Most of them were bureaucrats. Administrators. Educated retainers bound by discipline and service. During long periods of peace, they studied. They wrote. They governed. The word samurai means &quot;one who serves.&quot; Not one who conquers. That distinction matters. The West romanticized the blade. But the reality was restraint. The code wasn&apos;t about violence. It was about order.
                   </p>
 
                   <p>
-                    When you&apos;ve been trained to parse signal from noise in
-                    environments where mistakes matter, you don&apos;t just turn
-                    that off.
-                  </p>
-                  <p>You see propaganda differently.</p>
-                  <p>You hear manipulation differently.</p>
-                  <p>
-                    You recognize when language is being engineered to trigger
-                    rather than inform.
-                  </p>
-                  <p>And once you see it, you cannot unsee it.</p>
-                  <p>That is both a gift and a burden.</p>
-
-                  <p>The samurai served a lord.</p>
-                  <p>The linguist served a mission.</p>
-                  <p>
-                    The modern Yankee Samurai serves something harder to
-                    define.
-                  </p>
-                  <p>Truth, maybe.</p>
-                  <p>Or integrity.</p>
-                  <p>
-                    Or simply the discipline of refusing to be sloppy in a
-                    world that profits from sloppiness.
+                    The phrase as we use it today is almost certainly modern military vernacular. Esprit de corps. A way of saying: we are trained differently. We fight differently. We serve differently. Myth unexamined becomes propaganda. Metaphor examined becomes philosophy. So what is a Yankee Samurai? Not a warrior in the cinematic sense. Not a cosplay aesthetic. Not cultural appropriation. It&apos;s discipline under consequence. It&apos;s the understanding that language shapes reality. It&apos;s the refusal to speak casually about things that can cause harm. It&apos;s living with the knowledge that narratives can mobilize nations - or destroy them.
                   </p>
 
-                  <p>I don&apos;t carry a sword.</p>
-                  <p>I carry pattern recognition.</p>
-                  <p>I carry skepticism.</p>
                   <p>
-                    I carry the habit of checking twice before speaking once.
+                    When you&apos;ve been trained to parse signal from noise in environments where mistakes matter, you don&apos;t just turn that off. You see propaganda differently. You hear manipulation differently. You recognize when language is being engineered to trigger rather than inform. And once you see it, you cannot unsee it. That is both a gift and a burden.
                   </p>
-                  <p>And when I resist, I try to resist with precision.</p>
-                  <p>Not volume.</p>
-                  <p>Not rage.</p>
-                  <p>Precision.</p>
-                  <p>Because I know better.</p>
+
                   <p>
-                    And once you know better, you are responsible for what you
-                    do with that knowledge.
+                    The samurai served a lord. The linguist served a mission. The modern Yankee Samurai serves something harder to define. Truth, maybe. Or integrity. Or simply the discipline of refusing to be sloppy in a world that profits from sloppiness. I don&apos;t carry a sword. I carry pattern recognition. I carry skepticism. I carry the habit of checking twice before speaking once. And when I resist, I try to resist with precision. Not volume or rage. Because I know better. And once you know better, you are responsible for what you do with <strong>that knowledge.</strong>
                   </p>
 
                   <footer className='mt-16 pt-8 border-t border-terminal-magenta/20'>
