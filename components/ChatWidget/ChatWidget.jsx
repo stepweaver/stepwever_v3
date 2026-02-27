@@ -111,7 +111,7 @@ export default function ChatWidget() {
           type='button'
           aria-label='Close chat'
           onClick={toggleOpen}
-          className='fixed inset-0 z-[90] bg-black/30 cursor-pointer'
+          className='fixed inset-0 z-[90] bg-black/40 backdrop-blur-md cursor-pointer'
         />
       )}
       {/* Chat Widget Container */}
@@ -250,8 +250,8 @@ export default function ChatWidget() {
                       onKeyDown={handleKeyDown}
                       onPaste={handlePaste}
                       placeholder='Ask me anything... (Shift+Enter for new line, paste images)'
-                      rows={1}
-                      className='flex-1 min-w-0 bg-panel/40 border border-neon/25 text-text font-ocr text-base sm:text-sm min-h-[2.75rem] max-h-32 p-2.5 focus:outline-none focus:ring-1 focus:ring-neon/40 focus:border-neon/50 placeholder:text-text/40 resize-y overflow-y-auto'
+                      rows={3}
+                      className='flex-1 min-w-0 bg-panel/40 border border-neon/25 text-text font-ocr text-base sm:text-sm min-h-[5rem] max-h-40 p-2.5 focus:outline-none focus:ring-1 focus:ring-neon/40 focus:border-neon/50 placeholder:text-text/40 resize-y overflow-y-auto'
                       disabled={isLoading}
                       style={{ resize: 'vertical' }}
                     />
