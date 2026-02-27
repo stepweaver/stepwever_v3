@@ -95,6 +95,8 @@ async function fetchWithTimeout(url, options, timeoutMs) {
 
 const PROMPT_INJECTION_PATTERN = /ignore previous|disregard (instructions|above|prior)|system prompt|you are now|act as|pretend to be|new instructions/i;
 
+const GROQ_VISION_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct';
+const MAX_IMAGES_PER_MESSAGE = 5;
 function normalizeIncomingMessages(messages) {
   const allowedRoles = new Set(['user', 'assistant']);
 
@@ -103,19 +105,37 @@ function normalizeIncomingMessages(messages) {
       (m) =>
         m &&
         allowedRoles.has(m.role) &&
-        typeof m.content === 'string' &&
-        m.content.trim().length > 0
+        (typeof m.content === 'string' || (m.role === 'user' && m.attachments?.length > 0))
     )
     .map((m) => {
-      let content = sanitizeText(m.content).slice(0, MAX_MESSAGE_LENGTH);
-      if (m.role === 'assistant' && PROMPT_INJECTION_PATTERN.test(content)) {
-        return null;
+      const textContent = typeof m.content === 'string' ? sanitizeText(m.content).slice(0, MAX_MESSAGE_LENGTH) : '';
+      const hasText = textContent.trim().length > 0;
+      const attachments = Array.isArray(m.attachments) ? m.attachments.slice(0, MAX_IMAGES_PER_MESSAGE) : [];
+      const hasImages = attachments.length > 0;
+
+      if (!hasText && !hasImages) return null;
+      if (m.role === 'assistant' && PROMPT_INJECTION_PATTERN.test(textContent)) return null;
+
+      // Build content for vision (array) or text-only (string)
+      if (hasImages && m.role === 'user') {
+        const content = [];
+        const textForVision = hasText ? textContent : 'What do you see in this image?';
+        content.push({ type: 'text', text: textForVision });
+        for (const att of attachments) {
+          const url = att?.dataUrl;
+          if (typeof url === 'string' && url.startsWith('data:image/') && url.length < 6 * 1024 * 1024) {
+            content.push({ type: 'image_url', image_url: { url } });
+          }
+        }
+        if (content.length > 0) {
+          return { role: m.role, content };
+        }
       }
-      return { role: m.role, content };
+      return hasText ? { role: m.role, content: textContent } : null;
     })
     .filter(Boolean)
     .slice(-MAX_MESSAGES)
-    .filter((m) => m.content.length > 0);
+    .filter((m) => (Array.isArray(m.content) ? m.content.length > 0 : m.content.length > 0));
 
   return sanitizedMessages;
 }
@@ -248,19 +268,23 @@ export async function POST(request) {
     const openaiApiKey = process.env.OPENAI_API_KEY;
 
     const groqModel = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+    const groqVisionModel = process.env.GROQ_VISION_MODEL || GROQ_VISION_MODEL;
     const openaiModel = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
     const maxTokens = Number(process.env.AI_MAX_TOKENS || 300);
     const temperature = Number(process.env.AI_TEMPERATURE || 0.7);
 
+    const hasVisionContent = apiMessages.some((m) => Array.isArray(m.content));
+    const groqModelToUse = hasVisionContent ? groqVisionModel : groqModel;
+
     let provider = null;
     let assistantText = '';
 
-    // 1) Groq first (fast/cheap)
+    // 1) Groq first (fast/cheap); use vision model when images present
     if (groqApiKey) {
       const { res, data } = await callGroq({
         groqApiKey,
-        model: groqModel,
+        model: groqModelToUse,
         messages: apiMessages,
         maxTokens,
         temperature,

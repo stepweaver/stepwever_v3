@@ -55,7 +55,19 @@ export default function ChatMessage({ message, variant = 'default' }) {
             : 'bg-terminal-dark/50 border border-terminal-border text-terminal-text'
         }`}
       >
-        {parseChatLinks(message.content, {
+        {message.attachments?.length > 0 && (
+          <div className='flex flex-wrap gap-1.5 mb-2'>
+            {message.attachments.map((att, i) => (
+              <img
+                key={i}
+                src={att.dataUrl}
+                alt='Attached'
+                className='max-w-full max-h-24 object-contain rounded border border-terminal-border/50'
+              />
+            ))}
+          </div>
+        )}
+        {message.content && parseChatLinks(message.content, {
           renderAgentName: (key) => (
             <GlitchLambda key={key} size='small' className='inline' />
           ),

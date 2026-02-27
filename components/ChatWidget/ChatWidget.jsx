@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { MessageCircle, X, Send, Minimize2, Maximize2 } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
@@ -27,12 +27,46 @@ export default function ChatWidget() {
     messages,
     input,
     setInput,
+    attachments,
+    addAttachment,
+    removeAttachment,
     isLoading,
     error,
     messagesEndRef,
     sendMessage,
     handleSubmit,
   } = useChat({ inputRef, isVisible: isOpen && !isMinimized });
+
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSubmit(e);
+      }
+    },
+    [handleSubmit]
+  );
+
+  const handlePaste = useCallback(
+    (e) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      for (const item of items) {
+        if (item.type.startsWith('image/')) {
+          e.preventDefault();
+          const file = item.getAsFile();
+          if (!file || file.size > 4 * 1024 * 1024) continue; // 4MB limit
+          const reader = new FileReader();
+          reader.onload = () => {
+            addAttachment(reader.result, file.type);
+          };
+          reader.readAsDataURL(file);
+          break;
+        }
+      }
+    },
+    [addAttachment]
+  );
 
   // Show notification dot when message arrives while minimized
   const prevMessageCount = useRef(messages.length);
@@ -152,20 +186,47 @@ export default function ChatWidget() {
                   onSubmit={handleSubmit}
                   className='p-3 border-t border-neon/20'
                 >
-                  <div className='flex gap-2'>
-                    <input
+                  {attachments.length > 0 && (
+                    <div className='flex flex-wrap gap-2 mb-2'>
+                      {attachments.map((att, i) => (
+                        <div
+                          key={i}
+                          className='relative group inline-block'
+                        >
+                          <img
+                            src={att.dataUrl}
+                            alt='Pasted'
+                            className='w-14 h-14 object-cover rounded border border-neon/30'
+                          />
+                          <button
+                            type='button'
+                            onClick={() => removeAttachment(i)}
+                            className='absolute -top-1 -right-1 w-4 h-4 rounded-full bg-danger text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer'
+                            aria-label='Remove image'
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div className='flex gap-2 items-end'>
+                    <textarea
                       ref={inputRef}
-                      type='text'
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      placeholder='Ask me anything...'
-                      className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-base sm:text-sm min-h-[2.75rem] p-2.5 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_8px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/50'
+                      onKeyDown={handleKeyDown}
+                      onPaste={handlePaste}
+                      placeholder='Ask me anything... (Shift+Enter for new line, paste images)'
+                      rows={1}
+                      className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-base sm:text-sm min-h-[2.75rem] max-h-32 p-2.5 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_8px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/50 resize-y overflow-y-auto'
                       disabled={isLoading}
+                      style={{ resize: 'vertical' }}
                     />
                     <button
                       type='submit'
-                      disabled={isLoading || !input.trim()}
-                      className='px-3 py-2 bg-neon/10 border border-neon text-neon rounded hover:bg-neon/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer'
+                      disabled={isLoading || (!input.trim() && attachments.length === 0)}
+                      className='px-3 py-2 bg-neon/10 border border-neon text-neon rounded hover:bg-neon/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer shrink-0'
                       aria-label='Send message'
                     >
                       <Send className='w-4 h-4' />
