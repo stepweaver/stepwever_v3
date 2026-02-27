@@ -189,8 +189,8 @@ export default async function MeshtasticDocPage({ params }) {
             {/* Article body */}
             <div className='px-5 sm:px-6 lg:px-8 py-6 lg:py-8'>
               <div className='max-w-3xl'>
-                <AffiliateDisclosure />
-                <AffiliateIntroCTA />
+                <AffiliateDisclosure show={hasAffiliate} />
+                <AffiliateIntroCTA affiliateUrl={primaryAffiliateUrl} />
                 {blocks.length > 0 ? (
                   <div className='prose prose-invert max-w-none'>
                     <NotionBlockBody blocks={blocks} />

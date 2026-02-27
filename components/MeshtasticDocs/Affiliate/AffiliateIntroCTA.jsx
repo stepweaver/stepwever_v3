@@ -1,7 +1,6 @@
-import GlitchButton from '@/components/ui/GlitchButton';
-
 /**
  * Top-of-page affiliate CTA. Receives affiliateUrl from server to avoid hydration mismatch.
+ * Uses Meshtastic panel styling (semi-transparent) instead of solid GlitchButton.
  */
 export default function AffiliateIntroCTA({ affiliateUrl }) {
   if (!affiliateUrl) return null;
@@ -19,14 +18,14 @@ export default function AffiliateIntroCTA({ affiliateUrl }) {
           high-quality radios, repeaters, and accessories built for real-world
           use.
         </p>
-        <GlitchButton
+        <a
           href={affiliateUrl}
           target='_blank'
           rel='noopener noreferrer'
-          className='text-sm'
+          className='inline-flex items-center justify-center px-4 py-2.5 rounded-sm border border-neon/25 bg-panel/40 text-neon/90 hover:text-neon hover:bg-panel/60 hover:border-neon/40 transition-colors font-ocr text-xs sm:text-sm tracking-[0.15em] text-center'
         >
-          Explore Atlavox Radios & Accessories
-        </GlitchButton>
+          Shop Atlavox Radios
+        </a>
       </div>
     </section>
   );
