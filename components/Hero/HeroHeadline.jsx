@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function HeroHeadline() {
   return (
     <header className='mb-6 sm:mb-10'>
@@ -10,7 +12,12 @@ export default function HeroHeadline() {
             Problem Solver.
           </div>
           <div className='text-terminal-magenta font-bold whitespace-nowrap'>
-            Yankee Samurai.
+            <Link
+              href='/yankee-samurai'
+              className='border-b-2 border-terminal-magenta/40 hover:border-terminal-magenta hover:shadow-[0_0_16px_rgba(255,85,255,0.35)] transition-all duration-300'
+            >
+              Yankee Samurai.
+            </Link>
           </div>
         </div>
       </h1>

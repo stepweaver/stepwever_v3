@@ -7,6 +7,7 @@ import { HUDPanel } from '@/components/ui/HUDPanel';
 import { StatusPill } from '@/components/ui/StatusPill';
 import { MatrixSync } from '@/components/ui/MatrixSync';
 import TerminalLink from './TerminalLink';
+import Link from 'next/link';
 
 const About = dynamic(() => import('@/components/About/About'), {
   loading: () => <div className='min-h-[200px]' />,
@@ -82,14 +83,23 @@ function Hero() {
                   <ul className='flex flex-wrap gap-2 mt-4 list-none' aria-label="Characteristics">
                     {['Developer', 'Problem Solver', 'Yankee Samurai', 'Veteran', 'Rebel'].map((label, i) => (
                       <li key={label}>
-                        <span
-                          className={[
-                            'inline-block px-2.5 py-1 rounded border text-xs font-ibm',
-                            label === 'Rebel' ? 'border-terminal-magenta/70 text-terminal-magenta' : i === 1 ? 'border-accent text-accent' : 'border-neon/60 text-text/90',
-                          ].join(' ')}
-                        >
-                          {label}
-                        </span>
+                        {label === 'Yankee Samurai' ? (
+                          <Link
+                            href='/yankee-samurai'
+                            className='inline-block px-2.5 py-1 rounded border text-xs font-ibm border-terminal-magenta/60 text-terminal-magenta/90 hover:border-terminal-magenta hover:text-terminal-magenta hover:shadow-[0_0_12px_rgba(255,85,255,0.3)] transition-all duration-300 cursor-pointer'
+                          >
+                            {label}
+                          </Link>
+                        ) : (
+                          <span
+                            className={[
+                              'inline-block px-2.5 py-1 rounded border text-xs font-ibm',
+                              label === 'Rebel' ? 'border-terminal-magenta/70 text-terminal-magenta' : i === 1 ? 'border-accent text-accent' : 'border-neon/60 text-text/90',
+                            ].join(' ')}
+                          >
+                            {label}
+                          </span>
+                        )}
                       </li>
                     ))}
                   </ul>
