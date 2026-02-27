@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { MessageCircle, X, Send, Minimize2, Maximize2 } from 'lucide-react';
+import { MessageCircle, X, Send, Minimize2, Maximize2, Expand, Shrink } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
 import ChatMessage, {
   ChatLoadingIndicator,
@@ -20,6 +20,7 @@ const EXAMPLE_QUESTIONS = [
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const inputRef = useRef(null);
 
@@ -86,10 +87,21 @@ export default function ChatWidget() {
     if (!isOpen) {
       setIsOpen(true);
       setIsMinimized(false);
+      setIsFullscreen(false);
     } else {
       setIsOpen(false);
+      setIsFullscreen(false);
     }
   };
+
+  // Escape to exit fullscreen
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isFullscreen) setIsFullscreen(false);
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isFullscreen]);
 
   return (
     <>
@@ -105,10 +117,13 @@ export default function ChatWidget() {
       {/* Chat Widget Container */}
       {isOpen && (
         <div
-          className={`fixed bottom-20 right-4 sm:right-6 z-[100] transition-all duration-300 ${
-            isMinimized
-              ? 'w-72 h-14'
-              : 'w-[calc(100vw-2rem)] sm:w-96 h-[500px] max-h-[70vh]'
+          className={`fixed transition-all duration-300 ${
+            isFullscreen
+              ? 'inset-0 m-0 z-[200]'
+              : `z-[100] ${isMinimized
+                ? 'bottom-20 right-4 sm:right-6 w-72 h-14'
+                : 'bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[min(28rem,90vw)] md:w-[min(32rem,90vw)] h-[500px] max-h-[70vh]'
+              }`
           }`}
         >
           <div className='hud-panel h-full flex flex-col relative overflow-hidden' style={{ background: 'rgb(var(--panel))', backdropFilter: 'none', boxShadow: '0 0 24px rgb(var(--neon) / 0.25), 0 4px 30px rgba(0,0,0,0.4)' }}>
@@ -127,9 +142,26 @@ export default function ChatWidget() {
                 )}
               </div>
               <div className='flex items-center gap-2 shrink-0'>
+                {!isMinimized && (
+                  <button
+                    type='button'
+                    onClick={() => setIsFullscreen(!isFullscreen)}
+                    className='p-1 text-text/60 hover:text-neon transition-colors cursor-pointer'
+                    aria-label={isFullscreen ? 'Exit fullscreen' : 'Expand to fullscreen'}
+                  >
+                    {isFullscreen ? (
+                      <Shrink className='w-4 h-4' />
+                    ) : (
+                      <Expand className='w-4 h-4' />
+                    )}
+                  </button>
+                )}
                 <button
                   type='button'
-                  onClick={() => setIsMinimized(!isMinimized)}
+                  onClick={() => {
+                    if (isFullscreen) setIsFullscreen(false);
+                    setIsMinimized(!isMinimized);
+                  }}
                   className='p-1 text-text/60 hover:text-neon transition-colors cursor-pointer'
                   aria-label={isMinimized ? 'Expand chat' : 'Minimize chat'}
                 >
@@ -219,7 +251,7 @@ export default function ChatWidget() {
                       onPaste={handlePaste}
                       placeholder='Ask me anything... (Shift+Enter for new line, paste images)'
                       rows={1}
-                      className='flex-1 bg-terminal-dark/30 border border-terminal-border text-terminal-text font-ocr text-base sm:text-sm min-h-[2.75rem] max-h-32 p-2.5 rounded focus:outline-none focus:border-terminal-green focus:shadow-[0_0_8px_rgba(0,255,0,0.2)] placeholder:text-terminal-text/50 resize-y overflow-y-auto'
+                      className='flex-1 min-w-0 bg-panel/40 border border-neon/25 text-text font-ocr text-base sm:text-sm min-h-[2.75rem] max-h-32 p-2.5 focus:outline-none focus:ring-1 focus:ring-neon/40 focus:border-neon/50 placeholder:text-text/40 resize-y overflow-y-auto'
                       disabled={isLoading}
                       style={{ resize: 'vertical' }}
                     />
@@ -232,7 +264,7 @@ export default function ChatWidget() {
                       <Send className='w-4 h-4' />
                     </button>
                   </div>
-                  <p className='text-xs text-terminal-muted mt-2 text-center'>
+                  <p className='text-xs text-text/40 font-ocr mt-2 text-center'>
                     Conversations are processed by Groq API and not stored.{' '}
                     <Link
                       href='/privacy'
@@ -250,31 +282,33 @@ export default function ChatWidget() {
         </div>
       )}
 
-      {/* Floating Action Button */}
-      <button
-        type='button'
-        onClick={toggleOpen}
-        className={`fixed bottom-4 right-4 sm:right-6 z-[100] w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer border-2 ${
-          isOpen
-            ? 'border-neon/50 text-neon hover:bg-neon/10'
-            : 'border-neon text-neon hover:bg-neon/30 hover:shadow-[0_0_18px_rgb(var(--neon)/0.4)]'
-        }`}
+      {/* Floating Action Button - hidden when fullscreen */}
+      {!isFullscreen && (
+        <button
+          type='button'
+          onClick={toggleOpen}
+          className={`fixed bottom-4 right-4 sm:right-6 z-[100] w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer border-2 ${
+            isOpen
+              ? 'border-neon/50 text-neon hover:bg-neon/10'
+              : 'border-neon text-neon hover:bg-neon/30 hover:shadow-[0_0_18px_rgb(var(--neon)/0.4)]'
+          }`}
         style={{
           background: 'rgb(var(--panel))'
         }}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
-      >
-        {isOpen ? (
-          <X className='w-6 h-6' />
-        ) : (
-          <>
-            <MessageCircle className='w-6 h-6' />
-            {hasNewMessage && (
-              <span className='absolute top-0 right-0 w-3 h-3 rounded-full bg-neon motion-safe:animate-pulse' />
-            )}
-          </>
-        )}
-      </button>
+        >
+          {isOpen ? (
+            <X className='w-6 h-6' />
+          ) : (
+            <>
+              <MessageCircle className='w-6 h-6' />
+              {hasNewMessage && (
+                <span className='absolute top-0 right-0 w-3 h-3 rounded-full bg-neon motion-safe:animate-pulse' />
+              )}
+            </>
+          )}
+        </button>
+      )}
     </>
   );
 }
