@@ -98,7 +98,7 @@ export default async function CodexPostPage({ params }) {
             <header className="mb-10">
               {/* Meta row */}
               <div className="mb-4">
-                <div className="flex flex-nowrap items-center gap-3 overflow-x-auto">
+                <div className="flex flex-nowrap items-center justify-between overflow-x-auto">
                   <span className="font-mono text-[10px] tracking-[0.25em] text-neon/40 uppercase whitespace-nowrap shrink-0">
                     CODEX // ENTRY
                   </span>
