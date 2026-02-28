@@ -155,7 +155,7 @@ function CodexContent() {
                                 px-3 py-1 text-xs font-ocr tracking-wider uppercase
                                 border rounded-sm transition-all duration-200 cursor-pointer
                                 ${isActive
-                                  ? 'border-neon/70 text-neon bg-neon/15 [text-shadow:var(--terminal-text-glow)]'
+                                  ? 'border-neon text-neon bg-neon/25 [text-shadow:var(--terminal-strong-glow)] [box-shadow:0_0_12px_rgb(var(--neon)/0.4)]'
                                   : 'border-neon/25 text-text/60 hover:border-neon/50 hover:text-neon hover:bg-neon/5'
                                 }
                               `}
@@ -243,7 +243,7 @@ function CodexContent() {
                                 px-3 py-1 text-xs font-ocr tracking-wider uppercase
                                 border rounded-sm transition-all duration-200 cursor-pointer
                                 ${isActive
-                                  ? 'border-neon/70 text-neon bg-neon/15 [text-shadow:var(--terminal-text-glow)]'
+                                  ? 'border-neon text-neon bg-neon/25 [text-shadow:var(--terminal-strong-glow)] [box-shadow:0_0_12px_rgb(var(--neon)/0.4)]'
                                   : 'border-neon/25 text-text/60 hover:border-neon/50 hover:text-neon hover:bg-neon/5'
                                 }
                               `}
