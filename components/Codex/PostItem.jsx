@@ -24,17 +24,14 @@ export default function PostItem({ post, index, formatDate, onHashtagClick }) {
     >
       <Link href={`/codex/${post.slug}`} className="block py-6 sm:py-8">
         {/* Index + date row */}
-        <div className="flex items-center gap-3 mb-3">
-          <span className="font-mono text-[10px] tracking-[0.25em] text-neon/40 uppercase">
+        <div className="flex flex-nowrap items-center justify-between overflow-x-auto mb-3">
+          <span className="font-mono text-[10px] tracking-[0.25em] text-neon/40 uppercase whitespace-nowrap shrink-0">
             CODEX-{String(index + 1).padStart(2, '0')}
           </span>
-          <span className="font-ocr text-xs text-text/40 tracking-wide">
-            {formatDate(post.date)}
-            {post.updated && post.updated !== post.date && (
-              <span className="text-neon/50 ml-2">
-                Updated: {formatDate(post.updated)}
-              </span>
-            )}
+          <span className="font-ocr text-xs text-text/40 tracking-wide whitespace-nowrap shrink-0">
+            {post.updated && post.updated !== post.date
+              ? `Updated: ${formatDate(post.updated)}`
+              : formatDate(post.date)}
           </span>
         </div>
 

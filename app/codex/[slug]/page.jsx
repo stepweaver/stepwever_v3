@@ -97,20 +97,15 @@ export default async function CodexPostPage({ params }) {
             {/* Article header */}
             <header className="mb-10">
               {/* Meta row */}
-              <div className="mb-4">
-                <div className="flex flex-nowrap items-center justify-between overflow-x-auto">
-                  <span className="font-mono text-[10px] tracking-[0.25em] text-neon/40 uppercase whitespace-nowrap shrink-0">
-                    CODEX // ENTRY
-                  </span>
-                  <span className="font-ocr text-xs text-text/40 tracking-wide whitespace-nowrap shrink-0">
-                    {formatDate(entry.date)}
-                  </span>
-                </div>
-                {entry.updated && entry.updated !== entry.date && (
-                  <div className="font-ocr text-xs text-neon/50 tracking-wide mt-1 whitespace-nowrap">
-                    Updated: {formatDate(entry.updated)}
-                  </div>
-                )}
+              <div className="flex flex-nowrap items-center justify-between overflow-x-auto mb-4">
+                <span className="font-mono text-[10px] tracking-[0.25em] text-neon/40 uppercase whitespace-nowrap shrink-0">
+                  CODEX // ENTRY
+                </span>
+                <span className="font-ocr text-xs text-text/40 tracking-wide whitespace-nowrap shrink-0">
+                  {entry.updated && entry.updated !== entry.date
+                    ? `Updated: ${formatDate(entry.updated)}`
+                    : formatDate(entry.date)}
+                </span>
               </div>
 
               {/* Title */}
