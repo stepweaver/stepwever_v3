@@ -5,8 +5,8 @@ import { useState, useEffect, useRef } from 'react';
 import TerminalLoader from './TerminalLoader';
 
 const CONTENT_PREFIXES = ['/codex', '/meshtastic'];
-const CONTENT_DURATION_MS = 2800;
-const STANDARD_DURATION_MS = 1400;
+const CONTENT_DURATION_MS = 2400;
+const STANDARD_DURATION_MS = 1200;
 const FADEOUT_MS = 500;
 
 function isContentRoute(path) {

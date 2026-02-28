@@ -24,6 +24,7 @@ const formatDate = (dateStr) => {
   }
 };
 
+export const revalidate = 60; // Revalidate every 60s so Notion updates appear
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
