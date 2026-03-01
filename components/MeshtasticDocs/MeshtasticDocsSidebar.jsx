@@ -27,6 +27,14 @@ export default function MeshtasticDocsSidebar({
       </div>
 
       <nav className='flex-1 p-3 space-y-1 overflow-y-auto min-h-0'>
+        <div className='border-b border-neon/10 pb-1 mb-1'>
+          <Link
+            href='/meshtastic/dashboard'
+            className={getLinkClass(false)}
+          >
+            Dashboard
+          </Link>
+        </div>
         {hasFieldNotes && (
           <div className='border-b border-neon/10 pb-1 mb-1'>
             <Link
