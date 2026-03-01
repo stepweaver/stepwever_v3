@@ -45,14 +45,17 @@ export default function MeshFilters({
     [source, channel, onChange]
   );
 
+  const selectClass =
+    'bg-terminal-dark border border-neon/40 rounded px-3 py-2 text-sm font-ibm text-text min-w-[5rem] focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon/30';
+
   return (
     <div className="flex flex-wrap items-center gap-3 font-ocr text-xs">
       <label className="flex items-center gap-2">
-        <span className="text-neon/50 uppercase tracking-wider">Source</span>
+        <span className="text-neon/60 uppercase tracking-wider">Source</span>
         <select
           value={source}
           onChange={handleSourceChange}
-          className="bg-panel/60 border border-neon/20 rounded px-2 py-1 text-text focus:outline-none focus:border-neon/50"
+          className={selectClass}
         >
           <option value="">All</option>
           <option value="rf">RF</option>
@@ -60,11 +63,11 @@ export default function MeshFilters({
         </select>
       </label>
       <label className="flex items-center gap-2">
-        <span className="text-neon/50 uppercase tracking-wider">Channel</span>
+        <span className="text-neon/60 uppercase tracking-wider">Channel</span>
         <select
           value={channel}
           onChange={handleChannelChange}
-          className="bg-panel/60 border border-neon/20 rounded px-2 py-1 text-text focus:outline-none focus:border-neon/50"
+          className={selectClass}
         >
           <option value="">All</option>
           {channels.map((c) => (
@@ -75,11 +78,11 @@ export default function MeshFilters({
         </select>
       </label>
       <label className="flex items-center gap-2">
-        <span className="text-neon/50 uppercase tracking-wider">Node</span>
+        <span className="text-neon/60 uppercase tracking-wider">Node</span>
         <select
           value={node}
           onChange={handleNodeChange}
-          className="bg-panel/60 border border-neon/20 rounded px-2 py-1 text-text focus:outline-none focus:border-neon/50"
+          className={selectClass}
         >
           <option value="">All</option>
           {nodes.map((n) => (
