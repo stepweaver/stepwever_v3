@@ -87,7 +87,7 @@ export default function ChatWidget() {
     if (!isOpen) {
       setIsOpen(true);
       setIsMinimized(false);
-      setIsFullscreen(false);
+      setIsFullscreen(true);
     } else {
       setIsOpen(false);
       setIsFullscreen(false);

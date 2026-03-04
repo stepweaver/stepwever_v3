@@ -45,7 +45,7 @@ export default function HomePage() {
         <InkDivider showSeal={false} />
 
         <section className='relative z-30 py-8'>
-          <div className='w-full px-4 sm:px-6 md:px-8 lg:px-6 xl:px-6 2xl:px-6 max-w-none text-center'>
+          <div className='w-full px-2 sm:px-4 md:px-3 lg:px-4 max-w-none text-center'>
             <p className='text-xs tracking-[0.2em] text-neon/70 font-ocr uppercase mb-2'>RECENT INTEL</p>
             <Link
               href='/codex'

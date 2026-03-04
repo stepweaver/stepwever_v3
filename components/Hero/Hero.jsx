@@ -32,7 +32,7 @@ const ProjectCarousel = dynamic(() => import('./ProjectCarousel'), {
 function Hero() {
   return (
     <section className='relative z-30 pt-0 pb-2 sm:pb-4 md:pb-6 w-full'>
-      <div className='w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12'>
+      <div className='w-full px-1 sm:px-2 md:px-3 lg:px-4 xl:px-6 2xl:px-8'>
         <div className='grid grid-cols-1 lg:grid-cols-[390px_1fr] gap-8 lg:gap-10 xl:gap-12 lg:items-stretch'>
           <div className='min-w-0 flex flex-col'>
             <HUDPanel title="OPERATOR" id="OPS-00" className="p-6 h-full min-h-full flex flex-col">
@@ -118,10 +118,10 @@ function Hero() {
         </div>
 
         {/* Below the two panels so it never affects their height */}
-        <div className='mt-6 sm:mt-8 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)]'>
+        <div className='mt-6 sm:mt-8 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] px-2 sm:px-4 md:px-0'>
           <TerminalLink />
         </div>
-        <div className='mt-12 sm:mt-16 w-full'>
+        <div className='mt-12 sm:mt-16 w-full px-2 sm:px-4 md:px-0'>
           <ProjectCarousel />
         </div>
       </div>
