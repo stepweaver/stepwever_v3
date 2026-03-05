@@ -6,19 +6,10 @@ import '../styles/mdx.css';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar/Navbar';
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
+import Footer from '@/components/Footer/Footer';
+import PageTransition from '@/components/transition/PageTransition';
 // Analytics is a client component that handles its own lazy loading
 import Analytics from '@/components/Analytics/Analytics';
-
-// Lazy load below-the-fold and non-critical components
-const Footer = dynamic(() => import('@/components/Footer/Footer'), {
-  ssr: true, // Keep SSR for SEO
-});
-const PageTransition = dynamic(
-  () => import('@/components/transition/PageTransition'),
-  {
-    ssr: true,
-  }
-);
 import ChatWidgetWrapper from '@/components/ChatWidget/ChatWidgetWrapper';
 
 // Environment validation in development

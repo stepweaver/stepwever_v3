@@ -1,12 +1,21 @@
-import DOMPurify from 'dompurify';
-import { JSDOM } from 'jsdom';
+// DOMPurify + JSDOM are lazy-loaded only when sanitizeHTML() is called.
+// This avoids cold-start cost for routes that only use sanitizeText/sanitizeFormData (chat, contact APIs).
 
-// Create a JSDOM window for DOMPurify to work in Node.js environment
-const window = new JSDOM('').window;
-const purify = DOMPurify(window);
+let _purify = null;
+
+function getPurify() {
+  if (!_purify) {
+    const DOMPurify = require('dompurify');
+    const { JSDOM } = require('jsdom');
+    const window = new JSDOM('').window;
+    _purify = DOMPurify(window);
+  }
+  return _purify;
+}
 
 /**
- * Sanitize HTML content to prevent XSS attacks
+ * Sanitize HTML content to prevent XSS attacks.
+ * Lazy-loads DOMPurify/JSDOM on first use to avoid cold-start cost for text-only routes.
  * @param {string} html - The HTML content to sanitize
  * @param {Object} options - DOMPurify configuration options
  * @returns {string} - Sanitized HTML
@@ -37,7 +46,7 @@ export const sanitizeHTML = (html, options = {}) => {
     ...options
   };
 
-  return purify.sanitize(html, defaultOptions);
+  return getPurify().sanitize(html, defaultOptions);
 };
 
 /**

@@ -29,57 +29,8 @@ const nextConfig = {
   // Compress output
   compress: true,
 
-  // Better code splitting and smaller chunks
-  webpack: (config, { isServer, dev }) => {
-    // Exclude unnecessary polyfills for modern browsers
-    // These features are natively supported in all modern browsers
-    if (!isServer) {
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        // Prevent polyfills from being included for Baseline features
-        // These are natively supported in all modern browsers
-        'core-js/modules/es.array.at': false,
-        'core-js/modules/es.array.flat': false,
-        'core-js/modules/es.array.flat-map': false,
-        'core-js/modules/es.object.from-entries': false,
-        'core-js/modules/es.object.has-own': false,
-        'core-js/modules/es.string.trim-end': false,
-        'core-js/modules/es.string.trim-start': false,
-      };
-    }
-
-    if (!isServer && !dev) {
-      config.optimization.moduleIds = 'deterministic';
-
-      const existingGroups =
-        config.optimization.splitChunks?.cacheGroups || {};
-
-      config.optimization.splitChunks = {
-        ...config.optimization.splitChunks,
-        maxInitialRequests: 20,
-        minSize: 20000,
-        maxSize: 244000,
-        cacheGroups: {
-          ...existingGroups,
-          react: {
-            name: 'react',
-            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
-            chunks: 'all',
-            priority: 40,
-            enforce: true,
-          },
-          icons: {
-            name: 'icons',
-            test: /[\\/]node_modules[\\/](react-icons|lucide-react)[\\/]/,
-            chunks: 'all',
-            priority: 30,
-            enforce: true,
-          },
-        },
-      };
-    }
-
-    // Bundle analyzer in development/production when ANALYZE is set
+  // Bundle analyzer when ANALYZE=true (e.g. npm run analyze)
+  webpack: (config, { isServer }) => {
     if (process.env.ANALYZE === 'true' && !isServer) {
       const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
       config.plugins.push(

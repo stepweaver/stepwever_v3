@@ -39,5 +39,8 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  // Only run on HTML document requests. Skip API routes, static assets, and build artifacts.
+  matcher: [
+    '/((?!_next/static|_next/image|favicon\\.ico|api/|images/|fonts/|icon-|manifest\\.(?:webmanifest|js)|.*\\.(?:ico|png|jpg|jpeg|gif|svg|webp|avif|woff|woff2|ttf|otf|mp4|webm)).*)',
+  ],
 };
