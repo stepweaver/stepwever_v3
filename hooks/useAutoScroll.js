@@ -15,6 +15,7 @@ export function useAutoScroll(options = {}) {
   const [isAtBottom, setIsAtBottom] = useState(true);
   const lastScrollTsRef = useRef(0);
   const userScrollTimeoutRef = useRef(null);
+  const followUpTimeoutsRef = useRef([]);
 
   const computeIsAtBottom = useCallback(() => {
     const el = scrollerRef.current;
@@ -35,9 +36,59 @@ export function useAutoScroll(options = {}) {
     }, 120);
   }, [computeIsAtBottom]);
 
+  /** Scroll the container to bottom. Uses scrollTop for reliable positioning. */
   const scrollToBottom = useCallback((behavior = 'auto') => {
-    bottomRef.current?.scrollIntoView({ block: 'end', behavior });
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior });
   }, []);
+
+  /** Run scroll after layout has settled (RAF) and optionally after delays for keyboard/layout. */
+  const performScroll = useCallback(
+    (behavior, scheduleFollowUps = false) => {
+      const el = scrollerRef.current;
+      if (!el) return;
+
+      const doScroll = () => {
+        el.scrollTo({ top: el.scrollHeight, behavior });
+      };
+
+      // Double RAF: wait for layout to settle before scrolling
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          doScroll();
+          if (scheduleFollowUps && typeof window !== 'undefined') {
+            // Clear any pending follow-ups
+            followUpTimeoutsRef.current.forEach((id) => clearTimeout(id));
+            followUpTimeoutsRef.current = [];
+            // Re-scroll after keyboard dismiss and layout settle (mobile)
+            [100, 300].forEach((ms) => {
+              const id = setTimeout(() => {
+                const scrollEl = scrollerRef.current;
+                if (!scrollEl) return;
+                const dist =
+                  scrollEl.scrollHeight -
+                  scrollEl.scrollTop -
+                  scrollEl.clientHeight;
+                // Only follow-up if user hasn't scrolled up
+                if (dist <= bottomThreshold * 2) {
+                  scrollEl.scrollTo({
+                    top: scrollEl.scrollHeight,
+                    behavior: 'auto',
+                  });
+                }
+                followUpTimeoutsRef.current = followUpTimeoutsRef.current.filter(
+                  (x) => x !== id
+                );
+              }, ms);
+              followUpTimeoutsRef.current.push(id);
+            });
+          }
+        });
+      });
+    },
+    [bottomThreshold]
+  );
 
   /**
    * Call this when you append tokens / messages.
@@ -53,10 +104,10 @@ export function useAutoScroll(options = {}) {
       if (isStreaming && now - lastScrollTsRef.current < throttleMs) return;
       lastScrollTsRef.current = now;
 
-      // While streaming, prefer "auto" (instant) to avoid jittery smooth scrolling.
-      scrollToBottom(isStreaming ? 'auto' : 'smooth');
+      // When loading completes, schedule follow-up scrolls for keyboard/layout settle
+      performScroll(isStreaming ? 'auto' : 'smooth', !isStreaming);
     },
-    [computeIsAtBottom, scrollToBottom, throttleMs]
+    [computeIsAtBottom, throttleMs, performScroll]
   );
 
   useEffect(() => {
@@ -66,9 +117,46 @@ export function useAutoScroll(options = {}) {
     return () => el.removeEventListener('scroll', onScroll);
   }, [onScroll]);
 
+  // Re-scroll when viewport resizes (e.g. mobile keyboard open/close)
+  useEffect(() => {
+    const vv = typeof window !== 'undefined' ? window.visualViewport : null;
+    if (!vv) return;
+
+    const onResize = () => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      const distanceFromBottom =
+        el.scrollHeight - el.scrollTop - el.clientHeight;
+      // If we're near bottom, re-scroll to stay pinned (keyboard caused shift)
+      if (distanceFromBottom <= bottomThreshold * 2) {
+        el.scrollTo({ top: el.scrollHeight, behavior: 'auto' });
+      }
+    };
+
+    vv.addEventListener('resize', onResize);
+    vv.addEventListener('scroll', onResize);
+    return () => {
+      vv.removeEventListener('resize', onResize);
+      vv.removeEventListener('scroll', onResize);
+    };
+  }, [bottomThreshold]);
+
+  // Cleanup follow-up timeouts on unmount
+  useEffect(() => {
+    return () => {
+      followUpTimeoutsRef.current.forEach((id) => clearTimeout(id));
+      followUpTimeoutsRef.current = [];
+    };
+  }, []);
+
   // On first mount, jump to bottom once.
   useLayoutEffect(() => {
-    scrollToBottom('auto');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = scrollerRef.current;
+        if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'auto' });
+      });
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
