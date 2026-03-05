@@ -7,7 +7,6 @@ import { useChat } from '@/hooks/useChat';
 import ChatMessage, {
   ChatLoadingIndicator,
 } from '@/components/Chat/ChatMessage';
-import ExampleQuestions from '@/components/Chat/ExampleQuestions';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 import '@/components/ThemeToggle/ThemeToggle.css';
 
@@ -33,12 +32,6 @@ function useVisualViewportRect(isFullscreen) {
   return rect;
 }
 
-const EXAMPLE_QUESTIONS = [
-  "What's your tech stack?",
-  'Tell me about your background',
-  'Are you open to work?',
-];
-
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -56,7 +49,6 @@ export default function ChatWidget() {
     isLoading,
     error,
     messagesEndRef,
-    sendMessage,
     handleSubmit,
   } = useChat({ inputRef, isVisible: isOpen && !isMinimized });
 
@@ -235,16 +227,6 @@ export default function ChatWidget() {
                   )}
                   <div ref={messagesEndRef} />
                 </div>
-
-                {/* Example Questions */}
-                {messages.length <= 1 && (
-                  <ExampleQuestions
-                    questions={EXAMPLE_QUESTIONS}
-                    onSelect={sendMessage}
-                    disabled={isLoading}
-                    variant='compact'
-                  />
-                )}
 
                 {/* Input Form */}
                 <form
