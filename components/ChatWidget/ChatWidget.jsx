@@ -11,6 +11,28 @@ import ExampleQuestions from '@/components/Chat/ExampleQuestions';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 import '@/components/ThemeToggle/ThemeToggle.css';
 
+// Sync fullscreen chat to visual viewport so it resizes when mobile keyboard opens
+function useVisualViewportRect(isFullscreen) {
+  const [rect, setRect] = useState(() =>
+    typeof window !== 'undefined' && window.visualViewport
+      ? { top: 0, height: window.visualViewport.height }
+      : { top: 0, height: '100dvh' }
+  );
+  useEffect(() => {
+    if (!isFullscreen || typeof window === 'undefined' || !window.visualViewport) return;
+    const update = () =>
+      setRect({ top: window.visualViewport.offsetTop, height: window.visualViewport.height });
+    update();
+    window.visualViewport.addEventListener('resize', update);
+    window.visualViewport.addEventListener('scroll', update);
+    return () => {
+      window.visualViewport.removeEventListener('resize', update);
+      window.visualViewport.removeEventListener('scroll', update);
+    };
+  }, [isFullscreen]);
+  return rect;
+}
+
 const EXAMPLE_QUESTIONS = [
   "What's your tech stack?",
   'Tell me about your background',
@@ -37,6 +59,8 @@ export default function ChatWidget() {
     sendMessage,
     handleSubmit,
   } = useChat({ inputRef, isVisible: isOpen && !isMinimized });
+
+  const visualViewportRect = useVisualViewportRect(isOpen && isFullscreen);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -119,12 +143,21 @@ export default function ChatWidget() {
         <div
           className={`fixed transition-all duration-300 ${
             isFullscreen
-              ? 'inset-0 m-0 z-[200] h-[100dvh] max-h-[100dvh]'
+              ? 'left-0 right-0 m-0 z-[200]'
               : `z-[100] ${isMinimized
                 ? 'bottom-20 right-4 sm:right-6 w-72 h-14'
                 : 'bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[min(28rem,90vw)] md:w-[min(32rem,90vw)] h-[500px] max-h-[70vh]'
               }`
           }`}
+          style={
+            isFullscreen
+              ? {
+                  top: visualViewportRect.top,
+                  height: visualViewportRect.height,
+                  maxHeight: visualViewportRect.height,
+                }
+              : undefined
+          }
         >
           <div className='hud-panel h-full flex flex-col relative overflow-hidden' style={{ background: 'rgb(var(--panel))', backdropFilter: 'none', boxShadow: '0 0 24px rgb(var(--neon) / 0.25), 0 4px 30px rgba(0,0,0,0.4)' }}>
             {/* Header */}

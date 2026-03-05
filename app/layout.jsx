@@ -143,7 +143,7 @@ export default function RootLayout({ children }) {
         <meta name='supported-color-schemes' content='dark light' />
         <meta
           name='viewport'
-          content='width=device-width, initial-scale=1, maximum-scale=5'
+          content='width=device-width, initial-scale=1, maximum-scale=5, interactive-widget=resizes-visual'
         />
 
         {/* Theme script to prevent flashing - runs before React hydration */}
