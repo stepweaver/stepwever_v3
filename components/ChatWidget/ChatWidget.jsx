@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { MessageCircle, X, Send, Minimize2, Maximize2, Expand, Shrink } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
+import { useAutoScroll } from '@/hooks/useAutoScroll';
 import ChatMessage, {
   ChatLoadingIndicator,
 } from '@/components/Chat/ChatMessage';
@@ -48,11 +49,25 @@ export default function ChatWidget() {
     removeAttachment,
     isLoading,
     error,
-    messagesEndRef,
     handleSubmit,
   } = useChat({ inputRef, isVisible: isOpen && !isMinimized });
 
+  const {
+    scrollerRef,
+    bottomRef,
+    isAtBottom,
+    scrollToBottom,
+    maybeAutoScroll,
+  } = useAutoScroll({ bottomThreshold: 64, throttleMs: 50 });
+
   const visualViewportRect = useVisualViewportRect(isOpen && isFullscreen);
+
+  // Auto-scroll when messages change, only if user is at bottom
+  useEffect(() => {
+    if (isOpen && !isMinimized) {
+      maybeAutoScroll(isLoading);
+    }
+  }, [messages, isLoading, isOpen, isMinimized, maybeAutoScroll]);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -167,6 +182,15 @@ export default function ChatWidget() {
                 )}
               </div>
               <div className='flex items-center gap-2 shrink-0'>
+                {!isMinimized && !isAtBottom && (
+                  <button
+                    type='button'
+                    onClick={() => scrollToBottom('smooth')}
+                    className='text-xs text-neon/80 hover:text-neon underline cursor-pointer'
+                  >
+                    Jump to latest
+                  </button>
+                )}
                 {!isMinimized && (
                   <button
                     type='button'
@@ -211,7 +235,14 @@ export default function ChatWidget() {
             {!isMinimized && (
               <>
                 {/* Messages */}
-                <div className='flex-1 overflow-y-auto p-3 space-y-3 min-h-0'>
+                <div
+                  ref={scrollerRef}
+                  className='flex-1 overflow-y-auto p-3 space-y-3 min-h-0'
+                  style={{
+                    WebkitOverflowScrolling: 'touch',
+                    overscrollBehavior: 'contain',
+                  }}
+                >
                   {messages.map((message, index) => (
                     <ChatMessage
                       key={index}
@@ -225,7 +256,7 @@ export default function ChatWidget() {
                       <p className='text-danger font-ocr text-sm'>{error}</p>
                     </div>
                   )}
-                  <div ref={messagesEndRef} />
+                  <div ref={bottomRef} />
                 </div>
 
                 {/* Input Form */}

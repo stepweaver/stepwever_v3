@@ -14,24 +14,13 @@ const INITIAL_MESSAGE = {
 const MAX_IMAGE_SIZE_BYTES = 4 * 1024 * 1024; // 4MB Groq limit
 const MAX_IMAGES = 5;
 
-export function useChat({ scrollRef, inputRef, isVisible = true } = {}) {
+export function useChat({ inputRef, isVisible = true } = {}) {
   const { getBotFields } = useBotProtection();
   const [messages, setMessages] = useState([INITIAL_MESSAGE]);
   const [input, setInput] = useState('');
   const [attachments, setAttachments] = useState([]); // [{ dataUrl, type }]
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const messagesEndRef = useRef(null);
-
-  // Auto-scroll when new messages arrive
-  useEffect(() => {
-    if (!isVisible) return;
-    if (scrollRef?.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    } else {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, isVisible, scrollRef]);
 
   // Focus input when visible
   useEffect(() => {
@@ -122,7 +111,6 @@ export function useChat({ scrollRef, inputRef, isVisible = true } = {}) {
     removeAttachment,
     isLoading,
     error,
-    messagesEndRef,
     sendMessage,
     handleSubmit,
   };

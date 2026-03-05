@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
+import { useAutoScroll } from '@/hooks/useAutoScroll';
 import ChatMessage, {
   ChatLoadingIndicator,
 } from '@/components/Chat/ChatMessage';
@@ -17,7 +18,6 @@ const EXAMPLE_QUESTIONS = [
 ];
 
 export default function ChatBot() {
-  const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
 
   const {
@@ -26,17 +26,45 @@ export default function ChatBot() {
     setInput,
     isLoading,
     error,
-    messagesEndRef,
     sendMessage,
     handleSubmit,
-  } = useChat({ scrollRef: messagesContainerRef, inputRef });
+  } = useChat({ inputRef });
+
+  const {
+    scrollerRef,
+    bottomRef,
+    isAtBottom,
+    scrollToBottom,
+    maybeAutoScroll,
+  } = useAutoScroll({ bottomThreshold: 64, throttleMs: 50 });
+
+  // Auto-scroll when messages change, only if user is at bottom
+  useEffect(() => {
+    maybeAutoScroll(isLoading);
+  }, [messages, isLoading, maybeAutoScroll]);
 
   return (
     <div className='flex flex-col h-full'>
+      {/* Jump to latest - when user has scrolled up */}
+      {!isAtBottom && (
+        <div className='shrink-0 flex justify-end px-4 py-2 border-b border-terminal-border/30'>
+          <button
+            type='button'
+            onClick={() => scrollToBottom('smooth')}
+            className='text-xs text-terminal-green/80 hover:text-terminal-green underline cursor-pointer font-ocr'
+          >
+            Jump to latest
+          </button>
+        </div>
+      )}
       {/* Chat Messages */}
       <div
-        ref={messagesContainerRef}
+        ref={scrollerRef}
         className='flex-1 overflow-y-auto p-4 space-y-4 min-h-0'
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain',
+        }}
       >
         {messages.map((message, index) => (
           <ChatMessage key={index} message={message} />
@@ -47,7 +75,7 @@ export default function ChatBot() {
             <p className='text-terminal-red font-ocr text-base'>{error}</p>
           </div>
         )}
-        <div ref={messagesEndRef} />
+        <div ref={bottomRef} />
       </div>
 
       {/* Example Questions */}
