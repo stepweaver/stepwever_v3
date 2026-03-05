@@ -72,12 +72,6 @@ const nextConfig = {
             priority: 30,
             enforce: true,
           },
-          mdx: {
-            name: 'mdx',
-            test: /[\\/]node_modules[\\/](@mdx-js|next-mdx-remote|gray-matter|vfile-matter)[\\/]/,
-            chunks: 'all',
-            priority: 25,
-          },
         },
       };
     }
