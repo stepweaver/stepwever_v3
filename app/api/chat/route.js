@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createRateLimit } from '@/utils/rateLimit';
 import { sanitizeText } from '@/utils/sanitize';
-import { detectBot, stripBotFields } from '@/utils/botProtection';
+import { withProtectedRoute } from '@/lib/apiSecurity';
 import { buildSystemPrompt } from '@/lib/chat/systemPrompt';
 
 export const runtime = 'nodejs';
@@ -217,34 +217,28 @@ function extractAssistantTextFromResponses(data) {
 
 export async function POST(request) {
   try {
-    // Same-origin guard (prevents random third-party sites from POSTing from a browser)
     if (!sameOriginGuard(request)) {
       return safeJson({ error: 'Invalid request origin.' }, { status: 403 });
     }
 
-    const chatRateLimit = createRateLimit({
-      maxRequests: 20,
-      windowMs: 60 * 1000,
-      message: 'Too many messages. Please wait a moment before sending more.',
-      getKey: getRateLimitKey,
+    const result = await withProtectedRoute(request, {
+      rateLimit: createRateLimit({
+        maxRequests: 20,
+        windowMs: 60 * 1000,
+        message: 'Too many messages. Please wait a moment before sending more.',
+        getKey: getRateLimitKey,
+      }),
+      parseJson: (r) => r.json().catch(() => null),
+      botCheck: { opts: { checkContent: false, requireTimestamp: true } },
+      onBotDetected: () => {
+        console.warn('[CHAT] Bot blocked');
+        return safeJson({ message: 'I appreciate the question! Feel free to ask more.', role: 'assistant' });
+      },
     });
 
-    const rateLimitResult = await chatRateLimit(request);
-    if (rateLimitResult) return rateLimitResult;
+    if (result.error) return result.error;
 
-    const body = await request.json().catch(() => null);
-
-    // ── Bot detection (honeypot + timing; skip gibberish for chat) ──
-    if (body) {
-      const botCheck = detectBot(body, { checkContent: false, requireTimestamp: true });
-      if (botCheck.isBot) {
-        console.warn(`[CHAT] Bot blocked — reason: ${botCheck.reason}`);
-        // Return a plausible-looking response so bots don't retry
-        return safeJson({ message: 'I appreciate the question! Feel free to ask more.', role: 'assistant' });
-      }
-    }
-
-    const cleanBody = body ? stripBotFields(body) : body;
+    const cleanBody = result.body;
     const messages = cleanBody?.messages;
     const channel = cleanBody?.channel === 'terminal' ? 'terminal' : 'widget';
 

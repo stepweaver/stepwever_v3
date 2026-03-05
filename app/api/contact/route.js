@@ -7,40 +7,28 @@ import {
 } from '@/utils/email';
 import { sanitizeFormData } from '@/utils/sanitize';
 import { createRateLimit } from '@/utils/rateLimit';
-import { detectBot, stripBotFields } from '@/utils/botProtection';
+import { withProtectedRoute } from '@/lib/apiSecurity';
 
 export async function POST(request) {
   try {
-    // Apply rate limiting
-    const rateLimit = createRateLimit({
-      maxRequests: 3, // Allow 3 requests per 15 minutes
-      windowMs: 15 * 60 * 1000, // 15 minutes
-      message: 'Too many contact form submissions. Please try again later.'
+    const result = await withProtectedRoute(request, {
+      rateLimit: createRateLimit({
+        maxRequests: 3,
+        windowMs: 15 * 60 * 1000,
+        message: 'Too many contact form submissions. Please try again later.'
+      }),
+      botCheck: { opts: { checkContent: true, requireTimestamp: true } },
+      onBotDetected: () => {
+        console.warn('[CONTACT] Bot blocked');
+        return NextResponse.json({ message: "Message sent successfully! I'll get back to you soon." });
+      },
+      sanitize: sanitizeFormData
     });
 
-    const rateLimitResult = await rateLimit(request);
-    if (rateLimitResult) {
-      return rateLimitResult;
-    }
+    if (result.error) return result.error;
 
-    const formData = await request.json();
+    const { name, email, message } = result.body || {};
 
-    // ── Bot detection ───────────────────────────────────────────────
-    const botCheck = detectBot(formData, { checkContent: true, requireTimestamp: true });
-    if (botCheck.isBot) {
-      // Return a generic success to avoid leaking detection logic to bots
-      console.warn(`[CONTACT] Bot blocked — reason: ${botCheck.reason}`);
-      return NextResponse.json({ message: 'Message sent successfully! I\'ll get back to you soon.' });
-    }
-
-    // Strip bot-protection meta-fields before processing
-    const cleanData = stripBotFields(formData);
-
-    // Sanitize all form data
-    const sanitizedData = sanitizeFormData(cleanData);
-    const { name, email, message } = sanitizedData;
-
-    // Validate required fields
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: 'All fields are required' },
@@ -48,7 +36,6 @@ export async function POST(request) {
       );
     }
 
-    // Validate email format
     if (!validateEmail(email)) {
       return NextResponse.json(
         { error: 'Please enter a valid email address' },
@@ -56,7 +43,6 @@ export async function POST(request) {
       );
     }
 
-    // Check if email configuration is set up
     if (!isEmailConfigured()) {
       console.error('Email configuration missing. Please set EMAIL_USER and EMAIL_PASS environment variables.');
       return NextResponse.json(
@@ -66,12 +52,10 @@ export async function POST(request) {
     }
 
     try {
-      // Send contact email
-      await sendContactEmail(sanitizedData);
+      await sendContactEmail(result.body);
 
-      // Send confirmation email to the user (optional)
       if (process.env.SEND_CONFIRMATION_EMAIL === 'true') {
-        await sendConfirmationEmail(sanitizedData);
+        await sendConfirmationEmail(result.body);
       }
     } catch (emailError) {
       console.error('Error sending email:', emailError);
@@ -82,15 +66,13 @@ export async function POST(request) {
     }
 
     return NextResponse.json({
-      message: 'Message sent successfully! I\'ll get back to you soon.',
+      message: "Message sent successfully! I'll get back to you soon.",
     });
-
   } catch (error) {
     console.error('Error sending email:', error);
-
     return NextResponse.json(
       { error: 'Failed to send message. Please try again later.' },
       { status: 500 }
     );
   }
-} 
+}

@@ -1,4 +1,27 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+const scriptSrc = [
+  "'self'",
+  "'unsafe-inline'",
+  ...(isProd ? [] : ["'unsafe-eval'"]),
+  'https://assets.calendly.com',
+  'https://calendly.com',
+  'https://va.vercel-scripts.com'
+].join(' ');
+
+const csp = [
+  "default-src 'self'",
+  `script-src ${scriptSrc}`,
+  "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://calendly.com",
+  "img-src 'self' data: https: blob:",
+  "font-src 'self' data: https:",
+  "connect-src 'self' https://calendly.com https://api.calendly.com https://api.openweathermap.org https://va.vercel-scripts.com https://script.google.com https://www.notion.so https://api.notion.so",
+  "frame-src 'self' https://calendly.com https://script.google.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self' https://calendly.com"
+].join('; ');
+
 const nextConfig = {
   // Image optimization
   images: {
@@ -129,18 +152,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://calendly.com https://va.vercel-scripts.com",
-              "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://calendly.com",
-              "img-src 'self' data: https: blob:",
-              "font-src 'self' data: https:",
-              "connect-src 'self' https://calendly.com https://api.calendly.com https://api.openweathermap.org https://va.vercel-scripts.com https://script.google.com https://www.notion.so https://api.notion.so",
-              "frame-src 'self' https://calendly.com https://script.google.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self' https://calendly.com"
-            ].join('; ')
+            value: csp,
           },
           {
             key: 'Cache-Control',
