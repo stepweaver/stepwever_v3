@@ -202,8 +202,10 @@ function Experience() {
 
   return (
     <section className='relative z-30 py-20 overflow-x-hidden'>
-      {/* Right column: width = viewport minus lambda space so it never overflows */}
-      <div className='w-full px-2 sm:px-4 md:px-3 lg:pl-6 lg:pr-16 xl:pl-8 xl:pr-20 2xl:pr-24 min-w-0 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] lg:w-[calc(100%-390px-2.5rem)] xl:w-[calc(100%-390px-3rem)]'>
+      {/* Same outer padding as Hero for consistency with BACKGROUND section */}
+      <div className='w-full px-1 sm:px-2 md:px-3 lg:px-4 xl:px-6 2xl:px-8'>
+        {/* Right column: aligns with Hero right column, same internal padding as About (p-6) */}
+        <div className='w-full px-2 sm:px-4 md:p-6 min-w-0 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] lg:w-[calc(100%-390px-2.5rem)] xl:w-[calc(100%-390px-3rem)]'>
         {/* Section ID tag — unbounded, no panel wrapper */}
         <div className='mb-6 flex items-start justify-between gap-4'>
           <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>LOADOUT</p>
@@ -293,6 +295,7 @@ function Experience() {
               />
             ))}
           </div>
+        </div>
         </div>
       </div>
     </section>
