@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import { Send } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
 import { useAutoScroll } from '@/hooks/useAutoScroll';
@@ -32,16 +32,17 @@ export default function ChatBot() {
 
   const {
     scrollerRef,
-    bottomRef,
+    endRef,
     isAtBottom,
     scrollToBottom,
-    maybeAutoScroll,
-  } = useAutoScroll({ bottomThreshold: 64, throttleMs: 50 });
+    stickToBottom,
+    scrollIfSticky,
+  } = useAutoScroll({ bottomThreshold: 120 });
 
-  // Auto-scroll when messages change, only if user is at bottom
-  useEffect(() => {
-    maybeAutoScroll(isLoading);
-  }, [messages, isLoading, maybeAutoScroll]);
+  // Keep pinned users pinned when messages change (useLayoutEffect = before paint)
+  useLayoutEffect(() => {
+    scrollIfSticky(!isLoading);
+  }, [messages, isLoading, scrollIfSticky]);
 
   return (
     <div className='flex flex-col h-full'>
@@ -50,7 +51,10 @@ export default function ChatBot() {
         <div className='shrink-0 flex justify-end px-4 py-2 border-b border-terminal-border/30'>
           <button
             type='button'
-            onClick={() => scrollToBottom('smooth')}
+            onClick={() => {
+              stickToBottom();
+              scrollToBottom('smooth');
+            }}
             className='text-xs text-terminal-green/80 hover:text-terminal-green underline cursor-pointer font-ocr'
           >
             Jump to latest
@@ -75,21 +79,27 @@ export default function ChatBot() {
             <p className='text-terminal-red font-ocr text-base'>{error}</p>
           </div>
         )}
-        <div ref={bottomRef} />
+        <div ref={endRef} style={{ height: 1 }} />
       </div>
 
       {/* Example Questions */}
       {messages.length <= 1 && (
         <ExampleQuestions
           questions={EXAMPLE_QUESTIONS}
-          onSelect={sendMessage}
+          onSelect={(q) => {
+            stickToBottom();
+            sendMessage(q);
+          }}
           disabled={isLoading}
         />
       )}
 
       {/* Input Form */}
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          stickToBottom();
+          handleSubmit(e);
+        }}
         className='p-4 border-t border-terminal-border/30'
       >
         <div className='flex gap-2'>

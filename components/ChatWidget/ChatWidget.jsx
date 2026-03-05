@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { MessageCircle, X, Send, Minimize2, Maximize2, Expand, Shrink } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
@@ -54,20 +54,21 @@ export default function ChatWidget() {
 
   const {
     scrollerRef,
-    bottomRef,
+    endRef,
     isAtBottom,
     scrollToBottom,
-    maybeAutoScroll,
-  } = useAutoScroll({ bottomThreshold: 64, throttleMs: 50 });
+    stickToBottom,
+    scrollIfSticky,
+  } = useAutoScroll({ bottomThreshold: 120 });
 
   const visualViewportRect = useVisualViewportRect(isOpen && isFullscreen);
 
-  // Auto-scroll when messages change, only if user is at bottom
-  useEffect(() => {
+  // Keep pinned users pinned when messages change (useLayoutEffect = before paint)
+  useLayoutEffect(() => {
     if (isOpen && !isMinimized) {
-      maybeAutoScroll(isLoading);
+      scrollIfSticky(!isLoading);
     }
-  }, [messages, isLoading, isOpen, isMinimized, maybeAutoScroll]);
+  }, [messages, isLoading, isOpen, isMinimized, scrollIfSticky]);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -185,7 +186,10 @@ export default function ChatWidget() {
                 {!isMinimized && !isAtBottom && (
                   <button
                     type='button'
-                    onClick={() => scrollToBottom('smooth')}
+                    onClick={() => {
+                      stickToBottom();
+                      scrollToBottom('smooth');
+                    }}
                     className='text-xs text-neon/80 hover:text-neon underline cursor-pointer'
                   >
                     Jump to latest
@@ -234,13 +238,15 @@ export default function ChatWidget() {
             {/* Chat Content (hidden when minimized) */}
             {!isMinimized && (
               <>
-                {/* Messages */}
+                {/* Messages - transcript owns the scroll */}
                 <div
                   ref={scrollerRef}
                   className='flex-1 overflow-y-auto p-3 space-y-3 min-h-0'
                   style={{
                     WebkitOverflowScrolling: 'touch',
                     overscrollBehavior: 'contain',
+                    paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
+                    scrollPaddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
                   }}
                 >
                   {messages.map((message, index) => (
@@ -256,7 +262,7 @@ export default function ChatWidget() {
                       <p className='text-danger font-ocr text-sm'>{error}</p>
                     </div>
                   )}
-                  <div ref={bottomRef} />
+                  <div ref={endRef} style={{ height: 1 }} />
                 </div>
 
                 {/* Input Form */}
