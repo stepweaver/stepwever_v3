@@ -55,21 +55,26 @@ export function useAutoScroll(options = {}) {
   }, [thresholdPx]);
 
   // Re-scroll when viewport resizes (mobile keyboard open/close)
+  // Only listen to resize - scroll fires during our own scrollIntoView and can cause flicker
   useEffect(() => {
     const vv = typeof window !== 'undefined' ? window.visualViewport : null;
     if (!vv) return;
 
-    const onViewportChange = () => {
-      if (shouldStickRef.current) {
-        endRef.current?.scrollIntoView({ behavior: 'auto', block: 'end' });
-      }
+    let rafId = null;
+    const onResize = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        if (shouldStickRef.current) {
+          endRef.current?.scrollIntoView({ behavior: 'auto', block: 'end' });
+        }
+      });
     };
 
-    vv.addEventListener('resize', onViewportChange);
-    vv.addEventListener('scroll', onViewportChange);
+    vv.addEventListener('resize', onResize);
     return () => {
-      vv.removeEventListener('resize', onViewportChange);
-      vv.removeEventListener('scroll', onViewportChange);
+      vv.removeEventListener('resize', onResize);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 

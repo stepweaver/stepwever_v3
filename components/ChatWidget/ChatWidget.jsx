@@ -20,14 +20,19 @@ function useVisualViewportRect(isFullscreen) {
   );
   useEffect(() => {
     if (!isFullscreen || typeof window === 'undefined' || !window.visualViewport) return;
-    const update = () =>
-      setRect({ top: window.visualViewport.offsetTop, height: window.visualViewport.height });
-    update();
-    window.visualViewport.addEventListener('resize', update);
-    window.visualViewport.addEventListener('scroll', update);
+    let rafId = null;
+    const scheduleUpdate = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        setRect({ top: window.visualViewport.offsetTop, height: window.visualViewport.height });
+      });
+    };
+    scheduleUpdate();
+    window.visualViewport.addEventListener('resize', scheduleUpdate);
     return () => {
-      window.visualViewport.removeEventListener('resize', update);
-      window.visualViewport.removeEventListener('scroll', update);
+      window.visualViewport.removeEventListener('resize', scheduleUpdate);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [isFullscreen]);
   return rect;
@@ -149,10 +154,10 @@ export default function ChatWidget() {
       {/* Chat Widget Container */}
       {isOpen && (
         <div
-          className={`fixed transition-all duration-300 ${
+          className={`fixed ${
             isFullscreen
               ? 'left-0 right-0 m-0 z-[200]'
-              : `z-[100] ${isMinimized
+              : `transition-all duration-300 z-[100] ${isMinimized
                 ? 'bottom-20 right-4 sm:right-6 w-72 h-14'
                 : 'bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[min(28rem,90vw)] md:w-[min(32rem,90vw)] h-[500px] max-h-[70vh]'
               }`
