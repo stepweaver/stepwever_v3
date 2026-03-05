@@ -13,6 +13,7 @@ export function useAutoScroll(options = {}) {
   const bottomRef = useRef(null);
 
   const [isAtBottom, setIsAtBottom] = useState(true);
+  const [followModeActive, setFollowModeActive] = useState(false);
   const lastScrollTsRef = useRef(0);
   const userScrollTimeoutRef = useRef(null);
   const followUpTimeoutsRef = useRef([]);
@@ -62,7 +63,7 @@ export function useAutoScroll(options = {}) {
             followUpTimeoutsRef.current.forEach((id) => clearTimeout(id));
             followUpTimeoutsRef.current = [];
             // Re-scroll after keyboard dismiss and layout settle (mobile)
-            [100, 300].forEach((ms) => {
+            [100, 300, 500, 1000].forEach((ms) => {
               const id = setTimeout(() => {
                 const scrollEl = scrollerRef.current;
                 if (!scrollEl) return;
@@ -104,7 +105,11 @@ export function useAutoScroll(options = {}) {
       if (isStreaming && now - lastScrollTsRef.current < throttleMs) return;
       lastScrollTsRef.current = now;
 
-      // When loading completes, schedule follow-up scrolls for keyboard/layout settle
+      // When loading completes, enter follow mode so we keep scrolling as layout settles
+      if (!isStreaming) {
+        setFollowModeActive(true);
+        setTimeout(() => setFollowModeActive(false), 2000);
+      }
       performScroll(isStreaming ? 'auto' : 'smooth', !isStreaming);
     },
     [computeIsAtBottom, throttleMs, performScroll]
@@ -140,6 +145,27 @@ export function useAutoScroll(options = {}) {
       vv.removeEventListener('scroll', onResize);
     };
   }, [bottomThreshold]);
+
+  // Poll when in follow mode: content height can change after layout (text wrapping)
+  // ResizeObserver doesn't fire for scrollHeight changes in overflow containers
+  useEffect(() => {
+    if (!followModeActive) return;
+    let lastSh = 0;
+    const id = setInterval(() => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      const sh = el.scrollHeight;
+      const dist = sh - el.scrollTop - el.clientHeight;
+      if (sh !== lastSh) {
+        lastSh = sh;
+        setIsAtBottom(dist <= bottomThreshold);
+        if (dist > bottomThreshold) {
+          el.scrollTo({ top: sh, behavior: 'auto' });
+        }
+      }
+    }, 80);
+    return () => clearInterval(id);
+  }, [followModeActive, bottomThreshold]);
 
   // Cleanup follow-up timeouts on unmount
   useEffect(() => {
