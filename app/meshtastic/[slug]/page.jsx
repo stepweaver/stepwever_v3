@@ -1,4 +1,3 @@
-import { cache } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FileText } from 'lucide-react';
@@ -28,8 +27,6 @@ import {
   getPrimaryAffiliateUrl,
 } from '@/components/MeshtasticDocs/Affiliate/affiliateConfig';
 
-const getCachedDocBySlug = cache((slug) => getDocBySlug(slug));
-
 export const revalidate = 60;
 export const dynamicParams = true;
 
@@ -45,7 +42,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const doc = await getCachedDocBySlug(slug);
+  const doc = await getDocBySlug(slug);
   if (!doc)
     return {
       title: 'Not Found',
@@ -84,7 +81,7 @@ export async function generateMetadata({ params }) {
 export default async function MeshtasticDocPage({ params }) {
   const { slug } = await params;
 
-  const doc = await getCachedDocBySlug(slug);
+  const doc = await getDocBySlug(slug);
   if (!doc) notFound();
 
   const [blocks, docs, fieldNotes] = await Promise.all([

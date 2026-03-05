@@ -119,7 +119,7 @@ export default function ChatWidget() {
         <div
           className={`fixed transition-all duration-300 ${
             isFullscreen
-              ? 'inset-0 m-0 z-[200]'
+              ? 'inset-0 m-0 z-[200] h-[100dvh] max-h-[100dvh]'
               : `z-[100] ${isMinimized
                 ? 'bottom-20 right-4 sm:right-6 w-72 h-14'
                 : 'bottom-20 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[min(28rem,90vw)] md:w-[min(32rem,90vw)] h-[500px] max-h-[70vh]'

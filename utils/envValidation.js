@@ -47,6 +47,59 @@ const REQUIRED_ENV_VARS = {
     required: false,
     description: 'Google Search Console verification code',
     example: 'your-verification-code'
+  },
+
+  // Notion
+  NOTION_API_KEY: {
+    required: false,
+    description: 'Notion integration secret for blog and docs',
+    example: 'secret_xxxxxxxxxxxx'
+  },
+  NOTION_BLOG_DB_ID: {
+    required: false,
+    description: 'Notion database ID for blog entries',
+    example: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  },
+  NOTION_MESHTASTIC_DOCS_DB_ID: {
+    required: false,
+    description: 'Notion database ID for Meshtastic docs',
+    example: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  },
+
+  // Chat (AI)
+  GROQ_API_KEY: {
+    required: false,
+    description: 'Groq API key for chat',
+    example: 'gsk_xxxxxxxxxxxx'
+  },
+  OPENAI_API_KEY: {
+    required: false,
+    description: 'OpenAI API key for chat fallback',
+    example: 'sk-xxxxxxxxxxxx'
+  },
+
+  // Security (chat same-origin guard)
+  ALLOWED_ORIGINS: {
+    required: false,
+    description: 'Comma-separated allowed origins for chat',
+    example: 'https://stepweaver.dev,https://www.stepweaver.dev'
+  },
+  ALLOWED_HOSTS: {
+    required: false,
+    description: 'Comma-separated allowed hosts for chat',
+    example: 'stepweaver.dev,www.stepweaver.dev'
+  },
+
+  // Rate limiting (Vercel KV / Redis)
+  KV_REST_API_URL: {
+    required: false,
+    description: 'Vercel KV REST API URL for rate limit store',
+    example: 'https://xxx.upstash.io'
+  },
+  KV_REST_API_TOKEN: {
+    required: false,
+    description: 'Vercel KV REST API token',
+    example: 'AXxxxxxx'
   }
 };
 
