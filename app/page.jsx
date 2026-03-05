@@ -1,24 +1,25 @@
-import Script from 'next/script';
 import Link from 'next/link';
+import { headers } from 'next/headers';
 import generateStructuredData from './structured-data';
 import HomePageContent from './HomePageContent';
 
-export default function HomePage() {
+export default async function HomePage() {
   const structuredData = generateStructuredData();
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
 
   return (
     <>
-      {/* JSON-LD structured data for SEO - runs on server */}
-      <Script
-        id='ld-website'
+      {/* JSON-LD structured data for SEO - server-rendered, nonce-protected */}
+      <script
+        nonce={nonce}
+        suppressHydrationWarning
         type='application/ld+json'
-        strategy='afterInteractive'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.website) }}
       />
-      <Script
-        id='ld-person'
+      <script
+        nonce={nonce}
+        suppressHydrationWarning
         type='application/ld+json'
-        strategy='afterInteractive'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.person) }}
       />
 

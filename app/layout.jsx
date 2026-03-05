@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
 import dynamic from 'next/dynamic';
+import { headers } from 'next/headers';
 import './globals.css';
 import '../styles/mdx.css';
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -128,7 +129,9 @@ export const metadata = {
   manifest: '/manifest.js',
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
+
   return (
     <html
       lang='en'
@@ -148,6 +151,8 @@ export default function RootLayout({ children }) {
 
         {/* Theme script to prevent flashing - runs before React hydration */}
         <script
+          nonce={nonce}
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
@@ -195,7 +200,6 @@ export default function RootLayout({ children }) {
               })();
             `,
           }}
-          strategy='beforeInteractive'
         />
 
         {/* Mobile-specific meta tags */}

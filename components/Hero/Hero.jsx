@@ -71,7 +71,7 @@ function Hero() {
                   </div>
                   <div className='flex flex-col w-fit'>
                     <p className='text-[10px] tracking-[0.2em] text-neon/70 font-ocr uppercase mb-1'>STATUS</p>
-                    <StatusPill status="OPEN TO WORK" size="sm" />
+                    <StatusPill status="OPEN TO WORK" size="sm" href="/resume" />
                   </div>
                 </div>
                 <div className='w-full min-w-0'>

@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 const statusConfig = {
   ONLINE: {
     textColor: 'text-neon',
@@ -27,15 +29,14 @@ const statusConfig = {
   },
 };
 
-export function StatusPill({ status = 'ONLINE', size = 'default', className = '' }) {
+export function StatusPill({ status = 'ONLINE', size = 'default', className = '', href }) {
   const config = statusConfig[status] || statusConfig.ONLINE;
   const isSmall = size === 'sm';
-  return (
-    <div
-      className={`inline-flex items-center ${config.bg} ${config.border} border rounded shrink-0 ${className} ${
-        isSmall ? 'gap-1.5 px-2 py-1' : 'gap-2.5 px-3 py-1.5'
-      }`}
-    >
+  const baseClassName = `inline-flex items-center ${config.bg} ${config.border} border rounded shrink-0 ${className} ${
+    isSmall ? 'gap-1.5 px-2 py-1' : 'gap-2.5 px-3 py-1.5'
+  }`;
+  const content = (
+    <>
       <span className={`relative flex shrink-0 items-center justify-center ${isSmall ? 'h-3.5 w-3.5' : 'h-5 w-5'}`} aria-hidden>
         <span
           className={`absolute inline-flex rounded-full opacity-40 ${isSmall ? 'h-3.5 w-3.5' : 'h-5 w-5'}`}
@@ -49,6 +50,20 @@ export function StatusPill({ status = 'ONLINE', size = 'default', className = ''
       <span className={`${config.textColor} uppercase font-ocr font-bold whitespace-nowrap ${isSmall ? 'text-[10px] tracking-[0.2em]' : 'text-xs tracking-[0.3em]'}`}>
         {status}
       </span>
-    </div>
+    </>
   );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        aria-label={`${status} - view resume`}
+        className={`${baseClassName} cursor-pointer transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-neon/50 focus:ring-offset-2 focus:ring-offset-bg`}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return <div className={baseClassName}>{content}</div>;
 }

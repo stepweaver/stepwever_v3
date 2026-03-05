@@ -1,27 +1,7 @@
+import { createRequire } from 'module';
+
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === 'production';
-const scriptSrc = [
-  "'self'",
-  "'unsafe-inline'",
-  ...(isProd ? [] : ["'unsafe-eval'"]),
-  'https://assets.calendly.com',
-  'https://calendly.com',
-  'https://va.vercel-scripts.com'
-].join(' ');
-
-const csp = [
-  "default-src 'self'",
-  `script-src ${scriptSrc}`,
-  "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://calendly.com",
-  "img-src 'self' data: https: blob:",
-  "font-src 'self' data: https:",
-  "connect-src 'self' https://calendly.com https://api.calendly.com https://api.openweathermap.org https://va.vercel-scripts.com https://script.google.com https://www.notion.so https://api.notion.so",
-  "frame-src 'self' https://calendly.com https://script.google.com",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self' https://calendly.com"
-].join('; ');
-
+const require = createRequire(import.meta.url);
 const nextConfig = {
   // Image optimization
   images: {
@@ -117,7 +97,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Cache static assets (JS, CSS, images, fonts) for 1 year
+        // Next.js build assets (already fingerprinted)
         source: '/_next/static/(.*)',
         headers: [
           {
@@ -127,8 +107,8 @@ const nextConfig = {
         ],
       },
       {
-        // Cache public assets (images, fonts, etc.) for 1 year
-        source: '/(.*\\.(?:js|css|woff|woff2|ttf|otf|eot|png|jpg|jpeg|gif|svg|ico|webp|avif|mp4|webm))',
+        // Public assets: fonts and images only (exclude unversioned .js/.css)
+        source: '/(.*\\.(?:woff|woff2|ttf|otf|eot|png|jpg|jpeg|gif|svg|ico|webp|avif|mp4|webm))',
         headers: [
           {
             key: 'Cache-Control',
@@ -137,29 +117,17 @@ const nextConfig = {
         ],
       },
       {
-        // Cache insights/script.js and similar analytics scripts for 1 year
+        // Vercel Analytics: 1 hour cache (script may update without filename hash)
         source: '/insights/(.*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=3600, must-revalidate',
           },
         ],
       },
-      {
-        // HTML pages - short cache with revalidation
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: csp,
-          },
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
-        ],
-      },
+      // No catch-all HTML Cache-Control: Next/Vercel manage per-route caching
+      // CSP and security headers are set in middleware.js
     ];
   }
 };
