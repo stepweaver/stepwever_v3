@@ -192,7 +192,7 @@ export default function YankeeSamuraiPage() {
                   </p>
 
                   <p>
-                    When I was in service, I was given a creed. It was not written for public consumption. It was something I internalized. It said &quot;language is my weapon&quot; - not my sword, not my rifle. My language. And it said I must not make an error. Because error could mean miscalculation or escalation. It could mean someone doesn&apos;t come home. That kind of pressure reshapes you. It makes you slower to speak. It makes you suspicious of certainty. It makes you allergic to exaggeration. You begin to understand that words are not symbols. They are levers.
+                    When I was in the service, I was given a creed. It was not written for public consumption. It was something I internalized. It said &quot;language is my weapon&quot; - not my sword, not my rifle. My language. And it said I must not make an error. Because error could mean miscalculation or escalation. It could mean someone doesn&apos;t come home. That kind of pressure reshapes you. It makes you slower to speak. It makes you suspicious of certainty. It makes you allergic to exaggeration. You begin to understand that words are not symbols. They are levers.
                   </p>
 
                   <p>
