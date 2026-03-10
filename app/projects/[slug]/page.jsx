@@ -624,7 +624,8 @@ export default function ProjectPage({ params }) {
             {project.demoForms?.length > 0 && (
               <ProjectSection title='Demo Forms'>
                 <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
-                  The website includes three fully functional demo forms:
+                  The website includes {project.demoForms.length} demo forms (all
+                  non-functional, for demonstration only):
                 </p>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
                   {project.demoForms.map((form, index) => (
@@ -642,6 +643,27 @@ export default function ProjectPage({ params }) {
                   ))}
                 </div>
                 <SectionList items={project.formFeatures} icon={CheckCircle} />
+              </ProjectSection>
+            )}
+
+            {/* Key Pages */}
+            {project.keyPages?.length > 0 && (
+              <ProjectSection title='Key Pages'>
+                <SectionList items={project.keyPages} icon={FolderOpen} />
+              </ProjectSection>
+            )}
+
+            {/* Strengths */}
+            {project.strengths?.length > 0 && (
+              <ProjectSection title='Strengths'>
+                <SectionList items={project.strengths} icon={CheckCircle} />
+              </ProjectSection>
+            )}
+
+            {/* Limitations */}
+            {project.limitations?.length > 0 && (
+              <ProjectSection title='Limitations'>
+                <SectionList items={project.limitations} icon={Code} />
               </ProjectSection>
             )}
 
