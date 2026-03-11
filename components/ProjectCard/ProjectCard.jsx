@@ -33,11 +33,11 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {imageUrl && (
-        <div className={`relative mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56 ${['neon-profile-card', 'llambda-llm-agent'].includes(slug) ? 'bg-panel/50' : ''}`}>
+        <div className={`relative mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56 ${slug === 'neon-profile-card' ? 'bg-panel/50' : ''}`}>
           <OptimizedImage
             src={imageUrl}
             alt={title}
-            className={`transition-transform duration-300 hover:scale-105 ${['neon-profile-card', 'llambda-llm-agent'].includes(slug) ? 'object-contain object-center' : 'object-cover object-top'}`}
+            className={`transition-transform duration-300 hover:scale-105 ${slug === 'neon-profile-card' ? 'object-contain object-center' : 'object-cover object-top'}`}
             priority={isLCP}
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
           />

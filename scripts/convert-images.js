@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const imagesToConvert = [
+  'screely-llambda.png',
   'screely-lambda.png',
   'screely-stache.png',
   'screely-dice.png',

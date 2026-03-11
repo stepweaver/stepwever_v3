@@ -29,8 +29,8 @@ const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
   { ssr: false }
 );
-const NeonProfileCard = dynamic(() =>
-  import('@/components/NeonProfileCard/NeonProfileCard')
+const HeroOperatorCard = dynamic(() =>
+  import('@/components/Hero/HeroOperatorCard')
 );
 
 function SidebarPanel({ children, label, className = '' }) {
@@ -271,7 +271,7 @@ export default function ProjectPage({ params }) {
   const { slug } = use(params);
   const project = getProjectBySlug(slug);
   const demoComponents = {
-    'neon-profile-card': NeonProfileCard,
+    'neon-profile-card': HeroOperatorCard,
   };
   const DemoComponent = demoComponents[slug] || null;
 
