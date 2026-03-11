@@ -374,6 +374,27 @@ export default function ProjectPage({ params }) {
               </ProjectSection>
             )}
 
+            {/* Key Features */}
+            {project.keyFeatures?.length > 0 && (
+              <ProjectSection title='Key Features'>
+                <div className='space-y-6'>
+                  {project.keyFeatures.map((item, index) => (
+                    <div
+                      key={index}
+                      className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
+                    >
+                      <h3 className='text-lg font-ibm text-neon mb-3'>
+                        {item.title}
+                      </h3>
+                      <p className='font-ocr text-text text-base leading-relaxed'>
+                        {item.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </ProjectSection>
+            )}
+
             {/* Mission and Manifesto */}
             {project.mission && (
               <ProjectSection title={project.mission.title || 'Mission and Manifesto'}>
