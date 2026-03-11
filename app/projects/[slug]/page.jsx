@@ -374,6 +374,76 @@ export default function ProjectPage({ params }) {
               </ProjectSection>
             )}
 
+            {/* Mission and Manifesto */}
+            {project.mission && (
+              <ProjectSection title={project.mission.title || 'Mission and Manifesto'}>
+                <BulletList items={project.mission.points} />
+                {project.mission.symbolism && (
+                  <p className='font-ocr text-text text-base md:text-lg leading-relaxed mt-6'>
+                    {project.mission.symbolism}
+                  </p>
+                )}
+              </ProjectSection>
+            )}
+
+            {/* Content Sections */}
+            {project.contentSections?.length > 0 && (
+              <ProjectSection title='Content Sections'>
+                <div className='space-y-6'>
+                  {project.contentSections.map((item, index) => (
+                    <div
+                      key={index}
+                      className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
+                    >
+                      <h3 className='text-lg font-ibm text-neon mb-2'>
+                        {item.section}
+                      </h3>
+                      <p className='font-ocr text-text text-sm mb-4'>
+                        {item.purpose}
+                      </p>
+                      {item.elements?.length > 0 && (
+                        <BulletList items={item.elements} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </ProjectSection>
+            )}
+
+            {/* User Experience Findings */}
+            {project.userExperienceFindings && (
+              <ProjectSection title='User Experience and Usability'>
+                {(project.userExperienceFindings.strengths?.length > 0 ||
+                  project.userExperienceFindings.areasForImprovement?.length > 0) && (
+                  <div className='space-y-6'>
+                    {project.userExperienceFindings.strengths?.length > 0 && (
+                      <div>
+                        <h3 className='text-lg font-ibm text-neon mb-3'>
+                          Strengths
+                        </h3>
+                        <SectionList
+                          items={project.userExperienceFindings.strengths}
+                          icon={CheckCircle}
+                        />
+                      </div>
+                    )}
+                    {project.userExperienceFindings.areasForImprovement?.length >
+                      0 && (
+                      <div>
+                        <h3 className='text-lg font-ibm text-neon mb-3'>
+                          Areas for Improvement
+                        </h3>
+                        <SectionList
+                          items={project.userExperienceFindings.areasForImprovement}
+                          icon={Code}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </ProjectSection>
+            )}
+
             {/* Live Demo */}
             {DemoComponent && (
               <ProjectSection title='Live Neon Profile Card Demo'>
