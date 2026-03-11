@@ -237,7 +237,7 @@ function ProjectPageLayout({ project, slug, children }) {
                 <div className='flex items-center gap-2'>
                   <FolderOpen className='w-3 h-3 text-neon/40' />
                   <span className='font-ocr text-xs tracking-[0.18em] text-neon/40 uppercase'>
-                    Project detail
+                    {project.isService ? 'Service overview' : 'Project detail'}
                   </span>
                 </div>
                 <span className='font-ocr text-xs text-text/20 hidden sm:inline'>
@@ -322,27 +322,36 @@ export default function ProjectPage({ params }) {
               </ProjectSection>
             )}
 
-            {/* The Problem */}
+            {/* Service Intro */}
+            {project.isService && project.serviceIntro && (
+              <ProjectSection title='About This Service'>
+                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
+                  {project.serviceIntro}
+                </p>
+              </ProjectSection>
+            )}
+
+            {/* The Problem / Typical Challenges */}
             {project.problem && (
-              <ProjectSection title='The Problem'>
+              <ProjectSection title={project.isService ? 'Typical Challenges' : 'The Problem'}>
                 <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
                   {project.problem}
                 </p>
               </ProjectSection>
             )}
 
-            {/* My Role */}
+            {/* My Role / What I Offer */}
             {project.role && (
-              <ProjectSection title='My Role'>
+              <ProjectSection title={project.isService ? 'What I Offer' : 'My Role'}>
                 <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
                   {project.role}
                 </p>
               </ProjectSection>
             )}
 
-            {/* The Solution */}
+            {/* The Solution / Deliverables */}
             {(project.solution || project.features) && (
-              <ProjectSection title='The Solution'>
+              <ProjectSection title={project.isService ? 'Deliverables' : 'The Solution'}>
                 {project.solution && (
                   <p className='font-ocr text-text text-base md:text-lg leading-relaxed mb-6'>
                     {project.solution}
@@ -373,10 +382,17 @@ export default function ProjectPage({ params }) {
               </ProjectSection>
             )}
 
-            {/* The Outcome */}
+            {/* The Outcome / Benefits You Can Expect */}
             {project.outcome?.length > 0 && (
-              <ProjectSection title='The Outcome'>
+              <ProjectSection title={project.isService ? 'Benefits You Can Expect' : 'The Outcome'}>
                 <SectionList items={project.outcome} icon={CheckCircle} />
+              </ProjectSection>
+            )}
+
+            {/* Example Use Cases (Services) */}
+            {project.isService && project.exampleUseCases?.length > 0 && (
+              <ProjectSection title='Example Use Cases'>
+                <SectionList items={project.exampleUseCases} icon={Zap} />
               </ProjectSection>
             )}
 
@@ -882,15 +898,22 @@ export default function ProjectPage({ params }) {
             {/* CTA Section */}
             <section className='text-center hud-panel p-8 md:p-12'>
               <h2 className='text-xl md:text-2xl font-ibm text-neon mb-4'>
-                Like what you see?
+                {project.isService
+                  ? 'Discuss how I can help'
+                  : project.comingSoon
+                    ? 'Coming soon'
+                    : 'Like what you see?'}
               </h2>
               <p className='font-ocr text-text text-sm md:text-base mb-6 max-w-2xl mx-auto'>
-                Feel free to reach out if you have questions about this project
-                or want to chat about working together.
+                {project.isService
+                  ? 'These capabilities are available for hire. Reach out to discuss how I can apply these skills to your project or request a consultation.'
+                  : project.comingSoon
+                    ? 'This project is in active development. Reach out if you want to learn more or discuss similar work.'
+                    : 'Feel free to reach out if you have questions about this project or want to chat about working together.'}
               </p>
               <Link href='/contact'>
                 <button className='px-6 py-2.5 border border-neon text-neon font-ocr text-sm hover:bg-neon/10 transition-colors cursor-pointer'>
-                  Get in Touch
+                  {project.isService ? 'Request a Consultation' : project.comingSoon ? 'Get in Touch' : 'Get in Touch'}
                 </button>
               </Link>
             </section>

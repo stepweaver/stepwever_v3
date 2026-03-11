@@ -13,6 +13,8 @@ const ProjectCard = memo(function ProjectCard({
   actions = [],
   slug,
   isLCP = false,
+  isService = false,
+  comingSoon = false,
 }) {
   const cardContent = (
     <HUDPanel
@@ -25,11 +27,23 @@ const ProjectCard = memo(function ProjectCard({
           <span className='w-2.5 h-2.5 rounded-full bg-warn' />
           <span className='w-2.5 h-2.5 rounded-full bg-neon' />
         </div>
-        {keywords.length > 0 && (
-          <span className='text-xs text-muted font-ocr uppercase tracking-wider ml-auto'>
-            {keywords[0]}
-          </span>
-        )}
+        <div className='flex items-center gap-1.5 ml-auto'>
+          {comingSoon && (
+            <span className='text-[10px] text-warn font-ocr uppercase tracking-wider px-2 py-0.5 border border-warn/50 rounded'>
+              Coming Soon
+            </span>
+          )}
+          {isService && !comingSoon && (
+            <span className='text-[10px] text-neon/80 font-ocr uppercase tracking-wider px-2 py-0.5 border border-neon/30 rounded'>
+              Capability
+            </span>
+          )}
+          {keywords.length > 0 && (
+            <span className='text-xs text-muted font-ocr uppercase tracking-wider'>
+              {keywords[0]}
+            </span>
+          )}
+        </div>
       </div>
 
       {imageUrl && (
@@ -40,6 +54,7 @@ const ProjectCard = memo(function ProjectCard({
             className={`transition-transform duration-300 hover:scale-105 ${slug === 'neon-profile-card' ? 'object-contain object-center' : slug === 'llambda-llm-agent' ? 'object-cover object-center' : 'object-cover object-top'}`}
             priority={isLCP}
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
+            unoptimized={slug === 'llambda-llm-agent'}
           />
         </div>
       )}

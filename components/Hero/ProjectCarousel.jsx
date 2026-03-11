@@ -579,6 +579,8 @@ function ProjectCarousel() {
                         actions={project.actions}
                         slug={project.slug}
                         isLCP={isCurrent && index === 0}
+                        isService={project.isService}
+                        comingSoon={project.comingSoon}
                       />
                     </Link>
                   ) : (
@@ -592,6 +594,8 @@ function ProjectCarousel() {
                       actions={project.actions}
                       slug={project.slug}
                       isLCP={isCurrent && index === 0}
+                      isService={project.isService}
+                      comingSoon={project.comingSoon}
                     />
                   )}
                 </div>
@@ -724,6 +728,8 @@ function ProjectCarousel() {
                         actions={project.actions}
                         slug={project.slug}
                         isLCP={desktopPageIndex === 0 && index === 0}
+                        isService={project.isService}
+                        comingSoon={project.comingSoon}
                       />
                     </Link>
                   ) : (
@@ -737,6 +743,8 @@ function ProjectCarousel() {
                       actions={project.actions}
                       slug={project.slug}
                       isLCP={desktopPageIndex === 0 && index === 0}
+                      isService={project.isService}
+                      comingSoon={project.comingSoon}
                     />
                   )}
                 </div>
