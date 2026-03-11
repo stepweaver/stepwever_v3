@@ -288,17 +288,23 @@ export default function ProjectPage({ params }) {
   return (
     <ProjectPageLayout project={project} slug={slug}>
       <div className='max-w-4xl'>
-        {/* Project Image - Hero */}
-        {project.imageUrl && (
-          <div className='relative mb-8 border border-neon/20 overflow-hidden aspect-video'>
-            <OptimizedImage
-              src={project.imageUrl}
-              alt={project.title}
-              className='object-cover object-top'
-              priority
-              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
-            />
+        {/* Project Image or Live Component - Hero */}
+        {project.showComponentAsHero && DemoComponent ? (
+          <div className='relative mb-8 flex justify-center'>
+            <DemoComponent />
           </div>
+        ) : (
+          project.imageUrl && (
+            <div className='relative mb-8 border border-neon/20 overflow-hidden aspect-video'>
+              <OptimizedImage
+                src={project.imageUrl}
+                alt={project.title}
+                className='object-cover object-top'
+                priority
+                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
+              />
+            </div>
+          )
         )}
 
         {project.isAgencySubcontract && (
@@ -465,8 +471,8 @@ export default function ProjectPage({ params }) {
               </ProjectSection>
             )}
 
-            {/* Live Demo */}
-            {DemoComponent && (
+            {/* Live Demo - only show full section when component is not already used as hero */}
+            {DemoComponent && !project.showComponentAsHero && (
               <ProjectSection title='Live Neon Profile Card Demo'>
                 <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
                   <div className='flex justify-center'>
@@ -490,6 +496,20 @@ export default function ProjectPage({ params }) {
                       BackgroundCanvas lighting.
                     </p>
                   </div>
+                </div>
+              </ProjectSection>
+            )}
+
+            {/* Component highlights when component is shown as hero */}
+            {DemoComponent && project.showComponentAsHero && project.demoHighlights?.length > 0 && (
+              <ProjectSection title='Component Highlights'>
+                <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
+                  <SectionList items={project.demoHighlights} icon={CheckCircle} />
+                  <p className='text-sm font-ocr text-text/70'>
+                    Inspired by the Neon Profile Card brief from Codenhack,
+                    adapted to reuse our IBM headers, OCR body copy, and
+                    BackgroundCanvas lighting.
+                  </p>
                 </div>
               </ProjectSection>
             )}
