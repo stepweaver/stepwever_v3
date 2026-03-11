@@ -178,6 +178,20 @@ function ProjectPageLayout({ project, slug, children }) {
                   </SidebarPanel>
                 )}
 
+                {project.githubRepo && (
+                  <SidebarPanel label='REPO'>
+                    <a
+                      href={`https://github.com/${project.githubRepo}`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='inline-flex items-center text-neon font-ocr text-sm hover:text-neon/80 transition-colors'
+                    >
+                      <Code className='w-3.5 h-3.5 mr-2' />
+                      {project.githubRepo}
+                    </a>
+                  </SidebarPanel>
+                )}
+
                 {project.tags?.length > 0 && (
                   <SidebarPanel label='TAGS'>
                     <div className='flex flex-wrap gap-1.5'>
@@ -292,6 +306,15 @@ export default function ProjectPage({ params }) {
             Agency Subcontract Project
           </span>
         )}
+
+            {/* Overview */}
+            {project.overview && (
+              <ProjectSection title='Overview'>
+                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
+                  {project.overview}
+                </p>
+              </ProjectSection>
+            )}
 
             {/* The Problem */}
             {project.problem && (
@@ -650,6 +673,33 @@ export default function ProjectPage({ params }) {
             {project.keyPages?.length > 0 && (
               <ProjectSection title='Key Pages'>
                 <SectionList items={project.keyPages} icon={FolderOpen} />
+                {project.treatmentDetailContent?.length > 0 && (
+                  <div className='mt-6'>
+                    <h3 className='text-lg font-ibm text-neon mb-3'>
+                      Treatment Detail Pages
+                    </h3>
+                    <BulletList items={project.treatmentDetailContent} />
+                  </div>
+                )}
+              </ProjectSection>
+            )}
+
+            {/* README Recommendations */}
+            {project.readmeRecommendations?.length > 0 && (
+              <ProjectSection title='README Recommendations'>
+                <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
+                  Suggested README updates to make the repository more informative:
+                </p>
+                <SectionList items={project.readmeRecommendations} icon={Code} />
+              </ProjectSection>
+            )}
+
+            {/* Conclusion */}
+            {project.conclusion && (
+              <ProjectSection title='Conclusion'>
+                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
+                  {project.conclusion}
+                </p>
               </ProjectSection>
             )}
 
