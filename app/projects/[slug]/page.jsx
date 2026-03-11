@@ -299,7 +299,7 @@ export default function ProjectPage({ params }) {
               <OptimizedImage
                 src={project.imageUrl}
                 alt={project.title}
-                className='object-cover object-top'
+                className={slug === 'llambda-llm-agent' ? 'object-cover object-center' : 'object-cover object-top'}
                 priority
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
               />
