@@ -299,7 +299,9 @@ export default function ProjectPage({ params }) {
             className={`relative mb-8 border border-neon/20 overflow-hidden ${
               slug === 'lcerebro'
                 ? 'aspect-square max-w-md mx-auto bg-black'
-                : 'aspect-video max-w-3xl mx-auto'
+                : slug === 'llambda-llm-agent'
+                  ? 'aspect-video max-w-3xl'
+                  : 'aspect-video max-w-3xl mx-auto'
             } flex items-center justify-center rounded-sm`}
           >
             <DemoComponent />
