@@ -65,7 +65,7 @@ function ProjectPageLayout({ project, slug, children }) {
 
   return (
     <ErrorBoundary>
-      <div className='relative h-[calc(100vh-6rem)] flex flex-col overflow-hidden'>
+      <div className='relative min-h-[calc(100vh-6rem)] flex flex-col overflow-y-auto overflow-x-hidden lg:overflow-hidden'>
         <BackgroundCanvas />
 
         <div className='relative z-10 flex flex-col h-full'>
