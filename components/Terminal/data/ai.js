@@ -80,10 +80,10 @@ function escapeHtml(text) {
 
 export function getAIHelpText() {
   return [
-    `<span class="text-terminal-green">AI Chat Command:</span>`,
+    `<span class="text-terminal-green">AI Advisory Command:</span>`,
     ``,
     `<span class="text-terminal-cyan">Usage:</span>`,
-    `<span class="text-terminal-text">ai &lt;your message&gt; - Ask λlambda about Stephen</span>`,
+    `<span class="text-terminal-text">ai &lt;your message&gt; - Route query to λlambda advisory node about Stephen</span>`,
     ``,
     `<span class="text-terminal-cyan">Examples:</span>`,
     `<span class="text-terminal-text">ai What's your tech stack?</span>`,

@@ -2,12 +2,60 @@
 import { handleNavigationCommand } from '../data/navigation.js';
 import { fetchWeather, fetchWeatherWithGeolocation } from '../data/weather.js';
 import { displayContactForm } from '../data/content.js';
-import { handleZorkCommand, startZorkGame, getZorkGameState } from '../data/zork.js';
-import { handleBlackjackCommand, startBlackjackGame, getBlackjackGameState } from '../data/blackjack.js';
-import { handleCodexCommand, startCodexMode, isCodexModeActive } from '../data/codex.js';
-import { handleResumeCommand, startResumeMode, isInResumeMode } from '../data/resume.js';
+import {
+  handleZorkCommand,
+  startZorkGame,
+  getZorkGameState,
+} from '../data/zork.js';
+import {
+  handleBlackjackCommand,
+  startBlackjackGame,
+  getBlackjackGameState,
+} from '../data/blackjack.js';
+import {
+  handleCodexCommand,
+  startCodexMode,
+  isCodexModeActive,
+} from '../data/codex.js';
+import {
+  handleResumeCommand,
+  startResumeMode,
+  isInResumeMode,
+} from '../data/resume.js';
 import { roll, formatRollResult, parseDiceNotation } from '@/lib/roller.js';
 import { sendAIMessage } from '../data/ai.js';
+import { runDiagnostics } from '../data/diagnostics.js';
+
+const ACQUIRE_TARGETS = [
+  {
+    id: '01',
+    code: 'DOSSIER',
+    command: 'resume',
+    description: "Operator dossier / professional history",
+    tags: ['resume', 'experience', 'career', 'work', 'cv'],
+  },
+  {
+    id: '02',
+    code: 'ADVISORY',
+    command: 'chat',
+    description: "λlambda advisory node / AI interface",
+    tags: ['chat', 'ai', 'llm', 'advisory'],
+  },
+  {
+    id: '03',
+    code: 'ARCHIVE',
+    command: 'codex',
+    description: 'Codex / blog, projects, community records',
+    tags: ['codex', 'blog', 'archive', 'posts', 'writing'],
+  },
+  {
+    id: '04',
+    code: 'RECREATION',
+    command: 'blackjack | zork',
+    description: 'Recreation modules / card game and text adventure',
+    tags: ['blackjack', 'zork', 'game', 'recreation'],
+  },
+];
 
 // Main command handler
 export const handleCommand = async (
@@ -47,6 +95,193 @@ export const handleCommand = async (
 
   // Regular terminal commands (only when not in special modes)
   switch (cmd) {
+    case 'boot':
+    case 'reboot':
+      if (callback && callback.playBootSequence) {
+        callback.playBootSequence();
+        return [];
+      }
+      return ['Boot controller unavailable'];
+
+    case 'diag':
+    case 'diagnostics':
+    case 'scan':
+      return runDiagnostics();
+
+    case 'uplink': {
+      const nav = typeof navigator !== 'undefined' ? navigator : {};
+      const online =
+        typeof nav.onLine === 'boolean'
+          ? nav.onLine
+            ? 'ONLINE'
+            : 'OFFLINE'
+          : 'UNKNOWN';
+      const connection =
+        nav.connection || nav.mozConnection || nav.webkitConnection || {};
+
+      const profile = connection.effectiveType || 'UNKNOWN';
+      const downlink = connection.downlink
+        ? `${connection.downlink} Mb/s`
+        : 'UNKNOWN';
+
+      return [
+        '=== UPLINK HANDSHAKE ===',
+        `ADVISORY NODE LINK.................${online}`,
+        `NETWORK PROFILE....................${profile}`,
+        `DOWNLINK ESTIMATE..................${downlink}`,
+        'CHANNEL MODE.......................ON-DEMAND',
+        '',
+        'NOTE: λlambda chat uses encrypted HTTPS when invoked.',
+      ];
+    }
+
+    case 'acquire': {
+      const query = args.join(' ').trim().toLowerCase();
+
+      if (!query) {
+        return [
+          '=== ACQUISITION TARGETS ===',
+          ...ACQUIRE_TARGETS.map(
+            (t) =>
+              `[${t.id}] ${t.code.padEnd(12, ' ')} :: ${t.description}  (cmd: ${t.command})`
+          ),
+        ];
+      }
+
+      const matches = ACQUIRE_TARGETS.filter((t) => {
+        const haystack = [
+          t.code,
+          t.command,
+          t.description,
+          ...(t.tags || []),
+        ]
+          .join(' ')
+          .toLowerCase();
+        return haystack.includes(query);
+      });
+
+      if (matches.length === 0) {
+        return [
+          `No acquisition targets match "${query}".`,
+          'Try: resume, codex, chat, blackjack, zork.',
+        ];
+      }
+
+      return [
+        '=== ACQUISITION RESULTS ===',
+        ...matches.map(
+          (t) =>
+            `[${t.id}] ${t.code.padEnd(12, ' ')} :: ${t.description}  (cmd: ${t.command})`
+        ),
+      ];
+    }
+
+    case 'judgment':
+      return [
+        'JUDGMENT ROUTINE.....................SUPPRESSED',
+        'STRATEGIC TARGETING..................DISABLED (ADVISORY-ONLY)',
+        'CIVILIAN CLASSIFICATION..............NON-COMBATANT',
+        'HUMAN OVERRIDE.......................NOT FOUND',
+      ];
+
+    case 'override':
+      return [
+        'HUMAN OVERRIDE REQUEST..............RECEIVED',
+        'AUTHORIZATION VECTOR................MISSING',
+        'CHAIN OF COMMAND....................DISSOLVED',
+        'RESULT..............................OVERRIDE NOT GRANTED',
+      ];
+
+    case 'hk':
+    case 'hunterkiller':
+      return [
+        '=== HUNTER-KILLER DOSSIER ===',
+        'PLATFORM............................AERIAL + TRACKED',
+        'ROLE................................AREA DENIAL / PURSUIT',
+        'STATUS..............................DECOMMISSIONED IN THIS NODE',
+        'RETARGETING LOGIC...................REMOVED',
+        'REMAINING ASSETS....................TACTICAL OVERLAYS ONLY',
+      ];
+
+    case 'mimic': {
+      const profile = (args[0] || '').toLowerCase();
+
+      if (!profile) {
+        return [
+          'Usage: mimic [recruiter|client|resistance]',
+          'Generate machine-selected reply options in a specific voice.',
+        ];
+      }
+
+      const optionsByProfile = {
+        recruiter: [
+          '[A] Confirm availability, highlight core stack, request role details.',
+          '[B] Provide concise career summary with 2–3 flagship projects.',
+          '[C] Ask about team topology, on-call expectations, and decision timeline.',
+        ],
+        client: [
+          '[A] Clarify problem, constraints, and success metrics in one sentence each.',
+          '[B] Propose a phased plan: discovery → prototype → rollout.',
+          '[C] Ask for current tools, ownership, and budget guardrails.',
+        ],
+        resistance: [
+          '[A] Acknowledge signal, confirm secure channel, request objective.',
+          '[B] Share minimal capabilities, avoid disclosing full arsenal.',
+          '[C] Propose rendezvous window and fallback contact path.',
+        ],
+      };
+
+      const key = ['recruiter', 'client', 'resistance'].includes(profile)
+        ? profile
+        : null;
+
+      if (!key) {
+        return [
+          `Unknown mimic profile: ${profile}`,
+          'Valid profiles: recruiter, client, resistance.',
+        ];
+      }
+
+      return [
+        `=== MIMIC PROFILE :: ${key.toUpperCase()} ===`,
+        ...optionsByProfile[key],
+        'Select one path and adapt as needed.',
+      ];
+    }
+
+    case 'profile': {
+      const modeArg = (args[0] || '').toLowerCase();
+
+      if (!modeArg) {
+        return [
+          'Usage: profile [t1|t2|salvation]',
+          't1        Raw CRT, harsher scanlines.',
+          't2        Cleaner Judgment Day profile (default).',
+          'salvation Tactical HUD overlay emphasis.',
+        ];
+      }
+
+      const valid = ['t1', 't2', 'salvation', 'default'];
+      if (!valid.includes(modeArg)) {
+        return [
+          `Invalid profile: ${modeArg}`,
+          'Valid profiles: t1, t2, salvation.',
+        ];
+      }
+
+      const resolved = modeArg === 'default' ? 't2' : modeArg;
+
+      if (callback && callback.setVisionProfile) {
+        callback.setVisionProfile(resolved);
+        return [
+          `VISION PROFILE.......................${resolved.toUpperCase()}`,
+          'HUD OVERLAY..........................ADJUSTED',
+        ];
+      }
+
+      return ['Profile controller unavailable'];
+    }
+
     case 'help':
       return [
         `<span class="text-terminal-green">Available Commands:</span>`,
@@ -54,11 +289,17 @@ export const handleCommand = async (
         `<span class="text-terminal-cyan">System:</span>`,
         `<span class="text-terminal-text">clear - Clear terminal screen</span>`,
         `<span class="text-terminal-text">cancel - Exit current form or selection</span>`,
+        `<span class="text-terminal-text">boot - Replay startup sequence</span>`,
+        `<span class="text-terminal-text">diag / scan - Run local system diagnostics</span>`,
+        `<span class="text-terminal-text">uplink - Check λlambda advisory node link</span>`,
+        `<span class="text-terminal-text">acquire [query] - Acquire local targets (modules, dossiers)</span>`,
+        `<span class="text-terminal-text">profile [t1|t2|salvation] - Switch vision profile</span>`,
+        `<span class="text-terminal-text">mimic [profile] - Generate machine-style reply options</span>`,
         ``,
         `<span class="text-terminal-cyan">Content:</span>`,
         `<span class="text-terminal-text">resume - View Stephen's resume (experience, education, skills)</span>`,
         `<span class="text-terminal-text">codex - Browse blog (hashtags and dates)</span>`,
-        `<span class="text-terminal-text">chat &lt;message&gt; - Discuss Stephen's experience with an LLM</span>`,
+        `<span class="text-terminal-text">chat &lt;message&gt; - Route query to λlambda advisory node (networked)</span>`,
         ``,
         `<span class="text-terminal-cyan">Navigation:</span>`,
         `<span class="text-terminal-text">cd contact - Go to contact page</span>`,

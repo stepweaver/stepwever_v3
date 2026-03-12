@@ -14,11 +14,12 @@ export default function GlitchLambda({
 }) {
   const [isGlitching, setIsGlitching] = useState(false);
   const randomizedValues = useRef(null);
+  const timeoutsRef = useRef([]);
 
   useEffect(() => {
     if (!autoGlitch) return;
 
-    // Initialize randomized values only on client
+    // Initialize randomized values only once on the client
     if (!randomizedValues.current) {
       const getRandomizedDelay = (baseDelay) => {
         const variation = baseDelay * 0.3;
@@ -44,33 +45,30 @@ export default function GlitchLambda({
 
     const triggerGlitch = () => {
       setIsGlitching(true);
-      setTimeout(() => setIsGlitching(false), getGlitchDuration());
+      const endId = setTimeout(() => setIsGlitching(false), getGlitchDuration());
+      timeoutsRef.current.push(endId);
     };
 
-    // Use pre-calculated randomized initial delay
-    const initialTimeout = setTimeout(
-      triggerGlitch,
-      randomizedValues.current.initialDelay
-    );
-
-    // Set up interval with randomized timing
-    const setupNextGlitch = () => {
+    const scheduleNextGlitch = () => {
       const randomizedInterval = randomizedValues.current.getNextInterval();
-      setTimeout(() => {
+      const id = setTimeout(() => {
         triggerGlitch();
-        setupNextGlitch(); // Schedule the next glitch
+        scheduleNextGlitch();
       }, randomizedInterval);
+      timeoutsRef.current.push(id);
     };
 
-    // Start the staggered interval after initial delay
-    const intervalTimeout = setTimeout(
-      setupNextGlitch,
-      randomizedValues.current.initialDelay
-    );
+    // Kick off the first glitch and the recurring schedule
+    const initialId = setTimeout(() => {
+      triggerGlitch();
+      scheduleNextGlitch();
+    }, randomizedValues.current.initialDelay);
+    timeoutsRef.current.push(initialId);
 
     return () => {
-      clearTimeout(initialTimeout);
-      clearTimeout(intervalTimeout);
+      // Clear all scheduled timeouts on unmount or dependency change
+      timeoutsRef.current.forEach((id) => clearTimeout(id));
+      timeoutsRef.current = [];
     };
   }, [autoGlitch, glitchInterval, initialDelay, size]);
 

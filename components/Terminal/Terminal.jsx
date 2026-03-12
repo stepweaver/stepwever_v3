@@ -14,6 +14,11 @@ import { useCommandHistory } from './hooks/useCommandHistory';
 import { useContactForm } from './hooks/useContactForm';
 import { useWeatherSelection } from './hooks/useWeatherSelection';
 import { getCurrentPath, isCodexModeActive } from './data/codex.js';
+import { useBootSequence } from './hooks/useBootSequence';
+import {
+  TERMINATOR_BOOT_SEQUENCE,
+  TERMINATOR_READY_LINES,
+} from './data/bootSequence';
 import { useRouter } from 'next/navigation';
 import DOMPurify from 'dompurify';
 import styles from '../../styles/terminal.module.css';
@@ -27,30 +32,25 @@ const TERMINAL_CONFIG = {
   MAX_HISTORY_SIZE: 100,
 };
 
-// Welcome messages
-const WELCOME_MESSAGES = [
-  '<span class="text-terminal-green">Welcome to λstepweaver terminal v4.0.0</span>',
-  '<span>Type <span class="text-terminal-cyan">"help"</span> to see available commands.</span>',
-];
-
 // Utility: robust HTML sanitization via DOMPurify
 const sanitizeHTML = (html) => DOMPurify.sanitize(html);
 
 const Terminal = forwardRef((props, ref) => {
   // Core state
-  const [lines, setLines] = useState(WELCOME_MESSAGES);
+  const [lines, setLines] = useState([]);
   const [input, setInput] = useState('');
   const [currentPath, setCurrentPath] = useState('~');
   const [cursorVisible, setCursorVisible] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [lastCommand, setLastCommand] = useState('');
   const [lastCommandTime, setLastCommandTime] = useState(0);
+  const [visionProfile, setVisionProfile] = useState('t2');
 
   // Refs
   const containerRef = useRef(null);
   const inputRef = useRef(null);
   const preRefs = useRef({});
-  const previousLinesLength = useRef(WELCOME_MESSAGES.length);
+  const previousLinesLength = useRef(0);
   const bottomRef = useRef(null);
 
   // Hooks
@@ -76,6 +76,33 @@ const Terminal = forwardRef((props, ref) => {
   // Memoized values
   const memoizedLines = useMemo(() => lines, [lines]);
 
+  const visionClass = useMemo(() => {
+    switch (visionProfile) {
+      case 't1':
+        return styles.visionT1 || '';
+      case 'salvation':
+        return styles.visionSalvation || '';
+      case 't2':
+      default:
+        return styles.visionT2 || '';
+    }
+  }, [visionProfile]);
+
+  const { isBooting, playBoot, skipBoot } = useBootSequence({
+    setLines,
+    sequence: TERMINATOR_BOOT_SEQUENCE,
+    onComplete: () => {
+      setLines((prev) => [...prev, '', ...TERMINATOR_READY_LINES]);
+    },
+  });
+
+  // Auto-play boot sequence once on mount
+  useEffect(() => {
+    playBoot();
+    // We intentionally omit playBoot from deps to avoid replays on re-renders.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Get current path for prompt
   const getPromptPath = useCallback(() => {
     if (isCodexModeActive()) {
@@ -91,6 +118,9 @@ const Terminal = forwardRef((props, ref) => {
       const trimmedCommand = command.trim();
 
       if (!trimmedCommand) return;
+
+      // Block commands during boot sequence
+      if (isBooting) return;
 
       // Prevent duplicate rapid commands
       const now = Date.now();
@@ -119,7 +149,7 @@ const Terminal = forwardRef((props, ref) => {
 
       // Handle system commands
       if (trimmedCommand.toLowerCase() === 'clear') {
-        setLines([...WELCOME_MESSAGES]);
+        setLines([...TERMINATOR_READY_LINES]);
         setInput('');
         setCursorPosition(0);
         // Scroll to top after clear
@@ -153,6 +183,8 @@ const Terminal = forwardRef((props, ref) => {
             router,
             activateContactMode,
             setupSelectionMode,
+            setVisionProfile,
+            playBootSequence: playBoot,
           }
         );
 
@@ -190,8 +222,14 @@ const Terminal = forwardRef((props, ref) => {
   // Keyboard handling
   const handleKeyDown = useCallback(
     (e) => {
-      // Handle escape key for canceling modes
+      // Handle escape key for canceling modes / skipping boot
       if (e.key === 'Escape') {
+        if (isBooting) {
+          e.preventDefault();
+          skipBoot();
+          return;
+        }
+
         if (isInContactMode) {
           cancelContact();
           return;
@@ -227,6 +265,7 @@ const Terminal = forwardRef((props, ref) => {
       }
     },
     [
+      isBooting,
       isInContactMode,
       isInSelectionMode,
       cancelContact,
@@ -427,6 +466,7 @@ const Terminal = forwardRef((props, ref) => {
     <div
       ref={containerRef}
       className={`h-full min-w-0 overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm-normal leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
+      className={`h-full min-w-0 overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm-normal leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect} ${visionClass}`}
       onClick={focusInput}
       role='application'
       aria-label='Terminal interface'
