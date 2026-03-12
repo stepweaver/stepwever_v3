@@ -82,7 +82,7 @@ export default function ThemeToggle() {
     <div className='flex items-center gap-3'>
       {!mounted ? (
         // Skeleton state - matches the structure of the actual component
-        <div className='w-32 h-10 motion-safe:animate-pulse bg-terminal-border rounded-sm' />
+        <div className='w-10 h-10 motion-safe:animate-pulse bg-terminal-border rounded-full' />
       ) : (
         // CRT-style dropdown
         <div className='theme-dropdown-container' ref={dropdownRef}>
@@ -97,13 +97,16 @@ export default function ThemeToggle() {
             <Image
               src='/images/lambda_stepweaver.png'
               alt='Lambda'
-              width={16}
-              height={16}
+              width={24}
+              height={24}
               className={`lambda-icon ${theme}`}
-              sizes='16px'
-              style={{ width: 16, height: 16, objectFit: 'contain' }}
+              sizes='24px'
+              style={{ width: 24, height: 24, objectFit: 'contain' }}
             />
-            <span className='theme-dropdown-label'>{currentTheme?.label}</span>
+            {/* Keep the current theme name for screen readers only */}
+            <span className='sr-only theme-dropdown-label'>
+              {currentTheme?.label ?? 'Theme'}
+            </span>
             <span className={`theme-dropdown-arrow ${isOpen ? 'open' : ''}`}>▼</span>
           </button>
 

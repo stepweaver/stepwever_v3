@@ -32,6 +32,10 @@ const BackgroundCanvas = dynamic(
 const HeroOperatorCard = dynamic(() =>
   import('@/components/Hero/HeroOperatorCard')
 );
+const ChatBot = dynamic(
+  () => import('@/components/ChatBot/ChatBot'),
+  { ssr: false }
+);
 
 function SidebarPanel({ children, label, className = '' }) {
   return (
@@ -272,6 +276,7 @@ export default function ProjectPage({ params }) {
   const project = getProjectBySlug(slug);
   const demoComponents = {
     'neon-profile-card': HeroOperatorCard,
+    'llambda-llm-agent': ChatBot,
   };
   const DemoComponent = demoComponents[slug] || null;
 
@@ -290,16 +295,34 @@ export default function ProjectPage({ params }) {
       <div className='max-w-4xl'>
         {/* Project Image or Live Component - Hero */}
         {project.showComponentAsHero && DemoComponent ? (
-          <div className='relative mb-8 flex justify-center'>
+          <div
+            className={`relative mb-8 border border-neon/20 overflow-hidden ${
+              slug === 'lcerebro'
+                ? 'aspect-square max-w-md mx-auto bg-black'
+                : 'aspect-video max-w-3xl mx-auto'
+            } flex items-center justify-center rounded-sm`}
+          >
             <DemoComponent />
           </div>
         ) : (
           project.imageUrl && (
-            <div className={`relative mb-8 border border-neon/20 overflow-hidden ${slug === 'lcerebro' ? 'aspect-square max-w-md mx-auto bg-black' : 'aspect-video'}`}>
+            <div
+              className={`relative mb-8 border border-neon/20 overflow-hidden ${
+                slug === 'lcerebro'
+                  ? 'aspect-square max-w-md mx-auto bg-black'
+                  : 'aspect-video'
+              }`}
+            >
               <OptimizedImage
                 src={project.imageUrl}
                 alt={project.title}
-                className={slug === 'llambda-llm-agent' ? 'object-cover object-center' : slug === 'lcerebro' ? 'object-contain object-center' : 'object-cover object-top'}
+                className={
+                  slug === 'llambda-llm-agent'
+                    ? 'object-cover object-center'
+                    : slug === 'lcerebro'
+                      ? 'object-contain object-center'
+                      : 'object-cover object-top'
+                }
                 priority
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
               />
@@ -489,7 +512,7 @@ export default function ProjectPage({ params }) {
 
             {/* Live Demo - only show full section when component is not already used as hero */}
             {DemoComponent && !project.showComponentAsHero && (
-              <ProjectSection title='Live Neon Profile Card Demo'>
+              <ProjectSection title='Live Profile Card Demo'>
                 <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
                   <div className='flex justify-center'>
                     <DemoComponent />
@@ -507,9 +530,9 @@ export default function ProjectPage({ params }) {
                       icon={CheckCircle}
                     />
                     <p className='text-sm font-ocr text-text/70'>
-                      Inspired by the Neon Profile Card brief from Codenhack,
-                      adapted to reuse our IBM headers, OCR body copy, and
-                      BackgroundCanvas lighting.
+                      Inspired by the original profile card brief from
+                      Codenhack, adapted to reuse our IBM headers, OCR body
+                      copy, and BackgroundCanvas lighting.
                     </p>
                   </div>
                 </div>
@@ -517,18 +540,23 @@ export default function ProjectPage({ params }) {
             )}
 
             {/* Component highlights when component is shown as hero */}
-            {DemoComponent && project.showComponentAsHero && project.demoHighlights?.length > 0 && (
-              <ProjectSection title='Component Highlights'>
-                <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
-                  <SectionList items={project.demoHighlights} icon={CheckCircle} />
-                  <p className='text-sm font-ocr text-text/70'>
-                    Inspired by the Neon Profile Card brief from Codenhack,
-                    adapted to reuse our IBM headers, OCR body copy, and
-                    BackgroundCanvas lighting.
-                  </p>
-                </div>
-              </ProjectSection>
-            )}
+            {DemoComponent &&
+              project.showComponentAsHero &&
+              project.demoHighlights?.length > 0 && (
+                <ProjectSection title='Component Highlights'>
+                  <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
+                    <SectionList
+                      items={project.demoHighlights}
+                      icon={CheckCircle}
+                    />
+                    <p className='text-sm font-ocr text-text/70'>
+                      Inspired by the original profile card brief from
+                      Codenhack, adapted to reuse our IBM headers, OCR body
+                      copy, and BackgroundCanvas lighting.
+                    </p>
+                  </div>
+                </ProjectSection>
+              )}
 
             {/* Content Management */}
             {project.contentManagement && (

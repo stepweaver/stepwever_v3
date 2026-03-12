@@ -56,7 +56,7 @@ export default function Navbar() {
             aria-label='Go to homepage'
             aria-describedby='logo-description'
           >
-            <span className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
+            <span className='text-terminal-green font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold whitespace-nowrap'>
               <GlitchLambda
                 className='text-neon font-ibm text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'
                 size='large'
@@ -69,46 +69,49 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div
-            className='hidden md:flex items-center space-x-8 relative z-50'
-            role='menubar'
-            aria-label='Main menu'
-          >
-            {NAV_LINKS.map((link) =>
-              link.scroll ? (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-                  role='menuitem'
-                  aria-label={link.ariaLabel}
-                >
-                  {link.name}
-                </Link>
-              ) : (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-4 py-2 bg-transparent'
-                  role='menuitem'
-                  aria-label={link.ariaLabel}
-                >
-                  {link.name}
-                </Link>
-              )
-            )}
+          {/* Right side: desktop nav + mobile controls */}
+          <div className='flex items-center gap-2'>
+            {/* Desktop Navigation */}
+            <div
+              className='hidden md:flex items-center space-x-8 relative z-50'
+              role='menubar'
+              aria-label='Main menu'
+            >
+              {NAV_LINKS.map((link) =>
+                link.scroll ? (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-3 py-2 bg-transparent'
+                    role='menuitem'
+                    aria-label={link.ariaLabel}
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-3 py-2 bg-transparent'
+                    role='menuitem'
+                    aria-label={link.ariaLabel}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              )}
+            </div>
+
+            {/* Mobile Navigation (includes hamburger + theme toggle) */}
+            <MobileNav />
           </div>
         </div>
       </div>
 
-      {/* Theme Toggle - Corner Position */}
+      {/* Theme Toggle - desktop only (top-right corner) */}
       <div className='hidden md:block absolute top-4 right-4 z-50'>
         <ThemeToggle />
       </div>
-
-      {/* Mobile Navigation */}
-      <MobileNav />
     </nav>
   );
 }

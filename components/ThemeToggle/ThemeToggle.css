@@ -9,8 +9,7 @@
 
 /* Dropdown Trigger Button */
 .theme-dropdown-trigger {
-  @apply flex items-center gap-2 px-3 py-2 cursor-pointer select-none;
-  min-width: 150px;
+  @apply flex items-center gap-2 px-2 py-2 cursor-pointer select-none;
   background: transparent;
   border: none;
   transition: all 0.2s ease;
@@ -155,7 +154,7 @@
 
 /* Expanded Dropdown Menu */
 .theme-grid-menu {
-  @apply absolute top-full right-0 mt-2 rounded overflow-hidden z-50;
+  @apply absolute top-full right-0 mt-2 rounded overflow-hidden z-[9999];
   background: rgba(0, 0, 0, 0.95);
   animation: dropdown-fade-in 0.15s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);

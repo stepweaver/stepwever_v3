@@ -68,10 +68,11 @@ export default function MobileNav() {
   }, [isOpen, isClosing]);
 
   return (
-    <div className='md:hidden'>
-      {/* Toggle button when closed - in navbar */}
+    <div className='md:hidden flex items-center'>
+      {/* Theme toggle + toggle button when closed - inline in navbar row */}
       {!isOpen && (
-        <div className='absolute right-4 top-3 z-50'>
+        <div className='flex items-center gap-3'>
+          <ThemeToggle />
           <button
             onClick={() => setIsOpen(true)}
             className='flex cursor-pointer items-center justify-center rounded-sm bg-panel/50 p-3 text-neon backdrop-blur transition-colors duration-200 hover:bg-panel/70 hover:text-accent'
@@ -108,7 +109,6 @@ export default function MobileNav() {
             </div>
             <div className='flex items-center gap-3 shrink-0'>
               <span className='font-mono text-[10px] text-neon/40 hidden sm:inline'>NAV-00</span>
-              <ThemeToggle />
               <button
                 type='button'
                 onClick={handleClose}

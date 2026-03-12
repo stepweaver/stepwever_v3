@@ -151,6 +151,8 @@ export default async function RootLayout({ children }) {
                   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
                   var THEMES = ['dark','light','monochrome','monochrome-inverted','vintage','apple','c64','amber','synthwave','dracula','solarized','nord','cobalt'];
+                  // Themes that can be chosen randomly on load (exclude Apple, Amber, c64)
+                  var RANDOMIZABLE_THEMES = ['dark','light','monochrome','monochrome-inverted','vintage','synthwave','dracula','solarized','nord','cobalt'];
                   var META_COLORS = {dark:'#0d1211',light:'#e5e5e5',monochrome:'#000000','monochrome-inverted':'#ffffff',vintage:'#000000',apple:'#000000',c64:'#40318d',amber:'#1a0f00',synthwave:'#0a0a14',dracula:'#282a36',solarized:'#002b36',nord:'#2e3440',cobalt:'#193549'};
                   var COOLDOWN = 4 * 60 * 60 * 1000; // 4 hours
 
@@ -164,8 +166,8 @@ export default async function RootLayout({ children }) {
                     // User explicitly chose this theme -- respect it
                     theme = savedTheme;
                   } else if (!manualPick && (now - lastRotation > COOLDOWN || !savedTheme)) {
-                    // Enough time passed (or first visit) -- pick a random theme
-                    var pool = THEMES.filter(function(t) { return t !== savedTheme; });
+                    // Enough time passed (or first visit) -- pick a random theme from the allowed pool
+                    var pool = RANDOMIZABLE_THEMES.filter(function(t) { return t !== savedTheme; });
                     theme = pool[Math.floor(Math.random() * pool.length)];
                     localStorage.setItem('theme', theme);
                     localStorage.setItem('lastThemeRotation', String(now));
