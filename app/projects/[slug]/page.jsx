@@ -295,17 +295,22 @@ export default function ProjectPage({ params }) {
       <div className='max-w-4xl'>
         {/* Project Image or Live Component - Hero */}
         {project.showComponentAsHero && DemoComponent ? (
-          <div
-            className={`relative mb-8 border border-neon/20 overflow-hidden ${
-              slug === 'lcerebro'
-                ? 'aspect-square max-w-md mx-auto bg-black'
-                : slug === 'llambda-llm-agent'
-                  ? 'aspect-video max-w-3xl'
+          slug === 'llambda-llm-agent' ? (
+            // Let the chat component control its own layout – no forced aspect/borders
+            <div className='mb-8'>
+              <DemoComponent />
+            </div>
+          ) : (
+            <div
+              className={`relative mb-8 border border-neon/20 overflow-hidden ${
+                slug === 'lcerebro'
+                  ? 'aspect-square max-w-md mx-auto bg-black'
                   : 'aspect-video max-w-3xl mx-auto'
-            } flex items-center justify-center rounded-sm`}
-          >
-            <DemoComponent />
-          </div>
+              } flex items-center justify-center rounded-sm`}
+            >
+              <DemoComponent />
+            </div>
+          )
         ) : (
           project.imageUrl && (
             <div

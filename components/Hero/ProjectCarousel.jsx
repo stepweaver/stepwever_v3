@@ -516,7 +516,7 @@ function ProjectCarousel() {
       <div className='md:hidden'>
         <div
           ref={mobileCarouselRef}
-          className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [-webkit-overflow-scrolling:touch] carousel-container'
+          className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-x_pinch-zoom] [overscroll-behavior-x:contain] [-webkit-overflow-scrolling:touch] carousel-container'
           role='region'
           aria-label='Project carousel'
           onMouseEnter={handleUserInteraction}
@@ -564,7 +564,7 @@ function ProjectCarousel() {
                         }
                       }}
                       style={{
-                        touchAction: 'pan-y pinch-zoom',
+                        touchAction: 'pan-x pinch-zoom',
                         pointerEvents: 'auto',
                         WebkitTapHighlightColor: 'transparent',
                       }}
