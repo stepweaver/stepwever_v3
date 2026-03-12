@@ -180,21 +180,31 @@ const displayHands = (hideDealer = false) => {
   };
 };
 
-// Simple "thinking" animation for dealer actions
+// Simple dealing animation for dealer actions (single evolving line)
 const showDealerThinking = (callback, onDone) => {
   const frames = [
-    'Dealer is thinking',
-    'Dealer is thinking.',
-    'Dealer is thinking..',
-    'Dealer is thinking...',
+    'Dealing',
+    'Dealing.',
+    'Dealing..',
+    'Dealing...',
   ];
 
+  // First, append a placeholder line
+  callback.setLines((prev) => [
+    ...prev,
+    `<span class="text-terminal-dimmed">${frames[0]}</span>`,
+  ]);
+
+  // Then, update that same line over time
   frames.forEach((text, index) => {
     setTimeout(() => {
-      callback.setLines((prev) => [
-        ...prev,
-        `<span class="text-terminal-dimmed">${text}</span>`,
-      ]);
+      callback.setLines((prev) => {
+        if (!prev.length) return prev;
+        const next = [...prev];
+        const lastIndex = next.length - 1;
+        next[lastIndex] = `<span class="text-terminal-dimmed">${text}</span>`;
+        return next;
+      });
 
       if (index === frames.length - 1 && typeof onDone === 'function') {
         onDone();
