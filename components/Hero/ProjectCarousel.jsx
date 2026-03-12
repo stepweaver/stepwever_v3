@@ -581,6 +581,7 @@ function ProjectCarousel() {
                         isLCP={isCurrent && index === 0}
                         isService={project.isService}
                         comingSoon={project.comingSoon}
+                        isDemo={project.isDemo}
                       />
                     </Link>
                   ) : (
@@ -596,6 +597,7 @@ function ProjectCarousel() {
                       isLCP={isCurrent && index === 0}
                       isService={project.isService}
                       comingSoon={project.comingSoon}
+                      isDemo={project.isDemo}
                     />
                   )}
                 </div>
@@ -730,6 +732,7 @@ function ProjectCarousel() {
                         isLCP={desktopPageIndex === 0 && index === 0}
                         isService={project.isService}
                         comingSoon={project.comingSoon}
+                        isDemo={project.isDemo}
                       />
                     </Link>
                   ) : (
@@ -745,6 +748,7 @@ function ProjectCarousel() {
                       isLCP={desktopPageIndex === 0 && index === 0}
                       isService={project.isService}
                       comingSoon={project.comingSoon}
+                      isDemo={project.isDemo}
                     />
                   )}
                 </div>

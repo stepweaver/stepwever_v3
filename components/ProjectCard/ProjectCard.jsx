@@ -15,6 +15,7 @@ const ProjectCard = memo(function ProjectCard({
   isLCP = false,
   isService = false,
   comingSoon = false,
+  isDemo = false,
 }) {
   const cardContent = (
     <HUDPanel
@@ -30,12 +31,12 @@ const ProjectCard = memo(function ProjectCard({
         <div className='flex items-center gap-1.5 ml-auto'>
           {comingSoon && (
             <span className='text-[10px] text-warn font-ocr uppercase tracking-wider px-2 py-0.5 border border-warn/50 rounded'>
-              Coming Soon
+              {slug === 'lcerebro' ? 'Build in Progress' : 'Coming Soon'}
             </span>
           )}
-          {isService && !comingSoon && (
-            <span className='text-[10px] text-neon/80 font-ocr uppercase tracking-wider px-2 py-0.5 border border-neon/30 rounded'>
-              Capability
+          {isDemo && !comingSoon && (
+            <span className='text-[10px] text-accent font-ocr uppercase tracking-wider px-2 py-0.5 border border-accent/60 rounded'>
+              Demo
             </span>
           )}
           {keywords.length > 0 && (

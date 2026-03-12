@@ -35,7 +35,7 @@ function HeroOperatorCard() {
               </div>
               <div>
                 <p className='text-[10px] tracking-[0.2em] text-neon/70 font-ocr uppercase'>ROLE</p>
-                <p className='text-sm text-text/90 font-ibm'>FULL-STACK / DATA / AUTOMATION</p>
+                <p className='text-sm text-text/90 font-ibm'>FULL-STACK / AI / AUTOMATION</p>
               </div>
               <div>
                 <p className='text-[10px] tracking-[0.2em] text-neon/70 font-ocr uppercase'>CURRENT FOCUS</p>
