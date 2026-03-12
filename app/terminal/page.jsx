@@ -162,7 +162,7 @@ export default function TerminalPage() {
               {/* System Brief */}
               <SidebarPanel label='SYS.BRIEF'>
                 <p className='font-ibm text-lg text-text leading-snug'>
-                  Autonomous terminal.
+                  Interactive terminal.
                 </p>
                 <p className='font-ocr text-sm text-text/50 leading-relaxed mt-2'>
                   A repurposed defense console shell to explore my site. Browse
