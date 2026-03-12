@@ -52,7 +52,13 @@ const ProjectCard = memo(function ProjectCard({
           <OptimizedImage
             src={imageUrl}
             alt={title}
-            className={`transition-transform duration-300 hover:scale-105 ${slug === 'neon-profile-card' || slug === 'lcerebro' ? 'object-contain object-center' : 'object-cover object-top'}`}
+            className={`transition-transform duration-300 hover:scale-105 ${
+              slug === 'neon-profile-card' || slug === 'lcerebro'
+                ? 'object-contain object-center'
+                : slug === 'llambda-llm-agent'
+                  ? 'object-cover object-center'
+                  : 'object-cover object-top'
+            }`}
             priority={isLCP}
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
           />
