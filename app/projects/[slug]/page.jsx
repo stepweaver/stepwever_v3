@@ -295,11 +295,11 @@ export default function ProjectPage({ params }) {
           </div>
         ) : (
           project.imageUrl && (
-            <div className='relative mb-8 border border-neon/20 overflow-hidden aspect-video'>
+            <div className={`relative mb-8 border border-neon/20 overflow-hidden ${slug === 'lcerebro' ? 'aspect-square max-w-md mx-auto bg-black' : 'aspect-video'}`}>
               <OptimizedImage
                 src={project.imageUrl}
                 alt={project.title}
-                className={slug === 'llambda-llm-agent' ? 'object-cover object-center' : 'object-cover object-top'}
+                className={slug === 'llambda-llm-agent' ? 'object-cover object-center' : slug === 'lcerebro' ? 'object-contain object-center' : 'object-cover object-top'}
                 priority
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
               />
