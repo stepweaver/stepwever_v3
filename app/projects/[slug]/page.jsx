@@ -335,29 +335,6 @@ export default function ProjectPage({ params }) {
           )
         )}
 
-        {project.screenshots?.length > 0 && (
-          <section className='mb-10'>
-            <h2 className='font-ocr text-xs tracking-[0.2em] text-neon/60 uppercase mb-3'>
-              Screenshots
-            </h2>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-              {project.screenshots.map((src, index) => (
-                <div
-                  key={src}
-                  className='relative border border-neon/20 overflow-hidden rounded-sm aspect-video bg-black/60'
-                >
-                  <OptimizedImage
-                    src={src}
-                    alt={`${project.title} screenshot ${index + 1}`}
-                    className='object-cover object-top'
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px'
-                  />
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
         {project.isAgencySubcontract && (
           <span className='text-sm font-ocr text-neon uppercase tracking-wider block mb-4'>
             Agency Subcontract Project

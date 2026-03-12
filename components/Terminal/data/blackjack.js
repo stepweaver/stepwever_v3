@@ -161,7 +161,10 @@ const handleHit = (callback) => {
 
 const handleStand = (callback) => {
   if (!blackjackState.playerTurn || blackjackState.gameOver) return;
-  resolveGame(callback);
+  // Add a short delay with a simple animated "..." effect
+  showDealerThinking(callback, () => {
+    resolveGame(callback);
+  });
 };
 
 const displayHands = (hideDealer = false) => {
@@ -175,6 +178,29 @@ const displayHands = (hideDealer = false) => {
     player: `${playerStr} (${playerVal})`,
     dealer: `${dealerStr}${dealerVal}`,
   };
+};
+
+// Simple "thinking" animation for dealer actions
+const showDealerThinking = (callback, onDone) => {
+  const frames = [
+    'Dealer is thinking',
+    'Dealer is thinking.',
+    'Dealer is thinking..',
+    'Dealer is thinking...',
+  ];
+
+  frames.forEach((text, index) => {
+    setTimeout(() => {
+      callback.setLines((prev) => [
+        ...prev,
+        `<span class="text-terminal-dimmed">${text}</span>`,
+      ]);
+
+      if (index === frames.length - 1 && typeof onDone === 'function') {
+        onDone();
+      }
+    }, 350 * index);
+  });
 };
 
 export const handleBlackjackCommand = (command, callback) => {
