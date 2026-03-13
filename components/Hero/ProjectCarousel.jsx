@@ -133,6 +133,24 @@ function ProjectCarousel() {
       const deltaX = currentX - touchState.current.startX;
       const deltaY = Math.abs(currentY - touchState.current.startY);
 
+      // Allow vertical page scroll when the touch starts near the
+      // top or bottom of the viewport (e.g. top/bottom 20% bands).
+      // This avoids the "locked" feeling when trying to scroll the page.
+      if (typeof window !== 'undefined') {
+        const viewportHeight =
+          window.innerHeight || document.documentElement.clientHeight || 0;
+        if (viewportHeight > 0) {
+          const topZone = viewportHeight * 0.2;
+          const bottomZone = viewportHeight * 0.8;
+          const startY = touchState.current.startY ?? currentY;
+
+          if (startY < topZone || startY > bottomZone) {
+            // In the scroll zones, don't treat as carousel swipe.
+            return;
+          }
+        }
+      }
+
       // Only handle horizontal swipes
       if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > deltaY) {
         touchState.current.isDragging = true;
