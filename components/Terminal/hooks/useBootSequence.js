@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function flattenSequence(sequence) {
   return sequence
@@ -10,8 +10,10 @@ export function useBootSequence({ setLines, sequence, onComplete }) {
   const [isBooting, setIsBooting] = useState(false);
   const timersRef = useRef([]);
   const onCompleteRef = useRef(onComplete);
-  // Keep latest onComplete handler without triggering renders
-  onCompleteRef.current = onComplete;
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   const clearTimers = useCallback(() => {
     timersRef.current.forEach((timerId) => clearTimeout(timerId));

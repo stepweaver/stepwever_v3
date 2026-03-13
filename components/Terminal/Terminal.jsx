@@ -40,6 +40,7 @@ const Terminal = forwardRef((props, ref) => {
   const [lines, setLines] = useState([]);
   const [input, setInput] = useState('');
   const [currentPath, setCurrentPath] = useState('~');
+  const [cursorVisible, setCursorVisible] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [lastCommand, setLastCommand] = useState('');
   const [lastCommandTime, setLastCommandTime] = useState(0);
@@ -314,6 +315,16 @@ const Terminal = forwardRef((props, ref) => {
     [router]
   );
 
+  // Effects
+  useEffect(() => {
+    // Cursor blink effect
+    const blinkInterval = setInterval(() => {
+      setCursorVisible((prev) => !prev);
+    }, TERMINAL_CONFIG.CURSOR_BLINK_INTERVAL);
+
+    return () => clearInterval(blinkInterval);
+  }, []);
+
   // Scroll to bottom when new lines are added (after command execution)
   useEffect(() => {
     // Only scroll if lines increased (new content added) - not on initial load
@@ -509,7 +520,9 @@ const Terminal = forwardRef((props, ref) => {
                   {input.substring(0, cursorPosition)}
                 </span>
                 <span
-                  className={`inline-block h-5 w-2.5 align-middle -mt-0.5 bg-terminal-green opacity-100 ${styles.cursorGlow}`}
+                  className={`inline-block h-5 w-2.5 align-middle -mt-0.5 bg-terminal-green ${
+                    cursorVisible ? 'opacity-100' : 'opacity-0'
+                  } ${styles.cursorGlow}`}
                   aria-hidden='true'
                 />
                 <span className='text-terminal-text pl-0'>
