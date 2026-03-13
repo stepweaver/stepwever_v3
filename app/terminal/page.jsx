@@ -162,11 +162,11 @@ export default function TerminalPage() {
               {/* System Brief */}
               <SidebarPanel label='SYS.BRIEF'>
                 <p className='font-ibm text-lg text-text leading-snug'>
-                  Autonomous terminal.
+                  Interactive terminal.
                 </p>
                 <p className='font-ocr text-sm text-text/50 leading-relaxed mt-2'>
-                  A repurposed defense console shell to explore my site. Browse
-                  content, route queries to λlambda, and more.
+                  A command-line interface to explore my site. Browse content,
+                  chat with an AI, and more.
                 </p>
                 <div className='mt-3 w-full h-px bg-gradient-to-r from-neon/30 via-neon/10 to-transparent' />
                 <p className='font-ocr text-xs text-neon/40 mt-2'>
@@ -232,13 +232,13 @@ export default function TerminalPage() {
 
               {/* System Info */}
               <div className='px-1 space-y-1'>
-                <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
+              <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
+                <span className='w-1 h-1 rounded-full bg-neon/30' />
+                <span>Browser-based &middot; No data sent to server</span>
+              </div>
+              <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
                   <span className='w-1 h-1 rounded-full bg-neon/30' />
-                  <span>Local shell &middot; Networked advisory on demand</span>
-                </div>
-                <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
-                  <span className='w-1 h-1 rounded-full bg-neon/30' />
-                  <span>AI calls use encrypted HTTPS</span>
+                  <span>Runs locally in your browser</span>
                 </div>
               </div>
             </div>

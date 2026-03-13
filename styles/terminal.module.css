@@ -439,19 +439,6 @@
   min-width: 0;
 }
 
-/* Vision profiles */
-.visionT1 {
-  filter: contrast(1.18) saturate(1.15);
-}
-
-.visionT2 {
-  filter: contrast(1.08) saturate(1.0);
-}
-
-.visionSalvation {
-  filter: contrast(1.22) saturate(1.25);
-}
-
 /* Setting ellipsis color using mask technique */
 @supports (-webkit-mask-image: none) or (mask-image: none) {
   .terminalNoWrap {
