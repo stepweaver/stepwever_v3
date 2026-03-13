@@ -1,10 +1,42 @@
+/* Typography and appearance tokens for the terminal */
+.terminalRoot {
+  --terminal-font-size-embedded: 14px;
+  --terminal-font-size-full: 15px;
+  --terminal-line-height: 1.5;
+  --terminal-letter-spacing: 0;
+  --terminal-font-size: var(--terminal-font-size-embedded);
+  --terminal-text-shadow: var(--terminal-text-glow);
+  --terminal-scanline-opacity: 0.04;
+  --terminal-glow-opacity: 0.24;
+}
+
+.sizeEmbedded {
+  --terminal-font-size: var(--terminal-font-size-embedded);
+}
+
+.sizeFull {
+  --terminal-font-size: var(--terminal-font-size-full);
+}
+
+.modeFocus {
+  --terminal-text-shadow: none;
+  --terminal-scanline-opacity: 0;
+  --terminal-glow-opacity: 0;
+}
+
+.modeSkynet {
+  --terminal-text-shadow: var(--terminal-text-glow);
+  --terminal-scanline-opacity: 0.08;
+  --terminal-glow-opacity: 0.3;
+}
+
 .container {
-  background-color: var(--color-terminal-dark);
+  background-color: transparent;
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.6),
-    0 10px 10px -5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 255, 0, 0.3),
-    0 0 1px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.3);
+    0 10px 10px -5px rgba(0, 0, 0, 0.5),
+    0 0 18px rgba(0, 255, 0, var(--terminal-glow-opacity, 0.24));
   border: 1px solid rgba(0, 255, 0, 0.15);
   position: relative;
   overflow: hidden;
@@ -46,11 +78,16 @@
 
 .terminalWindowShadow {
   box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.6),
-    0 10px 10px -5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 255, 0, 0.3),
+    0 10px 10px -5px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(0, 255, 0, var(--terminal-glow-opacity, 0.24)),
     var(--terminal-shadow), var(--crt-glow);
   position: relative;
   overflow: hidden;
   animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.modeFocus.terminalWindowShadow {
+  animation: none;
 }
 
 .terminalInnerGlow {
@@ -71,7 +108,7 @@
   bottom: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.02) 50%,
+    rgba(0, 0, 0, var(--terminal-scanline-opacity, 0.04)) 50%,
     rgba(0, 0, 0, 0) 50%
   );
   background-size: 100% 4px;
@@ -95,6 +132,17 @@
 
 .scrollbarHide::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
+}
+
+.scrollbarVisible {
+  -ms-overflow-style: auto;
+  scrollbar-width: auto;
+}
+
+.scrollbarVisible::-webkit-scrollbar {
+  display: block;
+  width: 10px;
+  height: 10px;
 }
 
 /* Scanline effect for retro terminal feel */
@@ -342,53 +390,51 @@
 
 /* Terminal line with wrapping for better readability */
 .terminalNoWrap {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
   max-width: 100%;
   display: block;
   min-width: 0;
-  text-indent: 0;
-  padding-left: 0;
-  margin-left: 0;
-  /* Ensure wrapped lines start from the left margin like a real terminal */
   text-align: left;
+}
+
+.promptLine,
+.inputLine {
+  font-size: var(--terminal-font-size);
+  line-height: var(--terminal-line-height);
+  letter-spacing: var(--terminal-letter-spacing);
+  text-shadow: var(--terminal-text-shadow, var(--terminal-text-glow));
 }
 
 /* Alternative terminal text style that behaves more like a real terminal */
 .terminalText {
-  white-space: normal;
+  white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  font-size: var(--terminal-font-size);
+  line-height: var(--terminal-line-height);
+  letter-spacing: var(--terminal-letter-spacing);
+  text-shadow: var(--terminal-text-shadow, var(--terminal-text-glow));
   max-width: 100%;
   display: block;
   min-width: 0;
-  text-indent: 0;
-  padding-left: 0;
-  margin-left: 0;
   text-align: left;
-  /* Remove any automatic indentation */
-  text-indent: 0;
-  padding-left: 0;
-  margin-left: 0;
 }
 
 /* Terminal HTML content that wraps like a real terminal */
 .terminalHtml {
-  white-space: normal;
+  white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  font-size: var(--terminal-font-size);
+  line-height: var(--terminal-line-height);
+  letter-spacing: var(--terminal-letter-spacing);
+  text-shadow: var(--terminal-text-shadow, var(--terminal-text-glow));
   max-width: 100%;
   display: block;
   min-width: 0;
-  text-indent: 0;
-  padding-left: 0;
-  margin-left: 0;
   text-align: left;
-  /* Ensure wrapped lines start from the left margin */
-  text-indent: 0;
-  padding-left: 0;
-  margin-left: 0;
   position: relative;
 }
 
@@ -453,5 +499,21 @@
     color: var(--color-terminal-green);
     background-color: var(--color-terminal-dark);
     padding-left: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .terminalRoot {
+    --terminal-font-size-embedded: 13.5px;
+    --terminal-font-size-full: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminalWindowShadow,
+  .scanlinePattern::before,
+  .scanlineEffect::before,
+  .animate-blink {
+    animation: none !important;
   }
 }

@@ -286,70 +286,26 @@ const Terminal = forwardRef((props, ref) => {
     return () => clearInterval(blinkInterval);
   }, []);
 
+  // Keep input focused after commands / new output
+  useEffect(() => {
+    focusInput();
+  }, [lines.length, focusInput]);
+
   // Scroll to bottom when new lines are added (after command execution)
   useEffect(() => {
     // Only scroll if lines increased (new content added) - not on initial load
     const linesIncreased = lines.length > previousLinesLength.current;
     
     if (linesIncreased && bottomRef.current) {
-      // Use scrollIntoView - simplest and most reliable
-      bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      bottomRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
     }
     
     // Always update the previous length
     previousLinesLength.current = lines.length;
   }, [lines]);
 
-  useEffect(() => {
-    // Overflow checking and wrapping detection
-    const checkOverflow = () => {
-      Object.keys(preRefs.current).forEach((key) => {
-        const el = preRefs.current[key];
-        if (el) {
-          // Check for horizontal overflow (ellipsis)
-          if (el.offsetWidth < el.scrollWidth) {
-            el.classList.add(styles.terminalEllipsis);
-          } else {
-            el.classList.remove(styles.terminalEllipsis);
-          }
-          
-          // Check for vertical wrapping (line continuation)
-          // Compare scrollHeight to a single line height estimate
-          const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 20;
-          const hasWrapped = el.scrollHeight > lineHeight * 1.5;
-          
-          if (hasWrapped) {
-            // Check if this is output (not a prompt line)
-            const lineText = el.textContent || el.innerText || '';
-            const isPrompt = lineText.includes('user@stepweaver.dev') || 
-                           lineText.trim().startsWith('λ') ||
-                           lineText.includes('guest@');
-            
-            // Only add wrapping indicator to output lines, not prompts
-            if (!isPrompt) {
-              el.classList.add(styles.terminalWrapped);
-            } else {
-              el.classList.remove(styles.terminalWrapped);
-            }
-          } else {
-            el.classList.remove(styles.terminalWrapped);
-          }
-        }
-      });
-    };
-
-    // Use setTimeout to ensure DOM is updated after render
-    const timeoutId = setTimeout(() => {
-      checkOverflow();
-    }, 100);
-
-    window.addEventListener('resize', checkOverflow);
-
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('resize', checkOverflow);
-    };
-  }, [memoizedLines]);
+  // Note: previous scroll-based overflow detection has been removed
+  // to rely on CSS-based wrapping for simpler, more predictable layout.
 
   // Ref management
   const addPreRef = useCallback((id, el) => {
@@ -426,7 +382,7 @@ const Terminal = forwardRef((props, ref) => {
   return (
     <div
       ref={containerRef}
-      className={`h-full min-w-0 overflow-y-auto overflow-x-auto p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm-normal leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
+      className={`h-full min-w-0 overflow-y-auto overflow-x-hidden p-2 sm:p-3 md:p-4 text-base sm:text-lg md:text-xl text-terminal-text font-ibm-normal leading-relaxed cursor-text w-full ${styles.scrollbarHide} ${styles.crtTerminal} ${styles.crtEffect}`}
       onClick={focusInput}
       role='application'
       aria-label='Terminal interface'
@@ -464,7 +420,7 @@ const Terminal = forwardRef((props, ref) => {
 
         <div className='terminal-prompt min-w-0 break-words' role='status' aria-live='polite'>
           <div
-            className={`text-terminal-green mb-1 break-words ${styles.crtText}`}
+            className={`text-terminal-green mb-1 break-words ${styles.crtText} ${styles.promptLine}`}
             aria-label='Current path'
           >
             user@stepweaver.dev {getPromptPath()}

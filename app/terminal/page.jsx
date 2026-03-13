@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 
 import dynamic from 'next/dynamic';
+import TerminalShell from '@/components/Terminal/TerminalShell';
 
 const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
@@ -48,8 +49,9 @@ const FEATURE_MODULES = [
 const COMMAND_GUIDE = [
   { command: 'help', summary: 'Show commands' },
   { command: 'resume', summary: 'View experience' },
-  { command: 'chat <msg>', summary: 'Talk to LLM' },
+  { command: 'chat <msg>', summary: 'Talk to λlambda' },
   { command: 'codex', summary: 'Browse content' },
+  { command: 'zork', summary: 'Play Zork' },
   { command: 'blackjack', summary: 'Play Blackjack' },
   { command: 'contact', summary: 'Send message' },
   { command: 'clear', summary: 'Clear screen' },
@@ -266,7 +268,9 @@ export default function TerminalPage() {
 
             {/* Terminal body */}
             <div className='flex-1 min-h-0'>
-              <Terminal />
+              <TerminalShell fullPage>
+                <Terminal />
+              </TerminalShell>
             </div>
           </section>
         </div>
