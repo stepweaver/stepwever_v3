@@ -304,7 +304,7 @@ export default function ProjectPage({ params }) {
             <div
               className={`relative mb-8 border border-neon/20 overflow-hidden ${
                 slug === 'lcerebro'
-                  ? 'aspect-square max-w-md mx-auto bg-black'
+                  ? 'aspect-video max-w-3xl mx-auto bg-black'
                   : 'aspect-video max-w-3xl mx-auto'
               } flex items-center justify-center rounded-sm`}
             >
@@ -316,17 +316,19 @@ export default function ProjectPage({ params }) {
             <div
               className={`relative mb-8 border border-neon/20 overflow-hidden ${
                 slug === 'lcerebro'
-                  ? 'aspect-square max-w-md mx-auto bg-black'
-                  : 'aspect-video'
+                  ? 'aspect-video max-w-3xl mx-auto bg-black'
+                  : 'aspect-video max-w-3xl mx-auto'
               }`}
             >
               <OptimizedImage
                 src={project.imageUrl}
                 alt={project.title}
                 className={
-                  slug === 'lcerebro'
-                    ? 'object-contain object-center'
-                    : 'object-cover object-top'
+                  slug === 'ai-integrations' || slug === 'n8n-automations' || slug === 'it-consulting'
+                    ? 'object-cover object-center w-full h-full scale-105'
+                    : slug === 'lcerebro'
+                      ? 'object-contain object-center w-full h-full'
+                      : 'object-cover object-top'
                 }
                 priority
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'

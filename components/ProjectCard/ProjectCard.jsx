@@ -48,16 +48,26 @@ const ProjectCard = memo(function ProjectCard({
       </div>
 
       {imageUrl && (
-        <div className={`relative mb-4 w-full border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56 ${slug === 'neon-profile-card' ? 'bg-panel/50' : slug === 'lcerebro' ? 'bg-black' : ''}`}>
+        <div
+          className={`relative mb-4 w-full border border-neon/20 overflow-hidden rounded-sm ${
+            slug === 'neon-profile-card'
+                ? 'h-48 sm:h-56 bg-panel/50'
+                : slug === 'lcerebro'
+                  ? 'h-48 sm:h-56 bg-black'
+                  : 'h-48 sm:h-56'
+          }`}
+        >
           <OptimizedImage
             src={imageUrl}
             alt={title}
             className={`transition-transform duration-300 hover:scale-105 ${
               slug === 'neon-profile-card' || slug === 'lcerebro'
                 ? 'object-contain object-center'
-                : slug === 'llambda-llm-agent'
-                  ? 'object-cover object-center'
-                  : 'object-cover object-top'
+                : slug === 'ai-integrations' || slug === 'n8n-automations' || slug === 'it-consulting'
+                  ? 'object-cover object-center scale-105'
+                  : slug === 'llambda-llm-agent'
+                    ? 'object-cover object-center'
+                    : 'object-cover object-top'
             }`}
             priority={isLCP}
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
