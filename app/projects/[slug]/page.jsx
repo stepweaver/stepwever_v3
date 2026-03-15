@@ -36,6 +36,10 @@ const ChatBot = dynamic(
   () => import('@/components/ChatBot/ChatBot'),
   { ssr: false }
 );
+const DiceRoller = dynamic(
+  () => import('@/components/DiceRoller/DiceRoller'),
+  { ssr: false }
+);
 
 function SidebarPanel({ children, label, className = '' }) {
   return (
@@ -277,6 +281,7 @@ export default function ProjectPage({ params }) {
   const demoComponents = {
     'neon-profile-card': HeroOperatorCard,
     'llambda-llm-agent': ChatBot,
+    'rpg-dice-roller': DiceRoller,
   };
   const DemoComponent = demoComponents[slug] || null;
 
@@ -295,9 +300,9 @@ export default function ProjectPage({ params }) {
       <div className='max-w-4xl'>
         {/* Project Image or Live Component - Hero */}
         {project.showComponentAsHero && DemoComponent ? (
-          slug === 'llambda-llm-agent' ? (
-            // Let the chat component control its own layout – no forced aspect/borders
-            <div className='mb-8'>
+          slug === 'llambda-llm-agent' || slug === 'rpg-dice-roller' ? (
+            // Let the chat/dice component control its own layout – no forced aspect/borders
+            <div className='mb-8' id={slug === 'rpg-dice-roller' ? 'dice-roller-section' : undefined}>
               <DemoComponent />
             </div>
           ) : (
