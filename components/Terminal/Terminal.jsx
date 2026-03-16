@@ -55,7 +55,9 @@ const Terminal = forwardRef((props, ref) => {
 
   // Hooks
   const router = useRouter();
-  const { addToHistory, navigateHistory } = useCommandHistory();
+  const { addToHistory, navigateHistory } = useCommandHistory(
+    TERMINAL_CONFIG.MAX_HISTORY_SIZE
+  );
   const {
     isInContactMode,
     contactStep,

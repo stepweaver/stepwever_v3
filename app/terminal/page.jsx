@@ -51,6 +51,9 @@ const COMMAND_GUIDE = [
   { command: 'resume', summary: 'View experience' },
   { command: 'chat <msg>', summary: 'Talk to λlambda' },
   { command: 'codex', summary: 'Browse content' },
+  { command: 'weather <city>', summary: 'Check weather' },
+  { command: 'roll <notation>', summary: 'Roll RPG dice' },
+  { command: 'cd <dest>', summary: 'Jump to sections/pages' },
   { command: 'zork', summary: 'Play Zork' },
   { command: 'blackjack', summary: 'Play Blackjack' },
   { command: 'contact', summary: 'Send message' },
@@ -234,13 +237,13 @@ export default function TerminalPage() {
 
               {/* System Info */}
               <div className='px-1 space-y-1'>
-              <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
-                <span className='w-1 h-1 rounded-full bg-neon/30' />
-                <span>Browser-based &middot; No data sent to server</span>
-              </div>
-              <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
+                <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
                   <span className='w-1 h-1 rounded-full bg-neon/30' />
-                  <span>Runs locally in your browser</span>
+                  <span>Browser-first interface &middot; Some commands call live services</span>
+                </div>
+                <div className='flex items-center gap-2 font-ocr text-xs text-text/20'>
+                  <span className='w-1 h-1 rounded-full bg-neon/30' />
+                  <span>Chat, contact, and weather use live APIs</span>
                 </div>
               </div>
             </div>
@@ -286,11 +289,11 @@ export default function TerminalPage() {
           </span>
           <span className='text-neon/15 hidden sm:inline'>│</span>
           <span className='font-ocr text-xs text-text/25 uppercase whitespace-nowrap hidden sm:inline'>
-            Local runtime
+            Browser-first interface
           </span>
           <span className='text-neon/15 hidden md:inline'>│</span>
           <span className='font-ocr text-xs text-text/20 uppercase whitespace-nowrap hidden md:inline'>
-            No telemetry
+            Some commands call live services
           </span>
         </footer>
       </div>

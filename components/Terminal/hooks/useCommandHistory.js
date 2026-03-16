@@ -1,12 +1,16 @@
 import { useState } from 'react';
 
-export const useCommandHistory = () => {
+export const useCommandHistory = (maxSize = 100) => {
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
   const addToHistory = (command) => {
     if (command.trim()) {
-      setHistory((prev) => [...prev, command]);
+      setHistory((prev) => {
+        const next = [...prev, command];
+        if (!maxSize || maxSize <= 0) return next;
+        return next.length > maxSize ? next.slice(next.length - maxSize) : next;
+      });
       setHistoryIndex(-1);
     }
   };
