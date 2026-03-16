@@ -4,6 +4,7 @@ Practical transformations, powered by code.
 
 ## Features
 
+- Reusable CRT-inspired hero UI with Operator Card, animated status pill, and Matrix Sync terminal effects
 - Modern Next.js 15 with App Router
 - Tailwind CSS for styling
 - Contact form with Nodemailer integration

@@ -305,8 +305,8 @@ export default function ProjectPage({ params }) {
             <div id='dice-roller-section' className='max-w-6xl mx-auto'>
               <DemoComponent />
             </div>
-          ) : slug === 'llambda-llm-agent' ? (
-            // Let the chat component control its own layout – no forced aspect/borders
+          ) : slug === 'llambda-llm-agent' || slug === 'neon-profile-card' ? (
+            // Let chat and operator card control their own layout – no forced framing
             <DemoComponent />
           ) : (
             <div

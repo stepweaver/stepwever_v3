@@ -18,7 +18,6 @@ function ProjectCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false); // Default to false to match server
-  const [isPaused, setIsPaused] = useState(false);
 
   // Enhanced touch/swipe state for smooth animations
   const touchState = useRef({
@@ -37,21 +36,7 @@ function ProjectCarousel() {
   const mobileContainerRef = useRef(null);
   const desktopCarouselRef = useRef(null);
   const desktopContainerRef = useRef(null);
-  const autoScrollIntervalRef = useRef(null);
-  const pauseTimeoutRef = useRef(null);
   const minSwipeDistance = 50;
-
-  // Pause auto-scroll on user interaction - defined early so it can be used in handlers
-  const handleUserInteraction = useCallback(() => {
-    setIsPaused(true);
-    if (pauseTimeoutRef.current) {
-      clearTimeout(pauseTimeoutRef.current);
-    }
-    pauseTimeoutRef.current = setTimeout(() => {
-      setIsPaused(false);
-      pauseTimeoutRef.current = null;
-    }, 15000);
-  }, []);
 
   const nextProject = useCallback(() => {
     if (isTransitioning) return;
@@ -113,9 +98,8 @@ function ProjectCarousel() {
         velocity: 0,
         offsetX: 0,
       };
-      handleUserInteraction();
     },
-    [handleUserInteraction]
+    []
   );
 
   const handleTouchMove = useCallback(
@@ -270,9 +254,8 @@ function ProjectCarousel() {
         velocity: 0,
         offsetX: 0,
       };
-      handleUserInteraction();
     },
-    [handleUserInteraction]
+    []
   );
 
   const handleMouseMove = useCallback(
@@ -319,7 +302,6 @@ function ProjectCarousel() {
       } else if (isRightSwipe) {
         prevPage();
       }
-      handleUserInteraction();
     }
 
     // Animate to final position (mobile only)
@@ -331,7 +313,6 @@ function ProjectCarousel() {
       if (isLeftSwipe) {
         // Animate left (to -200%), then update state
         container.style.transform = `translateX(-200%)`;
-        handleUserInteraction();
         setTimeout(() => {
           nextProject();
           if (container) {
@@ -347,7 +328,6 @@ function ProjectCarousel() {
       } else if (isRightSwipe) {
         // Animate right (to 0%), then update state
         container.style.transform = `translateX(0%)`;
-        handleUserInteraction();
         setTimeout(() => {
           prevProject();
           if (container) {
@@ -377,14 +357,7 @@ function ProjectCarousel() {
       velocity: 0,
       offsetX: 0,
     };
-  }, [
-    isMobile,
-    nextProject,
-    prevProject,
-    nextPage,
-    prevPage,
-    handleUserInteraction,
-  ]);
+  }, [isMobile, nextProject, prevProject, nextPage, prevPage]);
 
   // Add event listeners with non-passive options (mobile only)
   useEffect(() => {
@@ -456,12 +429,7 @@ function ProjectCarousel() {
     };
 
     window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (pauseTimeoutRef.current) {
-        clearTimeout(pauseTimeoutRef.current);
-      }
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, [getCardsPerPage]);
 
   // Calculate total pages for desktop
@@ -476,38 +444,6 @@ function ProjectCarousel() {
     },
     [cardsPerPage]
   );
-
-  // Auto-scroll functionality
-  useEffect(() => {
-    // Clear any existing interval
-    if (autoScrollIntervalRef.current) {
-      clearInterval(autoScrollIntervalRef.current);
-    }
-
-    // Don't auto-scroll if paused or transitioning
-    if (isPaused || isTransitioning) return;
-
-    // Auto-scroll interval: 10 seconds (generous reading time)
-    const AUTO_SCROLL_DELAY = 10000;
-
-    autoScrollIntervalRef.current = setInterval(() => {
-      if (isMobile) {
-        // Mobile: advance to next project
-        nextProject();
-      } else {
-        // Desktop: advance to next page
-        if (totalPages > 1) {
-          nextPage();
-        }
-      }
-    }, AUTO_SCROLL_DELAY);
-
-    return () => {
-      if (autoScrollIntervalRef.current) {
-        clearInterval(autoScrollIntervalRef.current);
-      }
-    };
-  }, [isMobile, isPaused, isTransitioning, nextProject, nextPage, totalPages]);
 
   // Calculate visible items for mobile (current, prev, next)
   const getVisibleMobileIndices = useCallback(() => {
@@ -537,8 +473,6 @@ function ProjectCarousel() {
           className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [overscroll-behavior-x:contain] [-webkit-overflow-scrolling:touch] carousel-container'
           role='region'
           aria-label='Project carousel'
-          onMouseEnter={handleUserInteraction}
-          onTouchStart={handleUserInteraction}
         >
           <div
             ref={mobileContainerRef}
@@ -633,10 +567,7 @@ function ProjectCarousel() {
           {CAROUSEL_PROJECTS.map((_, index) => (
             <button
               key={index}
-              onClick={() => {
-                setCurrentIndex(index);
-                handleUserInteraction();
-              }}
+              onClick={() => setCurrentIndex(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentIndex
                   ? 'bg-terminal-green'
@@ -655,13 +586,9 @@ function ProjectCarousel() {
         <div className='relative min-h-[420px] lg:min-h-[480px]'>
           {/* Desktop Navigation Arrows */}
           <button
-            onClick={() => {
-              prevPage();
-              handleUserInteraction();
-            }}
+            onClick={prevPage}
             className='absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
             aria-label='Previous page of projects'
-            onMouseEnter={handleUserInteraction}
           >
             <svg
               className='w-6 h-6'
@@ -681,13 +608,9 @@ function ProjectCarousel() {
           </button>
 
           <button
-            onClick={() => {
-              nextPage();
-              handleUserInteraction();
-            }}
+            onClick={nextPage}
             className='absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-terminal-dark/80 hover:bg-terminal-dark border border-terminal-green/30 hover:border-terminal-green text-terminal-green hover:text-terminal-green/80 p-3 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-terminal-green/20'
             aria-label='Next page of projects'
-            onMouseEnter={handleUserInteraction}
           >
             <svg
               className='w-6 h-6'
@@ -711,7 +634,6 @@ function ProjectCarousel() {
             className='overflow-hidden carousel-container'
             role='region'
             aria-label='Project carousel'
-            onMouseEnter={handleUserInteraction}
           >
             <div className='flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] items-stretch'>
               {visibleDesktopProjects.map((project, index) => (
@@ -784,10 +706,7 @@ function ProjectCarousel() {
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
-              onClick={() => {
-                setDesktopPageIndex(index);
-                handleUserInteraction();
-              }}
+              onClick={() => setDesktopPageIndex(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentPage
                   ? 'bg-terminal-green'
