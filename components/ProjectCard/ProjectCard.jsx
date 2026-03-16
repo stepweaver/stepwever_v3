@@ -71,8 +71,7 @@ const ProjectCard = memo(function ProjectCard({
                     slug === 'orthodontic-tracker' ||
                     slug === 'service-business-demo' ||
                     slug === 'mishawaka-shower-booking' ||
-                    slug === 'rpg-dice-roller' ||
-                    link === '/terminal'
+                    slug === 'rpg-dice-roller'
                   ? 'object-cover object-center scale-105'
                   : slug === 'llambda-llm-agent'
                     ? 'object-cover object-center'
