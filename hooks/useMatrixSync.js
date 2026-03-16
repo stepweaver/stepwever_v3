@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 
-const DEFAULT_GLYPHS = [
+export const DEFAULT_GLYPHS = [
   'ﾊ', 'ﾐ', 'ﾋ', 'ｰ', 'ｳ', 'ｼ', 'ﾅ', 'ﾓ', 'ﾆ', 'ｻ',
   'ﾜ', 'ﾂ', 'ｵ', 'ﾘ', 'ｱ', 'ﾎ', 'ﾃ', 'ﾏ', 'ｹ', 'ﾒ',
   'ｴ', 'ｶ', 'ｷ', 'ﾑ', 'ﾕ', 'ﾗ', 'ｾ', 'ﾈ', 'ｽ', 'ﾀ',
@@ -21,15 +21,16 @@ const randomHex = (len = 4) =>
  * @returns {{ attempt, terminalOutput, matrixCells, showPrompt, isMounted, phase }}
  */
 export function useMatrixSync({ glyphs = DEFAULT_GLYPHS, cellCount = 6 } = {}) {
+  const safeGlyphs = glyphs?.length ? glyphs : DEFAULT_GLYPHS;
   const createCells = useCallback(
     () =>
       Array.from({ length: cellCount }, () =>
         [
-          glyphs[Math.floor(Math.random() * glyphs.length)],
-          glyphs[Math.floor(Math.random() * glyphs.length)],
+          safeGlyphs[Math.floor(Math.random() * safeGlyphs.length)],
+          safeGlyphs[Math.floor(Math.random() * safeGlyphs.length)],
         ].join('')
       ),
-    [glyphs, cellCount]
+    [safeGlyphs, cellCount]
   );
 
   const createDimCells = useCallback(

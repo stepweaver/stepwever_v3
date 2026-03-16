@@ -73,9 +73,7 @@ const ProjectCard = memo(function ProjectCard({
                     slug === 'mishawaka-shower-booking' ||
                     slug === 'rpg-dice-roller'
                   ? 'object-cover object-center scale-105'
-                  : slug === 'llambda-llm-agent'
-                    ? 'object-cover object-center'
-                    : 'object-cover object-top'
+                  : 'object-cover object-top'
             }`}
             priority={isLCP}
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'

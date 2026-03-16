@@ -32,10 +32,6 @@ const BackgroundCanvas = dynamic(
 const HeroOperatorCard = dynamic(() =>
   import('@/components/Hero/HeroOperatorCard')
 );
-const ChatBot = dynamic(
-  () => import('@/components/ChatBot/ChatBot'),
-  { ssr: false }
-);
 const DiceRoller = dynamic(
   () => import('@/components/DiceRoller/DiceRoller'),
   { ssr: false }
@@ -280,7 +276,6 @@ export default function ProjectPage({ params }) {
   const project = getProjectBySlug(slug);
   const demoComponents = {
     'neon-profile-card': HeroOperatorCard,
-    'llambda-llm-agent': ChatBot,
     'rpg-dice-roller': DiceRoller,
   };
   const DemoComponent = demoComponents[slug] || null;
@@ -305,7 +300,7 @@ export default function ProjectPage({ params }) {
             <div id='dice-roller-section' className='max-w-6xl mx-auto'>
               <DemoComponent />
             </div>
-          ) : slug === 'llambda-llm-agent' || slug === 'neon-profile-card' ? (
+          ) : slug === 'neon-profile-card' ? (
             // Let chat and operator card control their own layout – no forced framing
             <DemoComponent />
           ) : (
