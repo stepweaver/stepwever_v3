@@ -8,7 +8,24 @@ Practical transformations, powered by code.
 - Tailwind CSS for styling
 - Contact form with Nodemailer integration
 - Terminal-style UI components
+- λlambda LLM agent for portfolio-native AI chat
 - Responsive design
+
+## Featured Project: λlambda LLM Agent
+
+λlambda is the branded LLM agent built into this portfolio. It acts as Stephen Weaver's AI advocate and thinking partner, helping visitors understand his background, projects, and working style through conversational UI across both the website and the terminal.
+
+Instead of behaving like a generic chatbot, λlambda is wired directly into the portfolio experience: the same protected `/api/chat` route powers the website chat surfaces and the terminal `chat <message>` command, with channel-aware behavior for each surface. Under the hood, the agent prefers Groq for fast, free usage and falls back to OpenAI when configured.
+
+- Answers questions about Stephen's experience, skills, and projects
+- Routes visitors to relevant case studies and proof points
+- Extends the terminal `chat <message>` command with a branded AI experience
+- Uses Groq by default, with OpenAI as a fallback provider
+
+### Related docs
+
+- AI setup: [docs/AI_CHAT_SETUP.md](./docs/AI_CHAT_SETUP.md)
+- Case study: visit `/projects/llambda-llm-agent` in the running app
 
 ## Getting Started
 
@@ -67,14 +84,23 @@ The chat will automatically use Groq's free tier. OpenAI is supported as a fallb
 ## Project Structure
 
 ```
-├── app/                 # Next.js App Router
-│   ├── api/            # API routes
-│   │   └── contact/    # Contact form handler
-│   └── contact/        # Contact page
-├── components/         # React components
-├── utils/             # Utility functions
-│   └── email.js       # Email utilities
-└── public/            # Static assets
+├── app/                         # Next.js App Router
+│   ├── terminal/                # Interactive terminal with `chat` command (λlambda surface)
+│   ├── projects/
+│   │   └── [slug]/              # Project detail pages (includes λlambda LLM agent case study)
+│   ├── api/
+│   │   ├── chat/                # Protected AI chat route for λlambda
+│   │   └── contact/             # Contact form handler
+│   └── contact/                 # Contact page
+├── components/                  # React components
+│   ├── Terminal/                # Terminal shell, commands, and UI
+│   ├── ChatWidget/              # Floating/fullscreen website chat powered by λlambda
+│   ├── ChatBot/                 # Dedicated page chat surface
+│   └── Chat/                    # Shared chat message components
+├── hooks/                       # Shared hooks (chat, scrolling, bot protection)
+├── docs/                        # Documentation (email, AI chat setup, etc.)
+├── utils/                       # Utility functions
+└── public/                      # Static assets
 ```
 
 ## Technologies Used

@@ -1,5 +1,7 @@
 # AI Chat Setup Guide
 
+This guide configures **λlambda**, the portfolio-native LLM agent on this site. λlambda powers both the web chat surfaces and the terminal `chat <message>` command.
+
 Your chat feature is now configured to use **Groq** (free tier) as the primary LLM provider, with OpenAI as a fallback.
 
 ## 🆓 Free Option: Groq (Recommended)
@@ -71,13 +73,13 @@ After setting up your API key:
 1. Restart your dev server (`npm run dev`)
 2. Navigate to `/terminal` page
 3. Type: `chat What's your tech stack?`
-4. You should get a response!
+4. You should get a response from λlambda
 
 ---
 
 ## 📝 Updating the System Prompt
 
-The AI's knowledge about you is defined in `app/api/chat/route.js` in the `SYSTEM_PROMPT` constant. Update it whenever your resume or experience changes.
+λlambda's knowledge about you is defined in `app/api/chat/route.js` in the `SYSTEM_PROMPT` constant. Update it whenever your resume or experience changes.
 
 ---
 
@@ -102,3 +104,10 @@ If you want even more control or different models:
 3. **Anthropic Claude**: Has free tier but limited
 
 The current setup is optimized for Groq's free tier, which is the best balance of free, fast, and high-quality.
+
+---
+
+## 📚 Further Reading
+
+- λlambda case study (running app): `/projects/llambda-llm-agent`
+- Repository overview and λlambda summary: see the **Featured Project: λlambda LLM Agent** section in `README.md`

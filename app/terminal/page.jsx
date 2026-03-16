@@ -33,7 +33,7 @@ const FEATURE_MODULES = [
   {
     title: 'LLM Chat',
     cmd: 'chat <msg>',
-    body: 'Discuss my background with an AI trained on my experience.',
+    body: 'Discuss my background with λlambda, a portfolio-native AI trained on my experience.',
     icon: Sparkles,
     tag: 'MOD-02',
   },
