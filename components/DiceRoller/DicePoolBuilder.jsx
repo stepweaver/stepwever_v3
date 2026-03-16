@@ -89,7 +89,7 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
               )}
             </div>
             <span className='text-xs opacity-90 font-semibold tracking-wider font-ocr'>
-              {dice.label === 'd100' ? 'd%' : dice.label}
+              {dice.label}
             </span>
           </button>
         );
