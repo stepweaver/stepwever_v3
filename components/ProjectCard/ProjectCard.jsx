@@ -20,7 +20,7 @@ const ProjectCard = memo(function ProjectCard({
   const cardContent = (
     <HUDPanel
       title={title}
-      className="h-full flex flex-col transition-all duration-200 hover:-translate-y-0.5 min-h-[580px]"
+      className="h-full flex flex-col transition-all duration-200 hover:-translate-y-0.5"
     >
       <div className='flex items-center gap-2 mb-4'>
         <div className='flex gap-1.5'>
@@ -105,7 +105,7 @@ const ProjectCard = memo(function ProjectCard({
             {actions.slice(0, 2).map((action, index) => (
               <li key={index} className='text-xs text-text/70 font-ibm flex items-start'>
                 <span className='text-neon mr-2 flex-shrink-0 mt-0.5'>▶</span>
-                <span className='line-clamp-2'>{action}</span>
+                <span className='min-w-0 flex-1 whitespace-normal break-words'>{action}</span>
               </li>
             ))}
           </ul>

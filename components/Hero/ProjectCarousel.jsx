@@ -534,7 +534,7 @@ function ProjectCarousel() {
       <div className='md:hidden'>
         <div
           ref={mobileCarouselRef}
-          className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-x_pinch-zoom] [overscroll-behavior-x:contain] [-webkit-overflow-scrolling:touch] carousel-container'
+          className='overflow-hidden cursor-grab active:cursor-grabbing [touch-action:pan-y_pinch-zoom] [overscroll-behavior-x:contain] [-webkit-overflow-scrolling:touch] carousel-container'
           role='region'
           aria-label='Project carousel'
           onMouseEnter={handleUserInteraction}
@@ -551,7 +551,7 @@ function ProjectCarousel() {
               return (
                 <div
                   key={index}
-                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide h-[580px]'
+                  className='w-full flex-shrink-0 [transform:translateZ(0)] [backface-visibility:hidden] carousel-slide'
                 >
                   {project.slug || project.link ? (
                     <Link
@@ -570,7 +570,7 @@ function ProjectCarousel() {
                           ? 'noopener noreferrer'
                           : undefined
                       }
-                      className='block h-full'
+                      className='block'
                       onClick={(e) => {
                         if (
                           touchState.current.wasSwipe ||
@@ -582,7 +582,7 @@ function ProjectCarousel() {
                         }
                       }}
                       style={{
-                        touchAction: 'pan-x pinch-zoom',
+                        touchAction: 'pan-y pinch-zoom',
                         pointerEvents: 'auto',
                         WebkitTapHighlightColor: 'transparent',
                       }}
@@ -713,7 +713,7 @@ function ProjectCarousel() {
             aria-label='Project carousel'
             onMouseEnter={handleUserInteraction}
           >
-            <div className='flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] h-[620px]'>
+            <div className='flex gap-4 md:gap-6 [transform:translateZ(0)] [backface-visibility:hidden] items-stretch'>
               {visibleDesktopProjects.map((project, index) => (
                 <div
                   key={`${project.slug}-${index}`}
