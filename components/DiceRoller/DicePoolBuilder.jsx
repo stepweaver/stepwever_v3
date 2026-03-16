@@ -77,12 +77,19 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
             }}
             aria-label={`Add ${dice.label} to pool`}
           >
-            <IconComponent
-              size={44}
-              className='max-lg:w-[36px] max-lg:h-[36px]'
-            />
+            <div className='relative'>
+              <IconComponent
+                size={44}
+                className='max-lg:w-[36px] max-lg:h-[36px]'
+              />
+              {dice.sides === 100 && (
+                <span className='absolute -right-1.5 -bottom-1 px-1 py-px rounded-sm bg-panel/90 border border-neon/60 font-ocr text-[9px] leading-none text-neon'>
+                  %
+                </span>
+              )}
+            </div>
             <span className='text-xs opacity-90 font-semibold tracking-wider font-ocr'>
-              {dice.label}
+              {dice.label === 'd100' ? 'd%' : dice.label}
             </span>
           </button>
         );

@@ -187,7 +187,7 @@ export default function DiceRoller() {
   );
 
   return (
-    <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between max-w-6xl mx-auto px-4 md:px-6'>
+    <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between w-full px-4 md:px-6'>
       {/* Left column: dice & controls */}
       <div className='flex-1 flex flex-col gap-3 sm:pr-6 lg:pr-12'>
         {/* Hex - center of attention */}

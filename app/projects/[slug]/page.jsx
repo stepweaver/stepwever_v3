@@ -299,31 +299,31 @@ export default function ProjectPage({ params }) {
     <ProjectPageLayout project={project} slug={slug}>
       {/* Hero / live component section */}
       {project.showComponentAsHero && DemoComponent ? (
-        slug === 'llambda-llm-agent' ? (
-          // Let the chat component control its own layout – no forced aspect/borders
-          <div className='mb-8'>
+        <div className='mb-8'>
+          {slug === 'rpg-dice-roller' ? (
+            // Wider hero for dice roller; internal layout handled by DiceRoller
+            <div id='dice-roller-section' className='max-w-6xl mx-auto'>
+              <DemoComponent />
+            </div>
+          ) : slug === 'llambda-llm-agent' ? (
+            // Let the chat component control its own layout – no forced aspect/borders
             <DemoComponent />
-          </div>
-        ) : slug === 'rpg-dice-roller' ? (
-          // Full-width dice roller hero; DiceRoller handles its own internal width
-          <div className='mb-8' id='dice-roller-section'>
-            <DemoComponent />
-          </div>
-        ) : (
+          ) : (
+            <div
+              className={`relative border border-neon/20 overflow-hidden ${
+                slug === 'lcerebro'
+                  ? 'aspect-video max-w-3xl mx-auto bg-black'
+                  : 'aspect-video max-w-3xl mx-auto'
+              } flex items-center justify-center rounded-sm`}
+            >
+              <DemoComponent />
+            </div>
+          )}
+        </div>
+      ) : project.imageUrl ? (
+        <div className='mb-8'>
           <div
-            className={`relative mb-8 border border-neon/20 overflow-hidden ${
-              slug === 'lcerebro'
-                ? 'aspect-video max-w-3xl mx-auto bg-black'
-                : 'aspect-video max-w-3xl mx-auto'
-            } flex items-center justify-center rounded-sm`}
-          >
-            <DemoComponent />
-          </div>
-        )
-      ) : (
-        project.imageUrl && (
-          <div
-            className={`relative mb-8 border border-neon/20 overflow-hidden ${
+            className={`relative border border-neon/20 overflow-hidden ${
               slug === 'lcerebro'
                 ? 'aspect-video max-w-3xl mx-auto bg-black'
                 : 'aspect-video max-w-3xl mx-auto'
@@ -343,8 +343,8 @@ export default function ProjectPage({ params }) {
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
             />
           </div>
-        )
-      )}
+        </div>
+      ) : null}
 
       {/* Main project content constrained to readable width */}
       <div className='max-w-4xl'>
