@@ -87,7 +87,7 @@ function MobileBriefBar() {
             {KEYBOARD_GUIDE.map((item) => (
               <span key={item.key} className='font-ocr text-sm'>
                 <span className='text-neon/60 font-ibm'>{item.key}</span>
-                <span className='text-text/30'> — {item.action}</span>
+                <span className='text-text/30'> - {item.action}</span>
               </span>
             ))}
           </div>

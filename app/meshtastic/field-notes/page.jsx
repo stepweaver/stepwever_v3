@@ -33,7 +33,7 @@ export async function generateMetadata() {
   const title = 'Field Notes | Meshtastic';
   const description =
     noteCount > 0
-      ? `${noteCount} field note${noteCount === 1 ? '' : 's'} from real-world Meshtastic mesh networking tests — signal reports, range logs, and hardware observations.`
+      ? `${noteCount} field note${noteCount === 1 ? '' : 's'} from real-world Meshtastic mesh networking tests, with signal reports, range logs, and hardware observations.`
       : 'Live notes and experiences from Meshtastic exploration and testing.';
   const absoluteImageUrl = 'https://stepweaver.dev/images/lambda_preview.png';
 

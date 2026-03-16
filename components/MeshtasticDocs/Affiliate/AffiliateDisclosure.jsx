@@ -7,7 +7,7 @@ export default function AffiliateDisclosure({ show = false }) {
 
   return (
     <p className='text-text/60 font-ocr text-xs italic leading-relaxed mb-3'>
-      Disclosure: Some links on this page are affiliate links — if you
+      Disclosure: Some links on this page are affiliate links. If you
       purchase through them, I may earn a commission at no extra cost to you.
     </p>
   );

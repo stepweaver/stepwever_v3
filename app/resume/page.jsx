@@ -94,7 +94,7 @@ const EXPERIENCE = [
       'Founded and operate a solo digital consultancy focused on automation, optimization, and scaling for modern businesses. Launched and branded λstepweaver as an AI-native studio.',
     highlights: [
       'Architected and delivered data-driven web applications, AI-enabled business tools, and automated client dashboards',
-      'Built the portfolio-terminal—an interactive React/Next.js interface demonstrating full-stack and AI engineering capabilities',
+      'Built the portfolio terminal, an interactive React/Next.js interface demonstrating full-stack and AI engineering capabilities',
       'Developed proposal, contract, and payment systems (Stripe, DocuSign, Notion) to streamline client onboarding',
       'Grew λstepweaver into a profitable, incorporated business (2025) with expanding client roster',
     ],

@@ -157,7 +157,7 @@ export default function ContactForm() {
               aria-describedby='message-help message-error'
             />
             <p id='message-help' className='text-muted text-sm mt-2 font-ocr'>
-              Job opportunity, question, or just saying hi — I&apos;d love to hear from you.
+              Job opportunity, question, or just saying hi? I&apos;d love to hear from you.
             </p>
             <div id='message-error' className='sr-only' role='alert' />
           </div>

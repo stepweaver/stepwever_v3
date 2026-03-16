@@ -26,7 +26,7 @@ const FEATURE_MODULES = [
   {
     title: 'Resume',
     cmd: 'resume',
-    body: 'Experience, education, skills — or download the PDF.',
+    body: 'Experience, education, skills. Or download the PDF.',
     icon: BookOpen,
     tag: 'MOD-01',
   },
@@ -101,7 +101,7 @@ function MobileBriefBar() {
                 className='font-ocr text-xs text-neon/50'
               >
                 <span className='text-neon/70'>{item.command}</span>
-                <span className='text-text/40'> — {item.summary}</span>
+                <span className='text-text/40'> - {item.summary}</span>
               </div>
             ))}
           </div>

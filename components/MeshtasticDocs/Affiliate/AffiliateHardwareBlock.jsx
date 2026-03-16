@@ -16,8 +16,8 @@ export default function AffiliateHardwareBlock({ affiliateUrl }) {
       <div className='px-5 sm:px-6 py-4'>
         <p className='text-text/80 font-ocr text-sm leading-relaxed mb-4'>
           Atlavox builds Meshtastic-compatible radios, repeaters, and cases with
-          solid build quality, GPS support, and long battery life — a step up
-          from generic mesh radios.
+          solid build quality, GPS support, and long battery life (a step up
+          from generic mesh radios).
         </p>
         <GlitchButton
           href={affiliateUrl}
