@@ -297,51 +297,57 @@ export default function ProjectPage({ params }) {
 
   return (
     <ProjectPageLayout project={project} slug={slug}>
-      <div className='max-w-4xl'>
-        {/* Project Image or Live Component - Hero */}
-        {project.showComponentAsHero && DemoComponent ? (
-          slug === 'llambda-llm-agent' || slug === 'rpg-dice-roller' ? (
-            // Let the chat/dice component control its own layout – no forced aspect/borders
-            <div className='mb-8' id={slug === 'rpg-dice-roller' ? 'dice-roller-section' : undefined}>
-              <DemoComponent />
-            </div>
-          ) : (
-            <div
-              className={`relative mb-8 border border-neon/20 overflow-hidden ${
-                slug === 'lcerebro'
-                  ? 'aspect-video max-w-3xl mx-auto bg-black'
-                  : 'aspect-video max-w-3xl mx-auto'
-              } flex items-center justify-center rounded-sm`}
-            >
-              <DemoComponent />
-            </div>
-          )
+      {/* Hero / live component section */}
+      {project.showComponentAsHero && DemoComponent ? (
+        slug === 'llambda-llm-agent' ? (
+          // Let the chat component control its own layout – no forced aspect/borders
+          <div className='mb-8'>
+            <DemoComponent />
+          </div>
+        ) : slug === 'rpg-dice-roller' ? (
+          // Full-width dice roller hero; DiceRoller handles its own internal width
+          <div className='mb-8' id='dice-roller-section'>
+            <DemoComponent />
+          </div>
         ) : (
-          project.imageUrl && (
-            <div
-              className={`relative mb-8 border border-neon/20 overflow-hidden ${
-                slug === 'lcerebro'
-                  ? 'aspect-video max-w-3xl mx-auto bg-black'
-                  : 'aspect-video max-w-3xl mx-auto'
-              }`}
-            >
-              <OptimizedImage
-                src={project.imageUrl}
-                alt={project.title}
-                className={
-                  slug === 'ai-integrations' || slug === 'n8n-automations' || slug === 'it-consulting'
-                    ? 'object-cover object-center w-full h-full scale-105'
-                    : slug === 'lcerebro'
-                      ? 'object-contain object-center w-full h-full'
-                      : 'object-cover object-top'
-                }
-                priority
-                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
-              />
-            </div>
-          )
-        )}
+          <div
+            className={`relative mb-8 border border-neon/20 overflow-hidden ${
+              slug === 'lcerebro'
+                ? 'aspect-video max-w-3xl mx-auto bg-black'
+                : 'aspect-video max-w-3xl mx-auto'
+            } flex items-center justify-center rounded-sm`}
+          >
+            <DemoComponent />
+          </div>
+        )
+      ) : (
+        project.imageUrl && (
+          <div
+            className={`relative mb-8 border border-neon/20 overflow-hidden ${
+              slug === 'lcerebro'
+                ? 'aspect-video max-w-3xl mx-auto bg-black'
+                : 'aspect-video max-w-3xl mx-auto'
+            }`}
+          >
+            <OptimizedImage
+              src={project.imageUrl}
+              alt={project.title}
+              className={
+                slug === 'ai-integrations' || slug === 'n8n-automations' || slug === 'it-consulting'
+                  ? 'object-cover object-center w-full h-full scale-105'
+                  : slug === 'lcerebro'
+                    ? 'object-contain object-center w-full h-full'
+                    : 'object-cover object-top'
+              }
+              priority
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
+            />
+          </div>
+        )
+      )}
 
+      {/* Main project content constrained to readable width */}
+      <div className='max-w-4xl'>
         {project.isAgencySubcontract && (
           <span className='text-sm font-ocr text-neon uppercase tracking-wider block mb-4'>
             Agency Subcontract Project

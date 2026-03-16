@@ -53,7 +53,7 @@ export default function DiceRoller() {
       setIsRolling(false);
       setComment('');
       setHeldDice(new Set());
-    }, 800);
+    }, UI_CONSTANTS.ROLL_ANIMATION_DURATION);
   }, [dicePool, modifier, comment, isRolling]);
 
   const handleReroll = useCallback(() => {
@@ -66,7 +66,7 @@ export default function DiceRoller() {
       setCurrentResult(newResult);
       setHistory((prev) => [newResult, ...prev].slice(0, UI_CONSTANTS.MAX_HISTORY));
       setIsRolling(false);
-    }, 800);
+    }, UI_CONSTANTS.ROLL_ANIMATION_DURATION);
   }, [currentResult, heldDice, isRolling, comment]);
 
   const handleToggleDiceHold = useCallback((groupIndex, resultIndex) => {
@@ -78,20 +78,6 @@ export default function DiceRoller() {
       return next;
     });
   }, []);
-
-  const handleCopy = useCallback(() => {
-    if (!currentResult) return;
-    const notation = currentResult.notation;
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(text).then(
-        () => {
-          setCopyStatus(true);
-          setTimeout(() => setCopyStatus(false), UI_CONSTANTS.COPY_STATUS_DURATION);
-        },
-        () => fallbackCopy(text)
-      );
-    } else fallbackCopy(text);
-  }, [currentResult]);
 
   const fallbackCopy = (text) => {
     const ta = document.createElement('textarea');
@@ -110,6 +96,24 @@ export default function DiceRoller() {
     document.body.removeChild(ta);
   };
 
+  const handleCopy = useCallback(() => {
+    if (!currentResult) return;
+
+    const text = formatResultForDisplay(currentResult);
+
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).then(
+        () => {
+          setCopyStatus(true);
+          setTimeout(() => setCopyStatus(false), UI_CONSTANTS.COPY_STATUS_DURATION);
+        },
+        () => fallbackCopy(text)
+      );
+    } else {
+      fallbackCopy(text);
+    }
+  }, [currentResult]);
+
   const handleReset = useCallback(() => {
     setDicePool([]);
     setModifier(0);
@@ -122,7 +126,11 @@ export default function DiceRoller() {
   const handleClearHistory = useCallback(() => {
     if (window.confirm('Clear all roll history?')) {
       setHistory([]);
-      localStorage.removeItem('diceRollerHistory');
+      try {
+        localStorage.removeItem('diceRollerHistory');
+      } catch (e) {
+        errorMonitor.logError(e, { context: 'Dice roller history clear' });
+      }
     }
   }, []);
 
@@ -179,168 +187,180 @@ export default function DiceRoller() {
   );
 
   return (
-    <div className='flex flex-col gap-3 max-w-xl mx-auto'>
-      {/* Hex - center of attention */}
-      <DicePoolBuilder dicePool={dicePool} onUpdatePool={setDicePool} />
+    <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between max-w-6xl mx-auto px-4 md:px-6'>
+      {/* Left column: dice & controls */}
+      <div className='flex-1 flex flex-col gap-3 sm:pr-6 lg:pr-12'>
+        {/* Hex - center of attention */}
+        <DicePoolBuilder dicePool={dicePool} onUpdatePool={setDicePool} />
 
-      {/* POOL and MOD - balanced layout */}
-      <div className='flex flex-col sm:flex-row sm:items-start gap-4'>
-        <div className='flex-1 min-w-0'>
-          <span className='font-ocr text-[11px] tracking-widest text-neon/50 uppercase block mb-1.5'>
-            POOL
-          </span>
-          {dicePool.length === 0 ? null : (
-            <div className='flex flex-wrap gap-1.5'>
-              {dicePool.map((die) => (
-                <div
-                  key={die.sides}
-                  className='inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-neon/15 bg-panel/20'
-                  style={{ color: die.color }}
-                >
-                  <span className='font-mono text-sm font-bold'>
-                    [{die.count}d{die.sides}]
-                  </span>
-                  <button
-                    onClick={() => setDicePool(dicePool.filter((d) => d.sides !== die.sides))}
-                    className='text-danger/50 hover:text-danger text-[9px] leading-none w-3.5 h-3.5 flex items-center justify-center rounded-sm hover:bg-danger/10 transition-colors cursor-pointer'
-                    aria-label={`Remove all d${die.sides}`}
+        {/* POOL and MOD - balanced layout */}
+        <div className='flex flex-col sm:flex-row sm:items-start gap-4'>
+          <div className='flex-1 min-w-0'>
+            <span className='font-ocr text-[11px] tracking-widest text-neon/50 uppercase block mb-1.5'>
+              POOL
+            </span>
+            {dicePool.length === 0 ? null : (
+              <div className='flex flex-wrap gap-1.5'>
+                {dicePool.map((die) => (
+                  <div
+                    key={die.sides}
+                    className='inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-neon/15 bg-panel/20'
+                    style={{ color: die.color }}
                   >
-                    ×
-                  </button>
-                </div>
-              ))}
+                    <span className='font-mono text-sm font-bold'>
+                      [{die.count}d{die.sides}]
+                    </span>
+                    <button
+                      onClick={() =>
+                        setDicePool(dicePool.filter((d) => d.sides !== die.sides))
+                      }
+                      className='text-danger/50 hover:text-danger text-[9px] leading-none w-3.5 h-3.5 flex items-center justify-center rounded-sm hover:bg-danger/10 transition-colors cursor-pointer'
+                      aria-label={`Remove all d${die.sides}`}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className='sm:shrink-0'>
+            <span className='font-ocr text-[11px] tracking-widest text-neon/50 uppercase block mb-1.5'>
+              MOD
+            </span>
+            <div className='inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-neon/15 bg-panel/20'>
+              <button
+                onClick={() => setModifier(modifier - 1)}
+                className='w-3.5 h-3.5 flex items-center justify-center text-neon/70 hover:text-neon text-[9px] leading-none font-ibm transition-colors cursor-pointer'
+                aria-label='Decrease modifier'
+              >
+                −
+              </button>
+              <input
+                type='number'
+                min={UI_CONSTANTS.MIN_MODIFIER}
+                max={UI_CONSTANTS.MAX_MODIFIER}
+                value={modifier}
+                onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
+                className='w-7 py-0 bg-transparent text-neon font-mono text-sm font-bold text-center focus:outline-none focus:ring-1 focus:ring-neon/50'
+                aria-label='Modifier'
+              />
+              <button
+                onClick={() => setModifier(modifier + 1)}
+                className='w-3.5 h-3.5 flex items-center justify-center text-neon/70 hover:text-neon text-[9px] leading-none font-ibm transition-colors cursor-pointer'
+                aria-label='Increase modifier'
+              >
+                +
+              </button>
             </div>
+          </div>
+        </div>
+
+        {/* Note */}
+        <input
+          type='text'
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          className='w-full py-1.5 px-2 mt-2 bg-panel/30 border border-neon/25 text-text font-ocr text-sm focus:outline-none focus:ring-1 focus:ring-neon/40 placeholder:text-text/30'
+          placeholder='Note: Attack roll, Initiative...'
+          maxLength={UI_CONSTANTS.MAX_COMMENT_LENGTH}
+          aria-label='Roll note'
+        />
+
+        {/* Buttons */}
+        <div className='flex gap-2'>
+          <GlitchButton
+            onClick={handleRoll}
+            disabled={!canRoll}
+            className='flex-1 py-2 text-sm'
+          >
+            {isRolling ? 'ROLLING' : 'ROLL'}
+          </GlitchButton>
+          <GlitchButton onClick={handleReset} className='py-2 px-4 text-xs'>
+            RESET
+          </GlitchButton>
+          {currentResult && (
+            <GlitchButton onClick={handleCopy} className='py-2 px-4 text-xs'>
+              {copyStatus ? '✓' : 'COPY'}
+            </GlitchButton>
           )}
         </div>
-        <div className='sm:shrink-0'>
-          <span className='font-ocr text-[11px] tracking-widest text-neon/50 uppercase block mb-1.5'>
-            MOD
-          </span>
-          <div className='inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-neon/15 bg-panel/20'>
-            <button
-              onClick={() => setModifier(modifier - 1)}
-              className='w-3.5 h-3.5 flex items-center justify-center text-neon/70 hover:text-neon text-[9px] leading-none font-ibm transition-colors cursor-pointer'
-              aria-label='Decrease modifier'
-            >
-              −
-            </button>
-            <input
-              type='number'
-              min={UI_CONSTANTS.MIN_MODIFIER}
-              max={UI_CONSTANTS.MAX_MODIFIER}
-              value={modifier}
-              onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
-              className='w-7 py-0 bg-transparent text-neon font-mono text-sm font-bold text-center focus:outline-none focus:ring-1 focus:ring-neon/50'
-              aria-label='Modifier'
+
+        {/* Result - rolling graphic + compact output */}
+        <div className='min-h-[60px]'>
+          {isRolling ? (
+            <div className='flex flex-col items-center justify-center py-4 px-3'>
+              {/* Abstract terminal-style rolling display */}
+              <div className='relative w-full max-w-[200px] mx-auto'>
+                <div className='absolute inset-0 border border-neon/30 rounded-sm opacity-50' />
+                <div className='absolute inset-0 bg-gradient-to-b from-neon/5 via-transparent to-neon/5 rounded-sm motion-safe:animate-pulse' />
+                <div className='relative flex flex-wrap gap-2 justify-center items-center py-4 px-3'>
+                  {dicePool.flatMap((die, di) =>
+                    Array.from({ length: Math.min(die.count, 6) }).map((_, ci) => {
+                      const Icon = DICE_ICONS[die.sides];
+                      return (
+                        <div
+                          key={`${die.sides}-${di}-${ci}`}
+                          className='motion-safe:animate-[diceRoll_0.8s_ease-in-out_infinite]'
+                          style={{
+                            color: die.color,
+                            animationDelay: `${(di * die.count + ci) * 0.08}s`,
+                          }}
+                        >
+                          <Icon size={28} />
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+                <div className='flex items-center justify-center gap-1.5 pb-2'>
+                  <span
+                    className='text-neon/50 font-sans text-[10px]'
+                    aria-hidden='true'
+                  >
+                    »
+                  </span>
+                  <span className='font-ocr text-xs text-neon/70 tracking-widest'>
+                    ROLL IN PROGRESS
+                  </span>
+                  <span className='flex gap-0.5'>
+                    {[0, 1, 2].map((i) => (
+                      <span
+                        key={i}
+                        className='inline-block w-1 h-1 rounded-full bg-neon/60 motion-safe:animate-pulse'
+                        style={{ animationDelay: `${i * 0.2}s` }}
+                      />
+                    ))}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : currentResult ? (
+            <DiceResult
+              result={currentResult}
+              heldDice={heldDice}
+              onToggleDiceHold={handleToggleDiceHold}
+              onReroll={handleReroll}
             />
-            <button
-              onClick={() => setModifier(modifier + 1)}
-              className='w-3.5 h-3.5 flex items-center justify-center text-neon/70 hover:text-neon text-[9px] leading-none font-ibm transition-colors cursor-pointer'
-              aria-label='Increase modifier'
-            >
-              +
-            </button>
-          </div>
+          ) : (
+            <p className='font-ocr text-xs text-text/30 py-2 text-center'>
+              » Ready
+            </p>
+          )}
         </div>
       </div>
 
-      {/* Note */}
-      <input
-        type='text'
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        className='w-full py-1.5 px-2 mt-2 bg-panel/30 border border-neon/25 text-text font-ocr text-sm focus:outline-none focus:ring-1 focus:ring-neon/40 placeholder:text-text/30'
-        placeholder='Note: Attack roll, Initiative...'
-        maxLength={UI_CONSTANTS.MAX_COMMENT_LENGTH}
-        aria-label='Roll note'
-      />
-
-      {/* Buttons */}
-      <div className='flex gap-2'>
-        <GlitchButton
-          onClick={handleRoll}
-          disabled={!canRoll}
-          className='flex-1 py-2 text-sm'
-        >
-          {isRolling ? 'ROLLING' : 'ROLL'}
-        </GlitchButton>
-        <GlitchButton onClick={handleReset} className='py-2 px-4 text-xs'>
-          RESET
-        </GlitchButton>
-        {currentResult && (
-          <GlitchButton onClick={handleCopy} className='py-2 px-4 text-xs'>
-            {copyStatus ? '✓' : 'COPY'}
-          </GlitchButton>
-        )}
+      {/* Right column: history (moves beside controls on small+ screens) */}
+      <div className='mt-4 sm:mt-0 sm:w-80 lg:w-96 sm:self-stretch sm:ml-8 lg:ml-16 flex-shrink-0'>
+        <RollHistory
+          history={history}
+          onSelectRoll={handleSelectHistoryRoll}
+          onEditComment={handleEditComment}
+          onClearHistory={handleClearHistory}
+          isExpanded={historyExpanded}
+          onToggleExpanded={() => setHistoryExpanded((v) => !v)}
+        />
       </div>
-
-      {/* Result - rolling graphic + compact output */}
-      <div className='min-h-[60px]'>
-        {isRolling ? (
-          <div className='flex flex-col items-center justify-center py-4 px-3'>
-            {/* Abstract terminal-style rolling display */}
-            <div className='relative w-full max-w-[200px] mx-auto'>
-              <div className='absolute inset-0 border border-neon/30 rounded-sm opacity-50' />
-              <div className='absolute inset-0 bg-gradient-to-b from-neon/5 via-transparent to-neon/5 rounded-sm motion-safe:animate-pulse' />
-              <div className='relative flex flex-wrap gap-2 justify-center items-center py-4 px-3'>
-                {dicePool.flatMap((die, di) =>
-                  Array.from({ length: Math.min(die.count, 6) }).map((_, ci) => {
-                    const Icon = DICE_ICONS[die.sides];
-                    return (
-                      <div
-                        key={`${die.sides}-${di}-${ci}`}
-                        className='motion-safe:animate-[diceRoll_0.8s_ease-in-out_infinite]'
-                        style={{
-                          color: die.color,
-                          animationDelay: `${(di * die.count + ci) * 0.08}s`,
-                        }}
-                      >
-                        <Icon size={28} />
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-              <div className='flex items-center justify-center gap-1.5 pb-2'>
-                <span className='text-neon/50 font-sans text-[10px]' aria-hidden='true'>»</span>
-                <span className='font-ocr text-xs text-neon/70 tracking-widest'>
-                  ROLL IN PROGRESS
-                </span>
-                <span className='flex gap-0.5'>
-                  {[0, 1, 2].map((i) => (
-                    <span
-                      key={i}
-                      className='inline-block w-1 h-1 rounded-full bg-neon/60 motion-safe:animate-pulse'
-                      style={{ animationDelay: `${i * 0.2}s` }}
-                    />
-                  ))}
-                </span>
-              </div>
-            </div>
-          </div>
-        ) : currentResult ? (
-          <DiceResult
-            result={currentResult}
-            heldDice={heldDice}
-            onToggleDiceHold={handleToggleDiceHold}
-            onReroll={handleReroll}
-          />
-        ) : (
-          <p className='font-ocr text-xs text-text/30 py-2 text-center'>
-            » Ready
-          </p>
-        )}
-      </div>
-
-      {/* History */}
-      <RollHistory
-        history={history}
-        onSelectRoll={handleSelectHistoryRoll}
-        onEditComment={handleEditComment}
-        onClearHistory={handleClearHistory}
-        isExpanded={historyExpanded}
-        onToggleExpanded={() => setHistoryExpanded((v) => !v)}
-      />
     </div>
   );
 }
