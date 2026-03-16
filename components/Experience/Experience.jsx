@@ -184,9 +184,9 @@ const TECH_CATEGORIES = [
 
 const FEATURED_TESTIMONIAL = {
   quote:
-    '[PLACEHOLDER] TODO: insert short agency testimonial excerpt here once finalized.',
-  attribution: '[PLACEHOLDER] Agency name',
-  role: '[PLACEHOLDER] Role / relationship',
+    'Stephen has a great tenacity to solve problems in the world of technical development and engineering. We were fortunate enough to work alongside him multiple times, in which he delivered the dependable digital foundations for our Clients. With each project, his work significantly improved and become more operational. For those needing a digital facelift — it\'s not your job to understand how it\'s done. Instead, focus on finding someone you trust to help craft your vision inside your digital landscape. Stephen is one of those someones. God Bless.',
+  attribution: 'HERO POINT CONSULTING',
+  role: 'Agency Partner (Testimonial from Griffin H.)',
 };
 
 function Experience() {
