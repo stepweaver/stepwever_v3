@@ -36,7 +36,10 @@ function ProjectCarousel() {
   const mobileContainerRef = useRef(null);
   const desktopCarouselRef = useRef(null);
   const desktopContainerRef = useRef(null);
-  const minSwipeDistance = 50;
+  // Longer swipe required so the carousel doesn't advance on small drags; velocity only helps when swipe is already substantial
+  const minSwipeDistance = 100;
+  const minVelocitySwipeDistance = 60; // must drag at least this far for velocity to trigger advance
+  const minVelocity = 0.8; // higher = only fast flicks trigger advance
 
   const nextProject = useCallback(() => {
     if (isTransitioning) return;
@@ -169,10 +172,10 @@ function ProjectCarousel() {
     const velocity = touchState.current.velocity;
     const isLeftSwipe =
       distance > minSwipeDistance ||
-      (Math.abs(velocity) > 0.5 && distance > 20);
+      (Math.abs(velocity) > minVelocity && distance > minVelocitySwipeDistance);
     const isRightSwipe =
       distance < -minSwipeDistance ||
-      (Math.abs(velocity) > 0.5 && distance < -20);
+      (Math.abs(velocity) > minVelocity && distance < -minVelocitySwipeDistance);
 
     // Mark if this was a swipe
     const wasSwipe = isLeftSwipe || isRightSwipe;
@@ -290,10 +293,10 @@ function ProjectCarousel() {
     const velocity = touchState.current.velocity;
     const isLeftSwipe =
       distance > minSwipeDistance ||
-      (Math.abs(velocity) > 0.5 && distance > 20);
+      (Math.abs(velocity) > minVelocity && distance > minVelocitySwipeDistance);
     const isRightSwipe =
       distance < -minSwipeDistance ||
-      (Math.abs(velocity) > 0.5 && distance < -20);
+      (Math.abs(velocity) > minVelocity && distance < -minVelocitySwipeDistance);
 
     // Handle desktop navigation (no transforms, just page changes)
     if (!isMobile && (isLeftSwipe || isRightSwipe)) {
