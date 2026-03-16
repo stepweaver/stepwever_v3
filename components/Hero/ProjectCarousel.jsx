@@ -652,7 +652,7 @@ function ProjectCarousel() {
 
       {/* Desktop Grid/Carousel - Only render current page */}
       <div className='hidden md:block'>
-        <div className='relative'>
+        <div className='relative min-h-[420px] lg:min-h-[480px]'>
           {/* Desktop Navigation Arrows */}
           <button
             onClick={() => {
