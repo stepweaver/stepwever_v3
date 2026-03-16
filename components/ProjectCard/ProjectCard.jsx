@@ -63,7 +63,14 @@ const ProjectCard = memo(function ProjectCard({
             className={`transition-transform duration-300 hover:scale-105 ${
               slug === 'neon-profile-card' || slug === 'lcerebro'
                 ? 'object-contain object-center'
-                : slug === 'ai-integrations' || slug === 'n8n-automations' || slug === 'it-consulting'
+                : slug === 'ai-integrations' ||
+                    slug === 'n8n-automations' ||
+                    slug === 'it-consulting' ||
+                    slug === 'silent-auction' ||
+                    slug === 'bill-planner' ||
+                    slug === 'orthodontic-tracker' ||
+                    slug === 'service-business-demo' ||
+                    slug === 'mishawaka-shower-booking'
                   ? 'object-cover object-center scale-105'
                   : slug === 'llambda-llm-agent'
                     ? 'object-cover object-center'
@@ -77,7 +84,7 @@ const ProjectCard = memo(function ProjectCard({
       {!imageUrl && (
         <div className='relative mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56'>
           <OptimizedImage
-            src='/images/lambda_preview.png'
+            src='/images/screely-llambda.png'
             alt='Project preview'
             className='object-cover object-center transition-transform duration-300 hover:scale-105'
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'

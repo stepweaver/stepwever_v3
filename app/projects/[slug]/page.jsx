@@ -718,6 +718,40 @@ export default function ProjectPage({ params }) {
               </ProjectSection>
             )}
 
+            {/* Screenshots / Gallery */}
+            {project.screenshots && project.screenshots.length > 0 && (
+              <ProjectSection title='Screenshots / Gallery'>
+                {typeof project.screenshots[0] === 'string' ? (
+                  <p className='font-ocr text-text text-sm leading-relaxed'>
+                    {project.screenshots[0]}
+                  </p>
+                ) : (
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                    {project.screenshots.map((shot, index) => (
+                      <figure
+                        key={index}
+                        className='bg-panel/50 border border-neon/20 rounded-sm overflow-hidden card-glow'
+                      >
+                        <div className='relative w-full aspect-video'>
+                          <OptimizedImage
+                            src={shot.src}
+                            alt={shot.alt}
+                            className='object-cover object-top'
+                            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 600px'
+                          />
+                        </div>
+                        {shot.caption && (
+                          <figcaption className='px-4 py-3 font-ocr text-xs text-text/80 border-t border-neon/15'>
+                            {shot.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </ProjectSection>
+            )}
+
             {/* API Routes */}
             {project.apiRoutes?.length > 0 && (
               <ProjectSection title='API Routes'>
@@ -729,6 +763,13 @@ export default function ProjectPage({ params }) {
             {project.performance?.length > 0 && (
               <ProjectSection title='Performance'>
                 <SectionList items={project.performance} icon={Zap} />
+              </ProjectSection>
+            )}
+
+            {/* Challenges / Decisions */}
+            {(project.challenges && project.challenges.length > 0) && (
+              <ProjectSection title='Challenges & Decisions'>
+                <SectionList items={project.challenges} icon={Code} />
               </ProjectSection>
             )}
 
@@ -864,6 +905,25 @@ export default function ProjectPage({ params }) {
                   Suggested README updates to make the repository more informative:
                 </p>
                 <SectionList items={project.readmeRecommendations} icon={Code} />
+              </ProjectSection>
+            )}
+
+            {/* Testimonial */}
+            {project.testimonial && project.testimonial.quote && (
+              <ProjectSection title='Testimonial'>
+                <div className='bg-panel/60 border border-neon/25 rounded-sm p-6 card-glow'>
+                  <p className='font-ocr text-base md:text-lg text-text/90 leading-relaxed mb-4'>
+                    {project.testimonial.quote}
+                  </p>
+                  {(project.testimonial.attribution || project.testimonial.role) && (
+                    <p className='font-ocr text-xs text-text/60 uppercase tracking-[0.2em]'>
+                      {project.testimonial.attribution}
+                      {project.testimonial.role
+                        ? ` · ${project.testimonial.role}`
+                        : ''}
+                    </p>
+                  )}
+                </div>
               </ProjectSection>
             )}
 

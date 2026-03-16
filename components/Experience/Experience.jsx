@@ -182,6 +182,13 @@ const TECH_CATEGORIES = [
   },
 ];
 
+const FEATURED_TESTIMONIAL = {
+  quote:
+    '[PLACEHOLDER] TODO: insert short agency testimonial excerpt here once finalized.',
+  attribution: '[PLACEHOLDER] Agency name',
+  role: '[PLACEHOLDER] Role / relationship',
+};
+
 function Experience() {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
@@ -296,6 +303,23 @@ function Experience() {
             ))}
           </div>
         </div>
+
+        {/* Optional homepage testimonial excerpt */}
+        {FEATURED_TESTIMONIAL.quote && (
+          <div className='mt-12 md:mt-16'>
+            <div className='hud-panel p-4 md:p-6 border border-neon/20 bg-panel/60'>
+              <p className='font-ocr text-sm md:text-base text-text/90 leading-relaxed mb-3'>
+                {FEATURED_TESTIMONIAL.quote}
+              </p>
+              <p className='font-ocr text-[10px] text-text/50 uppercase tracking-[0.22em]'>
+                {FEATURED_TESTIMONIAL.attribution}
+                {FEATURED_TESTIMONIAL.role
+                  ? ` · ${FEATURED_TESTIMONIAL.role}`
+                  : ''}
+              </p>
+            </div>
+          </div>
+        )}
         </div>
       </div>
     </section>
