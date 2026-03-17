@@ -9,11 +9,11 @@ import Link from 'next/link';
 
 function HeroOperatorCard() {
   return (
-    <HUDPanel title="OPERATOR" id="OPS-00" className="p-6 h-full min-h-full flex flex-col w-full max-w-[390px]">
+    <HUDPanel title="OPERATOR" id="HMFIC-01" className="p-6 h-full min-h-full flex flex-col w-full max-w-[390px]">
       <div className='flex flex-col gap-6'>
         <div className='flex flex-col gap-3'>
           <div className='flex flex-row items-start gap-4'>
-            <div className='relative w-32 h-32 shrink-0'>
+            <div className='relative w-36 h-36 shrink-0'>
               <div
                 className='absolute inset-0 rounded-sm border-2 border-accent/50 motion-safe:animate-pulse'
               />
@@ -21,8 +21,8 @@ function HeroOperatorCard() {
                 <Image
                   src='/images/pixarMe-256.png'
                   alt='Stephen Weaver'
-                  width={128}
-                  height={128}
+                  width={144}
+                  height={144}
                   className='w-full h-full object-cover'
                   priority
                 />
