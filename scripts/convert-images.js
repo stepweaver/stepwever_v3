@@ -4,7 +4,7 @@ const path = require('path');
 
 const imagesToConvert = [
   'screely-lambda.png',
-  'screely-stache.png',
+  // 'screely-stache.png', // replaced by soap_stache.webp
   'screely-dice.png',
   'screely-profilcard.png',
   'screely-resist.png',

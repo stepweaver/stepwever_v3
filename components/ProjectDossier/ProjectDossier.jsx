@@ -123,7 +123,7 @@
      );
    }
  
-  const imageSrc = active.imageUrl || '/images/screely-llambda.png';
+  const imageSrc = active.imageUrl || '/images/terminal_ui.png';
    const primaryHref = active.slug ? `/projects/${active.slug}` : null;
    const secondaryHref = active.link || null;
    const secondaryIsExternal = Boolean(secondaryHref && /^https?:\/\//i.test(secondaryHref));

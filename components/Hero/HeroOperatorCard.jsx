@@ -2,87 +2,151 @@
 
 import { memo } from 'react';
 import Image from 'next/image';
-import { HUDPanel } from '@/components/ui/HUDPanel';
-import { StatusPill } from '@/components/ui/StatusPill';
 import { MatrixSync } from '@/components/ui/MatrixSync';
 import Link from 'next/link';
 
 function HeroOperatorCard() {
   return (
-    <HUDPanel title="OPERATOR" id="HMFIC-01" className="p-6 h-full min-h-full flex flex-col w-full max-w-[390px]">
-      <div className='flex flex-col gap-6'>
-        <div className='flex flex-col gap-3'>
-          <div className='flex flex-row items-start gap-4'>
-            <div className='relative w-36 h-36 shrink-0'>
-              <div
-                className='absolute inset-0 rounded-sm border-2 border-accent/50 motion-safe:animate-pulse'
+    <section className='relative w-full max-w-[390px] h-full min-h-full flex flex-col border border-neon/20 bg-panel/25 p-5'>
+      {/* corner brackets */}
+      <div className='pointer-events-none absolute left-0 top-0 h-6 w-6 border-l-2 border-t-2 border-neon/60' />
+      <div className='pointer-events-none absolute right-0 top-0 h-6 w-6 border-r-2 border-t-2 border-neon/25' />
+      <div className='pointer-events-none absolute bottom-0 left-0 h-6 w-6 border-b-2 border-l-2 border-neon/25' />
+      <div className='pointer-events-none absolute bottom-0 right-0 h-6 w-6 border-b-2 border-r-2 border-neon/60' />
+      <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_12px] opacity-10' />
+
+      {/* header rail */}
+      <header className='relative z-10 mb-4 flex items-start justify-between gap-4 pb-1'>
+        <div>
+          <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>OPERATOR DOSSIER</p>
+          <h2 className='text-lg font-semibold text-text font-ibm'>STEPHEN WEAVER</h2>
+        </div>
+        <div className='text-right text-xs text-muted font-mono shrink-0'>
+          <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
+          <div className='font-mono text-neon/80 whitespace-nowrap'>HMFIC-01</div>
+        </div>
+      </header>
+
+      <div className='relative z-10 flex flex-col gap-4 flex-1 min-h-0'>
+        {/* portrait bay + data rail */}
+        <div className='grid grid-cols-[144px_1fr] gap-4 items-start'>
+          <div className='flex flex-col gap-2'>
+            <div className='relative w-36 h-36 border border-neon/25 bg-terminal-dark/30'>
+              <div className='pointer-events-none absolute left-0 top-0 h-5 w-5 border-l border-t border-accent/50' />
+              <div className='pointer-events-none absolute right-0 top-0 h-5 w-5 border-r border-t border-neon/25' />
+              <div className='pointer-events-none absolute bottom-0 left-0 h-5 w-5 border-b border-l border-neon/25' />
+              <div className='pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-accent/50' />
+              <Image
+                src='/images/pixarMe-256.png'
+                alt='Stephen Weaver'
+                width={144}
+                height={144}
+                className='w-full h-full object-cover'
+                priority
               />
-              <div className='relative w-full h-full rounded-sm overflow-hidden border-2 border-neon/30'>
-                <Image
-                  src='/images/pixarMe-256.png'
-                  alt='Stephen Weaver'
-                  width={144}
-                  height={144}
-                  className='w-full h-full object-cover'
-                  priority
-                />
-              </div>
-            </div>
-            <div className='space-y-2 text-left min-w-0 flex-1'>
-              <div>
-                <p className='text-[10px] tracking-[0.2em] text-neon/70 font-ocr uppercase'>OPERATOR</p>
-                <p className='text-base font-bold text-text font-ibm'>STEPHEN WEAVER</p>
-              </div>
-              <div>
-                <p className='text-[10px] tracking-[0.2em] text-neon/70 font-ocr uppercase'>ROLE</p>
-                <p className='text-sm text-text/90 font-ibm'>FULL-STACK / AI / AUTOMATION</p>
-              </div>
-              <div>
-                <p className='text-[10px] tracking-[0.2em] text-neon/70 font-ocr uppercase'>CURRENT FOCUS</p>
-                <p className='text-sm text-text/90 font-ibm'>DevOps Engineering</p>
-              </div>
             </div>
           </div>
-          <div className='flex flex-col w-fit'>
-            <p className='text-[10px] tracking-[0.2em] text-neon/70 font-ocr uppercase mb-1'>STATUS</p>
-            <StatusPill status="OPEN TO WORK" size="sm" href="/resume" />
+
+          <div className='min-w-0 space-y-3'>
+            <div>
+              <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>ROLE</p>
+              <p className='text-sm text-text/90 font-ibm'>FULL-STACK / AI / AUTOMATION</p>
+            </div>
+
+            <div className='space-y-2'>
+              <Link
+                href='/resume'
+                className='group block'
+                aria-label='Open to work (view resume)'
+              >
+                <div className='flex items-start justify-between gap-3'>
+                  <div className='min-w-0'>
+                    <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>STATUS</p>
+                    <div className='mt-1 flex items-center gap-2'>
+                      <p className='text-[11px] text-terminal-green font-ocr uppercase tracking-[0.18em] whitespace-normal leading-snug'>
+                        OPEN TO WORK
+                      </p>
+                      <span className='relative flex h-4 w-4 flex-shrink-0 items-center justify-center' aria-hidden>
+                        <span className='absolute inline-flex h-full w-full rounded-full bg-terminal-green/35 motion-safe:animate-ping' />
+                        <span className='relative inline-flex h-2.5 w-2.5 rounded-full bg-terminal-green shadow-[0_0_14px_rgba(0,255,153,0.55)]' />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              <div>
+                <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>FOCUS</p>
+                <p className='mt-1 text-[11px] text-text/85 font-ocr uppercase tracking-[0.18em] whitespace-normal leading-snug'>
+                  DEVOPS ENGINEERING
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-        <div className='w-full min-w-0'>
-          <div className='space-y-3'>
-            <p className='font-ibm text-text text-sm leading-relaxed'>
-              Builds web apps, automations, and AI-enabled tools that reduce friction and improve operations. Translates business requirements into usable systems. Known to leverage automation and convince machines to do his bidding.
-            </p>
+
+        {/* mission statement */}
+        <div className='pt-3'>
+          <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase mb-2'>MISSION PROFILE</p>
+          <p className='font-ibm text-text text-sm leading-relaxed'>
+            Builds web apps, automations, and AI-enabled tools that reduce friction and improve operations. Translates
+            business requirements into usable systems.
+          </p>
+        </div>
+
+        {/* command rail */}
+        <div className='pt-3 flex flex-wrap gap-2'>
+          <Link
+            href='/resume'
+            className='inline-flex cursor-pointer items-center justify-center border border-terminal-green/25 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-green hover:border-terminal-green/60 hover:bg-terminal-green/10'
+          >
+            RESUME
+          </Link>
+          <Link
+            href='/contact'
+            className='inline-flex cursor-pointer items-center justify-center border border-neon/25 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-neon/80 hover:border-neon/55 hover:bg-neon/10'
+          >
+            CONTACT
+          </Link>
+          <Link
+            href='/terminal'
+            className='inline-flex cursor-pointer items-center justify-center border border-neon/15 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-dimmed hover:border-neon/40 hover:text-neon/80'
+          >
+            TERMINAL
+          </Link>
+        </div>
+
+        {/* tags + sync */}
+        <div className='pt-3 space-y-3 mt-auto'>
+          <div className='grid gap-2'>
+            <div className='flex flex-wrap items-center gap-2'>
+              {['Veteran', 'Business Analyst', 'Developer'].map((label) => (
+                <span
+                  key={label}
+                  className='border border-neon/25 bg-terminal-dark/15 px-2 py-1 text-[10px] font-ocr uppercase tracking-[0.22em] text-text/80'
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+
+            <div className='flex flex-wrap items-center gap-2'>
+              <Link
+                href='/yankee-samurai'
+                className='inline-flex cursor-pointer border border-terminal-magenta/35 bg-terminal-dark/10 px-2 py-1 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-magenta/80 hover:border-terminal-magenta/70 hover:bg-terminal-magenta/10'
+              >
+                YANKEE SAMURAI
+              </Link>
+              <span className='border border-terminal-magenta/20 bg-terminal-dark/10 px-2 py-1 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-magenta/60'>
+                REBEL
+              </span>
+            </div>
           </div>
-          <ul className='flex flex-wrap gap-2 mt-4 list-none' aria-label="Characteristics">
-            {['Developer', 'Problem Solver', 'Yankee Samurai', 'Veteran', 'Rebel'].map((label, i) => (
-              <li key={label}>
-                {label === 'Yankee Samurai' ? (
-                  <Link
-                    href='/yankee-samurai'
-                    className='inline-block px-2.5 py-1 rounded border text-xs font-ibm border-terminal-magenta/60 text-terminal-magenta/90 hover:border-terminal-magenta hover:text-terminal-magenta hover:shadow-[0_0_12px_rgba(255,85,255,0.3)] transition-all duration-300 cursor-pointer'
-                  >
-                    {label}
-                  </Link>
-                ) : (
-                  <span
-                    className={[
-                      'inline-block px-2.5 py-1 rounded border text-xs font-ibm',
-                      label === 'Rebel' ? 'border-terminal-magenta/70 text-terminal-magenta' : i === 1 ? 'border-accent text-accent' : 'border-neon/60 text-text/90',
-                    ].join(' ')}
-                  >
-                    {label}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-          <div className='mt-5'>
-            <MatrixSync />
-          </div>
+
+          <MatrixSync />
         </div>
       </div>
-    </HUDPanel>
+    </section>
   );
 }
 

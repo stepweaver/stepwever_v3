@@ -93,7 +93,7 @@ const ProjectCard = memo(function ProjectCard({
       {!imageUrl && (
         <div className='relative mb-4 border border-neon/20 overflow-hidden rounded-sm h-48 sm:h-56'>
           <OptimizedImage
-            src='/images/screely-llambda.png'
+            src='/images/terminal_ui.png'
             alt='Project preview'
             className='object-cover object-center transition-transform duration-300 hover:scale-105'
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
