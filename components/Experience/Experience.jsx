@@ -5,187 +5,62 @@ import {
   SiReact,
   SiNextdotjs,
   SiTailwindcss,
-  SiNodedotjs,
-  SiExpress,
   SiSupabase,
-  SiFirebase,
   SiPostgresql,
-  SiMysql,
-  SiOpenai,
   SiZapier,
   SiStripe,
   SiNotion,
   SiSlack,
   SiGithub,
   SiVercel,
-  SiNetlify,
   SiCloudflare,
 } from 'react-icons/si';
 import {
-  BarChart3,
   Calculator,
-  FileText,
-  Zap,
-  Brain,
+  Cpu,
+  Mail,
+  Printer,
   ShoppingCart,
-  Palette,
-  Server,
+  Workflow,
 } from 'lucide-react';
 
-// Category codes for military roster style
-const CATEGORY_CODES = {
-  'Front-End': 'FE',
-  'Back-End / APIs': 'BE',
-  'AI & Automation': 'AI',
-  'Commerce & Integrations': 'CI',
-  'DevOps & Delivery': 'DO',
-};
-
-const TECH_CATEGORIES = [
+const LOADOUT_GROUPS = [
   {
-    name: 'Front-End',
-    technologies: [
-      { name: 'React', icon: SiReact, color: '#61DAFB', isComponent: true },
-      {
-        name: 'Next.js 15',
-        icon: SiNextdotjs,
-        color: '#ffffff',
-        isComponent: true,
-      },
-      {
-        name: 'Tailwind CSS',
-        icon: SiTailwindcss,
-        color: '#06B6D4',
-        isComponent: true,
-      },
-      { name: 'shadcn/ui', icon: Palette, color: '#ffffff', isComponent: true },
-      { name: 'MDX', icon: FileText, color: '#ffffff', isComponent: true },
-      {
-        name: 'Contentlayer',
-        icon: FileText,
-        color: '#ffffff',
-        isComponent: true,
-      },
-      { name: 'Vite', icon: Zap, color: '#646CFF', isComponent: true },
+    id: 'SYS-01',
+    title: 'Core Systems',
+    subtitle: 'Primary build stack used across flagship projects',
+    tools: [
+      { code: 'NXT', name: 'Next.js', role: 'App shell / routing / server actions', icon: SiNextdotjs },
+      { code: 'RCT', name: 'React', role: 'UI architecture / reusable components', icon: SiReact },
+      { code: 'TWD', name: 'Tailwind CSS', role: 'Interface styling / design system velocity', icon: SiTailwindcss },
+      { code: 'SBS', name: 'Supabase', role: 'Auth / realtime / database workflows', icon: SiSupabase },
+      { code: 'PG', name: 'PostgreSQL', role: 'Structured data / relational storage', icon: SiPostgresql },
     ],
   },
   {
-    name: 'Back-End / APIs',
-    technologies: [
-      {
-        name: 'Node.js',
-        icon: SiNodedotjs,
-        color: '#339933',
-        isComponent: true,
-      },
-      {
-        name: 'Express.js',
-        icon: SiExpress,
-        color: '#ffffff',
-        isComponent: true,
-      },
-      {
-        name: 'Supabase',
-        icon: SiSupabase,
-        color: '#3ECF8E',
-        isComponent: true,
-      },
-      {
-        name: 'Firebase',
-        icon: SiFirebase,
-        color: '#FFCA28',
-        isComponent: true,
-      },
-      {
-        name: 'PostgreSQL',
-        icon: SiPostgresql,
-        color: '#336791',
-        isComponent: true,
-      },
-      { name: 'MySQL', icon: SiMysql, color: '#4479A1', isComponent: true },
-      { name: 'REST APIs', icon: Server, color: '#ffffff', isComponent: true },
-      { name: 'GraphQL', icon: Server, color: '#E10098', isComponent: true },
+    id: 'SYS-02',
+    title: 'AI / Automation Bus',
+    subtitle: 'Systems that reduce friction and extend capability',
+    tools: [
+      { code: 'LLM', name: 'LLM Routing', role: 'AI chat / model abstraction / routing', icon: Cpu },
+      { code: 'N8N', name: 'n8n', role: 'Workflow orchestration / automation chains', icon: Workflow },
+      { code: 'ZAP', name: 'Zapier', role: 'Connector glue / lightweight automations', icon: SiZapier },
+      { code: 'NOT', name: 'Notion API', role: 'CMS / editorial content / publishing', icon: SiNotion },
+      { code: 'SLK', name: 'Slack', role: 'Operational notifications / integrations', icon: SiSlack },
     ],
   },
   {
-    name: 'AI & Automation',
-    technologies: [
-      {
-        name: 'OpenAI API',
-        icon: SiOpenai,
-        color: '#412991',
-        isComponent: true,
-      },
-      { name: 'Zapier', icon: SiZapier, color: '#FF4A00', isComponent: true },
-      { name: 'Custom Bots', icon: Brain, color: '#00FF41', isComponent: true },
-      {
-        name: 'Workflow Auto',
-        icon: Zap,
-        color: '#00FF41',
-        isComponent: true,
-      },
-      {
-        name: 'Data Process',
-        icon: BarChart3,
-        color: '#00FF41',
-        isComponent: true,
-      },
-      {
-        name: 'Email Auto',
-        icon: FileText,
-        color: '#00FF41',
-        isComponent: true,
-      },
-    ],
-  },
-  {
-    name: 'Commerce & Integrations',
-    technologies: [
-      { name: 'Stripe', icon: SiStripe, color: '#008CDD', isComponent: true },
-      {
-        name: 'QuickBooks',
-        icon: Calculator,
-        color: '#2CA01C',
-        isComponent: true,
-      },
-      {
-        name: 'POS Systems',
-        icon: ShoppingCart,
-        color: '#FF6B35',
-        isComponent: true,
-      },
-      { name: 'Notion', icon: SiNotion, color: '#ffffff', isComponent: true },
-      {
-        name: 'Sheets',
-        icon: FileText,
-        color: '#34A853',
-        isComponent: true,
-      },
-      { name: 'Slack', icon: SiSlack, color: '#4A154B', isComponent: true },
-    ],
-  },
-  {
-    name: 'DevOps & Delivery',
-    technologies: [
-      {
-        name: 'GitHub',
-        icon: SiGithub,
-        color: '#ffffff',
-        isComponent: true,
-      },
-      { name: 'Vercel', icon: SiVercel, color: '#ffffff', isComponent: true },
-      {
-        name: 'Netlify',
-        icon: SiNetlify,
-        color: '#00C7B7',
-        isComponent: true,
-      },
-      {
-        name: 'Cloudflare',
-        icon: SiCloudflare,
-        color: '#F38020',
-        isComponent: true,
-      },
+    id: 'SYS-03',
+    title: 'Commerce / Ops Integrations',
+    subtitle: 'Revenue, messaging, deployment, and production surfaces',
+    tools: [
+      { code: 'STR', name: 'Stripe', role: 'Payments / checkout / billing flows', icon: SiStripe },
+      { code: 'PTY', name: 'Printify', role: 'Print-on-demand fulfillment', icon: Printer },
+      { code: 'RSD', name: 'Resend', role: 'Transactional email / notifications', icon: Mail },
+      { code: 'OPS', name: 'POS / QuickBooks', role: 'Operational reporting / business integrations', icon: ShoppingCart },
+      { code: 'GIT', name: 'GitHub', role: 'Source control / workflows / versioning', icon: SiGithub },
+      { code: 'VCL', name: 'Vercel', role: 'Deployment / edge / cron surfaces', icon: SiVercel },
+      { code: 'CFL', name: 'Cloudflare', role: 'DNS / performance / edge delivery', icon: SiCloudflare },
     ],
   },
 ];
@@ -196,6 +71,36 @@ const FEATURED_TESTIMONIAL = {
   attribution: 'HERO POINT CONSULTING',
   role: 'Agency Partner (Testimonial from Griffin H.)',
 };
+
+function ToolModule({ code, name, role, icon: Icon }) {
+  return (
+    <article className='group relative border border-neon/20 bg-panel/35 p-4 transition-colors duration-200 hover:border-neon/50 hover:bg-panel/55'>
+      <div className='pointer-events-none absolute left-0 top-0 h-4 w-4 border-l border-t border-neon/60' />
+      <div className='pointer-events-none absolute right-0 top-0 h-4 w-4 border-r border-t border-neon/25' />
+      <div className='pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-b border-l border-neon/25' />
+      <div className='pointer-events-none absolute bottom-0 right-0 top-0 h-4 w-4 border-r border-t border-neon/25' />
+
+      <div className='mb-4 flex items-start justify-between gap-3'>
+        <div className='min-w-0'>
+          <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>{code}</div>
+          <h4 className='mt-1 font-ibm text-base uppercase tracking-[0.06em] text-neon break-words'>{name}</h4>
+        </div>
+
+        <div className='flex h-10 w-10 items-center justify-center border border-neon/20 bg-terminal-dark/40'>
+          <Icon
+            size={18}
+            className='text-neon/80 transition-transform duration-200 group-hover:scale-110'
+            aria-hidden='true'
+          />
+        </div>
+      </div>
+
+      <div className='h-px w-full bg-gradient-to-r from-neon/35 to-transparent' />
+
+      <p className='mt-3 font-ocr text-[11px] leading-relaxed text-text/75'>{role}</p>
+    </article>
+  );
+}
 
 function Experience() {
   return (
@@ -223,55 +128,49 @@ function Experience() {
           </p>
         </div>
 
-        {/* Equipment roster: fixed-height rows, no layout shift */}
-        <div className='w-full max-w-6xl min-w-0 border border-neon/30 border-l-4 border-l-neon/70 bg-panel/30'>
-          <div className='border-b border-neon/30 px-3 py-2 font-ocr text-[10px] uppercase tracking-[0.2em] text-neon/60'>
-            Equipment inventory
+        {/* SYSTEM LOADOUT */}
+        <div className='w-full max-w-6xl min-w-0 border border-neon/20 bg-panel/20 p-4 md:p-5'>
+          <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_12px] opacity-10' />
+          <div className='mb-4 flex items-start justify-between gap-4 border-b border-neon/15 pb-4'>
+            <div className='min-w-0'>
+              <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>Manifest</div>
+              <h4 className='mt-1 font-ibm text-lg uppercase tracking-[0.05em] text-neon'>
+                Active systems, not just logos.
+              </h4>
+              <p className='mt-2 font-ocr text-xs leading-relaxed text-text/70 max-w-[72ch]'>
+                The modules below reflect the stack that shows up repeatedly across λstepweaver: app architecture,
+                automation, commerce, publishing, and delivery.
+              </p>
+            </div>
+            <div className='shrink-0 border border-neon/20 bg-panel/25 px-3 py-2 text-right'>
+              <div className='font-ocr text-[10px] uppercase tracking-[0.22em] text-neon/50'>Mode</div>
+              <div className='font-mono text-sm text-neon/80 whitespace-nowrap'>ACTIVE</div>
+            </div>
           </div>
-          <div className='divide-y divide-neon/20' role="list">
-            {TECH_CATEGORIES.map((category, rowIndex) => (
-              <div
-                key={category.name}
-                className={`flex min-h-[5.5rem] items-stretch ${rowIndex % 2 === 1 ? 'bg-panel/40' : ''}`}
-                role="listitem"
-              >
-                {/* Category code strip */}
-                <div
-                  className='flex w-14 shrink-0 flex-col justify-center border-r border-neon/30 px-2 font-ibm text-xs font-bold uppercase tracking-widest text-neon/90'
-                  aria-label={category.name}
-                >
-                  <span className='font-ocr text-[10px] text-neon/50'>Unit</span>
-                  <span>{CATEGORY_CODES[category.name] ?? category.name.slice(0, 2)}</span>
+
+          <div className='space-y-6'>
+            {LOADOUT_GROUPS.map((group) => (
+              <section key={group.id} className='relative border border-neon/20 bg-panel/20 p-4 md:p-5'>
+                <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_12px] opacity-10' />
+
+                <div className='relative mb-5 flex flex-col gap-3 border-b border-neon/15 pb-4 md:flex-row md:items-end md:justify-between'>
+                  <div className='min-w-0'>
+                    <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>{group.id}</div>
+                    <h4 className='mt-1 font-ibm text-xl uppercase tracking-[0.05em] text-neon break-words'>
+                      {group.title}
+                    </h4>
+                  </div>
+                  <p className='max-w-xl font-ocr text-[11px] uppercase tracking-[0.18em] text-text/55'>
+                    {group.subtitle}
+                  </p>
                 </div>
-                {/* Fixed-height tool strip: same row height regardless of item count */}
-                <div className='flex flex-1 items-center gap-2 overflow-x-auto py-2 px-3'>
-                  {category.technologies.map((tech) => {
-                    const IconComponent = tech.isComponent ? tech.icon : null;
-                    return (
-                      <div
-                        key={tech.name}
-                        className='group flex shrink-0 flex-col items-center justify-center rounded border border-neon/25 bg-panel/50 px-3 py-2 transition-colors duration-200 hover:border-neon/60 hover:bg-neon/5'
-                        style={{ minWidth: '5rem' }}
-                      >
-                        <div className='mb-0.5 flex h-8 w-8 items-center justify-center'>
-                          {tech.isComponent ? (
-                            <IconComponent
-                              size={20}
-                              color={tech.color}
-                              className='shrink-0 transition-transform duration-200 group-hover:scale-110'
-                            />
-                          ) : (
-                            <span className='text-lg'>{tech.icon}</span>
-                          )}
-                        </div>
-                        <span className='font-ocr text-[11px] text-text/80 group-hover:text-neon text-center leading-tight'>
-                          {tech.name}
-                        </span>
-                      </div>
-                    );
-                  })}
+
+                <div className='relative grid gap-4 md:grid-cols-2 xl:grid-cols-3'>
+                  {group.tools.map((tool) => (
+                    <ToolModule key={tool.code} {...tool} />
+                  ))}
                 </div>
-              </div>
+              </section>
             ))}
           </div>
         </div>
@@ -280,12 +179,18 @@ function Experience() {
         {FEATURED_TESTIMONIAL.quote && (
           <div className='mt-12 md:mt-16'>
             <div className='mb-4 md:mb-6'>
-              <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase mb-2'>Testimonial</p>
+              <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase mb-2'>COMMS / FIELD REPORT</p>
               <h3 className='text-lg md:text-xl lg:text-2xl font-ibm text-neon font-bold uppercase tracking-wider'>
-                What clients say
+                External validation
               </h3>
             </div>
-            <div className='hud-panel p-4 md:p-6 border border-neon/20 bg-panel/60'>
+            <div className='relative border border-neon/20 bg-panel/25 p-4 md:p-6'>
+              <div className='pointer-events-none absolute left-0 top-0 h-5 w-5 border-l border-t border-neon/60' />
+              <div className='pointer-events-none absolute right-0 top-0 h-5 w-5 border-r border-t border-neon/25' />
+              <div className='pointer-events-none absolute bottom-0 left-0 h-5 w-5 border-b border-l border-neon/25' />
+              <div className='pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-neon/60' />
+              <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_12px] opacity-10' />
+
               <p className='font-ocr text-sm md:text-base text-text/90 leading-relaxed mb-3'>
                 {FEATURED_TESTIMONIAL.quote}
               </p>
