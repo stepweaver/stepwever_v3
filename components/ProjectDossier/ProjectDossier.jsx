@@ -274,7 +274,7 @@
                {primaryHref ? (
                  <Link
                    href={primaryHref}
-                  className='inline-flex items-center justify-center border border-terminal-green/35 px-5 py-2.5 text-sm uppercase tracking-[0.22em] text-terminal-green transition hover:border-terminal-green/70 hover:bg-terminal-green/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+                 className='inline-flex cursor-pointer items-center justify-center border border-terminal-green/35 px-5 py-2.5 text-sm uppercase tracking-[0.22em] text-terminal-green transition hover:border-terminal-green/70 hover:bg-terminal-green/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
                  >
                    View Case Study
                  </Link>
@@ -285,7 +285,7 @@
                    href={secondaryHref}
                    target={secondaryIsExternal ? '_blank' : undefined}
                    rel={secondaryIsExternal ? 'noopener noreferrer' : undefined}
-                  className='inline-flex items-center justify-center border border-neon/25 px-5 py-2.5 text-sm uppercase tracking-[0.22em] text-neon/70 transition hover:border-neon/55 hover:bg-neon/10 hover:text-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+                 className='inline-flex cursor-pointer items-center justify-center border border-neon/25 px-5 py-2.5 text-sm uppercase tracking-[0.22em] text-neon/70 transition hover:border-neon/55 hover:bg-neon/10 hover:text-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
                  >
                    {secondaryIsExternal ? 'Open' : 'Open Module'}
                  </Link>
@@ -297,7 +297,7 @@
                  type='button'
                  onClick={goPrev}
                  aria-label='Previous project'
-                className='inline-flex h-10 min-w-10 items-center justify-center border border-terminal-green/20 px-3 text-xs uppercase tracking-[0.24em] text-terminal-dimmed transition hover:border-terminal-green/50 hover:bg-terminal-green/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+               className='inline-flex h-10 min-w-10 cursor-pointer items-center justify-center border border-terminal-green/20 px-3 text-xs uppercase tracking-[0.24em] text-terminal-dimmed transition hover:border-terminal-green/50 hover:bg-terminal-green/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
                >
                 &lt;
                </button>
@@ -305,7 +305,7 @@
                  type='button'
                  onClick={goNext}
                  aria-label='Next project'
-                className='inline-flex h-10 min-w-10 items-center justify-center border border-terminal-green/20 px-3 text-xs uppercase tracking-[0.24em] text-terminal-dimmed transition hover:border-terminal-green/50 hover:bg-terminal-green/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+               className='inline-flex h-10 min-w-10 cursor-pointer items-center justify-center border border-terminal-green/20 px-3 text-xs uppercase tracking-[0.24em] text-terminal-dimmed transition hover:border-terminal-green/50 hover:bg-terminal-green/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
                >
                 &gt;
                </button>
@@ -327,7 +327,7 @@
                aria-label={`Select ${label}`}
                aria-current={isActive ? 'true' : undefined}
                className={[
-                'px-3 py-2 text-[10px] sm:text-xs uppercase tracking-[0.22em] transition font-ocr border',
+               'cursor-pointer px-3 py-2 text-[10px] sm:text-xs uppercase tracking-[0.22em] transition font-ocr border',
                  prefersReducedMotion ? '' : 'motion-safe:duration-200',
                  isActive
                   ? 'border-terminal-green/40 bg-terminal-green/10 text-terminal-green'
