@@ -98,19 +98,21 @@ function HeroOperatorCard() {
         <div className='pt-3 flex flex-wrap gap-2'>
           <Link
             href='/resume'
-            className='inline-flex cursor-pointer items-center justify-center border border-terminal-green/25 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-green hover:border-terminal-green/60 hover:bg-terminal-green/10'
+            className='inline-flex cursor-pointer items-center justify-center border border-terminal-green/25 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-green transition-colors hover:border-terminal-green/60 hover:bg-terminal-green/10'
           >
             RESUME
           </Link>
+
           <Link
             href='/contact'
-            className='inline-flex cursor-pointer items-center justify-center border border-neon/25 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-neon/80 hover:border-neon/55 hover:bg-neon/10'
+            className='inline-flex cursor-pointer items-center justify-center border border-neon/25 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-neon/80 transition-colors hover:border-neon/55 hover:bg-neon/10 hover:text-neon'
           >
             CONTACT
           </Link>
+
           <Link
             href='/terminal'
-            className='inline-flex cursor-pointer items-center justify-center border border-neon/15 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-dimmed hover:border-neon/40 hover:text-neon/80'
+            className='inline-flex cursor-pointer items-center justify-center border border-neon/15 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-dimmed transition-colors hover:border-neon/40 hover:bg-neon/10 hover:text-neon/80'
           >
             TERMINAL
           </Link>
