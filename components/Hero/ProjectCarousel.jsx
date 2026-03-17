@@ -529,6 +529,9 @@ function ProjectCarousel() {
                         description={project.description}
                         link={project.link}
                         imageUrl={project.imageUrl}
+                        builtFor={project.builtFor}
+                        solved={project.solved}
+                        delivered={project.delivered}
                         tags={project.tags}
                         keywords={project.keywords}
                         actions={project.actions}
@@ -545,6 +548,9 @@ function ProjectCarousel() {
                       description={project.description}
                       link={project.link}
                       imageUrl={project.imageUrl}
+                      builtFor={project.builtFor}
+                      solved={project.solved}
+                      delivered={project.delivered}
                       tags={project.tags}
                       keywords={project.keywords}
                       actions={project.actions}
@@ -668,6 +674,9 @@ function ProjectCarousel() {
                         description={project.description}
                         link={project.link}
                         imageUrl={project.imageUrl}
+                        builtFor={project.builtFor}
+                        solved={project.solved}
+                        delivered={project.delivered}
                         tags={project.tags}
                         keywords={project.keywords}
                         actions={project.actions}
@@ -684,6 +693,9 @@ function ProjectCarousel() {
                       description={project.description}
                       link={project.link}
                       imageUrl={project.imageUrl}
+                      builtFor={project.builtFor}
+                      solved={project.solved}
+                      delivered={project.delivered}
                       tags={project.tags}
                       keywords={project.keywords}
                       actions={project.actions}

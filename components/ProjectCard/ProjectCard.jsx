@@ -8,6 +8,9 @@ const ProjectCard = memo(function ProjectCard({
   description,
   link,
   imageUrl,
+  builtFor,
+  solved,
+  delivered,
   tags = [],
   keywords = [],
   actions = [],
@@ -17,6 +20,12 @@ const ProjectCard = memo(function ProjectCard({
   comingSoon = false,
   isDemo = false,
 }) {
+  const proofLines = [
+    builtFor ? `Built for ${builtFor}` : null,
+    solved ? `Solved ${solved}` : null,
+    delivered ? `Delivered ${delivered}` : null,
+  ].filter(Boolean);
+
   const cardContent = (
     <HUDPanel
       title={title}
@@ -96,6 +105,27 @@ const ProjectCard = memo(function ProjectCard({
         <p className='text-sm text-text/80 font-ibm mb-4'>
           {description}
         </p>
+      )}
+
+      {proofLines.length > 0 && (
+        <div className='mb-4'>
+          <div className='text-xs text-neon/70 font-ocr uppercase tracking-wider mb-2'>
+            PROOF:
+          </div>
+          <ul className='space-y-1.5'>
+            {proofLines.slice(0, 4).map((line, index) => (
+              <li
+                key={index}
+                className='text-xs text-text/75 font-ibm flex items-start'
+              >
+                <span className='text-neon mr-2 flex-shrink-0 mt-0.5'>▶</span>
+                <span className='min-w-0 flex-1 whitespace-normal break-words'>
+                  {line}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {actions.length > 0 && (

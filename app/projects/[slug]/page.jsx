@@ -292,6 +292,19 @@ export default function ProjectPage({ params }) {
     ...(project.securityFeatures || []),
   ];
 
+  const contextText =
+    project.context ||
+    project.users ||
+    project.overview ||
+    (project.isService ? project.serviceIntro : null) ||
+    null;
+
+  const improveNextItems =
+    project.improveNext ||
+    project.plannedFeatures ||
+    project.userExperienceFindings?.areasForImprovement ||
+    [];
+
   return (
     <ProjectPageLayout project={project} slug={slug}>
       {/* Hero / live component section */}
@@ -356,81 +369,89 @@ export default function ProjectPage({ params }) {
           </span>
         )}
 
-            {/* Overview */}
-            {project.overview && (
-              <ProjectSection title='Overview'>
-                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
-                  {project.overview}
-                </p>
-              </ProjectSection>
-            )}
+        {/* ── Case Study Spine ── */}
 
-            {/* Service Intro */}
-            {project.isService && project.serviceIntro && (
-              <ProjectSection title='About This Service'>
-                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
-                  {project.serviceIntro}
-                </p>
-              </ProjectSection>
-            )}
+        {/* 1) Problem */}
+        {project.problem && (
+          <ProjectSection title={project.isService ? 'Problem' : 'Problem'}>
+            <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
+              {project.problem}
+            </p>
+          </ProjectSection>
+        )}
 
-            {/* The Problem / Typical Challenges */}
-            {project.problem && (
-              <ProjectSection title={project.isService ? 'Typical Challenges' : 'The Problem'}>
-                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
-                  {project.problem}
-                </p>
-              </ProjectSection>
-            )}
-
-            {/* My Role / What I Offer */}
+        {/* 2) Context / users */}
+        {contextText && (
+          <ProjectSection title='Context / users'>
+            <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
+              {contextText}
+            </p>
             {project.role && (
-              <ProjectSection title={project.isService ? 'What I Offer' : 'My Role'}>
+              <div className='mt-6'>
+                <h3 className='font-ocr text-xs tracking-[0.15em] text-neon/50 uppercase mb-3'>
+                  My role
+                </h3>
                 <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
                   {project.role}
                 </p>
-              </ProjectSection>
+              </div>
             )}
+          </ProjectSection>
+        )}
 
-            {/* The Solution / Deliverables */}
-            {(project.solution || project.features) && (
-              <ProjectSection title={project.isService ? 'Deliverables' : 'The Solution'}>
-                {project.solution && (
-                  <p className='font-ocr text-text text-base md:text-lg leading-relaxed mb-6'>
-                    {project.solution}
-                  </p>
-                )}
-                <SectionList items={project.features} icon={CheckCircle} />
-              </ProjectSection>
+        {/* 3) Solution */}
+        {(project.solution || project.features) && (
+          <ProjectSection title={project.isService ? 'Solution' : 'Solution'}>
+            {project.solution && (
+              <p className='font-ocr text-text text-base md:text-lg leading-relaxed mb-6'>
+                {project.solution}
+              </p>
             )}
+            <SectionList items={project.features} icon={CheckCircle} />
+          </ProjectSection>
+        )}
 
-            {/* The Tech */}
-            {project.techStack && (
-              <ProjectSection title='The Tech'>
-                <div className={project.projectStructure ? 'mb-8' : ''}>
-                  <TechStackGrid techStack={project.techStack} />
+        {/* 4) Stack */}
+        {project.techStack && (
+          <ProjectSection title='Stack'>
+            <div className={project.projectStructure ? 'mb-8' : ''}>
+              <TechStackGrid techStack={project.techStack} />
+            </div>
+            {project.projectStructure && (
+              <div>
+                <h3 className='font-ocr text-xs tracking-[0.15em] text-neon/50 uppercase mb-3'>
+                  Architecture
+                </h3>
+                <div className='bg-panel/50 p-6 border border-neon/20 overflow-hidden'>
+                  <pre className='font-mono text-text text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap'>
+                    {project.projectStructure}
+                  </pre>
                 </div>
-                {project.projectStructure && (
-                  <div>
-                    <h3 className='font-ocr text-xs tracking-[0.15em] text-neon/50 uppercase mb-3'>
-                      Architecture
-                    </h3>
-                    <div className='bg-panel/50 p-6 border border-neon/20 overflow-hidden'>
-                      <pre className='font-mono text-text text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap'>
-                        {project.projectStructure}
-                      </pre>
-                    </div>
-                  </div>
-                )}
-              </ProjectSection>
+              </div>
             )}
+          </ProjectSection>
+        )}
 
-            {/* The Outcome / Benefits You Can Expect */}
-            {project.outcome?.length > 0 && (
-              <ProjectSection title={project.isService ? 'Benefits You Can Expect' : 'The Outcome'}>
-                <SectionList items={project.outcome} icon={CheckCircle} />
-              </ProjectSection>
-            )}
+        {/* 5) Constraints */}
+        {project.challenges?.length > 0 && (
+          <ProjectSection title='Constraints'>
+            <SectionList items={project.challenges} icon={Code} />
+          </ProjectSection>
+        )}
+
+        {/* 6) Outcome */}
+        {project.outcome?.length > 0 && (
+          <ProjectSection title='Outcome'>
+            <SectionList items={project.outcome} icon={CheckCircle} />
+          </ProjectSection>
+        )}
+
+        {/* 7) What I'd improve next */}
+        {improveNextItems?.length > 0 && (
+          <ProjectSection title="What I'd improve next">
+            <SectionList items={improveNextItems} icon={Code} />
+          </ProjectSection>
+        )}
 
             {/* Example Use Cases (Services) */}
             {project.isService && project.exampleUseCases?.length > 0 && (
@@ -769,7 +790,7 @@ export default function ProjectPage({ params }) {
             )}
 
             {/* Challenges / Decisions */}
-            {(project.challenges && project.challenges.length > 0) && (
+            {(project.challenges && project.challenges.length > 0) && false && (
               <ProjectSection title='Challenges & Decisions'>
                 <SectionList items={project.challenges} icon={Code} />
               </ProjectSection>

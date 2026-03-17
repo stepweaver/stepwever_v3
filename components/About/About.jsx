@@ -25,7 +25,7 @@ function About() {
             I'm Stephen Weaver, a full-stack developer with an unconventional
             path. I've worn a lot of hats: Air Force linguist, restaurant
             manager, business analyst, and now a developer who loves building
-            things that actually work.
+            things that reduce friction, improve operations, and hold up in the real world.
           </p>
           <p className='text-base md:text-lg leading-relaxed'>My journey so far:</p>
           <ul className='space-y-3 text-base md:text-lg leading-relaxed'>

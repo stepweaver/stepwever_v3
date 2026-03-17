@@ -4,6 +4,7 @@ import { memo } from 'react';
 import dynamic from 'next/dynamic';
 import HeroOperatorCard from './HeroOperatorCard';
 import TerminalLink from './TerminalLink';
+import WhyStephen from '@/components/WhyStephen/WhyStephen';
 
 const About = dynamic(() => import('@/components/About/About'), {
   loading: () => <div className='min-h-[200px]' />,
@@ -44,7 +45,23 @@ function Hero() {
         <div className='mt-6 sm:mt-8 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] px-2 sm:px-4 md:px-0'>
           <TerminalLink />
         </div>
-        <div className='mt-12 sm:mt-16 w-full px-2 sm:px-4 md:px-0'>
+        <div className='mt-8 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] px-2 sm:px-4 md:px-0'>
+          <WhyStephen />
+        </div>
+        <div className='mt-12 sm:mt-16 w-full px-2 sm:px-4 md:px-0' id='projects'>
+          <div className='mb-6 sm:mb-8 flex items-end justify-between gap-4'>
+            <div className='min-w-0'>
+              <div className='text-[10px] sm:text-xs tracking-[0.28em] text-neon/60 font-ocr uppercase'>
+                Selected work
+              </div>
+              <h2 className='mt-2 text-xl sm:text-2xl md:text-3xl font-ibm text-terminal-green leading-tight'>
+                Projects
+              </h2>
+              <p className='mt-2 text-sm sm:text-base text-terminal-dimmed max-w-[68ch]'>
+                A few builds of my builds.
+              </p>
+            </div>
+          </div>
           <ProjectCarousel />
         </div>
       </div>

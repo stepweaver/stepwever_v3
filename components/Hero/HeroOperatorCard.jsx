@@ -51,7 +51,7 @@ function HeroOperatorCard() {
         <div className='w-full min-w-0'>
           <div className='space-y-3'>
             <p className='font-ibm text-text text-sm leading-relaxed'>
-              Builds for the web; translates business requirements into technical solutions. Known to leverage automation and convince machines to do his bidding.
+              Builds web apps, automations, and AI-enabled tools that reduce friction and improve operations. Translates business requirements into usable systems. Known to leverage automation and convince machines to do his bidding.
             </p>
           </div>
           <ul className='flex flex-wrap gap-2 mt-4 list-none' aria-label="Characteristics">

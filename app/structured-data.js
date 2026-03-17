@@ -5,9 +5,9 @@ export default function generateStructuredData() {
   const websiteData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Stephen Weaver - Developer Portfolio",
+    "name": "Stephen Weaver - λstepweaver",
     "url": baseUrl,
-    "description": "Full-stack developer portfolio showcasing web development, automation, and software projects. Built with Next.js, React, and modern web technologies.",
+    "description": "Business-minded builder focused on web apps, automation, and AI-enabled tools that reduce friction and improve operations.",
     "author": {
       "@type": "Person",
       "name": "Stephen Weaver"
@@ -28,8 +28,8 @@ export default function generateStructuredData() {
     "@type": "Person",
     "name": "Stephen Weaver",
     "alternateName": "Yankee Samurai",
-    "jobTitle": "Full-Stack Developer",
-    "description": "Full-stack developer with a background in Air Force intelligence, business analysis, and software development. Passionate about building web applications and automation solutions.",
+    "jobTitle": "Full-Stack / Automation / AI",
+    "description": "Business-minded builder and former U.S. Air Force linguist (Airborne Cryptologic Linguist) focused on web apps, automation, and AI-enabled tools that turn messy workflows into usable systems.",
     "url": baseUrl,
     "image": `${baseUrl}/images/pixarMe.png`,
     "sameAs": [
@@ -38,17 +38,17 @@ export default function generateStructuredData() {
     ],
     "email": "stephen@stepweaver.dev",
     "knowsAbout": [
-      "Web Development",
-      "React",
-      "Next.js",
-      "Node.js",
-      "TypeScript",
-      "JavaScript",
-      "Python",
-      "PostgreSQL",
+      "Web applications",
       "Automation",
-      "API Development",
-      "Full-Stack Development"
+      "AI workflows",
+      "Systems design",
+      "Operational tooling",
+      "Business analysis",
+      "DevOps",
+      "Next.js",
+      "React",
+      "JavaScript",
+      "PostgreSQL"
     ],
     "hasOccupation": {
       "@type": "Occupation",
@@ -57,7 +57,7 @@ export default function generateStructuredData() {
         "@type": "Country",
         "name": "United States"
       },
-      "skills": "React, Next.js, Node.js, TypeScript, PostgreSQL, API Development"
+      "skills": "Business analysis, systems thinking, web applications, automation, AI workflows"
     }
   };
 
