@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState, useEffect } from 'react';
+import { memo } from 'react';
 import {
   SiReact,
   SiNextdotjs,
@@ -32,7 +32,15 @@ import {
   Server,
 } from 'lucide-react';
 
-// 1) Data lives outside the component
+// Category codes for military roster style
+const CATEGORY_CODES = {
+  'Front-End': 'FE',
+  'Back-End / APIs': 'BE',
+  'AI & Automation': 'AI',
+  'Commerce & Integrations': 'CI',
+  'DevOps & Delivery': 'DO',
+};
+
 const TECH_CATEGORIES = [
   {
     name: 'Front-End',
@@ -184,36 +192,19 @@ const TECH_CATEGORIES = [
 
 const FEATURED_TESTIMONIAL = {
   quote:
-    'Stephen has a great tenacity to solve problems in the world of technical development and engineering. We were fortunate enough to work alongside him multiple times, in which he delivered the dependable digital foundations for our Clients. With each project, his work significantly improved and become more operational. For those needing a digital facelift — it\'s not your job to understand how it\'s done. Instead, focus on finding someone you trust to help craft your vision inside your digital landscape. Stephen is one of those someones. God Bless.',
+    'Stephen has a great tenacity to solve problems in the world of technical development and engineering. We were fortunate enough to work alongside him multiple times, in which he delivered the dependable digital foundations for our Clients. With each project, his work significantly improved and become more operational. For those needing a digital facelift - it\'s not your job to understand how it\'s done. Instead, focus on finding someone you trust to help craft your vision inside your digital landscape. Stephen is one of those someones. God Bless.',
   attribution: 'HERO POINT CONSULTING',
   role: 'Agency Partner (Testimonial from Griffin H.)',
 };
 
 function Experience() {
-  const [currentCategory, setCurrentCategory] = useState(0);
-  const [userInteracted, setUserInteracted] = useState(false);
-
-  const handleTabClick = (index) => {
-    setCurrentCategory(index);
-    setUserInteracted(true);
-  };
-
-  useEffect(() => {
-    if (!userInteracted) {
-      const interval = setInterval(() => {
-        setCurrentCategory((prev) => (prev + 1) % TECH_CATEGORIES.length);
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, [userInteracted]);
-
   return (
     <section className='relative z-30 py-20 overflow-x-hidden'>
       {/* Same outer padding as Hero for consistency with BACKGROUND section */}
       <div className='w-full px-1 sm:px-2 md:px-3 lg:px-4 xl:px-6 2xl:px-8'>
         {/* Right column: aligns with Hero right column, same internal padding as About (p-6) */}
         <div className='w-full px-2 sm:px-4 md:p-6 min-w-0 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] lg:w-[calc(100%-390px-2.5rem)] xl:w-[calc(100%-390px-3rem)]'>
-        {/* Section ID tag — unbounded, no panel wrapper */}
+        {/* Section ID - military roster style */}
         <div className='mb-6 flex items-start justify-between gap-4'>
           <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>LOADOUT</p>
           <div className='text-right text-xs text-muted font-mono shrink-0'>
@@ -227,79 +218,60 @@ function Experience() {
             Modern tools, battle-tested solutions.
           </h3>
           <p className='text-text/90 font-ocr text-base md:text-lg leading-relaxed'>
-            8+ years bridging business and tech. From Air Force intelligence
-            to AI-native development, I've learned that the right tools, and
+            8+ years bridging business and tech. I've learned that the right tools, and
             knowing when to use them, make all the difference.
           </p>
         </div>
 
-        <div className='w-full max-w-6xl min-w-0'>
-          <nav className='flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8 justify-center md:justify-start' aria-label="Tech categories">
-            {TECH_CATEGORIES.map((category, index) => (
-              <button
+        {/* Equipment roster: fixed-height rows, no layout shift */}
+        <div className='w-full max-w-6xl min-w-0 border border-neon/30 border-l-4 border-l-neon/70 bg-panel/30'>
+          <div className='border-b border-neon/30 px-3 py-2 font-ocr text-[10px] uppercase tracking-[0.2em] text-neon/60'>
+            Equipment inventory
+          </div>
+          <div className='divide-y divide-neon/20' role="list">
+            {TECH_CATEGORIES.map((category, rowIndex) => (
+              <div
                 key={category.name}
-                onClick={() => handleTabClick(index)}
-                className={`px-2 md:px-3 py-1 md:py-2 font-ibm text-sm md:text-base font-bold uppercase tracking-wider border-2 transition-all duration-300 cursor-pointer rounded-sm ${
-                  currentCategory === index
-                    ? 'border-neon text-neon bg-neon/10'
-                    : 'border-neon/30 text-text/80 hover:border-neon hover:text-neon hover:bg-neon/5'
-                }`}
+                className={`flex min-h-[5.5rem] items-stretch ${rowIndex % 2 === 1 ? 'bg-panel/40' : ''}`}
+                role="listitem"
               >
-                {category.name}
-              </button>
-            ))}
-          </nav>
-
-          {/* Current category header */}
-          <div className='mb-6 md:mb-8 text-center md:text-left'>
-            <h3 className='text-xl md:text-2xl lg:text-3xl font-ibm text-neon font-bold uppercase tracking-wider'>
-              {TECH_CATEGORIES[currentCategory].name}
-            </h3>
-          </div>
-
-          {/* Tech cards — single row for current category */}
-          <div className='flex flex-wrap justify-center md:justify-start gap-4'>
-            {TECH_CATEGORIES[currentCategory].technologies.map((tech, index) => {
-              const IconComponent = tech.isComponent ? tech.icon : null;
-              return (
+                {/* Category code strip */}
                 <div
-                  key={tech.name}
-                  className='group flex flex-col items-center justify-center p-3 border border-neon/30 rounded-sm bg-panel/50 transition-all duration-500 hover:border-neon hover:bg-neon/10 min-w-24 w-auto h-auto min-h-24 hover:-translate-y-0.5'
-                  style={{ animationDelay: `${index * 50}ms` }}
+                  className='flex w-14 shrink-0 flex-col justify-center border-r border-neon/30 px-2 font-ibm text-xs font-bold uppercase tracking-widest text-neon/90'
+                  aria-label={category.name}
                 >
-                  <div className='mb-1 flex items-center justify-center w-12 h-12'>
-                    {tech.isComponent ? (
-                      <IconComponent
-                        size={24}
-                        color={tech.color}
-                        className='transition-all duration-300 hover:scale-110'
-                      />
-                    ) : (
-                      <span className='text-2xl'>{tech.icon}</span>
-                    )}
-                  </div>
-                  <span className='font-ocr text-text/80 group-hover:text-neon text-sm sm:text-base text-center leading-tight transition-all duration-300'>
-                    {tech.name}
-                  </span>
+                  <span className='font-ocr text-[10px] text-neon/50'>Unit</span>
+                  <span>{CATEGORY_CODES[category.name] ?? category.name.slice(0, 2)}</span>
                 </div>
-              );
-            })}
-          </div>
-
-          <div className='flex justify-center md:justify-start mt-8 gap-3' role="tablist" aria-label="Category indicators">
-            {TECH_CATEGORIES.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => handleTabClick(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentCategory === index
-                    ? 'bg-neon scale-125'
-                    : 'bg-neon/30 hover:bg-neon/50 hover:scale-110'
-                }`}
-                aria-label={`Show ${TECH_CATEGORIES[index].name}`}
-                aria-selected={currentCategory === index}
-                role="tab"
-              />
+                {/* Fixed-height tool strip: same row height regardless of item count */}
+                <div className='flex flex-1 items-center gap-2 overflow-x-auto py-2 px-3'>
+                  {category.technologies.map((tech) => {
+                    const IconComponent = tech.isComponent ? tech.icon : null;
+                    return (
+                      <div
+                        key={tech.name}
+                        className='group flex shrink-0 flex-col items-center justify-center rounded border border-neon/25 bg-panel/50 px-3 py-2 transition-colors duration-200 hover:border-neon/60 hover:bg-neon/5'
+                        style={{ minWidth: '5rem' }}
+                      >
+                        <div className='mb-0.5 flex h-8 w-8 items-center justify-center'>
+                          {tech.isComponent ? (
+                            <IconComponent
+                              size={20}
+                              color={tech.color}
+                              className='shrink-0 transition-transform duration-200 group-hover:scale-110'
+                            />
+                          ) : (
+                            <span className='text-lg'>{tech.icon}</span>
+                          )}
+                        </div>
+                        <span className='font-ocr text-[11px] text-text/80 group-hover:text-neon text-center leading-tight'>
+                          {tech.name}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -307,6 +279,12 @@ function Experience() {
         {/* Optional homepage testimonial excerpt */}
         {FEATURED_TESTIMONIAL.quote && (
           <div className='mt-12 md:mt-16'>
+            <div className='mb-4 md:mb-6'>
+              <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase mb-2'>Testimonial</p>
+              <h3 className='text-lg md:text-xl lg:text-2xl font-ibm text-neon font-bold uppercase tracking-wider'>
+                What clients say
+              </h3>
+            </div>
             <div className='hud-panel p-4 md:p-6 border border-neon/20 bg-panel/60'>
               <p className='font-ocr text-sm md:text-base text-text/90 leading-relaxed mb-3'>
                 {FEATURED_TESTIMONIAL.quote}

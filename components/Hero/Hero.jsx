@@ -34,7 +34,7 @@ function Hero() {
             <HeroOperatorCard />
           </div>
 
-          {/* About content — same row height as left on desktop so bottom borders align */}
+          {/* About content - same row height as left on desktop so bottom borders align */}
           <div className='min-w-0 flex flex-col h-full min-h-0'>
             <About />
           </div>

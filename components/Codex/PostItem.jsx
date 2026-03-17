@@ -54,7 +54,7 @@ export default function PostItem({ post, index, formatDate, onHashtagClick }) {
           </p>
         )}
 
-        {/* Hashtags — the only bordered elements */}
+        {/* Hashtags - the only bordered elements */}
         {post.hashtags?.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {post.hashtags.map((tag) => (

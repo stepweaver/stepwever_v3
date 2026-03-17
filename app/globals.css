@@ -154,7 +154,7 @@
   --terminal-strong-glow: 0 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
   --crt-glow: 0 8px 16px rgba(0, 0, 0, 0.12);
 
-  /* Glitch Effect Colors — dark shadows */
+  /* Glitch Effect Colors -  dark shadows */
   --theme-glitch-color: #9900ff;
   --theme-glitch-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
 
@@ -204,7 +204,7 @@
     0 0 10px rgba(255, 255, 255, 0.4);
   --crt-glow: 0 0 30px rgba(255, 255, 255, 0.15);
 
-  /* Glitch Effect Colors — white */
+  /* Glitch Effect Colors - white */
   --theme-glitch-color: #ffffff;
   --theme-glitch-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
     0 0 10px rgba(255, 255, 255, 0.4);
@@ -255,7 +255,7 @@
     0 0 10px rgba(0, 0, 0, 0.4);
   --crt-glow: 0 0 30px rgba(0, 0, 0, 0.15);
 
-  /* Glitch Effect Colors — black */
+  /* Glitch Effect Colors - black */
   --theme-glitch-color: #000000;
   --theme-glitch-shadow: 0 0 5px rgba(0, 0, 0, 0.8),
     0 0 10px rgba(0, 0, 0, 0.4);
@@ -306,7 +306,7 @@
     0 0 10px rgba(85, 255, 255, 0.4);
   --crt-glow: 0 0 30px rgba(85, 255, 255, 0.15);
 
-  /* Glitch Effect Colors — bright cyan/blue */
+  /* Glitch Effect Colors - bright cyan/blue */
   --theme-glitch-color: #55ffff;
   --theme-glitch-shadow: 0 0 5px rgba(85, 255, 255, 0.8),
     0 0 10px rgba(85, 255, 255, 0.4);
@@ -357,7 +357,7 @@
     0 0 10px rgba(51, 255, 51, 0.4);
   --crt-glow: 0 0 30px rgba(51, 255, 51, 0.15);
 
-  /* Glitch Effect Colors — soft lime */
+  /* Glitch Effect Colors - soft lime */
   --theme-glitch-color: #33ff33;
   --theme-glitch-shadow: 0 0 5px rgba(51, 255, 51, 0.8),
     0 0 10px rgba(51, 255, 51, 0.4);
@@ -379,7 +379,7 @@
   --color-terminal-dark: #40318d;
   --color-terminal-light: #4a3b9f;
   --color-terminal-border: #5a4bbf;
-  /* C64 classic blue palette — text brightened for WCAG AA contrast */
+  /* C64 classic blue palette - text brightened for WCAG AA contrast */
   --color-terminal-green: #a3e6ff;
   --color-terminal-text: #b0a8e8;
   --color-terminal-muted: #7c70da;
@@ -408,7 +408,7 @@
     0 0 10px rgba(163, 230, 255, 0.4);
   --crt-glow: 0 0 30px rgba(163, 230, 255, 0.15);
 
-  /* Glitch Effect Colors — light blue */
+  /* Glitch Effect Colors - light blue */
   --theme-glitch-color: #a3e6ff;
   --theme-glitch-shadow: 0 0 5px rgba(163, 230, 255, 0.8),
     0 0 10px rgba(163, 230, 255, 0.4);
@@ -459,7 +459,7 @@
     0 0 10px rgba(255, 176, 0, 0.4);
   --crt-glow: 0 0 30px rgba(255, 176, 0, 0.15);
 
-  /* Glitch Effect Colors — warm amber */
+  /* Glitch Effect Colors - warm amber */
   --theme-glitch-color: #ff9900;
   --theme-glitch-shadow: 0 0 5px rgba(255, 153, 0, 0.8),
     0 0 10px rgba(255, 153, 0, 0.4);
@@ -510,7 +510,7 @@
     0 0 10px rgba(255, 20, 147, 0.4);
   --crt-glow: 0 0 30px rgba(255, 20, 147, 0.15);
 
-  /* Glitch Effect Colors — hot pink */
+  /* Glitch Effect Colors - hot pink */
   --theme-glitch-color: #ff1493;
   --theme-glitch-shadow: 0 0 5px rgba(255, 20, 147, 0.8),
     0 0 10px rgba(255, 20, 147, 0.4);
@@ -561,7 +561,7 @@
     0 0 10px rgba(189, 147, 249, 0.4);
   --crt-glow: 0 0 30px rgba(189, 147, 249, 0.15);
 
-  /* Glitch Effect Colors — purple */
+  /* Glitch Effect Colors - purple */
   --theme-glitch-color: #bd93f9;
   --theme-glitch-shadow: 0 0 5px rgba(189, 147, 249, 0.8),
     0 0 10px rgba(189, 147, 249, 0.4);
@@ -583,7 +583,7 @@
   --color-terminal-dark: #002b36;
   --color-terminal-light: #073642;
   --color-terminal-border: #0f4d5c;
-  /* Solarized colors — text brightened for WCAG AA contrast */
+  /* Solarized colors - text brightened for WCAG AA contrast */
   --color-terminal-green: #859900;
   --color-terminal-text: #93a1a1;
   --color-terminal-muted: #657b83;
@@ -612,7 +612,7 @@
     0 0 10px rgba(42, 161, 152, 0.4);
   --crt-glow: 0 0 30px rgba(42, 161, 152, 0.15);
 
-  /* Glitch Effect Colors — cyan/teal */
+  /* Glitch Effect Colors - cyan/teal */
   --theme-glitch-color: #2aa198;
   --theme-glitch-shadow: 0 0 5px rgba(42, 161, 152, 0.8),
     0 0 10px rgba(42, 161, 152, 0.4);
@@ -663,7 +663,7 @@
     0 0 10px rgba(136, 192, 208, 0.4);
   --crt-glow: 0 0 30px rgba(136, 192, 208, 0.15);
 
-  /* Glitch Effect Colors — frost blue */
+  /* Glitch Effect Colors - frost blue */
   --theme-glitch-color: #88c0d0;
   --theme-glitch-shadow: 0 0 5px rgba(136, 192, 208, 0.8),
     0 0 10px rgba(136, 192, 208, 0.4);
@@ -714,7 +714,7 @@
     0 0 10px rgba(255, 198, 0, 0.4);
   --crt-glow: 0 0 30px rgba(255, 198, 0, 0.15);
 
-  /* Glitch Effect Colors — bright yellow */
+  /* Glitch Effect Colors - bright yellow */
   --theme-glitch-color: #ffc600;
   --theme-glitch-shadow: 0 0 5px rgba(255, 198, 0, 0.8),
     0 0 10px rgba(255, 198, 0, 0.4);

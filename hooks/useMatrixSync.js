@@ -12,7 +12,7 @@ const randomHex = (len = 4) =>
   ).join('');
 
 /**
- * Matrix uplink terminal animation — simulates a construct search that
+ * Matrix uplink terminal animation - simulates a construct search that
  * repeatedly fails because the target user is unplugged.
  *
  * @param {Object} options

@@ -31,7 +31,7 @@ const MIN_HUMAN_MS = 3_000; // 3 seconds minimum for a real human
 function checkTiming(body) {
   const loadedAt = Number(body?._t);
   if (!loadedAt || Number.isNaN(loadedAt)) {
-    // Missing timestamp — treat as suspicious but not outright blocked.
+    // Missing timestamp - treat as suspicious but not outright blocked.
     // Bots that don't run JS won't send this field at all.
     return { isBot: true, reason: 'missing_timestamp' };
   }

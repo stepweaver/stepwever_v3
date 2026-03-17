@@ -97,7 +97,7 @@ export default function ContactForm() {
           onSubmit={handleSubmit}
           aria-label='Contact form'
         >
-          {/* Honeypot — invisible to humans, traps bots */}
+          {/* Honeypot - invisible to humans, traps bots */}
           <div aria-hidden='true' className='absolute -left-[9999px] opacity-0 h-0 overflow-hidden'>
             <label htmlFor='_hp_website'>Website</label>
             <input {...honeypotProps} id='_hp_website' />
