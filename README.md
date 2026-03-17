@@ -1,6 +1,13 @@
-# stepweaver v3
+# λstepweaver portfolio & terminal
 
-Practical transformations, powered by code.
+Practical transformations, powered by code — presented as a terminal-first portfolio with embedded case studies, utilities, and services.
+
+## Key surfaces
+
+- Terminal UI at `/terminal` with command-driven navigation, tools, and chat
+- λlambda LLM agent for portfolio-native AI chat (terminal `chat <message>` and web chat surfaces)
+- Project detail system at `/projects/[slug]` for case studies like the Silent Auction Platform, I AM [RESIST], and service offerings
+- Embedded utilities such as the RPG Dice Roller and Neon profile card demo
 
 ## Features
 
@@ -12,21 +19,16 @@ Practical transformations, powered by code.
 - λlambda LLM agent for portfolio-native AI chat
 - Responsive design
 
-## Featured Project: λlambda LLM Agent
+## Flagship systems
 
-λlambda is the branded LLM agent built into this portfolio. It acts as Stephen Weaver's AI advocate and thinking partner, helping visitors understand his background, projects, and working style through conversational UI across both the website and the terminal.
-
-Instead of behaving like a generic chatbot, λlambda is wired directly into the portfolio experience: the same protected `/api/chat` route powers the website chat surfaces and the terminal `chat <message>` command, with channel-aware behavior for each surface. Under the hood, the agent prefers Groq for fast, free usage and falls back to OpenAI when configured.
-
-- Answers questions about Stephen's experience, skills, and projects
-- Routes visitors to relevant case studies and proof points
-- Extends the terminal `chat <message>` command with a branded AI experience
-- Uses Groq by default, with OpenAI as a fallback provider
+- **λlambda LLM Chat Agent**: Branded portfolio-native chat agent that shares a protected `/api/chat` route across web chat and the terminal, helping visitors ask questions about experience and projects and routing them to relevant case studies.
+- **Silent Auction Platform**: Next.js + Supabase auction platform built and donated for a school PTO fundraiser, with real-time bidding, QR item access, donor tools, and organizer closeout workflows.
+- **I AM [RESIST]**: Next.js publishing and merch system that ties Notion-powered editorial content to a Stripe/Printify shop, designed as a small activism publication rather than a simple blog.
 
 ### Related docs
 
 - AI setup: [docs/AI_CHAT_SETUP.md](./docs/AI_CHAT_SETUP.md)
-- Case study: visit `/projects/llambda-llm-agent` in the running app
+- λlambda case study: visit `/projects/llambda-llm-agent` in the running app
 
 ## Getting Started
 

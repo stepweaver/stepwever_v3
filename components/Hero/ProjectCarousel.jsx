@@ -45,7 +45,7 @@ function ProjectCarousel() {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % CAROUSEL_PROJECTS.length);
-    setTimeout(() => setIsTransitioning(false), 600);
+    setTimeout(() => setIsTransitioning(false), 350);
   }, [isTransitioning]);
 
   const prevProject = useCallback(() => {
@@ -54,7 +54,7 @@ function ProjectCarousel() {
     setCurrentIndex(
       (prevIndex) => (prevIndex - 1 + CAROUSEL_PROJECTS.length) % CAROUSEL_PROJECTS.length
     );
-    setTimeout(() => setIsTransitioning(false), 600);
+    setTimeout(() => setIsTransitioning(false), 350);
   }, [isTransitioning]);
 
   // Calculate how many cards per page based on screen size

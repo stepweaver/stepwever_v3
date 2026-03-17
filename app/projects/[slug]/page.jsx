@@ -4,6 +4,7 @@ import { use, useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { getProjectBySlug } from '@/lib/projectsData';
+import ChatBot from '@/components/ChatBot/ChatBot';
 import {
   ArrowLeft,
   ExternalLink,
@@ -277,6 +278,7 @@ export default function ProjectPage({ params }) {
   const demoComponents = {
     'neon-profile-card': HeroOperatorCard,
     'rpg-dice-roller': DiceRoller,
+    'llambda-llm-agent': ChatBot,
   };
   const DemoComponent = demoComponents[slug] || null;
 
@@ -301,8 +303,13 @@ export default function ProjectPage({ params }) {
               <DemoComponent />
             </div>
           ) : slug === 'neon-profile-card' ? (
-            // Let chat and operator card control their own layout – no forced framing
+            // Let operator card control its own layout – no forced framing
             <DemoComponent />
+          ) : slug === 'llambda-llm-agent' ? (
+            // Constrain chat agent hero to the same width as the main body, left-aligned
+            <div className='max-w-4xl'>
+              <DemoComponent />
+            </div>
           ) : (
             <div
               className={`relative border border-neon/20 overflow-hidden ${
