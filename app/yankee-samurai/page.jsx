@@ -24,24 +24,6 @@ function SidebarPanel({ children, label, className = '' }) {
   );
 }
 
-function MobileBriefBar() {
-  return (
-    <div className='lg:hidden shrink-0 border-b border-neon/15'>
-      <div className='px-3 py-2'>
-        <div className='flex items-center gap-2'>
-          <BookOpen className='w-3 h-3 text-neon/60' />
-          <span className='font-ocr text-xs tracking-[0.2em] text-neon/50 uppercase'>
-            REFL-00
-          </span>
-        </div>
-        <p className='font-ocr text-sm text-text/60 leading-relaxed mt-2'>
-          Language as weapon. Discipline under consequence.
-        </p>
-      </div>
-    </div>
-  );
-}
-
 const THEMES = [
   { label: 'Language', tag: 'WPN' },
   { label: 'Discipline', tag: 'DSC' },
@@ -96,8 +78,6 @@ export default function YankeeSamuraiPage() {
               </span>
             </div>
           </header>
-
-          <MobileBriefBar />
 
           {/* ── Main Console ── */}
           <div className='flex-1 flex flex-col lg:flex-row min-h-0'>
