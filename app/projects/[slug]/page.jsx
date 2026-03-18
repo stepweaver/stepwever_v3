@@ -116,9 +116,8 @@ function ProjectPageLayout({ project, slug, children }) {
                 </span>
               </div>
               <ChevronRight
-                className={`w-3 h-3 text-neon/40 transition-transform duration-200 ${
-                  mobileBriefExpanded ? 'rotate-90' : ''
-                }`}
+                className={`w-3 h-3 text-neon/40 transition-transform duration-200 ${mobileBriefExpanded ? 'rotate-90' : ''
+                  }`}
               />
             </button>
 
@@ -286,98 +285,87 @@ export default function ProjectPage({ params }) {
     notFound();
   }
 
+  const isLlambdaProject = slug === 'llambda-llm-agent';
+  const shouldShowHeroComponent =
+    isLlambdaProject || (project.showComponentAsHero && DemoComponent);
+
   // Merge security + securityFeatures into one array
   const securityItems = [
-  ...(project.security || []),
-  ...(project.securityFeatures || []),
-];
+    ...(project.security || []),
+    ...(project.securityFeatures || []),
+  ];
 
-const contextText =
-  project.context ||
-  project.users ||
-  project.overview ||
-  (project.isService ? project.serviceIntro : null) ||
-  null;
+  const contextText =
+    project.context ||
+    project.users ||
+    project.overview ||
+    (project.isService ? project.serviceIntro : null) ||
+    null;
 
-const architectureText = project.architecture || null;
+  const architectureText = project.architecture || null;
 
-const engineeringItems = project.engineering || [];
+  const engineeringItems = project.engineering || [];
 
-const tradeoffItems =
-  project.tradeoffs ||
-  project.limitations ||
-  project.constraints ||
-  [];
+  const tradeoffItems =
+    project.tradeoffs ||
+    project.limitations ||
+    project.constraints ||
+    [];
 
-const improveNextItems =
-  project.improveNext ||
-  project.plannedFeatures ||
-  project.userExperienceFindings?.areasForImprovement ||
-  [];
+  const improveNextItems =
+    project.improveNext ||
+    project.plannedFeatures ||
+    project.userExperienceFindings?.areasForImprovement ||
+    [];
 
-const whyItMattersText =
-  project.whyItMatters ||
-  project.conclusion ||
-  null;
+  const whyItMattersText =
+    project.whyItMatters ||
+    project.conclusion ||
+    null;
 
   return (
     <ProjectPageLayout project={project} slug={slug}>
-      {/* Hero / live component section */}
-      {project.showComponentAsHero && DemoComponent ? (
-        <div className='mb-8'>
-          {slug === 'rpg-dice-roller' ? (
-            // Wider hero for dice roller; internal layout handled by DiceRoller
-            <div id='dice-roller-section' className='max-w-6xl mx-auto'>
-              <DemoComponent />
+      <div className='max-w-4xl'>
+        {/* Hero / live component section */}
+        {isLlambdaProject ? (
+          <div className='mb-8 w-full min-h-[500px]'>
+            <ErrorBoundary>
+              <ChatBot />
+            </ErrorBoundary>
+          </div>
+        ) : shouldShowHeroComponent && DemoComponent ? (
+          slug === 'rpg-dice-roller' ? (
+            <div className='mb-8'>
+              <ErrorBoundary>
+                <DemoComponent />
+              </ErrorBoundary>
             </div>
           ) : slug === 'neon-profile-card' ? (
-            // Let operator card control its own layout – no forced framing
-            <DemoComponent />
-          ) : slug === 'lambda-llm-agent' ? (
-            // Constrain chat agent hero to the same width as the main body, left-aligned
-            <div className='max-w-4xl'>
-              <DemoComponent />
+            <div className='mb-8'>
+              <ErrorBoundary>
+                <DemoComponent />
+              </ErrorBoundary>
             </div>
           ) : (
-            <div
-              className={`relative border border-neon/20 overflow-hidden ${
-                slug === 'lcerebro'
-                  ? 'aspect-video max-w-3xl mx-auto bg-black'
-                  : 'aspect-video max-w-3xl mx-auto'
-              } flex items-center justify-center rounded-sm`}
-            >
-              <DemoComponent />
+            <div className='mb-8 rounded-lg border border-terminal-green/20 bg-panel/20 p-4'>
+              <ErrorBoundary>
+                <DemoComponent />
+              </ErrorBoundary>
             </div>
-          )}
-        </div>
-      ) : project.imageUrl ? (
-        <div className='mb-8'>
-          <div
-            className={`relative border border-neon/20 overflow-hidden ${
-              slug === 'lcerebro'
-                ? 'aspect-video max-w-3xl mx-auto bg-black'
-                : 'aspect-video max-w-3xl mx-auto'
-            }`}
-          >
+          )
+        ) : project.imageUrl ? (
+          <div className='mb-8'>
             <OptimizedImage
               src={project.imageUrl}
               alt={project.title}
-              className={
-                slug === 'ai-integrations' || slug === 'n8n-automations' || slug === 'it-consulting'
-                  ? 'object-cover object-center w-full h-full scale-105'
-                  : slug === 'lcerebro'
-                    ? 'object-contain object-center w-full h-full'
-                    : 'object-cover object-top'
-              }
+              width={1200}
+              height={675}
+              className='h-auto w-full rounded-lg border border-terminal-green/20 object-cover'
               priority
-              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 900px'
             />
           </div>
-        </div>
-      ) : null}
+        ) : null}
 
-      {/* Main project content constrained to readable width */}
-      <div className='max-w-4xl'>
         {project.isAgencySubcontract && (
           <span className='text-sm font-ocr text-neon uppercase tracking-wider block mb-4'>
             Agency Subcontract Project
@@ -425,31 +413,31 @@ const whyItMattersText =
             <SectionList items={project.features} icon={CheckCircle} />
           </ProjectSection>
         )}
-        
+
         {/* 4) Architecture */}
-{(architectureText || project.projectStructure) && (
-  <ProjectSection title='Architecture'>
-    {architectureText && <p>{architectureText}</p>}
+        {(architectureText || project.projectStructure) && (
+          <ProjectSection title='Architecture'>
+            {architectureText && <p>{architectureText}</p>}
 
-    {project.projectStructure && (
-      <>
-        <h3 className='mt-6 mb-2 text-sm uppercase tracking-[0.2em] text-terminal-green/80'>
-          Project structure
-        </h3>
-        <pre className='overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-4 text-xs leading-6 text-neutral-300'>
-          <code>{project.projectStructure}</code>
-        </pre>
-      </>
-    )}
-  </ProjectSection>
-)}
+            {project.projectStructure && (
+              <>
+                <h3 className='mt-6 mb-2 text-sm uppercase tracking-[0.2em] text-terminal-green/80'>
+                  Project structure
+                </h3>
+                <pre className='overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-4 text-xs leading-6 text-neutral-300'>
+                  <code>{project.projectStructure}</code>
+                </pre>
+              </>
+            )}
+          </ProjectSection>
+        )}
 
-{/* 5) Engineering details */}
-{engineeringItems.length > 0 && (
-  <ProjectSection title='Engineering Details'>
-    <BulletList items={engineeringItems} />
-  </ProjectSection>
-)}
+        {/* 5) Engineering details */}
+        {engineeringItems.length > 0 && (
+          <ProjectSection title='Engineering Details'>
+            <BulletList items={engineeringItems} />
+          </ProjectSection>
+        )}
 
         {/* 6) Stack */}
         {project.techStack && (
@@ -485,20 +473,20 @@ const whyItMattersText =
             <SectionList items={project.outcome} icon={CheckCircle} />
           </ProjectSection>
         )}
-        
-        {/* Tradeoffs / limits */}
-{tradeoffItems.length > 0 && (
-  <ProjectSection title='Tradeoffs / Limits'>
-    <BulletList items={tradeoffItems} />
-  </ProjectSection>
-)}
 
-{/* Why it matters */}
-{whyItMattersText && (
-  <ProjectSection title='Why It Matters'>
-    <p>{whyItMattersText}</p>
-  </ProjectSection>
-)}
+        {/* Tradeoffs / limits */}
+        {tradeoffItems.length > 0 && (
+          <ProjectSection title='Tradeoffs / Limits'>
+            <BulletList items={tradeoffItems} />
+          </ProjectSection>
+        )}
+
+        {/* Why it matters */}
+        {whyItMattersText && (
+          <ProjectSection title='Why It Matters'>
+            <p>{whyItMattersText}</p>
+          </ProjectSection>
+        )}
 
         {/* 9) What I'd improve next */}
         {improveNextItems?.length > 0 && (
@@ -507,89 +495,89 @@ const whyItMattersText =
           </ProjectSection>
         )}
 
-            {/* Example Use Cases (Services) */}
-            {project.isService && project.exampleUseCases?.length > 0 && (
-              <ProjectSection title='Example Use Cases'>
-                <SectionList items={project.exampleUseCases} icon={Zap} />
-              </ProjectSection>
-            )}
+        {/* Example Use Cases (Services) */}
+        {project.isService && project.exampleUseCases?.length > 0 && (
+          <ProjectSection title='Example Use Cases'>
+            <SectionList items={project.exampleUseCases} icon={Zap} />
+          </ProjectSection>
+        )}
 
-            {/* Key Features */}
-            {project.keyFeatures?.length > 0 && (
-              <ProjectSection title='Key Features'>
-                <div className='space-y-6'>
-                  {project.keyFeatures.map((item, index) => (
-                    <div
-                      key={index}
-                      className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
-                    >
-                      <h3 className='text-lg font-ibm text-neon mb-3'>
-                        {item.title}
-                      </h3>
-                      <p className='font-ocr text-text text-base leading-relaxed'>
-                        {item.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </ProjectSection>
-            )}
-
-            {/* Mission and Manifesto */}
-            {project.mission && (
-              <ProjectSection title={project.mission.title || 'Mission and Manifesto'}>
-                <BulletList items={project.mission.points} />
-                {project.mission.symbolism && (
-                  <p className='font-ocr text-text text-base md:text-lg leading-relaxed mt-6'>
-                    {project.mission.symbolism}
+        {/* Key Features */}
+        {project.keyFeatures?.length > 0 && (
+          <ProjectSection title='Key Features'>
+            <div className='space-y-6'>
+              {project.keyFeatures.map((item, index) => (
+                <div
+                  key={index}
+                  className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
+                >
+                  <h3 className='text-lg font-ibm text-neon mb-3'>
+                    {item.title}
+                  </h3>
+                  <p className='font-ocr text-text text-base leading-relaxed'>
+                    {item.description}
                   </p>
-                )}
-              </ProjectSection>
-            )}
-
-            {/* Content Sections */}
-            {project.contentSections?.length > 0 && (
-              <ProjectSection title='Content Sections'>
-                <div className='space-y-6'>
-                  {project.contentSections.map((item, index) => (
-                    <div
-                      key={index}
-                      className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
-                    >
-                      <h3 className='text-lg font-ibm text-neon mb-2'>
-                        {item.section}
-                      </h3>
-                      <p className='font-ocr text-text text-sm mb-4'>
-                        {item.purpose}
-                      </p>
-                      {item.elements?.length > 0 && (
-                        <BulletList items={item.elements} />
-                      )}
-                    </div>
-                  ))}
                 </div>
-              </ProjectSection>
-            )}
+              ))}
+            </div>
+          </ProjectSection>
+        )}
 
-            {/* User Experience Findings */}
-            {project.userExperienceFindings && (
-              <ProjectSection title='User Experience and Usability'>
-                {(project.userExperienceFindings.strengths?.length > 0 ||
-                  project.userExperienceFindings.areasForImprovement?.length > 0) && (
-                  <div className='space-y-6'>
-                    {project.userExperienceFindings.strengths?.length > 0 && (
-                      <div>
-                        <h3 className='text-lg font-ibm text-neon mb-3'>
-                          Strengths
-                        </h3>
-                        <SectionList
-                          items={project.userExperienceFindings.strengths}
-                          icon={CheckCircle}
-                        />
-                      </div>
-                    )}
-                    {project.userExperienceFindings.areasForImprovement?.length >
-                      0 && (
+        {/* Mission and Manifesto */}
+        {project.mission && (
+          <ProjectSection title={project.mission.title || 'Mission and Manifesto'}>
+            <BulletList items={project.mission.points} />
+            {project.mission.symbolism && (
+              <p className='font-ocr text-text text-base md:text-lg leading-relaxed mt-6'>
+                {project.mission.symbolism}
+              </p>
+            )}
+          </ProjectSection>
+        )}
+
+        {/* Content Sections */}
+        {project.contentSections?.length > 0 && (
+          <ProjectSection title='Content Sections'>
+            <div className='space-y-6'>
+              {project.contentSections.map((item, index) => (
+                <div
+                  key={index}
+                  className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
+                >
+                  <h3 className='text-lg font-ibm text-neon mb-2'>
+                    {item.section}
+                  </h3>
+                  <p className='font-ocr text-text text-sm mb-4'>
+                    {item.purpose}
+                  </p>
+                  {item.elements?.length > 0 && (
+                    <BulletList items={item.elements} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </ProjectSection>
+        )}
+
+        {/* User Experience Findings */}
+        {project.userExperienceFindings && (
+          <ProjectSection title='User Experience and Usability'>
+            {(project.userExperienceFindings.strengths?.length > 0 ||
+              project.userExperienceFindings.areasForImprovement?.length > 0) && (
+                <div className='space-y-6'>
+                  {project.userExperienceFindings.strengths?.length > 0 && (
+                    <div>
+                      <h3 className='text-lg font-ibm text-neon mb-3'>
+                        Strengths
+                      </h3>
+                      <SectionList
+                        items={project.userExperienceFindings.strengths}
+                        icon={CheckCircle}
+                      />
+                    </div>
+                  )}
+                  {project.userExperienceFindings.areasForImprovement?.length >
+                    0 && (
                       <div>
                         <h3 className='text-lg font-ibm text-neon mb-3'>
                           Areas for Improvement
@@ -600,506 +588,506 @@ const whyItMattersText =
                         />
                       </div>
                     )}
-                  </div>
-                )}
-              </ProjectSection>
-            )}
-
-            {/* Live Demo - only show full section when component is not already used as hero */}
-            {DemoComponent && !project.showComponentAsHero && (
-              <ProjectSection title='Live Profile Card Demo'>
-                <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
-                  <div className='flex justify-center'>
-                    <DemoComponent />
-                  </div>
-                  <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
-                    <p className='font-ocr text-text text-base leading-relaxed'>
-                      This component brings the NETRUNNER challenge card into
-                      our CRT palette. Built as a React component with
-                      client-side state management for the automated Matrix Sync
-                      terminal sequence. Styling uses Tailwind CSS utilities for
-                      glow, glass effects, and responsive stacking.
-                    </p>
-                    <SectionList
-                      items={project.demoHighlights}
-                      icon={CheckCircle}
-                    />
-                    <p className='text-sm font-ocr text-text/70'>
-                      Inspired by the original profile card brief from
-                      Codenhack, adapted to reuse our IBM headers, OCR body
-                      copy, and BackgroundCanvas lighting.
-                    </p>
-                  </div>
                 </div>
-              </ProjectSection>
-            )}
-
-            {/* Component highlights when component is shown as hero */}
-            {DemoComponent &&
-              project.showComponentAsHero &&
-              project.demoHighlights?.length > 0 && (
-                <ProjectSection title='Component Highlights'>
-                  <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
-                    <SectionList
-                      items={project.demoHighlights}
-                      icon={CheckCircle}
-                    />
-                    <p className='text-sm font-ocr text-text/70'>
-                      Inspired by the original profile card brief from
-                      Codenhack, adapted to reuse our IBM headers, OCR body
-                      copy, and BackgroundCanvas lighting.
-                    </p>
-                  </div>
-                </ProjectSection>
               )}
+          </ProjectSection>
+        )}
 
-            {/* Content Management */}
-            {project.contentManagement && (
-              <ProjectSection
-                title={
-                  project.contentManagement.notionIntegration
-                    ? 'Content Management with Notion'
-                    : 'Content Management with Sanity'
-                }
-              >
-                {project.contentManagement.notionIntegration && (
-                  <div className='mb-8'>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
-                      Notion Integration
-                    </h3>
-                    <BulletList
-                      items={project.contentManagement.notionIntegration}
-                    />
-                  </div>
-                )}
-                {project.contentManagement.productSchema && (
-                  <div className='mb-8'>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
-                      Product Schema
-                    </h3>
-                    <p className='font-ocr text-text mb-4'>
-                      The project includes a comprehensive product schema with
-                      the following fields:
-                    </p>
-                    <BulletList
-                      items={project.contentManagement.productSchema}
-                    />
-                  </div>
-                )}
-                {project.contentManagement.contentTypes && (
-                  <div className='mb-8'>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
-                      Content Types
-                    </h3>
-                    {project.contentManagement.contentTypes.map(
-                      (type, index) => (
-                        <div
-                          key={index}
-                          className='mb-6 bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
-                        >
-                          <h4 className='font-ibm text-neon mb-3'>
-                            {type.name}
-                          </h4>
-                          {type.features ? (
-                            <BulletList items={type.features} />
-                          ) : (
-                            <p className='font-ocr text-text text-sm'>
-                              {type.description}
-                            </p>
-                          )}
-                        </div>
-                      )
-                    )}
-                  </div>
-                )}
-                {project.contentManagement.studioFeatures && (
-                  <div>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
-                      Sanity Studio Features
-                    </h3>
-                    <BulletList
-                      items={project.contentManagement.studioFeatures}
-                    />
-                  </div>
-                )}
-              </ProjectSection>
-            )}
-
-            {/* E-commerce Features */}
-            {project.ecommerceFeatures && (
-              <ProjectSection title='E-commerce Features'>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-                  {[
-                    {
-                      key: 'shoppingCart',
-                      label: 'Shopping Cart',
-                    },
-                    {
-                      key: 'checkout',
-                      label: 'Checkout Process',
-                    },
-                    {
-                      key: 'productManagement',
-                      label: 'Product Management',
-                    },
-                  ]
-                    .filter((s) => project.ecommerceFeatures[s.key])
-                    .map((s) => (
-                      <div
-                        key={s.key}
-                        className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'
-                      >
-                        <h3 className='text-lg font-ibm text-neon mb-4'>
-                          {s.label}
-                        </h3>
-                        <BulletList
-                          items={project.ecommerceFeatures[s.key]}
-                          className='ml-0'
-                        />
-                      </div>
-                    ))}
-                </div>
-              </ProjectSection>
-            )}
-
-            {/* Design System */}
-            {project.designSystem && (
-              <ProjectSection title='Design System'>
-                {project.designSystem.components ? (
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                    <TechStackCard
-                      icon={Palette}
-                      title='Components'
-                      items={project.designSystem.components}
-                    />
-                    <TechStackCard
-                      icon={Palette}
-                      title='Styling'
-                      items={project.designSystem.styling}
-                    />
-                  </div>
-                ) : (
-                  <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                    {['typography', 'colors', 'symbols']
-                      .filter((key) => project.designSystem[key])
-                      .map((key) => (
-                        <TechStackCard
-                          key={key}
-                          icon={Palette}
-                          title={key.charAt(0).toUpperCase() + key.slice(1)}
-                          items={project.designSystem[key]}
-                        />
-                      ))}
-                  </div>
-                )}
-              </ProjectSection>
-            )}
-
-            {/* Screenshots / Gallery */}
-            {project.screenshots && project.screenshots.length > 0 && (
-              <ProjectSection title='Screenshots / Gallery'>
-                {typeof project.screenshots[0] === 'string' ? (
-                  <p className='font-ocr text-text text-sm leading-relaxed'>
-                    {project.screenshots[0]}
-                  </p>
-                ) : (
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                    {project.screenshots.map((shot, index) => (
-                      <figure
-                        key={index}
-                        className='bg-panel/50 border border-neon/20 rounded-sm overflow-hidden card-glow'
-                      >
-                        <div className='relative w-full aspect-video'>
-                          <OptimizedImage
-                            src={shot.src}
-                            alt={shot.alt}
-                            className='object-cover object-top'
-                            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 600px'
-                          />
-                        </div>
-                        {shot.caption && (
-                          <figcaption className='px-4 py-3 font-ocr text-xs text-text/80 border-t border-neon/15'>
-                            {shot.caption}
-                          </figcaption>
-                        )}
-                      </figure>
-                    ))}
-                  </div>
-                )}
-              </ProjectSection>
-            )}
-
-            {/* API Routes */}
-            {project.apiRoutes?.length > 0 && (
-              <ProjectSection title='API Routes'>
-                <SectionList items={project.apiRoutes} icon={Code} />
-              </ProjectSection>
-            )}
-
-            {/* Performance */}
-            {project.performance?.length > 0 && (
-              <ProjectSection title='Performance'>
-                <SectionList items={project.performance} icon={Zap} />
-              </ProjectSection>
-            )}
-
-            {/* Challenges / Decisions */}
-            {(project.challenges && project.challenges.length > 0) && false && (
-              <ProjectSection title='Challenges & Decisions'>
-                <SectionList items={project.challenges} icon={Code} />
-              </ProjectSection>
-            )}
-
-            {/* YouTube Integration */}
-            {project.youtubeIntegration && (
-              <ProjectSection title='YouTube Integration'>
-                {project.youtubeIntegration.description && (
-                  <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
-                    {project.youtubeIntegration.description}
-                  </p>
-                )}
-                {project.youtubeIntegration.features && (
-                  <div className='mb-6'>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
-                      Features
-                    </h3>
-                    <BulletList items={project.youtubeIntegration.features} />
-                  </div>
-                )}
-                {project.youtubeIntegration.workflow && (
-                  <div className='mb-6'>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>
-                      Workflow
-                    </h3>
-                    <BulletList items={project.youtubeIntegration.workflow} />
-                  </div>
-                )}
-              </ProjectSection>
-            )}
-
-            {/* Security */}
-            {securityItems.length > 0 && (
-              <ProjectSection title='Security'>
-                <SectionList items={securityItems} icon={Shield} />
-              </ProjectSection>
-            )}
-
-            {/* Terminal Integration */}
-            {project.terminalIntegration && (
-              <ProjectSection title='Terminal Integration'>
-                <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
-                  {project.terminalIntegration.description}
-                </p>
-                {project.terminalIntegration.usage && (
-                  <div className='mb-6'>
-                    <h3 className='text-xl font-ibm text-neon mb-4'>Usage</h3>
-                    <BulletList items={project.terminalIntegration.usage} />
-                  </div>
-                )}
-                {project.terminalIntegration.example && (
-                  <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
-                    <pre className='font-mono text-neon text-sm overflow-x-auto whitespace-pre-wrap'>
-                      {project.terminalIntegration.example}
-                    </pre>
-                  </div>
-                )}
-              </ProjectSection>
-            )}
-
-            {/* Keyboard Shortcuts */}
-            {project.keyboardShortcuts?.length > 0 && (
-              <ProjectSection title='Keyboard Shortcuts'>
-                <SectionList items={project.keyboardShortcuts} icon={Code} />
-              </ProjectSection>
-            )}
-
-            {/* Dice Notation */}
-            {project.diceNotation?.length > 0 && (
-              <ProjectSection title='Dice Notation'>
-                <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
-                  The dice roller uses standard RPG dice notation:
+        {/* Live Demo - only show when component is not already used as hero */}
+        {DemoComponent && !shouldShowHeroComponent && (
+          <ProjectSection title='Live Demo'>
+            <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
+              <div className='flex justify-center'>
+                <DemoComponent />
+              </div>
+              <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
+                <p className='font-ocr text-text text-base leading-relaxed'>
+                  This component brings the NETRUNNER challenge card into
+                  our CRT palette. Built as a React component with
+                  client-side state management for the automated Matrix Sync
+                  terminal sequence. Styling uses Tailwind CSS utilities for
+                  glow, glass effects, and responsive stacking.
                 </p>
                 <SectionList
-                  items={project.diceNotation}
-                  icon={Code}
-                  fontClass='font-mono'
+                  items={project.demoHighlights}
+                  icon={CheckCircle}
                 />
-              </ProjectSection>
-            )}
-
-            {/* Planned Features */}
-            {project.plannedFeatures?.length > 0 && (
-              <ProjectSection title='Planned Features'>
-                <SectionList items={project.plannedFeatures} icon={Zap} />
-              </ProjectSection>
-            )}
-
-            {/* Demo Forms */}
-            {project.demoForms?.length > 0 && (
-              <ProjectSection title='Demo Forms'>
-                <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
-                  The website includes {project.demoForms.length} demo forms (all
-                  non-functional, for demonstration only):
+                <p className='text-sm font-ocr text-text/70'>
+                  Inspired by the original profile card brief from
+                  Codenhack, adapted to reuse our IBM headers, OCR body
+                  copy, and BackgroundCanvas lighting.
                 </p>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
-                  {project.demoForms.map((form, index) => (
+              </div>
+            </div>
+          </ProjectSection>
+        )}
+
+        {/* Component highlights when component is shown as hero */}
+        {DemoComponent &&
+          shouldShowHeroComponent &&
+          project.demoHighlights?.length > 0 && (
+            <ProjectSection title='Component Highlights'>
+              <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
+                <SectionList
+                  items={project.demoHighlights}
+                  icon={CheckCircle}
+                />
+                <p className='text-sm font-ocr text-text/70'>
+                  Inspired by the original profile card brief from
+                  Codenhack, adapted to reuse our IBM headers, OCR body
+                  copy, and BackgroundCanvas lighting.
+                </p>
+              </div>
+            </ProjectSection>
+          )}
+
+        {/* Content Management */}
+        {project.contentManagement && (
+          <ProjectSection
+            title={
+              project.contentManagement.notionIntegration
+                ? 'Content Management with Notion'
+                : 'Content Management with Sanity'
+            }
+          >
+            {project.contentManagement.notionIntegration && (
+              <div className='mb-8'>
+                <h3 className='text-xl font-ibm text-neon mb-4'>
+                  Notion Integration
+                </h3>
+                <BulletList
+                  items={project.contentManagement.notionIntegration}
+                />
+              </div>
+            )}
+            {project.contentManagement.productSchema && (
+              <div className='mb-8'>
+                <h3 className='text-xl font-ibm text-neon mb-4'>
+                  Product Schema
+                </h3>
+                <p className='font-ocr text-text mb-4'>
+                  The project includes a comprehensive product schema with
+                  the following fields:
+                </p>
+                <BulletList
+                  items={project.contentManagement.productSchema}
+                />
+              </div>
+            )}
+            {project.contentManagement.contentTypes && (
+              <div className='mb-8'>
+                <h3 className='text-xl font-ibm text-neon mb-4'>
+                  Content Types
+                </h3>
+                {project.contentManagement.contentTypes.map(
+                  (type, index) => (
                     <div
                       key={index}
-                      className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
+                      className='mb-6 bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
                     >
-                      <h3 className='text-lg font-ibm text-neon mb-2'>
-                        {form.name}
-                      </h3>
-                      <p className='font-ocr text-text text-sm'>
-                        {form.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <SectionList items={project.formFeatures} icon={CheckCircle} />
-              </ProjectSection>
-            )}
-
-            {/* Key Pages */}
-            {project.keyPages?.length > 0 && (
-              <ProjectSection title='Key Pages'>
-                <SectionList items={project.keyPages} icon={FolderOpen} />
-                {project.treatmentDetailContent?.length > 0 && (
-                  <div className='mt-6'>
-                    <h3 className='text-lg font-ibm text-neon mb-3'>
-                      Treatment Detail Pages
-                    </h3>
-                    <BulletList items={project.treatmentDetailContent} />
-                  </div>
-                )}
-              </ProjectSection>
-            )}
-
-            {/* README Recommendations */}
-            {project.readmeRecommendations?.length > 0 && (
-              <ProjectSection title='README Recommendations'>
-                <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
-                  Suggested README updates to make the repository more informative:
-                </p>
-                <SectionList items={project.readmeRecommendations} icon={Code} />
-              </ProjectSection>
-            )}
-
-            {/* Testimonial */}
-            {project.testimonial && project.testimonial.quote && (
-              <ProjectSection title='Testimonial'>
-                <div className='bg-panel/60 border border-neon/25 rounded-sm p-6 card-glow'>
-                  <p className='font-ocr text-base md:text-lg text-text/90 leading-relaxed mb-4'>
-                    {project.testimonial.quote}
-                  </p>
-                  {(project.testimonial.attribution || project.testimonial.role) && (
-                    <p className='font-ocr text-xs text-text/60 uppercase tracking-[0.2em]'>
-                      {project.testimonial.attribution}
-                      {project.testimonial.role
-                        ? ` · ${project.testimonial.role}`
-                        : ''}
-                    </p>
-                  )}
-                </div>
-              </ProjectSection>
-            )}
-
-            {/* Conclusion */}
-            {project.conclusion && (
-              <ProjectSection title='Conclusion'>
-                <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
-                  {project.conclusion}
-                </p>
-              </ProjectSection>
-            )}
-
-            {/* Strengths */}
-            {project.strengths?.length > 0 && (
-              <ProjectSection title='Strengths'>
-                <SectionList items={project.strengths} icon={CheckCircle} />
-              </ProjectSection>
-            )}
-
-            {/* Limitations */}
-            {project.limitations?.length > 0 && (
-              <ProjectSection title='Limitations'>
-                <SectionList items={project.limitations} icon={Code} />
-              </ProjectSection>
-            )}
-
-            {/* Benefits (Services) */}
-            {project.isService && project.benefits?.length > 0 && (
-              <ProjectSection title='Benefits'>
-                <SectionList items={project.benefits} icon={CheckCircle} />
-              </ProjectSection>
-            )}
-
-            {/* Process (Services) */}
-            {project.isService && project.process?.length > 0 && (
-              <ProjectSection title='Process'>
-                <div className='space-y-4'>
-                  {project.process.map((step, index) => (
-                    <div
-                      key={index}
-                      className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
-                    >
-                      <div className='flex items-start gap-4'>
-                        <div className='flex-shrink-0 w-8 h-8 bg-neon text-background font-ibm font-bold rounded-full flex items-center justify-center'>
-                          {index + 1}
-                        </div>
-                        <p className='flex-1 font-ocr text-text text-base leading-relaxed'>
-                          {step}
+                      <h4 className='font-ibm text-neon mb-3'>
+                        {type.name}
+                      </h4>
+                      {type.features ? (
+                        <BulletList items={type.features} />
+                      ) : (
+                        <p className='font-ocr text-text text-sm'>
+                          {type.description}
                         </p>
-                      </div>
+                      )}
                     </div>
+                  )
+                )}
+              </div>
+            )}
+            {project.contentManagement.studioFeatures && (
+              <div>
+                <h3 className='text-xl font-ibm text-neon mb-4'>
+                  Sanity Studio Features
+                </h3>
+                <BulletList
+                  items={project.contentManagement.studioFeatures}
+                />
+              </div>
+            )}
+          </ProjectSection>
+        )}
+
+        {/* E-commerce Features */}
+        {project.ecommerceFeatures && (
+          <ProjectSection title='E-commerce Features'>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+              {[
+                {
+                  key: 'shoppingCart',
+                  label: 'Shopping Cart',
+                },
+                {
+                  key: 'checkout',
+                  label: 'Checkout Process',
+                },
+                {
+                  key: 'productManagement',
+                  label: 'Product Management',
+                },
+              ]
+                .filter((s) => project.ecommerceFeatures[s.key])
+                .map((s) => (
+                  <div
+                    key={s.key}
+                    className='bg-panel/50 p-6 border border-neon/20 rounded-lg card-glow'
+                  >
+                    <h3 className='text-lg font-ibm text-neon mb-4'>
+                      {s.label}
+                    </h3>
+                    <BulletList
+                      items={project.ecommerceFeatures[s.key]}
+                      className='ml-0'
+                    />
+                  </div>
+                ))}
+            </div>
+          </ProjectSection>
+        )}
+
+        {/* Design System */}
+        {project.designSystem && (
+          <ProjectSection title='Design System'>
+            {project.designSystem.components ? (
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                <TechStackCard
+                  icon={Palette}
+                  title='Components'
+                  items={project.designSystem.components}
+                />
+                <TechStackCard
+                  icon={Palette}
+                  title='Styling'
+                  items={project.designSystem.styling}
+                />
+              </div>
+            ) : (
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                {['typography', 'colors', 'symbols']
+                  .filter((key) => project.designSystem[key])
+                  .map((key) => (
+                    <TechStackCard
+                      key={key}
+                      icon={Palette}
+                      title={key.charAt(0).toUpperCase() + key.slice(1)}
+                      items={project.designSystem[key]}
+                    />
                   ))}
-                </div>
-              </ProjectSection>
+              </div>
             )}
+          </ProjectSection>
+        )}
 
-            {/* Common Use Cases (Services) */}
-            {project.isService && project.commonUseCases?.length > 0 && (
-              <ProjectSection title='Common Use Cases'>
-                <SectionList items={project.commonUseCases} icon={Zap} />
-              </ProjectSection>
-            )}
-
-            {/* Use Cases (Services) */}
-            {project.isService && project.useCases?.length > 0 && (
-              <ProjectSection title='Use Cases'>
-                <SectionList items={project.useCases} icon={Zap} />
-              </ProjectSection>
-            )}
-
-            {/* Services Included (Services) */}
-            {project.isService && project.services?.length > 0 && (
-              <ProjectSection title='Services Included'>
-                <SectionList items={project.services} icon={CheckCircle} />
-              </ProjectSection>
-            )}
-
-            {/* CTA Section */}
-            <section className='text-center hud-panel p-8 md:p-12'>
-              <h2 className='text-xl md:text-2xl font-ibm text-neon mb-4'>
-                {project.isService
-                  ? 'Discuss how I can help'
-                  : project.comingSoon
-                    ? 'Coming soon'
-                    : 'Like what you see?'}
-              </h2>
-              <p className='font-ocr text-text text-sm md:text-base mb-6 max-w-2xl mx-auto'>
-                {project.isService
-                  ? 'These capabilities are available for hire. Reach out to discuss how I can apply these skills to your project or request a consultation.'
-                  : project.comingSoon
-                    ? 'This project is in active development. Reach out if you want to learn more or discuss similar work.'
-                    : 'Feel free to reach out if you have questions about this project or want to chat about working together.'}
+        {/* Screenshots / Gallery */}
+        {project.screenshots && project.screenshots.length > 0 && (
+          <ProjectSection title='Screenshots / Gallery'>
+            {typeof project.screenshots[0] === 'string' ? (
+              <p className='font-ocr text-text text-sm leading-relaxed'>
+                {project.screenshots[0]}
               </p>
-              <Link href='/contact'>
-                <button className='px-6 py-2.5 border border-neon text-neon font-ocr text-sm hover:bg-neon/10 transition-colors cursor-pointer'>
-                  {project.isService ? 'Request a Consultation' : project.comingSoon ? 'Get in Touch' : 'Get in Touch'}
-                </button>
-              </Link>
-            </section>
+            ) : (
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                {project.screenshots.map((shot, index) => (
+                  <figure
+                    key={index}
+                    className='bg-panel/50 border border-neon/20 rounded-sm overflow-hidden card-glow'
+                  >
+                    <div className='relative w-full aspect-video'>
+                      <OptimizedImage
+                        src={shot.src}
+                        alt={shot.alt}
+                        className='object-cover object-top'
+                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 600px'
+                      />
+                    </div>
+                    {shot.caption && (
+                      <figcaption className='px-4 py-3 font-ocr text-xs text-text/80 border-t border-neon/15'>
+                        {shot.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            )}
+          </ProjectSection>
+        )}
+
+        {/* API Routes */}
+        {project.apiRoutes?.length > 0 && (
+          <ProjectSection title='API Routes'>
+            <SectionList items={project.apiRoutes} icon={Code} />
+          </ProjectSection>
+        )}
+
+        {/* Performance */}
+        {project.performance?.length > 0 && (
+          <ProjectSection title='Performance'>
+            <SectionList items={project.performance} icon={Zap} />
+          </ProjectSection>
+        )}
+
+        {/* Challenges / Decisions */}
+        {(project.challenges && project.challenges.length > 0) && false && (
+          <ProjectSection title='Challenges & Decisions'>
+            <SectionList items={project.challenges} icon={Code} />
+          </ProjectSection>
+        )}
+
+        {/* YouTube Integration */}
+        {project.youtubeIntegration && (
+          <ProjectSection title='YouTube Integration'>
+            {project.youtubeIntegration.description && (
+              <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
+                {project.youtubeIntegration.description}
+              </p>
+            )}
+            {project.youtubeIntegration.features && (
+              <div className='mb-6'>
+                <h3 className='text-xl font-ibm text-neon mb-4'>
+                  Features
+                </h3>
+                <BulletList items={project.youtubeIntegration.features} />
+              </div>
+            )}
+            {project.youtubeIntegration.workflow && (
+              <div className='mb-6'>
+                <h3 className='text-xl font-ibm text-neon mb-4'>
+                  Workflow
+                </h3>
+                <BulletList items={project.youtubeIntegration.workflow} />
+              </div>
+            )}
+          </ProjectSection>
+        )}
+
+        {/* Security */}
+        {securityItems.length > 0 && (
+          <ProjectSection title='Security'>
+            <SectionList items={securityItems} icon={Shield} />
+          </ProjectSection>
+        )}
+
+        {/* Terminal Integration */}
+        {project.terminalIntegration && (
+          <ProjectSection title='Terminal Integration'>
+            <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
+              {project.terminalIntegration.description}
+            </p>
+            {project.terminalIntegration.usage && (
+              <div className='mb-6'>
+                <h3 className='text-xl font-ibm text-neon mb-4'>Usage</h3>
+                <BulletList items={project.terminalIntegration.usage} />
+              </div>
+            )}
+            {project.terminalIntegration.example && (
+              <div className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'>
+                <pre className='font-mono text-neon text-sm overflow-x-auto whitespace-pre-wrap'>
+                  {project.terminalIntegration.example}
+                </pre>
+              </div>
+            )}
+          </ProjectSection>
+        )}
+
+        {/* Keyboard Shortcuts */}
+        {project.keyboardShortcuts?.length > 0 && (
+          <ProjectSection title='Keyboard Shortcuts'>
+            <SectionList items={project.keyboardShortcuts} icon={Code} />
+          </ProjectSection>
+        )}
+
+        {/* Dice Notation */}
+        {project.diceNotation?.length > 0 && (
+          <ProjectSection title='Dice Notation'>
+            <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
+              The dice roller uses standard RPG dice notation:
+            </p>
+            <SectionList
+              items={project.diceNotation}
+              icon={Code}
+              fontClass='font-mono'
+            />
+          </ProjectSection>
+        )}
+
+        {/* Planned Features */}
+        {project.plannedFeatures?.length > 0 && (
+          <ProjectSection title='Planned Features'>
+            <SectionList items={project.plannedFeatures} icon={Zap} />
+          </ProjectSection>
+        )}
+
+        {/* Demo Forms */}
+        {project.demoForms?.length > 0 && (
+          <ProjectSection title='Demo Forms'>
+            <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
+              The website includes {project.demoForms.length} demo forms (all
+              non-functional, for demonstration only):
+            </p>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
+              {project.demoForms.map((form, index) => (
+                <div
+                  key={index}
+                  className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
+                >
+                  <h3 className='text-lg font-ibm text-neon mb-2'>
+                    {form.name}
+                  </h3>
+                  <p className='font-ocr text-text text-sm'>
+                    {form.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <SectionList items={project.formFeatures} icon={CheckCircle} />
+          </ProjectSection>
+        )}
+
+        {/* Key Pages */}
+        {project.keyPages?.length > 0 && (
+          <ProjectSection title='Key Pages'>
+            <SectionList items={project.keyPages} icon={FolderOpen} />
+            {project.treatmentDetailContent?.length > 0 && (
+              <div className='mt-6'>
+                <h3 className='text-lg font-ibm text-neon mb-3'>
+                  Treatment Detail Pages
+                </h3>
+                <BulletList items={project.treatmentDetailContent} />
+              </div>
+            )}
+          </ProjectSection>
+        )}
+
+        {/* README Recommendations */}
+        {project.readmeRecommendations?.length > 0 && (
+          <ProjectSection title='README Recommendations'>
+            <p className='font-ocr text-text text-base md:text-lg mb-6 leading-relaxed'>
+              Suggested README updates to make the repository more informative:
+            </p>
+            <SectionList items={project.readmeRecommendations} icon={Code} />
+          </ProjectSection>
+        )}
+
+        {/* Testimonial */}
+        {project.testimonial && project.testimonial.quote && (
+          <ProjectSection title='Testimonial'>
+            <div className='bg-panel/60 border border-neon/25 rounded-sm p-6 card-glow'>
+              <p className='font-ocr text-base md:text-lg text-text/90 leading-relaxed mb-4'>
+                {project.testimonial.quote}
+              </p>
+              {(project.testimonial.attribution || project.testimonial.role) && (
+                <p className='font-ocr text-xs text-text/60 uppercase tracking-[0.2em]'>
+                  {project.testimonial.attribution}
+                  {project.testimonial.role
+                    ? ` · ${project.testimonial.role}`
+                    : ''}
+                </p>
+              )}
+            </div>
+          </ProjectSection>
+        )}
+
+        {/* Conclusion */}
+        {project.conclusion && (
+          <ProjectSection title='Conclusion'>
+            <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
+              {project.conclusion}
+            </p>
+          </ProjectSection>
+        )}
+
+        {/* Strengths */}
+        {project.strengths?.length > 0 && (
+          <ProjectSection title='Strengths'>
+            <SectionList items={project.strengths} icon={CheckCircle} />
+          </ProjectSection>
+        )}
+
+        {/* Limitations */}
+        {project.limitations?.length > 0 && (
+          <ProjectSection title='Limitations'>
+            <SectionList items={project.limitations} icon={Code} />
+          </ProjectSection>
+        )}
+
+        {/* Benefits (Services) */}
+        {project.isService && project.benefits?.length > 0 && (
+          <ProjectSection title='Benefits'>
+            <SectionList items={project.benefits} icon={CheckCircle} />
+          </ProjectSection>
+        )}
+
+        {/* Process (Services) */}
+        {project.isService && project.process?.length > 0 && (
+          <ProjectSection title='Process'>
+            <div className='space-y-4'>
+              {project.process.map((step, index) => (
+                <div
+                  key={index}
+                  className='bg-panel/50 p-6 rounded-xl border border-neon/20 card-glow'
+                >
+                  <div className='flex items-start gap-4'>
+                    <div className='flex-shrink-0 w-8 h-8 bg-neon text-background font-ibm font-bold rounded-full flex items-center justify-center'>
+                      {index + 1}
+                    </div>
+                    <p className='flex-1 font-ocr text-text text-base leading-relaxed'>
+                      {step}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ProjectSection>
+        )}
+
+        {/* Common Use Cases (Services) */}
+        {project.isService && project.commonUseCases?.length > 0 && (
+          <ProjectSection title='Common Use Cases'>
+            <SectionList items={project.commonUseCases} icon={Zap} />
+          </ProjectSection>
+        )}
+
+        {/* Use Cases (Services) */}
+        {project.isService && project.useCases?.length > 0 && (
+          <ProjectSection title='Use Cases'>
+            <SectionList items={project.useCases} icon={Zap} />
+          </ProjectSection>
+        )}
+
+        {/* Services Included (Services) */}
+        {project.isService && project.services?.length > 0 && (
+          <ProjectSection title='Services Included'>
+            <SectionList items={project.services} icon={CheckCircle} />
+          </ProjectSection>
+        )}
+
+        {/* CTA Section */}
+        <section className='text-center hud-panel p-8 md:p-12'>
+          <h2 className='text-xl md:text-2xl font-ibm text-neon mb-4'>
+            {project.isService
+              ? 'Discuss how I can help'
+              : project.comingSoon
+                ? 'Coming soon'
+                : 'Like what you see?'}
+          </h2>
+          <p className='font-ocr text-text text-sm md:text-base mb-6 max-w-2xl mx-auto'>
+            {project.isService
+              ? 'These capabilities are available for hire. Reach out to discuss how I can apply these skills to your project or request a consultation.'
+              : project.comingSoon
+                ? 'This project is in active development. Reach out if you want to learn more or discuss similar work.'
+                : 'Feel free to reach out if you have questions about this project or want to chat about working together.'}
+          </p>
+          <Link href='/contact'>
+            <button className='px-6 py-2.5 border border-neon text-neon font-ocr text-sm hover:bg-neon/10 transition-colors cursor-pointer'>
+              {project.isService ? 'Request a Consultation' : project.comingSoon ? 'Get in Touch' : 'Get in Touch'}
+            </button>
+          </Link>
+        </section>
       </div>
     </ProjectPageLayout>
   );
