@@ -300,12 +300,19 @@ const contextText =
   null;
 
 const architectureText = project.architecture || null;
+
 const engineeringItems = project.engineering || [];
+
 const tradeoffItems =
   project.tradeoffs ||
   project.limitations ||
   project.constraints ||
   [];
+
+const whyItMattersText =
+  project.whyItMatters ||
+  project.conclusion ||
+  null;
 
 const improveNextItems =
   project.improveNext ||
