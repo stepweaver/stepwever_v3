@@ -288,22 +288,48 @@ export default function ProjectPage({ params }) {
 
   // Merge security + securityFeatures into one array
   const securityItems = [
-    ...(project.security || []),
-    ...(project.securityFeatures || []),
-  ];
+  ...(project.security || []),
+  ...(project.securityFeatures || []),
+];
 
-  const contextText =
-    project.context ||
-    project.users ||
-    project.overview ||
-    (project.isService ? project.serviceIntro : null) ||
-    null;
+const contextText =
+  project.context ||
+  project.users ||
+  project.overview ||
+  (project.isService ? project.serviceIntro : null) ||
+  null;
 
-  const improveNextItems =
-    project.improveNext ||
-    project.plannedFeatures ||
-    project.userExperienceFindings?.areasForImprovement ||
-    [];
+const architectureText = project.architecture || null;
+const engineeringItems = project.engineering || [];
+const tradeoffItems =
+  project.tradeoffs ||
+  project.limitations ||
+  project.constraints ||
+  [];
+
+const improveNextItems =
+  project.improveNext ||
+  project.plannedFeatures ||
+  project.userExperienceFindings?.areasForImprovement ||
+  [];
+
+const whyItMattersText =
+  project.whyItMatters ||
+  project.conclusion ||
+  null;
+    
+    const architectureText = project.architecture || null;
+const engineeringItems = project.engineering || [];
+const tradeoffItems =
+  project.tradeoffs ||
+  project.limitations ||
+  project.constraints ||
+  [];
+  
+const whyItMattersText =
+  project.whyItMatters ||
+  project.conclusion ||
+  null;
 
   return (
     <ProjectPageLayout project={project} slug={slug}>
@@ -410,8 +436,33 @@ export default function ProjectPage({ params }) {
             <SectionList items={project.features} icon={CheckCircle} />
           </ProjectSection>
         )}
+        
+        {/* 4) Architecture */}
+{(architectureText || project.projectStructure) && (
+  <ProjectSection title='Architecture'>
+    {architectureText && <p>{architectureText}</p>}
 
-        {/* 4) Stack */}
+    {project.projectStructure && (
+      <>
+        <h3 className='mt-6 mb-2 text-sm uppercase tracking-[0.2em] text-terminal-green/80'>
+          Project structure
+        </h3>
+        <pre className='overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-4 text-xs leading-6 text-neutral-300'>
+          <code>{project.projectStructure}</code>
+        </pre>
+      </>
+    )}
+  </ProjectSection>
+)}
+
+{/* 5) Engineering details */}
+{engineeringItems.length > 0 && (
+  <ProjectSection title='Engineering Details'>
+    <BulletList items={engineeringItems} />
+  </ProjectSection>
+)}
+
+        {/* 6) Stack */}
         {project.techStack && (
           <ProjectSection title='Stack'>
             <div className={project.projectStructure ? 'mb-8' : ''}>
@@ -432,21 +483,35 @@ export default function ProjectPage({ params }) {
           </ProjectSection>
         )}
 
-        {/* 5) Constraints */}
+        {/* 7) Constraints */}
         {project.challenges?.length > 0 && (
           <ProjectSection title='Constraints'>
             <SectionList items={project.challenges} icon={Code} />
           </ProjectSection>
         )}
 
-        {/* 6) Outcome */}
+        {/* 8) Outcome */}
         {project.outcome?.length > 0 && (
           <ProjectSection title='Outcome'>
             <SectionList items={project.outcome} icon={CheckCircle} />
           </ProjectSection>
         )}
+        
+        {/* Tradeoffs / limits */}
+{tradeoffItems.length > 0 && (
+  <ProjectSection title='Tradeoffs / Limits'>
+    <BulletList items={tradeoffItems} />
+  </ProjectSection>
+)}
 
-        {/* 7) What I'd improve next */}
+{/* Why it matters */}
+{whyItMattersText && (
+  <ProjectSection title='Why It Matters'>
+    <p>{whyItMattersText}</p>
+  </ProjectSection>
+)}
+
+        {/* 9) What I'd improve next */}
         {improveNextItems?.length > 0 && (
           <ProjectSection title="What I'd improve next">
             <SectionList items={improveNextItems} icon={Code} />
