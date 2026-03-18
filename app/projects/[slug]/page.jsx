@@ -278,7 +278,7 @@ export default function ProjectPage({ params }) {
   const demoComponents = {
     'neon-profile-card': HeroOperatorCard,
     'rpg-dice-roller': DiceRoller,
-    'llambda-llm-agent': ChatBot,
+    'lambda-llm-agent': ChatBot,
   };
   const DemoComponent = demoComponents[slug] || null;
 
@@ -333,7 +333,7 @@ const whyItMattersText =
           ) : slug === 'neon-profile-card' ? (
             // Let operator card control its own layout – no forced framing
             <DemoComponent />
-          ) : slug === 'llambda-llm-agent' ? (
+          ) : slug === 'lambda-llm-agent' ? (
             // Constrain chat agent hero to the same width as the main body, left-aligned
             <div className='max-w-4xl'>
               <DemoComponent />

@@ -28,7 +28,7 @@ Practical transformations, powered by code — presented as a terminal-first por
 ### Related docs
 
 - AI setup: [docs/AI_CHAT_SETUP.md](./docs/AI_CHAT_SETUP.md)
-- λlambda case study: visit `/projects/llambda-llm-agent` in the running app
+- λlambda case study: visit `/projects/λlambda-llm-agent` in the running app
 
 ## Getting Started
 

@@ -27,6 +27,63 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
+function getRepoHref(githubRepo) {
+  if (!githubRepo || typeof githubRepo !== 'string') return null;
+  if (/^https?:\/\//i.test(githubRepo)) return githubRepo;
+  return `https://github.com/${githubRepo}`;
+}
+
+function getProjectCtas(active) {
+  if (!active) return [];
+
+  const caseStudyHref = active.slug ? `/projects/${active.slug}` : null;
+  const liveHref = active.link || null;
+  const repoHref = getRepoHref(active.githubRepo);
+  const isService = Boolean(active.isService);
+
+  const ctas = [];
+
+  if (caseStudyHref) {
+    ctas.push({
+      key: 'case-study',
+      href: caseStudyHref,
+      label: 'View Case Study',
+      external: false,
+      variant: 'primary',
+    });
+  }
+
+  if (isService) {
+    return ctas;
+  }
+
+  if (liveHref) {
+    const isInternal = !/^https?:\/\//i.test(liveHref);
+
+    ctas.push({
+      key: 'live-project',
+      href: liveHref,
+      label: isInternal ? 'Open Module' : 'View Live Project',
+      external: !isInternal,
+      variant: 'secondary',
+    });
+
+    return ctas;
+  }
+
+  if (repoHref) {
+    ctas.push({
+      key: 'repo',
+      href: repoHref,
+      label: 'View Repo',
+      external: true,
+      variant: 'tertiary',
+    });
+  }
+
+  return ctas;
+}
+
 const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -77,6 +134,8 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
     const list = Array.isArray(active.tags) ? active.tags : [];
     return list.slice(0, 5);
   }, [active]);
+
+  const ctas = useMemo(() => getProjectCtas(active), [active]);
 
   const goPrev = useCallback(() => {
     if (!total) return;
@@ -136,9 +195,6 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
   }
 
   const imageSrc = active.imageUrl || '/images/terminal_ui.png';
-  const primaryHref = active.slug ? `/projects/${active.slug}` : null;
-  const secondaryHref = active.link || null;
-  const secondaryIsExternal = Boolean(secondaryHref && /^https?:\/\//i.test(secondaryHref));
 
   return (
     <section
@@ -147,7 +203,6 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
       className='relative w-full outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40 focus-visible:ring-offset-2 focus-visible:ring-offset-terminal-dark'
       aria-label='Active project module'
     >
-      {/* ambient structure */}
       <div className='pointer-events-none absolute inset-0 opacity-35'>
         <div className='absolute inset-x-0 top-0 h-px bg-terminal-green/15' />
         <div className='absolute inset-x-0 bottom-0 h-px bg-terminal-green/10' />
@@ -155,7 +210,6 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
         <div className='absolute right-[8%] top-0 h-full w-px bg-terminal-green/10' />
       </div>
 
-      {/* Top rail */}
       <div className='mb-6 flex items-start justify-between gap-4 border-b border-terminal-green/15 pb-4'>
         <div className='min-w-0'>
           <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/60 sm:text-xs'>
@@ -183,19 +237,15 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
       </div>
 
       <div className='grid items-start gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)]'>
-        {/* Media column */}
         <div className='space-y-3'>
           <div className='relative min-h-[320px] select-none sm:min-h-[420px] lg:min-h-[560px]'>
-            {/* outer frame */}
             <div className='absolute inset-0 border border-terminal-green/15' />
 
-            {/* corner brackets */}
             <div className='pointer-events-none absolute left-0 top-0 h-10 w-10 border-l-2 border-t-2 border-terminal-green/45' />
             <div className='pointer-events-none absolute right-0 top-0 h-10 w-10 border-r-2 border-t-2 border-terminal-green/25' />
             <div className='pointer-events-none absolute bottom-0 left-0 h-10 w-10 border-b-2 border-l-2 border-terminal-green/25' />
             <div className='pointer-events-none absolute bottom-0 right-0 h-10 w-10 border-b-2 border-r-2 border-terminal-green/45' />
 
-            {/* background / ambient */}
             <div className='absolute inset-0 overflow-hidden bg-terminal-dark/25'>
               <div className='absolute inset-0'>
                 <OptimizedImage
@@ -212,7 +262,6 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
               <div className='absolute inset-0 bg-gradient-to-br from-neon/8 via-transparent to-terminal-green/8' />
             </div>
 
-            {/* image stage */}
             <div className='relative flex h-full min-h-[320px] items-center justify-center px-8 py-8 sm:px-10 lg:min-h-[560px]'>
               <div className='relative h-[260px] w-full max-w-[980px] sm:h-[360px] lg:h-[520px]'>
                 <OptimizedImage
@@ -226,7 +275,6 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
             </div>
           </div>
 
-          {/* transport row */}
           <div className='flex items-center justify-center gap-3 font-ocr text-[10px] uppercase tracking-[0.22em] sm:text-xs'>
             <button
               type='button'
@@ -255,18 +303,16 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
           </div>
         </div>
 
-        {/* Details stage */}
         <div className='relative flex h-full min-w-0 flex-col justify-between border-l border-terminal-green/10 pl-0 lg:pl-6'>
-          {/* swipe zone: text content only */}
           <div
-  {...swipeBindings}
-  className='space-y-6 select-none'
-  style={{
-    touchAction: 'pan-y',
-    transform: `translate3d(${dragOffset}px, 0, 0)`,
-    transition: dragOffset === 0 ? 'transform 180ms ease-out' : 'none',
-  }}
->
+            {...swipeBindings}
+            className='space-y-6 select-none'
+            style={{
+              touchAction: 'pan-y',
+              transform: `translate3d(${dragOffset}px, 0, 0)`,
+              transition: dragOffset === 0 ? 'transform 180ms ease-out' : 'none',
+            }}
+          >
             <div className='min-w-0'>
               <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/60 sm:text-xs'>
                 Featured Deployment
@@ -316,32 +362,34 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
             )}
           </div>
 
-          {/* CTAs only */}
           <div className='mt-8 flex flex-wrap gap-3'>
-            {primaryHref ? (
-              <Link
-                href={primaryHref}
-                className='inline-flex cursor-pointer items-center justify-center border border-terminal-green/35 px-5 py-2.5 text-sm uppercase tracking-[0.22em] text-terminal-green transition hover:border-terminal-green/70 hover:bg-terminal-green/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
-              >
-                View Case Study
-              </Link>
-            ) : null}
+            {ctas.map((cta) => {
+              const base =
+                'inline-flex cursor-pointer items-center justify-center border px-5 py-2.5 text-sm uppercase tracking-[0.22em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40';
 
-            {secondaryHref ? (
-              <Link
-                href={secondaryHref}
-                target={secondaryIsExternal ? '_blank' : undefined}
-                rel={secondaryIsExternal ? 'noopener noreferrer' : undefined}
-                className='inline-flex cursor-pointer items-center justify-center border border-neon/25 px-5 py-2.5 text-sm uppercase tracking-[0.22em] text-neon/70 transition hover:border-neon/55 hover:bg-neon/10 hover:text-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
-              >
-                {secondaryIsExternal ? 'Open' : 'Open Module'}
-              </Link>
-            ) : null}
+              const variantClass =
+                cta.variant === 'primary'
+                  ? 'border-terminal-green/35 text-terminal-green hover:border-terminal-green/70 hover:bg-terminal-green/10'
+                  : cta.variant === 'secondary'
+                    ? 'border-neon/25 text-neon/70 hover:border-neon/55 hover:bg-neon/10 hover:text-neon'
+                    : 'border-terminal-dimmed/25 text-terminal-dimmed hover:border-terminal-dimmed/55 hover:bg-terminal-dimmed/10 hover:text-white';
+
+              return (
+                <Link
+                  key={cta.key}
+                  href={cta.href}
+                  target={cta.external ? '_blank' : undefined}
+                  rel={cta.external ? 'noopener noreferrer' : undefined}
+                  className={`${base} ${variantClass}`}
+                >
+                  {cta.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* Bottom rail: quick select */}
       <div className='mt-8 flex flex-wrap gap-2 border-t border-terminal-green/10 pt-4'>
         {projects.map((p, idx) => {
           const isActive = idx === activeIndex;

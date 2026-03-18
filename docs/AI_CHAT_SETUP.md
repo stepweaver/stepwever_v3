@@ -109,5 +109,5 @@ The current setup is optimized for Groq's free tier, which is the best balance o
 
 ## 📚 Further Reading
 
-- λlambda case study (running app): `/projects/llambda-llm-agent`
+- λlambda case study (running app): `/projects/λlambda-llm-agent`
 - Repository overview and λlambda summary: see the **Flagship systems** section in `README.md`
