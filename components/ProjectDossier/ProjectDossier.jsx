@@ -314,12 +314,6 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
                 </div>
               </div>
             )}
-
-            <div className='flex justify-start lg:hidden'>
-              <span className='border border-neon/15 bg-terminal-dark/60 px-3 py-1 font-ocr text-[10px] uppercase tracking-[0.22em] text-neon/55'>
-                Swipe dossier
-              </span>
-            </div>
           </div>
 
           {/* CTAs only */}
