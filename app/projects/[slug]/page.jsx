@@ -278,7 +278,7 @@ export default function ProjectPage({ params }) {
   const demoComponents = {
     'neon-profile-card': HeroOperatorCard,
     'rpg-dice-roller': DiceRoller,
-    'lambda-llm-agent': ChatBot,
+    'llambda-llm-agent': ChatBot,
   };
   const DemoComponent = demoComponents[slug] || null;
 
