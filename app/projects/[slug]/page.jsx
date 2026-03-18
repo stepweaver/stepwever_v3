@@ -342,9 +342,34 @@ export default function ProjectPage({ params }) {
             </div>
           ) : slug === 'neon-profile-card' ? (
             <div className='mb-8'>
-              <ErrorBoundary>
-                <DemoComponent />
-              </ErrorBoundary>
+              <div className='grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center'>
+                <div className='flex justify-center'>
+                  <ErrorBoundary>
+                    <DemoComponent />
+                  </ErrorBoundary>
+                </div>
+
+                <div className='space-y-6 border border-neon/20 rounded-lg bg-panel/50 p-6 card-glow'>
+                  <p className='font-ocr text-text text-base leading-relaxed'>
+                    This component brings the NETRUNNER challenge card into
+                    our CRT palette. Built as a React component with
+                    client-side state management for the automated Matrix Sync
+                    terminal sequence. Styling uses Tailwind CSS utilities for
+                    glow, glass effects, and responsive stacking.
+                  </p>
+
+                  <SectionList
+                    items={project.demoHighlights}
+                    icon={CheckCircle}
+                  />
+
+                  <p className='text-sm font-ocr text-text/70'>
+                    Inspired by the original profile card brief from
+                    Codenhack, adapted to reuse our IBM headers, OCR body
+                    copy, and BackgroundCanvas lighting.
+                  </p>
+                </div>
+              </div>
             </div>
           ) : (
             <div className='mb-8 rounded-lg border border-terminal-green/20 bg-panel/20 p-4'>
