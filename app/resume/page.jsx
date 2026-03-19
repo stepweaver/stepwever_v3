@@ -12,6 +12,7 @@ import {
   GraduationCap,
   Cpu,
   Mail,
+  Database,
 } from 'lucide-react';
 import {
   SiReact,
@@ -22,12 +23,17 @@ import {
   SiJavascript,
   SiPython,
   SiPostgresql,
-  SiMysql,
   SiGit,
   SiDocker,
   SiVercel,
   SiOpenai,
   SiGithub,
+  SiMongodb,
+  SiSupabase,
+  SiAuth0,
+  SiN8N,
+  SiStripe,
+  SiNetlify,
 } from 'react-icons/si';
 
 const BackgroundCanvas = dynamic(
@@ -35,68 +41,99 @@ const BackgroundCanvas = dynamic(
   { ssr: false }
 );
 
+const SUMMARY = `Full-stack engineer and business analyst with 9+ years of experience spanning software development, data analysis, and operations. Former Air Force linguist and business analyst who builds AI-enabled web apps, real-time systems, and automation workflows that reduce friction and improve operations. Specializes in Next.js, Supabase, PostgreSQL, LLM integrations, and practical software systems that connect business needs to working implementation. Adept at translating requirements into scalable systems and communicating across technical and non-technical teams.`;
+
 const SKILLS = [
   {
     category: 'Languages & Frameworks',
     tag: 'SK-01',
     items: [
-      { name: 'JavaScript (ES6+)', icon: SiJavascript, color: '#F7DF1E' },
+      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
       { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
       { name: 'Python', icon: SiPython, color: '#3776AB' },
       { name: 'SQL', icon: SiPostgresql, color: '#336791' },
       { name: 'React', icon: SiReact, color: '#61DAFB' },
-      { name: 'Next.js 15', icon: SiNextdotjs, color: '#ffffff' },
+      { name: 'Next.js', icon: SiNextdotjs, color: '#ffffff' },
       { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
       { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
     ],
   },
   {
-    category: 'Databases & Cloud',
+    category: 'Databases & Tools',
     tag: 'SK-02',
     items: [
       { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791' },
-      { name: 'MySQL', icon: SiMysql, color: '#4479A1' },
-      { name: 'MongoDB', icon: SiPostgresql, color: '#47A248' },
-      { name: 'AWS', icon: SiVercel, color: '#FF9900' },
-      { name: 'Vercel', icon: SiVercel, color: '#ffffff' },
-      { name: 'Git/GitHub', icon: SiGit, color: '#F05032' },
+      { name: 'Supabase', icon: SiSupabase, color: '#3ECF8E' },
+      { name: 'Neon', icon: Database, color: '#00E599' },
+      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
     ],
   },
   {
-    category: 'AI & Automation',
+    category: 'DevOps & Cloud',
     tag: 'SK-03',
     items: [
-      { name: 'OpenAI/ChatGPT', icon: SiOpenai, color: '#412991' },
-      { name: 'Claude', icon: SiOpenai, color: '#D97706' },
-      { name: 'Cursor IDE', icon: SiOpenai, color: '#00FF41' },
-      { name: 'Prompt Engineering', icon: SiOpenai, color: '#10B981' },
+      { name: 'Vercel', icon: SiVercel, color: '#ffffff' },
+      { name: 'AWS', icon: SiGithub, color: '#FF9900' },
+      { name: 'Git/GitHub', icon: SiGit, color: '#F05032' },
+      { name: 'CI/CD Pipelines', icon: SiGithub, color: '#10B981' },
+      { name: 'Docker', icon: SiDocker, color: '#2496ED' },
+      { name: 'Netlify', icon: SiNetlify, color: '#00C7B7' },
     ],
   },
   {
-    category: 'Business Intelligence',
+    category: 'Automation & AI',
     tag: 'SK-04',
+    items: [
+      { name: 'OpenAI / ChatGPT', icon: SiOpenai, color: '#412991' },
+      { name: 'Groq', icon: SiGithub, color: '#F43F5E' },
+      { name: 'Prompt Engineering', icon: SiOpenai, color: '#10B981' },
+      { name: 'Resend', icon: SiGithub, color: '#ffffff' },
+      { name: 'n8n', icon: SiN8N, color: '#EA4B71' },
+      { name: 'Zapier', icon: SiGithub, color: '#FF4F00' },
+      { name: 'Auth.js', icon: SiAuth0, color: '#7C3AED' },
+      { name: 'Stripe', icon: SiStripe, color: '#635BFF' },
+    ],
+  },
+  {
+    category: 'Data & Reporting',
+    tag: 'SK-05',
     items: [
       { name: 'Tableau', icon: SiGithub, color: '#E97627' },
       { name: 'SQL Analytics', icon: SiPostgresql, color: '#336791' },
-      { name: 'Excel/Pivot Tables', icon: SiGithub, color: '#217346' },
-      { name: 'Data Visualization', icon: SiGithub, color: '#00FF41' },
+      { name: 'Excel', icon: SiGithub, color: '#217346' },
+      { name: 'Data Storytelling', icon: SiGithub, color: '#00FF41' },
+    ],
+  },
+  {
+    category: 'Business Analysis',
+    tag: 'SK-06',
+    items: [
+      { name: 'Requirements Gathering', icon: SiGithub, color: '#00FF41' },
+      { name: 'Agile / Scrum', icon: SiGithub, color: '#38BDF8' },
+      { name: 'UAT', icon: SiGithub, color: '#F59E0B' },
+      { name: 'Documentation', icon: SiGithub, color: '#A78BFA' },
+      { name: 'Stakeholder Collaboration', icon: SiGithub, color: '#FB7185' },
     ],
   },
 ];
 
 const EXPERIENCE = [
   {
-    title: 'Founder & Principal Consultant',
+    title: 'Founder & Developer',
     company: 'λstepweaver – stepweaver.dev',
     period: 'Nov 2024 – Present',
     tag: 'EXP-01',
     description:
-      'Founded and operate a solo digital consultancy focused on automation, optimization, and scaling for modern businesses. Launched and branded λstepweaver as an AI-native studio.',
+      'Build and ship AI-enabled web apps, real-time systems, automation workflows, and operational tools for modern businesses and portfolio-driven product development.',
     highlights: [
-      'Architected and delivered data-driven web applications, AI-enabled business tools, and automated client dashboards',
-      'Built the portfolio terminal, an interactive React/Next.js interface demonstrating full-stack and AI engineering capabilities',
-      'Developed proposal, contract, and payment systems (Stripe, DocuSign, Notion) to streamline client onboarding',
-      'Grew λstepweaver into a profitable, incorporated business (2025) with expanding client roster',
+      'Designed and launched a real-time silent-auction platform for a school fundraiser using Next.js, Supabase Realtime, and Resend',
+      'Delivered guided bidder onboarding, alias bidding, real-time updates, donor portals, admin workflows, and server-side rule enforcement',
+      'Built Bill Planner, a cash-flow planning app using Next.js, Neon Postgres, Drizzle ORM, and Auth.js',
+      'Implemented paycheck-window UX and a status pipeline (scheduled → pending → paid) with month templates to reduce cash-flow surprises',
+      'Developed λlambda, a portfolio-native LLM chat agent integrated into both the website and terminal interface',
+      'Built server-only prompts, Groq/OpenAI routing, multimodal message support, prompt-injection filtering, provider fallback, and honeypot bot protection',
+      'Delivered automation systems for small-business clients using n8n, Zapier, Python, and Google APIs to reduce manual work and improve visibility',
+      'Managed projects from scoping and UX through deployment on Vercel with environment-based workflows and iterative feedback loops',
     ],
   },
   {
@@ -105,12 +142,14 @@ const EXPERIENCE = [
     period: 'Nov 2017 – May 2025',
     tag: 'EXP-02',
     description:
-      'Administered and optimized reporting platforms via SQL and Tableau, driving actionable insights for campus operations and revenue processes.',
+      'Managed reporting, system operations, and cross-functional requirements for high-volume university transaction and meal-plan systems.',
     highlights: [
-      'Designed, built, and maintained SQL-based reports and Tableau dashboards with parameterized and interactive reports',
-      'Translated complex business needs into clear, scalable technical requirements for IT and engineering teams',
-      "Administered the university's ID card transaction system (CSGold), managing system operations and data integrity",
-      'Spearheaded initiatives to optimize internal workflows, significantly reducing time-to-insight for campus departments',
+      'Managed SQL data pipelines and Tableau dashboards supporting campus meal-plan operations for thousands of students',
+      'Automated monthly reporting and reduced manual reconciliation time',
+      'Administered the CSGold ID transaction system handling thousands of transactions per day',
+      'Coordinated third-party integrations and implemented authentication updates',
+      'Automated procurement and meal-plan workflows using Python, SQL, and Excel macros',
+      'Led cross-functional user-acceptance testing, requirements gathering, stakeholder translation, and rollout support',
     ],
   },
   {
@@ -119,26 +158,25 @@ const EXPERIENCE = [
     period: 'Aug 2014 – Nov 2017',
     tag: 'EXP-03',
     description:
-      'Led operational logistics and staff management in a fast-paced, service-driven environment for high-volume dining venues.',
+      'Led logistics, labor, and service operations in high-volume campus dining environments with a metrics-driven approach to performance.',
     highlights: [
-      'Used data to optimize workflows, improve customer service delivery, and manage daily logistics',
-      'Managed dining operations, inventory, and procurement, overseeing labor scheduling and cost controls',
-      'Developed internal reports for scheduling, performance, and inventory tracking',
-      'Partnered with finance to track overhead, food, and labor cost ratios',
+      'Oversaw logistics, labor scheduling, and inventory management for high-volume dining operations',
+      'Implemented metrics-driven performance management to optimize cost and throughput',
+      'Managed daily operations across multiple dining halls',
+      'Improved customer service and supported quality assurance programs',
     ],
   },
   {
-    title: 'Airborne Cryptologic Linguist',
+    title: 'Cryptologic Linguist',
     company: 'U.S. Air Force – Active Duty',
     period: 'Aug 2003 – Aug 2007',
     tag: 'EXP-04',
     description:
-      'Analyzed complex data streams and produced actionable intelligence under high-pressure, mission-critical conditions.',
+      'Produced mission-critical reporting under tight deadlines, with strong emphasis on signal analysis, pattern recognition, and structured communication.',
     highlights: [
-      'Translated and analyzed high-stakes foreign communications, delivering actionable intelligence',
-      'Built advanced skills in data analysis, pattern recognition, and critical thinking under classified protocols',
-      'Developed strong analytical and communication skills transferable to business data analysis',
-      'Structured reporting under mission-critical conditions',
+      'Translated and analyzed high-stakes foreign signal intelligence',
+      'Produced mission-critical reports with high accuracy under tight deadlines',
+      'Built early expertise in pattern recognition, structured reporting, and mission-driven analysis that still informs current technical problem solving',
     ],
   },
 ];
@@ -165,6 +203,7 @@ const EDUCATION = [
 ];
 
 const SIDEBAR_NAV = [
+  { label: 'Summary', href: '#summary', icon: FileText },
   { label: 'Skills', href: '#skills', icon: Cpu },
   { label: 'Experience', href: '#experience', icon: Briefcase },
   { label: 'Education', href: '#education', icon: GraduationCap },
@@ -210,9 +249,10 @@ function MobileResumeBrief() {
           <div>
             <p className='font-ibm text-sm text-text'>Stephen Weaver</p>
             <p className='font-ocr text-[10px] text-text/40'>
-              Full-Stack Developer | AI-Native Technologist
+              Full-Stack Engineer | Business Analyst | AI & Automation
             </p>
           </div>
+
           <div className='flex flex-wrap gap-2'>
             <a
               href='/weaver_resume.pdf'
@@ -222,6 +262,7 @@ function MobileResumeBrief() {
               <Download className='w-3 h-3' />
               PDF
             </a>
+
             <Link
               href='/contact'
               className='inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-panel/30 border border-neon/15 font-ocr text-[10px] text-neon/70 hover:text-neon hover:border-neon/30 transition-colors'
@@ -229,6 +270,7 @@ function MobileResumeBrief() {
               <Mail className='w-3 h-3' />
               Contact
             </Link>
+
             <a
               href='https://github.com/stepweaver'
               target='_blank'
@@ -239,7 +281,9 @@ function MobileResumeBrief() {
               GitHub
             </a>
           </div>
+
           <div className='w-full h-px bg-gradient-to-r from-neon/15 via-neon/8 to-transparent' />
+
           <div className='flex flex-wrap gap-x-3 gap-y-1'>
             {SIDEBAR_NAV.map((item) => (
               <a
@@ -275,7 +319,6 @@ export default function ResumePage() {
       <BackgroundCanvas />
 
       <div className='relative z-10 flex flex-col h-full'>
-        {/* ── System Header ── */}
         <header className='shrink-0 border-b border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-2 flex items-center justify-between gap-4'>
           <div className='flex items-center gap-2.5'>
             <FileText className='w-3.5 h-3.5 text-neon/60' />
@@ -287,9 +330,10 @@ export default function ResumePage() {
               λstepweaver dossier
             </span>
           </div>
+
           <div className='flex items-center gap-2.5'>
             <span className='font-ocr text-[10px] text-neon/35 hidden sm:inline'>
-              2025
+              2026
             </span>
             <span className='inline-flex items-center gap-1.5'>
               <span className='relative flex h-2 w-2'>
@@ -303,33 +347,28 @@ export default function ResumePage() {
           </div>
         </header>
 
-        {/* ── Mobile expandable brief ── */}
         <MobileResumeBrief />
 
-        {/* ── Main Console ── */}
         <div className='flex-1 flex flex-col lg:flex-row min-h-0'>
-          {/* ── Sidebar ── */}
           <aside className='hidden lg:flex lg:flex-col lg:w-72 2xl:w-80 shrink-0 border-r border-neon/15 overflow-y-auto'>
             <div className='p-3 space-y-3 flex-1'>
-              {/* Identity */}
               <SidebarPanel label='IDENTITY'>
                 <h1 className='font-ibm text-lg text-neon leading-snug'>
                   Stephen Weaver
                 </h1>
                 <p className='font-ocr text-[11px] text-text/50 leading-relaxed mt-1'>
-                  Full-Stack Developer
-                  <br />
-                  AI-Native Technologist
+                  Full-Stack Engineer
                   <br />
                   Business Analyst
+                  <br />
+                  AI & Automation
                 </p>
                 <div className='mt-3 w-full h-px bg-gradient-to-r from-neon/30 via-neon/10 to-transparent' />
                 <p className='font-ocr text-[10px] text-text/35 mt-2'>
-                  8+ years bridging business and tech.
+                  9+ years bridging business, operations, and software systems.
                 </p>
               </SidebarPanel>
 
-              {/* Section Nav */}
               <div>
                 <p className='font-ocr text-[9px] tracking-[0.25em] text-neon/40 uppercase px-1 mb-2'>
                   Sections
@@ -337,6 +376,7 @@ export default function ResumePage() {
                 <div className='space-y-1'>
                   {SIDEBAR_NAV.map((item) => {
                     const Icon = item.icon;
+
                     return (
                       <a
                         key={item.label}
@@ -353,7 +393,6 @@ export default function ResumePage() {
                 </div>
               </div>
 
-              {/* Actions */}
               <SidebarPanel label='ACTIONS'>
                 <div className='space-y-1.5'>
                   <a
@@ -371,6 +410,7 @@ export default function ResumePage() {
                       </p>
                     </div>
                   </a>
+
                   <Link
                     href='/contact'
                     className='group flex items-center gap-2.5 px-2 py-2 rounded-sm bg-panel/30 border border-neon/8 hover:border-neon/20 hover:bg-panel/50 transition-all duration-200'
@@ -380,6 +420,7 @@ export default function ResumePage() {
                       Get in touch
                     </p>
                   </Link>
+
                   <a
                     href='https://github.com/stepweaver'
                     target='_blank'
@@ -397,11 +438,10 @@ export default function ResumePage() {
                 </div>
               </SidebarPanel>
 
-              {/* System Info */}
               <div className='px-1 space-y-1 mt-auto'>
                 <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
                   <span className='w-1 h-1 rounded-full bg-neon/30' />
-                  <span>Last updated: 2025</span>
+                  <span>Last updated: 2026</span>
                 </div>
                 <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
                   <span className='w-1 h-1 rounded-full bg-neon/30' />
@@ -411,9 +451,7 @@ export default function ResumePage() {
             </div>
           </aside>
 
-          {/* ── Resume Content ── */}
           <section className='flex-1 min-h-0 flex flex-col'>
-            {/* Chrome header */}
             <div className='shrink-0 bg-panel/50 border-b border-neon/20 px-4 py-2 flex items-center justify-between'>
               <div className='flex items-center gap-2'>
                 <Briefcase className='w-3 h-3 text-neon/40' />
@@ -422,14 +460,25 @@ export default function ResumePage() {
                 </span>
               </div>
               <span className='font-ocr text-[10px] text-text/20 hidden sm:inline'>
-                RESUME-2025
+                RESUME-2026
               </span>
             </div>
 
-            {/* Scrollable content */}
             <div className='flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 md:p-8'>
               <div className='max-w-4xl mx-auto space-y-8'>
-                {/* ── Skills ── */}
+                <section>
+                  <SectionDivider
+                    label='Professional Summary'
+                    id='summary'
+                    icon={FileText}
+                  />
+                  <div className='mt-4 max-w-3xl'>
+                    <p className='font-ocr text-[12px] sm:text-[13px] text-text/75 leading-relaxed'>
+                      {SUMMARY}
+                    </p>
+                  </div>
+                </section>
+
                 <section>
                   <SectionDivider
                     label='Skills & Technologies'
@@ -447,9 +496,11 @@ export default function ResumePage() {
                             {group.tag}
                           </span>
                         </div>
+
                         <div className='flex flex-wrap gap-2'>
                           {group.items.map((skill) => {
                             const Icon = skill.icon;
+
                             return (
                               <div
                                 key={skill.name}
@@ -471,7 +522,6 @@ export default function ResumePage() {
                   </div>
                 </section>
 
-                {/* ── Experience ── */}
                 <section>
                   <SectionDivider
                     label='Experience'
@@ -493,15 +543,18 @@ export default function ResumePage() {
                             {job.tag}
                           </span>
                         </div>
+
                         <p className='font-ocr text-xs text-accent/80'>
                           {job.company}
                         </p>
                         <span className='font-ocr text-[11px] text-text/40 block mb-3'>
                           {job.period}
                         </span>
+
                         <p className='font-ocr text-[12px] text-text/70 leading-relaxed mb-3'>
                           {job.description}
                         </p>
+
                         <ul className='space-y-1.5'>
                           {job.highlights.map((highlight, i) => (
                             <li
@@ -520,7 +573,6 @@ export default function ResumePage() {
                   </div>
                 </section>
 
-                {/* ── Education ── */}
                 <section>
                   <SectionDivider
                     label='Education'
@@ -551,27 +603,26 @@ export default function ResumePage() {
                 </section>
               </div>
             </div>
+
+            <footer className='shrink-0 border-t border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-1.5 flex items-center gap-2 sm:gap-3 overflow-x-auto'>
+              <span className='font-ocr text-[10px] text-neon/45 whitespace-nowrap'>
+                &gt; resume
+              </span>
+              <span className='text-neon/15'>│</span>
+              <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap'>
+                Document ready
+              </span>
+              <span className='text-neon/15 hidden sm:inline'>│</span>
+              <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap hidden sm:inline'>
+                PDF available
+              </span>
+              <span className='text-neon/15 hidden md:inline'>│</span>
+              <span className='font-ocr text-[10px] text-text/20 uppercase whitespace-nowrap hidden md:inline'>
+                Last updated 2026
+              </span>
+            </footer>
           </section>
         </div>
-
-        {/* ── Status Bar ── */}
-        <footer className='shrink-0 border-t border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-1.5 flex items-center gap-2 sm:gap-3 overflow-x-auto'>
-          <span className='font-ocr text-[10px] text-neon/45 whitespace-nowrap'>
-            &gt; resume
-          </span>
-          <span className='text-neon/15'>│</span>
-          <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap'>
-            Document ready
-          </span>
-          <span className='text-neon/15 hidden sm:inline'>│</span>
-          <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap hidden sm:inline'>
-            PDF available
-          </span>
-          <span className='text-neon/15 hidden md:inline'>│</span>
-          <span className='font-ocr text-[10px] text-text/20 uppercase whitespace-nowrap hidden md:inline'>
-            Last updated 2025
-          </span>
-        </footer>
       </div>
     </div>
   );
