@@ -30,12 +30,11 @@ function Hero() {
   return (
     <section className='relative z-30 pt-0 pb-2 sm:pb-4 md:pb-6 w-full'>
       <div className='w-full px-1 sm:px-2 md:px-3 lg:px-4 xl:px-6 2xl:px-8'>
-        <div className='grid grid-cols-1 lg:grid-cols-[390px_1fr] gap-8 lg:gap-10 xl:gap-12 lg:items-stretch'>
-          <div className='min-w-0 flex flex-col'>
+        <div className='grid grid-cols-1 lg:grid-cols-[390px_1fr] gap-8 lg:gap-10 xl:gap-12 lg:items-start'>
+          <div className='min-w-0 flex flex-col lg:self-start w-full'>
             <HeroOperatorCard />
           </div>
 
-          {/* About content - same row height as left on desktop so bottom borders align */}
           <div className='min-w-0 flex flex-col h-full min-h-0'>
             <About />
           </div>
