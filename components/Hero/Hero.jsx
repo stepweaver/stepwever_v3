@@ -57,9 +57,6 @@ function Hero() {
               <h2 className='mt-2 text-xl sm:text-2xl md:text-3xl font-ibm text-terminal-green leading-tight'>
                 Projects
               </h2>
-              <p className='mt-2 text-sm sm:text-base text-terminal-dimmed max-w-[68ch]'>
-                A few builds of my builds.
-              </p>
             </div>
           </div>
           <ProjectCarousel />
