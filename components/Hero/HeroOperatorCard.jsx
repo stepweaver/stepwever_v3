@@ -89,7 +89,7 @@ function HeroOperatorCard() {
         <div className='pt-3'>
           <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase mb-2'>MISSION PROFILE</p>
           <p className='font-ibm text-text text-sm leading-relaxed'>
-            λstepweaver builds modern websites and technical systems for businesses that have outgrown their current setup.
+            Builds web apps, automations, and AI-enabled tools for operational work. Turns requirements into working systems.
           </p>
         </div>
 
