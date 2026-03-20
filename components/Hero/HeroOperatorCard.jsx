@@ -89,8 +89,7 @@ function HeroOperatorCard() {
         <div className='pt-3'>
           <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase mb-2'>MISSION PROFILE</p>
           <p className='font-ibm text-text text-sm leading-relaxed'>
-            Builds web apps, automations, and AI-enabled tools that reduce friction and improve operations. Translates
-            business requirements into usable systems.
+            Builds web apps, automations, and AI-enabled tools for operational work. Turns requirements into working systems.
           </p>
         </div>
 

@@ -27,21 +27,21 @@ function WhyStephen() {
           {[
             {
               id: '01',
-              title: 'TRANSLATES OPERATIONS',
-              body: 'Understands business logic, edge cases, and handoffs — not just code paths.',
-              proof: '8+ years bridging business and technical systems',
+              title: 'UNDERSTANDS OPERATIONS',
+              body: 'Understands business rules, edge cases, dependencies, and handoffs. Not just the code.',
+              proof: '8+ years working across business process, reporting, systems, and web development.',
             },
             {
               id: '02',
               title: 'BUILDS UNDER CONSTRAINT',
-              body: 'Thrives in ambiguity and integration-heavy work where requirements aren’t clean.',
-              proof: 'Comfortable in ambiguity, integrations, and constraint-heavy environments',
+              body: 'Works well in unclear environments. Especially when the requirements are incomplete, the system is messy, or multiple tools have to be tied together.',
+              proof: 'Experienced with integration-heavy work, legacy process, and shifting requirements.',
             },
             {
               id: '03',
               title: 'SHIPS USABLE SYSTEMS',
-              body: 'Optimizes for adoption, clarity, and workflows that hold up under pressure.',
-              proof: 'Focused on outcomes: reduce friction, improve operations, make it usable',
+              body: 'Builds for actual use. Clear flows. Low friction. Fewer failure points.',
+              proof: 'Focused on making systems easier to use, easier to maintain, and easier to hand off.',
             },
           ].map((m) => (
             <article key={m.id} className='relative border border-neon/20 bg-terminal-dark/15 p-4'>
