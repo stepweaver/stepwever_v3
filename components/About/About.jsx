@@ -22,22 +22,18 @@ function About() {
 
         <div className='prose prose-invert font-ibm max-w-none space-y-4 text-text flex-1 min-h-0'>
           <p className='text-base md:text-lg leading-relaxed'>
-            I'm Stephen Weaver, a full-stack developer with an unconventional
-            path. I've worn a lot of hats: Air Force linguist, restaurant
-            manager, business analyst, and now a developer who loves building
-            things that reduce friction, improve operations, and hold up in the real world.
+            I'm Stephen Weaver. My path into software was not linear. I served as an Airborne Cryptologic Linguist in the U.S. Air Force. After that, I worked in restaurant operations and business analysis before moving deeper into development. That background still shapes how I build. I pay attention to process, constraints, maintenance, and whether a system is actually useful once real people have to use it.
           </p>
-          <p className='text-base md:text-lg leading-relaxed'>My journey so far:</p>
+          <p className='text-base md:text-lg leading-relaxed'>Background:</p>
           <ul className='space-y-3 text-base md:text-lg leading-relaxed'>
-            <li>U.S. Air Force veteran (Airborne Linguist)</li>
-            <li>Restaurant manager</li>
-            <li>Business analyst</li>
+            <li>U.S. Air Force veteran; Airborne Cryptologic Linguist</li>
+            <li>Restaurant operations and management</li>
+            <li>Business analysis</li>
             <li>Self-taught developer</li>
-            <li>DevOps engineering (Current Focus)</li>
+            <li>Current focus: DevOps and infrastructure</li>
           </ul>
           <p className='text-base md:text-lg leading-relaxed'>
-            That mix of experiences means I don't just write code, I understand
-            the problems that code is supposed to solve.
+            I do not treat software as an isolated technical exercise. I look at the workflow, the handoffs, the data, and the failure points. Then I build from there.
           </p>
         </div>
 
@@ -52,7 +48,7 @@ function About() {
             </Link>{' '}
             or{' '}
             <Link href='/contact' className='text-neon hover:text-accent transition-colors underline hover:no-underline font-bold'>
-              drop me a message
+              send me a message
             </Link>
             .
           </p>
