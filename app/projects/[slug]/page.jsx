@@ -24,6 +24,7 @@ import TechStackGrid from '@/components/ProjectDetail/TechStackGrid';
 import TechStackCard from '@/components/ProjectDetail/TechStackCard';
 import { Palette } from 'lucide-react';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { SiGithub } from 'react-icons/si';
 
 // Lazy load heavy components
 const BackgroundCanvas = dynamic(
@@ -51,9 +52,16 @@ function SidebarPanel({ children, label, className = '' }) {
   );
 }
 
+function getRepoHref(githubRepo) {
+  if (!githubRepo || typeof githubRepo !== 'string') return null;
+  if (/^https?:\/\//i.test(githubRepo)) return githubRepo;
+  return `https://github.com/${githubRepo}`;
+}
+
 function ProjectPageLayout({ project, slug, children }) {
   const [mobileBriefExpanded, setMobileBriefExpanded] = useState(false);
   const projId = `PROJ-${slug.toUpperCase().replace(/-/g, '').slice(0, 8)}`;
+  const repoHref = getRepoHref(project.githubRepo);
 
   // Hide site footer for full-screen console feel (like dice roller)
   useEffect(() => {
@@ -182,16 +190,16 @@ function ProjectPageLayout({ project, slug, children }) {
                   </SidebarPanel>
                 )}
 
-                {project.githubRepo && (
+                {repoHref && (
                   <SidebarPanel label='REPO'>
                     <a
-                      href={`https://github.com/${project.githubRepo}`}
+                      href={repoHref}
                       target='_blank'
                       rel='noopener noreferrer'
                       className='inline-flex items-center text-neon font-ocr text-sm hover:text-neon/80 transition-colors'
                     >
-                      <Code className='w-3.5 h-3.5 mr-2' />
-                      {project.githubRepo}
+                      <SiGithub className='w-3.5 h-3.5 mr-2 shrink-0' aria-hidden />
+                      Source code
                     </a>
                   </SidebarPanel>
                 )}

@@ -81,7 +81,8 @@ const ProjectCard = memo(function ProjectCard({
                     slug === 'service-business-demo' ||
                     slug === 'mishawaka-shower-booking' ||
                     slug === 'rpg-dice-roller' ||
-                    slug === 'portfolio-terminal'
+                    slug === 'portfolio-terminal' ||
+                    slug === 'stepweaver-dev'
                   ? 'object-cover object-center scale-105'
                   : 'object-cover object-top'
             }`}
