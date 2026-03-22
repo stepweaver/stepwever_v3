@@ -1,31 +1,9 @@
 'use client';
 
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import Link from 'next/link';
 import OptimizedImage from '@/components/OptimizedImage/OptimizedImage';
 import { useSwipeNavigation } from '@/hooks/useSwipeNavigation';
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return;
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    const update = () => setReduced(Boolean(media.matches));
-    update();
-
-    if (typeof media.addEventListener === 'function') {
-      media.addEventListener('change', update);
-      return () => media.removeEventListener('change', update);
-    }
-
-    media.addListener(update);
-    return () => media.removeListener(update);
-  }, []);
-
-  return reduced;
-}
 
 function getRepoHref(githubRepo) {
   if (!githubRepo || typeof githubRepo !== 'string') return null;
@@ -86,7 +64,6 @@ function getProjectCtas(active) {
 
 const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const prefersReducedMotion = usePrefersReducedMotion();
 
   const total = projects.length;
   const active = projects[activeIndex] || null;
@@ -275,31 +252,40 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
             </div>
           </div>
 
-          <div className='flex items-center justify-center gap-3 font-ocr text-[10px] uppercase tracking-[0.22em] sm:text-xs'>
-            <button
-              type='button'
-              onClick={goPrev}
-              aria-label='Previous project'
-              className='inline-flex min-h-11 min-w-11 items-center justify-center border border-terminal-green/20 px-4 py-2 text-terminal-dimmed transition hover:border-terminal-green/55 hover:bg-terminal-green/10 hover:text-terminal-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
-            >
-              ← Prev
-            </button>
+          <div className='flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between'>
+            <div className='flex items-center justify-center gap-3 font-ocr text-[10px] uppercase tracking-[0.22em] sm:text-xs'>
+              <button
+                type='button'
+                onClick={goPrev}
+                aria-label='Previous project'
+                className='inline-flex min-h-11 min-w-11 items-center justify-center border border-terminal-green/20 px-4 py-2 text-terminal-dimmed transition hover:border-terminal-green/55 hover:bg-terminal-green/10 hover:text-terminal-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+              >
+                ← Prev
+              </button>
 
-            <div
-              aria-live='polite'
-              className='min-w-[96px] border border-terminal-green/10 px-3 py-2 text-center text-neon/60'
-            >
-              {countLabel}
+              <div
+                aria-live='polite'
+                className='min-w-[96px] border border-terminal-green/10 px-3 py-2 text-center text-neon/60'
+              >
+                {countLabel}
+              </div>
+
+              <button
+                type='button'
+                onClick={goNext}
+                aria-label='Next project'
+                className='inline-flex min-h-11 min-w-11 items-center justify-center border border-terminal-green/20 px-4 py-2 text-terminal-dimmed transition hover:border-terminal-green/55 hover:bg-terminal-green/10 hover:text-terminal-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+              >
+                Next →
+              </button>
             </div>
 
-            <button
-              type='button'
-              onClick={goNext}
-              aria-label='Next project'
-              className='inline-flex min-h-11 min-w-11 items-center justify-center border border-terminal-green/20 px-4 py-2 text-terminal-dimmed transition hover:border-terminal-green/55 hover:bg-terminal-green/10 hover:text-terminal-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+            <Link
+              href='/projects'
+              className='text-center font-ibm text-sm text-neon/75 underline decoration-neon/30 underline-offset-4 transition hover:text-terminal-green hover:decoration-terminal-green/50 sm:text-right'
             >
-              Next →
-            </button>
+              Browse all projects →
+            </Link>
           </div>
         </div>
 
@@ -388,32 +374,6 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
             })}
           </div>
         </div>
-      </div>
-
-      <div className='mt-8 flex flex-wrap gap-2 border-t border-terminal-green/10 pt-4'>
-        {projects.map((p, idx) => {
-          const isActive = idx === activeIndex;
-          const label = p?.title || `Project ${idx + 1}`;
-
-          return (
-            <button
-              key={p?.slug || `${label}-${idx}`}
-              type='button'
-              onClick={() => setActiveIndex(idx)}
-              aria-label={`Select ${label}`}
-              aria-current={isActive ? 'true' : undefined}
-              className={[
-                'cursor-pointer border px-3 py-2 font-ocr text-[10px] uppercase tracking-[0.22em] transition sm:text-xs',
-                prefersReducedMotion ? '' : 'motion-safe:duration-200',
-                isActive
-                  ? 'border-terminal-green/40 bg-terminal-green/10 text-terminal-green'
-                  : 'border-neon/15 bg-terminal-dark/20 text-terminal-dimmed hover:border-neon/35 hover:text-neon/80',
-              ].join(' ')}
-            >
-              {label}
-            </button>
-          );
-        })}
       </div>
     </section>
   );

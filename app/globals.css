@@ -2086,8 +2086,10 @@ a.glitchButton,
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
 }
 
-/* Image Protection Styles */
-img {
+/* Image Protection Styles (deterrent only; not a security boundary) */
+img,
+picture img,
+canvas {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -2098,6 +2100,7 @@ img {
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
+  -webkit-touch-callout: none;
 }
 
 /* Prevent selection on picture elements */
@@ -2106,6 +2109,7 @@ picture {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 /* ── Cyberpunk scrollbars ── */

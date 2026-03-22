@@ -18,6 +18,10 @@ export default function OptimizedImage({
     return false;
   };
 
+  const handleDragStart = (e) => {
+    e.preventDefault();
+  };
+
   const isPriority = priority || loading === 'eager' || fetchPriority === 'high';
 
   if (fill && !width && !height) {
@@ -30,6 +34,7 @@ export default function OptimizedImage({
         className={className}
         priority={isPriority}
         onContextMenu={handleContextMenu}
+        onDragStart={handleDragStart}
         draggable={false}
         {...props}
       />
@@ -46,6 +51,7 @@ export default function OptimizedImage({
       className={className}
       priority={isPriority}
       onContextMenu={handleContextMenu}
+      onDragStart={handleDragStart}
       draggable={false}
       {...props}
     />

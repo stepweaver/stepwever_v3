@@ -11,6 +11,7 @@ import PageTransition from '@/components/transition/PageTransition';
 // Analytics is a client component that handles its own lazy loading
 import Analytics from '@/components/Analytics/Analytics';
 import ChatWidgetWrapper from '@/components/ChatWidget/ChatWidgetWrapper';
+import ImageProtection from '@/components/ImageProtection/ImageProtection';
 
 // Environment validation in development
 if (process.env.NODE_ENV === 'development') {
@@ -232,6 +233,7 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body className='text-text'>
+        <ImageProtection />
         {/* Skip to main content link for accessibility */}
         <a
           href='#main-content'

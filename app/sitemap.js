@@ -1,7 +1,23 @@
 import { listPublishedDocs } from '@/lib/notion/meshtastic-docs.repo';
+import { CAROUSEL_PROJECTS } from '@/lib/carouselProjects';
 
 export default async function sitemap() {
   const baseUrl = 'https://stepweaver.dev';
+
+  const projectEntries = [
+    {
+      url: `${baseUrl}/projects`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    ...CAROUSEL_PROJECTS.map((p) => ({
+      url: `${baseUrl}/projects/${p.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    })),
+  ];
 
   const staticEntries = [
     {
@@ -59,5 +75,5 @@ export default async function sitemap() {
     }
   }
 
-  return [...staticEntries, ...meshtasticEntries];
+  return [...staticEntries, ...projectEntries, ...meshtasticEntries];
 }

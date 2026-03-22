@@ -44,7 +44,10 @@ export default function NotionImage({ src, blockId, alt, caption }) {
       <img
         src={imageSrc}
         alt={alt || 'Notion image'}
-        className="max-w-full lg:max-w-lg h-auto rounded-sm"
+        className="max-w-full lg:max-w-lg h-auto rounded-sm select-none"
+        draggable={false}
+        onContextMenu={(e) => e.preventDefault()}
+        onDragStart={(e) => e.preventDefault()}
         onError={handleError}
       />
       {caption ? (

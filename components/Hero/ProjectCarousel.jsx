@@ -1,13 +1,13 @@
 'use client';
 
-import { CAROUSEL_PROJECTS } from '@/lib/carouselProjects';
+import { HOMEPAGE_CAROUSEL_PROJECTS } from '@/lib/carouselProjects';
 import { memo } from 'react';
 import ProjectDossier from '@/components/ProjectDossier/ProjectDossier';
 
 function ProjectCarousel() {
   return (
     <div className='w-full relative mt-8 sm:mt-16'>
-      <ProjectDossier projects={CAROUSEL_PROJECTS} />
+      <ProjectDossier projects={HOMEPAGE_CAROUSEL_PROJECTS} />
     </div>
   );
 }
