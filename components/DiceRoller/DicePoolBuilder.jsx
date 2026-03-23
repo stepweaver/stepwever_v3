@@ -51,7 +51,7 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
   ];
 
   return (
-    <div className='relative w-[280px] h-[240px] mx-auto max-lg:w-[85vw] max-lg:max-w-[260px] max-lg:h-[200px]'>
+    <div className='relative w-[430px] h-[360px] mx-auto max-xl:w-[72vw] max-xl:max-w-[430px] max-xl:h-[320px] max-md:w-[92vw] max-md:max-w-[360px] max-md:h-[280px]'>
       {DICE_TYPES.map((dice, index) => {
         const IconComponent = DICE_ICONS[dice.sides];
         const pos = positions[index];
@@ -79,8 +79,8 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
           >
             <div className='relative'>
               <IconComponent
-                size={44}
-                className='max-lg:w-[36px] max-lg:h-[36px]'
+                size={62}
+                className='max-xl:w-[54px] max-xl:h-[54px] max-md:w-[46px] max-md:h-[46px]'
               />
               {dice.sides === 100 && (
                 <span className='absolute -right-1.5 -bottom-1 px-1 py-px rounded-sm bg-panel/90 border border-neon/60 font-ocr text-[9px] leading-none text-neon'>
@@ -88,7 +88,7 @@ export default function DicePoolBuilder({ dicePool, onUpdatePool }) {
                 </span>
               )}
             </div>
-            <span className='text-xs opacity-90 font-semibold tracking-wider font-ocr'>
+            <span className='text-sm max-md:text-xs opacity-90 font-semibold tracking-wider font-ocr'>
               {dice.label}
             </span>
           </button>

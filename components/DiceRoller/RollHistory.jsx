@@ -74,7 +74,7 @@ export default function RollHistory({
       </div>
 
       <div
-        className={`overflow-y-auto max-h-[160px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-neon/20 [&::-webkit-scrollbar-thumb]:rounded ${
+        className={`overflow-y-auto max-h-[38vh] min-h-[120px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-neon/20 [&::-webkit-scrollbar-thumb]:rounded ${
           !isExpanded ? 'border-t border-neon/10' : ''
         }`}
       >
