@@ -18,11 +18,11 @@ function HeroOperatorCard() {
       {/* header rail */}
       <header className='relative z-10 mb-4 flex items-start justify-between gap-4 pb-1'>
         <div>
-          <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>OPERATOR DOSSIER</p>
-          <h2 className='text-lg font-semibold text-text font-ibm'>STEPHEN WEAVER</h2>
+          <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>Operator profile</p>
+          <h2 className='text-xl font-semibold text-text font-ibm'>Stephen Weaver</h2>
         </div>
         <div className='text-right text-xs text-muted font-mono shrink-0'>
-          <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
+          <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>Profile ID</div>
           <div className='font-mono text-neon/80 whitespace-nowrap'>HMFIC-01</div>
         </div>
       </header>
@@ -49,8 +49,8 @@ function HeroOperatorCard() {
 
           <div className='min-w-0 space-y-3'>
             <div>
-              <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>ROLE</p>
-              <p className='text-sm text-text/90 font-ibm'>FULL-STACK / AI / AUTOMATION</p>
+              <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>What I build</p>
+              <p className='text-sm text-text/90 font-ibm'>Full-stack web apps, automation, and AI-enabled tools</p>
             </div>
 
             <div className='space-y-2'>
@@ -61,10 +61,10 @@ function HeroOperatorCard() {
               >
                 <div className='flex items-start justify-between gap-3'>
                   <div className='min-w-0'>
-                    <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>STATUS</p>
+                    <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>Availability</p>
                     <div className='mt-1 flex items-center gap-2'>
-                      <p className='text-[11px] text-terminal-green font-ocr uppercase tracking-[0.18em] whitespace-normal leading-snug'>
-                        OPEN TO WORK
+                      <p className='text-sm text-terminal-green font-ibm whitespace-normal leading-snug'>
+                        Open to work
                       </p>
                       <span className='relative flex h-4 w-4 flex-shrink-0 items-center justify-center' aria-hidden>
                         <span className='absolute inline-flex h-full w-full rounded-full bg-terminal-green/35 motion-safe:animate-ping' />
@@ -76,9 +76,9 @@ function HeroOperatorCard() {
               </Link>
 
               <div>
-                <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>FOCUS</p>
-                <p className='mt-1 text-[11px] text-text/85 font-ocr uppercase tracking-[0.18em] whitespace-normal leading-snug'>
-                  DEVOPS ENGINEERING
+                <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>Current focus</p>
+                <p className='mt-1 text-sm text-text/85 font-ibm whitespace-normal leading-snug'>
+                  DevOps engineering and infrastructure
                 </p>
               </div>
             </div>
@@ -87,7 +87,7 @@ function HeroOperatorCard() {
 
         {/* mission statement */}
         <div className='pt-3'>
-          <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase mb-2'>MISSION PROFILE</p>
+          <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase mb-2'>Value proposition</p>
           <p className='font-ibm text-text text-sm leading-relaxed'>
             Builds web apps, automations, and AI-enabled tools for operational work. Turns requirements into working systems.
           </p>
@@ -97,23 +97,23 @@ function HeroOperatorCard() {
         <div className='pt-3 flex flex-wrap gap-2'>
           <Link
             href='/resume'
-            className='inline-flex cursor-pointer items-center justify-center border border-terminal-green/25 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-green transition-colors hover:border-terminal-green/60 hover:bg-terminal-green/10'
+            className='inline-flex cursor-pointer items-center justify-center border border-terminal-green/25 bg-terminal-dark/20 px-3 py-2 text-xs font-ibm uppercase tracking-[0.08em] text-terminal-green transition-colors hover:border-terminal-green/60 hover:bg-terminal-green/10'
           >
-            RESUME
+            Resume
           </Link>
 
           <Link
             href='/contact'
-            className='inline-flex cursor-pointer items-center justify-center border border-neon/25 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-neon/80 transition-colors hover:border-neon/55 hover:bg-neon/10 hover:text-neon'
+            className='inline-flex cursor-pointer items-center justify-center border border-neon/25 bg-terminal-dark/20 px-3 py-2 text-xs font-ibm uppercase tracking-[0.08em] text-neon/80 transition-colors hover:border-neon/55 hover:bg-neon/10 hover:text-neon'
           >
-            CONTACT
+            Contact
           </Link>
 
           <Link
             href='/terminal'
-            className='inline-flex cursor-pointer items-center justify-center border border-neon/15 bg-terminal-dark/20 px-3 py-2 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-dimmed transition-colors hover:border-neon/40 hover:bg-neon/10 hover:text-neon/80'
+            className='inline-flex cursor-pointer items-center justify-center border border-neon/15 bg-terminal-dark/20 px-3 py-2 text-xs font-ibm uppercase tracking-[0.08em] text-terminal-dimmed transition-colors hover:border-neon/40 hover:bg-neon/10 hover:text-neon/80'
           >
-            TERMINAL
+            Terminal
           </Link>
         </div>
 

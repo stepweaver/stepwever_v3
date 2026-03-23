@@ -5,13 +5,13 @@ import Link from 'next/link';
 
 function About() {
   return (
-    <section id='about' className='relative z-30 h-full flex flex-col'>
-      <div className="flex-1 flex flex-col min-h-0 px-2 py-6 sm:px-4 md:p-6">
+    <section id='about' className='relative z-30 flex flex-col border border-neon/20 bg-panel/25'>
+      <div className='flex-1 flex flex-col min-h-0 px-4 py-6 sm:px-5 md:p-6'>
         {/* Section ID tag - no border, just a label */}
         <div className='mb-4 flex items-start justify-between gap-4'>
-          <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>BACKGROUND</p>
+          <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>Background</p>
           <div className='text-right text-xs text-muted font-mono shrink-0'>
-            <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
+            <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>Section</div>
             <div className='font-mono text-neon/80 whitespace-nowrap'>BIO-01</div>
           </div>
         </div>

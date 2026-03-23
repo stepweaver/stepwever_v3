@@ -148,30 +148,11 @@ export default async function RootLayout({ children }) {
                   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
                   var THEMES = ['dark','light','monochrome','monochrome-inverted','vintage','apple','c64','amber','synthwave','dracula','solarized','nord','cobalt'];
-                  // Themes that can be chosen randomly on load (exclude Apple, Amber, c64)
-                  var RANDOMIZABLE_THEMES = ['dark','light','monochrome','monochrome-inverted','vintage','synthwave','dracula','solarized','nord','cobalt'];
                   var META_COLORS = {dark:'#0d1211',light:'#e5e5e5',monochrome:'#000000','monochrome-inverted':'#ffffff',vintage:'#000000',apple:'#000000',c64:'#40318d',amber:'#1a0f00',synthwave:'#0a0a14',dracula:'#282a36',solarized:'#002b36',nord:'#2e3440',cobalt:'#193549'};
-                  var COOLDOWN = 4 * 60 * 60 * 1000; // 4 hours
-
                   var savedTheme = localStorage.getItem('theme');
-                  var manualPick = localStorage.getItem('themeManual') === '1';
-                  var lastRotation = parseInt(localStorage.getItem('lastThemeRotation') || '0', 10);
-                  var now = Date.now();
-
-                  var theme;
-                  if (manualPick && savedTheme && THEMES.indexOf(savedTheme) !== -1) {
-                    // User explicitly chose this theme -- respect it
-                    theme = savedTheme;
-                  } else if (!manualPick && (now - lastRotation > COOLDOWN || !savedTheme)) {
-                    // Enough time passed (or first visit) -- pick a random theme from the allowed pool
-                    var pool = RANDOMIZABLE_THEMES.filter(function(t) { return t !== savedTheme; });
-                    theme = pool[Math.floor(Math.random() * pool.length)];
-                    localStorage.setItem('theme', theme);
-                    localStorage.setItem('lastThemeRotation', String(now));
-                    localStorage.removeItem('themeManual');
-                  } else {
-                    theme = (savedTheme && THEMES.indexOf(savedTheme) !== -1) ? savedTheme : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-                  }
+                  var theme = (savedTheme && THEMES.indexOf(savedTheme) !== -1)
+                    ? savedTheme
+                    : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
 
                   document.documentElement.setAttribute('data-theme', theme);
 

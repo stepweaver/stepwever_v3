@@ -41,37 +41,33 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className='relative z-30 min-h-screen flex flex-col justify-end bg-transparent'>
-      {/* Main Footer Content */}
-      <div className='max-w-7xl mx-auto px-4 md:px-6 w-full flex-1 flex flex-col justify-center'>
-        {/* Logo Section - Centered */}
-        <div className='mb-12 md:mb-16 lg:mb-24 flex justify-center'>
-          <h2 className='text-5xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] text-terminal-green font-ibm tracking-tight leading-none flex items-center'>
-            <GlitchLambda
-              className='text-5xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] text-terminal-green font-ibm tracking-tight leading-none'
-              size='xl'
-            />
-            <span>stepweaver</span>
-          </h2>
-        </div>
-
-        {/* Tagline and Email Section - Centered */}
-        <div className='space-y-6 md:space-y-8 lg:space-y-12'>
-          <div className='flex justify-center'>
+    <footer className='relative z-30 border-t border-neon/20 bg-transparent'>
+      <div className='max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-12'>
+        <div className='flex flex-col gap-6 md:flex-row md:items-end md:justify-between'>
+          <div>
+            <h2 className='text-3xl sm:text-4xl text-terminal-green font-ibm tracking-tight leading-none flex items-center gap-1'>
+              <GlitchLambda
+                className='text-3xl sm:text-4xl text-terminal-green font-ibm tracking-tight leading-none'
+                size='medium'
+              />
+              <span>stepweaver</span>
+            </h2>
+            <p className='mt-3 max-w-xl font-ibm text-sm sm:text-base text-text/80 leading-relaxed'>
+              Building web apps, automation, and AI-enabled tools for operational work.
+            </p>
+          </div>
+          <div>
             <Link
               href='/contact'
-              className='text-lg md:text-xl lg:text-4xl text-terminal-green font-ibm hover:text-terminal-white transition-colors duration-200 text-center'
+              className='inline-flex items-center border border-terminal-green/25 bg-terminal-dark/20 px-4 py-2 font-ibm text-base text-terminal-green transition-colors duration-200 hover:border-terminal-green/60 hover:text-terminal-white'
             >
               stephen@stepweaver.dev
             </Link>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Section - Social Links and Legal */}
-      <div className='mt-auto'>
-        <div className='max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8'>
-          <div className='flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-3 md:space-y-4 lg:space-y-0 min-h-[4rem] lg:min-h-0'>
+        <div className='mt-8 border-t border-neon/10 pt-5'>
+          <div className='flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-3 md:space-y-4 lg:space-y-0'>
             {/* Bottom Left - Social Links */}
             <div className='flex flex-wrap gap-4'>
               {FOOTER_LINKS.map((link) => {
@@ -85,7 +81,7 @@ export default function Footer() {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className={`inline-flex items-center font-ocr text-sm text-terminal-green hover:text-terminal-white transition-colors ${
+                    className={`inline-flex items-center font-ibm text-sm text-terminal-green hover:text-terminal-white transition-colors ${
                       isTerminalLink ? 'gap-0' : 'gap-2'
                     }`}
                     {...sharedProps}
@@ -112,7 +108,7 @@ export default function Footer() {
             </div>
 
             {/* Bottom Right - Legal */}
-            <div className='text-terminal-muted font-ocr text-sm md:text-base leading-tight flex items-center min-h-[3rem] md:min-h-0'>
+            <div className='text-terminal-muted font-ibm text-sm md:text-base leading-tight flex items-center min-h-[3rem] md:min-h-0'>
               <span>
                 © {currentYear} Stephen Weaver ·{' '}
                 <Link

@@ -14,11 +14,11 @@ function WhyStephen() {
 
         <header className='relative z-10 mb-4 flex items-start justify-between gap-4 border-b border-neon/15 pb-3'>
           <div>
-            <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>SELECTION CRITERIA</p>
-            <h2 className='text-lg font-semibold text-text font-ibm'>Why deploy this operator</h2>
+            <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>Why Stephen</p>
+            <h2 className='text-lg font-semibold text-text font-ibm'>Proof of fit</h2>
           </div>
           <div className='text-right text-xs text-muted font-mono shrink-0'>
-            <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
+            <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>Section</div>
             <div className='font-mono text-neon/80 whitespace-nowrap'>WHY-01</div>
           </div>
         </header>
@@ -27,19 +27,19 @@ function WhyStephen() {
           {[
             {
               id: '01',
-              title: 'UNDERSTANDS OPERATIONS',
+              title: 'Understands operations',
               body: 'Understands business rules, edge cases, dependencies, and handoffs. Not just the code.',
               proof: '8+ years working across business process, reporting, systems, and web development.',
             },
             {
               id: '02',
-              title: 'BUILDS UNDER CONSTRAINT',
+              title: 'Builds under constraint',
               body: 'Works well in unclear environments. Especially when the requirements are incomplete, the system is messy, or multiple tools have to be tied together.',
               proof: 'Experienced with integration-heavy work, legacy process, and shifting requirements.',
             },
             {
               id: '03',
-              title: 'SHIPS USABLE SYSTEMS',
+              title: 'Ships usable systems',
               body: 'Builds for actual use. Clear flows. Low friction. Fewer failure points.',
               proof: 'Focused on making systems easier to use, easier to maintain, and easier to hand off.',
             },
@@ -55,20 +55,21 @@ function WhyStephen() {
                   <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>
                     {m.id}
                   </div>
-                  <h3 className='mt-1 font-ibm text-base uppercase tracking-[0.06em] text-neon'>
+                  <h3 className='mt-1 font-ibm text-base tracking-[0.02em] text-neon'>
                     {m.title}
                   </h3>
                 </div>
                 <div className='border border-neon/15 bg-terminal-dark/20 px-2 py-1 text-[10px] font-ocr uppercase tracking-[0.22em] text-text/60'>
-                  CRIT
+                  Proof
                 </div>
               </div>
 
               <div className='h-px w-full bg-gradient-to-r from-neon/35 to-transparent' />
 
               <p className='mt-3 font-ibm text-sm leading-relaxed text-text/85'>{m.body}</p>
-              <p className='mt-3 border-t border-neon/10 pt-2 font-ocr text-[10px] uppercase tracking-[0.22em] text-text/60'>
-                PROOF: <span className='text-text/75'>{m.proof}</span>
+              <p className='mt-3 border-t border-neon/10 pt-2 font-ibm text-xs leading-relaxed text-text/70'>
+                <span className='font-ocr text-[10px] uppercase tracking-[0.22em] text-text/55'>Proof:</span>{' '}
+                <span className='text-text/75'>{m.proof}</span>
               </p>
             </article>
           ))}
