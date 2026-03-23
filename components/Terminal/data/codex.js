@@ -1,3 +1,10 @@
+import {
+  sortPosts,
+  formatCodexDate,
+  filterPostsByTags,
+  normalizeTag,
+} from '@/lib/codex/selectors';
+
 // Codex functionality for terminal – blog posts with hashtags and dates
 let cachedPosts = [];
 let currentPath = '~/codex';
@@ -12,32 +19,11 @@ const fetchPosts = async () => {
     const response = await fetch(`${baseUrl}/api/codex`);
     if (!response.ok) throw new Error(`Failed to fetch posts: ${response.status}`);
     const posts = await response.json();
-    cachedPosts = posts.sort((a, b) => {
-      const dateA = a.updated ? new Date(a.updated) : new Date(a.date);
-      const dateB = b.updated ? new Date(b.updated) : new Date(b.date);
-      return dateB - dateA;
-    });
+    cachedPosts = sortPosts(posts);
     return posts;
   } catch (error) {
     console.error('Error fetching posts:', error);
     return [];
-  }
-};
-
-// Format date as [YYYY-MM-DD] using UTC to match codex page (avoid timezone shift)
-const formatDate = (dateStr) => {
-  if (!dateStr) return '';
-  try {
-    const s = String(dateStr).trim();
-    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
-    if (m) return `[${m[1]}-${m[2]}-${m[3]}]`;
-    const date = new Date(dateStr);
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    return `[${year}-${month}-${day}]`;
-  } catch (e) {
-    return dateStr;
   }
 };
 
@@ -73,7 +59,7 @@ export const listCurrentDirectory = async () => {
       ``,
     ];
     cachedPosts.forEach((post, index) => {
-      const date = post.updated ? formatDate(post.updated) : formatDate(post.date);
+      const date = post.updated ? formatCodexDate(post.updated) : formatCodexDate(post.date);
       const hashtags = post.hashtags?.length ? ` [${post.hashtags.join(', ')}]` : '';
       output.push(
         `<span class="text-terminal-cyan">${index + 1}.</span> <span class="text-terminal-green">${post.title}</span>`,
@@ -110,7 +96,7 @@ export const viewPostInCurrentDirectory = async (numberOrSlug) => {
         return [`<span class="text-terminal-red">No post found with slug: ${numberOrSlug}</span>`];
       }
     }
-    const date = post.updated ? formatDate(post.updated) : formatDate(post.date);
+    const date = post.updated ? formatCodexDate(post.updated) : formatCodexDate(post.date);
     const hashtags = post.hashtags?.length ? post.hashtags.map((t) => `#${t}`).join(' ') : '';
 
     return [
@@ -133,10 +119,7 @@ export const searchPostsByTagInCurrentDirectory = async (tag) => {
   const pathParts = currentPath.split('/').filter((part) => part);
 
   if (pathParts.length === 2 && pathParts[0] === '~' && pathParts[1] === 'codex') {
-    const matchingPosts = cachedPosts.filter((post) => {
-      if (!post.hashtags) return false;
-      return post.hashtags.some((h) => h.toLowerCase() === tag.toLowerCase());
-    });
+    const matchingPosts = filterPostsByTags(cachedPosts, [normalizeTag(tag)]);
 
     if (matchingPosts.length === 0) {
       return [`<span class="text-terminal-red">No posts found with hashtag #${tag}</span>`];
@@ -147,7 +130,7 @@ export const searchPostsByTagInCurrentDirectory = async (tag) => {
       ``,
     ];
     matchingPosts.forEach((post, index) => {
-      const date = post.updated ? formatDate(post.updated) : formatDate(post.date);
+      const date = post.updated ? formatCodexDate(post.updated) : formatCodexDate(post.date);
       output.push(
         `<span class="text-terminal-cyan">${index + 1}.</span> <span class="text-terminal-green">${post.title}</span>`,
         `<span class="text-terminal-dimmed">   Date: ${date}</span>`,

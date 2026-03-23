@@ -1,15 +1,11 @@
 /**
  * Rate limiting for Next.js API routes.
- *
- * Store adapter shape (for Vercel KV, Redis, etc.):
- *   - get(key) => Promise<{ count, resetAt } | null>
- *   - set(key, value) => Promise<void>
- *
- * When no store is provided, uses in-memory Map (resets per serverless instance).
- * When KV_REST_API_URL and KV_REST_API_TOKEN are set, uses Vercel KV.
+ * Production requires Vercel KV (or explicit store); dev falls back to in-memory Map.
  */
 
+import { createHash } from "crypto";
 import { getKVStore } from "@/lib/rateLimitStore";
+import { jsonSecurityHeaders } from "@/lib/jsonSecurityHeaders";
 
 const inMemoryStore = new Map();
 
@@ -20,9 +16,6 @@ const defaultStore = {
   },
 };
 
-/**
- * Get client IP from request
- */
 export const getClientIP = (request) => {
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) return forwarded.split(",")[0].trim();
@@ -31,14 +24,35 @@ export const getClientIP = (request) => {
   return "127.0.0.1";
 };
 
+function hashKeyPart(value) {
+  return createHash("sha256").update(String(value)).digest("hex").slice(0, 32);
+}
+
+function defaultKeyedRequest(request, keyPrefix) {
+  const ip = getClientIP(request);
+  const ua = (request.headers.get("user-agent") || "no-ua").slice(0, 120);
+  const id = hashKeyPart(`${ip}:${ua}`);
+  return keyPrefix ? `${keyPrefix}:${id}` : id;
+}
+
+function resolveStore(explicitStore) {
+  if (explicitStore) return explicitStore;
+  return getKVStore() ?? defaultStore;
+}
+
+function prodMissingDistributedStore() {
+  return process.env.NODE_ENV === "production" && !getKVStore();
+}
+
 /**
- * Create rate limit middleware for Next.js API routes
- * @param {Object} options - Rate limit options
- * @param {number} [options.maxRequests=5] - Max requests per window
- * @param {number} [options.windowMs=900000] - Window in ms (15 min default)
- * @param {string} [options.message] - Error message when limited
- * @param {Function} [options.getKey] - (request) => string for rate-limit key
- * @param {Object} [options.store] - Store adapter { get, set }. Overrides auto-detection.
+ * @param {Object} options
+ * @param {number} [options.maxRequests=5]
+ * @param {number} [options.windowMs]
+ * @param {string} [options.message]
+ * @param {number} [options.statusCode=429]
+ * @param {Function} [options.getKey]
+ * @param {string} [options.keyPrefix] - namespaces stored keys (e.g. chat, contact)
+ * @param {Object} [options.store]
  */
 export const createRateLimit = (options = {}) => {
   const {
@@ -47,17 +61,45 @@ export const createRateLimit = (options = {}) => {
     message = "Too many requests, please try again later.",
     statusCode = 429,
     getKey = null,
+    keyPrefix = "",
     store = null,
   } = options;
 
-  const backingStore = store ?? getKVStore() ?? defaultStore;
+  const backingStore = resolveStore(store);
+  const useHashDefault =
+    typeof getKey !== "function" &&
+    (Boolean(keyPrefix) || process.env.NODE_ENV === "production");
+
+  const effectiveGetKey =
+    typeof getKey === "function"
+      ? getKey
+      : (request) =>
+          useHashDefault
+            ? defaultKeyedRequest(request, keyPrefix)
+            : getClientIP(request);
 
   return async (request) => {
-    const key = typeof getKey === "function" ? getKey(request) : getClientIP(request);
+    if (prodMissingDistributedStore() && !store) {
+      return new Response(
+        JSON.stringify({
+          error: "Service temporarily unavailable.",
+        }),
+        {
+          status: 503,
+          headers: {
+            "Content-Type": "application/json",
+            ...jsonSecurityHeaders(),
+          },
+        }
+      );
+    }
+
+    const key = effectiveGetKey(request);
     const now = Date.now();
 
     const existing = await backingStore.get(key);
     const resetAt = existing?.resetAt ?? now + windowMs;
+    const resetSec = Math.ceil(resetAt / 1000);
 
     if (!existing || now > resetAt) {
       await backingStore.set(key, { count: 1, resetAt: now + windowMs });
@@ -73,6 +115,10 @@ export const createRateLimit = (options = {}) => {
           headers: {
             "Content-Type": "application/json",
             "Retry-After": String(retryAfter),
+            "X-RateLimit-Limit": String(maxRequests),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": String(resetSec),
+            ...jsonSecurityHeaders(),
           },
         }
       );

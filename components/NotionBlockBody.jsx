@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getHeadingsFromBlocks } from '@/lib/meshtastic-docs-headings';
 import NotionImage from '@/components/NotionImage';
+import { mintNotionImageRefreshToken } from '@/lib/notion/imageTokens';
 
 /**
  * Render a single Notion rich_text segment (bold, italic, code, link).
@@ -233,7 +234,7 @@ export default function NotionBlockBody({ blocks }) {
         <NotionImage
           key={key}
           src={url}
-          blockId={block.id}
+          imageRefreshToken={mintNotionImageRefreshToken(block.id)}
           alt={caption || 'Notion image'}
           caption={caption}
         />

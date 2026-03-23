@@ -100,6 +100,18 @@ const REQUIRED_ENV_VARS = {
     required: false,
     description: 'Vercel KV REST API token',
     example: 'AXxxxxxx'
+  },
+
+  NOTION_IMAGE_TOKEN_SECRET: {
+    required: false,
+    description: 'HMAC secret for signing Notion image refresh tokens (required for /api/notion-image refresh)',
+    example: 'long-random-string'
+  },
+
+  NOTION_BLOCKS_ALLOWED_PAGE_IDS: {
+    required: false,
+    description: 'Comma-separated Notion page UUIDs allowed for POST /api/notion-blocks (empty disables route)',
+    example: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
   }
 };
 

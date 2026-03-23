@@ -4,13 +4,9 @@ import { headers } from 'next/headers';
 import './globals.css';
 import '../styles/mdx.css';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import Navbar from '@/components/Navbar/Navbar';
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
-import Footer from '@/components/Footer/Footer';
-import PageTransition from '@/components/transition/PageTransition';
 // Analytics is a client component that handles its own lazy loading
 import Analytics from '@/components/Analytics/Analytics';
-import ChatWidgetWrapper from '@/components/ChatWidget/ChatWidgetWrapper';
 import ImageProtection from '@/components/ImageProtection/ImageProtection';
 
 // Environment validation in development
@@ -243,14 +239,7 @@ export default async function RootLayout({ children }) {
         </a>
 
         <ErrorBoundary>
-          <ThemeProvider>
-            <Navbar />
-            <main id='main-content' role='main' className='pt-24'>
-              <PageTransition>{children}</PageTransition>
-            </main>
-            <Footer />
-            <ChatWidgetWrapper />
-          </ThemeProvider>
+          <ThemeProvider>{children}</ThemeProvider>
           {/* Load Analytics after initial render to reduce blocking */}
           <Analytics />
         </ErrorBoundary>

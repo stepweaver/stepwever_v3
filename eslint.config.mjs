@@ -9,6 +9,21 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [...compat.extends("next/core-web-vitals")];
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals"),
+  {
+    rules: {
+      "no-restricted-syntax": [
+        "warn",
+        {
+          selector:
+            "CallExpression[callee.object.name='document'][callee.property.name='querySelector'][arguments.0.value=/footer/i]",
+          message:
+            "Avoid document.querySelector('footer') for layout; use route-group layouts instead.",
+        },
+      ],
+    },
+  },
+];
 
 export default eslintConfig;

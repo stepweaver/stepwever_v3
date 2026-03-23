@@ -27,21 +27,12 @@ export default function BookShowerPage() {
   };
 
   useEffect(() => {
-    // Capture query parameters from URL
     if (typeof window !== 'undefined') {
       setQueryString(window.location.search);
     }
+  }, []);
 
-    // Hide navbar and footer, remove main padding
-    const navbar = document.querySelector('nav');
-    const footer = document.querySelector('footer');
-    const main = document.querySelector('main');
-
-    if (navbar) navbar.style.display = 'none';
-    if (footer) footer.style.display = 'none';
-    if (main) main.style.paddingTop = '0';
-
-    // Fetch config to check booking status
+  useEffect(() => {
     const fetchConfig = async () => {
       try {
         const response = await fetch('/api/book-shower?action=config');
@@ -50,12 +41,10 @@ export default function BookShowerPage() {
         }
         const data = await response.json();
 
-        // Handle different response structures
         let enabled = true;
         let message = 'Bookings are currently closed.';
 
         if (data.booking_enabled !== undefined) {
-          // Direct booking_enabled field
           enabled =
             data.booking_enabled === true ||
             data.booking_enabled === 'true' ||
@@ -63,7 +52,6 @@ export default function BookShowerPage() {
             data.booking_enabled === '1';
           message = data.booking_closed_message || message;
         } else if (data.config) {
-          // Nested config object
           const config = data.config;
           enabled =
             config.booking_enabled === true ||
@@ -78,7 +66,6 @@ export default function BookShowerPage() {
       } catch (err) {
         console.error('Error fetching booking config:', err);
         setError(err.message);
-        // Default to enabled if we can't fetch config
         setBookingEnabled(true);
       } finally {
         setLoading(false);
@@ -86,13 +73,6 @@ export default function BookShowerPage() {
     };
 
     fetchConfig();
-
-    // Cleanup on unmount
-    return () => {
-      if (navbar) navbar.style.display = '';
-      if (footer) footer.style.display = '';
-      if (main) main.style.paddingTop = '';
-    };
   }, []);
 
   if (loading) {

@@ -18,6 +18,7 @@ Practical transformations, powered by code — presented as a terminal-first por
 - Terminal-style UI components
 - λlambda LLM agent for portfolio-native AI chat
 - Responsive design
+- **Layout:** route groups separate default site chrome `(site)` from console-style pages `(console)` (no site footer) and embed-style pages `(embed)` (e.g. book-shower), so layout is composition—not DOM hacks
 
 ## Flagship systems
 
@@ -28,7 +29,7 @@ Practical transformations, powered by code — presented as a terminal-first por
 ### Related docs
 
 - AI setup: [docs/AI_CHAT_SETUP.md](./docs/AI_CHAT_SETUP.md)
-- λlambda case study: visit `/projects/λlambda-llm-agent` in the running app
+- λlambda case study: visit `/projects/llambda-llm-agent` in the running app
 
 ## Getting Started
 
@@ -83,26 +84,42 @@ The chat will automatically use Groq's free tier. OpenAI is supported as a fallb
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm test` - Run Jest (security helpers, rate limit, Codex selectors, carousel slug checks, etc.)
+- `npm run verify:carousel` - Quick Jest check that every homepage carousel slug exists in project data
 
 ## Project Structure
 
 ```
 ├── app/                         # Next.js App Router
-│   ├── terminal/                # Interactive terminal with `chat` command (λlambda surface)
-│   ├── projects/
-│   │   └── [slug]/              # Project detail pages (includes λlambda LLM agent case study)
+│   ├── (site)/                  # Default chrome: navbar, footer, chat widget
+│   │   ├── page.jsx             # Home
+│   │   ├── codex/               # Blog / codex listing + posts
+│   │   ├── contact/             # Contact page
+│   │   ├── projects/page.jsx    # Project index
+│   │   └── …                    # resume, meshtastic, privacy, etc.
+│   ├── (console)/               # Console-style pages (nav + chat, no site footer)
+│   │   ├── terminal/            # Interactive terminal (`chat` = λlambda)
+│   │   ├── projects/[slug]/     # Case study detail (server shell + client page)
+│   │   ├── dice-roller/
+│   │   └── yankee-samurai/
+│   ├── (embed)/                 # Minimal chrome (e.g. book-shower)
 │   ├── api/
-│   │   ├── chat/                # Protected AI chat route for λlambda
-│   │   └── contact/             # Contact form handler
-│   └── contact/                 # Contact page
+│   │   ├── chat/                # Protected AI chat (λlambda)
+│   │   ├── contact/             # Contact form handler
+│   │   ├── codex/               # Public post list JSON
+│   │   ├── notion-image/        # Signed-token image URL refresh
+│   │   └── …
+│   └── layout.jsx               # Root: theme, analytics—chrome lives in route groups
 ├── components/                  # React components
 │   ├── Terminal/                # Terminal shell, commands, and UI
 │   ├── ChatWidget/              # Floating/fullscreen website chat powered by λlambda
 │   ├── ChatBot/                 # Dedicated page chat surface
 │   └── Chat/                    # Shared chat message components
 ├── hooks/                       # Shared hooks (chat, scrolling, bot protection)
+├── lib/                         # apiSecurity, requestOrigin, codex/selectors, chat/requestBuilder, schemas, …
 ├── docs/                        # Documentation (email, AI chat setup, etc.)
-├── utils/                       # Utility functions
+├── utils/                       # Utility functions (rateLimit, safeHref, sanitize, …)
+├── __tests__/                   # Jest tests for risky paths
 └── public/                      # Static assets
 ```
 
@@ -114,3 +131,5 @@ The chat will automatically use Groq's free tier. OpenAI is supported as a fallb
 - Nodemailer
 - Lucide React Icons
 - React Icons
+- Zod (API request validation)
+- Jest + Testing Library (targeted tests for security and shared utilities)

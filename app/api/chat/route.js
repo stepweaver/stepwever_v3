@@ -3,6 +3,9 @@ import { createRateLimit } from '@/utils/rateLimit';
 import { sanitizeText } from '@/utils/sanitize';
 import { withProtectedRoute } from '@/lib/apiSecurity';
 import { buildSystemPrompt } from '@/lib/chat/systemPrompt';
+import { isAllowedRequestOrigin } from '@/lib/requestOrigin';
+import { jsonSecurityHeaders } from '@/lib/jsonSecurityHeaders';
+import { chatBodySchema } from '@/lib/schemas/chat.schema';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,55 +16,17 @@ const MAX_MESSAGES = 12;
 // Abort upstream calls so your API route can’t hang forever
 const UPSTREAM_TIMEOUT_MS = 20_000;
 
-// Optional allowlist (recommended in prod). Example:
-// ALLOWED_ORIGINS="https://stepweaver.dev,https://www.stepweaver.dev"
-// ALLOWED_HOSTS="stepweaver.dev,www.stepweaver.dev"
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
-  .split(',')
-  .map((s) => s.trim())
-  .filter(Boolean);
-
-const ALLOWED_HOSTS = (process.env.ALLOWED_HOSTS || '')
-  .split(',')
-  .map((s) => s.trim())
-  .filter(Boolean);
-
-// System prompt is imported from lib/chat/systemPrompt.js (server-only)
-
-function getClientIp(request) {
-  const xff = request.headers.get('x-forwarded-for');
-  if (xff) return xff.split(',')[0].trim();
-  return request.headers.get('x-real-ip') || 'unknown';
-}
-
-function getRateLimitKey(request) {
-  const ip = getClientIp(request);
-  const ua = request.headers.get('user-agent') || 'no-ua';
-  return `${ip}:${ua.slice(0, 40)}`;
-}
-
-function isAllowedOrigin(origin, host) {
-  if (ALLOWED_ORIGINS.length > 0) return ALLOWED_ORIGINS.includes(origin);
-  if (!origin || !host) return true;
-  try {
-    const originUrl = new URL(origin);
-    const hostOk = originUrl.host === host;
-    if (ALLOWED_HOSTS.length > 0) return hostOk && ALLOWED_HOSTS.includes(originUrl.host);
-    return hostOk;
-  } catch {
-    return false;
-  }
-}
-
-function sameOriginGuard(request) {
-  const origin = request.headers.get('origin');
-  const host = request.headers.get('host');
-  return isAllowedOrigin(origin, host);
-}
+const chatRateLimit = createRateLimit({
+  keyPrefix: 'chat',
+  maxRequests: 20,
+  windowMs: 60 * 1000,
+  message: 'Too many messages. Please wait a moment before sending more.',
+});
 
 function safeJson(value, init = {}) {
   const headers = {
     'Cache-Control': 'no-store',
+    ...jsonSecurityHeaders(),
     ...(init.headers || {}),
   };
   return NextResponse.json(value, { ...init, headers });
@@ -217,17 +182,11 @@ function extractAssistantTextFromResponses(data) {
 
 export async function POST(request) {
   try {
-    if (!sameOriginGuard(request)) {
-      return safeJson({ error: 'Invalid request origin.' }, { status: 403 });
-    }
-
     const result = await withProtectedRoute(request, {
-      rateLimit: createRateLimit({
-        maxRequests: 20,
-        windowMs: 60 * 1000,
-        message: 'Too many messages. Please wait a moment before sending more.',
-        getKey: getRateLimitKey,
-      }),
+      allowedMethods: ['POST'],
+      enforceOrigin: true,
+      rateLimit: chatRateLimit,
+      schema: chatBodySchema,
       parseJson: (r) => r.json().catch(() => null),
       botCheck: { opts: { checkContent: false, requireTimestamp: true } },
       onBotDetected: () => {
@@ -348,8 +307,8 @@ export async function POST(request) {
 }
 
 export async function OPTIONS(request) {
-  if (!sameOriginGuard(request)) {
-    return new NextResponse(null, { status: 403 });
+  if (!isAllowedRequestOrigin(request)) {
+    return new NextResponse(null, { status: 403, headers: jsonSecurityHeaders() });
   }
 
   const origin = request.headers.get('origin') || '';

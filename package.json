@@ -11,6 +11,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
+    "verify:carousel": "jest --testPathPatterns=carouselSlugs --no-coverage",
     "analyze": "ANALYZE=true npm run build",
     "analyze:dev": "ANALYZE=true npm run dev"
   },
@@ -27,7 +28,8 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
-    "yaml": "^2.8.0"
+    "yaml": "^2.8.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

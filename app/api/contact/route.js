@@ -3,26 +3,43 @@ import {
   validateEmail,
   sendContactEmail,
   sendConfirmationEmail,
-  isEmailConfigured
+  isEmailConfigured,
 } from '@/utils/email';
 import { sanitizeFormData } from '@/utils/sanitize';
 import { createRateLimit } from '@/utils/rateLimit';
 import { withProtectedRoute } from '@/lib/apiSecurity';
+import { contactBodySchema } from '@/lib/schemas/contact.schema';
+import { jsonSecurityHeaders } from '@/lib/jsonSecurityHeaders';
+import { logError } from '@/lib/observability/logger';
+
+const contactRateLimit = createRateLimit({
+  keyPrefix: 'contact',
+  maxRequests: 3,
+  windowMs: 15 * 60 * 1000,
+  message: 'Too many contact form submissions. Please try again later.',
+});
+
+const GENERIC_FAILURE = 'Message could not be sent. Please try again later.';
+
+function json(body, status = 200) {
+  return NextResponse.json(body, { status, headers: jsonSecurityHeaders() });
+}
 
 export async function POST(request) {
   try {
     const result = await withProtectedRoute(request, {
-      rateLimit: createRateLimit({
-        maxRequests: 3,
-        windowMs: 15 * 60 * 1000,
-        message: 'Too many contact form submissions. Please try again later.'
-      }),
+      allowedMethods: ['POST'],
+      enforceOrigin: true,
+      rateLimit: contactRateLimit,
+      schema: contactBodySchema,
       botCheck: { opts: { checkContent: true, requireTimestamp: true } },
       onBotDetected: () => {
         console.warn('[CONTACT] Bot blocked');
-        return NextResponse.json({ message: "Message sent successfully! I'll get back to you soon." });
+        return json({
+          message: "Message sent successfully! I'll get back to you soon.",
+        });
       },
-      sanitize: sanitizeFormData
+      sanitize: sanitizeFormData,
     });
 
     if (result.error) return result.error;
@@ -30,25 +47,16 @@ export async function POST(request) {
     const { name, email, message } = result.body || {};
 
     if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: 'All fields are required' },
-        { status: 400 }
-      );
+      return json({ error: 'All fields are required' }, 400);
     }
 
     if (!validateEmail(email)) {
-      return NextResponse.json(
-        { error: 'Please enter a valid email address' },
-        { status: 400 }
-      );
+      return json({ error: 'Please enter a valid email address' }, 400);
     }
 
     if (!isEmailConfigured()) {
-      console.error('Email configuration missing. Please set EMAIL_USER and EMAIL_PASS environment variables.');
-      return NextResponse.json(
-        { error: 'Email service not configured. Please set up your email credentials in .env.local' },
-        { status: 500 }
-      );
+      logError('contact_email_unconfigured', { route: '/api/contact' });
+      return json({ error: GENERIC_FAILURE }, 500);
     }
 
     try {
@@ -58,21 +66,21 @@ export async function POST(request) {
         await sendConfirmationEmail(result.body);
       }
     } catch (emailError) {
-      console.error('Error sending email:', emailError);
-      return NextResponse.json(
-        { error: 'Failed to send email. Please check your email configuration.' },
-        { status: 500 }
-      );
+      logError('contact_email_send_failed', {
+        route: '/api/contact',
+        cause: emailError?.message,
+      });
+      return json({ error: GENERIC_FAILURE }, 500);
     }
 
-    return NextResponse.json({
+    return json({
       message: "Message sent successfully! I'll get back to you soon.",
     });
   } catch (error) {
-    console.error('Error sending email:', error);
-    return NextResponse.json(
-      { error: 'Failed to send message. Please try again later.' },
-      { status: 500 }
-    );
+    logError('contact_unexpected', {
+      route: '/api/contact',
+      cause: error?.message,
+    });
+    return json({ error: GENERIC_FAILURE }, 500);
   }
 }

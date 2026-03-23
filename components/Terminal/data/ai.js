@@ -1,7 +1,8 @@
-// AI Chat handler for Terminal
-// Sends messages to the AI API and returns responses
+import { buildChatRequestPayload } from '@/lib/chat/requestBuilder';
 
-// Record module load time for bot-protection timing check
+// AI Chat handler for Terminal — sends messages to /api/chat
+
+// Session load time for bot-protection timing (min delay vs instant bots)
 const MODULE_LOADED_AT = Date.now();
 
 export async function sendAIMessage(message, callback) {
@@ -17,12 +18,13 @@ export async function sendAIMessage(message, callback) {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        channel: 'terminal',
-        messages: [{ role: 'user', content: message }],
-        _hp_website: '',            // honeypot (always empty)
-        _t: MODULE_LOADED_AT,       // timing stamp
-      }),
+      body: JSON.stringify(
+        buildChatRequestPayload({
+          channel: 'terminal',
+          messages: [{ role: 'user', content: message }],
+          botFields: { _hp_website: '', _t: MODULE_LOADED_AT },
+        })
+      ),
     });
 
     const data = await response.json();

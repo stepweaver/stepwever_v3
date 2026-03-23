@@ -41,11 +41,6 @@ function checkTiming(body) {
     return { isBot: true, reason: 'too_fast' };
   }
 
-  // Guard against obviously spoofed timestamps (> 24 hours old)
-  if (elapsed > 24 * 60 * 60 * 1000) {
-    return { isBot: true, reason: 'stale_timestamp' };
-  }
-
   return { isBot: false };
 }
 

@@ -4,24 +4,24 @@ import { useState, useCallback } from 'react';
 
 /**
  * Client component for Notion images that handles expired temporary URLs.
- * Notion `file`-type URLs are signed and expire after ~1 hour. When ISR
- * serves a stale page, the baked-in URL may already be dead. On load
- * failure we hit /api/notion-image to resolve a fresh URL from the API.
+ * Notion `file`-type URLs are signed and expire after ~1 hour. On load
+ * failure we call /api/notion-image with a server-minted signed token (never raw block IDs).
  */
-export default function NotionImage({ src, blockId, alt, caption }) {
+export default function NotionImage({ src, imageRefreshToken, alt, caption }) {
   const [imageSrc, setImageSrc] = useState(src);
   const [hasRetried, setHasRetried] = useState(false);
   const [failed, setFailed] = useState(false);
 
   const handleError = useCallback(async () => {
-    if (hasRetried || !blockId) {
+    if (hasRetried || !imageRefreshToken) {
       setFailed(true);
       return;
     }
     setHasRetried(true);
 
     try {
-      const res = await fetch(`/api/notion-image?blockId=${blockId}`);
+      const params = new URLSearchParams({ token: imageRefreshToken });
+      const res = await fetch(`/api/notion-image?${params.toString()}`);
       if (res.ok) {
         const data = await res.json();
         if (data.url) {
@@ -34,7 +34,7 @@ export default function NotionImage({ src, blockId, alt, caption }) {
     }
 
     setFailed(true);
-  }, [blockId, hasRetried]);
+  }, [imageRefreshToken, hasRetried]);
 
   if (failed) return null;
 

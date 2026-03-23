@@ -1,3 +1,5 @@
+import { safeHref } from '@/utils/safeHref';
+
 /**
  * Parse a single segment for markdown links. Returns array of strings and link elements.
  */
@@ -14,18 +16,33 @@ function parseSegmentForLinks(segment, keyPrefix = '') {
     }
     const linkText = match[1];
     const linkUrl = match[2];
-    parts.push(
-      <a
-        key={`${keyPrefix}link-${match.index}`}
-        href={linkUrl}
-        target={linkUrl.startsWith('http') ? '_blank' : undefined}
-        rel={linkUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
-        className='text-terminal-green hover:text-terminal-cyan underline underline-offset-2 break-words'
-        download={linkUrl.endsWith('.pdf') ? linkText.replace(/\s+/g, '_') + '.pdf' : undefined}
-      >
-        {linkText}
-      </a>
-    );
+    const resolved = safeHref(linkUrl);
+    if (resolved.ok) {
+      const { href, isExternal } = resolved;
+      const isPdf = /\.pdf$/i.test(href.split('?')[0] || '');
+      parts.push(
+        <a
+          key={`${keyPrefix}link-${match.index}`}
+          href={href}
+          {...(isExternal
+            ? {
+                target: '_blank',
+                rel: 'noopener noreferrer nofollow',
+              }
+            : {})}
+          className='text-terminal-green hover:text-terminal-cyan underline underline-offset-2 break-words'
+          download={
+            isPdf && !isExternal
+              ? linkText.replace(/\s+/g, '_') + '.pdf'
+              : undefined
+          }
+        >
+          {linkText}
+        </a>
+      );
+    } else {
+      parts.push(`[${linkText}](${linkUrl})`);
+    }
     lastIndex = match.index + match[0].length;
   }
 

@@ -15,17 +15,45 @@ function normalize(s) {
   return (s || '').toLowerCase();
 }
 
+/** Collapsed tag strip: enough for ~2–3 rows on mobile without hiding the grid. */
+const TAGS_COLLAPSED_MAX = 20;
+
 export default function ProjectsIndexPage() {
   const [query, setQuery] = useState('');
   const [activeTags, setActiveTags] = useState([]);
+  const [tagsExpanded, setTagsExpanded] = useState(false);
 
-  const allTags = useMemo(() => {
-    const set = new Set();
+  const { tagsSorted, tagCounts } = useMemo(() => {
+    const counts = new Map();
     CAROUSEL_PROJECTS.forEach((p) => {
-      (p.tags || []).forEach((t) => set.add(t));
+      (p.tags || []).forEach((t) => {
+        counts.set(t, (counts.get(t) || 0) + 1);
+      });
     });
-    return Array.from(set).sort((a, b) => a.localeCompare(b));
+    const tags = Array.from(counts.keys()).sort((a, b) => {
+      const ca = counts.get(a) ?? 0;
+      const cb = counts.get(b) ?? 0;
+      if (cb !== ca) return cb - ca;
+      return a.localeCompare(b);
+    });
+    return { tagsSorted: tags, tagCounts: counts };
   }, []);
+
+  const tagOrder = useMemo(
+    () => new Map(tagsSorted.map((t, i) => [t, i])),
+    [tagsSorted]
+  );
+
+  const displayTags = useMemo(() => {
+    if (tagsExpanded || tagsSorted.length <= TAGS_COLLAPSED_MAX) return tagsSorted;
+    const head = tagsSorted.slice(0, TAGS_COLLAPSED_MAX);
+    const extra = activeTags
+      .filter((t) => !head.includes(t))
+      .sort((a, b) => (tagOrder.get(a) ?? 0) - (tagOrder.get(b) ?? 0));
+    return extra.length ? [...head, ...extra] : head;
+  }, [tagsSorted, tagsExpanded, activeTags, tagOrder]);
+
+  const hiddenTagCount = tagsSorted.length - displayTags.length;
 
   const filtered = useMemo(() => {
     const q = normalize(query).trim();
@@ -110,26 +138,51 @@ export default function ProjectsIndexPage() {
             )}
           </div>
           <div className='flex flex-wrap gap-2'>
-            {allTags.map((tag) => {
+            {displayTags.map((tag) => {
               const on = activeTags.includes(tag);
+              const n = tagCounts.get(tag);
               return (
                 <button
                   key={tag}
                   type='button'
                   onClick={() => toggleTag(tag)}
                   aria-pressed={on}
+                  title={n != null ? `${n} project${n === 1 ? '' : 's'}` : undefined}
                   className={[
-                    'border px-3 py-1.5 font-ocr text-[10px] uppercase tracking-wider transition sm:text-xs',
+                    'inline-flex items-baseline gap-1.5 border px-3 py-1.5 font-ocr text-[10px] uppercase tracking-wider transition sm:text-xs',
                     on
                       ? 'border-terminal-green/45 bg-terminal-green/10 text-terminal-green'
                       : 'border-neon/15 bg-terminal-dark/25 text-terminal-dimmed hover:border-neon/35 hover:text-neon/85',
                   ].join(' ')}
                 >
-                  {tag}
+                  <span>{tag}</span>
+                  {n != null && n > 0 && (
+                    <span className='font-ibm normal-case text-[9px] tabular-nums text-neon/35 sm:text-[10px]'>
+                      {n}
+                    </span>
+                  )}
                 </button>
               );
             })}
           </div>
+          {!tagsExpanded && hiddenTagCount > 0 && (
+            <button
+              type='button'
+              onClick={() => setTagsExpanded(true)}
+              className='mt-3 font-ocr text-[10px] uppercase tracking-wider text-neon/55 underline decoration-neon/25 underline-offset-2 transition hover:text-terminal-green'
+            >
+              Show {hiddenTagCount} more tag{hiddenTagCount === 1 ? '' : 's'}
+            </button>
+          )}
+          {tagsExpanded && tagsSorted.length > TAGS_COLLAPSED_MAX && (
+            <button
+              type='button'
+              onClick={() => setTagsExpanded(false)}
+              className='mt-3 font-ocr text-[10px] uppercase tracking-wider text-neon/55 underline decoration-neon/25 underline-offset-2 transition hover:text-terminal-green'
+            >
+              Show fewer tags
+            </button>
+          )}
         </div>
 
         <p className='mb-6 font-ocr text-xs uppercase tracking-wider text-neon/50'>

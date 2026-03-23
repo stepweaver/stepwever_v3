@@ -5,25 +5,37 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import PostItem from '@/components/Codex/PostItem';
+import {
+  sortPosts,
+  extractUniqueTags,
+  filterPostsByTags,
+  formatCodexDate,
+  normalizeTag,
+} from '@/lib/codex/selectors';
 
 const BackgroundCanvas = dynamic(
   () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
   { ssr: false }
 );
 
-function CodexContent() {
+function CodexContent({ initialPosts = [] }) {
   const searchParams = useSearchParams();
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState(initialPosts);
+  const [loading, setLoading] = useState(initialPosts.length === 0);
   const [error, setError] = useState(null);
   const [activeHashtags, setActiveHashtags] = useState([]);
 
   useEffect(() => {
     const hashtagParam = searchParams.get('hashtag');
-    if (hashtagParam) setActiveHashtags([hashtagParam]);
+    if (hashtagParam) setActiveHashtags([normalizeTag(hashtagParam)]);
   }, [searchParams]);
 
   useEffect(() => {
+    if (initialPosts.length > 0) {
+      setPosts(initialPosts);
+      setLoading(false);
+      return;
+    }
     async function fetchPosts() {
       setLoading(true);
       setError(null);
@@ -41,51 +53,25 @@ function CodexContent() {
       }
     }
     fetchPosts();
-  }, []);
+  }, [initialPosts]);
 
-  const allPosts = useMemo(() => {
-    return [...posts].sort((a, b) => {
-      const dateA = a.updated ? new Date(a.updated) : new Date(a.date);
-      const dateB = b.updated ? new Date(b.updated) : new Date(b.date);
-      return dateB - dateA;
-    });
-  }, [posts]);
+  const allPosts = useMemo(() => sortPosts(posts), [posts]);
 
-  const filteredHashtags = useMemo(() => {
-    const tags = new Set();
-    allPosts.forEach((post) => {
-      if (post.hashtags) post.hashtags.forEach((tag) => tags.add(tag));
-    });
-    return Array.from(tags).sort();
-  }, [allPosts]);
+  const filteredHashtags = useMemo(
+    () => extractUniqueTags(allPosts),
+    [allPosts]
+  );
 
-  const filteredPosts = useMemo(() => {
-    if (activeHashtags.length === 0) return allPosts;
-    return allPosts.filter((post) => {
-      const postTags = post.hashtags || [];
-      return activeHashtags.some((tag) => postTags.includes(tag));
-    });
-  }, [allPosts, activeHashtags]);
+  const filteredPosts = useMemo(
+    () => filterPostsByTags(allPosts, activeHashtags),
+    [allPosts, activeHashtags]
+  );
 
   const handleHashtagClick = (tag) => {
+    const n = normalizeTag(tag);
     setActiveHashtags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+      prev.includes(n) ? prev.filter((t) => t !== n) : [...prev, n]
     );
-  };
-
-  const formatDate = (dateStr) => {
-    if (!dateStr) return '';
-    try {
-      const [year, month, day] = dateStr.split('-').map((part) => part.replace(/[^0-9]/g, ''));
-      if (!year || !month || !day) return dateStr;
-      const date = new Date(Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)));
-      const y = date.getUTCFullYear();
-      const m = String(date.getUTCMonth() + 1).padStart(2, '0');
-      const d = String(date.getUTCDate()).padStart(2, '0');
-      return `[${y}-${m}-${d}]`;
-    } catch (e) {
-      return dateStr;
-    }
   };
 
   return (
@@ -200,7 +186,7 @@ function CodexContent() {
                       key={`${post.slug}-${index}`}
                       post={post}
                       index={index}
-                      formatDate={formatDate}
+                      formatDate={formatCodexDate}
                       onHashtagClick={handleHashtagClick}
                     />
                   ))}
@@ -304,10 +290,10 @@ function CodexContent() {
   );
 }
 
-export default function CodexPage() {
+export default function CodexPageClient({ initialPosts = [] }) {
   return (
     <Suspense fallback={null}>
-      <CodexContent />
+      <CodexContent initialPosts={initialPosts} />
     </Suspense>
   );
 }

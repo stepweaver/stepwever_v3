@@ -1,9 +1,7 @@
 'use client';
 
-import { use, useState, useEffect } from 'react';
-import { notFound } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { getProjectBySlug } from '@/lib/projectsData';
 import ChatBot from '@/components/ChatBot/ChatBot';
 import {
   ArrowLeft,
@@ -62,15 +60,6 @@ function ProjectPageLayout({ project, slug, children }) {
   const [mobileBriefExpanded, setMobileBriefExpanded] = useState(false);
   const projId = `PROJ-${slug.toUpperCase().replace(/-/g, '').slice(0, 8)}`;
   const repoHref = getRepoHref(project.githubRepo);
-
-  // Hide site footer for full-screen console feel (like dice roller)
-  useEffect(() => {
-    const footer = document.querySelector('footer');
-    if (footer) footer.style.display = 'none';
-    return () => {
-      if (footer) footer.style.display = '';
-    };
-  }, []);
 
   return (
     <ErrorBoundary>
@@ -279,19 +268,13 @@ function ProjectPageLayout({ project, slug, children }) {
   );
 }
 
-export default function ProjectPage({ params }) {
-  const { slug } = use(params);
-  const project = getProjectBySlug(slug);
+export default function ProjectPageClient({ project, slug }) {
   const demoComponents = {
     'neon-profile-card': HeroOperatorCard,
     'rpg-dice-roller': DiceRoller,
     'llambda-llm-agent': ChatBot,
   };
   const DemoComponent = demoComponents[slug] || null;
-
-  if (!project) {
-    notFound();
-  }
 
   const isLlambdaProject = slug === 'llambda-llm-agent';
   const shouldShowHeroComponent =

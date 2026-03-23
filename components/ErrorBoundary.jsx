@@ -1,6 +1,7 @@
 'use client';
 
 import { Component } from 'react';
+import { logError } from '@/lib/observability/logger';
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -13,7 +14,11 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
+    logError('client_error_boundary', {
+      message: error?.message,
+      stack: error?.stack,
+      componentStack: errorInfo?.componentStack,
+    });
     this.setState({ errorInfo });
 
     // Log additional context for scroll-related errors

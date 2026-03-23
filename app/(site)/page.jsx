@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
-import generateStructuredData from './structured-data';
-import HomePageContent from './HomePageContent';
+import generateStructuredData from '../structured-data';
+import HomePageContent from '../HomePageContent';
 
 export default async function HomePage() {
   const structuredData = generateStructuredData();

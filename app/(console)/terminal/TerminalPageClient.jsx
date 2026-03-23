@@ -8,7 +8,7 @@ import {
   Terminal as TerminalIcon,
   ChevronRight,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import dynamic from 'next/dynamic';
 import TerminalShell from '@/components/Terminal/TerminalShell';
@@ -114,15 +114,7 @@ function MobileBriefBar() {
   );
 }
 
-export default function TerminalPage() {
-  useEffect(() => {
-    const footer = document.querySelector('footer');
-    if (footer) footer.style.display = 'none';
-    return () => {
-      if (footer) footer.style.display = '';
-    };
-  }, []);
-
+export default function TerminalPageClient() {
   return (
     <div className='relative h-[calc(100vh-6rem)] flex flex-col overflow-hidden'>
       <BackgroundCanvas />

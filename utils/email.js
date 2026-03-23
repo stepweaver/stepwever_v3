@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { escapeHtmlForEmail } from '@/lib/email/escapeHtml';
 
 // Create transporter instance
 let transporter = null;
@@ -22,11 +23,13 @@ export const validateEmail = (email) => {
   return emailRegex.test(email);
 };
 
-// Send contact form email
-export const sendContactEmail = async (formData) => {
+export function renderContactEmail(formData) {
   const { name, email, message } = formData;
+  const safeName = escapeHtmlForEmail(name);
+  const safeEmail = escapeHtmlForEmail(email);
+  const safeMessage = escapeHtmlForEmail(message);
 
-  const emailContent = {
+  return {
     subject: `New Contact Form Submission from ${name}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -36,13 +39,13 @@ export const sendContactEmail = async (formData) => {
         
         <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
           <h3 style="color: #007bff; margin-top: 0;">Contact Information</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Name:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> ${safeEmail}</p>
         </div>
         
         <div style="background-color: #fff; padding: 20px; border: 1px solid #dee2e6; border-radius: 5px;">
           <h3 style="color: #007bff; margin-top: 0;">Project Summary</h3>
-          <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
+          <p style="white-space: pre-wrap; line-height: 1.6;">${safeMessage}</p>
         </div>
         
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 14px;">
@@ -64,6 +67,33 @@ ${message}
 Timestamp: ${new Date().toLocaleString()}
     `,
   };
+}
+
+export function renderConfirmationEmail(formData) {
+  const { name, email, message } = formData;
+  const safeName = escapeHtmlForEmail(name);
+  const safeMessage = escapeHtmlForEmail(message);
+
+  return {
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333;">Thank you for reaching out!</h2>
+        <p>Hi ${safeName},</p>
+        <p>I've received your message and will get back to you as soon as possible.</p>
+        <p>Here's a copy of your message:</p>
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
+          <p style="white-space: pre-wrap;">${safeMessage}</p>
+        </div>
+        <p>Best regards,<br>Stephen<br>FOUNDER<br>λstepweaver</p>
+      </div>
+    `,
+  };
+}
+
+// Send contact form email
+export const sendContactEmail = async (formData) => {
+  const { name, email, message } = formData;
+  const emailContent = renderContactEmail({ name, email, message });
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -81,23 +111,13 @@ Timestamp: ${new Date().toLocaleString()}
 // Send confirmation email to user
 export const sendConfirmationEmail = async (formData) => {
   const { name, email, message } = formData;
+  const { html } = renderConfirmationEmail({ name, email, message });
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
     subject: 'Thank you for contacting λstepweaver',
-    html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #333;">Thank you for reaching out!</h2>
-        <p>Hi ${name},</p>
-        <p>I've received your message and will get back to you as soon as possible.</p>
-        <p>Here's a copy of your message:</p>
-        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
-          <p style="white-space: pre-wrap;">${message}</p>
-        </div>
-        <p>Best regards,<br>Stephen<br>FOUNDER<br>λstepweaver</p>
-      </div>
-    `,
+    html,
   };
 
   const transport = getTransporter();

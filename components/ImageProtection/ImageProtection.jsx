@@ -11,8 +11,9 @@ function isRasterMediaTarget(target) {
 }
 
 /**
- * Best-effort deterrents against right-click save and drag-to-desktop for
- * raster content. Does not stop screenshots, devtools, or direct URL access.
+ * Best-effort UX deterrents against right-click save and drag-to-desktop for
+ * raster content. Not a security boundary: screenshots, devtools, and direct
+ * URLs still work.
  */
 export default function ImageProtection() {
   useEffect(() => {
