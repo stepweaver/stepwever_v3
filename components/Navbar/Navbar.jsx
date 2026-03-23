@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import MobileNav from './MobileNav';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
@@ -9,37 +10,21 @@ import { NAV_LINKS } from '@/lib/navigation';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Determine if scrolled past threshold
       setScrolled(currentScrollY > 20);
-
-      // Show/hide navbar based on scroll direction
-      if (currentScrollY < lastScrollY || currentScrollY < 100) {
-        // Scrolling up or near top - show navbar
-        setVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down and past threshold - hide navbar
-        setVisible(false);
-      }
-
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   return (
     <nav
       className={`pt-6 pb-4 fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        visible ? 'translate-y-0' : '-translate-y-full'
-      } ${
         scrolled
           ? 'bg-terminal-dark/90 backdrop-blur-md shadow-lg shadow-terminal-green/10'
           : 'bg-transparent'
@@ -78,27 +63,32 @@ export default function Navbar() {
               aria-label='Main menu'
             >
               {NAV_LINKS.map((link) =>
-                link.scroll ? (
-                  <Link
-                    key={link.path}
-                    href={link.path}
-                    className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-3 py-2 bg-transparent'
-                    role='menuitem'
-                    aria-label={link.ariaLabel}
-                  >
-                    {link.name}
-                  </Link>
-                ) : (
-                  <Link
-                    key={link.path}
-                    href={link.path}
-                    className='text-text hover:text-neon transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-3 py-2 bg-transparent'
-                    role='menuitem'
-                    aria-label={link.ariaLabel}
-                  >
-                    {link.name}
-                  </Link>
-                )
+                (() => {
+                  const linkPath = link.path.split('#')[0] || '/';
+                  const isActive =
+                    linkPath === '/'
+                      ? pathname === '/'
+                      : pathname === linkPath || pathname.startsWith(`${linkPath}/`);
+                  const className = [
+                    'transition-colors duration-200 font-ibm text-lg font-bold uppercase tracking-wider cursor-pointer px-3 py-2 border-b-2',
+                    isActive
+                      ? 'text-neon border-neon/70'
+                      : 'text-text border-transparent hover:text-neon hover:border-neon/35',
+                  ].join(' ');
+
+                  return (
+                    <Link
+                      key={link.path}
+                      href={link.path}
+                      className={className}
+                      role='menuitem'
+                      aria-label={link.ariaLabel}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })()
               )}
             </div>
 

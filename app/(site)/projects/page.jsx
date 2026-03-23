@@ -16,7 +16,7 @@ function normalize(s) {
 }
 
 /** Collapsed tag strip: enough for ~2–3 rows on mobile without hiding the grid. */
-const TAGS_COLLAPSED_MAX = 20;
+const TAGS_COLLAPSED_MAX = 12;
 
 export default function ProjectsIndexPage() {
   const [query, setQuery] = useState('');
@@ -109,7 +109,7 @@ export default function ProjectsIndexPage() {
         </header>
 
         <div className='mb-8 space-y-4'>
-          <label className='block font-ocr text-[10px] uppercase tracking-[0.24em] text-neon/60 sm:text-xs'>
+          <label className='block font-ibm text-xs uppercase tracking-[0.08em] text-neon/70 sm:text-sm'>
             Search
           </label>
           <input
@@ -124,14 +124,14 @@ export default function ProjectsIndexPage() {
 
         <div className='mb-10'>
           <div className='mb-3 flex flex-wrap items-center gap-2'>
-            <span className='font-ocr text-[10px] uppercase tracking-[0.24em] text-neon/60 sm:text-xs'>
+            <span className='font-ibm text-xs uppercase tracking-[0.08em] text-neon/70 sm:text-sm'>
               Tags
             </span>
             {activeTags.length > 0 && (
               <button
                 type='button'
                 onClick={clearTags}
-                className='font-ocr text-[10px] uppercase tracking-wider text-neon/50 underline decoration-neon/25 underline-offset-2 hover:text-terminal-green'
+                className='font-ibm text-xs uppercase tracking-[0.08em] text-neon/60 underline decoration-neon/25 underline-offset-2 hover:text-terminal-green'
               >
                 Clear
               </button>
@@ -149,7 +149,7 @@ export default function ProjectsIndexPage() {
                   aria-pressed={on}
                   title={n != null ? `${n} project${n === 1 ? '' : 's'}` : undefined}
                   className={[
-                    'inline-flex items-baseline gap-1.5 border px-3 py-1.5 font-ocr text-[10px] uppercase tracking-wider transition sm:text-xs',
+                    'inline-flex items-baseline gap-1.5 border px-3 py-1.5 font-ibm text-xs tracking-[0.05em] transition sm:text-sm',
                     on
                       ? 'border-terminal-green/45 bg-terminal-green/10 text-terminal-green'
                       : 'border-neon/15 bg-terminal-dark/25 text-terminal-dimmed hover:border-neon/35 hover:text-neon/85',
@@ -169,7 +169,7 @@ export default function ProjectsIndexPage() {
             <button
               type='button'
               onClick={() => setTagsExpanded(true)}
-              className='mt-3 font-ocr text-[10px] uppercase tracking-wider text-neon/55 underline decoration-neon/25 underline-offset-2 transition hover:text-terminal-green'
+              className='mt-3 font-ibm text-xs uppercase tracking-[0.08em] text-neon/60 underline decoration-neon/25 underline-offset-2 transition hover:text-terminal-green'
             >
               Show {hiddenTagCount} more tag{hiddenTagCount === 1 ? '' : 's'}
             </button>
@@ -178,14 +178,14 @@ export default function ProjectsIndexPage() {
             <button
               type='button'
               onClick={() => setTagsExpanded(false)}
-              className='mt-3 font-ocr text-[10px] uppercase tracking-wider text-neon/55 underline decoration-neon/25 underline-offset-2 transition hover:text-terminal-green'
+              className='mt-3 font-ibm text-xs uppercase tracking-[0.08em] text-neon/60 underline decoration-neon/25 underline-offset-2 transition hover:text-terminal-green'
             >
               Show fewer tags
             </button>
           )}
         </div>
 
-        <p className='mb-6 font-ocr text-xs uppercase tracking-wider text-neon/50'>
+        <p className='mb-6 font-ibm text-sm uppercase tracking-[0.08em] text-neon/60'>
           Showing {filtered.length} of {CAROUSEL_PROJECTS.length}
         </p>
 
@@ -214,11 +214,11 @@ export default function ProjectsIndexPage() {
                       {p.title}
                     </h2>
                     {p.description && (
-                      <p className='mt-2 line-clamp-3 flex-1 font-ibm text-sm leading-6 text-terminal-dimmed'>
+                      <p className='mt-2 flex-1 font-ibm text-sm leading-6 text-terminal-dimmed'>
                         {p.description}
                       </p>
                     )}
-                    <span className='mt-4 inline-flex items-center gap-1 font-ocr text-[10px] uppercase tracking-[0.22em] text-neon/60 group-hover:text-terminal-green'>
+                    <span className='mt-4 inline-flex items-center gap-1 font-ibm text-xs uppercase tracking-[0.08em] text-neon/65 group-hover:text-terminal-green'>
                       View case study →
                     </span>
                   </div>

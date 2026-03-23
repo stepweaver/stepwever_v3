@@ -79,35 +79,18 @@ function CodexContent({ initialPosts = [] }) {
       <BackgroundCanvas />
       <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12 pb-16">
         <div className="max-w-7xl mx-auto">
-          {/* Hero */}
-          <div className="mb-12 space-y-6 md:space-y-8">
-            <div className="space-y-4">
+          <div className="mb-8 space-y-4 md:space-y-5">
+            <div className="space-y-3">
               <p className="text-xs tracking-[0.3em] text-neon/60 font-ocr uppercase">
-                CODEX &mdash; CODEX-00
+                Codex
               </p>
               <h1 className="font-ibm text-4xl sm:text-5xl md:text-6xl font-bold text-text leading-tight">
                 Digital codex.
               </h1>
-              <p className="font-ocr text-base sm:text-lg md:text-xl text-text/70 leading-relaxed max-w-3xl">
+              <p className="font-ibm text-base sm:text-lg text-text/75 leading-relaxed max-w-3xl">
                 Thoughts and things I&apos;m exploring &mdash; developer notes, projects, and community contributions.
               </p>
             </div>
-
-            <nav className="flex flex-wrap items-center gap-x-2 font-ibm text-neon text-lg" aria-label="Breadcrumb">
-              <span className="text-neon">user@stepweaver</span>
-              <span className="text-text">~</span>
-              <span className="text-text">/</span>
-              <button
-                type="button"
-                onClick={() => setActiveHashtags([])}
-                className="text-text hover:text-neon transition-colors cursor-pointer"
-              >
-                codex
-              </button>
-              <span className="text-neon motion-safe:animate-blink" aria-hidden>_</span>
-            </nav>
-
-            {/* Divider */}
             <div className="w-full h-px bg-gradient-to-r from-neon/40 via-neon/10 to-transparent" />
           </div>
 

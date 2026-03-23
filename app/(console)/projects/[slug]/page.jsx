@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getProjectBySlug, PROJECTS_DATA } from '@/lib/projectsData';
+import { getRenderableProjectBySlug, PROJECTS_DATA } from '@/lib/projectsData';
 import ProjectPageClient from './ProjectPageClient';
 
 export function generateStaticParams() {
@@ -7,8 +7,8 @@ export function generateStaticParams() {
 }
 
 export default async function ProjectPage({ params }) {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const slug = typeof params?.slug === 'string' ? params.slug : '';
+  const project = getRenderableProjectBySlug(slug);
   if (!project) {
     notFound();
   }

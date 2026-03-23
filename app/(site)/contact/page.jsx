@@ -147,7 +147,7 @@ function ContactPage() {
                 <span className='relative inline-flex h-2 w-2 rounded-full bg-neon' />
               </span>
               <span className='font-ocr text-[10px] tracking-[0.15em] text-neon/60 uppercase'>
-                Accepting messages
+                Online
               </span>
             </span>
           </div>
@@ -159,19 +159,18 @@ function ContactPage() {
         {/* ── Main Console ── */}
         <div className='flex-1 flex flex-col lg:flex-row min-h-0'>
           {/* ── Sidebar: HUD Panels ── */}
-          <aside className='hidden lg:flex lg:flex-col lg:w-72 2xl:w-80 shrink-0 border-r border-neon/15 overflow-y-auto'>
+          <aside className='hidden lg:flex lg:flex-col lg:w-64 2xl:w-72 shrink-0 border-r border-neon/15 overflow-y-auto'>
             <div className='p-3 space-y-3 flex-1'>
               {/* System Brief */}
               <SidebarPanel label='SYS.BRIEF'>
                 <p className='font-ibm text-lg text-text leading-snug'>
-                  Let&apos;s connect.
+                  Contact
                 </p>
-                <p className='font-ocr text-[11px] text-text/50 leading-relaxed mt-2'>
-                  Have a question, opportunity, or just want to say hello? My
-                  inbox is always open.
+                <p className='font-ibm text-sm text-text/65 leading-relaxed mt-2'>
+                  Questions, opportunities, or project inquiries are welcome.
                 </p>
                 <div className='mt-3 w-full h-px bg-gradient-to-r from-neon/30 via-neon/10 to-transparent' />
-                <p className='font-ocr text-[10px] text-neon/40 mt-2'>
+                <p className='font-ibm text-xs text-neon/50 mt-2'>
                   I typically respond within{' '}
                   <span className='text-neon/65'>24–48 hours</span>.
                 </p>
@@ -236,17 +235,6 @@ function ContactPage() {
                 </div>
               </div>
 
-              {/* System Info */}
-              <div className='px-1 space-y-1 mt-auto'>
-                <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
-                  <span className='w-1 h-1 rounded-full bg-neon/30' />
-                  <span>Messages are encrypted in transit</span>
-                </div>
-                <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
-                  <span className='w-1 h-1 rounded-full bg-neon/30' />
-                  <span>No spam &middot; No tracking</span>
-                </div>
-              </div>
             </div>
           </aside>
 

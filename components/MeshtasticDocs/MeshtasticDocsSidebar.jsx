@@ -74,16 +74,8 @@ export default function MeshtasticDocsSidebar({
         })}
       </nav>
 
-      {/* System info */}
-      <div className='p-3 border-t border-neon/10 space-y-1'>
-        <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
-          <span className='w-1 h-1 rounded-full bg-neon/30' />
-          <span>Notion-powered docs</span>
-        </div>
-        <div className='flex items-center gap-2 font-ocr text-[9px] text-text/20'>
-          <span className='w-1 h-1 rounded-full bg-neon/30' />
-          <span>Auto-synced content</span>
-        </div>
+      <div className='p-3 border-t border-neon/10'>
+        <p className='font-ibm text-[11px] text-text/30'>Content syncs automatically.</p>
       </div>
     </aside>
   );

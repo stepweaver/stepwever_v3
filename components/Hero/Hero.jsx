@@ -1,28 +1,12 @@
 'use client';
 
 import { memo } from 'react';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import HeroOperatorCard from './HeroOperatorCard';
 import TerminalLink from './TerminalLink';
 import WhyStephen from '@/components/WhyStephen/WhyStephen';
 import About from '@/components/About/About';
-
-const ProjectCarousel = dynamic(() => import('./ProjectCarousel'), {
-  ssr: false,
-  loading: () => (
-    <div className='min-h-[400px] flex items-center justify-center'>
-      <div className='hud-panel p-6 w-full max-w-md motion-safe:animate-pulse'>
-        <div className='text-xs tracking-[0.2em] text-neon/50 font-ocr uppercase'>SCANNING MODULES...</div>
-        <div className='mt-4 space-y-3'>
-          <div className='h-4 bg-neon/10 w-3/4' />
-          <div className='h-4 bg-neon/10 w-1/2' />
-          <div className='h-4 bg-neon/10 w-2/3' />
-        </div>
-      </div>
-    </div>
-  ),
-});
+import ProjectCarousel from './ProjectCarousel';
 
 function Hero() {
   return (

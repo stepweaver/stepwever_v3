@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero/Hero';
+import Experience from '@/components/Experience/Experience';
 import { InkDivider } from '@/components/ui/InkDivider';
 
 const BackgroundCanvas = dynamic(
@@ -9,17 +10,13 @@ const BackgroundCanvas = dynamic(
   { ssr: false }
 );
 
-const Experience = dynamic(() => import('@/components/Experience/Experience'), {
-  loading: () => <div className='min-h-[400px]' />,
-});
-
 export default function HomePageContent() {
   return (
     <div className='relative'>
       <BackgroundCanvas />
 
       <Hero />
-      <InkDivider showSeal={true} />
+      <InkDivider showSeal={true} className='py-0.5 sm:py-1' />
 
       <Experience />
       <InkDivider showSeal={false} />

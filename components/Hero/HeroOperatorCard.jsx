@@ -18,7 +18,7 @@ function HeroOperatorCard() {
       {/* header rail */}
       <header className='relative z-10 mb-4 flex items-start justify-between gap-4 pb-1'>
         <div>
-          <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>Operator profile</p>
+          <p className='text-xs tracking-[0.24em] text-neon/70 font-ocr uppercase'>Profile</p>
           <h2 className='text-xl font-semibold text-text font-ibm'>Stephen Weaver</h2>
         </div>
         <div className='text-right text-xs text-muted font-mono shrink-0'>
@@ -87,7 +87,6 @@ function HeroOperatorCard() {
 
         {/* mission statement */}
         <div className='pt-3'>
-          <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase mb-2'>What I do</p>
           <p className='font-ibm text-text text-sm leading-relaxed'>
             Builds web apps, automations, and AI-enabled tools for operational work. Turns requirements into working systems.
           </p>
@@ -124,7 +123,7 @@ function HeroOperatorCard() {
               {['Veteran', 'Business Analyst', 'Developer'].map((label) => (
                 <span
                   key={label}
-                  className='border border-neon/25 bg-terminal-dark/15 px-2 py-1 text-[10px] font-ocr uppercase tracking-[0.22em] text-text/80'
+                  className='border border-neon/25 bg-terminal-dark/15 px-2 py-1 text-[11px] font-ibm text-text/80'
                 >
                   {label}
                 </span>
@@ -134,11 +133,11 @@ function HeroOperatorCard() {
             <div className='flex flex-wrap items-center gap-2'>
               <Link
                 href='/yankee-samurai'
-                className='inline-flex cursor-pointer border border-terminal-magenta/35 bg-terminal-dark/10 px-2 py-1 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-magenta/80 hover:border-terminal-magenta/70 hover:bg-terminal-magenta/10'
+                className='inline-flex cursor-pointer border border-terminal-magenta/35 bg-terminal-dark/10 px-2 py-1 text-[11px] font-ibm text-terminal-magenta/80 hover:border-terminal-magenta/70 hover:bg-terminal-magenta/10'
               >
                 YANKEE SAMURAI
               </Link>
-              <span className='border border-terminal-magenta/20 bg-terminal-dark/10 px-2 py-1 text-[10px] font-ocr uppercase tracking-[0.22em] text-terminal-magenta/60'>
+              <span className='border border-terminal-magenta/20 bg-terminal-dark/10 px-2 py-1 text-[11px] font-ibm text-terminal-magenta/60'>
                 REBEL
               </span>
             </div>

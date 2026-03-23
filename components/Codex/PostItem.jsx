@@ -28,7 +28,7 @@ export default function PostItem({ post, index, formatDate, onHashtagClick }) {
           <span className="font-mono text-[10px] tracking-[0.25em] text-neon/40 uppercase whitespace-nowrap shrink-0">
             CODEX-{String(index + 1).padStart(2, '0')}
           </span>
-          <span className="font-ocr text-xs text-text/40 tracking-wide whitespace-nowrap shrink-0">
+          <span className="font-ibm text-xs text-text/45 tracking-wide whitespace-nowrap shrink-0">
             {post.updated && post.updated !== post.date
               ? `Updated: ${formatDate(post.updated)}`
               : formatDate(post.date)}
@@ -49,7 +49,7 @@ export default function PostItem({ post, index, formatDate, onHashtagClick }) {
 
         {/* Description */}
         {post.description && (
-          <p className="font-ocr text-sm text-text/60 leading-relaxed mb-4 max-w-2xl">
+          <p className="font-ibm text-sm text-text/70 leading-relaxed mb-4 max-w-2xl">
             {post.description}
           </p>
         )}
@@ -62,7 +62,7 @@ export default function PostItem({ post, index, formatDate, onHashtagClick }) {
                 key={tag}
                 role="button"
                 tabIndex={0}
-                className="px-3 py-1 text-xs font-ocr tracking-wider uppercase border border-neon/30 text-text/70 rounded-sm transition-all duration-200 cursor-pointer hover:border-neon/70 hover:text-neon hover:bg-neon/10"
+                className="px-3 py-1 text-xs font-ibm tracking-[0.06em] border border-neon/30 text-text/70 rounded-sm transition-all duration-200 cursor-pointer hover:border-neon/70 hover:text-neon hover:bg-neon/10"
                 onClick={(e) => handleTagClick(e, tag)}
               >
                 #{tag}

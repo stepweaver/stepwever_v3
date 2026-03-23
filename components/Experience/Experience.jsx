@@ -74,96 +74,77 @@ const FEATURED_TESTIMONIAL = {
 
 function ToolModule({ code, name, role, icon: Icon }) {
   return (
-    <article className='group relative border border-neon/20 bg-panel/35 p-3 transition-colors duration-200 hover:border-neon/50 hover:bg-panel/55'>
-      <div className='pointer-events-none absolute left-0 top-0 h-4 w-4 border-l border-t border-neon/60' />
-      <div className='pointer-events-none absolute right-0 top-0 h-4 w-4 border-r border-t border-neon/25' />
-      <div className='pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-b border-l border-neon/25' />
-      <div className='pointer-events-none absolute bottom-0 right-0 top-0 h-4 w-4 border-r border-t border-neon/25' />
-
-      <div className='mb-3 flex items-start justify-between gap-3'>
+    <article className='group rounded-sm border border-neon/12 bg-panel/35 p-2.5 transition-colors duration-200 hover:border-neon/30 hover:bg-panel/55'>
+      <div className='mb-2 flex items-start justify-between gap-2'>
         <div className='min-w-0'>
           <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>{code}</div>
-          <h4 className='mt-1 font-ibm text-base uppercase tracking-[0.06em] text-neon break-words'>{name}</h4>
+          <h4 className='mt-0.5 font-ibm text-sm uppercase tracking-[0.05em] text-neon break-words'>{name}</h4>
         </div>
 
-        <div className='flex h-9 w-9 items-center justify-center border border-neon/20 bg-terminal-dark/40'>
+        <div className='flex h-7 w-7 items-center justify-center rounded-sm bg-terminal-dark/35'>
           <Icon
-            size={18}
+            size={14}
             className='text-neon/80 transition-transform duration-200 group-hover:scale-110'
             aria-hidden='true'
           />
         </div>
       </div>
 
-      <div className='h-px w-full bg-gradient-to-r from-neon/35 to-transparent' />
+      <div className='h-px w-full bg-neon/20' />
 
-      <p className='mt-3 font-ocr text-[11px] leading-relaxed text-text/75'>{role}</p>
+      <p className='mt-2 font-ibm text-xs leading-relaxed text-text/75'>{role}</p>
     </article>
   );
 }
 
 function Experience() {
   return (
-    <section className='relative z-30 py-16 overflow-x-hidden'>
+    <section className='relative z-30 pt-1 pb-12 sm:pt-2 md:pt-4 overflow-x-hidden'>
       {/* Same outer padding as Hero for consistency with BACKGROUND section */}
       <div className='w-full px-1 sm:px-2 md:px-3 lg:px-4 xl:px-6 2xl:px-8'>
         {/* Right column: aligns with Hero right column, same internal padding as About (p-6) */}
         <div className='w-full px-2 sm:px-4 md:p-6 min-w-0 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] lg:w-[calc(100%-390px-2.5rem)] xl:w-[calc(100%-390px-3rem)]'>
-          {/* Section ID - military roster style */}
-          <div className='mb-5 flex items-start justify-between gap-4'>
-            <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>LOADOUT</p>
-            <div className='text-right text-xs text-muted font-mono shrink-0'>
-              <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>ID</div>
-              <div className='font-mono text-neon/80 whitespace-nowrap'>KIT-02</div>
-            </div>
+          <div className='mb-3'>
+            <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>Loadout</p>
           </div>
 
-          <div className='mb-6 md:mb-8'>
-            <h3 className='text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4 md:mb-6 leading-tight font-ibm text-neon'>
+          <div className='mb-4 md:mb-5'>
+            <h3 className='text-lg md:text-xl lg:text-2xl xl:text-3xl mb-2.5 md:mb-3 leading-tight font-ibm text-neon'>
               Tooling and systems in active use.
             </h3>
-            <p className='text-text/90 font-ocr text-base md:text-lg leading-relaxed'>
+            <p className='text-text/90 font-ibm text-sm md:text-base leading-relaxed'>
               I’ve spent 8+ years working across business operations and software. The stack here is the one that shows up repeatedly in actual builds: app architecture, data, automation, payments, publishing, and deployment.
             </p>
           </div>
 
-          {/* SYSTEM LOADOUT */}
-          <div className='w-full max-w-6xl min-w-0 border border-neon/20 bg-panel/20 p-3 md:p-4'>
-            <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_12px] opacity-10' />
-            <div className='mb-3 flex items-start justify-between gap-4 border-b border-neon/15 pb-3'>
+          <div className='w-full max-w-6xl min-w-0'>
+            <div className='mb-3 flex items-start justify-between gap-3 border-b border-neon/15 pb-2.5'>
               <div className='min-w-0'>
-                <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>Manifest</div>
-                <h4 className='mt-1 font-ibm text-lg uppercase tracking-[0.05em] text-neon'>
+                <h4 className='mt-0.5 font-ibm text-base uppercase tracking-[0.04em] text-neon'>
                   Systems currently in rotation.
                 </h4>
-                <p className='mt-2 font-ocr text-xs leading-relaxed text-text/70 max-w-[72ch]'>
+                <p className='mt-1.5 font-ibm text-xs leading-relaxed text-text/70 max-w-[72ch]'>
                   These are the tools I use to build applications, connect services, automate repetitive work, and ship production sites.
                 </p>
               </div>
-              <div className='shrink-0 border border-neon/20 bg-panel/25 px-3 py-1.5 text-right'>
-                <div className='font-ocr text-[10px] uppercase tracking-[0.22em] text-neon/50'>Mode</div>
-                <div className='font-mono text-sm text-neon/80 whitespace-nowrap'>ACTIVE</div>
-              </div>
             </div>
 
-            <div className='space-y-4'>
+            <div className='space-y-2'>
               {LOADOUT_GROUPS.map((group) => (
-                <section key={group.id} className='relative border border-neon/20 bg-panel/20 p-3 md:p-4'>
-                  <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_12px] opacity-10' />
-
-                  <div className='relative mb-4 flex flex-col gap-2 border-b border-neon/15 pb-3 md:flex-row md:items-end md:justify-between'>
+                <section key={group.id} className='rounded-sm bg-panel/20 p-2.5 md:p-3'>
+                  <div className='mb-3 flex flex-col gap-1.5 border-b border-neon/15 pb-2 md:flex-row md:items-end md:justify-between'>
                     <div className='min-w-0'>
                       <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>{group.id}</div>
-                      <h4 className='mt-1 font-ibm text-xl uppercase tracking-[0.05em] text-neon break-words'>
+                      <h4 className='mt-0.5 font-ibm text-lg uppercase tracking-[0.04em] text-neon break-words'>
                         {group.title}
                       </h4>
                     </div>
-                    <p className='max-w-xl font-ocr text-[11px] uppercase tracking-[0.18em] text-text/55'>
+                    <p className='max-w-xl font-ibm text-xs text-text/60'>
                       {group.subtitle}
                     </p>
                   </div>
 
-                  <div className='relative grid gap-3 md:grid-cols-2 xl:grid-cols-3'>
+                  <div className='grid gap-2 md:grid-cols-2 xl:grid-cols-3'>
                     {group.tools.map((tool) => (
                       <ToolModule key={tool.code} {...tool} />
                     ))}
@@ -175,24 +156,24 @@ function Experience() {
 
           {/* Optional homepage testimonial excerpt */}
           {FEATURED_TESTIMONIAL.quote && (
-            <div className='mt-10 md:mt-12'>
-              <div className='mb-3 md:mb-5'>
-                <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase mb-2'>COMMS / FIELD REPORT</p>
-                <h3 className='text-lg md:text-xl lg:text-2xl font-ibm text-neon font-bold uppercase tracking-wider'>
+            <div className='mt-6 md:mt-8'>
+              <div className='mb-2.5 md:mb-3'>
+                <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase mb-2'>Field report</p>
+                <h3 className='text-base md:text-lg lg:text-xl font-ibm text-neon font-bold uppercase tracking-wider'>
                   External validation
                 </h3>
               </div>
-              <div className='relative border border-neon/20 bg-panel/25 p-3 md:p-4'>
+              <div className='relative border border-neon/20 bg-panel/25 p-2.5 md:p-3'>
                 <div className='pointer-events-none absolute left-0 top-0 h-5 w-5 border-l border-t border-neon/60' />
                 <div className='pointer-events-none absolute right-0 top-0 h-5 w-5 border-r border-t border-neon/25' />
                 <div className='pointer-events-none absolute bottom-0 left-0 h-5 w-5 border-b border-l border-neon/25' />
                 <div className='pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-neon/60' />
                 <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_12px] opacity-10' />
 
-                <p className='font-ocr text-sm md:text-base text-text/90 leading-relaxed mb-3'>
+                <p className='font-ibm text-xs md:text-sm text-text/90 leading-relaxed mb-2.5'>
                   {FEATURED_TESTIMONIAL.quote}
                 </p>
-                <p className='font-ocr text-[10px] text-text/50 uppercase tracking-[0.22em]'>
+                <p className='font-ibm text-xs text-text/55 uppercase tracking-[0.1em]'>
                   {FEATURED_TESTIMONIAL.attribution}
                   {FEATURED_TESTIMONIAL.role
                     ? ` · ${FEATURED_TESTIMONIAL.role}`

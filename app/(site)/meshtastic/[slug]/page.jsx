@@ -13,7 +13,6 @@ import { getHeadingsFromBlocks } from '@/lib/meshtastic-docs-headings';
 import NotionBlockBody from '@/components/NotionBlockBody';
 import MeshtasticDocsLayout from '@/components/MeshtasticDocs/MeshtasticDocsLayout';
 import OnThisPage from '@/components/MeshtasticDocs/OnThisPage';
-import MeshtasticDocsDropdown from '@/components/MeshtasticDocs/MeshtasticDocsDropdown';
 import MeshtasticDocsMobileNav from '@/components/MeshtasticDocs/MeshtasticDocsMobileNav';
 import DocPrevNext from '@/components/MeshtasticDocs/DocPrevNext';
 import {
@@ -144,9 +143,6 @@ export default async function MeshtasticDocPage({ params }) {
                 Field Notes
               </Link>
             )}
-          </div>
-          <div>
-            <MeshtasticDocsDropdown headings={headings} className='w-full' />
           </div>
         </div>
 

@@ -322,9 +322,7 @@ export default function ResumePage() {
         <header className='shrink-0 border-b border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-2 flex items-center justify-between gap-4'>
           <div className='flex items-center gap-2.5'>
             <FileText className='w-3.5 h-3.5 text-neon/60' />
-            <span className='font-ocr text-[10px] tracking-[0.3em] text-neon/50 uppercase'>
-              DOSSIER-00
-            </span>
+            <span className='font-ocr text-[10px] tracking-[0.3em] text-neon/50 uppercase'>Resume</span>
             <span className='text-neon/15 hidden sm:inline'>│</span>
             <span className='font-ibm text-xs text-text/50 hidden sm:inline'>
               λstepweaver dossier
@@ -340,9 +338,7 @@ export default function ResumePage() {
                 <span className='absolute inline-flex h-full w-full rounded-full bg-neon opacity-40 motion-safe:animate-ping' />
                 <span className='relative inline-flex h-2 w-2 rounded-full bg-neon' />
               </span>
-              <span className='font-ocr text-[10px] tracking-[0.15em] text-neon/60 uppercase'>
-                Current
-              </span>
+                <span className='font-ocr text-[10px] tracking-[0.15em] text-neon/60 uppercase'>Current</span>
             </span>
           </div>
         </header>
@@ -455,13 +451,9 @@ export default function ResumePage() {
             <div className='shrink-0 bg-panel/50 border-b border-neon/20 px-4 py-2 flex items-center justify-between'>
               <div className='flex items-center gap-2'>
                 <Briefcase className='w-3 h-3 text-neon/40' />
-                <span className='font-ocr text-[10px] tracking-[0.18em] text-neon/40 uppercase'>
-                  Personnel file
-                </span>
+                <span className='font-ocr text-[10px] tracking-[0.18em] text-neon/40 uppercase'>Overview</span>
               </div>
-              <span className='font-ocr text-[10px] text-text/20 hidden sm:inline'>
-                RESUME-2026
-              </span>
+              <span className='font-ocr text-[10px] text-text/20 hidden sm:inline'>2026</span>
             </div>
 
             <div className='flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 md:p-8'>
@@ -506,11 +498,8 @@ export default function ResumePage() {
                                 key={skill.name}
                                 className='flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-neon/12 bg-panel/25 hover:border-neon/25 hover:bg-panel/40 transition-colors'
                               >
-                                <Icon
-                                  className='w-3.5 h-3.5 shrink-0'
-                                  style={{ color: skill.color }}
-                                />
-                                <span className='font-ocr text-[11px] text-text/80'>
+                                <Icon className='w-3.5 h-3.5 shrink-0 text-neon/75' />
+                                <span className='font-ibm text-[12px] text-text/85'>
                                   {skill.name}
                                 </span>
                               </div>
@@ -544,14 +533,14 @@ export default function ResumePage() {
                           </span>
                         </div>
 
-                        <p className='font-ocr text-xs text-accent/80'>
+                        <p className='font-ibm text-sm text-accent/85'>
                           {job.company}
                         </p>
-                        <span className='font-ocr text-[11px] text-text/40 block mb-3'>
+                        <span className='font-ibm text-xs text-text/45 block mb-3'>
                           {job.period}
                         </span>
 
-                        <p className='font-ocr text-[12px] text-text/70 leading-relaxed mb-3'>
+                        <p className='font-ibm text-[13px] text-text/75 leading-relaxed mb-3'>
                           {job.description}
                         </p>
 
