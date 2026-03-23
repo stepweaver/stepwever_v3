@@ -1,6 +1,6 @@
 /**
  * Rate limiting for Next.js API routes.
- * Production requires Vercel KV (or explicit store); dev falls back to in-memory Map.
+ * Uses Vercel KV when configured; otherwise falls back to an in-memory Map (per instance).
  */
 
 import { createHash } from "crypto";
@@ -40,8 +40,17 @@ function resolveStore(explicitStore) {
   return getKVStore() ?? defaultStore;
 }
 
-function prodMissingDistributedStore() {
-  return process.env.NODE_ENV === "production" && !getKVStore();
+let warnedMissingKv = false;
+
+function warnMissingKvOnce() {
+  if (process.env.NODE_ENV !== "production" || getKVStore() || warnedMissingKv) {
+    return;
+  }
+  warnedMissingKv = true;
+  console.warn(
+    "[rateLimit] Vercel KV not configured (KV_REST_API_URL / KV_REST_API_TOKEN). " +
+      "Using in-memory limits per serverless instance — add KV for production-grade abuse control."
+  );
 }
 
 /**
@@ -79,19 +88,8 @@ export const createRateLimit = (options = {}) => {
             : getClientIP(request);
 
   return async (request) => {
-    if (prodMissingDistributedStore() && !store) {
-      return new Response(
-        JSON.stringify({
-          error: "Service temporarily unavailable.",
-        }),
-        {
-          status: 503,
-          headers: {
-            "Content-Type": "application/json",
-            ...jsonSecurityHeaders(),
-          },
-        }
-      );
+    if (!store && process.env.NODE_ENV === "production" && !getKVStore()) {
+      warnMissingKvOnce();
     }
 
     const key = effectiveGetKey(request);

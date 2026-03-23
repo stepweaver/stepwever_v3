@@ -27,6 +27,16 @@ describe('isAllowedRequestOrigin', () => {
     expect(isAllowedRequestOrigin(r)).toBe(true);
   });
 
+  it('allows www vs apex as same site when allowlists empty', () => {
+    delete process.env.ALLOWED_ORIGINS;
+    delete process.env.ALLOWED_HOSTS;
+    const r = req({
+      origin: 'https://www.stepweaver.dev',
+      host: 'stepweaver.dev',
+    });
+    expect(isAllowedRequestOrigin(r)).toBe(true);
+  });
+
   it('blocks wrong origin when ALLOWED_ORIGINS set', () => {
     process.env.ALLOWED_ORIGINS = 'https://example.com';
     const r = req({
