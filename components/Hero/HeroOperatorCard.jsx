@@ -87,7 +87,7 @@ function HeroOperatorCard() {
 
         {/* mission statement */}
         <div className='pt-3'>
-          <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase mb-2'>Value proposition</p>
+          <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase mb-2'>What I do</p>
           <p className='font-ibm text-text text-sm leading-relaxed'>
             Builds web apps, automations, and AI-enabled tools for operational work. Turns requirements into working systems.
           </p>
