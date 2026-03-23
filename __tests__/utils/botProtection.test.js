@@ -26,6 +26,22 @@ describe('detectBot timing', () => {
     expect(r.isBot).toBe(false);
   });
 
+  it('rejects malformed elapsed timing when provided', () => {
+    const invalid = detectBot(
+      { ...base, _t: Date.now(), _d: 'not-a-number' },
+      { requireTimestamp: true }
+    );
+    expect(invalid).toEqual({ isBot: true, reason: 'invalid_elapsed' });
+  });
+
+  it('rejects malformed timestamp when required', () => {
+    const invalid = detectBot(
+      { ...base, _t: Infinity, _d: 5000 },
+      { requireTimestamp: true }
+    );
+    expect(invalid).toEqual({ isBot: true, reason: 'missing_timestamp' });
+  });
+
   it('blocks honeypot submissions', () => {
     const r = detectBot(
       { ...base, _t: Date.now(), _d: 5000, _hp_website: 'spam' },

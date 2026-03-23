@@ -25,32 +25,41 @@ function checkHoneypot(body) {
 
 // ── Timing ──────────────────────────────────────────────────────────
 // The client sends submit-time `_t` plus elapsed duration `_d`.
-// If the elapsed duration is < MIN_MS, it's likely automated.
+// `_t` is a freshness sanity signal, while `_d` models human think/type time.
+// Timing should detect obvious automation without acting like a long-lived identity token.
 const MIN_HUMAN_MS = 3_000; // 3 seconds minimum for a real human
 
 function checkTiming(body) {
   const submittedAt = Number(body?._t);
   const elapsedMs = Number(body?._d);
+  const now = Date.now();
 
-  if (!submittedAt || Number.isNaN(submittedAt)) {
-    // Missing timestamp - treat as suspicious but not outright blocked.
-    // Bots that don't run JS won't send this field at all.
+  if (!Number.isFinite(submittedAt) || submittedAt <= 0) {
+    // Missing or malformed timestamp is treated as suspicious when timestamp is required.
     return { isBot: true, reason: 'missing_timestamp' };
   }
+  if (submittedAt > now + 5_000) {
+    return { isBot: true, reason: 'invalid_timestamp' };
+  }
 
-  if (Number.isFinite(elapsedMs) && elapsedMs < MIN_HUMAN_MS) {
-    return { isBot: true, reason: 'too_fast' };
+  if (body?._d !== undefined) {
+    if (!Number.isFinite(elapsedMs) || elapsedMs < 0) {
+      return { isBot: true, reason: 'invalid_elapsed' };
+    }
+    // Keep `_d` as a soft timing signal: low elapsed suggests automation.
+    if (elapsedMs < MIN_HUMAN_MS) {
+      return { isBot: true, reason: 'too_fast' };
+    }
+    return { isBot: false };
   }
 
   // Backward-compatible fallback for older clients that only send `_t`.
-  if (!Number.isFinite(elapsedMs)) {
-    const elapsed = Date.now() - submittedAt;
-    if (elapsed < 0) {
-      return { isBot: true, reason: 'invalid_timestamp' };
-    }
-    if (elapsed < MIN_HUMAN_MS) {
-      return { isBot: true, reason: 'too_fast' };
-    }
+  const elapsed = now - submittedAt;
+  if (elapsed < 0) {
+    return { isBot: true, reason: 'invalid_timestamp' };
+  }
+  if (elapsed < MIN_HUMAN_MS) {
+    return { isBot: true, reason: 'too_fast' };
   }
 
   return { isBot: false };

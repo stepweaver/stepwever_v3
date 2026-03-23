@@ -16,6 +16,7 @@ const contactRateLimit = createRateLimit({
   maxRequests: 3,
   windowMs: 15 * 60 * 1000,
   message: 'Too many contact form submissions. Please try again later.',
+  requireDistributedStoreInProduction: true,
 });
 
 const GENERIC_FAILURE = 'Message could not be sent. Please try again later.';

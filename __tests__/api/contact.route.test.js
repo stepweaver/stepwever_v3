@@ -82,4 +82,21 @@ describe('/api/contact route', () => {
     const data = await res.json();
     expect(data.message).toMatch(/Message sent successfully/i);
   });
+
+  it('blocks malformed timing fields when timestamp is required', async () => {
+    const res = await POST(
+      new Request('https://stepweaver.dev/api/contact', {
+        method: 'POST',
+        headers: {
+          host: 'stepweaver.dev',
+          origin: 'https://stepweaver.dev',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ ...validBody, _d: 'invalid' }),
+      })
+    );
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.message).toMatch(/Message sent successfully/i);
+  });
 });

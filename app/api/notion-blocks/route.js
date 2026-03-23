@@ -34,6 +34,7 @@ const rateLimit = createRateLimit({
   maxRequests: 30,
   windowMs: 60 * 1000,
   message: 'Too many requests. Please try again shortly.',
+  requireDistributedStoreInProduction: true,
 });
 
 export async function POST(request) {

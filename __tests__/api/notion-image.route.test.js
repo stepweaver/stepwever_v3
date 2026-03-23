@@ -75,4 +75,23 @@ describe('/api/notion-image route', () => {
     const data = await res.json();
     expect(data.url).toContain('https://cdn.example.com/image.jpg');
   });
+
+  it('rejects non-image blocks', async () => {
+    process.env.NOTION_API_KEY = 'secret';
+    retrieveMock.mockResolvedValueOnce({ type: 'paragraph' });
+    const token = mintNotionImageRefreshToken('3f2504e0-4f89-41d3-9a0c-0305e82c3301');
+    const res = await GET(req(`https://stepweaver.dev/api/notion-image?token=${token}`));
+    expect(res.status).toBe(400);
+  });
+
+  it('returns 404 when image URL is missing', async () => {
+    process.env.NOTION_API_KEY = 'secret';
+    retrieveMock.mockResolvedValueOnce({
+      type: 'image',
+      image: { type: 'external', external: {} },
+    });
+    const token = mintNotionImageRefreshToken('3f2504e0-4f89-41d3-9a0c-0305e82c3301');
+    const res = await GET(req(`https://stepweaver.dev/api/notion-image?token=${token}`));
+    expect(res.status).toBe(404);
+  });
 });

@@ -20,6 +20,7 @@ const chatRateLimit = createRateLimit({
   maxRequests: 20,
   windowMs: 60 * 1000,
   message: 'Too many messages. Please wait a moment before sending more.',
+  requireDistributedStoreInProduction: true,
 });
 
 function safeJson(value, init = {}) {

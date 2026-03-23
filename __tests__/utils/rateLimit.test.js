@@ -61,4 +61,24 @@ describe('createRateLimit', () => {
     expect(result.status).toBe(503);
     expect(result.headers.get('Content-Type')).toContain('application/json');
   });
+
+  it('allows non-strict production mode when explicitly configured', async () => {
+    process.env.NODE_ENV = 'production';
+    delete process.env.KV_REST_API_URL;
+    delete process.env.KV_REST_API_TOKEN;
+    const limiter = createRateLimit({
+      keyPrefix: 'test-prod-nonstrict',
+      maxRequests: 2,
+      windowMs: 60_000,
+      requireDistributedStoreInProduction: false,
+    });
+    const req = new Request('https://stepweaver.dev/api/chat', {
+      headers: { host: 'stepweaver.dev', 'x-forwarded-for': '2.2.2.2' },
+    });
+    expect(await limiter(req)).toBeNull();
+    expect(await limiter(req)).toBeNull();
+    const blocked = await limiter(req);
+    expect(blocked).toBeInstanceOf(Response);
+    expect(blocked.status).toBe(429);
+  });
 });

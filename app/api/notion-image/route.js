@@ -9,6 +9,7 @@ const rateLimit = createRateLimit({
   maxRequests: 60,
   windowMs: 60 * 1000,
   message: 'Too many image requests. Please try again shortly.',
+  requireDistributedStoreInProduction: true,
 });
 
 function normalizeNotionId(id) {

@@ -72,6 +72,35 @@ describe('withProtectedRoute', () => {
     expect(result.error).toBeUndefined();
     expect(result.body).toEqual({ name: 'Jane' });
   });
+
+  it('short-circuits when rate limiter returns a response', async () => {
+    const req = new Request('https://stepweaver.dev/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: 'Jane' }),
+    });
+    const rateResponse = new Response(JSON.stringify({ error: 'limited' }), { status: 429 });
+    const result = await withProtectedRoute(req, {
+      rateLimit: async () => rateResponse,
+      schema: z.object({ name: z.string() }),
+    });
+    expect(result.error).toBe(rateResponse);
+  });
+
+  it('returns 400 when schema is required and JSON parsing fails', async () => {
+    const req = new Request('https://stepweaver.dev/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: '{',
+    });
+    const result = await withProtectedRoute(req, {
+      schema: z.object({ name: z.string() }),
+      parseJson: async () => {
+        throw new Error('bad json');
+      },
+    });
+    expect(result.error.status).toBe(400);
+  });
 });
 
 describe('buildProtectedOptionsResponse', () => {
@@ -83,5 +112,16 @@ describe('buildProtectedOptionsResponse', () => {
     const res = buildProtectedOptionsResponse(req, ['POST']);
     expect(res.status).toBe(204);
     expect(res.headers.get('Access-Control-Allow-Methods')).toContain('POST');
+    expect(res.headers.get('Vary')).toBe('Origin');
+  });
+
+  it('returns 403 for disallowed origins', async () => {
+    isAllowedRequestOrigin.mockReturnValueOnce(false);
+    const req = new Request('https://stepweaver.dev/api/chat', {
+      method: 'OPTIONS',
+      headers: { origin: 'https://evil.com', host: 'stepweaver.dev' },
+    });
+    const res = buildProtectedOptionsResponse(req, ['POST']);
+    expect(res.status).toBe(403);
   });
 });

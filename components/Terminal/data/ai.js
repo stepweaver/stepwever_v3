@@ -2,9 +2,6 @@ import { buildChatRequestPayload } from '@/lib/chat/requestBuilder';
 
 // AI Chat handler for Terminal — sends messages to /api/chat
 
-// Session load time for bot-protection timing (min delay vs instant bots)
-const MODULE_LOADED_AT = Date.now();
-
 export async function sendAIMessage(message, callback) {
   // Show loading indicator
   if (callback && callback.setLines) {
@@ -22,7 +19,7 @@ export async function sendAIMessage(message, callback) {
         buildChatRequestPayload({
           channel: 'terminal',
           messages: [{ role: 'user', content: message }],
-          botFields: { _hp_website: '', _t: MODULE_LOADED_AT },
+          botFields: { _hp_website: '', _t: Date.now(), _d: 4000 },
         })
       ),
     });

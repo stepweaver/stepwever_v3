@@ -50,6 +50,28 @@ describe('/api/chat route', () => {
     expect(data.role).toBe('assistant');
   });
 
+  it('returns safe bot response for honeypot submissions', async () => {
+    const res = await POST(
+      new Request('https://stepweaver.dev/api/chat', {
+        method: 'POST',
+        headers: {
+          host: 'stepweaver.dev',
+          origin: 'https://stepweaver.dev',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [{ role: 'user', content: 'hello' }],
+          _t: Date.now(),
+          _d: 5000,
+          _hp_website: 'filled',
+        }),
+      })
+    );
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.role).toBe('assistant');
+  });
+
   it('returns 503 when no AI provider is configured', async () => {
     const res = await POST(
       new Request('https://stepweaver.dev/api/chat', {

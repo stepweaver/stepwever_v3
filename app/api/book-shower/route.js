@@ -11,6 +11,7 @@ const getRateLimit = createRateLimit({
   maxRequests: 30,
   windowMs: 60 * 1000,
   message: 'Too many requests. Please try again shortly.',
+  requireDistributedStoreInProduction: true,
 });
 
 const postRateLimit = createRateLimit({
@@ -18,6 +19,7 @@ const postRateLimit = createRateLimit({
   maxRequests: 10,
   windowMs: 60 * 1000,
   message: 'Too many requests. Please try again shortly.',
+  requireDistributedStoreInProduction: true,
 });
 
 function json(body, status = 200) {
