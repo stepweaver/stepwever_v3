@@ -101,6 +101,18 @@ describe('withProtectedRoute', () => {
     });
     expect(result.error.status).toBe(400);
   });
+
+  it('returns 400 when schema validation fails', async () => {
+    const req = new Request('https://stepweaver.dev/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: '' }),
+    });
+    const result = await withProtectedRoute(req, {
+      schema: z.object({ name: z.string().min(1) }),
+    });
+    expect(result.error.status).toBe(400);
+  });
 });
 
 describe('buildProtectedOptionsResponse', () => {
@@ -112,6 +124,8 @@ describe('buildProtectedOptionsResponse', () => {
     const res = buildProtectedOptionsResponse(req, ['POST']);
     expect(res.status).toBe(204);
     expect(res.headers.get('Access-Control-Allow-Methods')).toContain('POST');
+    expect(res.headers.get('Access-Control-Allow-Methods')).toContain('OPTIONS');
+    expect(res.headers.get('Access-Control-Allow-Headers')).toContain('Content-Type');
     expect(res.headers.get('Vary')).toBe('Origin');
   });
 

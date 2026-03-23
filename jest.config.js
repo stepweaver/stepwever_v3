@@ -21,6 +21,8 @@ const customJestConfig = {
   collectCoverageFrom: [
     'components/**/*.{js,jsx}',
     'utils/**/*.{js,jsx}',
+    'lib/**/*.{js,jsx}',
+    'hooks/**/*.{js,jsx}',
     'app/**/*.{js,jsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
@@ -29,10 +31,10 @@ const customJestConfig = {
   ],
   coverageThreshold: {
     global: {
-      branches: 10,
-      functions: 10,
-      lines: 10,
-      statements: 10,
+      branches: 70,
+      functions: 70,
+      lines: 70,
+      statements: 70,
     },
   },
   testMatch: [

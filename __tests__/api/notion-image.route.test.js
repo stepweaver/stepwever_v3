@@ -49,11 +49,13 @@ describe('/api/notion-image route', () => {
   it('requires token', async () => {
     const res = await GET(req('https://stepweaver.dev/api/notion-image'));
     expect(res.status).toBe(400);
+    expect(res.headers.get('Cache-Control')).toBe('no-store');
   });
 
   it('rejects invalid token', async () => {
     const res = await GET(req('https://stepweaver.dev/api/notion-image?token=invalid'));
     expect(res.status).toBe(404);
+    expect(res.headers.get('Cache-Control')).toBe('no-store');
   });
 
   it('returns 500 if Notion API key missing', async () => {
@@ -61,6 +63,9 @@ describe('/api/notion-image route', () => {
     delete process.env.NOTION_API_KEY;
     const res = await GET(req(`https://stepweaver.dev/api/notion-image?token=${token}`));
     expect(res.status).toBe(500);
+    const data = await res.json();
+    expect(data.error).toBe('Internal server error');
+    expect(data.error).not.toMatch(/config|notion|api key/i);
   });
 
   it('returns image URL for valid token and image block', async () => {
@@ -74,6 +79,7 @@ describe('/api/notion-image route', () => {
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.url).toContain('https://cdn.example.com/image.jpg');
+    expect(res.headers.get('Cache-Control')).toContain('s-maxage=1800');
   });
 
   it('rejects non-image blocks', async () => {
@@ -81,7 +87,9 @@ describe('/api/notion-image route', () => {
     retrieveMock.mockResolvedValueOnce({ type: 'paragraph' });
     const token = mintNotionImageRefreshToken('3f2504e0-4f89-41d3-9a0c-0305e82c3301');
     const res = await GET(req(`https://stepweaver.dev/api/notion-image?token=${token}`));
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(404);
+    const data = await res.json();
+    expect(data.error).toBe('Not found');
   });
 
   it('returns 404 when image URL is missing', async () => {
@@ -93,5 +101,19 @@ describe('/api/notion-image route', () => {
     const token = mintNotionImageRefreshToken('3f2504e0-4f89-41d3-9a0c-0305e82c3301');
     const res = await GET(req(`https://stepweaver.dev/api/notion-image?token=${token}`));
     expect(res.status).toBe(404);
+    const data = await res.json();
+    expect(data.error).toBe('Not found');
+  });
+
+  it('returns generic 503 for unexpected upstream failure', async () => {
+    process.env.NOTION_API_KEY = 'secret';
+    retrieveMock.mockRejectedValueOnce({ status: 502, message: 'Notion upstream timeout detail' });
+    const token = mintNotionImageRefreshToken('3f2504e0-4f89-41d3-9a0c-0305e82c3301');
+    const res = await GET(req(`https://stepweaver.dev/api/notion-image?token=${token}`));
+    expect(res.status).toBe(503);
+    const data = await res.json();
+    expect(data.error).toBe('Service unavailable');
+    expect(data.error).not.toMatch(/notion|timeout|upstream/i);
+    expect(res.headers.get('Cache-Control')).toBe('no-store');
   });
 });

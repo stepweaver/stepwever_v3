@@ -133,6 +133,9 @@ async function callGroq({ groqApiKey, model, messages, maxTokens, temperature })
 }
 
 async function callOpenAIResponses({ openaiApiKey, model, messages, maxTokens, temperature }) {
+  const input = toOpenAIResponsesInput(messages);
+  if (!input) return { res: null, data: null };
+
   const res = await fetchWithTimeout(
     'https://api.openai.com/v1/responses',
     {
@@ -143,10 +146,7 @@ async function callOpenAIResponses({ openaiApiKey, model, messages, maxTokens, t
       },
       body: JSON.stringify({
         model,
-        input: messages.map((m) => ({
-          role: m.role,
-          content: [{ type: 'text', text: m.content }],
-        })),
+        input,
         max_output_tokens: maxTokens,
         temperature,
       }),
@@ -160,6 +160,48 @@ async function callOpenAIResponses({ openaiApiKey, model, messages, maxTokens, t
     data = JSON.parse(text);
   } catch {}
   return { res, data };
+}
+
+function toOpenAIResponsesInput(messages) {
+  const input = [];
+
+  for (const m of messages) {
+    if (!m || (m.role !== 'system' && m.role !== 'user' && m.role !== 'assistant')) return null;
+
+    if (typeof m.content === 'string') {
+      input.push({
+        role: m.role,
+        content: [{ type: 'input_text', text: m.content }],
+      });
+      continue;
+    }
+
+    if (Array.isArray(m.content)) {
+      const content = [];
+      for (const part of m.content) {
+        if (part?.type === 'text' && typeof part.text === 'string') {
+          content.push({ type: 'input_text', text: part.text });
+          continue;
+        }
+
+        const imageUrl = part?.image_url?.url;
+        if (part?.type === 'image_url' && typeof imageUrl === 'string') {
+          content.push({ type: 'input_image', image_url: imageUrl });
+          continue;
+        }
+
+        return null;
+      }
+
+      if (content.length === 0) return null;
+      input.push({ role: m.role, content });
+      continue;
+    }
+
+    return null;
+  }
+
+  return input;
 }
 
 function extractAssistantTextFromResponses(data) {
@@ -259,6 +301,10 @@ export async function POST(request) {
         maxTokens,
         temperature,
       });
+
+      if (!res) {
+        return safeJson({ error: 'Failed to get response from AI. Please try again.' }, { status: 502 });
+      }
 
       if (res.ok) {
         assistantText = extractAssistantTextFromResponses(data);

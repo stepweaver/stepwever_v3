@@ -3,6 +3,7 @@ import { createRateLimit } from '@/utils/rateLimit';
 import { verifyNotionImageRefreshToken } from '@/lib/notion/imageTokens';
 import { isAllowedRequestOrigin } from '@/lib/requestOrigin';
 import { jsonSecurityHeaders } from '@/lib/jsonSecurityHeaders';
+import { logError, logSecurityEvent } from '@/lib/observability/logger';
 
 const rateLimit = createRateLimit({
   keyPrefix: 'notion-image',
@@ -17,12 +18,18 @@ function normalizeNotionId(id) {
   return `${clean.slice(0, 8)}-${clean.slice(8, 12)}-${clean.slice(12, 16)}-${clean.slice(16, 20)}-${clean.slice(20)}`;
 }
 
+function json(body, init = {}) {
+  const headers = {
+    ...jsonSecurityHeaders(),
+    ...(init.headers || {}),
+  };
+  return Response.json(body, { ...init, headers });
+}
+
 export async function GET(request) {
   if (!isAllowedRequestOrigin(request)) {
-    return Response.json(
-      { error: 'Forbidden' },
-      { status: 403, headers: jsonSecurityHeaders() }
-    );
+    logSecurityEvent('notion_image_forbidden_origin', { route: '/api/notion-image' });
+    return json({ error: 'Forbidden' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
   }
 
   const rateLimitResult = await rateLimit(request);
@@ -32,31 +39,19 @@ export async function GET(request) {
   const token = searchParams.get('token');
 
   if (!token) {
-    if (process.env.NODE_ENV === 'development') {
-      console.warn('[notion-image] missing token');
-    }
-    return Response.json(
-      { error: 'Missing token' },
-      { status: 400, headers: jsonSecurityHeaders() }
-    );
+    logSecurityEvent('notion_image_missing_token', { route: '/api/notion-image' });
+    return json({ error: 'Bad request' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
   }
 
   const blockId = verifyNotionImageRefreshToken(token);
   if (!blockId) {
-    if (process.env.NODE_ENV === 'development') {
-      console.warn('[notion-image] invalid or expired token');
-    }
-    return Response.json(
-      { error: 'Not found' },
-      { status: 404, headers: jsonSecurityHeaders() }
-    );
+    logSecurityEvent('notion_image_invalid_token', { route: '/api/notion-image' });
+    return json({ error: 'Not found' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
   }
 
   if (!process.env.NOTION_API_KEY) {
-    return Response.json(
-      { error: 'Not configured' },
-      { status: 500, headers: jsonSecurityHeaders() }
-    );
+    logError('notion_image_not_configured', { route: '/api/notion-image' });
+    return json({ error: 'Internal server error' }, { status: 500, headers: { 'Cache-Control': 'no-store' } });
   }
 
   try {
@@ -64,10 +59,7 @@ export async function GET(request) {
     const block = await notion.blocks.retrieve({ block_id: normalizeNotionId(blockId) });
 
     if (block.type !== 'image') {
-      return Response.json(
-        { error: 'Block is not an image' },
-        { status: 400, headers: jsonSecurityHeaders() }
-      );
+      return json({ error: 'Not found' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
     }
 
     const img = block.image;
@@ -79,13 +71,10 @@ export async function GET(request) {
           : null;
 
     if (!url) {
-      return Response.json(
-        { error: 'No image URL found' },
-        { status: 404, headers: jsonSecurityHeaders() }
-      );
+      return json({ error: 'Not found' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
     }
 
-    return Response.json(
+    return json(
       { url },
       {
         headers: {
@@ -95,12 +84,16 @@ export async function GET(request) {
       }
     );
   } catch (err) {
-    const status = err.status || 500;
-    const message =
-      process.env.NODE_ENV === 'development' ? err.message : 'Failed to fetch image';
-    return Response.json(
-      { error: message },
-      { status, headers: jsonSecurityHeaders() }
+    const status = Number(err?.status);
+    const responseStatus = status >= 400 && status < 500 ? 404 : 503;
+    logError('notion_image_fetch_failed', {
+      route: '/api/notion-image',
+      status: Number.isFinite(status) ? status : undefined,
+      cause: err?.message,
+    });
+    return json(
+      { error: responseStatus === 404 ? 'Not found' : 'Service unavailable' },
+      { status: responseStatus, headers: { 'Cache-Control': 'no-store' } }
     );
   }
 }

@@ -14,6 +14,7 @@ const eslintConfig = [
   {
     rules: {
       "no-duplicate-imports": "error",
+      "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "no-restricted-syntax": [
         "error",
         {
@@ -38,16 +39,16 @@ const eslintConfig = [
     },
   },
   {
-    files: ["app/api/chat/route.js"],
+    files: ["app/api/**/route.js"],
     rules: {
       "no-restricted-imports": [
-        "error",
+        "warn",
         {
           paths: [
             {
               name: "@/lib/requestOrigin",
               message:
-                "Chat route should rely on withProtectedRoute/buildProtectedOptionsResponse for origin checks.",
+                "Prefer shared trust-boundary entry points (withProtectedRoute/buildProtectedOptionsResponse) over direct route-level origin checks unless documented.",
             },
           ],
         },
