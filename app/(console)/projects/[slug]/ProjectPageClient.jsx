@@ -1,7 +1,3 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import ChatBot from '@/components/ChatBot/ChatBot';
 import {
   ArrowLeft,
@@ -23,19 +19,9 @@ import TechStackCard from '@/components/ProjectDetail/TechStackCard';
 import { Palette } from 'lucide-react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { SiGithub } from 'react-icons/si';
-
-// Lazy load heavy components
-const BackgroundCanvas = dynamic(
-  () => import('@/components/BackgroundCanvas/BackgroundCanvas'),
-  { ssr: false }
-);
-const HeroOperatorCard = dynamic(() =>
-  import('@/components/Hero/HeroOperatorCard')
-);
-const DiceRoller = dynamic(
-  () => import('@/components/DiceRoller/DiceRoller'),
-  { ssr: false }
-);
+import BackgroundCanvas from '@/components/BackgroundCanvas/BackgroundCanvas';
+import HeroOperatorCard from '@/components/Hero/HeroOperatorCard';
+import DiceRoller from '@/components/DiceRoller/DiceRoller';
 
 function SidebarPanel({ children, label, className = '' }) {
   return (
@@ -57,7 +43,6 @@ function getRepoHref(githubRepo) {
 }
 
 function ProjectPageLayout({ project, slug, children }) {
-  const [mobileBriefExpanded, setMobileBriefExpanded] = useState(false);
   const projId = `PROJ-${slug.toUpperCase().replace(/-/g, '').slice(0, 8)}`;
   const repoHref = getRepoHref(project.githubRepo);
 
@@ -101,54 +86,45 @@ function ProjectPageLayout({ project, slug, children }) {
           </header>
 
           {/* ── Mobile expandable brief ── */}
-          <div className='lg:hidden shrink-0 border-b border-neon/15'>
-            <button
-              onClick={() => setMobileBriefExpanded(!mobileBriefExpanded)}
-              className='w-full px-3 py-2 flex items-center justify-between text-left hover:bg-panel/30 transition-colors cursor-pointer'
-            >
+          <details className='lg:hidden shrink-0 border-b border-neon/15 group'>
+            <summary className='w-full px-3 py-2 flex items-center justify-between text-left hover:bg-panel/30 transition-colors cursor-pointer list-none'>
               <div className='flex items-center gap-2'>
                 <FolderOpen className='w-3 h-3 text-neon/50' />
                 <span className='font-ocr text-xs tracking-[0.2em] text-neon/50 uppercase'>
                   Project brief
                 </span>
               </div>
-              <ChevronRight
-                className={`w-3 h-3 text-neon/40 transition-transform duration-200 ${mobileBriefExpanded ? 'rotate-90' : ''
-                  }`}
-              />
-            </button>
-
-            {mobileBriefExpanded && (
-              <div className='px-3 pb-3 space-y-3 motion-safe:animate-[hudFadeIn_0.15s_ease-out]'>
-                <p className='font-ocr text-sm text-text/70 leading-relaxed'>
-                  {project.description}
-                </p>
-                {project.tags?.length > 0 && (
-                  <div className='flex flex-wrap gap-1.5'>
-                    {project.tags.map((tag, i) => (
-                      <span
-                        key={i}
-                        className='px-2 py-0.5 font-ocr text-[10px] text-neon/70 border border-neon/20'
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                {project.link && (
-                  <a
-                    href={project.link}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='inline-flex items-center text-neon font-ocr text-xs hover:text-neon/80'
-                  >
-                    <ExternalLink className='w-3 h-3 mr-1.5' />
-                    View Live
-                  </a>
-                )}
-              </div>
-            )}
-          </div>
+              <ChevronRight className='w-3 h-3 text-neon/40 transition-transform duration-200 group-open:rotate-90' />
+            </summary>
+            <div className='px-3 pb-3 space-y-3 motion-safe:animate-[hudFadeIn_0.15s_ease-out]'>
+              <p className='font-ocr text-sm text-text/70 leading-relaxed'>
+                {project.description}
+              </p>
+              {project.tags?.length > 0 && (
+                <div className='flex flex-wrap gap-1.5'>
+                  {project.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className='px-2 py-0.5 font-ocr text-[10px] text-neon/70 border border-neon/20'
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {project.link && (
+                <a
+                  href={project.link}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='inline-flex items-center text-neon font-ocr text-xs hover:text-neon/80'
+                >
+                  <ExternalLink className='w-3 h-3 mr-1.5' />
+                  View Live
+                </a>
+              )}
+            </div>
+          </details>
 
           {/* ── Main Console ── */}
           <div className='flex-1 flex flex-col lg:flex-row min-h-0'>

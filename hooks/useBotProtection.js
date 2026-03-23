@@ -7,7 +7,7 @@ import { useRef, useCallback } from 'react';
  *
  * Provides:
  *  - A hidden honeypot field (bots fill it, humans never see it)
- *  - A timestamp recorded at mount time (detects instant submissions)
+ *  - Submit-time timing metadata (detects instant submissions without stale-session drift)
  *
  * Usage:
  *   const { honeypotProps, getBotFields } = useBotProtection();
@@ -21,7 +21,7 @@ import { useRef, useCallback } from 'react';
  *   const payload = { ...formData, ...getBotFields() };
  */
 export function useBotProtection() {
-  // Record mount time once
+  // Record initial load once, but emit fresh timing values at submit.
   const mountedAt = useRef(Date.now());
   const honeypotRef = useRef(null);
 
@@ -48,7 +48,8 @@ export function useBotProtection() {
    */
   const getBotFields = useCallback(() => ({
     _hp_website: honeypotRef.current?.value || '',
-    _t: mountedAt.current,
+    _t: Date.now(),
+    _d: Math.max(0, Date.now() - mountedAt.current),
   }), []);
 
   return { honeypotProps, getBotFields };

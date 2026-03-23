@@ -1,6 +1,7 @@
 /**
  * Rate limiting for Next.js API routes.
- * Uses Vercel KV when configured; otherwise falls back to an in-memory Map (per instance).
+ * Uses Vercel KV when configured; in production, callers can require
+ * distributed backing storage and fail closed when unavailable.
  */
 
 import { createHash } from "crypto";
@@ -41,6 +42,7 @@ function resolveStore(explicitStore) {
 }
 
 let warnedMissingKv = false;
+let warnedMissingKvStrict = false;
 
 function warnMissingKvOnce() {
   if (process.env.NODE_ENV !== "production" || getKVStore() || warnedMissingKv) {
@@ -53,6 +55,17 @@ function warnMissingKvOnce() {
   );
 }
 
+function warnMissingKvStrictOnce() {
+  if (process.env.NODE_ENV !== "production" || getKVStore() || warnedMissingKvStrict) {
+    return;
+  }
+  warnedMissingKvStrict = true;
+  console.error(
+    "[rateLimit] Vercel KV not configured (KV_REST_API_URL / KV_REST_API_TOKEN). " +
+      "Protected routes are fail-closed until a distributed rate-limit store is configured."
+  );
+}
+
 /**
  * @param {Object} options
  * @param {number} [options.maxRequests=5]
@@ -62,6 +75,7 @@ function warnMissingKvOnce() {
  * @param {Function} [options.getKey]
  * @param {string} [options.keyPrefix] - namespaces stored keys (e.g. chat, contact)
  * @param {Object} [options.store]
+ * @param {boolean} [options.requireDistributedStoreInProduction=true]
  */
 export const createRateLimit = (options = {}) => {
   const {
@@ -72,6 +86,7 @@ export const createRateLimit = (options = {}) => {
     getKey = null,
     keyPrefix = "",
     store = null,
+    requireDistributedStoreInProduction = true,
   } = options;
 
   const backingStore = resolveStore(store);
@@ -88,7 +103,25 @@ export const createRateLimit = (options = {}) => {
             : getClientIP(request);
 
   return async (request) => {
-    if (!store && process.env.NODE_ENV === "production" && !getKVStore()) {
+    const missingDistributedStore =
+      !store && process.env.NODE_ENV === "production" && !getKVStore();
+    if (missingDistributedStore && requireDistributedStoreInProduction) {
+      warnMissingKvStrictOnce();
+      return new Response(
+        JSON.stringify({
+          error: "Service temporarily unavailable.",
+          code: "rate_limit_store_unavailable",
+        }),
+        {
+          status: 503,
+          headers: {
+            "Content-Type": "application/json",
+            ...jsonSecurityHeaders(),
+          },
+        }
+      );
+    }
+    if (missingDistributedStore) {
       warnMissingKvOnce();
     }
 

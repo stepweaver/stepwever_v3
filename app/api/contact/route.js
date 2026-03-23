@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import {
-  validateEmail,
   sendContactEmail,
   sendConfirmationEmail,
   isEmailConfigured,
@@ -33,6 +32,7 @@ export async function POST(request) {
       rateLimit: contactRateLimit,
       schema: contactBodySchema,
       botCheck: { opts: { checkContent: true, requireTimestamp: true } },
+      requireJsonContentType: true,
       onBotDetected: () => {
         console.warn('[CONTACT] Bot blocked');
         return json({
@@ -45,14 +45,6 @@ export async function POST(request) {
     if (result.error) return result.error;
 
     const { name, email, message } = result.body || {};
-
-    if (!name || !email || !message) {
-      return json({ error: 'All fields are required' }, 400);
-    }
-
-    if (!validateEmail(email)) {
-      return json({ error: 'Please enter a valid email address' }, 400);
-    }
 
     if (!isEmailConfigured()) {
       logError('contact_email_unconfigured', { route: '/api/contact' });

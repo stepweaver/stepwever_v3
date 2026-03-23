@@ -24,21 +24,33 @@ function checkHoneypot(body) {
 }
 
 // ── Timing ──────────────────────────────────────────────────────────
-// The client embeds `_t` = Date.now() when the form/widget mounts.
-// If the submission arrives in < MIN_MS, it's a bot.
+// The client sends submit-time `_t` plus elapsed duration `_d`.
+// If the elapsed duration is < MIN_MS, it's likely automated.
 const MIN_HUMAN_MS = 3_000; // 3 seconds minimum for a real human
 
 function checkTiming(body) {
-  const loadedAt = Number(body?._t);
-  if (!loadedAt || Number.isNaN(loadedAt)) {
+  const submittedAt = Number(body?._t);
+  const elapsedMs = Number(body?._d);
+
+  if (!submittedAt || Number.isNaN(submittedAt)) {
     // Missing timestamp - treat as suspicious but not outright blocked.
     // Bots that don't run JS won't send this field at all.
     return { isBot: true, reason: 'missing_timestamp' };
   }
 
-  const elapsed = Date.now() - loadedAt;
-  if (elapsed < MIN_HUMAN_MS) {
+  if (Number.isFinite(elapsedMs) && elapsedMs < MIN_HUMAN_MS) {
     return { isBot: true, reason: 'too_fast' };
+  }
+
+  // Backward-compatible fallback for older clients that only send `_t`.
+  if (!Number.isFinite(elapsedMs)) {
+    const elapsed = Date.now() - submittedAt;
+    if (elapsed < 0) {
+      return { isBot: true, reason: 'invalid_timestamp' };
+    }
+    if (elapsed < MIN_HUMAN_MS) {
+      return { isBot: true, reason: 'too_fast' };
+    }
   }
 
   return { isBot: false };
@@ -156,6 +168,6 @@ export function detectBot(body, options = {}) {
  */
 export function stripBotFields(body) {
   if (!body || typeof body !== 'object') return body;
-  const { _hp_website, _t, ...rest } = body;
+  const { _hp_website, _t, _d, ...rest } = body;
   return rest;
 }

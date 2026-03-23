@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
 import { createRateLimit } from '@/utils/rateLimit';
 import { sanitizeText } from '@/utils/sanitize';
-import { withProtectedRoute } from '@/lib/apiSecurity';
+import { buildProtectedOptionsResponse, withProtectedRoute } from '@/lib/apiSecurity';
 import { buildSystemPrompt } from '@/lib/chat/systemPrompt';
-import { isAllowedRequestOrigin } from '@/lib/requestOrigin';
 import { jsonSecurityHeaders } from '@/lib/jsonSecurityHeaders';
 import { chatBodySchema } from '@/lib/schemas/chat.schema';
 
@@ -189,6 +188,7 @@ export async function POST(request) {
       schema: chatBodySchema,
       parseJson: (r) => r.json().catch(() => null),
       botCheck: { opts: { checkContent: false, requireTimestamp: true } },
+      requireJsonContentType: true,
       onBotDetected: () => {
         console.warn('[CHAT] Bot blocked');
         return safeJson({ message: 'I appreciate the question! Feel free to ask more.', role: 'assistant' });
@@ -200,10 +200,6 @@ export async function POST(request) {
     const cleanBody = result.body;
     const messages = cleanBody?.messages;
     const channel = cleanBody?.channel === 'terminal' ? 'terminal' : 'widget';
-
-    if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return safeJson({ error: 'Messages array is required' }, { status: 400 });
-    }
 
     const sanitizedMessages = normalizeIncomingMessages(messages);
 
@@ -307,20 +303,5 @@ export async function POST(request) {
 }
 
 export async function OPTIONS(request) {
-  if (!isAllowedRequestOrigin(request)) {
-    return new NextResponse(null, { status: 403, headers: jsonSecurityHeaders() });
-  }
-
-  const origin = request.headers.get('origin') || '';
-
-  return new NextResponse(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      ...(origin ? { 'Access-Control-Allow-Origin': origin } : {}),
-      Vary: 'Origin',
-      'Cache-Control': 'no-store',
-    },
-  });
+  return buildProtectedOptionsResponse(request, ['POST']);
 }
