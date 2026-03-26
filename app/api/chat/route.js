@@ -20,7 +20,9 @@ const chatRateLimit = createRateLimit({
   maxRequests: 20,
   windowMs: 60 * 1000,
   message: 'Too many messages. Please wait a moment before sending more.',
-  requireDistributedStoreInProduction: true,
+  // Without KV, strict mode returns 503 for every request. Chat should stay up with
+  // per-instance limits; add Vercel KV for distributed limits across lambdas.
+  requireDistributedStoreInProduction: false,
 });
 
 function safeJson(value, init = {}) {
