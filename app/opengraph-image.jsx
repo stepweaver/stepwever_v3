@@ -10,8 +10,11 @@ export const contentType = 'image/png';
 export default async function Image() {
   const h = await headers();
   const host = h.get('x-forwarded-host') ?? h.get('host') ?? 'www.stepweaver.dev';
-  const proto = h.get('x-forwarded-proto') ?? 'https';
+  const forwardedProto = h.get('x-forwarded-proto');
+  const proto =
+    forwardedProto ?? (host.includes('localhost') || host.startsWith('127.') ? 'http' : 'https');
   const baseUrl = `${proto}://${host}`;
+
   const PROFILE_IMAGE = `${baseUrl}/images/sigil.png`;
 
   return new ImageResponse(
