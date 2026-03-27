@@ -211,7 +211,7 @@ export default function ProjectsIndexPage() {
                   </div>
                   <div className='flex flex-1 flex-col p-4'>
                     <h2 className='font-ibm text-lg uppercase leading-snug tracking-[0.03em] text-terminal-green group-hover:text-neon'>
-                      Case Study: {p.title}
+                      {p.title}
                     </h2>
                     {p.description && (
                       <p className='mt-2 flex-1 font-ibm text-sm leading-6 text-terminal-dimmed'>
