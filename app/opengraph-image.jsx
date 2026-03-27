@@ -18,7 +18,6 @@ export default async function Image() {
           height: '100%',
           display: 'flex',
           position: 'relative',
-          position: 'relative',
           overflow: 'hidden',
           background:
             'linear-gradient(135deg, #05070c 0%, #0b1220 55%, #09131b 100%)',
@@ -26,14 +25,43 @@ export default async function Image() {
           fontFamily: 'Arial, sans-serif',
         }}
       >
-        {/* Tron grid lines */}
+        {/* Full-image background */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+          }}
+        >
+          <img
+            src={PROFILE_IMAGE}
+            alt='Stephen Weaver'
+            width='1200'
+            height='630'
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+
+        {/* Dark overlay for readability */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(90deg, rgba(5,7,12,0.92) 0%, rgba(5,7,12,0.82) 42%, rgba(5,7,12,0.35) 72%, rgba(5,7,12,0.15) 100%)',
+            display: 'flex',
+          }}
+        />
+
+        {/* Subtle grid on top */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
             backgroundImage:
               'linear-gradient(rgba(90,255,140,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(90,255,140,0.05) 1px, transparent 1px)',
-            backgroundSize: '48px 48px',
+            backgroundSize: '64px 64px',
+            opacity: 0.55,
           }}
         />
 
@@ -58,11 +86,10 @@ export default async function Image() {
         >
           <div
             style={{
-              width: '58%',
+              width: '100%',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              paddingRight: 24,
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -97,31 +124,6 @@ export default async function Image() {
               >
                 Stephen Weaver
               </div>
-
-              <div
-                style={{
-                  fontSize: 28,
-                  lineHeight: 1.25,
-                  color: '#9fd6ff',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <span>Full-stack web apps, automation,</span>
-                <span>and AI-enabled tools.</span>
-              </div>
-
-              <div
-                style={{
-                  fontSize: 20,
-                  lineHeight: 1.4,
-                  color: 'rgba(236,240,248,0.76)',
-                  maxWidth: 560,
-                }}
-              >
-                Business-minded builder focused on systems, operations, and
-                production-ready implementation.
-              </div>
             </div>
 
             <div
@@ -136,38 +138,6 @@ export default async function Image() {
               <span>stepweaver.dev</span>
               <span style={{ color: 'rgba(90,255,140,0.45)' }}>•</span>
               <span>Portfolio / Case Studies / Terminal</span>
-            </div>
-          </div>
-
-          <div
-            style={{
-              width: '42%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <div
-              style={{
-                width: 360,
-                height: 470,
-                display: 'flex',
-                position: 'relative',
-                overflow: 'hidden',
-                borderRadius: 24,
-                border: '1px solid rgba(90,210,255,0.22)',
-                background:
-                  'linear-gradient(180deg, rgba(8,16,28,0.95), rgba(5,9,16,0.95))',
-                boxShadow: '0 0 0 1px rgba(90,255,140,0.08) inset',
-              }}
-            >
-              <img
-                src={PROFILE_IMAGE}
-                alt='Stephen Weaver'
-                width='360'
-                height='470'
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
             </div>
           </div>
         </div>

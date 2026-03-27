@@ -47,19 +47,42 @@ export default async function Image({ params }) {
           display: 'flex',
           position: 'relative',
           overflow: 'hidden',
-          background:
-            'linear-gradient(135deg, #05070c 0%, #0b1220 55%, #09131b 100%)',
+          background: '#05070c',
           color: '#ecf0f8',
           fontFamily: 'Arial, sans-serif',
         }}
       >
+        {/* Full-image background */}
+        <div style={{ position: 'absolute', inset: 0, display: 'flex' }}>
+          <img
+            src={imageSrc}
+            alt={title}
+            width='1200'
+            height='630'
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+
+        {/* Dark overlay for readable text */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
+            background:
+              'linear-gradient(90deg, rgba(5,7,12,0.92) 0%, rgba(5,7,12,0.82) 46%, rgba(5,7,12,0.40) 75%, rgba(5,7,12,0.18) 100%)',
+            display: 'flex',
+          }}
+        />
+
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
             backgroundImage:
               'linear-gradient(rgba(90,255,140,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(90,255,140,0.045) 1px, transparent 1px)',
-            backgroundSize: '48px 48px',
+            backgroundSize: '64px 64px',
+            opacity: 0.55,
           }}
         />
 
@@ -84,7 +107,7 @@ export default async function Image({ params }) {
         >
           <div
             style={{
-              width: '38%',
+              width: '46%',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -154,35 +177,7 @@ export default async function Image({ params }) {
             </div>
           </div>
 
-          <div
-            style={{
-              width: '62%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <div
-              style={{
-                width: 690,
-                height: 410,
-                display: 'flex',
-                overflow: 'hidden',
-                borderRadius: 20,
-                border: '1px solid rgba(90,210,255,0.2)',
-                background: '#09111d',
-                boxShadow: '0 0 0 1px rgba(90,255,140,0.08) inset',
-              }}
-            >
-              <img
-                src={imageSrc}
-                alt={title}
-                width='690'
-                height='410'
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            </div>
-          </div>
+          <div style={{ width: '54%', display: 'flex' }} />
         </div>
       </div>
     ),
