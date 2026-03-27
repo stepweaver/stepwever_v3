@@ -7,6 +7,7 @@ const SITE_URL = 'https://stepweaver.dev';
 const HOME_TITLE = 'Stephen Weaver | Full-Stack Developer, Automation, and AI';
 const HOME_DESCRIPTION =
   'Full-stack developer building practical web apps, automation, and AI-enabled tools that reduce friction and improve operations.';
+const HOME_SHARE_IMAGE = `${SITE_URL}/images/stepweaver-dev.png`;
 
 export function generateMetadata() {
   return {
@@ -22,7 +23,7 @@ export function generateMetadata() {
       url: SITE_URL,
       images: [
         {
-          url: `${SITE_URL}/opengraph-image`,
+          url: HOME_SHARE_IMAGE,
           width: 1200,
           height: 630,
           alt: 'Stephen Weaver',
@@ -35,7 +36,7 @@ export function generateMetadata() {
       description: HOME_DESCRIPTION,
       creator: '@stepweaver',
       site: '@stepweaver',
-      images: [`${SITE_URL}/opengraph-image`],
+      images: [HOME_SHARE_IMAGE],
     },
   };
 }

@@ -15,7 +15,8 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const title = `Case Study: ${project.title}`;
+  const projectTitle = (project.title || '').trim();
+  const title = projectTitle || 'Project Case Study';
   const description = (project.description || project.overview || '')
     .trim()
     .replace(/\s+/g, ' ');
