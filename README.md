@@ -1,6 +1,6 @@
 # λstepweaver portfolio & terminal
 
-Practical transformations, powered by code — presented as a terminal-first portfolio with embedded case studies, utilities, and services.
+Practical transformations, powered by code - presented as a terminal-first portfolio with embedded case studies, utilities, and services.
 
 ## Key surfaces
 
@@ -18,7 +18,7 @@ Practical transformations, powered by code — presented as a terminal-first por
 - Terminal-style UI components
 - λlambda LLM agent for portfolio-native AI chat
 - Responsive design
-- **Layout:** route groups separate default site chrome `(site)` from console-style pages `(console)` (no site footer) and embed-style pages `(embed)` (e.g. book-shower), so layout is composition—not DOM hacks
+- **Layout:** route groups separate default site chrome `(site)` from console-style pages `(console)` (no site footer) and embed-style pages `(embed)` (e.g. book-shower), so layout is composition, not DOM hacks
 
 ## Flagship systems
 
@@ -109,7 +109,7 @@ The chat will automatically use Groq's free tier. OpenAI is supported as a fallb
 │   │   ├── codex/               # Public post list JSON
 │   │   ├── notion-image/        # Signed-token image URL refresh
 │   │   └── …
-│   └── layout.jsx               # Root: theme, analytics—chrome lives in route groups
+│   └── layout.jsx               # Root: theme, analytics - chrome lives in route groups
 ├── components/                  # React components
 │   ├── Terminal/                # Terminal shell, commands, and UI
 │   ├── ChatWidget/              # Floating/fullscreen website chat powered by λlambda

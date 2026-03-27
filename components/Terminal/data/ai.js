@@ -1,6 +1,6 @@
 import { buildChatRequestPayload } from '@/lib/chat/requestBuilder';
 
-// AI Chat handler for Terminal — sends messages to /api/chat
+// AI Chat handler for Terminal - sends messages to /api/chat
 
 export async function sendAIMessage(message, callback) {
   // Show loading indicator

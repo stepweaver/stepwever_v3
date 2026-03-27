@@ -51,7 +51,7 @@ function warnMissingKvOnce() {
   warnedMissingKv = true;
   console.warn(
     "[rateLimit] Vercel KV not configured (KV_REST_API_URL / KV_REST_API_TOKEN). " +
-      "Using in-memory limits per serverless instance — add KV for production-grade abuse control."
+      "Using in-memory limits per serverless instance - add KV for production-grade abuse control."
   );
 }
 
