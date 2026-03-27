@@ -8,20 +8,24 @@ export const alt = 'Project case study preview';
 
 const SITE_URL = 'https://www.stepweaver.dev';
 const FALLBACK_IMAGE = `${SITE_URL}/images/lambda_preview.png`;
+const KNOWN_WEBP_PNG_SIBLINGS = new Set([
+  '/images/screely-dice.png',
+  '/images/screely-lambda.png',
+  '/images/screely-profilcard.png',
+  '/images/screely-resist.png',
+  '/images/screely-stache.png',
+]);
 
 function toAbsoluteUrl(url = '') {
   if (!url) return FALLBACK_IMAGE;
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   const absolute = `${SITE_URL}${url}`;
-  if (absolute.toLowerCase().endsWith('.webp')) return FALLBACK_IMAGE;
+  if (absolute.toLowerCase().endsWith('.webp')) {
+    const pngSibling = url.replace(/\.webp$/i, '.png');
+    if (KNOWN_WEBP_PNG_SIBLINGS.has(pngSibling)) return `${SITE_URL}${pngSibling}`;
+    return FALLBACK_IMAGE;
+  }
   return absolute;
-}
-
-function truncate(text = '', max = 120) {
-  if (!text) return '';
-  const clean = text.trim().replace(/\s+/g, ' ');
-  if (clean.length <= max) return clean;
-  return `${clean.slice(0, max - 1).trim()}…`;
 }
 
 export default async function Image({ params }) {
@@ -31,10 +35,12 @@ export default async function Image({ params }) {
   const project = getProjectBySlug(resolvedParams?.slug);
 
   const title = project?.title || 'Project Case Study';
-  const summary = truncate(
-    project?.description || project?.overview || 'Case study from Stephen Weaver',
-    130
-  );
+  const summary = (project?.description ||
+    project?.overview ||
+    'Case study from Stephen Weaver'
+  )
+    .trim()
+    .replace(/\s+/g, ' ');
   const imageSrc = toAbsoluteUrl(project?.socialImage || project?.imageUrl);
   const tags = Array.isArray(project?.tags) ? project.tags.slice(0, 3) : [];
 
@@ -84,7 +90,7 @@ export default async function Image({ params }) {
         >
           <div
             style={{
-              width: '52%',
+              width: '44%',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -123,6 +129,8 @@ export default async function Image({ params }) {
                   lineHeight: 1.35,
                   color: '#9fd6ff',
                   maxWidth: 520,
+                  maxHeight: 170,
+                  overflow: 'hidden',
                 }}
               >{summary}</div>
 
@@ -166,7 +174,7 @@ export default async function Image({ params }) {
 
           <div
             style={{
-              width: '48%',
+              width: '56%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'flex-end',
@@ -174,8 +182,8 @@ export default async function Image({ params }) {
           >
             <div
               style={{
-                width: 520,
-                height: 360,
+                width: 620,
+                height: 390,
                 display: 'flex',
                 overflow: 'hidden',
                 borderRadius: 20,
@@ -187,8 +195,8 @@ export default async function Image({ params }) {
               <img
                 src={imageSrc}
                 alt={title}
-                width='520'
-                height='360'
+                width='620'
+                height='390'
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>

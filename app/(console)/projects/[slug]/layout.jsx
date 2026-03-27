@@ -2,14 +2,6 @@ import { getProjectBySlug } from '@/lib/projectsData';
 
 const SITE_NAME = 'Stephen Weaver';
 const SITE_URL = 'https://www.stepweaver.dev';
-const MAX_DESCRIPTION_LENGTH = 200;
-
-function truncateForMeta(text) {
-  if (!text || typeof text !== 'string') return '';
-  const trimmed = text.trim();
-  if (trimmed.length <= MAX_DESCRIPTION_LENGTH) return trimmed;
-  return trimmed.slice(0, MAX_DESCRIPTION_LENGTH - 3).trim() + '...';
-}
 
 export async function generateMetadata({ params }) {
   const resolvedParams = typeof params?.then === 'function' ? await params : params;
@@ -24,7 +16,9 @@ export async function generateMetadata({ params }) {
   }
 
   const title = project.title;
-  const description = truncateForMeta(project.description || project.overview || '');
+  const description = (project.description || project.overview || '')
+    .trim()
+    .replace(/\s+/g, ' ');
   const canonical = `${SITE_URL}/projects/${slug}`;
   const keywords = project.tags?.length
     ? [...(project.tags || []), 'case study', 'portfolio', SITE_NAME]
