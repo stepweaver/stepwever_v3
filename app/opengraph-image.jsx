@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
@@ -7,8 +8,11 @@ export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function Image() {
-  const SITE_URL = 'https://www.stepweaver.dev';
-  const PROFILE_IMAGE = `${SITE_URL}/images/sigil.png`;
+  const h = await headers();
+  const host = h.get('x-forwarded-host') ?? h.get('host') ?? 'www.stepweaver.dev';
+  const proto = h.get('x-forwarded-proto') ?? 'https';
+  const baseUrl = `${proto}://${host}`;
+  const PROFILE_IMAGE = `${baseUrl}/images/sigil.png`;
 
   return new ImageResponse(
     (
@@ -42,14 +46,10 @@ export default async function Image() {
           />
         </div>
 
-        {/* Dark overlay for readability */}
+        {/* No text — just the image */}
         <div
           style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'linear-gradient(90deg, rgba(5,7,12,0.92) 0%, rgba(5,7,12,0.82) 42%, rgba(5,7,12,0.35) 72%, rgba(5,7,12,0.15) 100%)',
-            display: 'flex',
+            display: 'none',
           }}
         />
 
@@ -61,7 +61,7 @@ export default async function Image() {
             backgroundImage:
               'linear-gradient(rgba(90,255,140,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(90,255,140,0.05) 1px, transparent 1px)',
             backgroundSize: '64px 64px',
-            opacity: 0.55,
+            opacity: 0.0,
           }}
         />
 
@@ -72,24 +72,18 @@ export default async function Image() {
             inset: 24,
             border: '1px solid rgba(90,210,255,0.18)',
             borderRadius: 24,
+            opacity: 0.0,
           }}
         />
 
         <div
           style={{
-            display: 'flex',
-            width: '100%',
-            height: '100%',
-            padding: '56px 64px',
-            position: 'relative',
+            display: 'none',
           }}
         >
           <div
             style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
+              display: 'none',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
