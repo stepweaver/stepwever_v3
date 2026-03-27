@@ -1,7 +1,7 @@
 import { getProjectBySlug } from '@/lib/projectsData';
 
 const SITE_NAME = 'Stephen Weaver';
-const SITE_URL = 'https://www.stepweaver.dev';
+const SITE_URL = 'https://stepweaver.dev';
 
 export async function generateMetadata({ params }) {
   const resolvedParams = typeof params?.then === 'function' ? await params : params;

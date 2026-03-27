@@ -9,11 +9,11 @@ export const contentType = 'image/png';
 
 export default async function Image() {
   const h = await headers();
-  const host = h.get('x-forwarded-host') ?? h.get('host') ?? 'www.stepweaver.dev';
+  const host = h.get('x-forwarded-host') ?? h.get('host') ?? 'stepweaver.dev';
   const isLocalhost = host.includes('localhost') || host.startsWith('127.');
-  const baseUrl = isLocalhost ? `http://${host}` : 'https://www.stepweaver.dev';
+  const baseUrl = isLocalhost ? `http://${host}` : 'https://stepweaver.dev';
 
-  const PROFILE_IMAGE = `${baseUrl}/images/sigil.png`;
+  const PROFILE_IMAGE = `${baseUrl}/images/stepweaver-dev.png`;
 
   return new ImageResponse(
     (

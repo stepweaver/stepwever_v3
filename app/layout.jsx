@@ -28,13 +28,13 @@ const ibm3270 = localFont({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://www.stepweaver.dev'),
+  metadataBase: new URL('https://stepweaver.dev'),
   title: {
     template: '%s | Stephen Weaver',
-    default: 'Stephen Weaver - Full-Stack / Automation / AI',
+    default: 'Stephen Weaver',
   },
   description:
-    'Business-minded builder focused on web apps, automation, and AI-enabled tools that reduce friction and improve operations.',
+    'Full-stack developer focused on practical web apps, automation, and AI-enabled tooling.',
   keywords: [
     'Stephen Weaver',
     'λstepweaver',
@@ -61,17 +61,17 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.stepweaver.dev/',
+    url: 'https://stepweaver.dev/',
     siteName: 'Stephen Weaver',
-    title: 'Stephen Weaver - Full-Stack / Automation / AI',
+    title: 'Stephen Weaver',
     description:
-      'Business-minded builder focused on web apps, automation, and AI-enabled tools that reduce friction and improve operations. Terminal-native, systems-first work.',
+      'Full-stack developer focused on practical web apps, automation, and AI-enabled tooling.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Stephen Weaver - Full-Stack / Automation / AI',
+    title: 'Stephen Weaver',
     description:
-      'Web apps, automation, and AI-enabled tools built with an operator mindset. Terminal-native, systems-first work.',
+      'Full-stack developer focused on practical web apps, automation, and AI-enabled tooling.',
     creator: '@stepweaver',
     site: '@stepweaver',
   },
@@ -87,7 +87,7 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: 'https://www.stepweaver.dev/',
+    canonical: 'https://stepweaver.dev/',
   },
   icons: {
     icon: [
