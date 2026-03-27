@@ -35,12 +35,6 @@ export default async function Image({ params }) {
   const project = getProjectBySlug(resolvedParams?.slug);
 
   const title = project?.title || 'Project Case Study';
-  const summary = (project?.description ||
-    project?.overview ||
-    'Case study from Stephen Weaver'
-  )
-    .trim()
-    .replace(/\s+/g, ' ');
   const imageSrc = toAbsoluteUrl(project?.socialImage || project?.imageUrl);
   const tags = Array.isArray(project?.tags) ? project.tags.slice(0, 3) : [];
 
@@ -90,7 +84,7 @@ export default async function Image({ params }) {
         >
           <div
             style={{
-              width: '44%',
+              width: '38%',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -121,18 +115,6 @@ export default async function Image({ params }) {
                   letterSpacing: '-0.03em',
                 }}
               >{title}</div>
-
-              <div
-                style={{
-                  display: 'flex',
-                  fontSize: 24,
-                  lineHeight: 1.35,
-                  color: '#9fd6ff',
-                  maxWidth: 520,
-                  maxHeight: 170,
-                  overflow: 'hidden',
-                }}
-              >{summary}</div>
 
               {tags.length > 0 ? (
                 <div
@@ -174,7 +156,7 @@ export default async function Image({ params }) {
 
           <div
             style={{
-              width: '56%',
+              width: '62%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'flex-end',
@@ -182,8 +164,8 @@ export default async function Image({ params }) {
           >
             <div
               style={{
-                width: 620,
-                height: 390,
+                width: 690,
+                height: 410,
                 display: 'flex',
                 overflow: 'hidden',
                 borderRadius: 20,
@@ -195,8 +177,8 @@ export default async function Image({ params }) {
               <img
                 src={imageSrc}
                 alt={title}
-                width='620'
-                height='390'
+                width='690'
+                height='410'
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>
