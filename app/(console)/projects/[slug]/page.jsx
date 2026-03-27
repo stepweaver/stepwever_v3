@@ -7,7 +7,8 @@ export function generateStaticParams() {
 }
 
 export default async function ProjectPage({ params }) {
-  const slug = typeof params?.slug === 'string' ? params.slug : '';
+  const resolvedParams = typeof params?.then === 'function' ? await params : params;
+  const slug = typeof resolvedParams?.slug === 'string' ? resolvedParams.slug : '';
   const project = getRenderableProjectBySlug(slug);
   if (!project) {
     notFound();

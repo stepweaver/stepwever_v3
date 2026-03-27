@@ -28,7 +28,7 @@ const ibm3270 = localFont({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://stepweaver.dev'),
+  metadataBase: new URL('https://www.stepweaver.dev'),
   title: {
     template: '%s | Stephen Weaver',
     default: 'Stephen Weaver - Full-Stack / Automation / AI',
@@ -61,34 +61,17 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://stepweaver.dev/',
+    url: 'https://www.stepweaver.dev/',
     siteName: 'Stephen Weaver',
     title: 'Stephen Weaver - Full-Stack / Automation / AI',
     description:
       'Business-minded builder focused on web apps, automation, and AI-enabled tools that reduce friction and improve operations. Terminal-native, systems-first work.',
-    images: [
-      {
-        url: '/images/lambda_preview.png',
-        width: 1200,
-        height: 630,
-        alt: 'Stephen Weaver - λstepweaver',
-        type: 'image/png',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Stephen Weaver - Full-Stack / Automation / AI',
     description:
       'Web apps, automation, and AI-enabled tools built with an operator mindset. Terminal-native, systems-first work.',
-    images: [
-      {
-        url: '/images/lambda_preview.png',
-        width: 1200,
-        height: 630,
-        alt: 'Stephen Weaver - λstepweaver',
-      },
-    ],
     creator: '@stepweaver',
     site: '@stepweaver',
   },
@@ -104,7 +87,7 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: 'https://stepweaver.dev/',
+    canonical: 'https://www.stepweaver.dev/',
   },
   icons: {
     icon: [
@@ -184,13 +167,7 @@ export default async function RootLayout({ children }) {
         <meta name='apple-mobile-web-app-title' content='Stephen Weaver' />
 
         {/* Additional Open Graph tags for better mobile support */}
-        <meta property='og:image:width' content='1200' />
-        <meta property='og:image:height' content='630' />
-        <meta property='og:image:type' content='image/png' />
-        <meta
-          property='og:image:secure_url'
-          content='https://stepweaver.dev/images/lambda_preview.png'
-        />
+        {/* (Share images are emitted by Next metadata routes.) */}
 
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link

@@ -1,11 +1,15 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Stephen Weaver - Operator Dossier';
+export const alt =
+  'Stephen Weaver — full-stack web apps, automation, and AI-enabled tools';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function Image() {
+  const SITE_URL = 'https://www.stepweaver.dev';
+  const PROFILE_IMAGE = `${SITE_URL}/images/sigil.png`;
+
   return new ImageResponse(
     (
       <div
@@ -13,13 +17,13 @@ export default async function Image() {
           width: '100%',
           height: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#070a10',
-          fontFamily: 'monospace',
+          position: 'relative',
           position: 'relative',
           overflow: 'hidden',
+          background:
+            'linear-gradient(135deg, #05070c 0%, #0b1220 55%, #09131b 100%)',
+          color: '#ecf0f8',
+          fontFamily: 'Arial, sans-serif',
         }}
       >
         {/* Tron grid lines */}
@@ -28,125 +32,144 @@ export default async function Image() {
             position: 'absolute',
             inset: 0,
             backgroundImage:
-              'linear-gradient(rgba(90,255,140,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(90,255,140,0.06) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
+              'linear-gradient(rgba(90,255,140,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(90,255,140,0.05) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
           }}
         />
 
-        {/* Corner accents */}
+        {/* Outer frame */}
         <div
           style={{
             position: 'absolute',
-            top: 32,
-            left: 32,
-            width: 60,
-            height: 60,
-            borderLeft: '2px solid rgba(90,210,255,0.6)',
-            borderTop: '2px solid rgba(90,210,255,0.6)',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 32,
-            right: 32,
-            width: 60,
-            height: 60,
-            borderRight: '2px solid rgba(90,210,255,0.6)',
-            borderBottom: '2px solid rgba(90,210,255,0.6)',
+            inset: 24,
+            border: '1px solid rgba(90,210,255,0.18)',
+            borderRadius: 24,
           }}
         />
 
-        {/* Lambda symbol */}
         <div
           style={{
-            fontSize: 120,
-            color: 'rgba(90,255,140,0.9)',
-            marginBottom: 16,
-            lineHeight: 1,
-          }}
-        >
-          λ
-        </div>
-
-        {/* MODULE label */}
-        <div
-          style={{
-            fontSize: 14,
-            letterSpacing: '0.3em',
-            color: 'rgba(90,255,140,0.6)',
-            textTransform: 'uppercase',
-            marginBottom: 12,
-          }}
-        >
-          MODULE // OPERATOR DOSSIER
-        </div>
-
-        {/* Name */}
-        <div
-          style={{
-            fontSize: 48,
-            fontWeight: 700,
-            color: '#ecf0f8',
-            marginBottom: 8,
-          }}
-        >
-          STEPHEN WEAVER
-        </div>
-
-        {/* Role */}
-        <div
-          style={{
-            fontSize: 20,
-            color: 'rgba(90,210,255,0.8)',
-            letterSpacing: '0.15em',
-          }}
-        >
-          FULL-STACK DEVELOPER | AUTOMATION | AI
-        </div>
-
-        {/* ID badge */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 40,
-            right: 48,
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
+            width: '100%',
+            height: '100%',
+            padding: '56px 64px',
+            position: 'relative',
           }}
         >
           <div
             style={{
-              fontSize: 10,
-              letterSpacing: '0.25em',
-              color: 'rgba(90,255,140,0.4)',
-              textTransform: 'uppercase',
+              width: '58%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              paddingRight: 24,
             }}
           >
-            ID
-          </div>
-          <div
-            style={{
-              fontSize: 14,
-              color: 'rgba(90,255,140,0.7)',
-            }}
-          >
-            HMFIC-01
-          </div>
-        </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '10px 16px',
+                  borderRadius: 999,
+                  border: '1px solid rgba(90,255,140,0.22)',
+                  background: 'rgba(7, 14, 24, 0.7)',
+                  color: '#7dffad',
+                  fontSize: 18,
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                <span style={{ fontSize: 28, lineHeight: 1 }}>λ</span>
+                <span>stepweaver</span>
+              </div>
+            </div>
 
-        {/* URL */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 40,
-            fontSize: 14,
-            color: 'rgba(150,160,180,0.6)',
-            letterSpacing: '0.1em',
-          }}
-        >
-          stepweaver.dev
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+              <div
+                style={{
+                  fontSize: 58,
+                  fontWeight: 800,
+                  lineHeight: 1.05,
+                  letterSpacing: '-0.03em',
+                }}
+              >
+                Stephen Weaver
+              </div>
+
+              <div
+                style={{
+                  fontSize: 28,
+                  lineHeight: 1.25,
+                  color: '#9fd6ff',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <span>Full-stack web apps, automation,</span>
+                <span>and AI-enabled tools.</span>
+              </div>
+
+              <div
+                style={{
+                  fontSize: 20,
+                  lineHeight: 1.4,
+                  color: 'rgba(236,240,248,0.76)',
+                  maxWidth: 560,
+                }}
+              >
+                Business-minded builder focused on systems, operations, and
+                production-ready implementation.
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 20,
+                fontSize: 18,
+                color: 'rgba(236,240,248,0.68)',
+              }}
+            >
+              <span>stepweaver.dev</span>
+              <span style={{ color: 'rgba(90,255,140,0.45)' }}>•</span>
+              <span>Portfolio / Case Studies / Terminal</span>
+            </div>
+          </div>
+
+          <div
+            style={{
+              width: '42%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <div
+              style={{
+                width: 360,
+                height: 470,
+                display: 'flex',
+                position: 'relative',
+                overflow: 'hidden',
+                borderRadius: 24,
+                border: '1px solid rgba(90,210,255,0.22)',
+                background:
+                  'linear-gradient(180deg, rgba(8,16,28,0.95), rgba(5,9,16,0.95))',
+                boxShadow: '0 0 0 1px rgba(90,255,140,0.08) inset',
+              }}
+            >
+              <img
+                src={PROFILE_IMAGE}
+                alt='Stephen Weaver'
+                width='360'
+                height='470'
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     ),
