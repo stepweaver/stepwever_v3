@@ -22,7 +22,7 @@ export const handleCommand = async (
   // Check if we're in Zork mode first
   const zorkGameState = getZorkGameState();
   if (zorkGameState.isActive) {
-    handleZorkCommand(trimmedCommand, callback);
+    await handleZorkCommand(trimmedCommand, callback);
     return [];
   }
 
@@ -72,7 +72,7 @@ export const handleCommand = async (
         ``,
         `<span class="text-terminal-cyan">Games:</span>`,
         `<span class="text-terminal-text">blackjack - Play Blackjack (hit, stand, score)</span>`,
-        `<span class="text-terminal-text">zork - Play ZORK I: The Great Underground Empire</span>`
+        `<span class="text-terminal-text">zork - Text adventure (classic cave-crawl style)</span>`
       ];
 
     case 'cd':
@@ -145,7 +145,7 @@ export const handleCommand = async (
       return [];
 
     case 'zork':
-      startZorkGame(callback);
+      await startZorkGame(callback);
       return [];
 
     case 'codex':

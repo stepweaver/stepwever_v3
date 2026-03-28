@@ -54,7 +54,7 @@ const COMMAND_GUIDE = [
   { command: 'weather <city>', summary: 'Check weather' },
   { command: 'roll <notation>', summary: 'Roll RPG dice' },
   { command: 'cd <dest>', summary: 'Jump to sections/pages' },
-  { command: 'zork', summary: 'Play Zork' },
+  { command: 'zork', summary: 'Text adventure' },
   { command: 'blackjack', summary: 'Play Blackjack' },
   { command: 'contact', summary: 'Send message' },
   { command: 'clear', summary: 'Clear screen' },

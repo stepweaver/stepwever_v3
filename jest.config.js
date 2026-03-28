@@ -38,11 +38,11 @@ const customJestConfig = {
     },
   },
   testMatch: [
-    '<rootDir>/**/__tests__/**/*.{js,jsx}',
-    '<rootDir>/**/*.(test|spec).{js,jsx}',
+    '<rootDir>/**/__tests__/**/*.{js,jsx,ts,tsx}',
+    '<rootDir>/**/*.(test|spec).{js,jsx,ts,tsx}',
   ],
   transform: {
-    '^.+\\.(js|jsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
   transformIgnorePatterns: [
     '/node_modules/',
