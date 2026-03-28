@@ -20,12 +20,12 @@ function About() {
         </div>
 
         <h3 className='font-ibm text-text text-xl md:text-2xl lg:text-3xl leading-tight mb-6 shrink-0'>
-          I speak both business and tech.
+          I translate business workflows into working systems.
         </h3>
 
         <div className='prose prose-invert font-ibm max-w-none space-y-4 text-text flex-1 min-h-0'>
           <p className='text-base md:text-lg leading-relaxed'>
-            I'm Stephen Weaver. My path into software was not linear. I served as an Airborne Cryptologic Linguist in the U.S. Air Force. After that, I worked in restaurant operations and business analysis before moving deeper into development. That background still shapes how I build. I pay attention to process, constraints, maintenance, and whether a system is actually useful once real people have to use it.
+            I'm Stephen Weaver. I came into software through operations, analysis, and real-world process work: Airborne Cryptologic Linguist in the U.S. Air Force, then restaurant operations and business analysis, then development. That path still shapes how I build.
           </p>
           <p className='text-base md:text-lg leading-relaxed'>Background:</p>
           <ul className='space-y-3 text-base md:text-lg leading-relaxed'>
@@ -36,7 +36,7 @@ function About() {
             <li>Current focus: DevOps and infrastructure</li>
           </ul>
           <p className='text-base md:text-lg leading-relaxed'>
-            I do not treat software as an isolated technical exercise. I look at the workflow, the handoffs, the data, and the failure points. Then I build from there.
+            I do not treat software as an isolated code problem. I look at the workflow, the handoffs, the data, the integrations, and the risks. Then I build systems that people can actually use, maintain, and trust.
           </p>
         </div>
 

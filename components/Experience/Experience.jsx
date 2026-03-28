@@ -110,10 +110,10 @@ function Experience() {
 
           <div className='mb-4 md:mb-5'>
             <h3 className='text-lg md:text-xl lg:text-2xl xl:text-3xl mb-2.5 md:mb-3 leading-tight font-ibm text-neon'>
-              Tooling and systems in active use.
+              Loadout: tools that support the system.
             </h3>
             <p className='text-text/90 font-ibm text-sm md:text-base leading-relaxed'>
-              I’ve spent 8+ years working across business operations and software. The stack here is the one that shows up repeatedly in actual builds: app architecture, data, automation, payments, publishing, and deployment.
+              After 8+ years across operations and software, the stack below is what shows up in real builds—but the stack is not the story. System design, integration thinking, and operational judgment come first; these tools are how I implement and connect the pieces.
             </p>
           </div>
 
@@ -124,7 +124,7 @@ function Experience() {
                   Systems currently in rotation.
                 </h4>
                 <p className='mt-1.5 font-ibm text-xs leading-relaxed text-text/70 max-w-[72ch]'>
-                  These are the tools I use to build applications, connect services, automate repetitive work, and ship production sites.
+                  These are the tools I use after the system design is clear. The value is not the stack by itself—it is knowing what to build, how it should behave, and how the pieces work together.
                 </p>
               </div>
             </div>

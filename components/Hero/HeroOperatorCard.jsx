@@ -49,8 +49,10 @@ function HeroOperatorCard() {
 
           <div className='min-w-0 space-y-3'>
             <div>
-              <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>What I build</p>
-              <p className='text-sm text-text/90 font-ibm'>Full-stack web apps, automation, and AI-enabled tools</p>
+              <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>Role</p>
+              <p className='text-sm text-text/90 font-ibm leading-snug'>
+                Systems Builder · Full-Stack Developer · Automation & AI Integration
+              </p>
             </div>
 
             <div className='space-y-2'>
@@ -88,7 +90,7 @@ function HeroOperatorCard() {
         {/* mission statement */}
         <div className='pt-3'>
           <p className='font-ibm text-text text-sm leading-relaxed'>
-            Builds web apps, automations, and AI-enabled tools for operational work. Turns requirements into working systems.
+            I turn business workflows into dependable software, automation, and AI-assisted systems. I define what should exist, connect the moving parts, supervise implementation, and think through failure points before they become expensive.
           </p>
         </div>
 

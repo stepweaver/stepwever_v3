@@ -14,8 +14,8 @@ function WhyStephen() {
 
         <header className='relative z-10 mb-4 flex items-start justify-between gap-4 border-b border-neon/15 pb-3'>
           <div>
-            <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>Why Stephen</p>
-            <h2 className='text-lg font-semibold text-text font-ibm'>Proof of fit</h2>
+            <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>Value</p>
+            <h2 className='text-lg font-semibold text-text font-ibm'>Why teams hire me</h2>
           </div>
           <div className='text-right text-xs text-muted font-mono shrink-0'>
             <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>Section</div>
@@ -23,25 +23,31 @@ function WhyStephen() {
           </div>
         </header>
 
-        <div className='relative z-10 grid gap-3 md:grid-cols-3'>
+        <div className='relative z-10 grid gap-3 md:grid-cols-2 lg:grid-cols-4'>
           {[
             {
               id: '01',
-              title: 'Understands operations',
-              body: 'Understands business rules, edge cases, dependencies, and handoffs. Not just the code.',
-              proof: '8+ years working across business process, reporting, systems, and web development.',
+              title: 'Sees the whole workflow',
+              body: 'Understands business rules, dependencies, handoffs, and edge cases—not just the code in front of me.',
+              proof: '8+ years across business process, reporting, systems, and web development.',
             },
             {
               id: '02',
-              title: 'Builds under constraint',
-              body: 'Works well in unclear environments. Especially when the requirements are incomplete, the system is messy, or multiple tools have to be tied together.',
-              proof: 'Experienced with integration-heavy work, legacy process, and shifting requirements.',
+              title: 'Connects the system',
+              body: 'Knows how tools, APIs, data, and people fit together across the full flow.',
+              proof: 'Integration-heavy work: glue code, automations, and production apps that have to talk to each other.',
             },
             {
               id: '03',
-              title: 'Ships usable systems',
-              body: 'Builds for actual use. Clear flows. Low friction. Fewer failure points.',
-              proof: 'Focused on making systems easier to use, easier to maintain, and easier to hand off.',
+              title: 'Builds under constraint',
+              body: 'Works well when requirements are incomplete, the budget is real, and the environment is messy.',
+              proof: 'Used to legacy process, shifting scope, and shipping without a perfect spec.',
+            },
+            {
+              id: '04',
+              title: 'Catches risks early',
+              body: 'Thinks about failure states, maintenance, security, and operational reality before they become rework.',
+              proof: 'Bias toward clear flows, fewer failure points, and systems that are easier to hand off.',
             },
           ].map((m) => (
             <article key={m.id} className='relative border border-neon/20 bg-terminal-dark/15 p-4'>
