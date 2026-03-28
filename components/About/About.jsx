@@ -5,7 +5,10 @@ import Link from 'next/link';
 
 function About() {
   return (
-    <section id='about' className='relative z-30 flex flex-col border border-neon/20 bg-panel/25'>
+    <section
+      id='about'
+      className='relative z-30 flex flex-col border border-neon/20 bg-panel/25 scroll-mt-24'
+    >
       <div className='flex-1 flex flex-col min-h-0 px-4 py-6 sm:px-5 md:p-6'>
         {/* Section ID tag - no border, just a label */}
         <div className='mb-4 flex items-start justify-between gap-4'>
