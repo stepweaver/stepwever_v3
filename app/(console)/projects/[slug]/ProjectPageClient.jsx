@@ -406,6 +406,14 @@ export default function ProjectPageClient({ project, slug }) {
           </ProjectSection>
         )}
 
+        {project.evolutionAfterSetup && (
+          <ProjectSection title='Evolution after setup'>
+            <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
+              {project.evolutionAfterSetup}
+            </p>
+          </ProjectSection>
+        )}
+
         {/* 4) Architecture */}
         {(architectureText || project.projectStructure) && (
           <ProjectSection title='Architecture'>
@@ -421,6 +429,12 @@ export default function ProjectPageClient({ project, slug }) {
                 </pre>
               </>
             )}
+          </ProjectSection>
+        )}
+
+        {project.operationalWorkflow?.length > 0 && (
+          <ProjectSection title='Operational Workflow'>
+            <BulletList items={project.operationalWorkflow} />
           </ProjectSection>
         )}
 
