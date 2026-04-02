@@ -47,7 +47,7 @@ function SidebarPanel({ children, label, className = '' }) {
   return (
     <div className={`hud-panel p-3 ${className}`}>
       {label && (
-        <p className='font-ocr text-[9px] tracking-[0.25em] text-neon/45 uppercase mb-2'>
+        <p className='font-ocr text-xs tracking-[0.25em] text-text-meta uppercase mb-2'>
           {label}
         </p>
       )}
@@ -67,7 +67,7 @@ function MobileContactBrief() {
       >
         <div className='flex items-center gap-2'>
           <Globe className='w-3 h-3 text-neon/50' />
-          <span className='font-ocr text-[10px] tracking-[0.2em] text-neon/50 uppercase'>
+          <span className='font-ocr text-xs tracking-[0.2em] text-text-meta uppercase'>
             Contact info
           </span>
         </div>
@@ -84,7 +84,7 @@ function MobileContactBrief() {
             <Mail className='w-3 h-3 text-neon/60 shrink-0' />
             <Link
               href='mailto:stephen@stepweaver.dev'
-              className='font-ocr text-[11px] text-neon/80 hover:text-neon transition-colors'
+              className='font-ocr text-xs text-text-secondary hover:text-neon transition-colors'
             >
               stephen@stepweaver.dev
             </Link>
@@ -100,7 +100,7 @@ function MobileContactBrief() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className='inline-flex items-center gap-1.5 font-ocr text-[10px] text-neon/60 hover:text-neon transition-colors'
+                  className='inline-flex items-center gap-1.5 font-ocr text-xs text-text-label hover:text-neon transition-colors'
                   {...sharedProps}
                 >
                   {link.isTerminal ? (
@@ -113,7 +113,7 @@ function MobileContactBrief() {
               );
             })}
           </div>
-          <p className='font-ocr text-[9px] text-text/30'>
+          <p className='font-ocr text-xs text-text-meta'>
             Response time: typically within 24–48h
           </p>
         </div>
@@ -132,11 +132,11 @@ function ContactPage() {
         <header className='shrink-0 border-b border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-2 flex items-center justify-between gap-4'>
           <div className='flex items-center gap-2.5'>
             <Send className='w-3.5 h-3.5 text-neon/60' />
-            <span className='font-ocr text-[10px] tracking-[0.3em] text-neon/50 uppercase'>
+            <span className='font-ocr text-xs tracking-[0.3em] text-text-meta uppercase'>
               COMMS-00
             </span>
             <span className='text-neon/15 hidden sm:inline'>│</span>
-            <span className='font-ibm text-xs text-text/50 hidden sm:inline'>
+            <span className='font-ibm text-xs text-text-meta hidden sm:inline'>
               λstepweaver comms
             </span>
           </div>
@@ -146,7 +146,7 @@ function ContactPage() {
                 <span className='absolute inline-flex h-full w-full rounded-full bg-neon opacity-40 motion-safe:animate-ping' />
                 <span className='relative inline-flex h-2 w-2 rounded-full bg-neon' />
               </span>
-              <span className='font-ocr text-[10px] tracking-[0.15em] text-neon/60 uppercase'>
+              <span className='font-ocr text-xs tracking-[0.15em] text-text-label uppercase'>
                 Online
               </span>
             </span>
@@ -166,11 +166,11 @@ function ContactPage() {
                 <p className='font-ibm text-lg text-text leading-snug'>
                   Contact
                 </p>
-                <p className='font-ibm text-sm text-text/65 leading-relaxed mt-2'>
+                <p className='font-ibm text-sm text-text-secondary leading-relaxed mt-2'>
                   Questions, opportunities, or project inquiries are welcome.
                 </p>
                 <div className='mt-3 w-full h-px bg-gradient-to-r from-neon/30 via-neon/10 to-transparent' />
-                <p className='font-ibm text-xs text-neon/50 mt-2'>
+                <p className='font-ibm text-xs text-text-meta mt-2'>
                   I typically respond within{' '}
                   <span className='text-neon/65'>24–48 hours</span>.
                 </p>
@@ -184,10 +184,10 @@ function ContactPage() {
                 >
                   <Mail className='w-3.5 h-3.5 text-neon/55 shrink-0 group-hover:text-neon/80 transition-colors' />
                   <div className='min-w-0'>
-                    <p className='font-ibm text-xs text-neon/80 group-hover:text-neon transition-colors'>
+                    <p className='font-ibm text-xs text-text-secondary group-hover:text-neon transition-colors'>
                       Email
                     </p>
-                    <p className='font-ocr text-[10px] text-text/40 truncate'>
+                    <p className='font-ocr text-xs text-text-meta truncate'>
                       stephen@stepweaver.dev
                     </p>
                   </div>
@@ -196,7 +196,7 @@ function ContactPage() {
 
               {/* Network */}
               <div>
-                <p className='font-ocr text-[9px] tracking-[0.25em] text-neon/40 uppercase px-1 mb-2'>
+                <p className='font-ocr text-xs tracking-[0.25em] text-text-meta uppercase px-1 mb-2'>
                   Network
                 </p>
                 <div className='space-y-1.5'>
@@ -222,10 +222,10 @@ function ContactPage() {
                           <Icon className='w-3.5 h-3.5 text-neon/55 shrink-0 group-hover:text-neon/80 transition-colors' />
                         )}
                         <div className='flex items-baseline gap-2 min-w-0'>
-                          <p className='font-ibm text-xs text-neon/80 group-hover:text-neon transition-colors'>
+                          <p className='font-ibm text-xs text-text-secondary group-hover:text-neon transition-colors'>
                             {link.label}
                           </p>
-                          <span className='font-ocr text-[8px] text-neon/25'>
+                          <span className='font-ocr text-xs text-text-meta'>
                             {link.tag}
                           </span>
                         </div>
@@ -244,11 +244,11 @@ function ContactPage() {
             <div className='shrink-0 bg-panel/50 border-b border-neon/20 px-4 py-2 flex items-center justify-between'>
               <div className='flex items-center gap-2'>
                 <Mail className='w-3 h-3 text-neon/40' />
-                <span className='font-ocr text-[10px] tracking-[0.18em] text-neon/40 uppercase'>
+                <span className='font-ocr text-xs tracking-[0.18em] text-text-meta uppercase'>
                   New message
                 </span>
               </div>
-              <span className='font-ocr text-[10px] text-text/20 hidden sm:inline'>
+              <span className='font-ocr text-xs text-text-meta hidden sm:inline'>
                 CONTACT-01
               </span>
             </div>
@@ -264,19 +264,19 @@ function ContactPage() {
 
         {/* ── Status Bar ── */}
         <footer className='shrink-0 border-t border-neon/20 bg-panel/60 backdrop-blur-sm px-3 sm:px-5 py-1.5 flex items-center gap-2 sm:gap-3 overflow-x-auto'>
-          <span className='font-ocr text-[10px] text-neon/45 whitespace-nowrap'>
+          <span className='font-ocr text-[10px] text-text-meta whitespace-nowrap'>
             &gt; contact
           </span>
           <span className='text-neon/15'>│</span>
-          <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap'>
+          <span className='font-ocr text-[10px] text-text-meta uppercase whitespace-nowrap'>
             Form ready
           </span>
           <span className='text-neon/15 hidden sm:inline'>│</span>
-          <span className='font-ocr text-[10px] text-text/25 uppercase whitespace-nowrap hidden sm:inline'>
+          <span className='font-ocr text-[10px] text-text-meta uppercase whitespace-nowrap hidden sm:inline'>
             Encrypted
           </span>
           <span className='text-neon/15 hidden md:inline'>│</span>
-          <span className='font-ocr text-[10px] text-text/20 uppercase whitespace-nowrap hidden md:inline'>
+          <span className='font-ocr text-[10px] text-text-meta uppercase whitespace-nowrap hidden md:inline'>
             Response: 24–48h
           </span>
         </footer>

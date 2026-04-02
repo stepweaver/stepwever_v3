@@ -77,8 +77,8 @@ function ToolModule({ code, name, role, icon: Icon }) {
     <article className='group rounded-sm border border-neon/12 bg-panel/35 p-2.5 transition-colors duration-200 hover:border-neon/30 hover:bg-panel/55'>
       <div className='mb-2 flex items-start justify-between gap-2'>
         <div className='min-w-0'>
-          <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>{code}</div>
-          <h4 className='mt-0.5 font-ibm text-sm uppercase tracking-[0.05em] text-neon break-words'>{name}</h4>
+      <div className='font-ocr text-xs uppercase tracking-[0.18em] text-text-label'>{code}</div>
+      <h4 className='mt-0.5 font-ibm text-sm uppercase tracking-[0.05em] text-neon break-words'>{name}</h4>
         </div>
 
         <div className='flex h-7 w-7 items-center justify-center rounded-sm bg-terminal-dark/35'>
@@ -92,7 +92,7 @@ function ToolModule({ code, name, role, icon: Icon }) {
 
       <div className='h-px w-full bg-neon/20' />
 
-      <p className='mt-2 font-ibm text-xs leading-relaxed text-text/75'>{role}</p>
+      <p className='mt-2 font-ibm text-xs leading-relaxed text-text-secondary'>{role}</p>
     </article>
   );
 }
@@ -105,7 +105,7 @@ function Experience() {
         {/* Right column: aligns with Hero right column, same internal padding as About (p-6) */}
         <div className='w-full px-2 sm:px-4 md:p-6 min-w-0 lg:ml-[calc(390px+2.5rem)] xl:ml-[calc(390px+3rem)] lg:w-[calc(100%-390px-2.5rem)] xl:w-[calc(100%-390px-3rem)]'>
           <div className='mb-3'>
-            <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase'>Loadout</p>
+            <p className='text-xs tracking-[0.18em] text-text-label font-ocr uppercase sm:text-sm'>Loadout</p>
           </div>
 
           <div className='mb-4 md:mb-5'>
@@ -113,33 +113,23 @@ function Experience() {
               Loadout: tools that support the system.
             </h3>
             <p className='text-text/90 font-ibm text-sm md:text-base leading-relaxed'>
-              After 8+ years across operations and software, the stack below is what shows up in real builds—but the stack is not the story. System design, integration thinking, and operational judgment come first; these tools are how I implement and connect the pieces.
+              After 8+ years across operations and software, the stack below is what shows up in real builds.
             </p>
           </div>
 
           <div className='w-full max-w-6xl min-w-0'>
-            <div className='mb-3 flex items-start justify-between gap-3 border-b border-neon/15 pb-2.5'>
-              <div className='min-w-0'>
-                <h4 className='mt-0.5 font-ibm text-base uppercase tracking-[0.04em] text-neon'>
-                  Systems currently in rotation.
-                </h4>
-                <p className='mt-1.5 font-ibm text-xs leading-relaxed text-text/70 max-w-[72ch]'>
-                  These are the tools I use after the system design is clear. The value is not the stack by itself—it is knowing what to build, how it should behave, and how the pieces work together.
-                </p>
-              </div>
-            </div>
 
             <div className='space-y-2'>
               {LOADOUT_GROUPS.map((group) => (
                 <section key={group.id} className='rounded-sm bg-panel/20 p-2.5 md:p-3'>
                   <div className='mb-3 flex flex-col gap-1.5 border-b border-neon/15 pb-2 md:flex-row md:items-end md:justify-between'>
                     <div className='min-w-0'>
-                      <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/50'>{group.id}</div>
+                      <div className='font-ocr text-xs uppercase tracking-[0.18em] text-text-label'>{group.id}</div>
                       <h4 className='mt-0.5 font-ibm text-lg uppercase tracking-[0.04em] text-neon break-words'>
                         {group.title}
                       </h4>
                     </div>
-                    <p className='max-w-xl font-ibm text-xs text-text/60'>
+                    <p className='max-w-xl font-ibm text-xs text-text-meta'>
                       {group.subtitle}
                     </p>
                   </div>
@@ -158,7 +148,7 @@ function Experience() {
           {FEATURED_TESTIMONIAL.quote && (
             <div className='mt-6 md:mt-8'>
               <div className='mb-2.5 md:mb-3'>
-                <p className='text-xs tracking-[0.28em] text-neon/70 font-ocr uppercase mb-2'>Field report</p>
+                <p className='text-xs tracking-[0.18em] text-text-label font-ocr uppercase mb-2 sm:text-sm'>Field report</p>
                 <h3 className='text-base md:text-lg lg:text-xl font-ibm text-neon font-bold uppercase tracking-wider'>
                   External validation
                 </h3>
@@ -170,10 +160,10 @@ function Experience() {
                 <div className='pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-neon/60' />
                 <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_12px] opacity-10' />
 
-                <p className='font-ibm text-xs md:text-sm text-text/90 leading-relaxed mb-2.5'>
+                <p className='font-ibm text-xs md:text-sm text-text-secondary leading-relaxed mb-2.5'>
                   {FEATURED_TESTIMONIAL.quote}
                 </p>
-                <p className='font-ibm text-xs text-text/55 uppercase tracking-[0.1em]'>
+                <p className='font-ibm text-xs text-text-meta uppercase tracking-[0.1em]'>
                   {FEATURED_TESTIMONIAL.attribution}
                   {FEATURED_TESTIMONIAL.role
                     ? ` · ${FEATURED_TESTIMONIAL.role}`

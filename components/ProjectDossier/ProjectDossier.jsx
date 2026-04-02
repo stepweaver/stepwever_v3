@@ -157,7 +157,7 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
           <div className='pointer-events-none absolute bottom-0 left-0 h-5 w-5 border-b border-l border-terminal-green/30' />
           <div className='pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-terminal-green/50' />
 
-          <div className='font-ocr text-xs uppercase tracking-[0.22em] text-neon/60'>
+          <div className='font-ocr text-xs uppercase tracking-[0.18em] text-text-label'>
             Scanning Modules...
           </div>
 
@@ -187,15 +187,15 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
         <div className='absolute right-[8%] top-0 h-full w-px bg-terminal-green/10' />
       </div>
 
-      <div className='mb-6 flex items-start justify-between gap-4 border-b border-terminal-green/15 pb-4'>
+      <div className='mb-6 flex items-start justify-between gap-4 border-b border-border-theme/40 pb-4'>
         <div className='min-w-0'>
-          <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/60 sm:text-xs'>
+          <div className='font-ocr text-xs uppercase tracking-[0.18em] text-text-label sm:text-sm'>
             Active Project Module
           </div>
 
           <div className='mt-2 flex items-center gap-3'>
             <span className='h-2 w-2 bg-terminal-green shadow-[0_0_14px_rgba(0,255,153,0.45)]' />
-            <span className='font-ocr text-xs uppercase tracking-[0.24em] text-terminal-dimmed'>
+            <span className='font-ocr text-xs uppercase tracking-[0.16em] text-text-secondary sm:text-sm'>
               {moduleLabel}
             </span>
           </div>
@@ -205,7 +205,7 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
           {statusChips.map((chip) => (
             <span
               key={chip}
-              className='relative border border-neon/25 bg-terminal-dark/50 px-2.5 py-1 font-ocr text-[10px] uppercase tracking-[0.24em] text-neon/70 sm:text-xs'
+              className='relative border border-neon/25 bg-terminal-dark/50 px-2.5 py-1 font-ocr text-xs uppercase tracking-[0.18em] text-text-label'
             >
               {chip}
             </span>
@@ -253,19 +253,19 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
           </div>
 
           <div className='flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between'>
-            <div className='flex items-center justify-center gap-3 font-ocr text-[10px] uppercase tracking-[0.22em] sm:text-xs'>
+            <div className='flex items-center justify-center gap-3 font-ocr text-xs uppercase tracking-[0.14em] sm:text-sm'>
               <button
                 type='button'
                 onClick={goPrev}
                 aria-label='Previous project'
-                className='inline-flex min-h-11 min-w-11 items-center justify-center border border-terminal-green/20 px-4 py-2 text-terminal-dimmed transition hover:border-terminal-green/55 hover:bg-terminal-green/10 hover:text-terminal-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+                className='inline-flex min-h-11 min-w-11 items-center justify-center border border-border-theme/50 px-4 py-2 text-text-secondary transition hover:bg-terminal-green/10 hover:text-terminal-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
               >
                 ← Prev
               </button>
 
               <div
                 aria-live='polite'
-                className='min-w-[96px] border border-terminal-green/10 px-3 py-2 text-center text-neon/60'
+                className='min-w-[96px] border border-border-theme/40 px-3 py-2 text-center text-text-secondary'
               >
                 {countLabel}
               </div>
@@ -274,7 +274,7 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
                 type='button'
                 onClick={goNext}
                 aria-label='Next project'
-                className='inline-flex min-h-11 min-w-11 items-center justify-center border border-terminal-green/20 px-4 py-2 text-terminal-dimmed transition hover:border-terminal-green/55 hover:bg-terminal-green/10 hover:text-terminal-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
+                className='inline-flex min-h-11 min-w-11 items-center justify-center border border-border-theme/50 px-4 py-2 text-text-secondary transition hover:bg-terminal-green/10 hover:text-terminal-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terminal-green/40'
               >
                 Next →
               </button>
@@ -282,7 +282,7 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
 
             <Link
               href='/projects'
-              className='text-center font-ibm text-sm text-neon/75 underline decoration-neon/30 underline-offset-4 transition hover:text-terminal-green hover:decoration-terminal-green/50 sm:text-right'
+              className='text-center font-ibm text-sm text-text-secondary underline decoration-border-theme/50 underline-offset-4 transition hover:text-terminal-green hover:decoration-terminal-green/50 sm:text-right'
             >
               Browse all projects →
             </Link>
@@ -300,7 +300,7 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
             }}
           >
             <div className='min-w-0'>
-              <div className='font-ocr text-[10px] uppercase tracking-[0.28em] text-neon/60 sm:text-xs'>
+              <div className='font-ocr text-xs uppercase tracking-[0.18em] text-text-label sm:text-sm'>
                 Featured Deployment
               </div>
 
@@ -312,17 +312,17 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
             <div className='h-px w-full bg-gradient-to-r from-terminal-green/35 to-transparent' />
 
             {active.description && (
-              <p className='max-w-[68ch] font-ibm text-sm leading-7 text-terminal-dimmed sm:text-base'>
+              <p className='max-w-[68ch] font-ibm text-sm leading-7 text-text-secondary sm:text-base'>
                 {active.description}
               </p>
             )}
 
             {proofBullets.length > 0 && (
               <div className='space-y-3'>
-                <div className='font-ocr text-xs uppercase tracking-wider text-neon/70'>Proof</div>
+                <div className='font-ocr text-xs uppercase tracking-wider text-text-label'>Proof</div>
                 <ul className='space-y-2.5'>
                   {proofBullets.map((line) => (
-                    <li key={line} className='flex items-start gap-3 font-ibm text-sm text-terminal-dimmed'>
+                    <li key={line} className='flex items-start gap-3 font-ibm text-sm text-text-secondary'>
                       <span className='mt-[0.45rem] h-[6px] w-[6px] shrink-0 bg-terminal-green shadow-[0_0_8px_rgba(0,255,153,0.45)]' />
                       <span className='min-w-0 break-words'>{line}</span>
                     </li>
@@ -333,12 +333,12 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
 
             {tags.length > 0 && (
               <div className='space-y-3'>
-                <div className='font-ocr text-xs uppercase tracking-wider text-neon/70'>Stack</div>
+                <div className='font-ocr text-xs uppercase tracking-wider text-text-label'>Stack</div>
                 <div className='flex flex-wrap gap-2'>
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className='border border-neon/20 bg-terminal-dark/35 px-2 py-1 font-ocr text-[10px] uppercase tracking-wider text-neon/65'
+                      className='border border-neon/20 bg-terminal-dark/35 px-2 py-1 font-ocr text-xs uppercase tracking-wider text-text-label'
                     >
                       {tag}
                     </span>
@@ -357,8 +357,8 @@ const ProjectDossier = memo(function ProjectDossier({ projects = [] }) {
                 cta.variant === 'primary'
                   ? 'border-terminal-green/35 text-terminal-green hover:border-terminal-green/70 hover:bg-terminal-green/10'
                   : cta.variant === 'secondary'
-                    ? 'border-neon/25 text-neon/70 hover:border-neon/55 hover:bg-neon/10 hover:text-neon'
-                    : 'border-terminal-dimmed/25 text-terminal-dimmed hover:border-terminal-dimmed/55 hover:bg-terminal-dimmed/10 hover:text-white';
+                    ? 'border-neon/25 text-text-secondary hover:border-neon/55 hover:bg-neon/10 hover:text-neon'
+                    : 'border-border-theme/40 text-text-meta hover:border-border-theme/70 hover:bg-terminal-dark/20 hover:text-text-secondary';
 
               return (
                 <Link

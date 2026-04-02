@@ -18,12 +18,12 @@ function HeroOperatorCard() {
       {/* header rail */}
       <header className='relative z-10 mb-4 flex items-start justify-between gap-4 pb-1'>
         <div>
-          <p className='text-xs tracking-[0.24em] text-neon/70 font-ocr uppercase'>Profile</p>
+          <p className='text-xs tracking-[0.18em] text-text-label sm:text-sm font-ocr uppercase'>Profile</p>
           <h2 className='text-xl font-semibold text-text font-ibm'>Stephen Weaver</h2>
         </div>
         <div className='text-right text-xs text-muted font-mono shrink-0'>
-          <div className='tracking-[0.22em] text-neon/50 uppercase font-ocr text-[10px]'>Profile ID</div>
-          <div className='font-mono text-neon/80 whitespace-nowrap'>HMFIC-01</div>
+          <div className='tracking-[0.18em] text-text-meta uppercase font-ocr text-xs'>Profile ID</div>
+          <div className='font-mono text-text-secondary whitespace-nowrap'>HMFIC-01</div>
         </div>
       </header>
 
@@ -49,8 +49,8 @@ function HeroOperatorCard() {
 
           <div className='min-w-0 space-y-3'>
             <div>
-              <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>Role</p>
-              <p className='text-sm text-text/90 font-ibm leading-snug'>
+              <p className='text-xs tracking-[0.18em] text-text-label font-ocr uppercase'>Role</p>
+              <p className='text-sm text-text-secondary font-ibm leading-snug'>
                 Systems Builder · Full-Stack Developer · Automation & AI Integration
               </p>
             </div>
@@ -63,7 +63,7 @@ function HeroOperatorCard() {
               >
                 <div className='flex items-start justify-between gap-3'>
                   <div className='min-w-0'>
-                    <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>Availability</p>
+                    <p className='text-xs tracking-[0.18em] text-text-label font-ocr uppercase'>Availability</p>
                     <div className='mt-1 flex items-center gap-2'>
                       <p className='text-sm text-terminal-green font-ibm whitespace-normal leading-snug'>
                         Open to work
@@ -78,8 +78,8 @@ function HeroOperatorCard() {
               </Link>
 
               <div>
-                <p className='text-[10px] tracking-[0.22em] text-neon/60 font-ocr uppercase'>Current focus</p>
-                <p className='mt-1 text-sm text-text/85 font-ibm whitespace-normal leading-snug'>
+                <p className='text-xs tracking-[0.18em] text-text-label font-ocr uppercase'>Current focus</p>
+                <p className='mt-1 text-sm text-text-secondary font-ibm whitespace-normal leading-snug'>
                   DevOps engineering and infrastructure
                 </p>
               </div>
@@ -105,14 +105,14 @@ function HeroOperatorCard() {
 
           <Link
             href='/contact'
-            className='inline-flex cursor-pointer items-center justify-center border border-neon/25 bg-terminal-dark/20 px-3 py-2 text-xs font-ibm uppercase tracking-[0.08em] text-neon/80 transition-colors hover:border-neon/55 hover:bg-neon/10 hover:text-neon'
+            className='inline-flex cursor-pointer items-center justify-center border border-neon/25 bg-terminal-dark/20 px-3 py-2 text-xs font-ibm uppercase tracking-[0.08em] text-text-secondary transition-colors hover:border-neon/55 hover:bg-neon/10 hover:text-neon'
           >
             Contact
           </Link>
 
           <Link
             href='/terminal'
-            className='inline-flex cursor-pointer items-center justify-center border border-neon/15 bg-terminal-dark/20 px-3 py-2 text-xs font-ibm uppercase tracking-[0.08em] text-terminal-dimmed transition-colors hover:border-neon/40 hover:bg-neon/10 hover:text-neon/80'
+            className='inline-flex cursor-pointer items-center justify-center border border-neon/15 bg-terminal-dark/20 px-3 py-2 text-xs font-ibm uppercase tracking-[0.08em] text-text-meta transition-colors hover:border-neon/40 hover:bg-neon/10 hover:text-neon'
           >
             Terminal
           </Link>
@@ -125,7 +125,7 @@ function HeroOperatorCard() {
               {['Veteran', 'Business Analyst', 'Developer'].map((label) => (
                 <span
                   key={label}
-                  className='border border-neon/25 bg-terminal-dark/15 px-2 py-1 text-[11px] font-ibm text-text/80'
+                  className='border border-neon/25 bg-terminal-dark/15 px-2 py-1 text-xs font-ibm text-text-secondary'
                 >
                   {label}
                 </span>
@@ -135,11 +135,11 @@ function HeroOperatorCard() {
             <div className='flex flex-wrap items-center gap-2'>
               <Link
                 href='/yankee-samurai'
-                className='inline-flex cursor-pointer border border-terminal-magenta/35 bg-terminal-dark/10 px-2 py-1 text-[11px] font-ibm text-terminal-magenta/80 hover:border-terminal-magenta/70 hover:bg-terminal-magenta/10'
+                className='inline-flex cursor-pointer border border-terminal-magenta/35 bg-terminal-dark/10 px-2 py-1 text-xs font-ibm text-terminal-magenta/80 hover:border-terminal-magenta/70 hover:bg-terminal-magenta/10'
               >
                 YANKEE SAMURAI
               </Link>
-              <span className='border border-terminal-magenta/20 bg-terminal-dark/10 px-2 py-1 text-[11px] font-ibm text-terminal-magenta/60'>
+              <span className='border border-terminal-magenta/20 bg-terminal-dark/10 px-2 py-1 text-xs font-ibm text-terminal-magenta/60'>
                 REBEL
               </span>
             </div>

@@ -55,6 +55,10 @@ module.exports = {
         warn: 'rgb(var(--warn) / <alpha-value>)',
         danger: 'rgb(var(--danger) / <alpha-value>)',
         ring: 'rgb(var(--ring) / <alpha-value>)',
+        'text-secondary': 'rgb(var(--text-secondary) / <alpha-value>)',
+        'text-meta': 'rgb(var(--text-meta) / <alpha-value>)',
+        'text-label': 'rgb(var(--text-label) / <alpha-value>)',
+        'border-theme': 'rgb(var(--border) / <alpha-value>)',
       },
       boxShadow: {
         'terminal-green': '0 0 6px 0 rgba(0, 255, 65, 0.5)',
