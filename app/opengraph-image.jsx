@@ -3,7 +3,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 export const alt =
-  'Stephen Weaver — full-stack web apps, automation, and AI-enabled tools';
+  'Stephen Weaver: full-stack web apps, automation, and AI-enabled tools';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -47,7 +47,7 @@ export default async function Image() {
           />
         </div>
 
-        {/* No text — just the image */}
+        {/* No text, just the image */}
         <div
           style={{
             display: 'none',

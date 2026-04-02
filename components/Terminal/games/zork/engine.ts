@@ -124,7 +124,7 @@ export function runCommand(state: GameState, rawInput: string): RunResult {
 export function getOpeningLines(): OutputLine[] {
   const initial = createInitialState();
   return [
-    line('success', 'The Underground Empire — a browser text adventure'),
+    line('success', 'The Underground Empire, a browser text adventure'),
     line('dim', 'Inspired by classic interactive fiction. All-new prose and code.'),
     line('text', ''),
     ...describeRoom(initial, 'west-of-house'),

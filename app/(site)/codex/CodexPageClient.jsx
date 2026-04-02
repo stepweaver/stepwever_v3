@@ -88,7 +88,7 @@ function CodexContent({ initialPosts = [] }) {
                 Digital codex.
               </h1>
               <p className="font-ibm text-base sm:text-lg text-text/75 leading-relaxed max-w-3xl">
-                Thoughts and things I&apos;m exploring &mdash; developer notes, projects, and community contributions.
+                Thoughts and things I&apos;m exploring: developer notes, projects, and community contributions.
               </p>
             </div>
             <div className="w-full h-px bg-gradient-to-r from-neon/40 via-neon/10 to-transparent" />

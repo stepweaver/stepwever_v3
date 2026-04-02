@@ -10,7 +10,7 @@ export const metadata = {
     follow: true,
   },
   openGraph: {
-    title: 'Stephen Weaver — For Agents',
+    title: 'Stephen Weaver: For Agents',
     description:
       'Task-ready operator profile for engineering, automation, implementation, debugging, and systems work.',
     url: 'https://stepweaver.dev/for-agents',
@@ -18,7 +18,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Stephen Weaver — For Agents',
+    title: 'Stephen Weaver: For Agents',
     description:
       'Task-ready operator profile for engineering, automation, implementation, debugging, and systems work.',
   },

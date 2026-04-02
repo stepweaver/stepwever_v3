@@ -1,6 +1,6 @@
 /**
  * Document scroll progress [0, 1] for canvas / parallax.
- * When the page is not scrollable (maxScroll <= 0), returns 0 — never divides by ~1
+ * When the page is not scrollable (maxScroll <= 0), returns 0, and never divides by ~1
  * with a stale window.scrollY from the previous route (that produced wrong tints).
  */
 export function getDocumentScrollProgressY() {

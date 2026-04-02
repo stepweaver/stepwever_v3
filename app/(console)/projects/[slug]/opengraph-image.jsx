@@ -70,7 +70,7 @@ export default async function Image({ params }) {
           />
         </div>
 
-        {/* No text — full image only */}
+        {/* No text, full image only */}
       </div>
     ),
     size

@@ -78,7 +78,7 @@ export default function ThemeAuditPage() {
             </Specimen>
 
             <Specimen label='Label text' className='font-ocr text-xs uppercase tracking-[0.18em] text-text-label'>
-              LABEL TEXT — section eyebrows, module IDs, status indicators.
+              LABEL TEXT: section eyebrows, module IDs, status indicators.
             </Specimen>
 
             <Specimen label='Heading (H2)' className='font-ibm text-2xl uppercase text-terminal-green'>

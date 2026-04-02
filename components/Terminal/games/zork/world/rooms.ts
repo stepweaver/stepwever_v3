@@ -128,7 +128,7 @@ const defs: Record<string, Omit<RoomDef, 'id'> & { id?: string }> = {
   cellar: {
     name: 'Cellar',
     description:
-      'You are in a damp cellar. A narrow passage leads north, a low crawlway south, and a steep metal ramp rises west — too smooth to climb.',
+      'You are in a damp cellar. A narrow passage leads north, a low crawlway south, and a steep metal ramp rises west, too smooth to climb.',
     dark: true,
     exits: {
       north: 'north-south-passage',
@@ -162,7 +162,7 @@ const defs: Record<string, Omit<RoomDef, 'id'> & { id?: string }> = {
   'reservoir-south': {
     name: 'South Reservoir',
     description:
-      'South of a vast underground reservoir, the path continues. Mist clings to the stone. (More lies ahead — content stub.)',
+      'South of a vast underground reservoir, the path continues. Mist clings to the stone. (More lies ahead: content stub.)',
     dark: true,
     exits: {
       southwest: 'chasm',
@@ -172,7 +172,7 @@ const defs: Record<string, Omit<RoomDef, 'id'> & { id?: string }> = {
   'east-west-passage': {
     name: 'East-West Passage',
     description:
-      'A carved passage runs east and west through the rock. Footprints in the dust suggest recent traffic. (Early dungeon — extend from here.)',
+      'A carved passage runs east and west through the rock. Footprints in the dust suggest recent traffic. (Early dungeon; extend from here.)',
     dark: true,
     exits: {
       northeast: 'chasm',

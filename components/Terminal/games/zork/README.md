@@ -9,11 +9,11 @@ raw input → normalize → parse → resolve objects (in handlers) → dispatch
 ```
 
 - **Engine:** [`engine.ts`](./engine.ts) (`runCommand`, `getOpeningLines`)
-- **State:** [`state.ts`](./state.ts) — serializable `GameState` (rooms, items, inventory, flags, lamp, score)
+- **State:** [`state.ts`](./state.ts): serializable `GameState` (rooms, items, inventory, flags, lamp, score)
 - **World data:** [`world/rooms.ts`](./world/rooms.ts), [`world/items.ts`](./world/items.ts), [`world/flags.ts`](./world/flags.ts)
-- **Parser:** [`parser.ts`](./parser.ts) — directions, `go`/`move`, `turn on/off`, verb + noun phrase
-- **Actions:** [`actions/`](./actions/) — movement, look, inventory, containers, combat stub, meta verbs
-- **Adapter:** [`adapters/terminalAdapter.ts`](./adapters/terminalAdapter.ts) — maps semantic `OutputLine`s to terminal HTML; handles `save` / `restore` / `restart` via [`persistence/saveGame.ts`](./persistence/saveGame.ts) (`localStorage`)
+- **Parser:** [`parser.ts`](./parser.ts): directions, `go`/`move`, `turn on/off`, verb + noun phrase
+- **Actions:** [`actions/`](./actions/): movement, look, inventory, containers, combat stub, meta verbs
+- **Adapter:** [`adapters/terminalAdapter.ts`](./adapters/terminalAdapter.ts): maps semantic `OutputLine`s to terminal HTML; handles `save` / `restore` / `restart` via [`persistence/saveGame.ts`](./persistence/saveGame.ts) (`localStorage`)
 - **Integration:** [`../../data/zork.js`](../../data/zork.js) lazy-loads the adapter; session flag lives in [`../../data/zorkBridge.js`](../../data/zorkBridge.js)
 
 ## Extending content

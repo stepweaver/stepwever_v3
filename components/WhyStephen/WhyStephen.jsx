@@ -28,7 +28,7 @@ function WhyStephen() {
             {
               id: '01',
               title: 'Sees the whole workflow',
-              body: 'Understands business rules, dependencies, handoffs, and edge cases—not just the code in front of me.',
+              body: 'Understands business rules, dependencies, handoffs, and edge cases, not just the code in front of me.',
               proof: '8+ years across business process, reporting, systems, and web development.',
             },
             {

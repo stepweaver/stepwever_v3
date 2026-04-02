@@ -14,6 +14,6 @@ export function tryAttack(
   }
   return {
     state,
-    lines: [line('text', 'Violence is not the answer — yet.')],
+    lines: [line('text', 'Violence is not the answer, yet.')],
   };
 }
