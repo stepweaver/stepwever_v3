@@ -4,39 +4,13 @@ import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react
 import Link from 'next/link';
 import { MessageCircle, X, Send, Minimize2, Maximize2, Expand, Shrink } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
+import { useVisualViewportRect } from '@/hooks/useVisualViewportRect';
 import { useAutoScroll } from '@/hooks/useAutoScroll';
 import ChatMessage, {
   ChatLoadingIndicator,
 } from '@/components/Chat/ChatMessage';
 import GlitchLambda from '@/components/ui/GlitchLambda';
 import '@/components/ThemeToggle/ThemeToggle.css';
-
-// Sync fullscreen chat to visual viewport so it resizes when mobile keyboard opens
-function useVisualViewportRect(isFullscreen) {
-  const [rect, setRect] = useState(() =>
-    typeof window !== 'undefined' && window.visualViewport
-      ? { top: 0, height: window.visualViewport.height }
-      : { top: 0, height: '100dvh' }
-  );
-  useEffect(() => {
-    if (!isFullscreen || typeof window === 'undefined' || !window.visualViewport) return;
-    let rafId = null;
-    const scheduleUpdate = () => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        setRect({ top: window.visualViewport.offsetTop, height: window.visualViewport.height });
-      });
-    };
-    scheduleUpdate();
-    window.visualViewport.addEventListener('resize', scheduleUpdate);
-    return () => {
-      window.visualViewport.removeEventListener('resize', scheduleUpdate);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, [isFullscreen]);
-  return rect;
-}
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);

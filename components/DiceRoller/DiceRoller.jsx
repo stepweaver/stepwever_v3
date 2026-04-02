@@ -9,11 +9,31 @@ import DiceResult, { formatResultForDisplay } from './DiceResult';
 import RollHistory from './RollHistory';
 import RollSessionModal from './RollSessionModal';
 import GlitchButton from '@/components/ui/GlitchButton';
+import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
+
+function formatSessionTime(iso) {
+  if (!iso) return null;
+  try {
+    const d = new Date(iso);
+    return d.toLocaleTimeString(undefined, {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  } catch {
+    return null;
+  }
+}
+
+const cmdBase =
+  'font-ibm text-[10px] sm:text-[11px] tracking-[0.12em] uppercase px-2.5 sm:px-3 py-2 rounded-none border transition-colors cursor-pointer disabled:opacity-40 disabled:pointer-events-none';
 
 /**
  * Simplified dice roller - hex-centric, one screen, cyberpunk terminal vibe.
  */
 export default function DiceRoller() {
+  const { theme } = useTheme();
   const [dicePool, setDicePool] = useState([]);
   const [modifier, setModifier] = useState(0);
   const [comment, setComment] = useState('');
@@ -211,9 +231,26 @@ export default function DiceRoller() {
     return buildNotation(dicePool, modifier);
   }, [dicePool, modifier]);
   const pageActionGridClass = currentResult ? 'grid-cols-2' : 'grid-cols-1';
-  const modalActionGridClass = currentResult
-    ? 'grid-cols-2 sm:grid-cols-3'
-    : 'grid-cols-2';
+
+  const rollLineDisplay = currentResult?.notation || pendingNotation || '—';
+  const sessionTime = formatSessionTime(currentResult?.timestamp);
+  const totalLabel = theme === 'skynet' ? 'THREAT SCORE' : 'TOTAL';
+  const modalTitle =
+    theme === 'skynet'
+      ? 'ROLL OUTPUT // HOSTILE BUFFER'
+      : 'ROLL OUTPUT // ACTIVE SESSION';
+
+  const noteField = (
+    <input
+      type='text'
+      value={comment}
+      onChange={(e) => setComment(e.target.value)}
+      className='flex-1 min-w-[10rem] min-h-[1.25rem] bg-transparent border-0 border-b border-neon/25 text-text/90 font-mono text-[10px] sm:text-[11px] py-0.5 focus:outline-none focus:border-accent/70 placeholder:text-text/25'
+      placeholder='next pool note…'
+      maxLength={UI_CONSTANTS.MAX_COMMENT_LENGTH}
+      aria-label='Roll note'
+    />
+  );
 
   return (
     <>
@@ -306,60 +343,52 @@ export default function DiceRoller() {
         </div>
 
         <div className='xl:w-96 xl:max-w-[34vw] min-w-0 xl:self-stretch xl:max-h-[68vh] overflow-hidden'>
-        <RollHistory
-          history={history}
-          onSelectRoll={handleSelectHistoryRoll}
-          onEditComment={handleEditComment}
-          onClearHistory={handleClearHistory}
-          isExpanded={historyExpanded}
-          onToggleExpanded={() => setHistoryExpanded((v) => !v)}
-        />
+          <RollHistory
+            history={history}
+            onSelectRoll={handleSelectHistoryRoll}
+            onEditComment={handleEditComment}
+            onClearHistory={handleClearHistory}
+            isExpanded={historyExpanded}
+            onToggleExpanded={() => setHistoryExpanded((v) => !v)}
+          />
         </div>
       </div>
       <RollSessionModal
         isOpen={isRollModalOpen}
         onClose={() => setIsRollModalOpen(false)}
-        title='Roll output'
+        title={modalTitle}
+        closeLabel='ABORT'
+        closeVariant='danger'
       >
-        <div className='space-y-4 w-full'>
-          <input
-            type='text'
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            className='w-full py-2 px-2.5 bg-panel/30 border border-neon/25 text-text font-ocr text-sm focus:outline-none focus:ring-1 focus:ring-neon/40 placeholder:text-text/30'
-            placeholder='Note: Attack roll, Initiative...'
-            maxLength={UI_CONSTANTS.MAX_COMMENT_LENGTH}
-            aria-label='Roll note'
-          />
-
-          <div className={`grid gap-2 ${modalActionGridClass}`}>
-            <GlitchButton
-              onClick={handleRoll}
-              disabled={!canRoll}
-              className='h-10 py-0 text-sm'
-            >
-              {isRolling ? 'ROLLING' : 'ROLL'}
-            </GlitchButton>
-            <GlitchButton
-              onClick={handleClearResults}
-              className='h-10 py-0 px-4 text-sm'
-            >
-              CLEAR
-            </GlitchButton>
-            {currentResult && (
-              <GlitchButton onClick={handleCopy} className='h-10 py-0 px-4 text-sm'>
-                {copyStatus ? '✓' : 'COPY'}
-              </GlitchButton>
+        <div className='flex flex-col min-h-[200px] px-2.5 py-2 sm:px-3 sm:py-2.5 pb-0'>
+          <div className='font-mono text-[10px] sm:text-[11px] space-y-1 text-neon/75 border-b border-neon/15 pb-2 mb-2 shrink-0'>
+            <div className='flex flex-wrap gap-x-2 gap-y-0.5 items-baseline'>
+              <span className='text-meta shrink-0'>ROLL //</span>
+              <span className='text-neon/90 break-all'>{rollLineDisplay}</span>
+            </div>
+            <div className='flex flex-wrap items-baseline gap-x-2 gap-y-1'>
+              <span className='text-meta shrink-0'>NOTE //</span>
+              {currentResult && !isRolling ? (
+                <span className='text-text/85 break-words'>{currentResult.comment || '—'}</span>
+              ) : (
+                noteField
+              )}
+            </div>
+            {sessionTime && (
+              <div className='flex flex-wrap gap-x-2 items-baseline text-meta'>
+                <span>TIME //</span>
+                <span className='tabular-nums text-neon/65'>{sessionTime}</span>
+              </div>
             )}
           </div>
 
-          <div className='min-h-[190px] w-full'>
+          <div className='min-h-[150px] w-full flex-1'>
             {isRolling ? (
-              <div className='flex flex-col items-center justify-center py-6 px-1 sm:px-3 w-full'>
-                <div className='relative w-full mx-auto'>
-                  <div className='absolute inset-0 border border-neon/30 rounded-sm opacity-50' />
-                  <div className='absolute inset-0 bg-gradient-to-b from-neon/5 via-transparent to-neon/5 rounded-sm motion-safe:animate-pulse' />
-                  <div className='relative flex flex-wrap gap-2.5 justify-center items-center py-5 px-3'>
+              <div className='flex flex-col justify-center py-4 px-1 w-full'>
+                <div className='relative w-full'>
+                  <div className='absolute inset-0 border border-neon/30 rounded-none opacity-60' />
+                  <div className='absolute inset-0 bg-gradient-to-b from-neon/5 via-transparent to-neon/5 rounded-none motion-safe:animate-pulse' />
+                  <div className='relative flex flex-wrap gap-2.5 justify-start items-center py-4 px-3'>
                     {dicePool.flatMap((die, di) =>
                       Array.from({ length: Math.min(die.count, 6) }).map((_, ci) => {
                         const Icon = DICE_ICONS[die.sides];
@@ -378,14 +407,11 @@ export default function DiceRoller() {
                       })
                     )}
                   </div>
-                  <div className='flex items-center justify-center gap-1.5 pb-2'>
-                    <span
-                      className='text-neon/50 font-sans text-[10px]'
-                      aria-hidden='true'
-                    >
+                  <div className='flex items-center justify-start gap-1.5 pb-2 px-3'>
+                    <span className='text-neon/50 font-sans text-[10px]' aria-hidden='true'>
                       »
                     </span>
-                    <span className='font-ocr text-xs text-neon/70 tracking-widest'>
+                    <span className='font-ocr text-[10px] text-neon/70 tracking-[0.2em]'>
                       ROLL IN PROGRESS
                     </span>
                     <span className='flex gap-0.5'>
@@ -406,24 +432,69 @@ export default function DiceRoller() {
                 heldDice={heldDice}
                 onToggleDiceHold={handleToggleDiceHold}
                 onReroll={handleReroll}
+                variant='readout'
+                totalLabel={totalLabel}
+                hideResultComment
+                showInlineReroll={false}
                 className='w-full'
               />
             ) : (
-              <div className='w-full border border-neon/15 bg-panel/20 px-3 py-3'>
+              <div className='w-full border border-neon/20 bg-surface/40 border-l-2 border-l-accent/50 px-3 py-2.5'>
                 {pendingNotation ? (
                   <>
                     <p className='font-ocr text-[10px] tracking-[0.16em] text-neon/45 uppercase'>
-                      Ready pool
+                      OUTPUT BUFFER // READY
                     </p>
-                    <p className='mt-1 font-mono text-base text-neon/80 break-words'>
+                    <p className='mt-1 font-mono text-sm text-neon/80 break-words'>
                       {pendingNotation}
                     </p>
                   </>
                 ) : (
-                  <p className='font-ocr text-xs text-text/30 text-center'>» Ready</p>
+                  <p className='font-ocr text-xs text-text/30'>» AWAITING POOL</p>
                 )}
               </div>
             )}
+          </div>
+
+          <div
+            className={`sticky bottom-0 z-[1] -mx-2.5 sm:-mx-3 mt-auto px-2.5 sm:px-3 py-2 border-t-2 border-neon/25 bg-panel/95 flex flex-wrap gap-2 items-center ${
+              theme === 'skynet' ? 'border-t-danger/35' : ''
+            }`}
+          >
+            <button
+              type='button'
+              onClick={handleRoll}
+              disabled={!canRoll}
+              className={`${cmdBase} border-neon/35 bg-surface/80 text-neon hover:bg-neon/10`}
+            >
+              ROLL
+            </button>
+            {currentResult && heldDice.size > 0 && (
+              <button
+                type='button'
+                onClick={handleReroll}
+                disabled={isRolling}
+                className={`${cmdBase} border-accent/45 bg-surface/80 text-accent hover:bg-accent/15`}
+              >
+                RE-ROLL UNHELD
+              </button>
+            )}
+            {currentResult && (
+              <button
+                type='button'
+                onClick={handleCopy}
+                className={`${cmdBase} border-neon/35 bg-surface/80 text-neon hover:bg-neon/10`}
+              >
+                {copyStatus ? 'COPIED' : 'COPY OUTPUT'}
+              </button>
+            )}
+            <button
+              type='button'
+              onClick={handleClearResults}
+              className={`${cmdBase} border-danger/45 text-danger hover:bg-danger/10`}
+            >
+              PURGE
+            </button>
           </div>
         </div>
       </RollSessionModal>

@@ -22,118 +22,182 @@ export default function DiceResult({
   onToggleDiceHold,
   onReroll,
   className = '',
+  variant = 'default',
+  totalLabel = 'TOTAL',
+  hideResultComment = false,
+  showInlineReroll = true,
 }) {
   if (!result) return null;
 
-  return (
-    <div className={`bg-panel/20 p-3 sm:p-3.5 ${className}`}>
-      <div className='space-y-2 mb-2'>
-        {result.breakdown?.length ? (
-          result.breakdown.map((group, index) => {
-            const sides = parseInt(group.notation.match(/\d+d(\d+)/)?.[1] || 0);
-            const color = DICE_COLORS[sides] || 'var(--color-terminal-green)';
-            const groupTotal = group.results.reduce((sum, value) => sum + value, 0);
-            return (
-              <div
-                key={index}
-                className='flex items-start gap-2 py-1'
-              >
-                <span style={{ color }} className='font-mono font-bold text-sm shrink-0'>
-                  {group.notation}
-                </span>
-                <span className='font-mono text-base text-neon/80 break-words'>
-                  <span className='text-neon/50'>[ </span>
-                  {group.results.map((roll, rollIndex) => {
-                    const key = `${index}-${rollIndex}`;
-                    const isHeld = heldDice?.has(key);
-                    const isMax = roll === sides;
-                    return (
-                      <span key={rollIndex} className='inline-flex items-center gap-0.5 mr-1.5'>
-                        {rollIndex > 0 && <span className='text-neon/40'>, </span>}
-                        <span
-                          style={{
-                            color: isHeld ? 'var(--color-terminal-yellow)' : color,
-                            backgroundColor: isMax && !isHeld
-                              ? 'rgba(0,255,65,0.12)'
-                              : 'transparent',
-                          }}
-                          className='font-bold text-lg leading-none'
-                        >
-                          {roll}
-                        </span>
-                        {onToggleDiceHold && (
-                          <button
-                            type='button'
-                            onClick={() => onToggleDiceHold(index, rollIndex)}
-                            className={`p-0.5 rounded transition-colors cursor-pointer ${
-                              isHeld
-                                ? 'text-terminal-yellow hover:text-terminal-yellow/80'
-                                : 'text-neon/40 hover:text-neon/70'
-                            }`}
-                            aria-label={isHeld ? `Unhold die ${roll}` : `Hold die ${roll}`}
-                          >
-                            {isHeld ? (
-                              <Lock size={10} className='shrink-0' />
-                            ) : (
-                              <LockOpen size={10} className='shrink-0' />
-                            )}
-                          </button>
-                        )}
+  const isReadout = variant === 'readout';
+
+  const shellClass = isReadout
+    ? `pl-2.5 border-l-2 border-accent/55 ${className}`
+    : `bg-panel/20 p-3 sm:p-3.5 ${className}`;
+
+  const innerClass = isReadout
+    ? 'border border-neon/20 bg-surface/45 px-2.5 py-2 sm:px-3 sm:py-2.5'
+    : '';
+
+  const rowBtnClass = isReadout
+    ? 'p-0.5 rounded-none transition-colors cursor-pointer'
+    : 'p-0.5 rounded transition-colors cursor-pointer';
+
+  const maxRollBg = 'rgb(var(--neon) / 0.12)';
+
+  const body = (
+    <div className={`space-y-1.5 ${isReadout ? '' : 'mb-2'}`}>
+      {result.breakdown?.length ? (
+        result.breakdown.map((group, index) => {
+          const sides = parseInt(group.notation.match(/\d+d(\d+)/)?.[1] || 0);
+          const color = DICE_COLORS[sides] || 'var(--color-terminal-green)';
+          const groupTotal = group.results.reduce((sum, value) => sum + value, 0);
+          return (
+            <div
+              key={index}
+              className={`flex items-start gap-2 py-0.5 ${isReadout ? 'font-mono text-sm' : ''}`}
+            >
+              <span style={{ color }} className='font-mono font-bold text-sm shrink-0 tabular-nums'>
+                {group.notation}
+              </span>
+              <span className='font-mono text-base text-neon/80 break-words min-w-0'>
+                <span className='text-neon/50'>[ </span>
+                {group.results.map((roll, rollIndex) => {
+                  const key = `${index}-${rollIndex}`;
+                  const isHeld = heldDice?.has(key);
+                  const isMax = roll === sides;
+                  return (
+                    <span key={rollIndex} className='inline-flex items-center gap-0.5 mr-1.5'>
+                      {rollIndex > 0 && <span className='text-neon/40'>, </span>}
+                      <span
+                        style={{
+                          color: isHeld ? 'var(--color-terminal-yellow)' : color,
+                          backgroundColor:
+                            isMax && !isHeld ? maxRollBg : 'transparent',
+                        }}
+                        className='font-bold text-lg leading-none tabular-nums'
+                      >
+                        {roll}
                       </span>
-                    );
-                  })}
-                  <span className='text-neon/50'> ]</span>
-                </span>
-                <span className='ml-auto font-ibm text-sm text-neon/75 shrink-0'>
-                  = {groupTotal}
-                </span>
-              </div>
-            );
-          })
-        ) : (
-          <p className='font-mono text-base text-neon/80'>{result.notation}</p>
-        )}
-
-        {(result.modifier !== 0 || result.comment) && (
-          <div className='flex items-center justify-between gap-2'>
-            {result.modifier !== 0 ? (
-              <span className='text-sm font-bold text-neon/70 shrink-0'>
-                {result.modifier > 0 ? '+' : ''}
-                {result.modifier}
+                      {onToggleDiceHold && (
+                        <button
+                          type='button'
+                          onClick={() => onToggleDiceHold(index, rollIndex)}
+                          className={
+                            isHeld
+                              ? `${rowBtnClass} text-terminal-yellow hover:text-terminal-yellow/80`
+                              : `${rowBtnClass} text-neon/40 hover:text-neon/70`
+                          }
+                          aria-label={isHeld ? `Unhold die ${roll}` : `Hold die ${roll}`}
+                        >
+                          {isHeld ? (
+                            <Lock size={10} className='shrink-0' />
+                          ) : (
+                            <LockOpen size={10} className='shrink-0' />
+                          )}
+                        </button>
+                      )}
+                    </span>
+                  );
+                })}
+                <span className='text-neon/50'> ]</span>
               </span>
-            ) : (
-              <span />
-            )}
-            {result.comment && (
-              <span className='font-ocr text-xs text-neon/50 italic truncate max-w-[70%]'>
-                &quot;{result.comment}&quot;
+              <span className='ml-auto font-ibm text-sm text-neon/75 shrink-0 tabular-nums'>
+                = {groupTotal}
               </span>
-            )}
-          </div>
-        )}
-      </div>
-
-      {onToggleDiceHold && (
-        <p className='font-ocr text-[9px] text-neon/40 mb-1.5'>
-          Lock dice to keep them, then RE-ROLL UNHELD
-        </p>
+            </div>
+          );
+        })
+      ) : (
+        <p className='font-mono text-base text-neon/80'>{result.notation}</p>
       )}
 
-      <div className='flex justify-between items-center py-2 px-2.5 bg-panel/30'>
-        <span className='font-ocr text-sm text-neon/60'>TOTAL</span>
-        <span className='font-ibm text-xl sm:text-2xl leading-none font-bold text-neon'>
-          = {result.total}
-        </span>
-      </div>
-
-      {onReroll && heldDice?.size > 0 && (
-        <button
-          onClick={onReroll}
-          className='mt-2 w-full py-1.5 px-2 bg-panel/30 text-neon/80 hover:bg-neon/20 hover:text-neon font-ocr text-sm transition-colors cursor-pointer'
+      {(result.modifier !== 0 || (result.comment && !hideResultComment)) && (
+        <div
+          className={`flex items-center justify-between gap-2 ${isReadout ? 'pt-1 border-t border-[rgb(var(--neon)/0.12)]' : ''}`}
         >
-          RE-ROLL UNHELD
-        </button>
+          {result.modifier !== 0 ? (
+            <span className='text-sm font-bold text-neon/70 shrink-0 tabular-nums'>
+              {result.modifier > 0 ? '+' : ''}
+              {result.modifier}
+            </span>
+          ) : (
+            <span />
+          )}
+          {result.comment && !hideResultComment && (
+            <span className='font-ocr text-xs text-neon/50 italic truncate max-w-[70%]'>
+              &quot;{result.comment}&quot;
+            </span>
+          )}
+        </div>
       )}
+    </div>
+  );
+
+  const instruction = onToggleDiceHold && (
+    <p
+      className={`font-ocr text-[9px] text-meta ${
+        isReadout ? 'mt-2 pt-2 border-t border-theme tracking-[0.06em]' : 'mb-1.5'
+      }`}
+    >
+      LOCK DICE TO PRESERVE // REROLL UNHELD
+    </p>
+  );
+
+  const totalRow = isReadout ? (
+    <div className='mt-3 flex items-baseline gap-2 min-w-0'>
+      <span className='font-ocr text-xs sm:text-sm text-[rgb(var(--chrome)/0.75)] shrink-0 tracking-[0.12em]'>
+        {totalLabel}
+      </span>
+      <span
+        className='flex-1 min-w-[1rem] border-b border-dotted border-[rgb(var(--neon)/0.35)] translate-y-[-0.35em]'
+        aria-hidden='true'
+      />
+      <span className='font-mono text-2xl sm:text-3xl font-bold text-text tabular-nums shrink-0 leading-none'>
+        {result.total}
+      </span>
+    </div>
+  ) : (
+    <div className='flex justify-between items-center py-2 px-2.5 bg-panel/30'>
+      <span className='font-ocr text-sm text-neon/60'>{totalLabel}</span>
+      <span className='font-ibm text-xl sm:text-2xl leading-none font-bold text-neon'>
+        = {result.total}
+      </span>
+    </div>
+  );
+
+  const rerollBtn =
+    onReroll &&
+    heldDice?.size > 0 &&
+    showInlineReroll && (
+      <button
+        type='button'
+        onClick={onReroll}
+        className='mt-2 w-full py-1.5 px-2 bg-panel/30 text-neon/80 hover:bg-neon/20 hover:text-neon font-ocr text-sm transition-colors cursor-pointer rounded-none border border-neon/20'
+      >
+        RE-ROLL UNHELD
+      </button>
+    );
+
+  if (isReadout) {
+    return (
+      <div className={shellClass}>
+        <div className={innerClass}>
+          {body}
+          {instruction}
+          {totalRow}
+        </div>
+        {rerollBtn}
+      </div>
+    );
+  }
+
+  return (
+    <div className={shellClass}>
+      {body}
+      {instruction}
+      {totalRow}
+      {rerollBtn}
     </div>
   );
 }

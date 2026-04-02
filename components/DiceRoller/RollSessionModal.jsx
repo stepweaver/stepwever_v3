@@ -1,42 +1,69 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { useVisualViewportRect } from '@/hooks/useVisualViewportRect';
 
 export default function RollSessionModal({
   isOpen,
   onClose,
   children,
-  title = 'Roll session',
+  title = 'ROLL OUTPUT // ACTIVE SESSION',
+  closeLabel = 'ABORT',
+  closeVariant = 'danger',
 }) {
-  if (!isOpen) return null;
+  const visualViewportRect = useVisualViewportRect(isOpen);
 
-  return (
-    <div className='fixed inset-x-0 bottom-0 top-24 z-50 flex items-start justify-center p-1.5 sm:p-4'>
+  if (!isOpen || typeof document === 'undefined') return null;
+
+  const closeClasses =
+    closeVariant === 'danger'
+      ? 'text-danger/90 hover:text-danger hover:bg-danger/10 border border-danger/40'
+      : 'text-neon/80 hover:text-neon hover:bg-neon/10 border border-neon/35';
+
+  return createPortal(
+    <>
       <button
         type='button'
         aria-label='Close roll session'
         onClick={onClose}
-        className='absolute inset-0 bg-black/80 backdrop-blur-[1px] cursor-pointer'
+        className='fixed inset-0 z-[190] bg-black/80 backdrop-blur-sm cursor-pointer'
       />
 
-      <div className='relative w-full max-w-5xl max-h-full overflow-hidden border border-neon/20 bg-panel/95'>
-        <div className='flex items-center justify-between px-3 sm:px-4 py-2 border-b border-neon/20 bg-panel/75'>
-          <p className='font-ocr text-xs tracking-[0.2em] text-neon/60 uppercase'>
-            {title}
-          </p>
-          <button
-            type='button'
-            onClick={onClose}
-            className='inline-flex items-center justify-center w-7 h-7 text-neon/70 hover:text-neon hover:bg-panel/70 transition-colors cursor-pointer'
-            aria-label='Close roll session'
-          >
-            <X size={14} />
-          </button>
-        </div>
-        <div className='overflow-y-auto max-h-[calc(100%-44px)] p-2.5 sm:p-4'>
-          {children}
+      {/* Outer shell must be `fixed` only — `.hud-panel` sets position:relative and would override `fixed` on the same node */}
+      <div
+        className='fixed left-0 right-0 z-[200] m-0 w-full overflow-hidden'
+        style={{
+          top: visualViewportRect.top,
+          height: visualViewportRect.height,
+          maxHeight: visualViewportRect.height,
+        }}
+        role='dialog'
+        aria-modal='true'
+        aria-labelledby='roll-session-title'
+      >
+        <div className='hud-panel flex h-full min-h-0 flex-col overflow-hidden rounded-none shadow-none'>
+          <div className='relative z-[2] flex shrink-0 items-stretch justify-between gap-3 border-b-2 border-neon/25 bg-surface/95 px-3 py-2.5 sm:px-4'>
+            <p
+              id='roll-session-title'
+              className='self-center font-ocr text-[11px] uppercase leading-snug tracking-[0.14em] text-label/90 sm:text-xs'
+            >
+              {title}
+            </p>
+            <button
+              type='button'
+              onClick={onClose}
+              className={`shrink-0 cursor-pointer rounded-none px-2.5 py-1.5 font-ibm text-[11px] uppercase tracking-widest transition-colors ${closeClasses}`}
+              aria-label='Close roll session'
+            >
+              {closeLabel}
+            </button>
+          </div>
+          <div className='relative z-[2] min-h-0 flex-1 overflow-y-auto overflow-x-hidden'>
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </>,
+    document.body
   );
 }
