@@ -2367,6 +2367,15 @@ picture {
   background: rgb(var(--panel) / 0.5);
 }
 
+/* Same-document route view transitions (Next experimental.viewTransition); duration matches transitionConfig FADE_MS handoff feel */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 280ms;
+    animation-timing-function: ease-out;
+  }
+}
+
 /* ── Reduced motion: kill all animations & transitions ── */
 @media (prefers-reduced-motion: reduce) {
   *,

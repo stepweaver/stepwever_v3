@@ -13,6 +13,7 @@ const nextConfig = {
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['lucide-react', 'react-icons', '@notionhq/client'],
+    viewTransition: true,
   },
 
   // Compiler configuration to target modern browsers and exclude unnecessary polyfills

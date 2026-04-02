@@ -5,6 +5,7 @@ import './globals.css';
 import '../styles/mdx.css';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
+import { NavigationTransitionProvider } from '@/components/transition/NavigationTransitionContext';
 // Analytics is a client component that handles its own lazy loading
 import Analytics from '@/components/Analytics/Analytics';
 import ImageProtection from '@/components/ImageProtection/ImageProtection';
@@ -197,7 +198,9 @@ export default async function RootLayout({ children }) {
         </a>
 
         <ErrorBoundary>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <NavigationTransitionProvider>{children}</NavigationTransitionProvider>
+          </ThemeProvider>
           {/* Load Analytics after initial render to reduce blocking */}
           <Analytics />
         </ErrorBoundary>
