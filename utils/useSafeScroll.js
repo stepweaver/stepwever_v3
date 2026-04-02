@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import errorMonitor from './errorMonitor';
+import { getDocumentScrollProgressX, getDocumentScrollProgressY } from './documentScrollProgress';
 
 // Simple throttle function
 function throttle(func, limit) {
@@ -32,14 +33,8 @@ export function useSafeScroll(options = {}) {
 
       const scrollTop = window.scrollY || 0;
       const scrollLeft = window.scrollX || 0;
-      const docHeight = Math.max(
-        document.documentElement.scrollHeight - window.innerHeight,
-        1
-      );
-      const docWidth = Math.max(
-        document.documentElement.scrollWidth - window.innerWidth,
-        1
-      );
+      const scrollProgressY = getDocumentScrollProgressY();
+      const scrollProgressX = getDocumentScrollProgressX();
 
       const scrollData = {
         scrollTop,
@@ -48,8 +43,8 @@ export function useSafeScroll(options = {}) {
         scrollWidth: document.documentElement.scrollWidth,
         clientHeight: window.innerHeight,
         clientWidth: window.innerWidth,
-        scrollProgressY: Math.min(Math.max(scrollTop / docHeight, 0), 1),
-        scrollProgressX: Math.min(Math.max(scrollLeft / docWidth, 0), 1),
+        scrollProgressY,
+        scrollProgressX,
         event
       };
 

@@ -10,23 +10,35 @@ export default function ThemeToggle() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const themes = [
-    { value: 'dark', label: 'DARK' },
-    { value: 'light', label: 'LIGHT' },
-    { value: 'monochrome', label: 'MONO' },
-    { value: 'monochrome-inverted', label: 'INVERT' },
-    { value: 'vintage', label: 'DOS' },
-    { value: 'apple', label: 'APPLE' },
-    { value: 'c64', label: 'C64' },
-    { value: 'amber', label: 'AMBER' },
-    { value: 'synthwave', label: 'SYNTH' },
-    { value: 'dracula', label: 'DRACULA' },
-    { value: 'solarized', label: 'SOLAR' },
-    { value: 'nord', label: 'NORD' },
-    { value: 'cobalt', label: 'COBALT' },
+  const themeGroups = [
+    { category: 'NATIVE', themes: [
+      { value: 'dark', label: 'DARK' },
+      { value: 'light', label: 'LIGHT' },
+    ]},
+    { category: 'CLASSIC', themes: [
+      { value: 'monochrome', label: 'MONO' },
+      { value: 'monochrome-inverted', label: 'INVERT' },
+      { value: 'vintage', label: 'DOS' },
+      { value: 'apple', label: 'APPLE' },
+      { value: 'c64', label: 'C64' },
+      { value: 'amber', label: 'AMBER' },
+    ]},
+    { category: 'MODERN', themes: [
+      { value: 'dracula', label: 'DRACULA' },
+      { value: 'nord', label: 'NORD' },
+      { value: 'solarized', label: 'SOLAR' },
+      { value: 'cobalt', label: 'COBALT' },
+    ]},
+    { category: 'STYLIZED', themes: [
+      { value: 'synthwave', label: 'SYNTH' },
+    ]},
+    { category: 'SPECIAL', themes: [
+      { value: 'skynet', label: 'SKYNET' },
+    ]},
   ];
 
-  const currentTheme = themes.find(t => t.value === theme);
+  const allThemes = themeGroups.flatMap(g => g.themes);
+  const currentTheme = allThemes.find(t => t.value === theme);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -112,29 +124,38 @@ export default function ThemeToggle() {
 
           {isOpen && (
             <div className={`theme-grid-menu ${theme}`} role='listbox'>
-              {themes.map((themeOption) => (
-                <button
-                  key={themeOption.value}
-                  onClick={() => handleThemeSelect(themeOption.value)}
-                  onKeyDown={(e) => handleOptionKeyDown(e, themeOption.value)}
-                  className={`theme-grid-option ${themeOption.value} ${
-                    theme === themeOption.value ? 'active' : ''
-                  }`}
-                  role='option'
-                  aria-selected={theme === themeOption.value}
-                  tabIndex={0}
-                >
-                  <Image
-                    src='/images/lambda_stepweaver.png'
-                    alt='Lambda'
-                    width={14}
-                    height={14}
-                    className={`lambda-icon-grid ${themeOption.value}`}
-                    sizes='14px'
-                    style={{ width: 'auto', height: 'auto' }}
-                  />
-                  <span className='theme-label'>{themeOption.label}</span>
-                </button>
+              {themeGroups.map((group, groupIdx) => (
+                <div key={group.category}>
+                  <div className={`theme-group-header${groupIdx === 0 ? ' theme-group-header-first' : ''}`}>
+                    {group.category}
+                  </div>
+                  <div className='theme-group-grid'>
+                    {group.themes.map((themeOption) => (
+                      <button
+                        key={themeOption.value}
+                        onClick={() => handleThemeSelect(themeOption.value)}
+                        onKeyDown={(e) => handleOptionKeyDown(e, themeOption.value)}
+                        className={`theme-grid-option ${themeOption.value} ${
+                          theme === themeOption.value ? 'active' : ''
+                        }`}
+                        role='option'
+                        aria-selected={theme === themeOption.value}
+                        tabIndex={0}
+                      >
+                        <Image
+                          src='/images/lambda_stepweaver.png'
+                          alt='Lambda'
+                          width={12}
+                          height={12}
+                          className={`lambda-icon-grid ${themeOption.value}`}
+                          sizes='12px'
+                          style={{ width: 'auto', height: 'auto' }}
+                        />
+                        <span className='theme-label'>{themeOption.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           )}

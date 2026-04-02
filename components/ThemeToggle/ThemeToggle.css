@@ -69,6 +69,10 @@
   color: #ffc600;
 }
 
+.theme-dropdown-trigger.skynet {
+  color: #cc2020;
+}
+
 .theme-dropdown-trigger:hover {
   filter: brightness(1.2);
 }
@@ -152,13 +156,17 @@
   filter: brightness(0) saturate(100%) invert(83%) sepia(65%) saturate(2040%) hue-rotate(360deg) brightness(104%) contrast(101%) drop-shadow(0 0 6px rgba(255, 198, 0, 0.7));
 }
 
+.lambda-icon.skynet {
+  filter: brightness(0) saturate(100%) invert(22%) sepia(95%) saturate(5000%) hue-rotate(350deg) brightness(90%) contrast(110%) drop-shadow(0 0 6px rgba(204, 32, 32, 0.7));
+}
+
 /* Expanded Dropdown Menu */
 .theme-grid-menu {
   @apply absolute top-full right-0 mt-2 rounded overflow-hidden z-[9999];
   background: rgba(0, 0, 0, 0.95);
   animation: dropdown-fade-in 0.15s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  min-width: 160px;
+  min-width: 240px;
   padding: 4px 0;
 }
 
@@ -238,15 +246,20 @@
   border-color: rgba(255, 198, 0, 0.2);
 }
 
+.theme-grid-menu.skynet {
+  box-shadow: 0 8px 24px rgba(204, 32, 32, 0.25);
+  border-color: rgba(204, 32, 32, 0.3);
+}
+
 /* Dropdown Option Items */
 .theme-grid-option {
-  @apply w-full px-4 py-3 text-left text-sm font-bold tracking-wide cursor-pointer flex items-center gap-2;
+  @apply px-3 py-1.5 text-left text-xs font-bold tracking-wide cursor-pointer flex items-center gap-1.5;
   background: transparent;
   border: none;
-  border-left: 3px solid transparent;
+  border-left: 2px solid transparent;
   transition: all 0.15s ease;
   position: relative;
-  min-height: 40px;
+  min-height: 28px;
 }
 
 .theme-grid-option:hover {
@@ -272,6 +285,7 @@
 .theme-grid-option.solarized { color: #2aa198; }
 .theme-grid-option.nord { color: #88c0d0; }
 .theme-grid-option.cobalt { color: #ffc600; }
+.theme-grid-option.skynet { color: #cc2020; }
 
 /* Lambda Icons in Dropdown - size via Next/Image width/height to avoid aspect-ratio warning */
 .lambda-icon-grid {
@@ -329,6 +343,10 @@
 
 .lambda-icon-grid.cobalt {
   filter: brightness(0) saturate(100%) invert(83%) sepia(65%) saturate(2040%) hue-rotate(360deg) brightness(104%) contrast(101%) drop-shadow(0 0 4px rgba(255, 198, 0, 0.6));
+}
+
+.lambda-icon-grid.skynet {
+  filter: brightness(0) saturate(100%) invert(22%) sepia(95%) saturate(5000%) hue-rotate(350deg) brightness(90%) contrast(110%) drop-shadow(0 0 4px rgba(204, 32, 32, 0.6));
 }
 
 .theme-grid-option:hover .lambda-icon-grid {
@@ -400,11 +418,16 @@
   filter: brightness(0) saturate(100%) invert(83%) sepia(65%) saturate(2040%) hue-rotate(360deg) brightness(104%) contrast(101%) drop-shadow(0 0 8px rgba(255, 198, 0, 0.9));
 }
 
+.theme-grid-option.skynet:hover .lambda-icon-grid.skynet,
+.theme-grid-option.skynet.active .lambda-icon-grid.skynet {
+  filter: brightness(0) saturate(100%) invert(22%) sepia(95%) saturate(5000%) hue-rotate(350deg) brightness(90%) contrast(110%) drop-shadow(0 0 8px rgba(204, 32, 32, 0.9));
+}
+
 /* Theme Labels */
 .theme-label {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   transition: all 0.15s ease;
 }
 
@@ -461,6 +484,10 @@
   color: #ffc600;
 }
 
+.theme-grid-option.skynet .theme-label {
+  color: #cc2020;
+}
+
 .theme-grid-option:hover .theme-label {
   text-shadow: 0 0 8px currentColor;
 }
@@ -478,4 +505,30 @@
 .theme-grid-option:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.6);
   outline-offset: 2px;
+}
+
+/* Category group headers */
+.theme-group-header {
+  padding: 4px 10px 2px;
+  margin-top: 2px;
+  font-family: 'OCR-A', 'Courier New', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.30);
+  text-transform: uppercase;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+.theme-group-header-first {
+  margin-top: 0;
+  border-top: none;
+}
+
+/* 2-column grid for theme options within each group */
+.theme-group-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }

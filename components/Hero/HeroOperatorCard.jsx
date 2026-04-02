@@ -135,11 +135,13 @@ function HeroOperatorCard() {
             <div className='flex flex-wrap items-center gap-2'>
               <Link
                 href='/yankee-samurai'
-                className='inline-flex cursor-pointer border border-terminal-magenta/35 bg-terminal-dark/10 px-2 py-1 text-xs font-ibm text-terminal-magenta/80 hover:border-terminal-magenta/70 hover:bg-terminal-magenta/10'
+                className='inline-flex cursor-pointer items-center gap-1.5 border-l-2 border border-identity/30 border-l-identity/70 bg-terminal-dark/10 px-2 py-1 text-xs font-ibm text-identity/85 hover:border-identity/55 hover:bg-identity/10 transition-colors'
               >
+                <span className='opacity-50' aria-hidden>&gt;</span>
                 YANKEE SAMURAI
               </Link>
-              <span className='border border-terminal-magenta/20 bg-terminal-dark/10 px-2 py-1 text-xs font-ibm text-terminal-magenta/60'>
+              <span className='inline-flex items-center gap-1.5 border-l-2 border border-identity/20 border-l-identity/50 bg-terminal-dark/10 px-2 py-1 text-xs font-ibm text-identity/65'>
+                <span className='opacity-40' aria-hidden>&gt;</span>
                 REBEL
               </span>
             </div>

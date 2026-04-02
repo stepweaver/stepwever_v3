@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { useSafeScroll } from '@/utils/useSafeScroll';
+import { getDocumentScrollProgressY } from '@/utils/documentScrollProgress';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
-import { COLOR_PALETTES, GLOW_FILTERS, SPRITE_COLORS } from './constants';
+import { COLOR_PALETTES, GLOW_FILTERS, SPRITE_COLORS, SPRITE_PALETTE_BY_THEME } from './constants';
 
 export default function BackgroundCanvas() {
   const canvasRef = useRef(null);
@@ -17,6 +19,7 @@ export default function BackgroundCanvas() {
     () => (typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false)
   );
   const { theme } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -33,7 +36,7 @@ export default function BackgroundCanvas() {
   );
 
   const neonColorsRef = useRef(neonColors);
-  useEffect(() => { neonColorsRef.current = neonColors; }, [neonColors]);
+  neonColorsRef.current = neonColors;
 
   const rafIdRef = useRef(null);
   const lastColorKeyRef = useRef(null);
@@ -106,10 +109,41 @@ export default function BackgroundCanvas() {
     throttleMs: 16,
   });
 
+  const applyScrollDerivedCanvas = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    scrollProgressRef.current = getDocumentScrollProgressY();
+    lastColorKeyRef.current = null;
+    updateCanvasColors();
+    updateTransform();
+  }, [updateCanvasColors, updateTransform]);
+
+  useLayoutEffect(() => {
+    let alive = true;
+    const sync = () => {
+      if (alive) applyScrollDerivedCanvas();
+    };
+    sync();
+    let raf2Id = null;
+    const raf1Id = requestAnimationFrame(() => {
+      sync();
+      raf2Id = requestAnimationFrame(sync);
+    });
+    const t = window.setTimeout(sync, 120);
+    return () => {
+      alive = false;
+      cancelAnimationFrame(raf1Id);
+      if (raf2Id != null) cancelAnimationFrame(raf2Id);
+      window.clearTimeout(t);
+    };
+  }, [pathname, applyScrollDerivedCanvas]);
+
   useEffect(() => {
     const handleResize = () => {
       if (typeof window === 'undefined') return;
       isMobileRef.current = window.innerWidth < 768;
+      scrollProgressRef.current = getDocumentScrollProgressY();
+      lastColorKeyRef.current = null;
+      updateCanvasColors();
       updateTransform();
     };
     if (typeof window !== 'undefined') {
@@ -162,8 +196,8 @@ export default function BackgroundCanvas() {
     img.src = '/images/lambda_stepweaver.webp';
   }, [updateCanvasColors, updateTransform]);
 
-  // Re-color when theme changes
-  useEffect(() => {
+  // Re-color when theme changes (layout effect: before paint, matches current palette ref)
+  useLayoutEffect(() => {
     lastColorKeyRef.current = null;
     updateCanvasColors();
   }, [neonColors, updateCanvasColors]);
@@ -179,6 +213,7 @@ export default function BackgroundCanvas() {
     let W, H;
     const isLightMode = theme === 'light' || theme === 'monochrome-inverted';
     const gDim = isLightMode ? 0.3 : 1.0;
+    const spritePalette = SPRITE_PALETTE_BY_THEME[theme] || SPRITE_COLORS;
 
     let nodes = [];
     let edges = [];
@@ -296,7 +331,7 @@ export default function BackgroundCanvas() {
     function newSprite() {
       const eIdx = Math.floor(Math.random() * edges.length);
       const fwd = Math.random() > 0.5;
-      const color = SPRITE_COLORS[Math.floor(Math.random() * SPRITE_COLORS.length)];
+      const color = spritePalette[Math.floor(Math.random() * spritePalette.length)];
       return {
         eIdx,
         t: fwd ? 0 : 1,
@@ -324,13 +359,16 @@ export default function BackgroundCanvas() {
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
 
+      const circuitRgb = COLOR_PALETTES[theme]?.[0] || COLOR_PALETTES.dark[0];
+      const [cr, cg, cb] = circuitRgb;
+
       ctx.lineCap = 'square';
       ctx.lineJoin = 'miter';
       for (const e of edges) {
         ctx.beginPath();
         ctx.moveTo(e.pts[0].x, e.pts[0].y);
         for (let i = 1; i < e.pts.length; i++) ctx.lineTo(e.pts[i].x, e.pts[i].y);
-        ctx.strokeStyle = `rgba(90,255,140,${0.09 * gDim})`;
+        ctx.strokeStyle = `rgba(${cr},${cg},${cb},${0.09 * gDim})`;
         ctx.lineWidth = 1.2;
         ctx.stroke();
       }
@@ -343,11 +381,11 @@ export default function BackgroundCanvas() {
 
         const s = 1.5;
         const baseA = 0.1 + flashA * 0.4;
-        ctx.fillStyle = `rgba(90,255,140,${baseA * gDim})`;
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${baseA * gDim})`;
         ctx.fillRect(n.x - s, n.y - s, s * 2, s * 2);
 
         if (flashA > 0.05) {
-          const fc = n.flashColor || { r: 90, g: 255, b: 140 };
+          const fc = n.flashColor || { r: cr, g: cg, b: cb };
           ctx.shadowBlur = 12;
           ctx.shadowColor = `rgba(${fc.r},${fc.g},${fc.b},${flashA * 0.45 * gDim})`;
           ctx.beginPath();
@@ -443,7 +481,10 @@ export default function BackgroundCanvas() {
   }
 
   const isLightish = theme === 'light' || theme === 'monochrome-inverted';
+  const isSkynet = theme === 'skynet';
   const glowFilter = GLOW_FILTERS[theme] || GLOW_FILTERS.dark;
+  const rainOpacity = isLightish ? 0.2 : isSkynet ? 0.48 : 0.4;
+  const lambdaOpacity = isLightish ? 0.2 : isSkynet ? 0.34 : 0.3;
 
   return (
     <>
@@ -451,7 +492,7 @@ export default function BackgroundCanvas() {
         <canvas
           ref={rainCanvasRef}
           className="w-full h-full"
-          style={{ opacity: isLightish ? 0.2 : 0.4 }}
+          style={{ opacity: rainOpacity }}
         />
       </div>
       <div className='fixed inset-0 z-10 flex items-center justify-start'>
@@ -464,7 +505,7 @@ export default function BackgroundCanvas() {
           }`}
           style={{
             filter: glowFilter,
-            opacity: isLightish ? 0.2 : 0.3,
+            opacity: lambdaOpacity,
           }}
         />
       </div>

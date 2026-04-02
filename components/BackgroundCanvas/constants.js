@@ -51,6 +51,10 @@ export const COLOR_PALETTES = {
     [255, 198, 0], [255, 157, 0], [255, 0, 136], [174, 129, 255],
     [0, 136, 255], [0, 187, 255], [58, 217, 0], [255, 198, 0],
   ],
+  skynet: [
+    [204, 32, 32], [180, 24, 28], [160, 20, 24], [140, 18, 22],
+    [255, 102, 0], [255, 140, 48], [220, 45, 38], [255, 72, 48],
+  ],
 };
 
 export const GLOW_FILTERS = {
@@ -67,6 +71,20 @@ export const GLOW_FILTERS = {
   nord: 'drop-shadow(0 0 8px rgba(136,192,208,1)) drop-shadow(0 0 20px rgba(136,192,208,0.4))',
   cobalt: 'drop-shadow(0 0 8px rgba(255,198,0,1)) drop-shadow(0 0 20px rgba(255,198,0,0.4))',
   dark: 'drop-shadow(0 0 8px rgba(0,255,65,1)) drop-shadow(0 0 20px rgba(0,255,65,0.4))',
+  skynet:
+    'drop-shadow(0 0 10px rgba(204,32,32,0.95)) drop-shadow(0 0 24px rgba(204,32,32,0.35)) drop-shadow(0 0 8px rgba(255,102,0,0.3))',
+};
+
+/** Moving-packet colors on the circuit canvas; themes not listed use SPRITE_COLORS */
+export const SPRITE_PALETTE_BY_THEME = {
+  skynet: [
+    { r: 204, g: 32, b: 32, hr: 255, hg: 90, hb: 72 },
+    { r: 176, g: 28, b: 30, hr: 255, hg: 120, hb: 88 },
+    { r: 220, g: 40, b: 36, hr: 255, hg: 160, hb: 100 },
+    { r: 255, g: 102, b: 0, hr: 255, hg: 200, hb: 120 },
+    { r: 150, g: 26, b: 30, hr: 255, hg: 70, hb: 58 },
+    { r: 255, g: 64, b: 32, hr: 255, hg: 180, hb: 110 },
+  ],
 };
 
 export const SPRITE_COLORS = [

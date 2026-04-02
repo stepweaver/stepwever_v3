@@ -7,7 +7,7 @@ const ThemeContext = createContext();
 export const VALID_THEMES = [
   'dark', 'light', 'monochrome', 'monochrome-inverted',
   'vintage', 'apple', 'c64', 'amber', 'synthwave',
-  'dracula', 'solarized', 'nord', 'cobalt',
+  'dracula', 'solarized', 'nord', 'cobalt', 'skynet',
 ];
 
 const VALID_THEME_SET = new Set(VALID_THEMES);
@@ -26,11 +26,13 @@ export function ThemeProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    const stored = localStorage.getItem('theme');
     const domTheme = document.documentElement.getAttribute('data-theme');
-    const resolved = VALID_THEME_SET.has(domTheme)
-      ? domTheme
-      : VALID_THEME_SET.has(localStorage.getItem('theme'))
-        ? localStorage.getItem('theme')
+    /* Prefer saved theme so we recover after navigation/full reload if inline script list was stale */
+    const resolved = VALID_THEME_SET.has(stored)
+      ? stored
+      : VALID_THEME_SET.has(domTheme)
+        ? domTheme
         : getSystemTheme();
 
     if (resolved !== theme) {

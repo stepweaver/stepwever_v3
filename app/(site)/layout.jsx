@@ -7,7 +7,11 @@ export default function SiteLayout({ children }) {
   return (
     <>
       <Navbar />
-      <main id='main-content' role='main' className='pt-24'>
+      <main
+        id='main-content'
+        role='main'
+        className='pt-20 md:pt-[5.5rem] lg:pt-24'
+      >
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />

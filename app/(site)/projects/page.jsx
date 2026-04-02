@@ -111,175 +111,194 @@ export default function ProjectsIndexPage() {
     <div className='relative min-h-screen'>
       <BackgroundCanvas />
 
-      <div className='relative z-10 mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8'>
-        <header className='mb-10 border-b border-border-theme/40 pb-8'>
-          <p className='font-ocr text-xs uppercase tracking-[0.18em] text-text-label sm:text-sm'>
-            Full catalog
-          </p>
-          <h1 className='mt-3 font-ibm text-3xl uppercase tracking-[0.04em] text-terminal-green sm:text-4xl'>
-            Projects
-          </h1>
-          <p className='mt-4 max-w-[68ch] font-ibm text-sm leading-7 text-text-secondary sm:text-base'>
-            Case studies and build notes across apps, automation, and client work.
-          </p>
-          <Link
-            href='/'
-            className='mt-6 inline-block font-ibm text-sm text-text-secondary underline decoration-border-theme/50 underline-offset-4 transition hover:text-terminal-green hover:decoration-terminal-green/50'
-          >
-            ← Back to home
-          </Link>
-        </header>
-
-        {/* Category chips */}
-        <div className='mb-6 flex flex-wrap gap-2'>
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              type='button'
-              onClick={() => selectCategory(cat.id)}
-              className={[
-                'inline-flex items-center border px-3 py-1.5 font-ibm text-xs uppercase tracking-[0.08em] transition sm:text-sm',
-                activeCategory === cat.id
-                  ? 'border-terminal-green/45 bg-terminal-green/10 text-terminal-green'
-                  : 'border-border-theme/40 bg-terminal-dark/25 text-text-secondary hover:border-neon/35 hover:text-neon',
-              ].join(' ')}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Search */}
-        <div className='mb-6 space-y-3'>
-          <label className='block font-ibm text-xs uppercase tracking-[0.08em] text-text-label sm:text-sm'>
-            Search
-          </label>
-          <input
-            type='search'
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setVisibleCount(PAGE_SIZE);
-            }}
-            placeholder='Filter by title, stack, or keyword…'
-            className='w-full border border-border-theme/40 bg-terminal-dark/40 px-4 py-3 font-ibm text-sm text-text-secondary placeholder:text-text-meta/60 focus:border-terminal-green/45 focus:outline-none focus:ring-2 focus:ring-terminal-green/25'
-            autoComplete='off'
-          />
-        </div>
-
-        {/* Tag cloud -- collapsed on mobile behind a toggle */}
-        <div className='mb-10'>
-          <div className='mb-3 flex flex-wrap items-center gap-2'>
-            <button
-              type='button'
-              onClick={() => setTagsOpen((v) => !v)}
-              className='font-ibm text-xs uppercase tracking-[0.08em] text-text-label sm:text-sm lg:hidden'
-            >
-              {tagsOpen ? 'Hide filters' : 'More filters'}
-            </button>
-            <span className='hidden font-ibm text-xs uppercase tracking-[0.08em] text-text-label sm:text-sm lg:inline'>
-              Tags
-            </span>
-            {activeTags.length > 0 && (
-              <button
-                type='button'
-                onClick={clearTags}
-                className='font-ibm text-xs uppercase tracking-[0.08em] text-text-meta underline decoration-border-theme/40 underline-offset-2 hover:text-terminal-green'
-              >
-                Clear
-              </button>
-            )}
-          </div>
-          <div className={`flex-wrap gap-2 ${tagsOpen ? 'flex' : 'hidden lg:flex'}`}>
-            {tagsSorted.map((tag) => {
-              const on = activeTags.includes(tag);
-              const n = tagCounts.get(tag);
-              return (
-                <button
-                  key={tag}
-                  type='button'
-                  onClick={() => toggleTag(tag)}
-                  aria-pressed={on}
-                  title={n != null ? `${n} project${n === 1 ? '' : 's'}` : undefined}
-                  className={[
-                    'inline-flex items-baseline gap-1.5 border px-3 py-1.5 font-ibm text-xs tracking-[0.05em] transition sm:text-sm',
-                    on
-                      ? 'border-terminal-green/45 bg-terminal-green/10 text-terminal-green'
-                      : 'border-border-theme/30 bg-terminal-dark/25 text-text-secondary hover:border-neon/35 hover:text-neon',
-                  ].join(' ')}
+      <div className='relative z-10 w-full px-4 pb-16 sm:px-6 md:px-8 lg:px-8 xl:px-10 2xl:px-12'>
+        <div className='mx-auto max-w-7xl'>
+          <div className='mb-8 space-y-4 md:space-y-5'>
+            <div className='space-y-3'>
+              <div className='flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1'>
+                <p className='font-ocr text-xs uppercase tracking-[0.3em] text-neon/60'>
+                  Full catalog
+                </p>
+                <Link
+                  href='/'
+                  aria-label='Back to home'
+                  className='shrink-0 font-ocr text-[10px] uppercase tracking-[0.15em] text-neon/50 transition-colors hover:text-neon'
                 >
-                  <span>{tag}</span>
-                  {n != null && n > 0 && (
-                    <span className='font-ibm normal-case text-xs tabular-nums text-text-meta'>
-                      {n}
-                    </span>
-                  )}
+                  ← Home
+                </Link>
+              </div>
+              <h1 className='font-ibm text-4xl font-bold leading-tight text-text sm:text-5xl md:text-6xl'>
+                Projects
+              </h1>
+              <p className='max-w-3xl font-ibm text-base leading-relaxed text-text/75 sm:text-lg'>
+                Case studies and build notes across apps, automation, and client work.
+              </p>
+            </div>
+            <div className='h-px w-full bg-gradient-to-r from-neon/40 via-neon/10 to-transparent' />
+          </div>
+
+          <div className='mb-8 space-y-6'>
+            <div>
+              <p className='mb-3 font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50'>
+                Browse
+              </p>
+              <div className='flex flex-wrap gap-2'>
+                {CATEGORIES.map((cat) => {
+                  const isActive = activeCategory === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      type='button'
+                      onClick={() => selectCategory(cat.id)}
+                      className={`
+                        cursor-pointer rounded-sm border px-3 py-1 font-ocr text-xs uppercase tracking-wider transition-all duration-200
+                        ${
+                          isActive
+                            ? 'border-neon bg-neon/25 text-neon [text-shadow:var(--terminal-strong-glow)] [box-shadow:0_0_12px_rgb(var(--neon)/0.4)]'
+                            : 'border-neon/25 text-text/60 hover:border-neon/50 hover:bg-neon/5 hover:text-neon'
+                        }
+                      `}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className='space-y-3'>
+              <label className='block font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50'>
+                Search
+              </label>
+              <input
+                type='search'
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setVisibleCount(PAGE_SIZE);
+                }}
+                placeholder='Filter by title, stack, or keyword…'
+                className='w-full rounded-sm border border-neon/25 bg-panel/50 px-4 py-3 font-ibm text-sm text-text/80 placeholder:text-text/40 focus:border-neon/50 focus:outline-none focus:ring-2 focus:ring-neon/20'
+                autoComplete='off'
+              />
+            </div>
+
+            <div>
+              <div className='mb-3 flex flex-wrap items-center gap-2'>
+                <button
+                  type='button'
+                  onClick={() => setTagsOpen((v) => !v)}
+                  className='font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50 lg:hidden'
+                >
+                  {tagsOpen ? 'Hide filters' : 'More filters'}
                 </button>
+                <span className='hidden font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50 lg:inline'>
+                  Filter by tag
+                </span>
+                {activeTags.length > 0 && (
+                  <button
+                    type='button'
+                    onClick={clearTags}
+                    className='font-ocr text-[10px] uppercase tracking-[0.15em] text-neon/50 transition-colors hover:text-neon'
+                  >
+                    [ Clear filters ]
+                  </button>
+                )}
+              </div>
+              <div className={`flex flex-wrap gap-2 ${tagsOpen ? 'flex' : 'hidden lg:flex'}`}>
+                {tagsSorted.map((tag) => {
+                  const on = activeTags.includes(tag);
+                  const n = tagCounts.get(tag);
+                  return (
+                    <button
+                      key={tag}
+                      type='button'
+                      onClick={() => toggleTag(tag)}
+                      aria-pressed={on}
+                      title={n != null ? `${n} project${n === 1 ? '' : 's'}` : undefined}
+                      className={`
+                        inline-flex items-baseline gap-1.5 rounded-sm border px-3 py-1 font-ocr text-xs uppercase tracking-wider transition-all duration-200
+                        ${
+                          on
+                            ? 'border-neon bg-neon/25 text-neon [text-shadow:var(--terminal-strong-glow)] [box-shadow:0_0_12px_rgb(var(--neon)/0.4)]'
+                            : 'border-neon/25 text-text/60 hover:border-neon/50 hover:bg-neon/5 hover:text-neon'
+                        }
+                      `}
+                    >
+                      <span>{tag}</span>
+                      {n != null && n > 0 && (
+                        <span className='font-ocr text-xs tabular-nums normal-case text-text/30'>{n}</span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className='mb-6 h-px bg-neon/10' />
+
+          <p className='mb-6 font-ocr text-xs uppercase tracking-wide text-text/50'>
+            Showing {displayedProjects.length} of {filtered.length}
+          </p>
+
+          <ul className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+            {displayedProjects.map((p) => {
+              const href = `/projects/${p.slug}`;
+              const img = p.imageUrl || '/images/terminal_ui.png';
+
+              return (
+                <li key={p.slug}>
+                  <Link
+                    href={href}
+                    className='group flex h-full flex-col rounded-sm border border-neon/15 bg-panel/20 transition-all duration-200 hover:border-neon/35 hover:bg-panel/40'
+                  >
+                    <div className='relative aspect-[16/10] overflow-hidden border-b border-neon/10 bg-panel/30'>
+                      <OptimizedImage
+                        src={img}
+                        alt=''
+                        className='h-full w-full object-cover opacity-90 transition group-hover:opacity-100'
+                        sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                      />
+                      <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-panel/90 via-transparent to-transparent' />
+                    </div>
+                    <div className='flex flex-1 flex-col p-4'>
+                      <h2 className='font-ibm text-lg uppercase leading-snug tracking-[0.03em] text-text group-hover:text-neon'>
+                        {p.title}
+                      </h2>
+                      {p.description && (
+                        <p className='mt-2 flex-1 font-ibm text-sm leading-6 text-text/75'>
+                          {p.description}
+                        </p>
+                      )}
+                      <span className='mt-4 inline-flex items-center gap-1 font-ocr text-xs uppercase tracking-wider text-neon/50 transition-colors group-hover:text-neon'>
+                        View case study →
+                      </span>
+                    </div>
+                  </Link>
+                </li>
               );
             })}
-          </div>
+          </ul>
+
+          {hasMore && (
+            <div className='mt-8 text-center'>
+              <button
+                type='button'
+                onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+                className='inline-flex items-center rounded-sm border border-neon/25 px-6 py-3 font-ocr text-xs uppercase tracking-wider text-text/70 transition-all duration-200 hover:border-neon/50 hover:text-neon'
+              >
+                Show more ({filtered.length - visibleCount} remaining)
+              </button>
+            </div>
+          )}
+
+          {filtered.length === 0 && (
+            <div className='rounded-sm border border-neon/10 bg-panel/20 p-8 text-center font-ibm text-text/70'>
+              No projects match your filters. Try clearing tags or shortening the search.
+            </div>
+          )}
         </div>
-
-        <p className='mb-6 font-ibm text-sm uppercase tracking-[0.08em] text-text-meta'>
-          Showing {displayedProjects.length} of {filtered.length}
-        </p>
-
-        <ul className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-          {displayedProjects.map((p) => {
-            const href = `/projects/${p.slug}`;
-            const img = p.imageUrl || '/images/terminal_ui.png';
-
-            return (
-              <li key={p.slug}>
-                <Link
-                  href={href}
-                  className='group flex h-full flex-col border border-terminal-green/15 bg-terminal-dark/25 transition hover:border-terminal-green/35 hover:bg-terminal-dark/40'
-                >
-                  <div className='relative aspect-[16/10] overflow-hidden border-b border-terminal-green/10 bg-terminal-dark/40'>
-                    <OptimizedImage
-                      src={img}
-                      alt=''
-                      className='h-full w-full object-cover opacity-90 transition group-hover:opacity-100'
-                      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
-                    />
-                    <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-terminal-dark/80 via-transparent to-transparent' />
-                  </div>
-                  <div className='flex flex-1 flex-col p-4'>
-                    <h2 className='font-ibm text-lg uppercase leading-snug tracking-[0.03em] text-terminal-green group-hover:text-neon'>
-                      {p.title}
-                    </h2>
-                    {p.description && (
-                      <p className='mt-2 flex-1 font-ibm text-sm leading-6 text-text-secondary'>
-                        {p.description}
-                      </p>
-                    )}
-                    <span className='mt-4 inline-flex items-center gap-1 font-ibm text-xs uppercase tracking-[0.08em] text-text-label group-hover:text-terminal-green'>
-                      View case study →
-                    </span>
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-
-        {hasMore && (
-          <div className='mt-8 text-center'>
-            <button
-              type='button'
-              onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-              className='inline-flex items-center border border-border-theme/50 px-6 py-3 font-ibm text-sm uppercase tracking-[0.08em] text-text-secondary transition hover:border-neon/50 hover:text-neon'
-            >
-              Show more ({filtered.length - visibleCount} remaining)
-            </button>
-          </div>
-        )}
-
-        {filtered.length === 0 && (
-          <div className='border border-terminal-green/15 bg-terminal-dark/30 p-8 text-center font-ibm text-text-secondary'>
-            No projects match your filters. Try clearing tags or shortening the search.
-          </div>
-        )}
       </div>
     </div>
   );

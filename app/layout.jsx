@@ -130,8 +130,8 @@ export default async function RootLayout({ children }) {
                 try {
                   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
-                  var THEMES = ['dark','light','monochrome','monochrome-inverted','vintage','apple','c64','amber','synthwave','dracula','solarized','nord','cobalt'];
-                  var META_COLORS = {dark:'#0d1211',light:'#e5e5e5',monochrome:'#000000','monochrome-inverted':'#ffffff',vintage:'#000000',apple:'#000000',c64:'#40318d',amber:'#1a0f00',synthwave:'#0a0a14',dracula:'#282a36',solarized:'#002b36',nord:'#2e3440',cobalt:'#193549'};
+                  var THEMES = ['dark','light','monochrome','monochrome-inverted','vintage','apple','c64','amber','synthwave','dracula','solarized','nord','cobalt','skynet'];
+                  var META_COLORS = {dark:'#0d1211',light:'#e5e5e5',monochrome:'#000000','monochrome-inverted':'#ffffff',vintage:'#000000',apple:'#000000',c64:'#40318d',amber:'#1a0f00',synthwave:'#0a0a14',dracula:'#282a36',solarized:'#002b36',nord:'#2e3440',cobalt:'#193549',skynet:'#0a0505'};
                   var savedTheme = localStorage.getItem('theme');
                   var theme = (savedTheme && THEMES.indexOf(savedTheme) !== -1)
                     ? savedTheme
