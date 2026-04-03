@@ -1,17 +1,38 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { MatrixSync } from '@/components/ui/MatrixSync';
 import Link from 'next/link';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 
+const HERO_PORTRAIT_FADE_MS = 400;
+const HERO_PORTRAIT_GLITCH_BURST_MS = 480;
+
 function HeroOperatorCard() {
   const { theme } = useTheme();
-  const profileSrc =
-    theme === 'skynet'
-      ? '/images/pixarMe_terminator.png'
-      : '/images/pixarMe-256.png';
+  const isSkynet = theme === 'skynet';
+  const [portraitGlitchBurst, setPortraitGlitchBurst] = useState(false);
+  const skipNextGlitchRef = useRef(true);
+
+  useEffect(() => {
+    if (skipNextGlitchRef.current) {
+      skipNextGlitchRef.current = false;
+      return;
+    }
+    setPortraitGlitchBurst(true);
+    const t = window.setTimeout(
+      () => setPortraitGlitchBurst(false),
+      HERO_PORTRAIT_GLITCH_BURST_MS
+    );
+    return () => window.clearTimeout(t);
+  }, [isSkynet]);
+
+  /** Inline opacity + transition: Next merges `style` last; avoids Tailwind missing classes from string vars. */
+  const portraitLayerStyle = (visible) => ({
+    opacity: visible ? 1 : 0,
+    transition: `opacity ${HERO_PORTRAIT_FADE_MS}ms ease-in-out`,
+  });
 
   return (
     <section className='relative w-full max-w-[390px] flex flex-col border border-neon/20 bg-panel/25 p-5'>
@@ -38,19 +59,47 @@ function HeroOperatorCard() {
         {/* portrait bay + data rail */}
         <div className='grid grid-cols-[144px_1fr] gap-4 items-start'>
           <div className='flex flex-col gap-2'>
-            <div className='relative w-36 h-36 border border-neon/25 bg-terminal-dark/30'>
-              <div className='pointer-events-none absolute left-0 top-0 h-5 w-5 border-l border-t border-accent/50' />
-              <div className='pointer-events-none absolute right-0 top-0 h-5 w-5 border-r border-t border-neon/25' />
-              <div className='pointer-events-none absolute bottom-0 left-0 h-5 w-5 border-b border-l border-neon/25' />
-              <div className='pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-accent/50' />
+            <div
+              className={[
+                'hero-operator-portrait-bay relative w-36 h-36 overflow-hidden border border-neon/25 bg-terminal-dark/30',
+                portraitGlitchBurst ? 'hero-portrait-glitch-burst' : '',
+                isSkynet && !portraitGlitchBurst ? 'hero-portrait-skynet-bay' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
+              <div className='pointer-events-none absolute left-0 top-0 z-20 h-5 w-5 border-l border-t border-accent/50' />
+              <div className='pointer-events-none absolute right-0 top-0 z-20 h-5 w-5 border-r border-t border-neon/25' />
+              <div className='pointer-events-none absolute bottom-0 left-0 z-20 h-5 w-5 border-b border-l border-neon/25' />
+              <div className='pointer-events-none absolute bottom-0 right-0 z-20 h-5 w-5 border-b border-r border-accent/50' />
               <Image
-                key={profileSrc}
-                src={profileSrc}
+                src='/images/pixarMe-256.png'
                 alt='Stephen Weaver'
                 width={144}
                 height={144}
-                className='absolute inset-0 h-full w-full object-cover'
-                priority={profileSrc === '/images/pixarMe-256.png'}
+                sizes='144px'
+                placeholder='empty'
+                style={portraitLayerStyle(!isSkynet)}
+                className='pointer-events-none absolute inset-0 z-0 h-full w-full object-cover'
+                priority
+                aria-hidden={isSkynet}
+              />
+              <Image
+                src='/images/pixarMe_terminator.png'
+                alt='Stephen Weaver'
+                width={144}
+                height={144}
+                sizes='144px'
+                placeholder='empty'
+                style={portraitLayerStyle(isSkynet)}
+                className={[
+                  'pointer-events-none absolute inset-0 z-10 h-full w-full object-cover',
+                  isSkynet && !portraitGlitchBurst ? 'hero-portrait-skynet-layer' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                loading='eager'
+                aria-hidden={!isSkynet}
               />
             </div>
           </div>
