@@ -74,9 +74,11 @@ export default function GlobalCommandPalette() {
   const inputRef = useRef(null);
   const listRef = useRef(null);
   const selectedIndexRef = useRef(0);
+  const queryRef = useRef('');
   const router = useRouter();
 
   selectedIndexRef.current = selectedIndex;
+  queryRef.current = query;
 
   useEffect(() => {
     try {
@@ -133,8 +135,9 @@ export default function GlobalCommandPalette() {
   }, []);
 
   const tryUnlockSecretPalette = useCallback(() => {
-    const q = query.trim().toLowerCase();
+    const q = queryRef.current.trim().toLowerCase();
     if (q !== PALETTE_SECRET_UNLOCK) return false;
+    if (secretUnlocked) return false;
     try {
       sessionStorage.setItem(PALETTE_SECRET_STORAGE_KEY, '1');
     } catch {
@@ -144,7 +147,7 @@ export default function GlobalCommandPalette() {
     setQuery('');
     setSelectedIndex(0);
     return true;
-  }, [query]);
+  }, [secretUnlocked]);
 
   const executeItem = useCallback(
     (item) => {
@@ -202,22 +205,48 @@ export default function GlobalCommandPalette() {
     el?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }, [isOpen, selectedIndex, flatItems.length, query]);
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setSelectedIndex((i) => Math.min(i + 1, flatItems.length - 1));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setSelectedIndex((i) => Math.max(i - 1, 0));
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (flatItems.length === 0 && tryUnlockSecretPalette()) {
+  const isEnterKey = (e) =>
+    e.key === 'Enter' || e.key === 'NumpadEnter' || e.code === 'Enter';
+
+  const handlePaletteKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedIndex((i) => Math.min(i + 1, flatItems.length - 1));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedIndex((i) => Math.max(i - 1, 0));
+      } else if (isEnterKey(e)) {
+        e.preventDefault();
+        if (tryUnlockSecretPalette()) {
+          return;
+        }
+        const item = flatItems[selectedIndexRef.current];
+        executeItem(item);
+      }
+    },
+    [flatItems, tryUnlockSecretPalette, executeItem]
+  );
+
+  // If focus leaves the input (e.g. after clicking the list), still handle arrows / Enter
+  useEffect(() => {
+    if (!isOpen) return;
+    const onWindowKeyDown = (e) => {
+      if (document.activeElement === inputRef.current) return;
+      if (
+        e.key !== 'ArrowDown' &&
+        e.key !== 'ArrowUp' &&
+        e.key !== 'Enter' &&
+        e.key !== 'NumpadEnter' &&
+        e.code !== 'Enter'
+      ) {
         return;
       }
-      const item = flatItems[selectedIndexRef.current];
-      executeItem(item);
-    }
-  };
+      handlePaletteKeyDown(e);
+    };
+    window.addEventListener('keydown', onWindowKeyDown);
+    return () => window.removeEventListener('keydown', onWindowKeyDown);
+  }, [isOpen, handlePaletteKeyDown]);
 
   if (!isOpen) {
     return (
@@ -256,7 +285,7 @@ export default function GlobalCommandPalette() {
             type='text'
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
+            onKeyDown={handlePaletteKeyDown}
             placeholder='Jump to page, project, or service...'
             className='flex-1 bg-transparent font-ocr text-sm text-text placeholder:text-text/30 focus:outline-none'
             aria-label='Search commands'
@@ -276,6 +305,10 @@ export default function GlobalCommandPalette() {
           role='listbox'
           aria-label='Commands'
           className='max-h-[60vh] overflow-y-auto overscroll-contain py-1'
+          onMouseDown={(e) => {
+            // Keep focus in the search field (cmdk-style); Enter still works via window listener if not
+            e.preventDefault();
+          }}
         >
           {filteredGroups.length === 0 && (
             <div className='px-4 py-6 text-center font-ocr text-sm text-text/30'>
