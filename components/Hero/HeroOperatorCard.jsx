@@ -4,8 +4,15 @@ import { memo } from 'react';
 import Image from 'next/image';
 import { MatrixSync } from '@/components/ui/MatrixSync';
 import Link from 'next/link';
+import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 
 function HeroOperatorCard() {
+  const { theme } = useTheme();
+  const profileSrc =
+    theme === 'skynet'
+      ? '/images/pixarMe_terminator.png'
+      : '/images/pixarMe-256.png';
+
   return (
     <section className='relative w-full max-w-[390px] flex flex-col border border-neon/20 bg-panel/25 p-5'>
       {/* corner brackets */}
@@ -37,12 +44,13 @@ function HeroOperatorCard() {
               <div className='pointer-events-none absolute bottom-0 left-0 h-5 w-5 border-b border-l border-neon/25' />
               <div className='pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-accent/50' />
               <Image
-                src='/images/pixarMe-256.png'
+                key={profileSrc}
+                src={profileSrc}
                 alt='Stephen Weaver'
                 width={144}
                 height={144}
-                className='w-full h-full object-cover'
-                priority
+                className='absolute inset-0 h-full w-full object-cover'
+                priority={profileSrc === '/images/pixarMe-256.png'}
               />
             </div>
           </div>

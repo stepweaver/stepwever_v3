@@ -1,63 +1,74 @@
-import ServiceHero from '@/components/services/ServiceHero';
-import ProblemGrid from '@/components/services/ProblemGrid';
-import ServiceLaneCards from '@/components/services/ServiceLaneCards';
-import ProofRail from '@/components/services/ProofRail';
-import ProcessStrip from '@/components/services/ProcessStrip';
-import FitCheck from '@/components/services/FitCheck';
-import ServiceCTA from '@/components/services/ServiceCTA';
+import ServicesHero from '@/components/services/ServicesHero';
+import ProofSignalStrip from '@/components/services/ProofSignalStrip';
+import ServiceLanes from '@/components/services/ServiceLanes';
+import EngagementModel from '@/components/services/EngagementModel';
+import SelectedProof from '@/components/services/SelectedProof';
+import ServicesCTA from '@/components/services/ServicesCTA';
 import SiteScrollPageBackground from '@/components/layout/SiteScrollPageBackground';
-import { servicesPage } from '@/lib/servicesData';
-import { getProofForLane } from '@/lib/proofLinks';
+import { servicesLanding } from '@/lib/servicesLandingData';
 
 export const metadata = {
   title: 'Services | Stephen Weaver',
   description:
-    'Operational web systems, automation, and AI-assisted tooling for businesses that have outgrown duct-tape workflows. Lead systems, integrations, and websites that do real work.',
+    'Lead capture, local visibility, workflow handoffs, and maintainable business websites for small teams. Practical fixes and light automation—scoped build, clear handoff, optional retainer.',
   alternates: {
     canonical: 'https://stepweaver.dev/services',
   },
   openGraph: {
     title: 'Services | Stephen Weaver',
     description:
-      'Operational web systems, automation, and AI-assisted tooling. Lead systems, integrations, and websites that do real work.',
+      'Practical web systems and workflow fixes for small businesses: visibility, handoffs, and sites that earn their keep.',
     url: 'https://stepweaver.dev/services',
     type: 'website',
   },
 };
 
-const allProof = [
-  ...getProofForLane('web-platforms'),
-  ...getProofForLane('automation'),
-  ...getProofForLane('lead-systems'),
-].filter((item, idx, arr) => arr.findIndex((i) => i.slug === item.slug) === idx);
-
 export default function ServicesPage() {
+  const { sectionEyebrows } = servicesLanding;
+
   return (
     <SiteScrollPageBackground>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <ServiceHero
-          eyebrow={servicesPage.hero.eyebrow}
-          title={servicesPage.hero.title}
-          body={servicesPage.hero.body}
-          primaryCta={servicesPage.hero.primaryCta}
-          secondaryCta={servicesPage.hero.secondaryCta}
+      <div className='max-w-5xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <ServicesHero
+          eyebrow={servicesLanding.hero.eyebrow}
+          title={servicesLanding.hero.title}
+          body={servicesLanding.hero.body}
+          primaryCta={servicesLanding.hero.primaryCta}
+          secondaryCta={servicesLanding.hero.secondaryCta}
         />
 
-        <ProblemGrid problems={servicesPage.problems} />
+        <ProofSignalStrip
+          eyebrow={sectionEyebrows.proofSignals}
+          title={servicesLanding.proofSignalsTitle}
+          items={servicesLanding.proofSignals}
+        />
 
-        <ServiceLaneCards lanes={servicesPage.lanes} />
+        <ServiceLanes
+          eyebrow={sectionEyebrows.serviceLanes}
+          title={servicesLanding.serviceLanesTitle}
+          lanes={servicesLanding.serviceLanes}
+        />
 
-        <ProofRail items={allProof} title='Project proof' />
+        <EngagementModel
+          eyebrow={sectionEyebrows.engagement}
+          title={servicesLanding.engagementModel.title}
+          steps={servicesLanding.engagementModel.steps}
+        />
 
-        <ProcessStrip steps={servicesPage.process} />
+        <SelectedProof
+          id='selected-proof'
+          eyebrow={sectionEyebrows.selectedProof}
+          sectionTitle={servicesLanding.selectedProof.sectionTitle}
+          sectionIntro={servicesLanding.selectedProof.sectionIntro}
+          featured={servicesLanding.selectedProof.featured}
+          secondary={servicesLanding.selectedProof.secondary}
+          portfolioLink={servicesLanding.selectedProof.portfolioLink}
+        />
 
-        <FitCheck good={servicesPage.fit.good} bad={servicesPage.fit.bad} />
-
-        <ServiceCTA
-          title={servicesPage.cta.title}
-          body={servicesPage.cta.body}
-          primaryCta={servicesPage.cta.primaryCta}
-          secondaryCta={servicesPage.cta.secondaryCta}
+        <ServicesCTA
+          title={servicesLanding.cta.title}
+          body={servicesLanding.cta.body}
+          primaryCta={servicesLanding.cta.primaryCta}
         />
       </div>
     </SiteScrollPageBackground>
