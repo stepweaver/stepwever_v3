@@ -5,6 +5,14 @@ import { useRouter } from 'next/navigation';
 import { Search, ArrowRight, Terminal, FileText, Zap, BookOpen, Mail, FolderOpen, ChevronRight } from 'lucide-react';
 import { PROJECTS_DATA } from '@/lib/projectsData';
 
+const OPERATOR_CONSOLE_URL =
+  process.env.NEXT_PUBLIC_OPERATOR_CONSOLE_URL ||
+  'https://console-taupe-pi.vercel.app';
+
+/** Type this in the palette search and press Enter (with zero matching results) to reveal operator commands for this browser session. */
+const PALETTE_SECRET_UNLOCK = 'opensigil';
+const PALETTE_SECRET_STORAGE_KEY = 'sw-palette-operator';
+
 const STATIC_COMMANDS = [
   {
     group: 'Navigate',
@@ -25,6 +33,21 @@ const STATIC_COMMANDS = [
     ],
   },
 ];
+
+function buildSecretCommands() {
+  return {
+    group: 'Operator',
+    items: [
+      {
+        id: 'sigil-console',
+        label: 'Sigil console',
+        href: OPERATOR_CONSOLE_URL,
+        icon: Terminal,
+        meta: 'External',
+      },
+    ],
+  };
+}
 
 function buildProjectCommands() {
   return Object.entries(PROJECTS_DATA)
@@ -47,6 +70,7 @@ export default function GlobalCommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [secretUnlocked, setSecretUnlocked] = useState(false);
   const inputRef = useRef(null);
   const listRef = useRef(null);
   const selectedIndexRef = useRef(0);
@@ -54,12 +78,21 @@ export default function GlobalCommandPalette() {
 
   selectedIndexRef.current = selectedIndex;
 
+  useEffect(() => {
+    try {
+      setSecretUnlocked(sessionStorage.getItem(PALETTE_SECRET_STORAGE_KEY) === '1');
+    } catch {
+      // ignore
+    }
+  }, []);
+
   const projectCommands = useMemo(() => buildProjectCommands(), []);
 
-  const allGroups = useMemo(
-    () => [...STATIC_COMMANDS, { group: 'Projects', items: projectCommands }],
-    [projectCommands]
-  );
+  const allGroups = useMemo(() => {
+    const base = [...STATIC_COMMANDS, { group: 'Projects', items: projectCommands }];
+    if (!secretUnlocked) return base;
+    return [...base, buildSecretCommands()];
+  }, [projectCommands, secretUnlocked]);
 
   const filteredGroups = useMemo(
     () =>
@@ -98,6 +131,20 @@ export default function GlobalCommandPalette() {
     setIsOpen(false);
     setQuery('');
   }, []);
+
+  const tryUnlockSecretPalette = useCallback(() => {
+    const q = query.trim().toLowerCase();
+    if (q !== PALETTE_SECRET_UNLOCK) return false;
+    try {
+      sessionStorage.setItem(PALETTE_SECRET_STORAGE_KEY, '1');
+    } catch {
+      // still show in-session if storage fails
+    }
+    setSecretUnlocked(true);
+    setQuery('');
+    setSelectedIndex(0);
+    return true;
+  }, [query]);
 
   const executeItem = useCallback(
     (item) => {
@@ -164,6 +211,9 @@ export default function GlobalCommandPalette() {
       setSelectedIndex((i) => Math.max(i - 1, 0));
     } else if (e.key === 'Enter') {
       e.preventDefault();
+      if (flatItems.length === 0 && tryUnlockSecretPalette()) {
+        return;
+      }
       const item = flatItems[selectedIndexRef.current];
       executeItem(item);
     }
@@ -320,6 +370,11 @@ export default function GlobalCommandPalette() {
           <span className='font-ocr text-[9px] uppercase tracking-[0.2em] text-text/40'>
             Esc close
           </span>
+          {secretUnlocked && (
+            <span className='font-ocr text-[9px] uppercase tracking-[0.2em] text-neon/35'>
+              Operator row · this session
+            </span>
+          )}
         </div>
       </div>
     </>

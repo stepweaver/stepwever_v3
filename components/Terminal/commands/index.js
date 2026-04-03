@@ -9,11 +9,6 @@ import { handleResumeCommand, startResumeMode, isInResumeMode } from '../data/re
 import { roll, formatRollResult, parseDiceNotation } from '@/lib/roller.js';
 import { sendAIMessage } from '../data/ai.js';
 
-/** Not listed in help — opens your remote operator console (override via env). */
-const OPERATOR_CONSOLE_URL =
-  process.env.NEXT_PUBLIC_OPERATOR_CONSOLE_URL ||
-  'https://console-taupe-pi.vercel.app';
-
 // Main command handler
 export const handleCommand = async (
   command,
@@ -226,17 +221,6 @@ export const handleCommand = async (
           `<span class="text-terminal-text">Please check your notation and try again</span>`
         ];
       }
-
-    case 'sigil':
-      if (typeof window !== 'undefined') {
-        setTimeout(() => {
-          window.open(OPERATOR_CONSOLE_URL, '_blank', 'noopener,noreferrer');
-        }, 250);
-      }
-      return [
-        `<span class="text-terminal-green">Opening remote console…</span>`,
-        `<span class="text-terminal-dimmed">If the tab did not open, allow pop-ups for this site.</span>`,
-      ];
 
     case '':
       return [];
