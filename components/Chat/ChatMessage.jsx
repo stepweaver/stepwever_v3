@@ -3,7 +3,7 @@ import { User, Loader2 } from 'lucide-react';
 import { parseChatLinks } from '@/utils/parseChatLinks';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import GlitchLambda from '@/components/ui/GlitchLambda';
-import SourceCitations from '@/components/chat/SourceCitations';
+import SourceCitations from '@/components/Chat/SourceCitations';
 
 /**
  * Shared chat message bubble used by both ChatWidget and ChatBot.
