@@ -17,8 +17,8 @@ export default function RollSessionModal({
 
   const closeClasses =
     closeVariant === 'danger'
-      ? 'text-danger/90 hover:text-danger hover:bg-danger/10 border border-danger/40'
-      : 'text-neon/80 hover:text-neon hover:bg-neon/10 border border-neon/35';
+      ? 'text-danger/90 hover:text-danger hover:bg-danger/10'
+      : 'text-neon/80 hover:text-neon hover:bg-neon/10';
 
   return createPortal(
     <>
@@ -41,8 +41,8 @@ export default function RollSessionModal({
         aria-modal='true'
         aria-labelledby='roll-session-title'
       >
-        <div className='hud-panel flex h-full min-h-0 flex-col overflow-hidden rounded-none shadow-none'>
-          <div className='relative z-[2] flex shrink-0 items-stretch justify-between gap-3 border-b-2 border-neon/25 bg-surface/95 px-3 py-2.5 sm:px-4'>
+        <div className='flex h-full min-h-0 flex-col overflow-hidden bg-panel/92 backdrop-blur-sm'>
+          <div className='relative z-[2] flex shrink-0 items-stretch justify-between gap-3 border-b border-neon/20 bg-surface/90 px-3 py-2.5 sm:px-4'>
             <p
               id='roll-session-title'
               className='self-center font-ocr text-[11px] uppercase leading-snug tracking-[0.14em] text-label/90 sm:text-xs'

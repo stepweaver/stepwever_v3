@@ -32,12 +32,8 @@ export default function DiceResult({
   const isReadout = variant === 'readout';
 
   const shellClass = isReadout
-    ? `pl-2.5 border-l-2 border-accent/55 ${className}`
+    ? `border-l-2 border-accent/50 py-0.5 pl-2.5 sm:py-1 sm:pl-3 ${className}`
     : `bg-panel/20 p-3 sm:p-3.5 ${className}`;
-
-  const innerClass = isReadout
-    ? 'border border-neon/20 bg-surface/45 px-2.5 py-2 sm:px-3 sm:py-2.5'
-    : '';
 
   const rowBtnClass = isReadout
     ? 'p-0.5 rounded-none transition-colors cursor-pointer'
@@ -137,7 +133,7 @@ export default function DiceResult({
   const instruction = onToggleDiceHold && (
     <p
       className={`font-ocr text-[9px] text-meta ${
-        isReadout ? 'mt-2 pt-2 border-t border-theme tracking-[0.06em]' : 'mb-1.5'
+        isReadout ? 'mt-2.5 tracking-[0.06em]' : 'mb-1.5'
       }`}
     >
       LOCK DICE TO PRESERVE // REROLL UNHELD
@@ -182,11 +178,9 @@ export default function DiceResult({
   if (isReadout) {
     return (
       <div className={shellClass}>
-        <div className={innerClass}>
-          {body}
-          {instruction}
-          {totalRow}
-        </div>
+        {body}
+        {instruction}
+        {totalRow}
         {rerollBtn}
       </div>
     );

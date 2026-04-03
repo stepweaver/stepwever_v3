@@ -26,8 +26,8 @@ function formatSessionTime(iso) {
   }
 }
 
-const cmdBase =
-  'font-ibm text-[10px] sm:text-[11px] tracking-[0.12em] uppercase px-2.5 sm:px-3 py-2 rounded-none border transition-colors cursor-pointer disabled:opacity-40 disabled:pointer-events-none';
+const modalCmdBase =
+  'font-ibm text-[10px] sm:text-[11px] tracking-[0.12em] uppercase px-3 sm:px-3.5 py-2 rounded-none transition-colors cursor-pointer disabled:opacity-40 disabled:pointer-events-none';
 
 /**
  * Simplified dice roller - hex-centric, one screen, cyberpunk terminal vibe.
@@ -386,7 +386,7 @@ export default function DiceRoller() {
             {isRolling ? (
               <div className='flex flex-col justify-center py-4 px-1 w-full'>
                 <div className='relative w-full'>
-                  <div className='absolute inset-0 border border-neon/30 rounded-none opacity-60' />
+                  <div className='absolute inset-0 rounded-none bg-neon/[0.04]' />
                   <div className='absolute inset-0 bg-gradient-to-b from-neon/5 via-transparent to-neon/5 rounded-none motion-safe:animate-pulse' />
                   <div className='relative flex flex-wrap gap-2.5 justify-start items-center py-4 px-3'>
                     {dicePool.flatMap((die, di) =>
@@ -439,7 +439,7 @@ export default function DiceRoller() {
                 className='w-full'
               />
             ) : (
-              <div className='w-full border border-neon/20 bg-surface/40 border-l-2 border-l-accent/50 px-3 py-2.5'>
+              <div className='w-full border-l-2 border-l-accent/50 bg-surface/30 pl-3 pr-2 py-2.5'>
                 {pendingNotation ? (
                   <>
                     <p className='font-ocr text-[10px] tracking-[0.16em] text-neon/45 uppercase'>
@@ -457,15 +457,15 @@ export default function DiceRoller() {
           </div>
 
           <div
-            className={`sticky bottom-0 z-[1] -mx-2.5 sm:-mx-3 mt-auto px-2.5 sm:px-3 py-2 border-t-2 border-neon/25 bg-panel/95 flex flex-wrap gap-2 items-center ${
-              theme === 'skynet' ? 'border-t-danger/35' : ''
+            className={`sticky bottom-0 z-[1] -mx-2.5 sm:-mx-3 mt-auto px-2.5 sm:px-3 py-2 border-t border-neon/20 bg-panel/95 flex flex-wrap gap-2 items-center ${
+              theme === 'skynet' ? 'border-t-danger/30' : ''
             }`}
           >
             <button
               type='button'
               onClick={handleRoll}
               disabled={!canRoll}
-              className={`${cmdBase} border-neon/35 bg-surface/80 text-neon hover:bg-neon/10`}
+              className={`${modalCmdBase} text-neon hover:bg-neon/10`}
             >
               ROLL
             </button>
@@ -474,7 +474,7 @@ export default function DiceRoller() {
                 type='button'
                 onClick={handleReroll}
                 disabled={isRolling}
-                className={`${cmdBase} border-accent/45 bg-surface/80 text-accent hover:bg-accent/15`}
+                className={`${modalCmdBase} text-accent hover:bg-accent/15`}
               >
                 RE-ROLL UNHELD
               </button>
@@ -483,7 +483,7 @@ export default function DiceRoller() {
               <button
                 type='button'
                 onClick={handleCopy}
-                className={`${cmdBase} border-neon/35 bg-surface/80 text-neon hover:bg-neon/10`}
+                className={`${modalCmdBase} text-neon hover:bg-neon/10`}
               >
                 {copyStatus ? 'COPIED' : 'COPY OUTPUT'}
               </button>
@@ -491,7 +491,7 @@ export default function DiceRoller() {
             <button
               type='button'
               onClick={handleClearResults}
-              className={`${cmdBase} border-danger/45 text-danger hover:bg-danger/10`}
+              className={`${modalCmdBase} text-danger hover:bg-danger/10`}
             >
               PURGE
             </button>
