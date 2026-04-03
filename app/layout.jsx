@@ -9,6 +9,7 @@ import { NavigationTransitionProvider } from '@/components/transition/Navigation
 // Analytics is a client component that handles its own lazy loading
 import Analytics from '@/components/Analytics/Analytics';
 import ImageProtection from '@/components/ImageProtection/ImageProtection';
+import GlobalCommandPaletteWrapper from '@/components/navigation/GlobalCommandPaletteWrapper';
 
 // Environment validation in development
 if (process.env.NODE_ENV === 'development') {
@@ -199,7 +200,10 @@ export default async function RootLayout({ children }) {
 
         <ErrorBoundary>
           <ThemeProvider>
-            <NavigationTransitionProvider>{children}</NavigationTransitionProvider>
+            <NavigationTransitionProvider>
+              {children}
+              <GlobalCommandPaletteWrapper />
+            </NavigationTransitionProvider>
           </ThemeProvider>
           {/* Load Analytics after initial render to reduce blocking */}
           <Analytics />
