@@ -10,7 +10,7 @@ import { servicesLanding } from '@/lib/servicesLandingData';
 export const metadata = {
   title: 'Services | Stephen Weaver',
   description:
-    'Lead capture, local visibility, workflow handoffs, and maintainable business websites for small teams. Practical fixes and light automation—scoped build, clear handoff, optional retainer.',
+    'Lead capture, local visibility, workflow handoffs, and maintainable business websites for small teams. Practical fixes and light automation: scoped build, clear handoff, optional retainer.',
   alternates: {
     canonical: 'https://stepweaver.dev/services',
   },

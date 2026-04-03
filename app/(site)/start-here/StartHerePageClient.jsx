@@ -57,7 +57,7 @@ export default function StartHerePageClient() {
           />
         </section>
 
-        {/* Pathway detail — scroll target when a track is selected */}
+        {/* Pathway detail; scroll target when a track is selected */}
         <div
           ref={profileRef}
           id='start-here-profile'
