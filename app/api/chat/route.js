@@ -34,6 +34,40 @@ function safeJson(value, init = {}) {
   return NextResponse.json(value, { ...init, headers });
 }
 
+/**
+ * Parse [[CITE:type|label|href|section]] markers from assistant text.
+ * Returns { cleanText, citations } where citations is an array of structured objects.
+ * Markers are stripped from the visible text.
+ *
+ * Format: [[CITE:type|label|href]] or [[CITE:type|label|href|section]]
+ * Example: [[CITE:project|λsigil Setup|/projects/lsigil-setup|Architecture]]
+ */
+function extractCitations(text) {
+  if (!text || typeof text !== 'string') return { cleanText: text, citations: [] };
+
+  const citations = [];
+  const CITE_PATTERN = /\[\[CITE:([^|]+)\|([^|]+)\|([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+
+  const cleanText = text.replace(CITE_PATTERN, (_, type, label, href, section) => {
+    const allowedTypes = new Set(['project', 'resume', 'codex', 'page']);
+    const safeType = allowedTypes.has(type.trim()) ? type.trim() : 'page';
+    const safeLabel = label.trim().slice(0, 80);
+    const safeHref = href.trim().slice(0, 200);
+    const safeSection = section ? section.trim().slice(0, 60) : undefined;
+
+    citations.push({
+      type: safeType,
+      label: safeLabel,
+      href: safeHref,
+      ...(safeSection ? { section: safeSection } : {}),
+    });
+
+    return '';
+  }).replace(/\s{2,}/g, ' ').trim();
+
+  return { cleanText, citations };
+}
+
 function redactIfPromptLeak(text) {
   const patterns = [
     /BASE_SYSTEM_PROMPT/i,
@@ -334,9 +368,12 @@ export async function POST(request) {
     assistantText = redactIfPromptLeak(assistantText);
     assistantText = assistantText.slice(0, 6000);
 
+    const { cleanText, citations } = extractCitations(assistantText);
+
     return safeJson({
-      message: assistantText,
+      message: cleanText,
       role: 'assistant',
+      ...(citations.length > 0 ? { citations } : {}),
       ...(process.env.NODE_ENV === 'development' ? { provider } : {}),
     });
   } catch (error) {

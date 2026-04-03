@@ -113,7 +113,11 @@ export function useChat({ inputRef, isVisible = true } = {}) {
 
         setMessages((pm) => [
           ...pm,
-          { role: 'assistant', content: data.message },
+          {
+            role: 'assistant',
+            content: data.message,
+            citations: data.citations || [],
+          },
         ]);
       } catch (err) {
         if (err.name === 'AbortError') return;

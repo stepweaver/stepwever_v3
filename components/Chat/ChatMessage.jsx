@@ -3,11 +3,12 @@ import { User, Loader2 } from 'lucide-react';
 import { parseChatLinks } from '@/utils/parseChatLinks';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import GlitchLambda from '@/components/ui/GlitchLambda';
+import SourceCitations from '@/components/chat/SourceCitations';
 
 /**
  * Shared chat message bubble used by both ChatWidget and ChatBot.
  *
- * @param {Object} message - { role: 'user' | 'assistant', content: string }
+ * @param {Object} message - { role: 'user' | 'assistant', content: string, citations?: Array }
  * @param {'compact' | 'default'} variant - Size variant
  */
 export default function ChatMessage({ message, variant = 'default' }) {
@@ -72,6 +73,9 @@ export default function ChatMessage({ message, variant = 'default' }) {
             <GlitchLambda key={key} size='small' className='inline' />
           ),
         })}
+        {!isUser && message.citations?.length > 0 && (
+          <SourceCitations citations={message.citations} />
+        )}
       </div>
     </div>
   );

@@ -232,7 +232,7 @@ export default function DiceRoller() {
   }, [dicePool, modifier]);
   const pageActionGridClass = currentResult ? 'grid-cols-2' : 'grid-cols-1';
 
-  const rollLineDisplay = currentResult?.notation || pendingNotation || '—';
+  const rollLineDisplay = currentResult?.notation || pendingNotation || '-';
   const sessionTime = formatSessionTime(currentResult?.timestamp);
   const totalLabel = theme === 'skynet' ? 'THREAT SCORE' : 'TOTAL';
   const modalTitle =
@@ -369,7 +369,7 @@ export default function DiceRoller() {
             <div className='flex flex-wrap items-baseline gap-x-2 gap-y-1'>
               <span className='text-meta shrink-0'>NOTE //</span>
               {currentResult && !isRolling ? (
-                <span className='text-text/85 break-words'>{currentResult.comment || '—'}</span>
+                <span className='text-text/85 break-words'>{currentResult.comment || '-'}</span>
               ) : (
                 noteField
               )}

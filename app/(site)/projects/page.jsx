@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { CAROUSEL_PROJECTS, HOMEPAGE_FEATURED_SLUGS } from '@/lib/carouselProjects';
@@ -56,6 +56,36 @@ export default function ProjectsIndexPage() {
     });
     return { tagsSorted: tags, tagCounts: counts };
   }, []);
+
+  const categoryCounts = useMemo(() => {
+    const counts = { featured: 0, apps: 0, automation: 0, services: 0 };
+    for (const p of CAROUSEL_PROJECTS) {
+      if (FEATURED_SET.has(p.slug)) counts.featured += 1;
+      counts[getCategory(p)] += 1;
+    }
+    return counts;
+  }, []);
+
+  const visibleCategories = useMemo(() => {
+    if (CAROUSEL_PROJECTS.length === 0) return [];
+    return CATEGORIES.filter((cat) => {
+      if (cat.id === 'all') return true;
+      return (categoryCounts[cat.id] ?? 0) > 0;
+    });
+  }, [categoryCounts]);
+
+  useEffect(() => {
+    if (visibleCategories.length === 0) return;
+    if (!visibleCategories.some((c) => c.id === activeCategory)) {
+      setActiveCategory('all');
+    }
+  }, [visibleCategories, activeCategory]);
+
+  useEffect(() => {
+    if (tagsSorted.length === 0 && activeTags.length > 0) {
+      setActiveTags([]);
+    }
+  }, [tagsSorted.length, activeTags.length]);
 
   const filtered = useMemo(() => {
     const q = normalize(query).trim();
@@ -138,19 +168,20 @@ export default function ProjectsIndexPage() {
           </div>
 
           <div className='mb-8 space-y-6'>
-            <div>
-              <p className='mb-3 font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50'>
-                Browse
-              </p>
-              <div className='flex flex-wrap gap-2'>
-                {CATEGORIES.map((cat) => {
-                  const isActive = activeCategory === cat.id;
-                  return (
-                    <button
-                      key={cat.id}
-                      type='button'
-                      onClick={() => selectCategory(cat.id)}
-                      className={`
+            {visibleCategories.length > 0 && (
+              <div>
+                <p className='mb-3 font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50'>
+                  Browse
+                </p>
+                <div className='flex flex-wrap gap-2'>
+                  {visibleCategories.map((cat) => {
+                    const isActive = activeCategory === cat.id;
+                    return (
+                      <button
+                        key={cat.id}
+                        type='button'
+                        onClick={() => selectCategory(cat.id)}
+                        className={`
                         cursor-pointer rounded-sm border px-3 py-1 font-ocr text-xs uppercase tracking-wider transition-all duration-200
                         ${
                           isActive
@@ -158,13 +189,14 @@ export default function ProjectsIndexPage() {
                             : 'border-neon/25 text-text/60 hover:border-neon/50 hover:bg-neon/5 hover:text-neon'
                         }
                       `}
-                    >
-                      {cat.label}
-                    </button>
-                  );
-                })}
+                      >
+                        {cat.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className='space-y-3'>
               <label className='block font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50'>
@@ -183,40 +215,41 @@ export default function ProjectsIndexPage() {
               />
             </div>
 
-            <div>
-              <div className='mb-3 flex flex-wrap items-center gap-2'>
-                <button
-                  type='button'
-                  onClick={() => setTagsOpen((v) => !v)}
-                  className='font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50 lg:hidden'
-                >
-                  {tagsOpen ? 'Hide filters' : 'More filters'}
-                </button>
-                <span className='hidden font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50 lg:inline'>
-                  Filter by tag
-                </span>
-                {activeTags.length > 0 && (
+            {tagsSorted.length > 0 && (
+              <div>
+                <div className='mb-3 flex flex-wrap items-center gap-2'>
                   <button
                     type='button'
-                    onClick={clearTags}
-                    className='font-ocr text-[10px] uppercase tracking-[0.15em] text-neon/50 transition-colors hover:text-neon'
+                    onClick={() => setTagsOpen((v) => !v)}
+                    className='font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50 lg:hidden'
                   >
-                    [ Clear filters ]
+                    {tagsOpen ? 'Hide filters' : 'More filters'}
                   </button>
-                )}
-              </div>
-              <div className={`flex flex-wrap gap-2 ${tagsOpen ? 'flex' : 'hidden lg:flex'}`}>
-                {tagsSorted.map((tag) => {
-                  const on = activeTags.includes(tag);
-                  const n = tagCounts.get(tag);
-                  return (
+                  <span className='hidden font-ocr text-[10px] uppercase tracking-[0.25em] text-neon/50 lg:inline'>
+                    Filter by tag
+                  </span>
+                  {activeTags.length > 0 && (
                     <button
-                      key={tag}
                       type='button'
-                      onClick={() => toggleTag(tag)}
-                      aria-pressed={on}
-                      title={n != null ? `${n} project${n === 1 ? '' : 's'}` : undefined}
-                      className={`
+                      onClick={clearTags}
+                      className='font-ocr text-[10px] uppercase tracking-[0.15em] text-neon/50 transition-colors hover:text-neon'
+                    >
+                      [ Clear filters ]
+                    </button>
+                  )}
+                </div>
+                <div className={`flex flex-wrap gap-2 ${tagsOpen ? 'flex' : 'hidden lg:flex'}`}>
+                  {tagsSorted.map((tag) => {
+                    const on = activeTags.includes(tag);
+                    const n = tagCounts.get(tag);
+                    return (
+                      <button
+                        key={tag}
+                        type='button'
+                        onClick={() => toggleTag(tag)}
+                        aria-pressed={on}
+                        title={n != null ? `${n} project${n === 1 ? '' : 's'}` : undefined}
+                        className={`
                         inline-flex items-baseline gap-1.5 rounded-sm border px-3 py-1 font-ocr text-xs uppercase tracking-wider transition-all duration-200
                         ${
                           on
@@ -224,16 +257,17 @@ export default function ProjectsIndexPage() {
                             : 'border-neon/25 text-text/60 hover:border-neon/50 hover:bg-neon/5 hover:text-neon'
                         }
                       `}
-                    >
-                      <span>{tag}</span>
-                      {n != null && n > 0 && (
-                        <span className='font-ocr text-xs tabular-nums normal-case text-text/30'>{n}</span>
-                      )}
-                    </button>
-                  );
-                })}
+                      >
+                        <span>{tag}</span>
+                        {n != null && n > 0 && (
+                          <span className='font-ocr text-xs tabular-nums normal-case text-text/30'>{n}</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className='mb-6 h-px bg-neon/10' />

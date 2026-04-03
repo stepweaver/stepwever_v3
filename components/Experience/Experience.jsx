@@ -110,7 +110,7 @@ function Experience() {
 
           <div className='mb-4 md:mb-5'>
             <h3 className='text-lg md:text-xl lg:text-2xl xl:text-3xl mb-2.5 md:mb-3 leading-tight font-ibm text-neon'>
-              Loadout: tools that support the system.
+              Tools that support the system.
             </h3>
             <p className='text-text/90 font-ibm text-sm md:text-base leading-relaxed'>
               After 8+ years across operations and software, the stack below is what shows up in real builds.

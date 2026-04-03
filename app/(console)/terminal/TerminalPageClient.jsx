@@ -134,7 +134,7 @@ export default function TerminalPageClient() {
           </div>
           <div className='flex items-center gap-2.5'>
             <span className='font-ocr text-xs text-neon/35 hidden sm:inline'>
-              v4.1.0
+              v4.2.0
             </span>
             <span className='inline-flex items-center gap-1.5'>
               <span className='relative flex h-2 w-2'>

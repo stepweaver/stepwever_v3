@@ -1,4 +1,5 @@
 import ChatBot from '@/components/ChatBot/ChatBot';
+import EvidenceBar from '@/components/projects/EvidenceBar';
 import {
   ArrowLeft,
   ExternalLink,
@@ -293,6 +294,13 @@ export default function ProjectPageClient({ project, slug }) {
   return (
     <ProjectPageLayout project={project} slug={slug}>
       <div className='max-w-4xl'>
+        {/* Evidence bar; only renders when project.evidenceBar is defined */}
+        <EvidenceBar
+          evidenceBar={project.evidenceBar}
+          liveLink={project.link}
+          githubRepo={project.githubRepo}
+        />
+
         {/* Hero / live component section */}
         {isLlambdaProject ? (
           <div className='mb-8 w-full min-h-[500px]'>

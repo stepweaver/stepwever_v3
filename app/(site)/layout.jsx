@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import PageTransition from '@/components/transition/PageTransition';
 import ChatWidgetWrapper from '@/components/ChatWidget/ChatWidgetWrapper';
+import GlobalCommandPaletteWrapper from '@/components/navigation/GlobalCommandPaletteWrapper';
 
 export default function SiteLayout({ children }) {
   return (
@@ -16,6 +17,7 @@ export default function SiteLayout({ children }) {
       </main>
       <Footer />
       <ChatWidgetWrapper />
+      <GlobalCommandPaletteWrapper />
     </>
   );
 }

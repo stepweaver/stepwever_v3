@@ -29,7 +29,7 @@ export default function RollSessionModal({
         className='fixed inset-0 z-[190] bg-black/80 backdrop-blur-sm cursor-pointer'
       />
 
-      {/* Outer shell must be `fixed` only — `.hud-panel` sets position:relative and would override `fixed` on the same node */}
+      {/* Outer shell must be `fixed` only; `.hud-panel` sets position:relative and would override `fixed` on the same node */}
       <div
         className='fixed left-0 right-0 z-[200] m-0 w-full overflow-hidden'
         style={{
