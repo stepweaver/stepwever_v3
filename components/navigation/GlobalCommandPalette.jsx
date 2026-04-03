@@ -9,7 +9,10 @@ const OPERATOR_CONSOLE_URL =
   process.env.NEXT_PUBLIC_OPERATOR_CONSOLE_URL ||
   'https://console-taupe-pi.vercel.app';
 
-/** Type this in the palette search and press Enter (with zero matching results) to reveal operator commands for this browser session. */
+/**
+ * Type this and press Enter: first time unlocks the Operator row for the session; after that it
+ * also matches "Sigil console" in search so Enter opens the console (substring match alone would not).
+ */
 const PALETTE_SECRET_UNLOCK = 'opensigil';
 const PALETTE_SECRET_STORAGE_KEY = 'sw-palette-operator';
 
@@ -96,18 +99,27 @@ export default function GlobalCommandPalette() {
     return [...base, buildSecretCommands()];
   }, [projectCommands, secretUnlocked]);
 
-  const filteredGroups = useMemo(
-    () =>
-      allGroups
-        .map((group) => ({
-          ...group,
-          items: group.items.filter(
-            (item) => matchesQuery(item.label, query) || matchesQuery(item.meta || '', query)
-          ),
-        }))
-        .filter((group) => group.items.length > 0),
-    [allGroups, query]
-  );
+  const filteredGroups = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return allGroups
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) => {
+          if (matchesQuery(item.label, query) || matchesQuery(item.meta || '', query)) {
+            return true;
+          }
+          if (
+            secretUnlocked &&
+            item.id === 'sigil-console' &&
+            q === PALETTE_SECRET_UNLOCK
+          ) {
+            return true;
+          }
+          return false;
+        }),
+      }))
+      .filter((group) => group.items.length > 0);
+  }, [allGroups, query, secretUnlocked]);
 
   const { flatItems, rows } = useMemo(() => {
     const flat = [];
