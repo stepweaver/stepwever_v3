@@ -24,10 +24,17 @@ function checkHoneypot(body) {
 }
 
 // ── Timing ──────────────────────────────────────────────────────────
-// The client sends submit-time `_t` plus elapsed duration `_d`.
-// `_t` is a freshness sanity signal, while `_d` models human think/type time.
-// Timing should detect obvious automation without acting like a long-lived identity token.
-const MIN_HUMAN_MS = 3_000; // 3 seconds minimum for a real human
+// The client may send `_t` (anchor time) and optionally `_d` (elapsed ms).
+//
+// When `_d` is present (e.g. ContactForm via useBotProtection), it is **session age**
+// since the form mounted — not "typing time". A 3s minimum falsely flagged anyone who
+// submitted within a few seconds of load while still blocking scripts that post instantly.
+//
+// When only `_t` is present (e.g. terminal contact flow), `_t` is when the flow started;
+// elapsed = now - _t is how long the interaction took. That can be under a few seconds
+// for real users, so use a separate, smaller floor than session-age.
+const MIN_PAGE_AGE_MS = 400; // reject posts in the first ~instant after form mount (bots)
+const MIN_FLOW_DURATION_MS = 500; // reject _t-only flows shorter than this (automation)
 
 function checkTiming(body) {
   const submittedAt = Number(body?._t);
@@ -46,19 +53,18 @@ function checkTiming(body) {
     if (!Number.isFinite(elapsedMs) || elapsedMs < 0) {
       return { isBot: true, reason: 'invalid_elapsed' };
     }
-    // Keep `_d` as a soft timing signal: low elapsed suggests automation.
-    if (elapsedMs < MIN_HUMAN_MS) {
+    if (elapsedMs < MIN_PAGE_AGE_MS) {
       return { isBot: true, reason: 'too_fast' };
     }
     return { isBot: false };
   }
 
-  // Backward-compatible fallback for older clients that only send `_t`.
+  // Clients that only send `_t`: elapsed is from anchor (e.g. start of terminal contact).
   const elapsed = now - submittedAt;
   if (elapsed < 0) {
     return { isBot: true, reason: 'invalid_timestamp' };
   }
-  if (elapsed < MIN_HUMAN_MS) {
+  if (elapsed < MIN_FLOW_DURATION_MS) {
     return { isBot: true, reason: 'too_fast' };
   }
 

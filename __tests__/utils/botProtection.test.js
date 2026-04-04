@@ -3,7 +3,7 @@ import { detectBot, stripBotFields } from '@/utils/botProtection';
 describe('detectBot timing', () => {
   const base = { name: 'Jane', message: 'Hello there friend' };
 
-  it('blocks instant submit', () => {
+  it('blocks instant submit when _d is session age since form mount', () => {
     const r = detectBot(
       { ...base, _t: Date.now(), _d: 250 },
       { requireTimestamp: true }
@@ -12,9 +12,26 @@ describe('detectBot timing', () => {
     expect(r.reason).toBe('too_fast');
   });
 
-  it('allows submit after minimum human delay', () => {
+  it('allows submit once form has been mounted longer than bot threshold', () => {
     const r = detectBot(
       { ...base, _t: Date.now(), _d: 5000 },
+      { requireTimestamp: true }
+    );
+    expect(r.isBot).toBe(false);
+  });
+
+  it('blocks _t-only flow when elapsed since anchor is extremely short', () => {
+    const r = detectBot(
+      { ...base, _t: Date.now() - 200 },
+      { requireTimestamp: true }
+    );
+    expect(r.isBot).toBe(true);
+    expect(r.reason).toBe('too_fast');
+  });
+
+  it('allows _t-only flow after minimum interaction duration', () => {
+    const r = detectBot(
+      { ...base, _t: Date.now() - 900 },
       { requireTimestamp: true }
     );
     expect(r.isBot).toBe(false);
