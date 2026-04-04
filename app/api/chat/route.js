@@ -40,7 +40,7 @@ function safeJson(value, init = {}) {
  * Markers are stripped from the visible text.
  *
  * Format: [[CITE:type|label|href]] or [[CITE:type|label|href|section]]
- * Example: [[CITE:project|λsigil // Lead Ops Runtime|/projects/lsigil-setup|Architecture]]
+ * Example: [[CITE:project|λsigil Lead Ops Runtime|/projects/lsigil-setup|Architecture]]
  */
 function extractCitations(text) {
   if (!text || typeof text !== 'string') return { cleanText: text, citations: [] };
