@@ -27,7 +27,7 @@ function checkHoneypot(body) {
 // The client may send `_t` (anchor time) and optionally `_d` (elapsed ms).
 //
 // When `_d` is present (e.g. ContactForm via useBotProtection), it is **session age**
-// since the form mounted — not "typing time". A 3s minimum falsely flagged anyone who
+// since the form mounted, not "typing time". A 3s minimum falsely flagged anyone who
 // submitted within a few seconds of load while still blocking scripts that post instantly.
 //
 // When only `_t` is present (e.g. terminal contact flow), `_t` is when the flow started;
