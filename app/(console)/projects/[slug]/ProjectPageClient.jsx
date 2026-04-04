@@ -414,14 +414,6 @@ export default function ProjectPageClient({ project, slug }) {
           </ProjectSection>
         )}
 
-        {project.evolutionAfterSetup && (
-          <ProjectSection title='Evolution after setup'>
-            <p className='font-ocr text-text text-base md:text-lg leading-relaxed'>
-              {project.evolutionAfterSetup}
-            </p>
-          </ProjectSection>
-        )}
-
         {/* 4) Architecture */}
         {(architectureText || project.projectStructure) && (
           <ProjectSection title='Architecture'>
