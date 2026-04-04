@@ -11,9 +11,12 @@ import { contactBodySchema } from '@/lib/schemas/contact.schema';
 import { jsonSecurityHeaders } from '@/lib/jsonSecurityHeaders';
 import { logError } from '@/lib/observability/logger';
 
+const isDev = process.env.NODE_ENV === 'development';
+
+// Production stays strict (spam). Dev allows many tries—local testing burns through 3/15min fast.
 const contactRateLimit = createRateLimit({
   keyPrefix: 'contact',
-  maxRequests: 3,
+  maxRequests: isDev ? 120 : 3,
   windowMs: 15 * 60 * 1000,
   message: 'Too many contact form submissions. Please try again later.',
   requireDistributedStoreInProduction: true,
