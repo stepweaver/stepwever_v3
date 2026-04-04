@@ -106,15 +106,15 @@ export default function ThemeToggle() {
             aria-haspopup='listbox'
             aria-expanded={isOpen}
           >
-            <Image
-              src='/images/lambda_stepweaver.png'
-              alt='Lambda'
-              width={24}
-              height={24}
-              className={`lambda-icon ${theme}`}
-              sizes='24px'
-              style={{ width: 'auto', height: 'auto' }}
-            />
+            <span className='relative inline-block h-6 w-6 shrink-0'>
+              <Image
+                src='/images/lambda_stepweaver.png'
+                alt='Lambda'
+                fill
+                className={`lambda-icon ${theme}`}
+                sizes='24px'
+              />
+            </span>
             {/* Keep the current theme name for screen readers only */}
             <span className='sr-only theme-dropdown-label'>
               {currentTheme?.label ?? 'Theme'}
@@ -142,15 +142,15 @@ export default function ThemeToggle() {
                         aria-selected={theme === themeOption.value}
                         tabIndex={0}
                       >
-                        <Image
-                          src='/images/lambda_stepweaver.png'
-                          alt='Lambda'
-                          width={12}
-                          height={12}
-                          className={`lambda-icon-grid ${themeOption.value}`}
-                          sizes='12px'
-                          style={{ width: 'auto', height: 'auto' }}
-                        />
+                        <span className='relative inline-block h-3 w-3 shrink-0'>
+                          <Image
+                            src='/images/lambda_stepweaver.png'
+                            alt='Lambda'
+                            fill
+                            className={`lambda-icon-grid ${themeOption.value}`}
+                            sizes='12px'
+                          />
+                        </span>
                         <span className='theme-label'>{themeOption.label}</span>
                       </button>
                     ))}
