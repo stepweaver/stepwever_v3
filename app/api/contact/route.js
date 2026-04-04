@@ -21,6 +21,9 @@ const contactRateLimit = createRateLimit({
 
 const GENERIC_FAILURE = 'Message could not be sent. Please try again later.';
 
+const EMAIL_UNCONFIGURED_DEV =
+  'Contact email is not configured on the server. Add EMAIL_USER and EMAIL_PASS to .env.local at the project root (same folder as package.json), then stop and restart `npm run dev`.';
+
 function json(body, status = 200) {
   return NextResponse.json(body, { status, headers: jsonSecurityHeaders() });
 }
@@ -49,7 +52,11 @@ export async function POST(request) {
 
     if (!isEmailConfigured()) {
       logError('contact_email_unconfigured', { route: '/api/contact' });
-      return json({ error: GENERIC_FAILURE }, 500);
+      const error =
+        process.env.NODE_ENV === 'development'
+          ? EMAIL_UNCONFIGURED_DEV
+          : GENERIC_FAILURE;
+      return json({ error }, 500);
     }
 
     try {

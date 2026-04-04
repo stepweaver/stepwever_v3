@@ -58,7 +58,27 @@ describe('/api/contact route', () => {
     expect(res.status).toBe(403);
   });
 
-  it('returns generic failure when email config is missing', async () => {
+  it('returns dev-oriented error when email config is missing in development', async () => {
+    isEmailConfigured.mockReturnValueOnce(false);
+    const res = await POST(
+      new Request('https://stepweaver.dev/api/contact', {
+        method: 'POST',
+        headers: {
+          host: 'stepweaver.dev',
+          origin: 'https://stepweaver.dev',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(validBody),
+      })
+    );
+    expect(res.status).toBe(500);
+    const data = await res.json();
+    expect(data.error).toMatch(/EMAIL_USER|EMAIL_PASS|\.env\.local/);
+    expect(data.error).not.toMatch(/credential|smtp auth/i);
+  });
+
+  it('returns generic failure when email config is missing in production', async () => {
+    process.env.NODE_ENV = 'production';
     isEmailConfigured.mockReturnValueOnce(false);
     const res = await POST(
       new Request('https://stepweaver.dev/api/contact', {
@@ -74,7 +94,7 @@ describe('/api/contact route', () => {
     expect(res.status).toBe(500);
     const data = await res.json();
     expect(data.error).toBe('Message could not be sent. Please try again later.');
-    expect(data.error).not.toMatch(/env|credential|smtp/i);
+    expect(data.error).not.toMatch(/\.env\.local/);
   });
 
   it('returns success-shaped response for bot submissions', async () => {
