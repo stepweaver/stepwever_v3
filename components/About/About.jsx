@@ -25,7 +25,7 @@ function About() {
 
         <div className='prose prose-invert font-ibm max-w-none space-y-4 text-text flex-1 min-h-0'>
           <p className='text-base md:text-lg leading-relaxed'>
-            I'm Stephen Weaver. I came into software through operations, analysis, and real-world process work: Airborne Cryptologic Linguist in the U.S. Air Force, then restaurant operations and business analysis, then development. That path still shapes how I build.
+            I came into software through operations, analysis, and real-world process work: Airborne Cryptologic Linguist in the U.S. Air Force, then restaurant operations and business analysis, then development. That path still shapes how I build.
           </p>
           <p className='text-base md:text-lg leading-relaxed'>Background:</p>
           <ul className='space-y-3 text-base md:text-lg leading-relaxed'>
