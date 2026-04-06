@@ -128,8 +128,8 @@ const EXPERIENCE = [
     highlights: [
       'Designed and launched a real-time silent-auction platform for a school fundraiser using Next.js, Supabase Realtime, and Resend',
       'Delivered guided bidder onboarding, alias bidding, real-time updates, donor portals, admin workflows, and server-side rule enforcement',
-      'Built Bill Planner, a cash-flow planning app using Next.js, Neon Postgres, Drizzle ORM, and Auth.js',
-      'Implemented paycheck-window UX and a status pipeline (scheduled → pending → paid) with month templates to reduce cash-flow surprises',
+      'Built λledger, a paycheck-window household cashflow planner using Next.js, Neon Postgres, Drizzle ORM, and Auth.js',
+      'Implemented paycheck grouping, draft month review, attention flags, and a bill lifecycle (scheduled/due → pending → paid or skipped) with templates to reduce cashflow surprises',
       'Developed λlambda, a portfolio-native LLM chat agent integrated into both the website and terminal interface',
       'Built server-only prompts, Groq/OpenAI routing, multimodal message support, prompt-injection filtering, provider fallback, and honeypot bot protection',
       'Delivered automation systems for small-business clients using n8n, Zapier, Python, and Google APIs to reduce manual work and improve visibility',
