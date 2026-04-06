@@ -13,7 +13,7 @@ import { logError } from '@/lib/observability/logger';
 
 const isDev = process.env.NODE_ENV === 'development';
 
-// Production stays strict (spam). Dev allows many tries—local testing burns through 3/15min fast.
+// Production stays strict (spam). Dev allows many tries; local testing burns through 3/15min fast.
 const contactRateLimit = createRateLimit({
   keyPrefix: 'contact',
   maxRequests: isDev ? 120 : 3,
